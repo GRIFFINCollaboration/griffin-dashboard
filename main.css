@@ -1,0 +1,140 @@
+/*CSS Reset*/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	height:100%;
+	width:100%;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*Enforce more intuitive box-sizing, suppress selection, demand default cursor*/
+* { 
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+	box-sizing: border-box; 
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	cursor:default;
+}
+
+/*branding///////////////////////////////////////////////////*/
+div#branding{
+	height:10%;
+}
+
+/*navigation//////////////////////////////////////////////////*/
+div#navigation{
+	border: 1px solid #FF0000;
+	height: 5%;
+}
+
+/*status bar//////////////////////////////////////////////////*/
+div#statusBar{
+	border:1px solid #006600;
+	float: left;
+	width: 20%;
+	height:85%;
+}
+
+/*main///////////////////////////////////////////////////////*/
+div#main{
+	border:1px solid #0000FF;
+	float:right;
+	width:80%;
+	height:85%;
+}
+
+div#canvasWrap{
+	width: 80%;
+	height: 100%;
+	float:left;
+}
+
+x-deck#subNavigation{
+	width:100%;
+	height:20%;
+}
+
+canvas#canvas{
+	width:100%;
+	height:80%;
+}
+
+x-deck#deck{
+	width:20%;
+	height:100%;
+	float:right;
+}
+
+div.cardDiv{
+	width:100%;
+	height:100%;
+}
+
+/*buttons/////////////////////////////////////////////////////////*/
+button#navButton{
+	display:inline;
+}
+
+/*Footer and footer-related styles////////////////////////////////////////////////////*/
+html, body {height: 100%;}
+
+#wrapper {
+	height: 100%;
+}
+
+#statusBar {
+	overflow:auto;
+	padding-bottom: 6em;
+}  /* must be same height as the footer */
+
+#footer {
+	position: relative;
+	margin-top: -6em; /* negative value of footer height */
+	height: 6em;
+	border: 1px solid #000000;
+	clear:both;
+} 

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+	    <meta charset="utf-8" />
+	    <title>Mk2</title>
+
+		<link rel='stylesheet' type='text/css' href='frameworks/brick-0.9.1.css'>
+		<link rel="stylesheet" type="text/css" href="main.css"/>
+
+	    <script type='text/javascript' src='frameworks/brick-0.9.1.js'></script> 
+	    <script type='text/javascript' src='frameworks/paper.js'></script> 
+
+		<script type='text/javascript' src='main.js'></script> 	    
+
+	</head>
+
+	<body>
+
+		<div id='wrapper'>
+
+		    <div id='branding'>
+
+		    </div>
+
+		    <div id='navigation'>
+		    	<button id='button0' class='navButton'>Button 0</button>
+		    	<button id='button1' class='navButton'>Button 1</button>
+		    	<button id='button2' class='navButton'>Button 2</button>
+
+		    </div>
+
+		    <div id='statusBar'>
+
+		    </div>
+
+		    <div id='main'>
+		    	<div id='canvasWrap'>
+		    		<x-deck id='subNavigation'>
+			    		<x-card>
+							<div class='cardDiv' style='background-color:#f1c40f'></div>
+				    	</x-card>
+
+			    		<x-card>
+							<div class='cardDiv' style='background-color:#e74c3c'></div>
+				    	</x-card>
+
+			    		<x-card>
+							<div class='cardDiv' style='background-color:#8e44ad'></div>
+				    	</x-card>				    	
+		    		</x-deck>
+		    		<canvas id='canvas' style="background:black"></canvas>
+		    	</div>
+		    	<x-deck id='deck' transition-type='scrollUp'>
+		    		<x-card>
+						<div class='cardDiv' style='background-color:#f1c40f'></div>
+			    	</x-card>
+
+		    		<x-card>
+						<div class='cardDiv' style='background-color:#e74c3c'></div>
+			    	</x-card>
+
+		    		<x-card>
+						<div class='cardDiv' style='background-color:#8e44ad'></div>
+			    	</x-card>
+			    </x-deck>
+		    </div>
+
+			<div id='tooltip' style = 'width:100px; height:100px; background-color:#FFFFFF; display:none; position:absolute;'></div>
+		</div>
+
+		<div id='footer'></div>
+
+		<script type='text/paperscript', canvas='canvas'>
+				//globals
+				layer = {};
+				path = {};
+
+				//deploy stuff
+				griffin();
+				descant();
+				dante();
+
+				//tooltip
+				function onMouseMove(event) {
+					project.activeLayer.selected = false;
+					if (event.item){
+						event.item.selected = true;
+						document.getElementById('tooltip').innerHTML = event['_item'].channel;
+						summonTooltip(event.event.clientX, event.event.clientY);
+					} else
+						dismissTooltip();
+				}	
+
+				//animation
+				function onFrame(event){
+					
+					for(key in path){
+						if(path[key].layer.visible && dataBus[key] && 
+							(	dataBus[key].currentColor[0] != dataBus[key].color[0] || 
+								dataBus[key].currentColor[1] != dataBus[key].color[1] || 
+								dataBus[key].currentColor[2] != dataBus[key].color[2]) 
+							){
+							interpolateColor(key);
+							path[key].fillColor.red = dataBus[key].currentColor[0]/255;
+							path[key].fillColor.blue = dataBus[key].currentColor[1]/255;
+							path[key].fillColor.green = dataBus[key].currentColor[2]/255;
+							console.log('transitioning')
+						}
+					}
+					
+				}
+
+		</script>
+
+		<script>
+			document.addEventListener('DOMComponentsLoaded', function(){
+
+				var button0 = document.getElementById('button0'),
+					button1 = document.getElementById('button1'),
+					button2 = document.getElementById('button2'),
+					deck = document.getElementById('deck'),
+					subNav = document.getElementById('subNavigation')
+
+				button0.addEventListener("click", function(){
+	   	 			deck.shuffleTo(0);
+	   	 			subNav.shuffleTo(0);
+
+					layer['griffin'].visible=true
+					layer['griffin'].activate();
+					layer['descant'].visible=false
+					layer['dante'].visible=false
+					paper.view.draw();
+
+				});	
+				button1.addEventListener("click", function(){
+	   	 			deck.shuffleTo(1);
+	   	 			subNav.shuffleTo(1);
+
+					layer['griffin'].visible=false
+					layer['descant'].visible=true
+					layer['descant'].activate();
+					layer['dante'].visible=false
+					paper.view.draw();
+   	 			
+				});	
+				button2.addEventListener("click", function(){
+	   	 			deck.shuffleTo(2);
+	   	 			subNav.shuffleTo(2);
+
+					layer['griffin'].visible=false
+					layer['descant'].visible=false
+					layer['dante'].visible=true
+					layer['dante'].activate();
+					paper.view.draw();
+
+				});
+
+			});
+
+			function summonTooltip(x, y){
+				var tt = document.getElementById('tooltip');
+				tt.style.display = 'block';
+				tt.style.left = x+'px';
+				tt.style.top = y+'px';
+			}
+
+			function dismissTooltip(){
+				var tt = document.getElementById('tooltip');
+				tt.style.display = 'none';			
+			}
+
+			dataBus = {};
+			dataBus.GRG06BN00A = {}
+			dataBus.GRG06BN00A.oldColor = [255,255,255]
+			dataBus.GRG06BN00A.currentColor = [255,255,255]
+			dataBus.GRG06BN00A.color = [255,0,0]
+			dataBus.DSC01XN00X = {}
+			dataBus.DSC01XN00X.oldColor = [255,255,255]
+			dataBus.DSC01XN00X.currentColor = [255,255,255]
+			dataBus.DSC01XN00X.color = [0,255,0]
+			dataBus.DAL01XN00X = {}
+			dataBus.DAL01XN00X.oldColor = [255,255,255]
+			dataBus.DAL01XN00X.currentColor = [255,255,255]
+			dataBus.DAL01XN00X.color = [0,0,255]
+
+		</script>
+
+	</body>
+
+</html>
