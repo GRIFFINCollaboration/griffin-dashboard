@@ -1,3 +1,4 @@
+//animation///////////////////////////////////////////////////////////////////
 //for a key in dataBus that has children oldColor, currentColor and color, increment currentColor 1/60 towards color and away from oldColor.
 function incrementColor(key){
 	var oldColor = dataBus[key].oldColor,
@@ -56,6 +57,95 @@ function incrementHeight(key){
 	dataBus[key].currentHeight = currentHeight;
 }
 
+//tooltip///////////////////////////////////////////////////////////////////////
+function summonTooltip(x, y){
+	var tt = document.getElementById('tooltip');
+	tt.style.display = 'block';
+	tt.style.left = x+'px';
+	tt.style.top = y+'px';
+}
+
+function dismissTooltip(){
+	var tt = document.getElementById('tooltip');
+	tt.style.display = 'none';			
+}
+
+//main sections//////////////////////////////////////////////////////////////////
+function renderDashboard(){
+	layer['dashboard'] = new paper.Layer();
+	layer['dashboard'].visible = false;
+
+	var text = new paper.PointText(new paper.Point(200, 50));
+	text.justification = 'center';
+	text.fillColor = 'white';
+	text.content = 'Dashboard';
+};
+function renderHV(){
+	layer['HV'] = new paper.Layer();
+	layer['HV'].visible = false;
+
+	var text = new paper.PointText(new paper.Point(200, 50));
+	text.justification = 'center';
+	text.fillColor = 'white';
+	text.content = 'hv';
+};
+function renderSubsystem(){
+	layer['subsystem'] = new paper.Layer();
+	layer['subsystem'].visible = false;
+
+	var text = new paper.PointText(new paper.Point(200, 50));
+	text.justification = 'center';
+	text.fillColor = 'white';
+	text.content = 'subsystem';
+};
+function renderDAQ(){
+	layer['DAQ'] = new paper.Layer();
+	layer['DAQ'].visible = false;
+
+	var text = new paper.PointText(new paper.Point(200, 50));
+	text.justification = 'center';
+	text.fillColor = 'white';
+	text.content = 'DAQ';
+};
+function renderClock(){
+	layer['clock'] = new paper.Layer();
+	layer['clock'].visible = false;
+
+	var text = new paper.PointText(new paper.Point(200, 50));
+	text.justification = 'center';
+	text.fillColor = 'white';
+	text.content = 'Clock';
+};
+function renderFilter(){
+	layer['filter'] = new paper.Layer();
+	layer['filter'].visible = false;
+
+	var text = new paper.PointText(new paper.Point(200, 50));
+	text.justification = 'center';
+	text.fillColor = 'white';
+	text.content = 'Filter';
+};
+function renderVME(){
+	layer['VME'] = new paper.Layer();
+	layer['VME'].visible = false;
+
+	var text = new paper.PointText(new paper.Point(200, 50));
+	text.justification = 'center';
+	text.fillColor = 'white';
+	text.content = 'VME';
+};
+function renderCycle(){
+	layer['cycle'] = new paper.Layer();
+	layer['cycle'].visible = false;
+
+	var text = new paper.PointText(new paper.Point(200, 50));
+	text.justification = 'center';
+	text.fillColor = 'white';
+	text.content = 'Cycle';
+};
+
+
+//abyss////////////////////////////////////////////////////////////////////////////
 /*
 //transform string '#123456' into int array [0x12, 0x34, 0x56]
 function parseColorString(string){
@@ -114,6 +204,5 @@ function dante(){
 	path['DAL01XN00X'].add(new paper.Point(300,300), new paper.Point(350, 300), new paper.Point(350, 350), new paper.Point(300,350));
 	path['DAL01XN00X'].fillColor = dataBus['DAL01XN00X'].oldColor;
 	path['DAL01XN00X'].channel = 'DANTE'
-	console.log(path['DAL01XN00X'])
 	layer['dante'].addChild(path['DAL01XN00X']);
 }

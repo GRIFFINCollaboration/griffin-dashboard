@@ -24,10 +24,15 @@
 		    </div>
 
 		    <div id='navigation'>
-		    	<button id='button0' class='navButton'>Button 0</button>
-		    	<button id='button1' class='navButton'>Button 1</button>
-		    	<button id='button2' class='navButton'>Button 2</button>
-
+		    	<button id='statusButton' class='navButton'>MIDAS Status</button>
+		    	<button id='dashboardButton' class='navButton'>Dashboard</button>
+		    	<button id='HVButton' class='navButton'>HV Monitor</button>
+		    	<button id='subsystemButton' class='navButton'>Subsystem Monitor</button>
+		    	<button id='DAQButton' class='navButton'>DAQ</button>
+		    	<button id='clockButton' class='navButton'>Clock</button>
+		    	<button id='filterButton' class='navButton'>Filter</button>
+		    	<button id='VMEButton' class='navButton'>VME</button>
+		    	<button id='cycleButton' class='navButton'>Cycle</button>
 		    </div>
 
 		    <div id='statusBar'>
@@ -37,32 +42,28 @@
 		    <div id='main'>
 		    	<div id='canvasWrap'>
 		    		<x-deck id='subNavigation'>
-			    		<x-card>
-							<div class='cardDiv' style='background-color:#f1c40f'></div>
-				    	</x-card>
-
-			    		<x-card>
-							<div class='cardDiv' style='background-color:#e74c3c'></div>
-				    	</x-card>
-
-			    		<x-card>
-							<div class='cardDiv' style='background-color:#8e44ad'></div>
-				    	</x-card>				    	
+				    	<x-card>Dashboard subnav</x-card>
+				    	<x-card>HV subnav</x-card>
+				    	<x-card>Subsystem subnav</x-card>				    	
+				    	<x-card>DAQ subnav</x-card>
+				    	<x-card>Clock subnav</x-card>
+				    	<x-card>Filter subnav</x-card>
+				    	<x-card>VME subnav</x-card>
+				    	<x-card>Cycle subnav</x-card>
 		    		</x-deck>
+
 		    		<canvas id='canvas' style="background:black"></canvas>
 		    	</div>
+
 		    	<x-deck id='deck' transition-type='scrollUp'>
-		    		<x-card>
-						<div class='cardDiv' style='background-color:#f1c40f'></div>
-			    	</x-card>
-
-		    		<x-card>
-						<div class='cardDiv' style='background-color:#e74c3c'></div>
-			    	</x-card>
-
-		    		<x-card>
-						<div class='cardDiv' style='background-color:#8e44ad'></div>
-			    	</x-card>
+			    	<x-card>Dashboard side</x-card>
+			    	<x-card>HV side</x-card>
+			    	<x-card>Subsystem side</x-card>				    	
+			    	<x-card>DAQ side</x-card>
+			    	<x-card>Clock side</x-card>
+			    	<x-card>Filter side</x-card>
+			    	<x-card>VME side</x-card>
+			    	<x-card>Cycle side</x-card>
 			    </x-deck>
 		    </div>
 
@@ -77,9 +78,14 @@
 				path = {};
 
 				//deploy stuff
-				griffin();
-				descant();
-				dante();
+				renderDashboard();
+				renderHV();
+				renderSubsystem();
+				renderDAQ();
+				renderClock();
+				renderFilter();
+				renderVME();
+				renderCycle();
 
 				//tooltip
 				function onMouseMove(event) {
@@ -136,60 +142,45 @@
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
 
-				var button0 = document.getElementById('button0'),
-					button1 = document.getElementById('button1'),
-					button2 = document.getElementById('button2'),
+				var statusButton = document.getElementById('statusButton'),
+					dashboardButton = document.getElementById('dashboardButton'),
+					HVButton = document.getElementById('HVButton'),
+					subsystemButton = document.getElementById('subsystemButton'),
+					DAQButton = document.getElementById('DAQButton'),
+					clockButton = document.getElementById('clockButton'),
+					filterButton = document.getElementById('filterButton'),
+					VMEButton = document.getElementById('VMEButton'),
+					cycleButton = document.getElementById('cycleButton'),
 					deck = document.getElementById('deck'),
 					subNav = document.getElementById('subNavigation')
 
-				button0.addEventListener("click", function(){
-	   	 			deck.shuffleTo(0);
-	   	 			subNav.shuffleTo(0);
+				//configure top level buttons
+				dashboardButton.addEventListener('click', topNav.bind(null, 0, 'dashboard'));
+				HVButton.addEventListener('click', topNav.bind(null, 1, 'HV'));
+				subsystemButton.addEventListener('click', topNav.bind(null, 2, 'subsystem'));
+				DAQButton.addEventListener('click', topNav.bind(null, 3, 'DAQ'));
+				clockButton.addEventListener('click', topNav.bind(null, 4, 'clock'));
+				filterButton.addEventListener('click', topNav.bind(null, 5, 'filter'));
+				VMEButton.addEventListener('click', topNav.bind(null, 6, 'VME'));
+				cycleButton.addEventListener('click', topNav.bind(null, 7, 'cycle'));
 
-					layer['griffin'].visible=true
-					layer['griffin'].activate();
-					layer['descant'].visible=false
-					layer['dante'].visible=false
-					paper.view.draw();
+				function topNav(index, layerName){
+					var key;
 
-				});	
-				button1.addEventListener("click", function(){
-	   	 			deck.shuffleTo(1);
-	   	 			subNav.shuffleTo(1);
+	   	 			deck.shuffleTo(index);
+	   	 			subNav.shuffleTo(index);
 
-					layer['griffin'].visible=false
-					layer['descant'].visible=true
-					layer['descant'].activate();
-					layer['dante'].visible=false
-					paper.view.draw();
-   	 			
-				});	
-				button2.addEventListener("click", function(){
-	   	 			deck.shuffleTo(2);
-	   	 			subNav.shuffleTo(2);
+	   	 			for(key in layer) layer[key].visible = false;
 
-					layer['griffin'].visible=false
-					layer['descant'].visible=false
-					layer['dante'].visible=true
-					layer['dante'].activate();
-					paper.view.draw();
-
-				});
-
+	   	 			layer[layerName].visible = true;
+	   	 			layer[layerName].activate();
+	   	 			paper.view.draw();
+				}
+		
 			});
 
-			function summonTooltip(x, y){
-				var tt = document.getElementById('tooltip');
-				tt.style.display = 'block';
-				tt.style.left = x+'px';
-				tt.style.top = y+'px';
-			}
 
-			function dismissTooltip(){
-				var tt = document.getElementById('tooltip');
-				tt.style.display = 'none';			
-			}
-
+			//dummy dataBus
 			dataBus = {};
 			dataBus.GRG06BN00A = {}
 			dataBus.GRG06BN00A.oldColor = [255,255,255]
