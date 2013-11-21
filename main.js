@@ -1,3 +1,85 @@
+//for a key in dataBus that has children oldColor, currentColor and color, increment currentColor 1/60 towards color and away from oldColor.
+function incrementColor(key){
+	var oldColor = dataBus[key].oldColor,
+		currentColor = dataBus[key].currentColor,
+		color = dataBus[key].color,
+		nSteps = 60,
+		redStep = Math.ceil((color[0] - oldColor[0])/nSteps),
+		greenStep = Math.ceil((color[1] - oldColor[1])/nSteps),
+		blueStep = Math.ceil((color[2] - oldColor[2])/nSteps);
+
+	//increment the color indices
+	currentColor[0] += redStep;
+	currentColor[1] += greenStep;
+	currentColor[2] += blueStep;
+
+	//jump to the goal when less than one step away, prevents incrementing runaway
+	if(Math.abs(currentColor[0] - color[0]) <= redStep) currentColor[0] = color[0];
+	if(Math.abs(currentColor[1] - color[1]) <= greenStep) currentColor[1] = color[1];
+	if(Math.abs(currentColor[2] - color[2]) <= blueStep) currentColor[2] = color[2];
+
+	dataBus[key].currentColor = currentColor;
+
+}
+
+//analagous to incrementColor, but steps the width of a bar on a horizonatal bar graph
+function incrementWidth(key){
+	var oldWidth = dataBus[key].oldWidth,
+		currentWidth = dataBus[key].currentWidth,
+		width = dataBus[key].width,
+		nSteps = 60,
+		stepSize = Math.ceil((width - oldWidth) / nSteps);
+
+	//increment by a step
+	currentWidth += stepSize;
+
+	//jump to the goal when less than one step away, prevents incrementing runaway
+	if(Math.abs(currentWidth - width) <= stepSize ) currentWidth = width;
+
+	dataBus[key].currentWidth = currentWidth;
+}
+
+//same as incrementWidth, but now for height
+function incrementHeight(key){
+	var oldHeight = dataBus[key].oldHeight,
+		currentHeight = dataBus[key].currentHeight,
+		height = dataBus[key].height,
+		nSteps = 60,
+		stepSize = Math.ceil((height - oldHeight) / nSteps);
+
+	//increment by a step
+	currentHeight += stepSize;
+
+	//jump to the goal when less than one step away, prevents incrementing runaway
+	if(Math.abs(currentHeight - height) <= stepSize ) currentHeight = height;
+
+	dataBus[key].currentHeight = currentHeight;
+}
+
+/*
+//transform string '#123456' into int array [0x12, 0x34, 0x56]
+function parseColorString(string){
+	var parsed = [];
+
+	parsed[0] = parseInt(string.slice(1,3), 16);
+	parsed[1] = parseInt(string.slice(3,5), 16);
+	parsed[2] = parseInt(string.slice(5,7), 16);
+
+	return parsed;
+}
+
+//invert parseColorString
+function buildColorString(parsed){
+	var str = '#';
+
+	str += (parsed[0].toString(16).length==1) ? '0'+parsed[0].toString(16) : parsed[0].toString(16);
+	str += (parsed[1].toString(16).length==1) ? '0'+parsed[1].toString(16) : parsed[1].toString(16);
+	str += (parsed[2].toString(16).length==1) ? '0'+parsed[2].toString(16) : parsed[2].toString(16);
+
+	return str
+}
+*/
+
 function griffin(){
 	//boilerplate
 	layer['griffin'] = new paper.Layer();
@@ -32,49 +114,6 @@ function dante(){
 	path['DAL01XN00X'].add(new paper.Point(300,300), new paper.Point(350, 300), new paper.Point(350, 350), new paper.Point(300,350));
 	path['DAL01XN00X'].fillColor = dataBus['DAL01XN00X'].oldColor;
 	path['DAL01XN00X'].channel = 'DANTE'
+	console.log(path['DAL01XN00X'])
 	layer['dante'].addChild(path['DAL01XN00X']);
-}
-
-//for a key in dataBus that has children oldColor, currentColor and color, increment currentColor 1/60 towards color and away from oldColor.
-function interpolateColor(key){
-	var oldColor = dataBus[key].oldColor,
-		currentColor = dataBus[key].currentColor,
-		color = dataBus[key].color,
-		nSteps = 60,
-		redStep = Math.ceil((color[0] - oldColor[0])/nSteps),
-		greenStep = Math.ceil((color[1] - oldColor[1])/nSteps),
-		blueStep = Math.ceil((color[2] - oldColor[2])/nSteps);
-
-	currentColor[0] += redStep;
-	currentColor[1] += greenStep;
-	currentColor[2] += blueStep;
-
-	if(Math.abs(currentColor[0] - color[0]) <= 1) currentColor[0] = color[0];
-	if(Math.abs(currentColor[1] - color[1]) <= 1) currentColor[1] = color[1];
-	if(Math.abs(currentColor[2] - color[2]) <= 1) currentColor[2] = color[2];
-
-	dataBus[key].currentColor = currentColor;
-
-}
-
-//transform string '#123456' into int array [0x12, 0x34, 0x56]
-function parseColorString(string){
-	var parsed = [];
-
-	parsed[0] = parseInt(string.slice(1,3), 16);
-	parsed[1] = parseInt(string.slice(3,5), 16);
-	parsed[2] = parseInt(string.slice(5,7), 16);
-
-	return parsed;
-}
-
-//invert parseColorString
-function buildColorString(parsed){
-	var str = '#';
-
-	str += (parsed[0].toString(16).length==1) ? '0'+parsed[0].toString(16) : parsed[0].toString(16);
-	str += (parsed[1].toString(16).length==1) ? '0'+parsed[1].toString(16) : parsed[1].toString(16);
-	str += (parsed[2].toString(16).length==1) ? '0'+parsed[2].toString(16) : parsed[2].toString(16);
-
-	return str
 }
