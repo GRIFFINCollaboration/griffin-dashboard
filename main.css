@@ -110,7 +110,7 @@ x-deck#deck{
 }
 
 /*buttons/////////////////////////////////////////////////////////*/
-button#navButton{
+button.navButton{
 	display:inline;
 }
 

@@ -70,6 +70,48 @@ function dismissTooltip(){
 	tt.style.display = 'none';			
 }
 
+//utilities//////////////////////////////////////////////////////////////////////
+function injectDOM(element, id, wrapperID, properties){
+    var key, elt,
+        newElement = document.createElement(element);
+    //explicit ID
+    newElement.setAttribute('id', id);
+    //append to document:
+    if(wrapperID == 'body')
+        document.body.appendChild(newElement)
+    else
+        document.getElementById(wrapperID).appendChild(newElement);
+    elt = document.getElementById(id);
+
+    //some things need to be set specially:
+    if(properties['innerHTML'] || properties['innerHTML'] === 0){
+        elt.innerHTML = properties['innerHTML'];
+        delete properties['innerHTML'];
+    }
+    if(properties['onclick']){
+        elt.onclick = properties['onclick'];
+        delete properties['onclick'];
+    }
+    //send in the clowns:
+    for(key in properties){
+        elt.setAttribute(key, properties[key]);
+    }
+
+}
+
+function topNav(subNavbar, sidebar, layerName){
+	var key;
+
+	deck.shuffleTo(sidebar);
+	subNav.shuffleTo(subNavbar);
+
+	for(key in layer) layer[key].visible = false;
+
+	layer[layerName].visible = true;
+	layer[layerName].activate();
+	paper.view.draw();
+}
+
 //main sections//////////////////////////////////////////////////////////////////
 function renderDashboard(){
 	layer['dashboard'] = new paper.Layer();
@@ -89,15 +131,17 @@ function renderHV(){
 	text.fillColor = 'white';
 	text.content = 'hv';
 };
-function renderSubsystem(){
-	layer['subsystem'] = new paper.Layer();
-	layer['subsystem'].visible = false;
+function renderHPGe(){
+	layer['HPGe'] = new paper.Layer();
+	layer['HPGe'].visible = false;
 
-	var text = new paper.PointText(new paper.Point(200, 50));
-	text.justification = 'center';
-	text.fillColor = 'white';
-	text.content = 'subsystem';
-};
+	injectDOM('button', 'HPGeButton', 'subsystemNavCard', {
+		'innerHTML' : 'HPGe',
+		'class' : 'navButton'
+	});
+
+	document.getElementById('HPGeButton').addEventListener('click', topNav.bind(null, 2, 2, 'HPGe'));
+}
 function renderDAQ(){
 	layer['DAQ'] = new paper.Layer();
 	layer['DAQ'].visible = false;
@@ -144,6 +188,37 @@ function renderCycle(){
 	text.content = 'Cycle';
 };
 
+function renderDESCANT(){
+	layer['DESCANT'] = new paper.Layer();
+	layer['DESCANT'].visible = false;
+
+	injectDOM('button', 'DESCANTButton', 'subsystemNavCard', {
+		'innerHTML' : 'DESCANT',
+		'class' : 'navButton'
+	});
+
+	injectDOM('x-card', 'DESCANTSidebar', 'deck', {
+		'innerHTML' : 'DESCANT right sidebar'
+	});
+
+	document.getElementById('DESCANTButton').addEventListener('click', topNav.bind(null, 2, document.getElementById('deck').children.length-1, 'DESCANT'));
+}
+
+function renderSPICE(){
+	layer['SPICE'] = new paper.Layer();
+	layer['SPICE'].visible = false;
+
+	injectDOM('button', 'SPICEButton', 'subsystemNavCard', {
+		'innerHTML' : 'SPICE',
+		'class' : 'navButton'
+	});
+
+	injectDOM('x-card', 'SPICESidebar', 'deck', {
+		'innerHTML' : 'SPICE right sidebar'
+	});
+
+	document.getElementById('SPICEButton').addEventListener('click', topNav.bind(null, 2, document.getElementById('deck').children.length-1, 'SPICE'));
+}
 
 //abyss////////////////////////////////////////////////////////////////////////////
 /*
