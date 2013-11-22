@@ -132,17 +132,7 @@ function renderHV(){
 	text.fillColor = 'white';
 	text.content = 'hv';
 };
-function renderHPGe(){
-	layer['HPGe'] = new paper.Layer();
-	layer['HPGe'].visible = false;
 
-	injectDOM('button', 'HPGeButton', 'subsystemNavCard', {
-		'innerHTML' : 'HPGe',
-		'class' : 'navButton'
-	});
-
-	document.getElementById('HPGeButton').addEventListener('click', navigate.bind(null, 2, 2, 0, 'HPGe'));
-}
 function renderDAQ(){
 	layer['DAQ'] = new paper.Layer();
 	layer['DAQ'].visible = false;

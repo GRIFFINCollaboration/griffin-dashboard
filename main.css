@@ -33,6 +33,9 @@ body {
 	line-height: 1;
 	height:100%;
 	width:100%;
+	background-color: #333333;
+	font-family: Raleway, sans-serif;
+
 }
 ol, ul {
 	list-style: none;
@@ -49,6 +52,9 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+input, select, button{
+	outline:none;
+}
 
 /*Enforce more intuitive box-sizing, suppress selection, demand default cursor*/
 * { 
@@ -63,25 +69,49 @@ table {
 /*branding///////////////////////////////////////////////////*/
 div#branding{
 	height:10%;
+	color:#999999;
+	border-left: 5px solid #999999;
+	border-bottom: 5px solid #999999;
+	border-bottom-left-radius: 25px;
+	margin-bottom: 1em;
+	padding-left: 1em;
+}
+
+#logo{
+	height:100%;
+	float:left;
+	opacity:0.6;
+}
+
+div#branding h1{
+    float:left;
+	font-size: 400%;
+	padding-top:5px;
+	margin-left: 5px;
 }
 
 /*navigation//////////////////////////////////////////////////*/
 div#navigation{
-	border: 1px solid #FF0000;
-	height: 5%;
+	height: auto;
+	padding-bottom:1em;
 }
 
 /*status bar//////////////////////////////////////////////////*/
 div#statusBar{
-	border:1px solid #006600;
 	float: left;
-	width: 20%;
+	width: 18%;
 	height:85%;
+	border: 2px solid #000000;
+	border-left: none;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	background-color: #4C4C4C;
+	margin-right: 2%;
+	margin-bottom: 1em;
 }
 
 /*main///////////////////////////////////////////////////////*/
 div#main{
-	border:1px solid #0000FF;
 	float:right;
 	width:80%;
 	height:85%;
@@ -96,6 +126,11 @@ div#canvasWrap{
 canvas#canvas{
 	width:100%;
 	height:100%;
+}
+
+h2.subNavHeader{
+	font-size: 300%;
+	color: #555555;	
 }
 
 x-deck#subNavigation{
@@ -114,9 +149,37 @@ x-deck#sidebar{
 	float:right;
 }
 
+/*Right Sidebars//////////////////////////////////////////////////*/
+x-card#HVsidebar{
+	border: 2px solid #000000;
+	border-right: none;
+	border-top-left-radius: 25px;
+	border-bottom-left-radius: 25px;
+	background-color: #4C4C4C;
+}
+
 /*buttons/////////////////////////////////////////////////////////*/
 button.navButton{
-	display:inline;
+	background: #4C4C4C; 
+	color: #FFFFFF;
+	border-color: #333333; 
+	border-radius: 5px;
+    display: inline;
+    font-family: 'Raleway', sans-serif;
+    font-size:14px;
+    padding:1em;
+}
+
+/*tooltip/////////////////////////////////////////////////////////*/
+div#tooltip{
+	padding:1em;
+	background-color:rgba(0,0,0,0.7);
+	color:#FFFFFF; 
+	display:none; 
+	position:absolute;
+	border: 5px solid #FFFFFF;
+	border-radius: 25px;
+	z-index: 100;
 }
 
 /*Footer and footer-related styles////////////////////////////////////////////////////*/
@@ -128,13 +191,17 @@ html, body {height: 100%;}
 
 #statusBar {
 	overflow:auto;
-	padding-bottom: 6em;
+	padding-bottom: 5em;
 }  /* must be same height as the footer */
 
 #footer {
 	position: relative;
-	margin-top: -6em; /* negative value of footer height */
-	height: 6em;
-	border: 1px solid #000000;
+	margin-top: -5em; /* negative value of footer height */
+	height: 5em;
 	clear:both;
+	border-top: 2px solid #000000;
+	text-align: center;
+	background-color: #4C4C4C;
+	padding:2em;
+	color: #EEEEEE;
 } 
