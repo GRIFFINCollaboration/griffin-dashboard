@@ -99,11 +99,12 @@ function injectDOM(element, id, wrapperID, properties){
 
 }
 
-function topNav(subNavbar, sidebar, layerName){
+function navigate(subNavbarIndex, sidebarIndex, visualizationIndex, layerName){
 	var key;
 
-	deck.shuffleTo(sidebar);
-	subNav.shuffleTo(subNavbar);
+	sidebar.shuffleTo(sidebarIndex);
+	subNav.shuffleTo(subNavbarIndex);
+	visualization.shuffleTo(visualizationIndex);
 
 	for(key in layer) layer[key].visible = false;
 
@@ -140,7 +141,7 @@ function renderHPGe(){
 		'class' : 'navButton'
 	});
 
-	document.getElementById('HPGeButton').addEventListener('click', topNav.bind(null, 2, 2, 'HPGe'));
+	document.getElementById('HPGeButton').addEventListener('click', navigate.bind(null, 2, 2, 0, 'HPGe'));
 }
 function renderDAQ(){
 	layer['DAQ'] = new paper.Layer();
@@ -197,11 +198,11 @@ function renderDESCANT(){
 		'class' : 'navButton'
 	});
 
-	injectDOM('x-card', 'DESCANTSidebar', 'deck', {
+	injectDOM('x-card', 'DESCANTSidebar', 'sidebar', {
 		'innerHTML' : 'DESCANT right sidebar'
 	});
 
-	document.getElementById('DESCANTButton').addEventListener('click', topNav.bind(null, 2, document.getElementById('deck').children.length-1, 'DESCANT'));
+	document.getElementById('DESCANTButton').addEventListener('click', navigate.bind(null, 2, document.getElementById('sidebar').children.length-1, 0, 'DESCANT'));
 }
 
 function renderSPICE(){
@@ -213,11 +214,11 @@ function renderSPICE(){
 		'class' : 'navButton'
 	});
 
-	injectDOM('x-card', 'SPICESidebar', 'deck', {
+	injectDOM('x-card', 'SPICESidebar', 'sidebar', {
 		'innerHTML' : 'SPICE right sidebar'
 	});
 
-	document.getElementById('SPICEButton').addEventListener('click', topNav.bind(null, 2, document.getElementById('deck').children.length-1, 'SPICE'));
+	document.getElementById('SPICEButton').addEventListener('click', navigate.bind(null, 2, document.getElementById('sidebar').children.length-1, 0, 'SPICE'));
 }
 
 //abyss////////////////////////////////////////////////////////////////////////////

@@ -52,10 +52,12 @@
 				    	<x-card>Cycle subnav</x-card>
 		    		</x-deck>
 
-		    		<canvas id='canvas' style="background:black"></canvas>
+		    		<x-deck id='visualization'>
+			    		<x-card><canvas id='canvas' style="background:black"></canvas></x-card>
+			    	</x-deck>
 		    	</div>
 
-		    	<x-deck id='deck' transition-type='scrollUp'>
+		    	<x-deck id='sidebar' transition-type='scrollUp'>
 			    	<x-card>Dashboard side</x-card>
 			    	<x-card>HV side</x-card>
 			    	<x-card>HPGe side</x-card>				    	
@@ -155,18 +157,19 @@
 					VMEButton = document.getElementById('VMEButton'),
 					cycleButton = document.getElementById('cycleButton');
 
-				deck = document.getElementById('deck')
-				subNav = document.getElementById('subNavigation')
+			 	sidebar = document.getElementById('sidebar');
+				subNav = document.getElementById('subNavigation');
+				visualization = document.getElementById('visualization');
 
 				//configure top level buttons
-				dashboardButton.addEventListener('click', topNav.bind(null, 0, 0, 'dashboard'));
-				HVButton.addEventListener('click', topNav.bind(null, 1, 1, 'HV'));
-				subsystemButton.addEventListener('click', topNav.bind(null, 2, 2, 'HPGe'));
-				DAQButton.addEventListener('click', topNav.bind(null, 3, 3, 'DAQ'));
-				clockButton.addEventListener('click', topNav.bind(null, 4, 4, 'clock'));
-				filterButton.addEventListener('click', topNav.bind(null, 5, 5, 'filter'));
-				VMEButton.addEventListener('click', topNav.bind(null, 6, 6, 'VME'));
-				cycleButton.addEventListener('click', topNav.bind(null, 7, 7, 'cycle'));		
+				dashboardButton.addEventListener('click', navigate.bind(null, 0, 0, 0, 'dashboard'));
+				HVButton.addEventListener('click', navigate.bind(null, 1, 1, 0, 'HV'));
+				subsystemButton.addEventListener('click', navigate.bind(null, 2, 2, 0, 'HPGe'));
+				DAQButton.addEventListener('click', navigate.bind(null, 3, 3, 0, 'DAQ'));
+				clockButton.addEventListener('click', navigate.bind(null, 4, 4, 0, 'clock'));
+				filterButton.addEventListener('click', navigate.bind(null, 5, 5, 0, 'filter'));
+				VMEButton.addEventListener('click', navigate.bind(null, 6, 6, 0, 'VME'));
+				cycleButton.addEventListener('click', navigate.bind(null, 7, 7, 0, 'cycle'));		
 
 			});
 

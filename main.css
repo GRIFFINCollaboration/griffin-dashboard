@@ -93,17 +93,22 @@ div#canvasWrap{
 	float:left;
 }
 
+canvas#canvas{
+	width:100%;
+	height:100%;
+}
+
 x-deck#subNavigation{
 	width:100%;
 	height:20%;
 }
 
-canvas#canvas{
+x-deck#visualization{
 	width:100%;
-	height:80%;
+	height:80%;	
 }
 
-x-deck#deck{
+x-deck#sidebar{
 	width:20%;
 	height:100%;
 	float:right;
