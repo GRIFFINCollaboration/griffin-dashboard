@@ -1,26 +1,33 @@
 //animation///////////////////////////////////////////////////////////////////
 //for a key in dataBus that has children oldColor, currentColor and color, increment currentColor 1/60 towards color and away from oldColor.
 function incrementColor(key){
-	var oldColor = dataBus[key].oldColor,
-		currentColor = dataBus[key].currentColor,
-		color = dataBus[key].color,
-		nSteps = 60,
-		redStep = Math.ceil((color[0] - oldColor[0])/nSteps),
-		greenStep = Math.ceil((color[1] - oldColor[1])/nSteps),
-		blueStep = Math.ceil((color[2] - oldColor[2])/nSteps);
+	var i,
+		oldColor = [],
+		currentColor = [],
+		color = [],
+		nSteps = 30,
+		redStep, greenStep, blueStep;
 
-	//increment the color indices
-	currentColor[0] += redStep;
-	currentColor[1] += greenStep;
-	currentColor[2] += blueStep;
+	for(i=0; i<3; i++){
+		oldColor[i] = dataBus[key].oldColor[i];
+		currentColor[i] = dataBus[key].currentColor[i];
+		color[i] = dataBus[key].color[i];
+	}
+	redStep = (color[0] - oldColor[0])/nSteps,
+	greenStep = (color[1] - oldColor[1])/nSteps,
+	blueStep = (color[2] - oldColor[2])/nSteps;
 
-	//jump to the goal when less than one step away, prevents incrementing runaway
-	if(Math.abs(currentColor[0] - color[0]) <= redStep) currentColor[0] = color[0];
-	if(Math.abs(currentColor[1] - color[1]) <= greenStep) currentColor[1] = color[1];
-	if(Math.abs(currentColor[2] - color[2]) <= blueStep) currentColor[2] = color[2];
+	//step towards the target color, but jump to the goal when less than one step away; prevents incrementing runaway
+	if(Math.abs(currentColor[0] - color[0]) <= Math.abs(redStep) ) currentColor[0] = color[0];
+	else currentColor[0] += redStep;
+	if(Math.abs(currentColor[1] - color[1]) <= Math.abs(greenStep) ) currentColor[1] = color[1];
+	else currentColor[1] += greenStep;
+	if(Math.abs(currentColor[2] - color[2]) <= Math.abs(blueStep) ) currentColor[2] = color[2];
+	else currentColor[2] += blueStep;
 
-	dataBus[key].currentColor = currentColor;
-
+	dataBus[key].currentColor[0] = currentColor[0];
+	dataBus[key].currentColor[1] = currentColor[1];
+	dataBus[key].currentColor[2] = currentColor[2];
 }
 
 //analagous to incrementColor, but steps the width of a bar on a horizonatal bar graph

@@ -194,25 +194,23 @@
 
 			});
 
-
-			//dummy dataBus
 			dataBus = {};
-			dataBus.GRG06BN00A = {}
-			dataBus.GRG06BN00A.oldColor = [255,255,255]
-			dataBus.GRG06BN00A.currentColor = [255,255,255]
-			dataBus.GRG06BN00A.color = [255,0,0]
-			dataBus.DSC01XN00X = {}
-			dataBus.DSC01XN00X.oldColor = [255,255,255]
-			dataBus.DSC01XN00X.currentColor = [255,255,255]
-			dataBus.DSC01XN00X.color = [0,255,0]
-			dataBus.DAL01XN00X = {}
-			dataBus.DAL01XN00X.oldColor = [255,255,255]
-			dataBus.DAL01XN00X.currentColor = [255,255,255]
-			dataBus.DAL01XN00X.color = [0,0,255]
-			dataBus.DAL01XN00X.oldHeight = 50
-			dataBus.DAL01XN00X.currentHeight = 50
-			dataBus.DAL01XN00X.height = 300
 
+			//dummy loop making fake data:
+			function fakeData(){
+				var i, key;
+
+				for(key in dataBus){
+						for(i=0; i<3; i++){
+							dataBus[key].oldColor[i] = dataBus[key].color[i];
+							dataBus[key].oldColor[i] = dataBus[key].color[i];
+						}
+						dataBus[key].color = [255*Math.random(),255*Math.random(),255*Math.random()];
+						dataBus[key].color = [255*Math.random(),255*Math.random(),255*Math.random()];					
+				}
+				
+			}
+			window.setInterval(fakeData, 5000);
 
 		</script>
 
