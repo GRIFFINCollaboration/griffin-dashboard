@@ -72,7 +72,7 @@
 		    		</x-deck>
 
 		    		<x-deck id='visualization'>
-			    		<x-card><canvas id='mainCanvas'></canvas></x-card>
+			    		<x-card><canvas keepalive='true' id='mainCanvas'></canvas></x-card>
 			    	</x-deck>
 		    	</div>
 
@@ -126,10 +126,10 @@
 
 				//animation
 				function onFrame(event){
-					var x0, y0;
+					var x0, y0, i;
 					
 					for(key in path){
-						//color transitions
+						//color transitions - smooth if watching, jump on refocus
 						if(path[key].layer.visible && dataBus[key] && 
 							(	dataBus[key].currentColor[0] != dataBus[key].color[0] || 
 								dataBus[key].currentColor[1] != dataBus[key].color[1] || 
@@ -139,6 +139,14 @@
 							path[key].fillColor.red = dataBus[key].currentColor[0]/255;
 							path[key].fillColor.blue = dataBus[key].currentColor[1]/255;
 							path[key].fillColor.green = dataBus[key].currentColor[2]/255;
+						} else if(!path[key].layer.visible && dataBus[key]){
+							path[key].fillColor.red = dataBus[key].color[0]/255;
+							path[key].fillColor.blue = dataBus[key].color[1]/255;
+							path[key].fillColor.green = dataBus[key].color[2]/255;
+							for(i=0; i<3; i++){
+								dataBus[key].oldColor[i] = dataBus[key].color[i];
+								dataBus[key].currentColor[i] = dataBus[key].color[i]; 
+							}
 						}
 
 						//width transition (horizontal bar graphs)

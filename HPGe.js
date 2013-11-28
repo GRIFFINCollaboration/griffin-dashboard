@@ -15,16 +15,6 @@ function renderHPGe(){
 
 	document.getElementById('HPGeButton').addEventListener('click', navigate.bind(null, 2, 2, 0, 'HPGe'));
 
-	//detail view
-	layer['HPGeDetail'] = new paper.Layer();
-	layer['HPGeDetail'].visible = false;
-	//temporary button, click summary in final version
-	injectDOM('button', 'HPGeDetailButton', 'subsystemNavCard', {
-		'innerHTML' : 'HPGe Detail',
-		'class' : 'navButton'
-	});
-	document.getElementById('HPGeDetailButton').addEventListener('click', navigate.bind(null, 2, 2, 0, 'HPGeDetail'));
-
 	//canvas dimensions:
 	canvas = document.getElementById('mainCanvas');
 	viewWidth = canvas.offsetWidth;
@@ -80,10 +70,6 @@ function renderHPGe(){
 	beamLabel.fillColor = '#999999';
 	beamLabel.content = 'Beam';
 	beamLabel.rotate(-90)
-
-
-	//detail view
-	drawHPGeDetail(12, 'HPGeDetail');
 }
 
 //imprint the Paths for a single clover + BGO in summary view on the given layer, centered at x0, y0
@@ -91,50 +77,51 @@ function drawHPGeSummary(HPGeNo, layerID, x0, y0, size){
 
 	var crystalSide = size/6,  //side length of crystal summary
 		i,
-		crystalID = ['GreenSummary', 'BlueSummary', 'WhiteSummary', 'RedSummary'],
-		BGOID = ['GreenSummary', 'BlueSummary', 'WhiteSummary', 'RedSummary']
+		colorQuad = ['G', 'B', 'W', 'R'];
 
 	for(i=0; i<4; i++){
 		//crystal summary
-		path['HPGe'+HPGeNo+crystalID[i]] = new paper.Path();
-		path['HPGe'+HPGeNo+crystalID[i]].closed = true;
-		path['HPGe'+HPGeNo+crystalID[i]].strokeColor = '#999999';
-		path['HPGe'+HPGeNo+crystalID[i]].add(	new paper.Point(x0,y0), 
+		path['HPGe'+HPGeNo+colorQuad[i]] = new paper.Path();
+		path['HPGe'+HPGeNo+colorQuad[i]].closed = true;
+		path['HPGe'+HPGeNo+colorQuad[i]].strokeColor = '#999999';
+		path['HPGe'+HPGeNo+colorQuad[i]].add(	new paper.Point(x0,y0), 
 												new paper.Point(x0,y0-crystalSide), 
 												new paper.Point(x0-crystalSide, y0-crystalSide), 
 												new paper.Point(x0-crystalSide,y0)
 											);
-		path['HPGe'+HPGeNo+crystalID[i]].channel = crystalID[i];
-		path['HPGe'+HPGeNo+crystalID[i]].fillColor = [0,0,0];
-		layer[layerID].addChild(path['HPGe'+HPGeNo+crystalID[i]]);
-		path['HPGe'+HPGeNo+crystalID[i]].rotate(i*90, [x0,y0]);
+		path['HPGe'+HPGeNo+colorQuad[i]].channel = 'GRG' + ((HPGeNo>10)?HPGeNo:'0'+HPGeNo) + colorQuad[i];
+		path['HPGe'+HPGeNo+colorQuad[i]].fillColor = [0,0,0];
+		layer[layerID].addChild(path['HPGe'+HPGeNo+colorQuad[i]]);
+		path['HPGe'+HPGeNo+colorQuad[i]].rotate(i*90, [x0,y0]);
+		path['HPGe'+HPGeNo+colorQuad[i]].onClick = navigateDetailLayer.bind(null, HPGeNo);
 
 		//BGO summary
-		path['BGO'+HPGeNo+BGOID[i]] = new paper.Path();
-		path['BGO'+HPGeNo+BGOID[i]].closed = true;
-		path['BGO'+HPGeNo+BGOID[i]].strokeColor = '#999999';
-		path['BGO'+HPGeNo+BGOID[i]].add(new paper.Point(x0-3*crystalSide,y0), 
+		path['BGO'+HPGeNo+colorQuad[i]] = new paper.Path();
+		path['BGO'+HPGeNo+colorQuad[i]].closed = true;
+		path['BGO'+HPGeNo+colorQuad[i]].strokeColor = '#999999';
+		path['BGO'+HPGeNo+colorQuad[i]].add(new paper.Point(x0-3*crystalSide,y0), 
 										new paper.Point(x0-3*crystalSide,y0-3*crystalSide), 
 										new paper.Point(x0, y0-3*crystalSide), 
 										new paper.Point(x0,y0-2*crystalSide),
 										new paper.Point(x0-2*crystalSide,y0-2*crystalSide),
 										new paper.Point(x0-2*crystalSide,y0)
 									);
-		path['BGO'+HPGeNo+BGOID[i]].channel = BGOID[i];
-		path['BGO'+HPGeNo+BGOID[i]].fillColor = [0,0,0];
-		layer[layerID].addChild(path['BGO'+HPGeNo+ BGOID[i]]);
-		path['BGO'+HPGeNo+BGOID[i]].rotate(i*90, [x0,y0]);
+		path['BGO'+HPGeNo+colorQuad[i]].channel = 'GRS' + ((HPGeNo>10)?HPGeNo:'0'+HPGeNo) + colorQuad[i];
+		path['BGO'+HPGeNo+colorQuad[i]].fillColor = [0,0,0];
+		layer[layerID].addChild(path['BGO'+HPGeNo+ colorQuad[i]]);
+		path['BGO'+HPGeNo+colorQuad[i]].rotate(i*90, [x0,y0]);
+		path['BGO'+HPGeNo+colorQuad[i]].onClick = navigateDetailLayer.bind(null, HPGeNo);
 
 		//initialize the dataBus for each path:
-		dataBus['HPGe'+HPGeNo+crystalID[i]] = {};
-		dataBus['HPGe'+HPGeNo+crystalID[i]].oldColor = [0,0,0];
-		dataBus['HPGe'+HPGeNo+crystalID[i]].currentColor = [0,0,0];
-		dataBus['HPGe'+HPGeNo+crystalID[i]].color = [0,0,0];
+		dataBus['HPGe'+HPGeNo+colorQuad[i]] = {};
+		dataBus['HPGe'+HPGeNo+colorQuad[i]].oldColor = [0,0,0];
+		dataBus['HPGe'+HPGeNo+colorQuad[i]].currentColor = [0,0,0];
+		dataBus['HPGe'+HPGeNo+colorQuad[i]].color = [0,0,0];
 
-		dataBus['BGO'+HPGeNo+BGOID[i]] = {};
-		dataBus['BGO'+HPGeNo+BGOID[i]].oldColor = [0,0,0];
-		dataBus['BGO'+HPGeNo+BGOID[i]].currentColor = [0,0,0];
-		dataBus['BGO'+HPGeNo+BGOID[i]].color = [0,0,0];		
+		dataBus['BGO'+HPGeNo+colorQuad[i]] = {};
+		dataBus['BGO'+HPGeNo+colorQuad[i]].oldColor = [0,0,0];
+		dataBus['BGO'+HPGeNo+colorQuad[i]].currentColor = [0,0,0];
+		dataBus['BGO'+HPGeNo+colorQuad[i]].color = [0,0,0];		
 	}
 }
 
@@ -160,7 +147,7 @@ function drawHPGeDetail(HPGeNo, layerID){
 												new paper.Point(x0, y0),
 												new paper.Point(x0, y0-crystalSide)
 											);
-		path['HPGe'+HPGeNo+colors[i]+'B'].channel = 'HPGe'+HPGeNo+colors[i]+'B';
+		path['HPGe'+HPGeNo+colors[i]+'B'].channel = 'GRG'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N00B';
 		path['HPGe'+HPGeNo+colors[i]+'B'].fillColor = '#000000';
 		layer[layerID].addChild(path['HPGe'+HPGeNo+colors[i]+'B']);
 		path['HPGe'+HPGeNo+colors[i]+'B'].rotate(i*90, [x0,y0]);
@@ -173,7 +160,7 @@ function drawHPGeDetail(HPGeNo, layerID){
 												new paper.Point(x0-crystalSide, y0-crystalSide),
 												new paper.Point(x0, y0-crystalSide)
 											);
-		path['HPGe'+HPGeNo+colors[i]+'A'].channel = 'HPGe'+HPGeNo+colors[i]+'A';
+		path['HPGe'+HPGeNo+colors[i]+'A'].channel = 'GRG'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N00A';
 		path['HPGe'+HPGeNo+colors[i]+'A'].fillColor = '#000000';
 		layer[layerID].addChild(path['HPGe'+HPGeNo+colors[i]+'A']);
 		path['HPGe'+HPGeNo+colors[i]+'A'].rotate(i*90, [x0,y0]);
@@ -189,12 +176,12 @@ function drawHPGeDetail(HPGeNo, layerID){
 													new paper.Point(x0, y0 - crystalSide - HPGeGutter),
 													new paper.Point(x0 - crystalSide - HPGeGutter, y0 - crystalSide - HPGeGutter)
 										)
-		path['BGO'+HPGeNo+colors[i]+'-back'].channel = 'BGO'+HPGeNo+colors[i];
+		path['BGO'+HPGeNo+colors[i]+'-back'].channel = 'GRS'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N05X';
 		path['BGO'+HPGeNo+colors[i]+'-back'].fillColor = '#000000';
 		layer[layerID].addChild(path['BGO'+HPGeNo+colors[i]+'-back']);
 		path['BGO'+HPGeNo+colors[i]+'-back'].rotate(i*90, [x0, y0]);
 
-		//BGO side 1
+		//BGO side segment 4
 		path['BGO'+HPGeNo+colors[i]+'-side1'] = new paper.Path();
 		path['BGO'+HPGeNo+colors[i]+'-side1'].closed = true;
 		path['BGO'+HPGeNo+colors[i]+'-side1'].strokeColor = '#999999';
@@ -203,12 +190,12 @@ function drawHPGeDetail(HPGeNo, layerID){
 													new paper.Point(x0 - crystalSide - HPGeGutter - 2*BGOwidth - BGOgutter, y0 - crystalSide - HPGeGutter - 2*BGOwidth - BGOgutter),
 													new paper.Point(x0 - crystalSide - HPGeGutter - BGOwidth - BGOgutter, y0 - crystalSide - HPGeGutter - BGOwidth - BGOgutter)	
 												);
-		path['BGO'+HPGeNo+colors[i]+'-side1'].channel = 'BGO'+HPGeNo+colors[i]+'-side1';
+		path['BGO'+HPGeNo+colors[i]+'-side1'].channel = 'GRS'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N04X';
 		path['BGO'+HPGeNo+colors[i]+'-side1'].fillColor = '#000000';
 		layer[layerID].addChild(path['BGO'+HPGeNo+colors[i]+'-side1']);
 		path['BGO'+HPGeNo+colors[i]+'-side1'].rotate(i*90, [x0, y0]);
 
-		//BGO side 2
+		//BGO side segment 3
 		path['BGO'+HPGeNo+colors[i]+'-side2'] = new paper.Path();
 		path['BGO'+HPGeNo+colors[i]+'-side2'].closed = true;
 		path['BGO'+HPGeNo+colors[i]+'-side2'].strokeColor = '#999999';
@@ -217,12 +204,12 @@ function drawHPGeDetail(HPGeNo, layerID){
 													new paper.Point(x0 - crystalSide - HPGeGutter - 2*BGOwidth - BGOgutter, y0 - crystalSide - HPGeGutter - 2*BGOwidth - BGOgutter),
 													new paper.Point(x0, y0 - crystalSide - HPGeGutter - 2*BGOwidth - BGOgutter)
 												);
-		path['BGO'+HPGeNo+colors[i]+'-side2'].channel = 'BGO'+HPGeNo+colors[i]+'-side2';
+		path['BGO'+HPGeNo+colors[i]+'-side2'].channel = 'GRS'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N03X';
 		path['BGO'+HPGeNo+colors[i]+'-side2'].fillColor = '#000000';
 		layer[layerID].addChild(path['BGO'+HPGeNo+colors[i]+'-side2']);
 		path['BGO'+HPGeNo+colors[i]+'-side2'].rotate(i*90, [x0, y0]);
 
-		//BGO front 1
+		//BGO front segment 2
 		path['BGO'+HPGeNo+colors[i]+'-front1'] = new paper.Path();
 		path['BGO'+HPGeNo+colors[i]+'-front1'].closed = true;
 		path['BGO'+HPGeNo+colors[i]+'-front1'].strokeColor = '#999999';
@@ -231,12 +218,12 @@ function drawHPGeDetail(HPGeNo, layerID){
 													new paper.Point(x0 - crystalSide - HPGeGutter - 3*BGOwidth - 2*BGOgutter, y0 - crystalSide - HPGeGutter - 2*BGOwidth - 2*BGOgutter),
 													new paper.Point(x0 - crystalSide - HPGeGutter - 2*BGOwidth - 2*BGOgutter, y0 - crystalSide - HPGeGutter - 2*BGOwidth - BGOgutter)	
 												);
-		path['BGO'+HPGeNo+colors[i]+'-front1'].channel = 'BGO'+HPGeNo+colors[i]+'-front1';
+		path['BGO'+HPGeNo+colors[i]+'-front1'].channel = 'GRS'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N02X';
 		path['BGO'+HPGeNo+colors[i]+'-front1'].fillColor = '#000000';
 		layer[layerID].addChild(path['BGO'+HPGeNo+colors[i]+'-front1']);
 		path['BGO'+HPGeNo+colors[i]+'-front1'].rotate(i*90, [x0, y0]);
 
-		//BGO front 2
+		//BGO front segment 1
 		path['BGO'+HPGeNo+colors[i]+'-front2'] = new paper.Path();
 		path['BGO'+HPGeNo+colors[i]+'-front2'].closed = true;
 		path['BGO'+HPGeNo+colors[i]+'-front2'].strokeColor = '#999999';
@@ -245,12 +232,22 @@ function drawHPGeDetail(HPGeNo, layerID){
 													new paper.Point(x0 - crystalSide - HPGeGutter - 2*BGOwidth - 2*BGOgutter, y0 - crystalSide - HPGeGutter - 3*BGOwidth - 2*BGOgutter),
 													new paper.Point(x0, y0 - crystalSide - HPGeGutter - 3*BGOwidth - 2*BGOgutter)
 												);
-		path['BGO'+HPGeNo+colors[i]+'-front2'].channel = 'BGO'+HPGeNo+colors[i]+'-front2';
+		path['BGO'+HPGeNo+colors[i]+'-front2'].channel = 'GRS'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N01X';
 		path['BGO'+HPGeNo+colors[i]+'-front2'].fillColor = '#000000';
 		layer[layerID].addChild(path['BGO'+HPGeNo+colors[i]+'-front2']);
 		path['BGO'+HPGeNo+colors[i]+'-front2'].rotate(i*90, [x0, y0]);		
 
 	}
+}
 
-
+//handle creating each HPGe detail layer as it is required, and navigating to it afterwards
+function navigateDetailLayer(HPGeNo){
+	if(layer['HPGeDetail'+HPGeNo])
+		navigate(2, 2, 0, 'HPGeDetail'+HPGeNo);
+	else{
+		layer['HPGeDetail'+HPGeNo] = new paper.Layer();
+		layer['HPGeDetail'+HPGeNo].visible = false;
+		drawHPGeDetail(HPGeNo, 'HPGeDetail'+HPGeNo);
+		navigate(2, 2, 0, 'HPGeDetail'+HPGeNo);
+	}
 }
