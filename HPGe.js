@@ -90,6 +90,7 @@ function drawHPGeSummary(HPGeNo, layerID, x0, y0, size){
 												new paper.Point(x0-crystalSide,y0)
 											);
 		path['HPGe'+HPGeNo+colorQuad[i]].channel = 'GRG' + ((HPGeNo>10)?HPGeNo:'0'+HPGeNo) + colorQuad[i];
+		path['HPGe'+HPGeNo+colorQuad[i]].tag = 'HPGe'+HPGeNo+colorQuad[i];
 		path['HPGe'+HPGeNo+colorQuad[i]].fillColor = [0,0,0];
 		layer[layerID].addChild(path['HPGe'+HPGeNo+colorQuad[i]]);
 		path['HPGe'+HPGeNo+colorQuad[i]].rotate(i*90, [x0,y0]);
@@ -107,6 +108,7 @@ function drawHPGeSummary(HPGeNo, layerID, x0, y0, size){
 										new paper.Point(x0-2*crystalSide,y0)
 									);
 		path['BGO'+HPGeNo+colorQuad[i]].channel = 'GRS' + ((HPGeNo>10)?HPGeNo:'0'+HPGeNo) + colorQuad[i];
+		path['BGO'+HPGeNo+colorQuad[i]].tag = 'BGO'+HPGeNo+colorQuad[i];
 		path['BGO'+HPGeNo+colorQuad[i]].fillColor = [0,0,0];
 		layer[layerID].addChild(path['BGO'+HPGeNo+ colorQuad[i]]);
 		path['BGO'+HPGeNo+colorQuad[i]].rotate(i*90, [x0,y0]);
@@ -148,6 +150,7 @@ function drawHPGeDetail(HPGeNo, layerID){
 												new paper.Point(x0, y0-crystalSide)
 											);
 		path['HPGe'+HPGeNo+colors[i]+'B'].channel = 'GRG'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N00B';
+		path['HPGe'+HPGeNo+colors[i]+'B'].tag = 'HPGe'+HPGeNo+colors[i]+'B'
 		path['HPGe'+HPGeNo+colors[i]+'B'].fillColor = '#000000';
 		layer[layerID].addChild(path['HPGe'+HPGeNo+colors[i]+'B']);
 		path['HPGe'+HPGeNo+colors[i]+'B'].rotate(i*90, [x0,y0]);
@@ -161,6 +164,7 @@ function drawHPGeDetail(HPGeNo, layerID){
 												new paper.Point(x0, y0-crystalSide)
 											);
 		path['HPGe'+HPGeNo+colors[i]+'A'].channel = 'GRG'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N00A';
+		path['HPGe'+HPGeNo+colors[i]+'A'].tag = 'HPGe'+HPGeNo+colors[i]+'A'
 		path['HPGe'+HPGeNo+colors[i]+'A'].fillColor = '#000000';
 		layer[layerID].addChild(path['HPGe'+HPGeNo+colors[i]+'A']);
 		path['HPGe'+HPGeNo+colors[i]+'A'].rotate(i*90, [x0,y0]);
@@ -177,6 +181,7 @@ function drawHPGeDetail(HPGeNo, layerID){
 													new paper.Point(x0 - crystalSide - HPGeGutter, y0 - crystalSide - HPGeGutter)
 										)
 		path['BGO'+HPGeNo+colors[i]+'-back'].channel = 'GRS'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N05X';
+		path['BGO'+HPGeNo+colors[i]+'-back'].tag = 'BGO'+HPGeNo+colors[i]+'-back'
 		path['BGO'+HPGeNo+colors[i]+'-back'].fillColor = '#000000';
 		layer[layerID].addChild(path['BGO'+HPGeNo+colors[i]+'-back']);
 		path['BGO'+HPGeNo+colors[i]+'-back'].rotate(i*90, [x0, y0]);
@@ -191,6 +196,7 @@ function drawHPGeDetail(HPGeNo, layerID){
 													new paper.Point(x0 - crystalSide - HPGeGutter - BGOwidth - BGOgutter, y0 - crystalSide - HPGeGutter - BGOwidth - BGOgutter)	
 												);
 		path['BGO'+HPGeNo+colors[i]+'-side1'].channel = 'GRS'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N04X';
+		path['BGO'+HPGeNo+colors[i]+'-side1'].tag = 'BGO'+HPGeNo+colors[i]+'-side1'
 		path['BGO'+HPGeNo+colors[i]+'-side1'].fillColor = '#000000';
 		layer[layerID].addChild(path['BGO'+HPGeNo+colors[i]+'-side1']);
 		path['BGO'+HPGeNo+colors[i]+'-side1'].rotate(i*90, [x0, y0]);
@@ -205,6 +211,7 @@ function drawHPGeDetail(HPGeNo, layerID){
 													new paper.Point(x0, y0 - crystalSide - HPGeGutter - 2*BGOwidth - BGOgutter)
 												);
 		path['BGO'+HPGeNo+colors[i]+'-side2'].channel = 'GRS'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N03X';
+		path['BGO'+HPGeNo+colors[i]+'-side2'].tag = 'BGO'+HPGeNo+colors[i]+'-side2'
 		path['BGO'+HPGeNo+colors[i]+'-side2'].fillColor = '#000000';
 		layer[layerID].addChild(path['BGO'+HPGeNo+colors[i]+'-side2']);
 		path['BGO'+HPGeNo+colors[i]+'-side2'].rotate(i*90, [x0, y0]);
@@ -219,6 +226,7 @@ function drawHPGeDetail(HPGeNo, layerID){
 													new paper.Point(x0 - crystalSide - HPGeGutter - 2*BGOwidth - 2*BGOgutter, y0 - crystalSide - HPGeGutter - 2*BGOwidth - BGOgutter)	
 												);
 		path['BGO'+HPGeNo+colors[i]+'-front1'].channel = 'GRS'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N02X';
+		path['BGO'+HPGeNo+colors[i]+'-front1'].tag = 'BGO'+HPGeNo+colors[i]+'-front1'
 		path['BGO'+HPGeNo+colors[i]+'-front1'].fillColor = '#000000';
 		layer[layerID].addChild(path['BGO'+HPGeNo+colors[i]+'-front1']);
 		path['BGO'+HPGeNo+colors[i]+'-front1'].rotate(i*90, [x0, y0]);
@@ -233,6 +241,7 @@ function drawHPGeDetail(HPGeNo, layerID){
 													new paper.Point(x0, y0 - crystalSide - HPGeGutter - 3*BGOwidth - 2*BGOgutter)
 												);
 		path['BGO'+HPGeNo+colors[i]+'-front2'].channel = 'GRS'+((HPGeNo>10)?HPGeNo:'0'+HPGeNo)+colors[i]+'N01X';
+		path['BGO'+HPGeNo+colors[i]+'-front2'].tag = 'BGO'+HPGeNo+colors[i]+'-front2'
 		path['BGO'+HPGeNo+colors[i]+'-front2'].fillColor = '#000000';
 		layer[layerID].addChild(path['BGO'+HPGeNo+colors[i]+'-front2']);
 		path['BGO'+HPGeNo+colors[i]+'-front2'].rotate(i*90, [x0, y0]);		
@@ -248,6 +257,6 @@ function navigateDetailLayer(HPGeNo){
 		layer['HPGeDetail'+HPGeNo] = new paper.Layer();
 		layer['HPGeDetail'+HPGeNo].visible = false;
 		drawHPGeDetail(HPGeNo, 'HPGeDetail'+HPGeNo);
-		navigate(2, 2, 0, 'HPGeDetail'+HPGeNo);
+		//navigate(2, 2, 0, 'HPGeDetail'+HPGeNo);
 	}
 }
