@@ -86,8 +86,9 @@ div#branding{
 div#branding h1{
     float:left;
 	font-size: 400%;
-	padding-top:5px;
+	
 	margin-left: 5px;
+	height: 100%;
 }
 
 /*navigation//////////////////////////////////////////////////*/

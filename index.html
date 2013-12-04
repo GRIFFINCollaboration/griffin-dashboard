@@ -23,7 +23,7 @@
 
 		    <div id='branding'>
 		    	<img id='logo' src='logo.gif'></img>
-		    	<h1>GRIFFIN</h1>
+		    	<h1 id='headerBanner'>GRIFFIN</h1>
 		    </div>
 
 		    <div id='navigation'>
@@ -200,7 +200,10 @@
 				clockButton.addEventListener('click', navigate.bind(null, 4, 4, 0, 'clock'));
 				filterButton.addEventListener('click', navigate.bind(null, 5, 5, 0, 'filter'));
 				VMEButton.addEventListener('click', navigate.bind(null, 6, 6, 0, 'VME'));
-				cycleButton.addEventListener('click', navigate.bind(null, 7, 7, 0, 'cycle'));	
+				cycleButton.addEventListener('click', navigate.bind(null, 7, 7, 0, 'cycle'));
+
+				//get the header font right
+				document.getElementById('headerBanner').style.fontSize = parseInt(document.getElementById('branding').offsetHeight, 10)*0.9+'px';
 
 			});
 
