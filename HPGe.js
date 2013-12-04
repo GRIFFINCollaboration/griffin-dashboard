@@ -257,6 +257,6 @@ function navigateDetailLayer(HPGeNo){
 		layer['HPGeDetail'+HPGeNo] = new paper.Layer();
 		layer['HPGeDetail'+HPGeNo].visible = false;
 		drawHPGeDetail(HPGeNo, 'HPGeDetail'+HPGeNo);
-		//navigate(2, 2, 0, 'HPGeDetail'+HPGeNo);
+		navigate(2, 2, 0, 'HPGeDetail'+HPGeNo);
 	}
 }

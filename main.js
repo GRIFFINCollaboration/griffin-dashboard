@@ -106,6 +106,8 @@ function injectDOM(element, id, wrapperID, properties){
 
 }
 
+//navigate to the appropriate view; first 3 indices are for the corresponding x-decks, layerName
+//is for the corresponding paper.js canvas layer
 function navigate(subNavbarIndex, sidebarIndex, visualizationIndex, layerName){
 	var key;
 
@@ -116,8 +118,27 @@ function navigate(subNavbarIndex, sidebarIndex, visualizationIndex, layerName){
 	for(key in layer) layer[key].visible = false;
 
 	layer[layerName].visible = true;
+	instaUpdate(layerName);
 	layer[layerName].activate();
 	paper.view.draw();
+}
+
+//update the colors on layer layerName immediately, with no intermediate states.
+function instaUpdate(layerName){
+	var i,j;
+
+	for(j=0; j<layer[layerName].children.length; j++){
+		key = layer[layerName].children[j].tag;
+		if(!key) continue;
+
+		path[key].fillColor.red = dataBus[key].color[0]/255;
+		path[key].fillColor.blue = dataBus[key].color[1]/255;
+		path[key].fillColor.green = dataBus[key].color[2]/255;
+		for(i=0; i<3; i++){
+			dataBus[key].oldColor[i] = dataBus[key].color[i];
+			dataBus[key].currentColor[i] = dataBus[key].color[i]; 
+		}
+	}
 }
 
 //main sections//////////////////////////////////////////////////////////////////
