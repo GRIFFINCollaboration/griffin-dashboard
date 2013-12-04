@@ -141,6 +141,14 @@ function instaUpdate(layerName){
 	}
 }
 
+//initialize the databus entry for path pathName
+function dataBusInit(pathName){
+	dataBus[pathName] = {};
+	dataBus[pathName].oldColor = [0,0,0];
+	dataBus[pathName].currentColor = [0,0,0];
+	dataBus[pathName].color = [0,0,0];
+}
+
 //main sections//////////////////////////////////////////////////////////////////
 function renderDashboard(){
 	layer['dashboard'] = new paper.Layer();
