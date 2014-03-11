@@ -1,12 +1,12 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="main.css"/>
-		<link rel='stylesheet' type='text/css' href='lib/brick-1.0.0.min.css'>
-
-		<script type='text/javascript' src='lib/brick-1.0.0.min.js'></script>
-		<script type="text/javascript" src="branding.js"></script>
+		
+		<script type='text/javascript' src='lib/brick-0.9.1.js'></script>
+		<link rel='stylesheet' type='text/css' href='lib/brick-0.9.1.css'>
 
 		<script type="text/javascript" src="xTags/xBasic.js"></script>
+		<link rel='stylesheet' type='text/css' href='xTags/xBasic.css'>
 	</head>
 
 	<body>
@@ -18,37 +18,7 @@
 			<div id='push'></div>
 		</div>
 
-		<div id='footer'>
-
-			<div class='textBlock'>
-				<h3>Built in Vancouver by the GRIFFIN Collaboration</h3>
-
-				<p>
-					Code available on <a href='https://github.com/GRIFFINCollaboration'>Github</a>
-					<br>
-					Copyright &#169 2014 GRIFFIN Collaboration
-					<br>
-					All code freely available under MIT license.
-				</p>
-
-				<table>
-					<tr>
-						<td>
-							<a class='imgLink' href='https://github.com/GRIFFINCollaboration'>
-								<img id='gitLogo' width='72' height='72' src='img/GitHub-Mark-Light-64px.png'></img>
-							</a>
-						</td>
-						<td>
-							<a class='imgLink' href='http://www.triumf.ca/griffin'>
-								<img id='griffLogo' width='65' height='78' src='img/GRIFFIN_Logo_White_small.png'></img>
-							</a>
-						</td>
-					</tr>
-				</table>
-			</div>
-
-			<canvas id='footerImage' width='550' height='300'></canvas>
-		</div>
+		<x-footBranding></x-footBranding>
 
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
