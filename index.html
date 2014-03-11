@@ -1,232 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<html>
 	<head>
-	    <meta charset="utf-8" />
-	    <title>Mk2</title>
-
-		<link rel='stylesheet' type='text/css' href='frameworks/brick-0.9.1.css'>
 		<link rel="stylesheet" type="text/css" href="main.css"/>
-		<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+		<link rel='stylesheet' type='text/css' href='lib/brick-1.0.0.min.css'>
 
-	    <script type='text/javascript' src='frameworks/brick-0.9.1.js'></script> 
-	    <script type='text/javascript' src='frameworks/paper.js'></script> 
+		<script type='text/javascript' src='lib/brick-1.0.0.min.js'></script>
+		<script type="text/javascript" src="branding.js"></script>
 
-		<script type='text/javascript' src='main.js'></script> 	    
-		<script type='text/javascript' src='HPGe.js'></script> 
-
+		<script type="text/javascript" src="xTags/xBasic.js"></script>
 	</head>
 
 	<body>
 
 		<div id='wrapper'>
 
-		    <div id='branding'>
-		    	<img id='logo' src='logo.gif'></img>
-		    	<h1 id='headerBanner'>GRIFFIN</h1>
-		    </div>
+			<x-headBranding></x-headBranding>
 
-		    <div id='navigation'>
-		    	<button id='statusButton' class='navButton'>MIDAS Status</button>
-		    	<button id='dashboardButton' class='navButton'>Dashboard</button>
-		    	<button id='HVButton' class='navButton'>HV Monitor</button>
-		    	<button id='subsystemButton' class='navButton'>Subsystem Monitor</button>
-		    	<button id='DAQButton' class='navButton'>DAQ</button>
-		    	<button id='clockButton' class='navButton'>Clock</button>
-		    	<button id='filterButton' class='navButton'>Filter</button>
-		    	<button id='VMEButton' class='navButton'>VME</button>
-		    	<button id='cycleButton' class='navButton'>Cycle</button>
-		    </div>
-
-		    <div id='statusBar'>
-
-		    </div>
-
-		    <div id='main'>
-		    	<div id='canvasWrap'>
-		    		<x-deck id='subNavigation'>
-				    	<x-card>
-				    		<h2 class='subNavHeader'>Dashboard</h2>
-				    	</x-card>
-				    	<x-card>
-				    		<h2 class='subNavHeader'>HV Monitor</h2>
-				    	</x-card>
-				    	<x-card id='subsystemNavCard'>
-				    		<h2 class='subNavHeader'>Subsystem Monitor</h2>
-				    	</x-card>				    	
-				    	<x-card>
-				    		<h2 class='subNavHeader'>DAQ</h2>
-				    	</x-card>
-				    	<x-card>
-				    		<h2 class='subNavHeader'>Clock</h2>
-				    	</x-card>
-				    	<x-card>
-				    		<h2 class='subNavHeader'>Filter</h2>
-				    	</x-card>
-				    	<x-card>
-				    		<h2 class='subNavHeader'>VME</h2>
-				    	</x-card>
-				    	<x-card>
-				    		<h2 class='subNavHeader'>Cycle</h2>
-				    	</x-card>
-		    		</x-deck>
-
-		    		<x-deck id='visualization'>
-			    		<x-card><canvas keepalive='true' id='mainCanvas'></canvas></x-card>
-			    	</x-deck>
-		    	</div>
-
-		    	<x-deck id='sidebar' transition-type='scrollUp'>
-			    	<x-card>Dashboard side</x-card>
-			    	<x-card id='HVsidebar'></x-card>
-			    	<x-card>HPGe side</x-card>				    	
-			    	<x-card>DAQ side</x-card>
-			    	<x-card>Clock side</x-card>
-			    	<x-card>Filter side</x-card>
-			    	<x-card>VME side</x-card>
-			    	<x-card>Cycle side</x-card>
-			    </x-deck>
-		    </div>
-
-			<div id='tooltip'></div>
+			<div id='push'></div>
 		</div>
 
 		<div id='footer'>
-			GRIFFIN Mark II Monitoring & Control
+
+			<div class='textBlock'>
+				<h3>Built in Vancouver by the GRIFFIN Collaboration</h3>
+
+				<p>
+					Code available on <a href='https://github.com/GRIFFINCollaboration'>Github</a>
+					<br>
+					Copyright &#169 2014 GRIFFIN Collaboration
+					<br>
+					All code freely available under MIT license.
+				</p>
+
+				<table>
+					<tr>
+						<td>
+							<a class='imgLink' href='https://github.com/GRIFFINCollaboration'>
+								<img id='gitLogo' width='72' height='72' src='img/GitHub-Mark-Light-64px.png'></img>
+							</a>
+						</td>
+						<td>
+							<a class='imgLink' href='http://www.triumf.ca/griffin'>
+								<img id='griffLogo' width='65' height='78' src='img/GRIFFIN_Logo_White_small.png'></img>
+							</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<canvas id='footerImage' width='550' height='300'></canvas>
 		</div>
-
-		<script type='text/paperscript', canvas='mainCanvas'>
-				//globals
-				layer = {};
-				path = {};
-
-				//deploy stuff
-				renderDashboard();
-				renderHV();
-				renderHPGe();
-				renderDAQ();
-				renderClock();
-				renderFilter();
-				renderVME();
-				renderCycle();
-
-				renderDESCANT();
-				renderSPICE();
-
-				//tooltip
-				function onMouseMove(event) {
-					project.activeLayer.selected = false;
-					if (event.item){
-						event.item.selected = true;
-						document.getElementById('tooltip').innerHTML = event['_item'].channel;
-						summonTooltip(event.event.clientX, event.event.clientY);
-					} else
-						dismissTooltip();
-				}	
-
-				//animation
-				function onFrame(event){
-					var x0, y0, i, j, key;
-					
-					for(j=0; j<paper.project.activeLayer.children.length; j++){
-						key = paper.project.activeLayer.children[j].tag;
-						if(!key) continue;
-						//color transitions - smooth if watching, jump on refocus
-						if(path[key].layer.visible && dataBus[key] && 
-							(	dataBus[key].currentColor[0] != dataBus[key].color[0] || 
-								dataBus[key].currentColor[1] != dataBus[key].color[1] || 
-								dataBus[key].currentColor[2] != dataBus[key].color[2]) 
-							){
-							incrementColor(key);
-							path[key].fillColor.red = dataBus[key].currentColor[0]/255;
-							path[key].fillColor.blue = dataBus[key].currentColor[1]/255;
-							path[key].fillColor.green = dataBus[key].currentColor[2]/255;
-						} else if(!path[key].layer.visible && dataBus[key]){
-							path[key].fillColor.red = dataBus[key].color[0]/255;
-							path[key].fillColor.blue = dataBus[key].color[1]/255;
-							path[key].fillColor.green = dataBus[key].color[2]/255;
-							for(i=0; i<3; i++){
-								dataBus[key].oldColor[i] = dataBus[key].color[i];
-								dataBus[key].currentColor[i] = dataBus[key].color[i]; 
-							}
-						}
-
-						//width transition (horizontal bar graphs)
-						if(path[key].layer.visible && dataBus[key] && dataBus[key].width && dataBus[key].currentWidth != dataBus[key].width){
-							incrementWidth(key);
-							//bottom left corner of box - fixed point on both horizontal and vertical bars.
-							x0 = path[key]['_segments'][3]['_point']['_x'];
-							//y0 = path[key]['_segments'][3]['_point']['_y'];
-							path[key]['_segments'][1]['_point']['_x'] = x0 + dataBus[key].currentWidth;
-							path[key]['_segments'][2]['_point']['_x'] = x0 + dataBus[key].currentWidth;
-						}
-
-						//height transition (horizontal bar graphs)
-						if(path[key].layer.visible && dataBus[key] && dataBus[key].height && dataBus[key].currentHeight != dataBus[key].height){
-							incrementHeight(key);
-							//bottom left corner of box - fixed point on both horizontal and vertical bars.
-							y0 = path[key]['_segments'][3]['_point']['_y'];
-							path[key]['_segments'][0]['_point']['_y'] = y0 - dataBus[key].currentHeight;
-							path[key]['_segments'][1]['_point']['_y'] = y0 - dataBus[key].currentHeight;
-						}
-					}
-					
-				}
-
-		</script>
 
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
 
-				var statusButton = document.getElementById('statusButton'),
-					dashboardButton = document.getElementById('dashboardButton'),
-					HVButton = document.getElementById('HVButton'),
-					subsystemButton = document.getElementById('subsystemButton'),
-					DAQButton = document.getElementById('DAQButton'),
-					clockButton = document.getElementById('clockButton'),
-					filterButton = document.getElementById('filterButton'),
-					VMEButton = document.getElementById('VMEButton'),
-					cycleButton = document.getElementById('cycleButton');
-
-			 	sidebar = document.getElementById('sidebar');
-				subNav = document.getElementById('subNavigation');
-				visualization = document.getElementById('visualization');
-
-				//configure top level buttons
-				dashboardButton.addEventListener('click', navigate.bind(null, 0, 0, 0, 'dashboard'));
-				HVButton.addEventListener('click', navigate.bind(null, 1, 1, 0, 'HV'));
-				subsystemButton.addEventListener('click', navigate.bind(null, 2, 2, 0, 'HPGe'));
-				DAQButton.addEventListener('click', navigate.bind(null, 3, 3, 0, 'DAQ'));
-				clockButton.addEventListener('click', navigate.bind(null, 4, 4, 0, 'clock'));
-				filterButton.addEventListener('click', navigate.bind(null, 5, 5, 0, 'filter'));
-				VMEButton.addEventListener('click', navigate.bind(null, 6, 6, 0, 'VME'));
-				cycleButton.addEventListener('click', navigate.bind(null, 7, 7, 0, 'cycle'));
-
-				//get the header font right
-				document.getElementById('headerBanner').style.fontSize = parseInt(document.getElementById('branding').offsetHeight, 10)*0.9+'px';
-
 			});
-
-			dataBus = {};
-
-			//dummy loop making fake data:
-			function fakeData(){
-				var i, key;
-
-				for(key in dataBus){
-						for(i=0; i<3; i++){
-							dataBus[key].oldColor[i] = dataBus[key].color[i];
-							dataBus[key].oldColor[i] = dataBus[key].color[i];
-						}
-						dataBus[key].color = [255*Math.random(),255*Math.random(),255*Math.random()];
-						dataBus[key].color = [255*Math.random(),255*Math.random(),255*Math.random()];					
-				}
-				
-			}
-			window.setInterval(fakeData, 5000);
-
 		</script>
 
 	</body>
-
 </html>
