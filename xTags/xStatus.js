@@ -11,7 +11,7 @@
                 ,   startTime = document.createElement('li')
                 ,   upTime = document.createElement('li')
                 ,   stopTime = document.createElement('li')
-                ,   runContol = document.createElement('form')
+                ,   runControl = document.createElement('form')
                 ,   start = document.createElement('button')
                 ,   stop = document.createElement('button')
                 ,   pause = document.createElement('button')
@@ -42,7 +42,7 @@
                 stopTime.setAttribute('id', 'statusStopTime');
                 document.getElementById('statusRunDetail').appendChild(stopTime);
 
-                runContol.setAttribute('id', 'runControl');
+                runControl.setAttribute('id', 'runControl');
                 this.appendChild(runControl);
 
                 start.setAttribute('id', 'statusStart');
