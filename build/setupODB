@@ -1,0 +1,4 @@
+sed 's@$PWD@'$PWD'@g' ./ODBconfig > ODBconfigInstance
+sed -i 's@/install@''@g' ./ODBconfigInstance
+odbedit -c @ODBconfigInstance
+rm ./ODBconfigInstance
