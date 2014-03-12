@@ -481,6 +481,7 @@ function repopulate(){
                 ,   startTime = document.createElement('li')
                 ,   upTime = document.createElement('li')
                 ,   stopTime = document.createElement('li')
+                ,   runContol = document.createElement('form')
                 ,   start = document.createElement('button')
                 ,   stop = document.createElement('button')
                 ,   pause = document.createElement('button')
@@ -511,20 +512,35 @@ function repopulate(){
                 stopTime.setAttribute('id', 'statusStopTime');
                 document.getElementById('statusRunDetail').appendChild(stopTime);
 
+                runContol.setAttribute('id', 'runControl');
+                this.appendChild(runControl);
+
                 start.setAttribute('id', 'statusStart');
-                this.appendChild(start);
+                start.setAttribute('name', 'cmd');
+                start.setAttribute('type', 'submit');
+                start.setAttribute('value', 'Start');
+                document.getElementById('runControl').appendChild(start);
                 document.getElementById('statusStart').innerHTML = 'Start';
 
                 stop.setAttribute('id', 'statusStop');
-                this.appendChild(stop);
+                stop.setAttribute('name', 'cmd');
+                stop.setAttribute('type', 'submit');
+                stop.setAttribute('value', 'Stop');
+                document.getElementById('runControl').appendChild(stop);
                 document.getElementById('statusStop').innerHTML = 'Stop';
 
                 pause.setAttribute('id', 'statusPause');
-                this.appendChild(pause);
+                pause.setAttribute('name', 'cmd');
+                pause.setAttribute('type', 'submit');
+                pause.setAttribute('value', 'Pause');
+                document.getElementById('runControl').appendChild(pause);
                 document.getElementById('statusPause').innerHTML = 'Pause';
 
                 resume.setAttribute('id', 'statusResume');
-                this.appendChild(resume);
+                resume.setAttribute('name', 'cmd');
+                resume.setAttribute('type', 'submit');
+                resume.setAttribute('value', 'Resume');
+                document.getElementById('runControl').appendChild(resume);
                 document.getElementById('statusResume').innerHTML = 'Resume';
 
                 messageList.setAttribute('id', 'statusMessageList');
