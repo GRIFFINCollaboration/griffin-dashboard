@@ -494,9 +494,11 @@ function repopulate(){
                     messages[i] = document.createElement('li');
                 }
 
+                //headline
                 exptTitle.setAttribute('id', 'statusTitle');
                 this.appendChild(exptTitle);
 
+                //top level info
                 runDetail.setAttribute('id', 'statusRunDetail');
                 this.appendChild(runDetail);
 
@@ -512,6 +514,7 @@ function repopulate(){
                 stopTime.setAttribute('id', 'statusStopTime');
                 document.getElementById('statusRunDetail').appendChild(stopTime);
 
+                //run control form
                 runControl.setAttribute('id', 'runControl');
                 this.appendChild(runControl);
 
@@ -549,6 +552,7 @@ function repopulate(){
                 redirectKludge.setAttribute('value', 'http://annikal.triumf.ca:8082/CS/MarkII')
                 document.getElementById('runControl').appendChild(redirectKludge)
 
+                //message list
                 messageList.setAttribute('id', 'statusMessageList');
                 this.appendChild(messageList);
 
@@ -556,8 +560,6 @@ function repopulate(){
                     messages[i].setAttribute('id', 'statusMessage'+i);
                     document.getElementById('statusMessageList').appendChild(messages[i]);
                 }                
-                
-                //this.populateFields();
                 
             },
             inserted: function() {},
@@ -580,6 +582,27 @@ function repopulate(){
                 //check to make sure the requisite buffers exist:
                 if(!window.currentData.ODB.Experiment || !window.currentData.ODB.Runinfo) return;
 
+                //show different stuff depending on run state:
+                if(window.currentData.ODB.Runinfo.State == 1){
+                    //run is stopped
+                    document.getElementById('statusStart').style.display = 'inline';
+                    document.getElementById('statusStop').style.display = 'none';
+                    document.getElementById('statusPause').style.display = 'none';
+                    document.getElementById('statusResume').style.display = 'none';
+                } else if(window.currentData.ODB.Runinfo.State == 2){
+                    //run is paused
+                    document.getElementById('statusStart').style.display = 'none';
+                    document.getElementById('statusStop').style.display = 'none';
+                    document.getElementById('statusPause').style.display = 'none';
+                    document.getElementById('statusResume').style.display = 'inline';
+                } else if(window.currentData.ODB.Runinfo.State == 3){
+                    //run is live
+                    document.getElementById('statusStart').style.display = 'none';
+                    document.getElementById('statusStop').style.display = 'inline';
+                    document.getElementById('statusPause').style.display = 'inline';
+                    document.getElementById('statusResume').style.display = 'none';
+                }
+
                 //data is present if we get this far, stick it in the correct DOM elements:
                 document.getElementById('statusTitle').innerHTML = window.currentData.ODB.Experiment.Name;
                 document.getElementById('statusRunNumber').innerHTML = 'Run ' + window.currentData.ODB.Runinfo['Run number'];
@@ -591,6 +614,7 @@ function repopulate(){
                 minutes = Math.floor( (uptime%3600)/60 );
                 seconds = Math.floor(uptime%60);
                 document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
+
 
                 /*
                 no messages for now - need JSONP support for jmsg

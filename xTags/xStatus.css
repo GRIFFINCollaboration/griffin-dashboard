@@ -12,7 +12,7 @@ x-status h2{
 	margin-top: 0;
 }
 
-x-status button{
+x-status input{
 	font-size: 120%;
 	line-height: 1em;
 	border-radius: 5px;
@@ -24,6 +24,6 @@ x-status button{
 	background-color: #222222;
 }
 
-x-status button:hover{
+x-status input:hover{
 	background-color: #555555;
 }
