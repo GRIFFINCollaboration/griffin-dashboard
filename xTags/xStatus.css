@@ -31,9 +31,14 @@ x-status input:hover{
 
 x-status ul#statusMessageList{
 	margin-top: 1em;
-	line-height: 1.2em;
+	
 }
 
-x-status ul:nth-child(odd){
+x-status ul#statusMessageList li{
+	line-height: 1.2em;
+	padding: 0.5em;
+}
+
+x-status ul#statusMessageList li:nth-child(odd){
 	background-color: #222222
 }
