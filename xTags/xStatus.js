@@ -108,26 +108,32 @@
             'populateFields': function(){
                 var i,
                     date = new Date(),
-                    now, uptime, hours, minutes, seconds;
+                    now, uptime, hours, minutes, seconds,
+                    runNumber, stoptime;
 
                 //check to make sure the requisite buffers exist:
                 if(!window.currentData.ODB.Experiment || !window.currentData.ODB.Runinfo) return;
 
+                runNumber = 'Run ' + window.currentData.ODB.Runinfo['Run number'];
                 //show different stuff depending on run state:
                 if(window.currentData.ODB.Runinfo.State == 1){
                     //run is stopped
+                    runNumber += ' Stopped';
                     document.getElementById('statusStart').style.display = 'inline';
                     document.getElementById('statusStop').style.display = 'none';
                     document.getElementById('statusPause').style.display = 'none';
                     document.getElementById('statusResume').style.display = 'none';
+                    stoptime = 'Stopped ' + window.currentData.ODB.Runinfo['Stop time'];
                 } else if(window.currentData.ODB.Runinfo.State == 2){
                     //run is paused
+                    runNumber += ' Paused';
                     document.getElementById('statusStart').style.display = 'none';
                     document.getElementById('statusStop').style.display = 'none';
                     document.getElementById('statusPause').style.display = 'none';
                     document.getElementById('statusResume').style.display = 'inline';
                 } else if(window.currentData.ODB.Runinfo.State == 3){
                     //run is live
+                    runNumber += ' Live';
                     document.getElementById('statusStart').style.display = 'none';
                     document.getElementById('statusStop').style.display = 'inline';
                     document.getElementById('statusPause').style.display = 'inline';
@@ -136,15 +142,19 @@
 
                 //data is present if we get this far, stick it in the correct DOM elements:
                 document.getElementById('statusTitle').innerHTML = window.currentData.ODB.Experiment.Name;
-                document.getElementById('statusRunNumber').innerHTML = 'Run ' + window.currentData.ODB.Runinfo['Run number'];
+                document.getElementById('statusRunNumber').innerHTML = runNumber;
                 document.getElementById('statusStartTime').innerHTML = 'Started ' + window.currentData.ODB.Runinfo['Start time'];
-                //calculate uptime:
-                now = date.getTime() / 1000;
-                uptime = now - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
-                hours = Math.floor(uptime / 3600);
-                minutes = Math.floor( (uptime%3600)/60 );
-                seconds = Math.floor(uptime%60);
-                document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
+                if(stoptime)
+                    document.getElementById('statusUpTime').innerHTML = stoptime;
+                else{
+                    //calculate uptime:
+                    now = date.getTime() / 1000;
+                    uptime = now - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
+                    hours = Math.floor(uptime / 3600);
+                    minutes = Math.floor( (uptime%3600)/60 );
+                    seconds = Math.floor(uptime%60);
+                    document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
+                }
 
 
                 /*
