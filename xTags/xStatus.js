@@ -109,7 +109,8 @@
                 var i,
                     date = new Date(),
                     now, uptime, hours, minutes, seconds,
-                    runNumber, stoptime;
+                    runNumber, stoptime,
+                    messages;
 
                 //check to make sure the requisite buffers exist:
                 if(!window.currentData.ODB.Experiment || !window.currentData.ODB.Runinfo) return;
@@ -157,12 +158,11 @@
                 }
 
 
-                /*
-                no messages for now - need JSONP support for jmsg
+                messages = ODBGetMsg(5);
                 for(i=0; i<5; i++){
-                    document.getElementById('statusMessage'+i).innerHTML = i;
+                    document.getElementById('statusMessage'+i).innerHTML = messages[i];
                 }
-                */
+                
             }
         }
     });
