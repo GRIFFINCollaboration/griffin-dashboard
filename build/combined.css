@@ -333,6 +333,7 @@ img#gitLogo{
 	border-radius: 1em;
 	padding: 1em;
 	margin: 1em;
+	max-width: 10%;
 
 	clear:both;
 }
@@ -355,4 +356,13 @@ x-status input{
 
 x-status input:hover{
 	background-color: #555555;
+}
+
+x-status ul#statusMessageList{
+	margin-top: 1em;
+	line-height: 1.2em;
+}
+
+x-status ul:nth-child(odd){
+	background-color: #222222
 }
