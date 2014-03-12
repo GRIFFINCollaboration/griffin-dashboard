@@ -1,0 +1,29 @@
+x-status{
+	display:inline-block;
+	background: #333333;
+	border-radius: 1em;
+	padding: 1em;
+	margin: 1em;
+
+	clear:both;
+}
+
+x-status h2{
+	margin-top: 0;
+}
+
+x-status button{
+	font-size: 120%;
+	line-height: 1em;
+	border-radius: 5px;
+	cursor:pointer;
+	margin: 1em 1px 0em 1px;
+	padding: 0.5em;
+	border:0px;
+	color:#EEEEEE;
+	background-color: #222222;
+}
+
+x-status button:hover{
+	background-color: #555555;
+}
