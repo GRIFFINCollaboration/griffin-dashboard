@@ -547,6 +547,7 @@ function repopulate(){
                 redirectKludge.setAttribute('name', 'redir');
                 redirectKludge.setAttribute('type', 'hidden');
                 redirectKludge.setAttribute('value', 'http://annikal.triumf.ca:8082/CS/MarkII')
+                document.getElementById('runControl').appendChild(redirectKludge)
 
                 messageList.setAttribute('id', 'statusMessageList');
                 this.appendChild(messageList);
