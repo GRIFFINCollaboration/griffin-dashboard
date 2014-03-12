@@ -13,14 +13,14 @@ set combinedCSS! $PWD/combined.css
 mkdir Images
 cd Images
 
-mkdir GitHub-Mark-Light-64px.png
-cd GitHub-Mark-Light-64px.png
+mkdir GitHub-Mark-Light-64px.gif
+cd GitHub-Mark-Light-64px.gif
 create string Background[1][128]
-set Background $PWD/../GitHub-Mark-Light-64px.png
+set Background $PWD/../GitHub-Mark-Light-64px.gif
 cd ..
 
-mkdir GRIFFIN_Logo_White_small.png
-cd GRIFFIN_Logo_White_small.png
+mkdir GRIFFIN_Logo_White_small.gif
+cd GRIFFIN_Logo_White_small.gif
 create string Background[1][128]
-set Background $PWD/../GRIFFIN_Logo_White_small.png
+set Background $PWD/../GRIFFIN_Logo_White_small.gif
 cd ..
