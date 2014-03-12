@@ -5,28 +5,3 @@
 		<link rel="stylesheet" type="text/css" href="combinedCSS!" />
 	</head>
 	
-	<body>
-
-		<div id='wrapper'>
-			<x-headBranding></x-headBranding>
-
-			<x-status id='statusBar'></x-status>
-
-			<div id='push'></div>
-		</div>
-
-		<x-footBranding></x-footBranding>
-
-		<script>
-			document.addEventListener('DOMComponentsLoaded', function(){
-				//declare a namespace to dump external data on:
-				window.currentData = {};
-
-				//begin data fetch loop:
-				assembleData(repopulate)
-				window.setInterval(assembleData.bind(null, repopulate), 3000);
-			});
-		</script>
-
-	</body>
-</html>

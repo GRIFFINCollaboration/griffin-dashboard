@@ -2,13 +2,13 @@ mkdir /Custom
 cd Custom
 
 create string MarkII&[1][128]
-set MarkII& $PWD/index.html
+set MarkII& $PWD/build/index.html
 
 create string combinedJS![1][128]
-set combinedJS! $PWD/combined.js
+set combinedJS! $PWD/build/combined.js
 
 create string combinedCSS![1][128]
-set combinedCSS! $PWD/combined.css
+set combinedCSS! $PWD/build/combined.css
 
 mkdir Images
 cd Images
@@ -16,11 +16,11 @@ cd Images
 mkdir GitHub-Mark-Light-64px.gif
 cd GitHub-Mark-Light-64px.gif
 create string Background[1][128]
-set Background $PWD/../GitHub-Mark-Light-64px.gif
+set Background $PWD/img/GitHub-Mark-Light-64px.gif
 cd ..
 
 mkdir GRIFFIN_Logo_White_small.gif
 cd GRIFFIN_Logo_White_small.gif
 create string Background[1][128]
-set Background $PWD/../GRIFFIN_Logo_White_small.gif
+set Background $PWD/img/GRIFFIN_Logo_White_small.gif
 cd ..
