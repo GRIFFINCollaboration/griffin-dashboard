@@ -12,11 +12,11 @@
                 ,   upTime = document.createElement('li')
                 ,   stopTime = document.createElement('li')
                 ,   runControl = document.createElement('form')
-                ,   start = document.createElement('button')
-                ,   stop = document.createElement('button')
-                ,   pause = document.createElement('button')
-                ,   resume = document.createElement('button')
-                ,   redirectKludge = document.createElement('button')
+                ,   start = document.createElement('input')
+                ,   stop = document.createElement('input')
+                ,   pause = document.createElement('input')
+                ,   resume = document.createElement('input')
+                ,   redirectKludge = document.createElement('input')
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
                 ,   i;
