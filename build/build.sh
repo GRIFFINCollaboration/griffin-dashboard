@@ -9,6 +9,10 @@ cat *.js > combined.js
 sed 's/.png/.gif/g' combined.js > temp
 mv temp combined.js
 
+#MIDAS does it's own image path handling:
+sed 's|img/||g' combined.js > temp
+mv temp combined.js
+
 #Concat all CSS:
 cp ../lib/*.css .
 cp ../*.css .
