@@ -2,6 +2,7 @@
 cp ../lib/*.js .
 cp ../utilities/*.js .
 cp ../xTags/*.js .
+cp ../*.js .
 if [ -e combined.js ]; then rm combined.js; fi
 cat *.js > combined.js
 

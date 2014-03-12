@@ -36,7 +36,6 @@ function fetchODB(returnObj){
     window.currentData.ODB = {};
     window.currentData.ODB.Experiment = returnObj[0];
     window.currentData.ODB.Runinfo = returnObj[1];
-    console.log(window.currentData)
 }
 
 
