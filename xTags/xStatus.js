@@ -16,6 +16,7 @@
                 ,   stop = document.createElement('button')
                 ,   pause = document.createElement('button')
                 ,   resume = document.createElement('button')
+                ,   redirectKludge = document.createElement('button')
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
                 ,   i;
@@ -72,6 +73,11 @@
                 resume.setAttribute('value', 'Resume');
                 document.getElementById('runControl').appendChild(resume);
                 document.getElementById('statusResume').innerHTML = 'Resume';
+
+                redirectKludge.setAttribute('id', 'statusRedirect');
+                redirectKludge.setAttribute('name', 'redir');
+                redirectKludge.setAttribute('type', 'hidden');
+                redirectKludge.setAttribute('value', 'http://annikal.triumf.ca:8082/CS/MarkII')
 
                 messageList.setAttribute('id', 'statusMessageList');
                 this.appendChild(messageList);
