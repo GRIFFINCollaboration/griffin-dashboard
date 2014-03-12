@@ -5,6 +5,10 @@ cp ../xTags/*.js .
 if [ -e combined.js ]; then rm combined.js; fi
 cat *.js > combined.js
 
+#MIDAS needs gifs not pngs :(
+sed 's/.png/.gif/g' combined.js > temp
+mv temp combined.js
+
 #Concat all CSS:
 cp ../lib/*.css .
 cp ../*.css .

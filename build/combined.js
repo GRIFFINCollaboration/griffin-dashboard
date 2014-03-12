@@ -64,7 +64,7 @@ function repopulate(){
                 logo.setAttribute('id', 'logo');
                 logo.setAttribute('width', 92.5);
                 logo.setAttribute('height', 111);
-                logo.setAttribute('src', 'img/GRIFFIN_Logo_White_small.png');
+                logo.setAttribute('src', 'img/GRIFFIN_Logo_White_small.gif');
 
                 titleWrap.setAttribute('id', 'title');
 
@@ -164,7 +164,7 @@ function repopulate(){
                 gitLinkPic.setAttribute('id', 'gitLogo');
                 gitLinkPic.setAttribute('width', 72);
                 gitLinkPic.setAttribute('height', 72);
-                gitLinkPic.setAttribute('src', 'img/GitHub-Mark-Light-64px.png');
+                gitLinkPic.setAttribute('src', 'img/GitHub-Mark-Light-64px.gif');
                 document.getElementById('gitLink').appendChild(gitLinkPic);
 
                 grifLogoCell.setAttribute('id', 'grifLogoCell');
@@ -178,7 +178,7 @@ function repopulate(){
                 grifLinkPic.setAttribute('id', 'grifLogo');
                 grifLinkPic.setAttribute('width', 65);
                 grifLinkPic.setAttribute('height', 78);
-                grifLinkPic.setAttribute('src', 'img/GRIFFIN_Logo_White_small.png');
+                grifLinkPic.setAttribute('src', 'img/GRIFFIN_Logo_White_small.gif');
                 document.getElementById('grifLink').appendChild(grifLinkPic);
 
                 this.setup('footerImage', 2, '#444444');
