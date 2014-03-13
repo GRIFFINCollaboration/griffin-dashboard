@@ -24,6 +24,7 @@
                 this.cellLayer = new createjs.Container();      //layer for detector cells
                 this.stage.addChild(this.wireLayer);
                 this.stage.addChild(this.cellLayer);
+                createjs.Ticker.addEventListener("tick", this.tick);
 
                 //drawing parameters
                 this.frameLineWidth = 2;
@@ -116,6 +117,10 @@
                     tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({x:200,y:200}, 5000, createjs.Ease.bounceOut).call(function(){});
 
                 }
+            },
+
+            'tick': function(event){
+                this.stage.update(event)
             }
         }
     });
