@@ -511,6 +511,8 @@ function repopulate(){
                 //initialize all the cells:
                 this.instantiateCells();
 
+                this.updateCells();
+
                 //render the canvas:
                 this.stage.update();
 
@@ -575,6 +577,15 @@ function repopulate(){
 
                     this.cells[this.channelNames[i]].graphics.beginFill('0x000000').mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]);                
+                }
+            },
+
+            'updateCells': function(){
+                var i;
+
+                //change the color of each cell to whatever it should be now:
+                for(i=0; i<this.channelNames.length; i++){
+                    this.cells[this.channelNames[i]].filters = [new createjs.ColorFilter(0,0,0,1, 0,0,255,0)];
                 }
             }
         }
