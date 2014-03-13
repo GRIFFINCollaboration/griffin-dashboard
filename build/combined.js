@@ -488,6 +488,10 @@ function repopulate(){
                 canvas.setAttribute('height', height);
                 this.appendChild(canvas);
 
+                //declare the detector cell names for this detector:
+                this.channelNames = ['DEMOCHAN00'];
+                this.cells = {};
+
                 //set up the easel canvas environment:
                 this.stage = new createjs.Stage(this.id+'Canvas');
                 this.wireLayer = new createjs.Container();      //layer for outline
@@ -503,6 +507,10 @@ function repopulate(){
 
                 //draw the wireframe:
                 this.drawFrame();
+
+                //initialize all the cells:
+                this.instantiateCells();
+
                 //render the canvas:
                 this.stage.update();
 
@@ -556,6 +564,18 @@ function repopulate(){
                 //draw the frame:
                 frame.graphics.mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
                 this.wireLayer.addChild(frame);
+            },
+
+            'instantiateCells': function(){
+                var cell, i;
+
+                //each channel listed in this.channelNames gets an entry in this.cells as an easel object: 
+                for(i=0; i<this.channelNames.length; i++){
+                    this.cells[this.channelNames[i]] = new createjs.Shape();
+
+                    this.cells[this.channelNames[i]].beginFill('0x000000').mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
+                    this.cellLayer.addChild(this.cells[this.channelNames[i]]);                
+                }
             }
         }
     });
