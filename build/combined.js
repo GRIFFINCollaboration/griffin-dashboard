@@ -603,8 +603,8 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
                 for(i=0; i<this.channelNames.length; i++){
                     //this.cells[this.channelNames[i]].filters = [new createjs.ColorFilter(0,0,0,1, 0,0,255,0)];
                     //Tween.get(this.cells[this.channelNames[i]]).to({alpha:0, visible:false}, 5000);
-                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({alpha:0}, 5000);
-                    tween.tween;
+                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({x:200,y:200}, 5000, createjs.Ease.bounceOut).call(function(){});
+
                 }
             }
         }
