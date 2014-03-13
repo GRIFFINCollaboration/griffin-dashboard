@@ -544,7 +544,7 @@ function repopulate(){
 
             'update': function(){
                 
-            }
+            },
 
             'drawFrame': function(){
                 var frame;
