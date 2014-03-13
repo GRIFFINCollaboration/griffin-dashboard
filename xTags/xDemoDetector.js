@@ -115,7 +115,7 @@
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
                 }
 
-                createjs.Ticker.addEventListener("tick", this.stage);
+                createjs.Ticker.addEventListener("tick", this.cellLayer);
             }
         }
     });
