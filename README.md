@@ -22,13 +22,22 @@ and the scripts will take care of the rest, by creating the necessary `Custom` a
 ###Overall Programmatic Logic
 
 ####x-tags
-As advertised, Mark II is meant to be modular.  The web components that live in `xTags` can be included at will in any page, and all follow the same pattern: on instantiation, they configure their internal DOM structure, and each non-static element is required to have an `update` method, which goes looking for new information in memory to populate itself with.  The key design element in that sentence was 'in memory' - all network requests for new information are handled in the main event loop, and not by the components themselves.
+As advertised, Mark II is meant to be modular.  The web components that live in `xTags` can be included at will in any page, and all follow the same pattern on instantiation:
 
-####The Main Event (loop)
+ - configure their internal DOM structure 
+ - append a URL to the array `window.fetchURL` which will respond with JSONP containing the information this element needs to refresh itself
+ - append itself to the array `window.refreshTargets`, which puts it in the queue for being refreshed every update.
+
+In addition, all components who want to participate in the update loop must declare:
+ 
+ - an `update()` method (exactly that - named `update`, with no arguments), which goes looking for new information in memory to populate itself with, nominally from the object `window.currentData`.  The key design element in that sentence was 'in memory' - all network requests for new information are handled in the main event loop, and not by the components themselves.
+ - a definition for the JSONP wrapper function which will be returned by the request to the URL inserted into `window.fetchURL` above
+
+####The Main Event Loop
 Every Mark II page relies on a loop of the following form to update itself continuously:
 
- - call a function `assembleData`, whose job it is to make all the network requests necessary to pull information into memory, and place it where the x-tags are expecting it to be (typically on the `window.currentData` object), with the help of JSONP wrapper functions defined for each source of data (more detail on this in the corresponding docs).
- - call a function `repopulate` as the callback to `assembleData`, which fires the `update` methods of all the x-tags deployed in the page.
+ - call a function `assembleData`, whose job it is to query all the URLs listed in `window.fetchURL`, so that the JSONP wrapper functions defined along with their respective xTags can repopulate the `window.currentData` object
+ - call a function `repopulate` as the callback to `assembleData`, which fires the `update` methods of all the x-tags queued in `window.refreshTargets`.
  
 Stick that in a `setInterval` loop and you have a basic Mark II page.
 
