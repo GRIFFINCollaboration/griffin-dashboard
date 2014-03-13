@@ -527,6 +527,9 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
                 //initialize all the cells:
                 this.instantiateCells();
 
+                //prepare the stage to animate on tick
+                createjs.Ticker.addEventListener("tick", this.stage);
+
                 this.updateCells();
 
                 //render the canvas:
@@ -607,7 +610,6 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
                 }
 
-                createjs.Ticker.addEventListener("tick", this.stage);
             }
         }
     });
