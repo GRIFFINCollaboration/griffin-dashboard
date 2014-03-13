@@ -19,7 +19,8 @@
                 ,   redirectKludge = document.createElement('input')
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
-                ,   i;
+                ,   i
+                ,   URL = 'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODB';
 
                 for(i=0; i<5; i++){
                     messages[i] = document.createElement('li');
@@ -90,6 +91,11 @@
                 for(i=0; i<5; i++){
                     messages[i].setAttribute('id', 'statusMessage'+i);
                     document.getElementById('statusMessageList').appendChild(messages[i]);
+                }
+
+                //append data location information to list of URLs to fetch from:
+                if(window.fetchURL.indexOf(URL) == -1){
+                    window.fetchURL[window.fetchURL.length] = URL;
                 }                
                 
             },
@@ -105,7 +111,7 @@
         }, 
         methods: {
 
-            'populateFields': function(){
+            'update': function(){
                 var i,
                     date = new Date(),
                     now, uptime, hours, minutes, seconds,
@@ -160,7 +166,7 @@
 
                 messages = ODBGetMsg(5);
                 for(i=0; i<5; i++){
-                    document.getElementById('statusMessage'+i).innerHTML = messages[i];
+                    document.getElementById('statusMessage'+i).innerHTML = messages[4-i];
                 }
                 
             }
