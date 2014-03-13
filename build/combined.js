@@ -562,6 +562,8 @@ function repopulate(){
                 }
 
                 //append data location information to list of URLs to fetch from:
+                if(!window.fetchURL)
+                    window.fetchURL = [];
                 if(window.fetchURL.indexOf(URL) == -1){
                     window.fetchURL[window.fetchURL.length] = URL;
                 }                
