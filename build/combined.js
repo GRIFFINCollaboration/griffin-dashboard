@@ -616,7 +616,7 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
 
-                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({redOffset:255, greenOffset:255, blueOffset:255}, 5000).addEventListener('change', this.updateColor)
+                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({redOffset:255, greenOffset:255, blueOffset:255}, 5000).call(this.cells[this.channelNames[i]].updateColor);
 
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
                 }
