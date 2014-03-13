@@ -554,11 +554,7 @@ function repopulate(){
                 frame.graphics.ss(this.frameLineWidth).s(this.frameColor);
 
                 //draw the frame:
-                frame.mt(100, 100);
-                frame.lt(200,100);
-                frame.lt(200,200);
-                frame.lt(100,200);
-                frame.lt(100,100);
+                frame.graphics.mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
                 this.wireLayer.addChild(frame);
             }
         }
