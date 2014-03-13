@@ -594,14 +594,6 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
                 for(i=0; i<this.channelNames.length; i++){
                     this.cells[this.channelNames[i]] = new createjs.Shape();
 
-                    this.cells[this.channelNames[i]].R = 0;
-                    this.cells[this.channelNames[i]].G = 0;
-                    this.cells[this.channelNames[i]].B = 0;
-                    this.cells[this.channelNames[i]].updateColor = function(){
-                       var color = createjs.Graphics.getRGB( parseInt(this.R), parseInt(this.G), parseInt(this.B), 1);
-                        this.graphics.beginFill( color )
-                    }
-
                     this.cells[this.channelNames[i]].graphics.beginFill('0x000000').mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]);                
                 }
@@ -615,9 +607,8 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
-
-                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({redOffset:255, greenOffset:255, blueOffset:255}, 5000).call(this.cells[this.channelNames[i]].updateColor);
-
+                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({x:200,y:200}, 5000).call(function(){});
+                    
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
                 }
 
