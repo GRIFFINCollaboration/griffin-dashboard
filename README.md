@@ -22,7 +22,7 @@ and the scripts will take care of the rest, by creating the necessary `Custom` a
 ###Overall Programmatic Logic
 
 ####x-tags
-As advertised, Mark II is meant to be modular.  The web components that live in `xTags` can be included at will in any page, and all follow the same pattern: on instantiation, they configure their internal DOM structure, and each non-static element is required to have an `update` method, which goes looking for new information in memory to populate itself with.  The key designe element in that sentence was 'in memory' - all network requests for new information are handled in the main event loop.
+As advertised, Mark II is meant to be modular.  The web components that live in `xTags` can be included at will in any page, and all follow the same pattern: on instantiation, they configure their internal DOM structure, and each non-static element is required to have an `update` method, which goes looking for new information in memory to populate itself with.  The key design element in that sentence was 'in memory' - all network requests for new information are handled in the main event loop, and not by the components themselves.
 
 ####The Main Event (loop)
 Every Mark II page relies on a loop of the following form to update itself continuously:
