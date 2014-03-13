@@ -609,7 +609,7 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
                 for(i=0; i<this.channelNames.length; i++){
                     filter = new createjs.ColorFilter(1,1,1,1,0,0,0,0); //identity filter
                     this.cells[this.channelNames[i]].filters = [filter];
-                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]].filters[0]).to({redOffset:255, greenOffset:255, blueOffset:255}, 5000).call(function(){});
+                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]].filters[0]).to({redOffset:255, greenOffset:255, blueOffset:255}, 5000).call(function(){this.cellLayer.cache(0,0,600,400)});
 
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
                 }
