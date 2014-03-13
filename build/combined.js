@@ -600,13 +600,17 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
             },
 
             'updateCells': function(){
-                var i, tween;
+                var i, tween, filter;
 
+                //dump everything so children don't stack up
                 this.cellLayer.removeAllChildren();
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
-                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({x:200,y:200}, 5000).call(function(){});
+                    filter = new createjs.ColorFilter(1,1,1,1,0,0,0,0); //identity filter
+                    this.cells[this.channelNames[i]].filters = [filter];
+                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({redMultiplier:0, greenMultiplier:0, blueMultiplier:0, redOffset:255, greenOffset:255; blueOffset:255}, 5000).call(function(){});
+
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
                 }
 
