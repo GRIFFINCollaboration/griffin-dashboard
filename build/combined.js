@@ -645,7 +645,8 @@ function repopulate(){
 
 //JSONP wrapper function def:
 function fetchODB(returnObj){
-    window.currentData.ODB = {};
+    if(!window.currentData.ODB)
+        window.currentData.ODB = {};
     window.currentData.ODB.Experiment = returnObj[0];
     window.currentData.ODB.Runinfo = returnObj[1];
 }

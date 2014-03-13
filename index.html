@@ -27,9 +27,6 @@
 
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
-				//declare a namespace to dump external data on:
-				window.currentData = {};
-
 				//begin data fetch loop:
 				assembleData(repopulate)
 				window.setInterval(assembleData.bind(null, repopulate), 3000);
