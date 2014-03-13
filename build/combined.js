@@ -586,6 +586,7 @@ function repopulate(){
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
                     this.cells[this.channelNames[i]].filters = [new createjs.ColorFilter(0,0,0,1, 0,0,255,0)];
+                    this.cells[this.channelNames[i]].cache(-50, -50, 100, 100);
                 }
             }
         }
