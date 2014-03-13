@@ -22,6 +22,9 @@
 				//declare a namespace to dump external data on:
 				window.currentData = {};
 
+				//declare a global array to list URLs for assembleData to fetch from
+				window.fetchURL = [];
+
 				//begin data fetch loop:
 				assembleData(repopulate)
 				window.setInterval(assembleData.bind(null, repopulate), 3000);
