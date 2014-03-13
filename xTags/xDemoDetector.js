@@ -99,7 +99,7 @@
                 for(i=0; i<this.channelNames.length; i++){
                     this.cells[this.channelNames[i]] = new createjs.Shape();
 
-                    this.cells[this.channelNames[i]].beginFill('0x000000').mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
+                    this.cells[this.channelNames[i]].graphics.beginFill('0x000000').mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]);                
                 }
             }
