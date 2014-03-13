@@ -24,7 +24,6 @@
                 this.cellLayer = new createjs.Container();      //layer for detector cells
                 this.stage.addChild(this.wireLayer);
                 this.stage.addChild(this.cellLayer);
-                createjs.Ticker.addEventListener("tick", this.tick);
 
                 //drawing parameters
                 this.frameLineWidth = 2;
@@ -112,15 +111,11 @@
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
-                    //this.cells[this.channelNames[i]].filters = [new createjs.ColorFilter(0,0,0,1, 0,0,255,0)];
-                    //Tween.get(this.cells[this.channelNames[i]]).to({alpha:0, visible:false}, 5000);
                     tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({x:200,y:200}, 5000, createjs.Ease.bounceOut).call(function(){});
-
+                    this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
                 }
-            },
 
-            'tick': function(event){
-                this.stage.update(event)
+                createjs.Ticker.addEventListener("tick", this.stage);
             }
         }
     });
