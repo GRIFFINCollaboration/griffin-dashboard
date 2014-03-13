@@ -98,7 +98,12 @@
                     window.fetchURL = [];
                 if(window.fetchURL.indexOf(URL) == -1){
                     window.fetchURL[window.fetchURL.length] = URL;
-                }                
+                }
+
+                //let repopulate know that the status bar would like to be updated every loop:
+                if(!window.refreshTargets)
+                    window.refreshTargets = [];
+                window.refreshTargets[window.refreshTargets.length] = this;
                 
             },
             inserted: function() {},
@@ -176,3 +181,10 @@
     });
 
 })();
+
+//JSONP wrapper function def:
+function fetchODB(returnObj){
+    window.currentData.ODB = {};
+    window.currentData.ODB.Experiment = returnObj[0];
+    window.currentData.ODB.Runinfo = returnObj[1];
+}

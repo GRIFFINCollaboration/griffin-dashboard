@@ -30,20 +30,13 @@ function assembleData(callback) {
     }
 }
 
-//functions to route data returned by fetchingData nicely:
-function fetchODB(returnObj){
-    window.currentData.ODB = {};
-    window.currentData.ODB.Experiment = returnObj[0];
-    window.currentData.ODB.Runinfo = returnObj[1];
-}
-
-
 //tell everybody to refresh their data from the in-memory buffers:
 function repopulate(){
-    var sidebar = document.getElementById('statusBar');
+    var i;
 
     //refresh everybody
-    sidebar.update();
+    for(i=0; i<window.refreshTargets.length; i++)
+        window.refreshTargets[i].update();
 }//header branding
 (function(){  
 
@@ -566,7 +559,12 @@ function repopulate(){
                     window.fetchURL = [];
                 if(window.fetchURL.indexOf(URL) == -1){
                     window.fetchURL[window.fetchURL.length] = URL;
-                }                
+                }
+
+                //let repopulate know that the status bar would like to be updated every loop:
+                if(!window.refreshTargets)
+                    window.refreshTargets = [];
+                window.refreshTargets[window.refreshTargets.length] = this;
                 
             },
             inserted: function() {},
@@ -644,3 +642,10 @@ function repopulate(){
     });
 
 })();
+
+//JSONP wrapper function def:
+function fetchODB(returnObj){
+    window.currentData.ODB = {};
+    window.currentData.ODB.Experiment = returnObj[0];
+    window.currentData.ODB.Runinfo = returnObj[1];
+}
