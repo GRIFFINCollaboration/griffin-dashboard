@@ -109,13 +109,15 @@
             'updateCells': function(){
                 var i, tween;
 
+                this.cellLayer.removeAllChildren();
+
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
                     tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({x:200,y:200}, 5000).call(function(){});
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
                 }
 
-                createjs.Ticker.addEventListener("tick", this.cellLayer);
+                createjs.Ticker.addEventListener("tick", this.stage);
             }
         }
     });
