@@ -107,12 +107,14 @@
             },
 
             'updateCells': function(){
-                var i;
+                var i, tween;
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
                     //this.cells[this.channelNames[i]].filters = [new createjs.ColorFilter(0,0,0,1, 0,0,255,0)];
-                    Tween.get(this.cells[this.channelNames[i]]).to({alpha:0, visible:false}, 5000);
+                    //Tween.get(this.cells[this.channelNames[i]]).to({alpha:0, visible:false}, 5000);
+                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({alpha:0}, 5000);
+                    tween.tween;
                 }
             }
         }
