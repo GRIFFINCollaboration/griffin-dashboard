@@ -21,17 +21,17 @@
 	<body>
 
 		<div id='wrapper'>
-			<x-headBranding></x-headBranding>
+			<branding-head></branding-head>
 
 			<div id='mainContent'>
-				<x-status id='statusBar'></x-status>
-				<x-demoDetector id='demoDetector'></x-demoDetector>
+				<widget-status id='statusBar'></widget-status>
+				<detector-demo id='demoDetector'></detector-demo>
 			</div>
 
 			<div id='push'></div>
 		</div>
 
-		<x-footBranding></x-footBranding>
+		<branding-foot></branding-foot>
 
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){

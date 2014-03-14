@@ -1,7 +1,7 @@
 //status bar
 (function(){  
 
-    xtag.register('x-status', {
+    xtag.register('widget-status', {
         extends: 'div',
         lifecycle: {
             created: function() {

@@ -225,7 +225,7 @@ function fetchDetectorData(returnObj){
 *///header branding
 (function(){  
 
-    xtag.register('x-headBranding', {
+    xtag.register('branding-head', {
         extends: 'div',
         lifecycle: {
             created: function() {
@@ -285,7 +285,7 @@ function fetchDetectorData(returnObj){
 //footer branding
 (function(){  
 
-    xtag.register('x-footBranding', {
+    xtag.register('branding-foot', {
         extends: 'div',
         lifecycle: {
             created: function() {
@@ -647,7 +647,7 @@ function fetchDetectorData(returnObj){
 })();//status bar
 (function(){  
 
-    xtag.register('x-demoDetector', {
+    xtag.register('detector-demo', {
         extends: 'div',
         lifecycle: {
             created: function() {
@@ -787,7 +787,7 @@ function fetchDetectorData(returnObj){
                 for(i=0; i<this.channelNames.length; i++){
                     this.cells[this.channelNames[i]] = new createjs.Shape();
 
-                    this.cells[this.channelNames[i]].graphics.beginFill('0x000000').mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
+                    this.cells[this.channelNames[i]].graphics.mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]);                
                 }
             },
@@ -819,7 +819,7 @@ function fetchDetectorData(returnObj){
 *///status bar
 (function(){  
 
-    xtag.register('x-status', {
+    xtag.register('widget-status', {
         extends: 'div',
         lifecycle: {
             created: function() {

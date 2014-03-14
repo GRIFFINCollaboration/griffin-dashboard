@@ -1,7 +1,7 @@
 //header branding
 (function(){  
 
-    xtag.register('x-headBranding', {
+    xtag.register('branding-head', {
         extends: 'div',
         lifecycle: {
             created: function() {
@@ -61,7 +61,7 @@
 //footer branding
 (function(){  
 
-    xtag.register('x-footBranding', {
+    xtag.register('branding-foot', {
         extends: 'div',
         lifecycle: {
             created: function() {

@@ -1,4 +1,4 @@
-x-status{
+widget-status{
 	float:left;
 	background: #333333;
 	border-radius: 1em;
@@ -9,11 +9,11 @@ x-status{
 	clear:both;
 }
 
-x-status h2{
+widget-status h2{
 	margin-top: 0;
 }
 
-x-status input{
+widget-status input{
 	font-size: 120%;
 	line-height: 1em;
 	border-radius: 5px;
@@ -25,20 +25,20 @@ x-status input{
 	background-color: #222222;
 }
 
-x-status input:hover{
+widget-status input:hover{
 	background-color: #555555;
 }
 
-x-status ul#statusMessageList{
+widget-status ul#statusMessageList{
 	margin-top: 1em;
 	
 }
 
-x-status ul#statusMessageList li{
+widget-status ul#statusMessageList li{
 	line-height: 1.2em;
 	padding: 0.5em;
 }
 
-x-status ul#statusMessageList li:nth-child(odd){
+widget-status ul#statusMessageList li:nth-child(odd){
 	background-color: #222222
 }
