@@ -5,19 +5,63 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var canvas = document.createElement('canvas')
-                ,   width = 600
-                ,   height = 400
+                var title = document.createElement('h1')
+                ,   viewTitles = ['HV', 'Threshold', 'Rate']
+                ,   canvas = document.createElement('canvas')
+                //canvas has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
+                ,   width = Math.min(window.innerWidth*0.8, 3*window.innerHeight*0.8/2)
+                ,   height = 2*width/3
+                ,   i, subdetectoNav, subdetectorNavLabel;
 
+                //////////////////////
+                //Build DOM
+                //////////////////////
+                //top nav title
+                title.setAttribute('id', this.id+'title');
+                title.setAttribute('class', 'subdetectorTitle');
+                this.appendChild(title);
+                document.getElementById(this.id+'title').innerHTML = 'Demo Detector';
+                //state nav radio
+                for(i=0; i<viewTitles.length; i++){
+                    subdetectoNav = document.createElement('radio')
+                    subdetectorNav.setAttribute('id', this.id+'goto'+viewTitles[i]);
+                    subdetectorNav.setAttribute('class', 'subdetectorNavRadio');
+                    subdetectoNav.setAttribute('type', 'radio');
+                    subdetectoNav.setAttribute('name', this.id+'Nav');
+                    if(i==2) subdetectoNav.setAttribute('selected', true); //default to rate view
+                    this.appendChild(subdetectoNav);
+                    subdetectorNavLabel = document.createElement('label');
+                    subdetectorNavLabel.setAttribute('id', this.id+'goto'+viewTitles[i]+'Label');
+                    subdetectorNavLabel.setAttribute('class', 'subdetectorNavLabel');
+                    subdetectorNavLabel.setAttribute('for', this.id+'goto'+viewTitles[i]);
+                    this.appendChild(subdetectorNavLabel);
+                    document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
+                }
+
+                //canvas to paint detector in
                 canvas.setAttribute('id', this.id+'Canvas');
                 canvas.setAttribute('width', width);
                 canvas.setAttribute('height', height);
                 this.appendChild(canvas);
 
+                ////////////////////////////
+                //Define Channels
+                ////////////////////////////
                 //declare the detector cell names for this detector:
                 this.channelNames = ['DEMOCHAN00'];
                 this.cells = {};
 
+                ////////////////////////////
+                //Drawing parameters
+                ////////////////////////////
+                this.frameLineWidth = 2;
+                this.frameColor = '#999999';
+                this.width = width;
+                this.height = height;
+
+                ////////////////////////////
+                //Easel.js setup
+                ////////////////////////////
                 //set up the easel canvas environment:
                 this.stage = new createjs.Stage(this.id+'Canvas');
                 this.wireLayer = new createjs.Container();      //layer for outline
@@ -25,22 +69,11 @@
                 this.stage.addChild(this.wireLayer);
                 this.stage.addChild(this.cellLayer);
 
-                //drawing parameters
-                this.frameLineWidth = 2;
-                this.frameColor = '#999999';
-                this.width = width;
-                this.height = height;
-
                 //draw the wireframe:
                 this.drawFrame();
 
                 //initialize all the cells:
                 this.instantiateCells();
-
-                //prepare the stage to animate on tick
-                createjs.Ticker.addEventListener("tick", this.stage);
-
-                this.updateCells();
 
                 //render the canvas:
                 this.stage.update();
@@ -110,16 +143,14 @@
             },
 
             'updateCells': function(){
-                var i, tween;
+                var i;
 
                 //dump everything so children don't stack up
                 this.cellLayer.removeAllChildren();
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
-                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({x:200,y:200}, 5000).call(function(){});
-                    
-                    this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
+
                 }
 
             }
