@@ -1,5 +1,5 @@
 x-status{
-	display:inline-block;
+	float:left;
 	background: #333333;
 	border-radius: 1em;
 	padding: 1em;

@@ -237,6 +237,12 @@ body {
 
 }
 
+/*Main content*/
+div#mainContent{
+	display:inline-block; 
+	width:100%
+}
+
 /*Footer and footer-related styles////////////////////////////////////////////////////*/
 div#footer{
     background-color: #111111;
@@ -328,7 +334,7 @@ canvas#footerImage{
 img#gitLogo{
 	margin-bottom:3px;
 }x-demoDetector{
-	display: inline-block;
+	float:left;
 	width:60%;
 }
 
@@ -356,7 +362,7 @@ x-demoDetector input[type='radio']:checked + label{
 div.subdetectorHeadlineWrap{
 	display:block;
 }x-status{
-	display:inline-block;
+	float:left;
 	background: #333333;
 	border-radius: 1em;
 	padding: 1em;

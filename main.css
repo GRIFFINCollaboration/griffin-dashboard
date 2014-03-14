@@ -71,6 +71,12 @@ body {
 
 }
 
+/*Main content*/
+div#mainContent{
+	display:inline-block; 
+	width:100%
+}
+
 /*Footer and footer-related styles////////////////////////////////////////////////////*/
 div#footer{
     background-color: #111111;
