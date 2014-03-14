@@ -5,7 +5,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var headWrapper = document.createjs('div')
+                var headWrapper = document.createElement('div')
                 ,   title = document.createElement('h1')
                 ,   viewTitles = ['HV', 'Threshold', 'Rate']
                 ,   canvas = document.createElement('canvas')
