@@ -38,7 +38,7 @@
                 this.instantiateCells();
 
                 //prepare the stage to animate on tick
-                createjs.Ticker.addEventListener("tick", function(){this.stage; this.stage.cache(0,0,400,600)});
+                createjs.Ticker.addEventListener("tick", this.stage);
 
                 this.updateCells();
 
@@ -105,24 +105,20 @@
                     this.cells[this.channelNames[i]] = new createjs.Shape();
 
                     this.cells[this.channelNames[i]].graphics.beginFill('0x000000').mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
-
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]);                
                 }
             },
 
             'updateCells': function(){
-                var i, tween, filter;
+                var i, tween;
 
                 //dump everything so children don't stack up
                 this.cellLayer.removeAllChildren();
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
-                    filter = new createjs.ColorFilter(1,1,1,1,0,0,0,0);
-                    this.cells[this.channelNames[i]].filters = [filter];
-
-                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]].filters[0]).to({redOffset:255}, 5000).call(function(){});
-
+                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({x:200,y:200}, 5000).call(function(){});
+                    
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
                 }
 
