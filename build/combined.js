@@ -707,8 +707,9 @@ function fetchDetectorData(returnObj){
                 //point kinetic at the div and set up the staging and layers:
                 this.stage = new Kinetic.Stage({
                     container: this.id+'Draw',
-                    width: 800,
-                    height: 500
+                    width: width,
+                    height: height,
+                    listening: false;
                 });
                 this.mainLayer = new Kinetic.Layer();   //main rendering layer
 
