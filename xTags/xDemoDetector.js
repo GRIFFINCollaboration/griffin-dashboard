@@ -134,7 +134,7 @@
                         closed: true
                     });
 
-                    this.mainLayer.add(this.cells[this.channelNames[i]])
+                    //this.mainLayer.add(this.cells[this.channelNames[i]])
                 }
             },
 
