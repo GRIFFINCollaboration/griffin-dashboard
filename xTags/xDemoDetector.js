@@ -8,7 +8,7 @@
                 var headWrapper = document.createElement('div')
                 ,   title = document.createElement('h1')
                 ,   viewTitles = ['HV', 'Threshold', 'Rate']
-                ,   canvas = document.createElement('canvas')
+                ,   drawTarget = document.createElement('div')
                 //canvas has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
                 ,   width = this.offsetWidth
                 ,   height = 2*width/3
@@ -45,10 +45,8 @@
                 }
                 this.currentView = 'Rate';
 
-                //canvas to paint detector in
-                canvas.setAttribute('id', this.id+'Canvas');
-                canvas.setAttribute('width', width);
-                canvas.setAttribute('height', height);
+                //div to paint detector in
+                drawTarget.setAttribute('id', this.id+'Draw');
                 this.appendChild(canvas);
 
                 ////////////////////////////
@@ -67,24 +65,22 @@
                 this.height = height;
 
                 ////////////////////////////
-                //Easel.js setup
+                //Kinetic.js setup
                 ////////////////////////////
-                //set up the easel canvas environment:
-                this.stage = new createjs.Stage(this.id+'Canvas');
-                this.wireLayer = new createjs.Container();      //layer for outline
-                this.cellLayer = new createjs.Container();      //layer for detector cells
-                this.stage.addChild(this.wireLayer);
-                this.stage.addChild(this.cellLayer);
-
-                //draw the wireframe:
-                this.drawFrame();
+                //point kinetic at the div and set up the staging and layers:
+                this.stage = new Kinetic.Stage({
+                    container: this.id+'Draw',
+                    width: width,
+                    height: height
+                });
+                this.mainLayer = new Kinetic.Layer();   //main rendering layer
+                this.stage.add(this.mainLayer);
 
                 //initialize all the cells:
                 this.instantiateCells();
 
-                //render the canvas:
-                this.stage.update();
 
+                this.mainLayer.draw();
 
 
 
@@ -125,27 +121,20 @@
                 
             },
 
-            'drawFrame': function(){
-                var frame;
-
-                //declare frame and set it's linewidth and color:
-                frame = new createjs.Shape();
-                frame.graphics.ss(this.frameLineWidth).s(this.frameColor);
-
-                //draw the frame:
-                frame.graphics.mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
-                this.wireLayer.addChild(frame);
-            },
-
             'instantiateCells': function(){
-                var cell, i;
+                var i;
 
-                //each channel listed in this.channelNames gets an entry in this.cells as an easel object: 
+                //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
-                    this.cells[this.channelNames[i]] = new createjs.Shape();
+                    this.cells[this.channelNames[i]] = new Kinetic.Line({
+                        points: [100,100,200,100,200,200,100,200,100,100],
+                        fill: '#000000',
+                        stroke: this.frameColor,
+                        strokeWidth: this.frameLineWidth,
+                        closed: true
+                    });
 
-                    this.cells[this.channelNames[i]].graphics.mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
-                    this.cellLayer.addChild(this.cells[this.channelNames[i]]);                
+                    this.mainLayer.add(this.cells[this.channelNames[i]])
                 }
             },
 
