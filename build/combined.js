@@ -711,7 +711,7 @@ function fetchDetectorData(returnObj){
                     height: height
                 });
                 this.mainLayer = new Kinetic.Layer();   //main rendering layer
-                //this.stage.add(this.mainLayer);
+                this.stage.add(this.mainLayer);
 
                 //initialize all the cells:
                 //this.instantiateCells();
