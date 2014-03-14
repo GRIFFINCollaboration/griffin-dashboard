@@ -674,8 +674,8 @@ function fetchDetectorData(returnObj){
                     subdetectorNav.setAttribute('class', 'subdetectorNavRadio');
                     subdetectorNav.setAttribute('type', 'radio');
                     subdetectorNav.setAttribute('name', this.id+'Nav');
-                    if(i==2) subdetectoNav.setAttribute('selected', true); //default to rate view
-                    this.appendChild(subdetectoNav);
+                    if(i==2) subdetectorNav.setAttribute('selected', true); //default to rate view
+                    this.appendChild(subdetectorNav);
                     subdetectorNavLabel = document.createElement('label');
                     subdetectorNavLabel.setAttribute('id', this.id+'goto'+viewTitles[i]+'Label');
                     subdetectorNavLabel.setAttribute('class', 'subdetectorNavLabel');
