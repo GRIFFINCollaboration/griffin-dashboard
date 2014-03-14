@@ -328,7 +328,7 @@ canvas#footerImage{
 img#gitLogo{
 	margin-bottom:3px;
 }x-demoDetector{
-	float:right;
+	display: inline-block;
 	width:60%;
 }
 

@@ -32,7 +32,7 @@
                     subdetectorNav.setAttribute('class', 'subdetectorNavRadio');
                     subdetectorNav.setAttribute('type', 'radio');
                     subdetectorNav.setAttribute('name', this.id+'Nav');
-                    if(i==2) subdetectorNav.setAttribute('selected', true); //default to rate view
+                    if(i==2) subdetectorNav.setAttribute('checked', true); //default to rate view
                     document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
                     subdetectorNavLabel = document.createElement('label');
                     subdetectorNavLabel.setAttribute('id', this.id+'goto'+viewTitles[i]+'Label');
