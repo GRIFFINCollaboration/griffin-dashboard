@@ -164,10 +164,10 @@
 
             'trackView': function(){
                 //extract which view has been selected
-                var radios = document.querySelectorAll('detector-demo input[type="radio"]');
+                var radios = document.querySelectorAll('input.subdetectorNavRadio');
                 [].forEach.call(radios, function(radio){
                     if(radio.checked)
-                        this.currentView = 'x';
+                        this.currentView = radio.value;
                 });
 
                 console.log(this.currentView)
