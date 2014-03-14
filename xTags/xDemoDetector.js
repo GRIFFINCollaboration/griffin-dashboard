@@ -168,7 +168,7 @@
                 //intended for binding to the onchange of the radio.
                 this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
 
-                this.updateCells();
+                //this.updateCells();
             }
         }
     });
