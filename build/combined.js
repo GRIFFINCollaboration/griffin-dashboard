@@ -809,6 +809,7 @@ function fetchDetectorData(returnObj){
             },
 
             'trackView': function(){
+                /*
                 //extract which view has been selected
                 var radios = document.querySelectorAll('input.subdetectorNavRadio');
                 [].forEach.call(radios, function(radio){
@@ -817,6 +818,9 @@ function fetchDetectorData(returnObj){
                         this.currentView = radio.value;
                 });
 
+                console.log(this.currentView)
+                */
+                this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
                 console.log(this.currentView)
             }
         }
