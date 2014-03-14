@@ -328,7 +328,7 @@ canvas#footerImage{
 img#gitLogo{
 	margin-bottom:3px;
 }x-demoDetector{
-	display: inline-block;
+	float:right;
 }
 
 x-demoDetector input[type=radio]{
@@ -350,6 +350,10 @@ x-demoDetector input[type='radio'] + label{
 
 x-demoDetector input[type='radio']:checked + label{
 	background-color: #555555;
+}
+
+div.subdetectorHeadlineWrap{
+	display:block;
 }x-status{
 	display:inline-block;
 	background: #333333;

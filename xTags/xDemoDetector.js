@@ -5,7 +5,8 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var title = document.createElement('h1')
+                var headWrapper = document.createjs('div')
+                ,   title = document.createElement('h1')
                 ,   viewTitles = ['HV', 'Threshold', 'Rate']
                 ,   canvas = document.createElement('canvas')
                 //canvas has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
@@ -16,10 +17,13 @@
                 //////////////////////
                 //Build DOM
                 //////////////////////
+                headWrapper.setAttribute('id', this.id+'titleWrapper');
+                headWrapper.setAttribute('class', 'subdetectorHeadlineWrap')
+                this.appendChild(headWrapper);
                 //top nav title
                 title.setAttribute('id', this.id+'title');
                 title.setAttribute('class', 'subdetectorTitle');
-                this.appendChild(title);
+                document.getElementById(this.id+'titleWrapper').appendChild(title);
                 document.getElementById(this.id+'title').innerHTML = 'Demo Detector';
                 //state nav radio
                 for(i=0; i<viewTitles.length; i++){
@@ -29,12 +33,12 @@
                     subdetectorNav.setAttribute('type', 'radio');
                     subdetectorNav.setAttribute('name', this.id+'Nav');
                     if(i==2) subdetectorNav.setAttribute('selected', true); //default to rate view
-                    this.appendChild(subdetectorNav);
+                    document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
                     subdetectorNavLabel = document.createElement('label');
                     subdetectorNavLabel.setAttribute('id', this.id+'goto'+viewTitles[i]+'Label');
                     subdetectorNavLabel.setAttribute('class', 'subdetectorNavLabel');
                     subdetectorNavLabel.setAttribute('for', this.id+'goto'+viewTitles[i]);
-                    this.appendChild(subdetectorNavLabel);
+                    document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
                     document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
                 }
 
