@@ -711,10 +711,9 @@ function fetchDetectorData(returnObj){
                     height: height
                 });
                 this.mainLayer = new Kinetic.Layer();   //main rendering layer
-                this.stage.add(this.mainLayer);
 
                 //initialize all the cells:
-                //this.instantiateCells();
+                this.instantiateCells();
 
 
                 //this.mainLayer.draw();
@@ -773,6 +772,8 @@ function fetchDetectorData(returnObj){
 
                     this.mainLayer.add(this.cells[this.channelNames[i]])
                 }
+
+                this.stage.add(this.mainLayer);
             },
 
             'updateCells': function(){
