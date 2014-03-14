@@ -10,7 +10,7 @@
                 ,   viewTitles = ['HV', 'Threshold', 'Rate']
                 ,   canvas = document.createElement('canvas')
                 //canvas has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
-                ,   width = this.offsetWidth;
+                ,   width = this.offsetWidth
                 ,   height = 2*width/3
                 ,   i, subdetectorNav, subdetectorNavLabel
 
