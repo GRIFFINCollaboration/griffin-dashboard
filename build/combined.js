@@ -813,7 +813,7 @@ function fetchDetectorData(returnObj){
                 var radios = document.querySelectorAll('detector-demo input[type=radio]');
                 [].forEach.call(radios, function(radio){
                     if(radio.checked)
-                        this.currentView = radio.value;
+                        this.currentView = 'x';
                 });
 
                 console.log(this.currentView)
