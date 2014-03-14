@@ -656,7 +656,7 @@ function fetchDetectorData(returnObj){
                 ,   viewTitles = ['HV', 'Threshold', 'Rate']
                 ,   canvas = document.createElement('canvas')
                 //canvas has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
-                ,   width = Math.min(window.innerWidth*0.8, 3*window.innerHeight*0.8/2)
+                ,   width = Math.min(window.offsetWidth*0.8, 3*window.offsetHeight*0.8/2)
                 ,   height = 2*width/3
                 ,   i, subdetectorNav, subdetectorNavLabel;
 
@@ -673,7 +673,7 @@ function fetchDetectorData(returnObj){
                 document.getElementById(this.id+'title').innerHTML = 'Demo Detector';
                 //state nav radio
                 for(i=0; i<viewTitles.length; i++){
-                    subdetectorNav = document.createElement('radio')
+                    subdetectorNav = document.createElement('input')
                     subdetectorNav.setAttribute('id', this.id+'goto'+viewTitles[i]);
                     subdetectorNav.setAttribute('class', 'subdetectorNavRadio');
                     subdetectorNav.setAttribute('type', 'radio');
