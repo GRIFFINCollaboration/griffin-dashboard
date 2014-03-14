@@ -73,7 +73,7 @@
                     width: width,
                     height: height
                 });
-                //this.mainLayer = new Kinetic.Layer();   //main rendering layer
+                this.mainLayer = new Kinetic.Layer();   //main rendering layer
                 //this.stage.add(this.mainLayer);
 
                 //initialize all the cells:
