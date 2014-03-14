@@ -646,7 +646,7 @@ function fetchDetectorData(returnObj){
                 ,   title = document.createElement('h1')
                 ,   viewTitles = ['HV', 'Threshold', 'Rate']
                 ,   drawTarget = document.createElement('div')
-                //canvas has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
+                //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
                 ,   width = this.offsetWidth
                 ,   height = 2*width/3
                 ,   i, subdetectorNav, subdetectorNavLabel
@@ -684,7 +684,7 @@ function fetchDetectorData(returnObj){
 
                 //div to paint detector in
                 drawTarget.setAttribute('id', this.id+'Draw');
-                this.appendChild(canvas);
+                this.appendChild(drawTarget);
 
                 ////////////////////////////
                 //Define Channels
