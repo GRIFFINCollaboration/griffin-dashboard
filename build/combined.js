@@ -812,6 +812,7 @@ function fetchDetectorData(returnObj){
                 //extract which view has been selected
                 var radios = document.querySelectorAll('input.subdetectorNavRadio');
                 [].forEach.call(radios, function(radio){
+                    console.log('test')
                     if(radio.checked)
                         this.currentView = radio.value;
                 });
