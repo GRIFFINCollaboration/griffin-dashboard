@@ -679,7 +679,7 @@ function fetchDetectorData(returnObj){
                     subdetectorNav.setAttribute('type', 'radio');
                     subdetectorNav.setAttribute('name', this.id+'Nav');
                     subdetectorNav.setAttribute('value', viewTitles[i]);
-                    subdetectorNav.onchange = function(){console.log('test')};
+                    subdetectorNav.onchange = this.trackView;
                     if(i==2) subdetectorNav.setAttribute('checked', true); //default to rate view
                     document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
                     subdetectorNavLabel = document.createElement('label');
