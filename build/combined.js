@@ -817,6 +817,7 @@ function fetchDetectorData(returnObj){
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]);
                 }
 
+                this.stage.update();
             },
 
             'trackView': function(){
