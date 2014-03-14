@@ -678,6 +678,8 @@ function fetchDetectorData(returnObj){
                     subdetectorNav.setAttribute('class', 'subdetectorNavRadio');
                     subdetectorNav.setAttribute('type', 'radio');
                     subdetectorNav.setAttribute('name', this.id+'Nav');
+                    subdetectorNav.setAttribute('value', viewTitles[i]);
+                    subdetectorNav.setAttribute('onchange', this.trackView.bind(this));
                     if(i==2) subdetectorNav.setAttribute('checked', true); //default to rate view
                     document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
                     subdetectorNavLabel = document.createElement('label');
@@ -687,6 +689,7 @@ function fetchDetectorData(returnObj){
                     document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
                     document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
                 }
+                this.currentView = 'Rate';
 
                 //canvas to paint detector in
                 canvas.setAttribute('id', this.id+'Canvas');
@@ -803,6 +806,17 @@ function fetchDetectorData(returnObj){
 
                 }
 
+            },
+
+            'trackView': function(){
+                //extract which view has been selected
+                var radios = document.querySelectorAll('detector-demo input[type=radio]');
+                [].forEach.call(function(radio){
+                    if(radio.checked)
+                        this.currentView = radio.value;
+                });
+
+                console.log(this.currentView)
             }
         }
     });
