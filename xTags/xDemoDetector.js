@@ -33,7 +33,7 @@
                     subdetectorNav.setAttribute('type', 'radio');
                     subdetectorNav.setAttribute('name', this.id+'Nav');
                     subdetectorNav.setAttribute('value', viewTitles[i]);
-                    subdetectorNav.setAttribute('onchange', function(console.log(test)));
+                    subdetectorNav.setAttribute('onchange', function(){console.log(test)});
                     if(i==2) subdetectorNav.setAttribute('checked', true); //default to rate view
                     document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
                     subdetectorNavLabel = document.createElement('label');
