@@ -528,7 +528,7 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
                 this.instantiateCells();
 
                 //prepare the stage to animate on tick
-                createjs.Ticker.addEventListener("tick", this.stage);
+                createjs.Ticker.addEventListener("tick", function(){this.stage; this.stage.cache(0,0,400,600)});
 
                 this.updateCells();
 
@@ -595,6 +595,7 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
                     this.cells[this.channelNames[i]] = new createjs.Shape();
 
                     this.cells[this.channelNames[i]].graphics.beginFill('0x000000').mt(100, 100).lt(200,100).lt(200,200).lt(100,200).lt(100,100);
+
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]);                
                 }
             },
@@ -607,8 +608,11 @@ this.createjs=this.createjs||{},function(){"use strict";var a=function(a,b,c){th
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
-                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]]).to({x:200,y:200}, 5000).call(function(){});
-                    
+                    filter = new createjs.ColorFilter(1,1,1,1,0,0,0,0);
+                    this.cells[this.channelNames[i]].filters = [filter];
+
+                    tween = new createjs.Tween.get(this.cells[this.channelNames[i]].filters[0]).to({redOffset:255}, 5000).call(function(){});
+
                     this.cellLayer.addChild(this.cells[this.channelNames[i]]); 
                 }
 
