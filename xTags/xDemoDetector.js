@@ -73,14 +73,10 @@
                     width: width,
                     height: height
                 });
-                this.mainLayer = new Kinetic.Layer();   //main rendering layer
+                this.mainLayer = new Kinetic.Layer({x:0, y:0});   //main rendering layer
 
                 //initialize all the cells:
                 this.instantiateCells();
-
-
-                //this.mainLayer.draw();
-
 
 
 
@@ -133,7 +129,7 @@
                         closed: true
                     });
 
-                    this.mainLayer.add(this.cells[this.channelNames[i]])
+                    this.mainLayer.add(this.cells[this.channelNames[i]]);
                 }
 
                 this.stage.add(this.mainLayer);
