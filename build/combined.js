@@ -717,7 +717,7 @@ function fetchDetectorData(returnObj){
                 this.instantiateCells();
 
 
-                this.mainLayer.draw();
+                //this.mainLayer.draw();
 
 
 
@@ -771,7 +771,7 @@ function fetchDetectorData(returnObj){
                         closed: true
                     });
 
-                    //this.mainLayer.add(this.cells[this.channelNames[i]])
+                    this.mainLayer.add(this.cells[this.channelNames[i]])
                 }
             },
 

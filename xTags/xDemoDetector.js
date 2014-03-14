@@ -80,7 +80,7 @@
                 this.instantiateCells();
 
 
-                this.mainLayer.draw();
+                //this.mainLayer.draw();
 
 
 
@@ -134,7 +134,7 @@
                         closed: true
                     });
 
-                    //this.mainLayer.add(this.cells[this.channelNames[i]])
+                    this.mainLayer.add(this.cells[this.channelNames[i]])
                 }
             },
 
