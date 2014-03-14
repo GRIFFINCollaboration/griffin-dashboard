@@ -72,7 +72,7 @@
                     container: this.id+'Draw',
                     width: width,
                     height: height,
-                    listening: false;
+                    listening: false
                 });
                 this.mainLayer = new Kinetic.Layer();   //main rendering layer
 
