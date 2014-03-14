@@ -707,10 +707,10 @@ function fetchDetectorData(returnObj){
                 //point kinetic at the div and set up the staging and layers:
                 this.stage = new Kinetic.Stage({
                     container: this.id+'Draw',
-                    width: width,
-                    height: height
+                    width: 800,
+                    height: 500
                 });
-                this.mainLayer = new Kinetic.Layer({x:0, y:0});   //main rendering layer
+                this.mainLayer = new Kinetic.Layer();   //main rendering layer
 
                 //initialize all the cells:
                 this.instantiateCells();
