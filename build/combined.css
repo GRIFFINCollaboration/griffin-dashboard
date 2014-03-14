@@ -327,7 +327,11 @@ canvas#footerImage{
 
 img#gitLogo{
 	margin-bottom:3px;
-}x-demoDetector input[type=radio]{
+}x-demoDetector{
+	display: inline-block;
+}
+
+x-demoDetector input[type=radio]{
 	display:none;
 }
 
