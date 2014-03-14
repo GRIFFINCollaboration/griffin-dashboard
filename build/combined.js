@@ -811,7 +811,7 @@ function fetchDetectorData(returnObj){
             'trackView': function(){
                 //extract which view has been selected
                 var radios = document.querySelectorAll('detector-demo input[type=radio]');
-                [].forEach.call(function(radio){
+                [].forEach.call(radios, function(radio){
                     if(radio.checked)
                         this.parentNode.parentNode.currentView = radio.value;
                 });
