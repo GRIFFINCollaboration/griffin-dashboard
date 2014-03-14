@@ -33,7 +33,7 @@
                     subdetectorNav.setAttribute('type', 'radio');
                     subdetectorNav.setAttribute('name', this.id+'Nav');
                     subdetectorNav.setAttribute('value', viewTitles[i]);
-                    subdetectorNav.setAttribute('onchange', this.trackView.bind(document.getElementById(this.id) ));
+                    subdetectorNav.setAttribute('onchange', this.trackView);
                     if(i==2) subdetectorNav.setAttribute('checked', true); //default to rate view
                     document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
                     subdetectorNavLabel = document.createElement('label');
@@ -167,10 +167,10 @@
                 var radios = document.querySelectorAll('detector-demo input[type=radio]');
                 [].forEach.call(function(radio){
                     if(radio.checked)
-                        this.currentView = radio.value;
+                        this.parentNode.parentNode.currentView = radio.value;
                 });
 
-                console.log(this.currentView)
+                console.log(this.parentNode.parentNode.currentView)
             }
         }
     });
