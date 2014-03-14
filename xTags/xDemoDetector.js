@@ -150,32 +150,35 @@
             },
 
             'updateCells': function(){
-                var i;
+                var i, color;
 
-                //dump everything so children don't stack up
+                //dump everything so children don't stack up - do it all at once, probably more perfomant
                 this.cellLayer.removeAllChildren();
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
+                    //determine the color of the cell as a function of the view state:
+                    if(this.currentView == 'HV'){
+                        color = '#FF0000';
+                    } else if (this.currentView == 'Threshold'){
+                        color = '#00FF00';
+                    } else if (this.currentView == 'Rate'){
+                        color = '#0000FF';
+                    }
 
+                    //recolor and redraw the cell:
+                    this.cells[this.channelNames[i]].graphics.beginFill(color);
+                    this.cellLayer.addChild(this.cells[this.channelNames[i]]);
                 }
 
             },
 
             'trackView': function(){
-                /*
-                //extract which view has been selected
-                var radios = document.querySelectorAll('input.subdetectorNavRadio');
-                [].forEach.call(radios, function(radio){
-                    console.log(radio)
-                    if(radio.checked)
-                        this.currentView = radio.value;
-                });
-
-                console.log(this.currentView)
-                */
+                //keep track of what state the view state radio is in in a convenient variable right on the detector-demo object
+                //intended for binding to the onchange of the radio.
                 this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
-                console.log(this.currentView)
+
+                this.updateCells();
             }
         }
     });
