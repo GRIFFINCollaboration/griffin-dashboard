@@ -329,6 +329,7 @@ img#gitLogo{
 	margin-bottom:3px;
 }x-demoDetector{
 	float:right;
+	width:60%;
 }
 
 x-demoDetector input[type=radio]{

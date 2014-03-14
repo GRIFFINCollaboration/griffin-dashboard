@@ -656,9 +656,9 @@ function fetchDetectorData(returnObj){
                 ,   viewTitles = ['HV', 'Threshold', 'Rate']
                 ,   canvas = document.createElement('canvas')
                 //canvas has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
-                ,   width = Math.min(document.body.clientWidth*0.8, 3*document.body.clientHeight*0.8/2)
+                ,   width = this.offsetWidth;
                 ,   height = 2*width/3
-                ,   i, subdetectorNav, subdetectorNavLabel;
+                ,   i, subdetectorNav, subdetectorNavLabel
 
                 //////////////////////
                 //Build DOM
