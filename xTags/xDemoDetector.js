@@ -185,6 +185,7 @@
 
             'writeTooltip': function(i){
                 //formulate the tooltip text for cell i and write it on the tooltip layer.
+                console.log(i)
                 var text; 
                 if(i!=-1){
                     text = this.channelNames[i];    
