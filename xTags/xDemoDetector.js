@@ -71,8 +71,7 @@
                 this.stage = new Kinetic.Stage({
                     container: this.id+'Draw',
                     width: width,
-                    height: height,
-                    listening: false
+                    height: height
                 });
                 this.mainLayer = new Kinetic.Layer();   //main rendering layer
 
