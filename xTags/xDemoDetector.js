@@ -85,6 +85,7 @@
                     text: '',
                     fill: '#999999'
                 });
+                this.tooltipLayer.add(this.text);
 
                 //initialize all the cells:
                 this.instantiateCells();
@@ -185,7 +186,6 @@
 
             'writeTooltip': function(i){
                 //formulate the tooltip text for cell i and write it on the tooltip layer.
-                console.log(this);
                 var text; 
                 if(i!=-1){
                     text = this.channelNames[i];    
