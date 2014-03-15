@@ -138,9 +138,6 @@
             'updateCells': function(){
                 var i, color;
 
-                //dump everything so children don't stack up - do it all at once, probably more perfomant
-                this.cellLayer.removeAllChildren();
-
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
                     //determine the color of the cell as a function of the view state:
@@ -152,12 +149,11 @@
                         color = '#0000FF';
                     }
 
-                    //recolor and redraw the cell:
-                    this.cells[this.channelNames[i]].graphics.beginFill(color);
-                    this.cellLayer.addChild(this.cells[this.channelNames[i]]);
+                    //recolor the cell:
+                    this.cells[this.channelNames[i]].fill(color);
                 }
 
-                this.stage.update();
+                this.mainLayer.draw();
             },
 
             'trackView': function(){
