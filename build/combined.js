@@ -14846,7 +14846,7 @@ function fetchDetectorData(returnObj){
                     });
 
                     //set up the tooltip listeners:
-                    this.cells[this.channelNames[i]].on('mouseover', function(this.writeTooltip(i)) );
+                    this.cells[this.channelNames[i]].on('mouseover', function(){this.writeTooltip(i)} );
                     this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
 
                     //add the cell to the main layer
@@ -14889,7 +14889,7 @@ function fetchDetectorData(returnObj){
 
             'writeTooltip': function(i){
                 //formulate the tooltip text for cell i and write it on the tooltip layer.
-                console.log(i)
+                console.log(i);
                 var text; 
                 if(i!=-1){
                     text = this.channelNames[i];    
