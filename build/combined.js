@@ -14777,7 +14777,18 @@ function fetchDetectorData(returnObj){
                     width: width,
                     height: height
                 });
-                this.mainLayer = new Kinetic.Layer();   //main rendering layer
+                this.mainLayer = new Kinetic.Layer();       //main rendering layer
+                this.tooltipLayer = new Kinetic.Layer();    //layer for tooltip info
+
+                //tooltip text:
+                this.text = new Kinetic.Text({
+                    x: 70,
+                    y: 10,
+                    fontFamily: 'Arial',
+                    fontSize: 14,
+                    text: '',
+                    fill: '#999999'
+                });
 
                 //initialize all the cells:
                 this.instantiateCells();
@@ -14830,13 +14841,21 @@ function fetchDetectorData(returnObj){
                         fill: '#000000',
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
-                        closed: true
+                        closed: true,
+                        listening: true
                     });
 
+                    //set up the tooltip listeners:
+                    this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i));
+                    this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
+
+                    //add the cell to the main layer
                     this.mainLayer.add(this.cells[this.channelNames[i]]);
                 }
 
+                //add the layers to the stage
                 this.stage.add(this.mainLayer);
+                this.stage.add(this.tooltipLayer);
             },
 
             'updateCells': function(){
@@ -14866,6 +14885,19 @@ function fetchDetectorData(returnObj){
                 this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
 
                 this.updateCells();
+            },
+
+            'writeTooltip': function(i){
+                //formulate the tooltip text for cell i and write it on the tooltip layer.
+                var text; 
+                if(i!=-1){
+                    text = this.channelNames[i];    
+                } else {
+                    text = '';
+                }
+                this.text.setText(text);
+                this.tooltipLayer.draw();
+
             }
         }
     });
