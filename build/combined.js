@@ -9329,7 +9329,7 @@ var Kinetic = {};
             evt = evt ? evt : window.event;
 
             // touch events
-            if(evt.touches !== undefined || evt.touches !== []) { //BM hackfix to make kinetic be friends with brick
+            if(evt.touches !== undefined && evt.touches != []) { //BM hackfix to make kinetic be friends with brick
                 // currently, only handle one finger
                 if (evt.touches.length === 1) {
 
@@ -9367,8 +9367,6 @@ var Kinetic = {};
                     x: x,
                     y: y
                 };
-            } else{
-                console.log([offsetX, evt.offsetY])
             }
         },
         _getContentPosition: function() {
