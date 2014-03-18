@@ -63,7 +63,7 @@
                 this.frameColor = '#999999';
                 this.width = width;
                 this.height = height;
-                this.scale = 'RootRainbow';
+                this.scale = 'ROOT Rainbow';
 
                 ////////////////////////////
                 //Kinetic.js setup
@@ -202,12 +202,24 @@
 
             //generate the color scale
             'generateColorScale': function(){
+                var colorStops = [],
+                    i;
+
+                //generate a bunch of color stop points for the gradient
+                for(i=0; i<=100; i++){
+                    colorStops.push(i/100);
+                    colorStops.push(scalepickr(i/100, this.scale));
+                }
+
+
                 this.colorScale = new Kinetic.Rect({
                     x: 0.1*this.width,
                     y: 0.8*this.height,
                     width: 0.8*this.width,
-                    height: 0.85*this.height,
-                    fill: 'green',
+                    height: 0.05*this.height,
+                    fillLinearGradientStartPoint: {x: 0.1*this.width, y: 0.825*this.height},
+                    fillLinearGradientEndPoint: {x: 0.9*width, y: 0.825*this.height},
+                    fillLinearGradientColorStops: colorStops,
                     stroke: '#999999',
                     strokeWidth: 2                    
                 });
