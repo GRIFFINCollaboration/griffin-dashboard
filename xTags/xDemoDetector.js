@@ -198,7 +198,7 @@
                 }
                 this.text.setText(text);
                 this.tooltipLayer.draw();
-            },
+            }/*,
 
             //generate the color scale
             'generateColorScale': function(){
@@ -226,7 +226,7 @@
 
                 this.mainLayer.add(this.colorScale);
                 this.mainLayer.draw();
-            }
+            }*/
         }
     });
 

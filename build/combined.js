@@ -15004,7 +15004,7 @@ function fetchDetectorData(returnObj){
                 }
                 this.text.setText(text);
                 this.tooltipLayer.draw();
-            },
+            }/*,
 
             //generate the color scale
             'generateColorScale': function(){
@@ -15032,7 +15032,7 @@ function fetchDetectorData(returnObj){
 
                 this.mainLayer.add(this.colorScale);
                 this.mainLayer.draw();
-            }
+            }*/
         }
     });
 
