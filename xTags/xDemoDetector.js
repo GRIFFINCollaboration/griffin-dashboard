@@ -63,6 +63,7 @@
                 this.frameColor = '#999999';
                 this.width = width;
                 this.height = height;
+                this.scale = 'RootRainbow';
 
                 ////////////////////////////
                 //Kinetic.js setup
@@ -89,6 +90,9 @@
 
                 //initialize all the cells:
                 this.instantiateCells();
+
+                //generate the color scale
+                this.generateColorScale();
 
 
 
@@ -184,8 +188,8 @@
                 this.updateCells();
             },
 
+            //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeTooltip': function(i){
-                //formulate the tooltip text for cell i and write it on the tooltip layer.
                 var text; 
                 if(i!=-1){
                     text = this.channelNames[i];    
@@ -194,7 +198,19 @@
                 }
                 this.text.setText(text);
                 this.tooltipLayer.draw();
+            }
 
+            //generate the color scale
+            'generateColorScale': function(){
+                this.colorScale = new Kinetic.Rect({
+                    x: 0.1*this.width,
+                    y: 0.8*this.height,
+                    width: 0.8*this.width,
+                    height: 0.85*this.height,
+                    fill: 'green',
+                    stroke: '#999999',
+                    strokeWidth: 2                    
+                });
             }
         }
     });
