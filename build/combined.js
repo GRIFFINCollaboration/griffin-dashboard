@@ -14898,7 +14898,7 @@ function fetchDetectorData(returnObj){
                 this.instantiateCells();
 
                 //generate the color scale
-                this.generateColorScale();
+                //this.generateColorScale();
 
 
 

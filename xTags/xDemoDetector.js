@@ -92,7 +92,7 @@
                 this.instantiateCells();
 
                 //generate the color scale
-                this.generateColorScale();
+                //this.generateColorScale();
 
 
 
