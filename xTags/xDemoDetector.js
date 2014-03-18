@@ -44,6 +44,7 @@
                     document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
                 }
                 this.currentView = 'Rate';
+                this.currentUnit = 'Hz';
 
                 //div to paint detector in
                 drawTarget.setAttribute('id', this.id+'Draw');
@@ -191,6 +192,7 @@
                 //keep track of what state the view state radio is in in a convenient variable right on the detector-demo object
                 //intended for binding to the onchange of the radio.
                 this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
+                this.currentUnit = (this.currentView == 'Rate') ? 'Hz' : ((this.currentView == 'HV') ? 'V' : 'ADC Units' );
 
                 this.updateCells();
                 this.refreshColorScale();
@@ -252,7 +254,7 @@
                     this.tickLabels[i] = new Kinetic.Text({
                         x: (0.1+i*0.08)*this.width,
                         y: 0.86*this.height + 2,
-                        text: (this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(2),
+                        text: (this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0),
                         fontSize: 14,
                         fontFamily: 'Arial',
                         fill: '#999999'
@@ -261,6 +263,18 @@
                     this.tickLabels[i].setAttr('x', this.tickLabels[i].getAttr('x') - this.tickLabels[i].getTextWidth()/2);
                     this.mainLayer.add(this.tickLabels[i]);
                 }
+
+                //place title on scale
+                this.scaleTitle = new Kinetic.Title({
+                    x: this.width/2,
+                    y: 0.8*this.height - 20,
+                    text: this.currentView + '[' + this.currentUnit + ']',
+                    fontSize : 20,
+                    fontFamily: 'Arial',
+                    fill: '#999999'
+                })
+                this.scaleTitle.setAttr('x', this.width/2 - this.scaleTitle.getTextWidth()/2);
+                this.mainLayer.add(this.scaleTitle);
 
                 this.mainLayer.draw();
             },
@@ -272,10 +286,14 @@
                 //refresh tick labels
                 for(i=0; i<11; i++){
                     //update text
-                    this.tickLabels[i].setText((this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(2));
+                    this.tickLabels[i].setText((this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0));
                     //update position
                     this.tickLabels[i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[i].getTextWidth()/2);
                 }
+
+                //update title
+                this.scaleTitle.setText(this.currentView + '[' + this.currentUnit + ']');
+                this.scaleTitle.setAttribute('x', this.width/2 - this.scaleTitle.getTextWidth()/2);
             }
         }
     });
