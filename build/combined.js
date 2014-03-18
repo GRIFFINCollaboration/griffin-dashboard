@@ -14918,12 +14918,12 @@ function fetchDetectorData(returnObj){
                     window.fetchURL[window.fetchURL.length] = URL;
                 }
                 */
-                /*
+                
                 //let repopulate know that the status bar would like to be updated every loop:
                 if(!window.refreshTargets)
                     window.refreshTargets = [];
                 window.refreshTargets[window.refreshTargets.length] = this;
-                */
+                
             },
             inserted: function() {},
             removed: function() {},
@@ -14938,7 +14938,9 @@ function fetchDetectorData(returnObj){
         methods: {
 
             'update': function(){
-                
+                this.updateCells();
+
+                this.mainLayer.draw();
             },
 
             'instantiateCells': function(){
@@ -14975,11 +14977,11 @@ function fetchDetectorData(returnObj){
                 for(i=0; i<this.channelNames.length; i++){
                     //determine the color of the cell as a function of the view state:
                     if(this.currentView == 'HV'){
-                        color = '#FF0000';
+                        color = scalepickr(Math.random(), this.scale);
                     } else if (this.currentView == 'Threshold'){
-                        color = '#00FF00';
+                        color = scalepickr(Math.random(), this.scale);
                     } else if (this.currentView == 'Rate'){
-                        color = '#0000FF';
+                        color = scalepickr(Math.random(), this.scale);
                     }
 
                     //recolor the cell:
