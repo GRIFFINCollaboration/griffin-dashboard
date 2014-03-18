@@ -68,8 +68,8 @@
                 //Scale Parameters
                 ///////////////////////////
                 this.scale = 'ROOT Rainbow';
-                this.min = 0;
-                this.max = 1;
+                this.min = {HV: 0, Threshold: 10, Rate: 100};
+                this.max = {HV: 1, Threhsold: 20, Rate: 200};
 
                 ////////////////////////////
                 //Kinetic.js setup
@@ -185,8 +185,6 @@
                     //recolor the cell:
                     this.cells[this.channelNames[i]].fill(color);
                 }
-
-                this.mainLayer.draw();
             },
 
             'trackView': function(){
@@ -195,6 +193,9 @@
                 this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
 
                 this.updateCells();
+                this.refreshColorScale();
+
+                this.mainLayer.draw();
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
@@ -251,18 +252,27 @@
                     this.tickLabels[i] = new Kinetic.Text({
                         x: (0.1+i*0.08)*this.width,
                         y: 0.86*this.height + 2,
-                        text: (this.min + (this.max-this.min)/10*i).toFixed(2),
+                        text: (this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(2),
                         fontSize: 14,
                         fontFamily: 'Arial',
                         fill: '#999999'
                     });
                     //center lable under tick
-                    console.log([this.tickLabels[i].getAttr('x'), this.tickLabels[i].getTextWidth()/2])
                     this.tickLabels[i].setAttr('x', this.tickLabels[i].getAttr('x') - this.tickLabels[i].getTextWidth()/2);
                     this.mainLayer.add(this.tickLabels[i]);
                 }
 
                 this.mainLayer.draw();
+            },
+
+            //refresh the color scale labeling / coloring:
+            'refreshColorScale': function(){
+                var i;
+
+                //refresh tick labels
+                for(i=0; i<11; i++){
+                    this.tickLabels[i].text = (this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(2)
+                }
             }
         }
     });
