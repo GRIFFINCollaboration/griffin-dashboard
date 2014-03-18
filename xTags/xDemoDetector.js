@@ -209,7 +209,13 @@
             'writeTooltip': function(i){
                 var text; 
                 if(i!=-1){
-                    text = this.channelNames[i];    
+                    text = this.channelNames[i];
+                    text += '\n HV: ';
+                    text += Math.random();
+                    text += '\n Threshold: ';
+                    text += Math.random();
+                    text += '\n Rate: ';
+                    text += Math.random();
                 } else {
                     text = '';
                 }
