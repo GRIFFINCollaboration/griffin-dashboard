@@ -14868,7 +14868,7 @@ function fetchDetectorData(returnObj){
                 ///////////////////////////
                 this.scale = 'ROOT Rainbow';
                 this.min = {HV: 0, Threshold: 10, Rate: 100};
-                this.max = {HV: 1, Threhsold: 20, Rate: 200};
+                this.max = {HV: 1, Threshold: 20, Rate: 200};
 
                 ////////////////////////////
                 //Kinetic.js setup
@@ -15070,7 +15070,10 @@ function fetchDetectorData(returnObj){
 
                 //refresh tick labels
                 for(i=0; i<11; i++){
+                    //update text
                     this.tickLabels[i].setText((this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(2));
+                    //update position
+                    this.tickLabels[i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[i].getTextWidth()/2);
                 }
             }
         }
