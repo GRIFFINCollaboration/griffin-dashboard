@@ -13,6 +13,9 @@
                 ,   width = this.offsetWidth
                 ,   height = 2*width/3
                 ,   i, subdetectorNav, subdetectorNavLabel
+                ,   URL = null //fetch /DashboardConfig/<this.detectorName>, put it on window.currentData.ODB.<this.detectorName>, should contain at least HVscale, ThresholdScale and RateScale arrays of scale limits
+
+                this.detectorName = 'DEMO';
 
                 //////////////////////
                 //Build DOM
@@ -43,12 +46,16 @@
                     document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
                     document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
                 }
-                this.currentView = 'Rate';
-                this.currentUnit = 'Hz';
 
                 //div to paint detector in
                 drawTarget.setAttribute('id', this.id+'Draw');
                 this.appendChild(drawTarget);
+
+                ///////////////////////
+                //State variables
+                ///////////////////////
+                this.currentView = 'Rate';
+                this.currentUnit = 'Hz';
 
                 ////////////////////////////
                 //Define Channels
@@ -109,21 +116,12 @@
                 //generate the color scale
                 this.generateColorScale();
 
-
-
-
-
-
-
-
                 //append data location information to list of URLs to fetch from:
-                /*
                 if(!window.fetchURL)
                     window.fetchURL = [];
-                if(window.fetchURL.indexOf(URL) == -1){
+                if(URL && window.fetchURL.indexOf(URL) == -1){
                     window.fetchURL[window.fetchURL.length] = URL;
                 }
-                */
                 
                 //let repopulate know that the status bar would like to be updated every loop:
                 if(!window.refreshTargets)
@@ -144,9 +142,16 @@
         methods: {
 
             'update': function(){
+                //get scale limits from local ODB if this detector has an entry there: 
+                if(window.currentData.ODB[this.name]){
+                    this.min = {HV: window.currentData.ODB[this.name].HVscale[0], Threshold: window.currentData.ODB[this.name].thresholdScale[0], Rate: window.currentData.ODB[this.name].rateScale[0]};
+                    this.min = {HV: window.currentData.ODB[this.name].HVscale[1], Threshold: window.currentData.ODB[this.name].thresholdScale[1], Rate: window.currentData.ODB[this.name].rateScale[1]};
+                }
+
+                //update the cell colors and tooltip content
                 this.updateCells();
                 this.writeTooltip(this.lastTTindex);
-
+                //repaint
                 this.mainLayer.draw();
             },
 
@@ -318,11 +323,10 @@
 
 })();
 
-/*
+
 //JSONP wrapper function def:
 function fetchDetectorData(returnObj){
-    if(!window.currentData.detectorData)
-        window.currentData.detectorData = {};
-    window.currentData.detectorData = returnObj;
+    if(!window.currentData.ODB)
+        window.currentData.ODB = {};
+    window.currentData.ODB.DEMO = returnObj;
 }
-*/
