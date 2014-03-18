@@ -15056,8 +15056,8 @@ function fetchDetectorData(returnObj){
                         fill: '#999999'
                     });
                     //center lable under tick
-                    console.log([this.tickLabels[i].getAttr('x'), this.tickLabels[i].getTextWidth/2])
-                    this.tickLabels[i].setAttr('x', this.tickLabels[i].getAttr('x') - this.tickLabels[i].getTextWidth/2);
+                    console.log([this.tickLabels[i].getAttr('x'), this.tickLabels[i].getTextWidth()/2])
+                    this.tickLabels[i].setAttr('x', this.tickLabels[i].getAttr('x') - this.tickLabels[i].getTextWidth()/2);
                     this.mainLayer.add(this.tickLabels[i]);
                 }
 
