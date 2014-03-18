@@ -237,13 +237,26 @@
                 this.mainLayer.add(this.colorScale);
 
                 //place ticks on scale
+                this.tickLabels = [];
                 for(i=0; i<11; i++){
+                    //tick line
                     tick = new Kinetic.Line({
                         points: [(0.1+i*0.08)*this.width, 0.85*this.height, (0.1+i*0.08)*this.width, 0.86*this.height],
                         stroke: '#999999',
                         strokeWidth: 2
                     });
                     this.mainLayer.add(tick);
+
+                    //tick label
+                    this.tickLabels[i] = new Kinetic.Text({
+                        x: (0.1+i*0.08)*this.width,
+                        y: 0.86*this.height + 20,
+                        text: (this.min + (this.max-this.min)/10*i).toFixed(2);
+                        fontSize: 14,
+                        fontFamily: 'Arial',
+                        fill: '#999999';
+                    });
+                    this.mainLayer.add(this.tickLabels[i]);
                 }
 
                 this.mainLayer.draw();
