@@ -15053,7 +15053,7 @@ function fetchDetectorData(returnObj){
                         text: (this.min + (this.max-this.min)/10*i).toFixed(2),
                         fontSize: 14,
                         fontFamily: 'Arial',
-                        fill: '#999999';
+                        fill: '#999999'
                     });
                     this.mainLayer.add(this.tickLabels[i]);
                 }
