@@ -63,7 +63,13 @@
                 this.frameColor = '#999999';
                 this.width = width;
                 this.height = height;
+
+                ///////////////////////////
+                //Scale Parameters
+                ///////////////////////////
                 this.scale = 'ROOT Rainbow';
+                this.min = 0;
+                this.max = 1;
 
                 ////////////////////////////
                 //Kinetic.js setup
@@ -88,6 +94,9 @@
                 });
                 this.tooltipLayer.add(this.text);
 
+                /////////////////////////////
+                //Initialize visualization
+                /////////////////////////////
                 //initialize all the cells:
                 this.instantiateCells();
 
@@ -203,7 +212,8 @@
             //generate the color scale
             'generateColorScale': function(){
                 var colorStops = [],
-                    i;
+                    i,
+                    tick;
 
                 //generate a bunch of color stop points for the gradient
                 for(i=0; i<101; i++){
@@ -211,12 +221,13 @@
                     colorStops.push(scalepickr(i/100, this.scale));
                 }
 
+                //draw the gradient itself
                 this.colorScale = new Kinetic.Rect({
                     x: 0.1*this.width,
                     y: 0.8*this.height,
                     width: 0.8*this.width,
                     height: 0.05*this.height,
-                    fillLinearGradientStartPoint: {x: 0, y: 0},
+                    fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
                     fillLinearGradientEndPoint: {x: 0.8*this.width, y: 0},
                     fillLinearGradientColorStops: colorStops,
                     stroke: '#999999',
@@ -224,6 +235,16 @@
                 });
 
                 this.mainLayer.add(this.colorScale);
+
+                //place ticks on scale
+                for(i=0; i<10; i++){
+                    tick = new Kinetic.Line({
+                        points: [(0.1+i*0.08)*this.width, 0.85*this.height, (0.1+i*0.08)*this.width, 0.87*this.height].
+                        stroke: '#999999',
+                        strokeWidth: 2
+                    });
+                }
+
                 this.mainLayer.draw();
             }
         }
