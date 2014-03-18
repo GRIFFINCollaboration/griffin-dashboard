@@ -15048,13 +15048,14 @@ function fetchDetectorData(returnObj){
 
                     //tick label
                     this.tickLabels[i] = new Kinetic.Text({
-                        x: (0.1+i*0.08)*this.width - this.tickLabels[i].width/2,
+                        x: (0.1+i*0.08)*this.width,
                         y: 0.86*this.height,
                         text: (this.min + (this.max-this.min)/10*i).toFixed(2),
                         fontSize: 14,
                         fontFamily: 'Arial',
                         fill: '#999999'
                     });
+                    this.tickLabels[i].x -= this.tickLabels[i].width/2;
                     this.mainLayer.add(this.tickLabels[i]);
                 }
 
