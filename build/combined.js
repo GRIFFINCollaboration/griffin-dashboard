@@ -15055,7 +15055,8 @@ function fetchDetectorData(returnObj){
                         fontFamily: 'Arial',
                         fill: '#999999'
                     });
-                    this.tickLabels[i].x -= this.tickLabels[i].getTextWidth/2;
+                    //center lable under tick
+                    this.tickLabels[i].setAttr(this.tickLabels[i].x - this.tickLabels[i].getTextWidth/2);
                     this.mainLayer.add(this.tickLabels[i]);
                 }
 
