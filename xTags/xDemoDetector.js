@@ -212,8 +212,8 @@
                     strokeWidth: 2                    
                 });
 
-                this.tooltipLayer.add(this.colorScale);
-                this.tooltipLayer.draw();
+                this.mainLayer.add(this.colorScale);
+                this.mainLayer.draw();
             }
         }
     });
