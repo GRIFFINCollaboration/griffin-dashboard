@@ -211,6 +211,9 @@
                     stroke: '#999999',
                     strokeWidth: 2                    
                 });
+
+                this.tooltipLayer.add(this.colorScale);
+                this.tooltipLayer.draw();
             }
         }
     });
