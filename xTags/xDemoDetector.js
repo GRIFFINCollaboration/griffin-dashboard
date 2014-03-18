@@ -206,7 +206,7 @@
                     i;
 
                 //generate a bunch of color stop points for the gradient
-                for(i=0; i<100; i++){
+                for(i=0; i<=100; i++){
                     colorStops.push(i/100);
                     colorStops.push(scalepickr(i/100, this.scale));
                 }
@@ -217,8 +217,8 @@
                     y: 0.8*this.height,
                     width: 0.8*this.width,
                     height: 0.05*this.height,
-                    fillLinearGradientStartPoint: {x: 0.1*this.width, y: 0.825*this.height},
-                    fillLinearGradientEndPoint: {x: 0.9*this.width, y: 0.825*this.height},
+                    fillLinearGradientStartPoint: {x: 0.1*this.width + 2, y: 0.825*this.height},
+                    fillLinearGradientEndPoint: {x: 0.9*this.width - 2, y: 0.825*this.height},
                     fillLinearGradientColorStops: colorStops,
                     stroke: '#999999',
                     strokeWidth: 2                    
