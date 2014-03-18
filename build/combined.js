@@ -15064,7 +15064,7 @@ function fetchDetectorData(returnObj){
                 }
 
                 //place title on scale
-                this.scaleTitle = new Kinetic.Title({
+                this.scaleTitle = new Kinetic.Text({
                     x: this.width/2,
                     y: 0.8*this.height - 20,
                     text: this.currentView + '[' + this.currentUnit + ']',
