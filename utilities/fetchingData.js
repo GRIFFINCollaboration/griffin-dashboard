@@ -1,9 +1,8 @@
 //pull in data from the URLs listed in URL; <callback> executes on successful fetch.
 function assembleData(callback) {
-    var i, element, script,
-        URL = [ 'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODB'];
+    var i, element, script;
 
-    for(i=0; i<URL.length; i++){
+    for(i=0; i<window.fetchURL.length; i++){
         //delete last instance of this script so they don't accrue:
         element = document.getElementById('tempScript'+i);
         if(element)
@@ -11,7 +10,7 @@ function assembleData(callback) {
 
         //refetch the ith repo:
         script = document.createElement('script');
-        script.setAttribute('src', URL[i]);
+        script.setAttribute('src', window.fetchURL[i]);
 
         script.setAttribute('id', 'tempScript'+i);
 
@@ -29,19 +28,11 @@ function assembleData(callback) {
     }
 }
 
-//functions to route data returned by fetchingData nicely:
-function fetchODB(returnObj){
-    window.currentData.ODB = {};
-    window.currentData.ODB.Experiment = returnObj[0];
-    window.currentData.ODB.Runinfo = returnObj[1];
-    console.log(window.currentData)
-}
-
-
 //tell everybody to refresh their data from the in-memory buffers:
 function repopulate(){
-    var sidebar = document.getElementById('statusBar');
+    var i;
 
     //refresh everybody
-    sidebar.populateFields();
+    for(i=0; i<window.refreshTargets.length; i++)
+        window.refreshTargets[i].update();
 }

@@ -1,5 +1,5 @@
 //map [0,1] onto various color scales
-/*
+
 scalepickr = function(scale, palette){
     //map scale onto [0,360]:
     var H = scale*300 / 60;
@@ -93,4 +93,3 @@ function constructHexColor(color){
 
     return '#'+R+G+B;
 }
-*/
