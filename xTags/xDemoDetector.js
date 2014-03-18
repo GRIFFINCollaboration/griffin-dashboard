@@ -211,7 +211,7 @@
                     colorStops.push(scalepickr(i/100, this.scale));
                 }
                 //1% fudge to make top of scale color visible
-                colorStops.push(0.99);
+                colorStops.push(0.95);
                 colorStops.push(scalepickr(1, this.scale));
 
 
