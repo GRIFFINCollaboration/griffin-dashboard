@@ -14868,8 +14868,8 @@ function fetchDetectorData(returnObj){
                 //Scale Parameters
                 ///////////////////////////
                 this.scale = 'ROOT Rainbow';
-                this.min = {HV: 0, Threshold: 10, Rate: 100};
-                this.max = {HV: 1, Threshold: 20, Rate: 200};
+                this.min = {HV: 0, Threshold: 0, Rate: 0};
+                this.max = {HV: 1, Threshold: 5, Rate: 10};
 
                 ////////////////////////////
                 //Kinetic.js setup
@@ -14971,18 +14971,21 @@ function fetchDetectorData(returnObj){
             },
 
             'updateCells': function(){
-                var i, color;
+                var i, color, rawValue, colorIndex;
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
                     //determine the color of the cell as a function of the view state:
                     if(this.currentView == 'HV'){
-                        color = scalepickr(Math.random(), this.scale);
+                        rawValue = Math.random();
                     } else if (this.currentView == 'Threshold'){
-                        color = scalepickr(Math.random(), this.scale);
+                        rawValue = Math.random();
                     } else if (this.currentView == 'Rate'){
-                        color = scalepickr(Math.random(), this.scale);
+                        rawValue = Math.random();
                     }
+
+                    colorIndex = (rawValue - this.min[this.currentView]) / (this.max[this.currentView] - this.min[this.currentView]);
+                    color = scalepickr(colorIndex, this.scale);
 
                     //recolor the cell:
                     this.cells[this.channelNames[i]].fill(color);
