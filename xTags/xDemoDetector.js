@@ -92,7 +92,7 @@
                 this.instantiateCells();
 
                 //generate the color scale
-                //this.generateColorScale();
+                this.generateColorScale();
 
 
 
@@ -206,7 +206,7 @@
                     i;
 
                 //generate a bunch of color stop points for the gradient
-                for(i=0; i<=100; i++){
+                for(i=0; i<100; i++){
                     colorStops.push(i/100);
                     colorStops.push(scalepickr(i/100, this.scale));
                 }
