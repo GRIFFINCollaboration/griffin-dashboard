@@ -257,7 +257,7 @@
                         fill: '#999999'
                     });
                     //center lable under tick
-                    this.tickLabels[i].setAttr('x', this.tickLabels[i].x - this.tickLabels[i].getTextWidth/2);
+                    this.tickLabels[i].setAttr('x', this.tickLabels[i].getAttr('x') - this.tickLabels[i].getTextWidth/2);
                     this.mainLayer.add(this.tickLabels[i]);
                 }
 
