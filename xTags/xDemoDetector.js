@@ -271,7 +271,7 @@
 
                 //refresh tick labels
                 for(i=0; i<11; i++){
-                    this.tickLabels[i].text = (this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(2)
+                    this.tickLabels[i].setText((this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(2));
                 }
             }
         }
