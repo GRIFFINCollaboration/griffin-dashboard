@@ -267,8 +267,8 @@
                 //place title on scale
                 this.scaleTitle = new Kinetic.Text({
                     x: this.width/2,
-                    y: 0.8*this.height - 20,
-                    text: this.currentView + '[' + this.currentUnit + ']',
+                    y: 0.8*this.height - 22,
+                    text: this.currentView + ' [' + this.currentUnit + ']',
                     fontSize : 20,
                     fontFamily: 'Arial',
                     fill: '#999999'
@@ -292,8 +292,8 @@
                 }
 
                 //update title
-                this.scaleTitle.setText(this.currentView + '[' + this.currentUnit + ']');
-                this.scaleTitle.setAttribute('x', this.width/2 - this.scaleTitle.getTextWidth()/2);
+                this.scaleTitle.setText(this.currentView + ' [' + this.currentUnit + ']');
+                this.scaleTitle.setAttr('x', this.width/2 - this.scaleTitle.getTextWidth()/2);
             }
         }
     });
