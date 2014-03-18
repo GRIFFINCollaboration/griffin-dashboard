@@ -15016,8 +15016,8 @@ function fetchDetectorData(returnObj){
                     y: 0.8*this.height,
                     width: 0.8*this.width,
                     height: 0.05*this.height,
-                    fillLinearGradientStartPoint: {x: 0.1*this.width + 2, y: 0.825*this.height},
-                    fillLinearGradientEndPoint: {x: 0.9*this.width - 2, y: 0.825*this.height},
+                    fillLinearGradientStartPoint: {x: 0.1*this.width+10, y: 0.825*this.height},
+                    fillLinearGradientEndPoint: {x: 0.9*this.width-10, y: 0.825*this.height},
                     fillLinearGradientColorStops: colorStops,
                     stroke: '#999999',
                     strokeWidth: 2                    
