@@ -72,6 +72,11 @@
                 this.min = {HV: 0, Threshold: 0, Rate: 0};
                 this.max = {HV: 1, Threshold: 5, Rate: 10};
 
+                ///////////////////////////
+                //Tooltip state
+                ///////////////////////////
+                this.lastTTindex = -1;
+
                 ////////////////////////////
                 //Kinetic.js setup
                 ////////////////////////////
@@ -140,6 +145,7 @@
 
             'update': function(){
                 this.updateCells();
+                this.writeTooltip(this.lastTTindex);
 
                 this.mainLayer.draw();
             },
@@ -210,15 +216,16 @@
                 var text; 
                 if(i!=-1){
                     text = this.channelNames[i];
-                    text += '\n HV: ';
+                    text += '\nHV: ';
                     text += Math.random();
-                    text += '\n Threshold: ';
+                    text += '\nThreshold: ';
                     text += Math.random();
-                    text += '\n Rate: ';
+                    text += '\nRate: ';
                     text += Math.random();
                 } else {
                     text = '';
                 }
+                this.lastTTindex = i;
                 this.text.setText(text);
                 this.tooltipLayer.draw();
             },
