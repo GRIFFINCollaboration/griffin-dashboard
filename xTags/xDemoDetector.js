@@ -237,9 +237,9 @@
                 this.mainLayer.add(this.colorScale);
 
                 //place ticks on scale
-                for(i=0; i<10; i++){
+                for(i=0; i<11; i++){
                     tick = new Kinetic.Line({
-                        points: [(0.1+i*0.08)*this.width, 0.85*this.height, (0.1+i*0.08)*this.width, 0.87*this.height],
+                        points: [(0.1+i*0.08)*this.width, 0.85*this.height, (0.1+i*0.08)*this.width, 0.86*this.height],
                         stroke: '#999999',
                         strokeWidth: 2
                     });
