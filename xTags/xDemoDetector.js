@@ -206,13 +206,13 @@
                     i;
 
                 //generate a bunch of color stop points for the gradient
-                for(i=0; i<99; i++){
+                for(i=0; i<95; i++){
                     colorStops.push(i/100);
                     colorStops.push(scalepickr(i/100, this.scale));
                 }
                 //1% fudge to make top of scale color visible
                 colorStops.push(0.99);
-                colorStops.push(scalepickr(0.99, this.scale));
+                colorStops.push(scalepickr(1, this.scale));
 
 
                 this.colorScale = new Kinetic.Rect({
