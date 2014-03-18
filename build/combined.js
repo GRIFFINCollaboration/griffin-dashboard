@@ -15050,7 +15050,7 @@ function fetchDetectorData(returnObj){
                     this.tickLabels[i] = new Kinetic.Text({
                         x: (0.1+i*0.08)*this.width,
                         y: 0.86*this.height + 20,
-                        text: (this.min + (this.max-this.min)/10*i).toFixed(2);
+                        text: (this.min + (this.max-this.min)/10*i).toFixed(2),
                         fontSize: 14,
                         fontFamily: 'Arial',
                         fill: '#999999';
