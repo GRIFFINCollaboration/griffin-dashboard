@@ -15692,7 +15692,7 @@ function fetchODB(returnObj){
                     //coords of top left corner of this cell
                     X = this.x0 + this.cellSide*(iOffset%5);    
                     Y = this.y0 + this.cellSide*Math.floor(iOffset/5);
-                    console.log([this.x0, this.y0, this.cellSide, iOffset])
+
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
                         fill: '#000000',
@@ -15713,9 +15713,7 @@ function fetchODB(returnObj){
                 //add the layers to the stage
                 this.stage.add(this.mainLayer);
                 this.stage.add(this.tooltipLayer);
-            },
-
-            'update': function(){}
+            }
         }
     });
 
