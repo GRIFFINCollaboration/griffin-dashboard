@@ -15655,7 +15655,7 @@ function fetchODB(returnObj){
         extends: 'detector-template',
         lifecycle: {
             created: function() {
-                initializeSingleViewDetector.bind(this, 'TIP', ['TIPWCHAN00'], 'TIP Wall' null)();                
+                initializeSingleViewDetector.bind(this, 'TIP', ['TIPWCHAN00'], 'TIP Wall', null)();                
             },
             inserted: function() {},
             removed: function() {},
