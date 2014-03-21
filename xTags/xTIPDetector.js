@@ -21,7 +21,7 @@
                 this.cellSide = this.height*0.7/5;              //length of cell side
                 this.x0 = this.width/2 - 2.5*this.cellSide;     //x coordinate of upper left corner of TIP image
                 this.y0 = 0;                                    //y ''
-
+                console.log([this.height, this.width])
             },
             inserted: function() {},
             removed: function() {},
@@ -45,7 +45,6 @@
                     //coords of top left corner of this cell
                     X = this.x0 + this.cellSide*(iOffset%5);    
                     Y = this.y0 + this.cellSide*Math.floor(iOffset/5);
-                    console.log([X,Y])
 
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
