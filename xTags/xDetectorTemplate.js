@@ -1,12 +1,10 @@
-//status bar
+//abstraction tag for detectors to inherit from
 (function(){  
 
-    xtag.register('detector-demo', {
+    xtag.register('detector-template', {
         extends: 'div',
         lifecycle: {
-            created: function() {
-                //initializeSingleViewDetector.bind(this, 'DEMO', ['DEMOCHAN00'], null)();
-            },
+            created: function() {},
             inserted: function() {},
             removed: function() {},
             attributeChanged: function() {}
@@ -201,15 +199,7 @@
 
 })();
 
-
-//JSONP wrapper function def:
-function fetchDetectorData(returnObj){
-    if(!window.currentData.ODB)
-        window.currentData.ODB = {};
-    window.currentData.ODB.DEMO = returnObj;
-}
-
-function initializeSingleViewDetector(name, channelNames, URL){
+function initializeSingleViewDetector(name, channelNames, title, URL){
     var headWrapper = document.createElement('div')
     ,   title = document.createElement('h1')
     ,   viewTitles = ['HV', 'Threshold', 'Rate']
@@ -232,7 +222,7 @@ function initializeSingleViewDetector(name, channelNames, URL){
     title.setAttribute('id', this.id+'title');
     title.setAttribute('class', 'subdetectorTitle');
     document.getElementById(this.id+'titleWrapper').appendChild(title);
-    document.getElementById(this.id+'title').innerHTML = 'Demo Detector';
+    document.getElementById(this.id+'title').innerHTML = title;
     //state nav radio
     for(i=0; i<viewTitles.length; i++){
         subdetectorNav = document.createElement('input')
