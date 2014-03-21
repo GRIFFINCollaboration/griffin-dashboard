@@ -14876,7 +14876,7 @@ function fetchDetectorData(returnObj){
                 ///////////////////////////
                 this.scale = 'ROOT Rainbow';
                 this.min = {HV: 0, Threshold: 0, Rate: 0};
-                this.max = {HV: 1, Threshold: 5, Rate: 10};
+                this.max = {HV: 1, Threshold: 1, Rate: 1};
 
                 ///////////////////////////
                 //Tooltip state
