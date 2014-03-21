@@ -14,17 +14,17 @@ function assembleData(callback) {
 
         script.setAttribute('id', 'tempScript'+i);
 
-        script.onload = function(){
-            if(callback && i==0){ //only assign the callback once
-                callback()
+        //only do the callback on the first script
+        if(i==0){
+            script.onload = function(){
+                if(callback){
+                    callback()
+                }
             }
         }
 
         script.onerror = function(){
             console.log('failed fetch!')
-            if(callback && i==0){ //only assign the callback once
-                callback()
-            } 
         }
 
         document.head.appendChild(script);

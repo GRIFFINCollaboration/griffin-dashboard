@@ -209,7 +209,6 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
             window.fetchURL[window.fetchURL.length] = URL[i];
         }
     }
-    console.log(window.fetchURL)
     
     //let repopulate know that the status bar would like to be updated every loop:
     if(!window.refreshTargets)
@@ -269,17 +268,17 @@ function assembleData(callback) {
 
         script.setAttribute('id', 'tempScript'+i);
 
-        script.onload = function(){
-            if(callback && i==0){ //only assign the callback once
-                callback()
+        //only do the callback on the first script
+        if(i==0){
+            script.onload = function(){
+                if(callback){
+                    callback()
+                }
             }
         }
 
         script.onerror = function(){
             console.log('failed fetch!')
-            if(callback && i==0){ //only assign the callback once
-                callback()
-            } 
         }
 
         document.head.appendChild(script);
