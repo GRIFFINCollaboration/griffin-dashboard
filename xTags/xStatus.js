@@ -20,7 +20,7 @@
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
                 ,   i
-                ,   URL = 'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODB';
+                ,   URL = 'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
 
                 for(i=0; i<5; i++){
                     messages[i] = document.createElement('li');
@@ -183,7 +183,7 @@
 })();
 
 //JSONP wrapper function def:
-function fetchODB(returnObj){
+function fetchODBrunControl(returnObj){
     if(!window.currentData.ODB)
         window.currentData.ODB = {};
     window.currentData.ODB.Experiment = returnObj[0];

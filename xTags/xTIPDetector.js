@@ -12,8 +12,12 @@
                                 'TPW009P00X', 'TPW001P00X', 'TPW005P00X', 'TPW017P00X',
                                 'TPW024P00X', 'TPW008P00X', 'TPW007P00X', 'TPW006P00X', 'TPW018P00X',
                                 'TPW023P00X', 'TPW022P00X', 'TPW021P00X', 'TPW020P00X', 'TPW019P00X'
-                                ];
-                initializeSingleViewDetector.bind(this, 'TIP', channels, 'TIP Wall', null)();
+                                ],
+                    URLs = ["http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold",    //threshold server
+                            "http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate",             //rate server
+                            'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
+
+                initializeSingleViewDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();
 
                 //////////////////////////////////////
                 //TIP Wall specific drawing parameters
@@ -73,16 +77,30 @@
                 //add the layers to the stage
                 this.stage.add(this.mainLayer);
                 this.stage.add(this.tooltipLayer);
+            },
+
+            'updateCells': function(){
+                var i, color, rawValue, colorIndex;
+
+                //change the color of each cell to whatever it should be now:
+                for(i=0; i<this.channelNames.length; i++){
+                    //determine the color of the cell as a function of the view state:
+                    if(this.currentView == 'HV'){
+                        rawValue = Math.random();
+                    } else if (this.currentView == 'Threshold'){
+                        rawValue = Math.random();
+                    } else if (this.currentView == 'Rate'){
+                        rawValue = Math.random();
+                    }
+
+                    colorIndex = (rawValue - this.min[this.currentView]) / (this.max[this.currentView] - this.min[this.currentView]);
+                    color = scalepickr(colorIndex, this.scale);
+
+                    //recolor the cell:
+                    this.cells[this.channelNames[i]].fill(color);
+                }
             }
         }
     });
 
 })();
-
-
-//JSONP wrapper function def:
-function fetchDetectorData(returnObj){
-    if(!window.currentData.ODB)
-        window.currentData.ODB = {};
-    window.currentData.ODB.DEMO = returnObj;
-}
