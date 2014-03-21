@@ -1,3 +1,7 @@
+#cleanup:
+rm ./*.js
+rm ./*.css
+
 #Concat all JS:
 cp ../lib/*.js .
 cp ../utilities/*.js .
