@@ -199,7 +199,7 @@
 
 })();
 
-function initializeSingleViewDetector(name, channelNames, title, URL){
+function initializeSingleViewDetector(name, channelNames, headline, URL){
     var headWrapper = document.createElement('div')
     ,   title = document.createElement('h1')
     ,   viewTitles = ['HV', 'Threshold', 'Rate']
@@ -222,7 +222,7 @@ function initializeSingleViewDetector(name, channelNames, title, URL){
     title.setAttribute('id', this.id+'title');
     title.setAttribute('class', 'subdetectorTitle');
     document.getElementById(this.id+'titleWrapper').appendChild(title);
-    document.getElementById(this.id+'title').innerHTML = title;
+    document.getElementById(this.id+'title').innerHTML = headline;
     //state nav radio
     for(i=0; i<viewTitles.length; i++){
         subdetectorNav = document.createElement('input')
