@@ -15320,4 +15320,72 @@ function fetchODB(returnObj){
         window.currentData.ODB = {};
     window.currentData.ODB.Experiment = returnObj[0];
     window.currentData.ODB.Runinfo = returnObj[1];
+}//status bar
+(function(){  
+
+    xtag.register('detector-TIPWall', {
+        //prototype: Object.create(HTMLElement.prototype),
+        extends: 'detector-demo',
+        lifecycle: {
+            created: function() {
+                console.log(this.__proto__)
+                var URL = null //fetch /DashboardConfig/<this.detectorName>, put it on window.currentData.ODB.<this.detectorName>, should contain at least HVscale, ThresholdScale and RateScale arrays of scale limits
+
+                this.detectorName = 'TIPWall';
+
+                ////////////////////////////
+                //Define Channels
+                ////////////////////////////
+                //declare the detector cell names for this detector:
+                this.channelNames = ['TIPCHAN000'];
+                
+            },
+            inserted: function() {},
+            removed: function() {},
+            attributeChanged: function() {}
+        }, 
+        events: { 
+
+        },
+        accessors: {
+
+        }, 
+        methods: {
+            'instantiateCells': function(){
+                var i;
+
+                //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
+                for(i=0; i<this.channelNames.length; i++){
+                    this.cells[this.channelNames[i]] = new Kinetic.Line({
+                        points: [200,200,300,200,300,300,200,300,200,200],
+                        fill: '#000000',
+                        stroke: this.frameColor,
+                        strokeWidth: this.frameLineWidth,
+                        closed: true,
+                        listening: true
+                    });
+
+                    //set up the tooltip listeners:
+                    this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
+
+                    //add the cell to the main layer
+                    this.mainLayer.add(this.cells[this.channelNames[i]]);
+                }
+
+                //add the layers to the stage
+                this.stage.add(this.mainLayer);
+                this.stage.add(this.tooltipLayer);
+            }
+        }
+    });
+
+})();
+
+
+//JSONP wrapper function def:
+function fetchDetectorData(returnObj){
+    if(!window.currentData.ODB)
+        window.currentData.ODB = {};
+    window.currentData.ODB.DEMO = returnObj;
 }
