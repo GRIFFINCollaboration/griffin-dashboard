@@ -302,15 +302,6 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     });
     this.tooltipLayer.add(this.text);
 
-    /////////////////////////////
-    //Initialize visualization
-    /////////////////////////////
-    //initialize all the cells:
-    this.instantiateCells();
-
-    //generate the color scale
-    this.generateColorScale();
-
     //append data location information to list of URLs to fetch from:
     if(!window.fetchURL)
         window.fetchURL = [];
