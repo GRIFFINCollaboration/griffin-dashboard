@@ -15331,6 +15331,7 @@ function fetchODB(returnObj){
         extends: 'detector-demo',
         lifecycle: {
             created: function() {
+                console.log(this)
                 initializeSingleViewDetector.bind(this, 'TIP', ['TIPWCHAN00'], null)();                
             },
             inserted: function() {},
