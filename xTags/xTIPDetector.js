@@ -94,7 +94,7 @@
                     } else if (this.currentView == 'Rate'){
                         rawValue = Math.random();
                     }
-
+console.log(rawValue)
                     colorIndex = (rawValue - this.min[this.currentView]) / (this.max[this.currentView] - this.min[this.currentView]);
                     color = scalepickr(colorIndex, this.scale);
 
