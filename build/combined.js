@@ -209,6 +209,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
             window.fetchURL[window.fetchURL.length] = URL[i];
         }
     }
+    console.log(window.fetchURL)
     
     //let repopulate know that the status bar would like to be updated every loop:
     if(!window.refreshTargets)
@@ -15695,8 +15696,8 @@ function fetchODBrunControl(returnObj){
                                 'TPW023P00X', 'TPW022P00X', 'TPW021P00X', 'TPW020P00X', 'TPW019P00X'
                                 ],
                     URLs = ["http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold",    //threshold server
-                            "http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate"/*,             //rate server
-                            'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'*/];  //ODB Equipment tree
+                            "http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate",             //rate server
+                            'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 initializeSingleViewDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();
 

@@ -112,6 +112,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
             window.fetchURL[window.fetchURL.length] = URL[i];
         }
     }
+    console.log(window.fetchURL)
     
     //let repopulate know that the status bar would like to be updated every loop:
     if(!window.refreshTargets)
