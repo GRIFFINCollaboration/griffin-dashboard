@@ -210,7 +210,7 @@ function fetchDetectorData(returnObj){
 }
 
 function initializeSingleViewDetector(name, channelNames, URL){
-    console.log(this.__proto__)
+    console.log(this.id)
     var headWrapper = document.createElement('div')
     ,   title = document.createElement('h1')
     ,   viewTitles = ['HV', 'Threshold', 'Rate']
