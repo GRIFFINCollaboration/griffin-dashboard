@@ -14804,7 +14804,7 @@ function fetchDetectorData(returnObj){
         extends: 'div',
         lifecycle: {
             created: function() {
-                console.log(this.prototype)
+                console.log(this.__proto__)
                 var headWrapper = document.createElement('div')
                 ,   title = document.createElement('h1')
                 ,   viewTitles = ['HV', 'Threshold', 'Rate']
