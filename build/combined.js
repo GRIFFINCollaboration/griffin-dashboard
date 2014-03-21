@@ -15688,6 +15688,7 @@ function fetchODB(returnObj){
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
+                    console.log(this.channelNames[i])
                     iOffset = i;
                     if(i>11) iOffset++; //skip the middle square in the grid
 
