@@ -14804,7 +14804,7 @@ function fetchDetectorData(returnObj){
         extends: 'div',
         lifecycle: {
             created: function(){
-                setupSubdetector('DEMO', ['DEMOCHAN00'], null);
+                setupSubdetector.bind(this, 'DEMO', ['DEMOCHAN00'], null);
             },
             inserted: function() {},
             removed: function() {},
