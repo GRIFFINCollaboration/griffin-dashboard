@@ -5,6 +5,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
+                console.log(this.proto)
                 var headWrapper = document.createElement('div')
                 ,   title = document.createElement('h1')
                 ,   viewTitles = ['HV', 'Threshold', 'Rate']
