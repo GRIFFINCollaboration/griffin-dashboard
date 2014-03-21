@@ -15360,13 +15360,13 @@ function fetchODBrunControl(returnObj){
                                 'TPW024P00X', 'TPW008P00X', 'TPW007P00X', 'TPW006P00X', 'TPW018P00X',
                                 'TPW023P00X', 'TPW022P00X', 'TPW021P00X', 'TPW020P00X', 'TPW019P00X'
                                 ]
-                    /*
+                    
                     URLs = ["http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold",    //threshold server
                             "http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate",             //rate server
                             'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
-                    */
 
-                initializeSingleViewDetector.bind(this, 'TIP', channels, 'TIP Wall', null)();
+
+                initializeSingleViewDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();
 
                 //////////////////////////////////////
                 //TIP Wall specific drawing parameters
