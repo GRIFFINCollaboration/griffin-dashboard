@@ -284,12 +284,15 @@ function assembleData(callback) {
 }
 
 //tell everybody to refresh their data from the in-memory buffers:
-function repopulate(){
+function repopulate(callback){
     var i;
 
     //refresh everybody
     for(i=0; i<window.refreshTargets.length; i++)
         window.refreshTargets[i].update();
+
+    if(callback)
+        callback();
 }
 /*
  * KineticJS JavaScript Framework v5.0.1
