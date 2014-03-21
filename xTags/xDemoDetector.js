@@ -268,7 +268,7 @@ function initializeSingleViewDetector(name, channelNames, URL){
     //Define Channels
     ////////////////////////////
     //declare the detector cell names for this detector:
-    this.channelNames = this.channelNames; //['DEMOCHAN00'];
+    this.channelNames = channelNames; //['DEMOCHAN00'];
     this.cells = {};
 
     ////////////////////////////
