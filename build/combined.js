@@ -14803,130 +14803,8 @@ function fetchDetectorData(returnObj){
     xtag.register('detector-demo', {
         extends: 'div',
         lifecycle: {
-            created: function() {
-                var headWrapper = document.createElement('div')
-                ,   title = document.createElement('h1')
-                ,   viewTitles = ['HV', 'Threshold', 'Rate']
-                ,   drawTarget = document.createElement('div')
-                //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
-                ,   width = this.offsetWidth
-                ,   height = 2*width/3
-                ,   i, subdetectorNav, subdetectorNavLabel
-                ,   URL = null //fetch /DashboardConfig/<this.detectorName>, put it on window.currentData.ODB.<this.detectorName>, should contain at least HVscale, ThresholdScale and RateScale arrays of scale limits
-
-                this.detectorName = 'DEMO';
-
-                //////////////////////
-                //Build DOM
-                //////////////////////
-                headWrapper.setAttribute('id', this.id+'titleWrapper');
-                headWrapper.setAttribute('class', 'subdetectorHeadlineWrap')
-                this.appendChild(headWrapper);
-                //top nav title
-                title.setAttribute('id', this.id+'title');
-                title.setAttribute('class', 'subdetectorTitle');
-                document.getElementById(this.id+'titleWrapper').appendChild(title);
-                document.getElementById(this.id+'title').innerHTML = 'Demo Detector';
-                //state nav radio
-                for(i=0; i<viewTitles.length; i++){
-                    subdetectorNav = document.createElement('input')
-                    subdetectorNav.setAttribute('id', this.id+'goto'+viewTitles[i]);
-                    subdetectorNav.setAttribute('class', 'subdetectorNavRadio');
-                    subdetectorNav.setAttribute('type', 'radio');
-                    subdetectorNav.setAttribute('name', this.id+'Nav');
-                    subdetectorNav.setAttribute('value', viewTitles[i]);
-                    subdetectorNav.onchange = this.trackView.bind(this);
-                    if(i==2) subdetectorNav.setAttribute('checked', true); //default to rate view
-                    document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
-                    subdetectorNavLabel = document.createElement('label');
-                    subdetectorNavLabel.setAttribute('id', this.id+'goto'+viewTitles[i]+'Label');
-                    subdetectorNavLabel.setAttribute('class', 'subdetectorNavLabel');
-                    subdetectorNavLabel.setAttribute('for', this.id+'goto'+viewTitles[i]);
-                    document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
-                    document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
-                }
-
-                //div to paint detector in
-                drawTarget.setAttribute('id', this.id+'Draw');
-                this.appendChild(drawTarget);
-
-                ///////////////////////
-                //State variables
-                ///////////////////////
-                this.currentView = 'Rate';
-                this.currentUnit = 'Hz';
-
-                ////////////////////////////
-                //Define Channels
-                ////////////////////////////
-                //declare the detector cell names for this detector:
-                this.channelNames = ['DEMOCHAN00'];
-                this.cells = {};
-
-                ////////////////////////////
-                //Drawing parameters
-                ////////////////////////////
-                this.frameLineWidth = 2;
-                this.frameColor = '#999999';
-                this.width = width;
-                this.height = height;
-
-                ///////////////////////////
-                //Scale Parameters
-                ///////////////////////////
-                this.scale = 'ROOT Rainbow';
-                this.min = {HV: 0, Threshold: 0, Rate: 0};
-                this.max = {HV: 1, Threshold: 1, Rate: 1};
-
-                ///////////////////////////
-                //Tooltip state
-                ///////////////////////////
-                this.lastTTindex = -1;
-
-                ////////////////////////////
-                //Kinetic.js setup
-                ////////////////////////////
-                //point kinetic at the div and set up the staging and layers:
-                this.stage = new Kinetic.Stage({
-                    container: this.id+'Draw',
-                    width: width,
-                    height: height
-                });
-                this.mainLayer = new Kinetic.Layer();       //main rendering layer
-                this.tooltipLayer = new Kinetic.Layer();    //layer for tooltip info
-
-                //tooltip text:
-                this.text = new Kinetic.Text({
-                    x: 70,
-                    y: 10,
-                    fontFamily: 'Arial',
-                    fontSize: 14,
-                    text: '',
-                    fill: '#999999'
-                });
-                this.tooltipLayer.add(this.text);
-
-                /////////////////////////////
-                //Initialize visualization
-                /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
-
-                //generate the color scale
-                this.generateColorScale();
-
-                //append data location information to list of URLs to fetch from:
-                if(!window.fetchURL)
-                    window.fetchURL = [];
-                if(URL && window.fetchURL.indexOf(URL) == -1){
-                    window.fetchURL[window.fetchURL.length] = URL;
-                }
-                
-                //let repopulate know that the status bar would like to be updated every loop:
-                if(!window.refreshTargets)
-                    window.refreshTargets = [];
-                window.refreshTargets[window.refreshTargets.length] = this;
-                
+            created: function(){
+                setupSubdetector('DEMO', ['DEMOCHAN00'], null);
             },
             inserted: function() {},
             removed: function() {},
@@ -15128,6 +15006,132 @@ function fetchDetectorData(returnObj){
     if(!window.currentData.ODB)
         window.currentData.ODB = {};
     window.currentData.ODB.DEMO = returnObj;
+}
+
+function setupSubdetector(name, channelNames, URL) {
+    var headWrapper = document.createElement('div')
+    ,   title = document.createElement('h1')
+    ,   viewTitles = ['HV', 'Threshold', 'Rate']
+    ,   drawTarget = document.createElement('div')
+    //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
+    ,   width = this.offsetWidth
+    ,   height = 2*width/3
+    ,   i, subdetectorNav, subdetectorNavLabel
+    //,   URL = null //fetch /DashboardConfig/<this.detectorName>, put it on window.currentData.ODB.<this.detectorName>, should contain at least HVscale, ThresholdScale and RateScale arrays of scale limits
+
+    this.detectorName = name;
+
+    //////////////////////
+    //Build DOM
+    //////////////////////
+    headWrapper.setAttribute('id', this.id+'titleWrapper');
+    headWrapper.setAttribute('class', 'subdetectorHeadlineWrap')
+    this.appendChild(headWrapper);
+    //top nav title
+    title.setAttribute('id', this.id+'title');
+    title.setAttribute('class', 'subdetectorTitle');
+    document.getElementById(this.id+'titleWrapper').appendChild(title);
+    document.getElementById(this.id+'title').innerHTML = 'Demo Detector';
+    //state nav radio
+    for(i=0; i<viewTitles.length; i++){
+        subdetectorNav = document.createElement('input')
+        subdetectorNav.setAttribute('id', this.id+'goto'+viewTitles[i]);
+        subdetectorNav.setAttribute('class', 'subdetectorNavRadio');
+        subdetectorNav.setAttribute('type', 'radio');
+        subdetectorNav.setAttribute('name', this.id+'Nav');
+        subdetectorNav.setAttribute('value', viewTitles[i]);
+        subdetectorNav.onchange = this.trackView.bind(this);
+        if(i==2) subdetectorNav.setAttribute('checked', true); //default to rate view
+        document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
+        subdetectorNavLabel = document.createElement('label');
+        subdetectorNavLabel.setAttribute('id', this.id+'goto'+viewTitles[i]+'Label');
+        subdetectorNavLabel.setAttribute('class', 'subdetectorNavLabel');
+        subdetectorNavLabel.setAttribute('for', this.id+'goto'+viewTitles[i]);
+        document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
+        document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
+    }
+
+    //div to paint detector in
+    drawTarget.setAttribute('id', this.id+'Draw');
+    this.appendChild(drawTarget);
+
+    ///////////////////////
+    //State variables
+    ///////////////////////
+    this.currentView = 'Rate';
+    this.currentUnit = 'Hz';
+
+    ////////////////////////////
+    //Define Channels
+    ////////////////////////////
+    //declare the detector cell names for this detector:
+    this.channelNames = channelNames;
+    this.cells = {};
+
+    ////////////////////////////
+    //Drawing parameters
+    ////////////////////////////
+    this.frameLineWidth = 2;
+    this.frameColor = '#999999';
+    this.width = width;
+    this.height = height;
+
+    ///////////////////////////
+    //Scale Parameters
+    ///////////////////////////
+    this.scale = 'ROOT Rainbow';
+    this.min = {HV: 0, Threshold: 0, Rate: 0};
+    this.max = {HV: 1, Threshold: 1, Rate: 1};
+
+    ///////////////////////////
+    //Tooltip state
+    ///////////////////////////
+    this.lastTTindex = -1;
+
+    ////////////////////////////
+    //Kinetic.js setup
+    ////////////////////////////
+    //point kinetic at the div and set up the staging and layers:
+    this.stage = new Kinetic.Stage({
+        container: this.id+'Draw',
+        width: width,
+        height: height
+    });
+    this.mainLayer = new Kinetic.Layer();       //main rendering layer
+    this.tooltipLayer = new Kinetic.Layer();    //layer for tooltip info
+
+    //tooltip text:
+    this.text = new Kinetic.Text({
+        x: 70,
+        y: 10,
+        fontFamily: 'Arial',
+        fontSize: 14,
+        text: '',
+        fill: '#999999'
+    });
+    this.tooltipLayer.add(this.text);
+
+    /////////////////////////////
+    //Initialize visualization
+    /////////////////////////////
+    //initialize all the cells:
+    this.instantiateCells();
+
+    //generate the color scale
+    this.generateColorScale();
+
+    //append data location information to list of URLs to fetch from:
+    if(!window.fetchURL)
+        window.fetchURL = [];
+    if(URL && window.fetchURL.indexOf(URL) == -1){
+        window.fetchURL[window.fetchURL.length] = URL;
+    }
+    
+    //let repopulate know that the status bar would like to be updated every loop:
+    if(!window.refreshTargets)
+        window.refreshTargets = [];
+    window.refreshTargets[window.refreshTargets.length] = this;
+    
 }
 //status bar
 (function(){  
