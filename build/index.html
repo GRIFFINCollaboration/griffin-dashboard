@@ -25,13 +25,13 @@
 				//declare a namespace to dump external data on:
 				window.currentData = {};
 
-				//begin data fetch loop:
-				assembleData()
+				//begin data fetch loop; begin repaint loop after first assembly finishes.
+				assembleData(function(){
+					repopulate()
+					window.setInterval(repopulate.bind(null), 3000);
+				})
 				window.setInterval(assembleData.bind(null), 3000);
 
-				//begin refresh loop:
-				repopulate()
-				window.setInterval(repopulate.bind(null), 3000);
 			});
 		</script>
 
