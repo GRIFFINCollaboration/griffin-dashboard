@@ -41,10 +41,8 @@
 				window.currentData = {};
 
 				//begin data fetch loop:
-				//assembleData(repopulate)
-				//window.setInterval(assembleData.bind(null, repopulate), 3000);
-
-				window.setInterval(repopulate.bind(null, assembleData), 3000);
+				assembleData(repopulate)
+				window.setInterval(assembleData.bind(null, repopulate), 3000);
 			});
 		</script>
 

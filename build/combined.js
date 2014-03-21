@@ -270,13 +270,16 @@ function assembleData(callback) {
         script.setAttribute('id', 'tempScript'+i);
 
         script.onload = function(){
-            if(callback){
+            if(callback && i==0){ //only assign the callback once
                 callback()
             }
         }
 
         script.onerror = function(){
             console.log('failed fetch!')
+            if(callback && i==0){ //only assign the callback once
+                callback()
+            } 
         }
 
         document.head.appendChild(script);
@@ -15444,7 +15447,7 @@ function fetchODBrunControl(returnObj){
                     } else if (this.currentView == 'Rate'){
                         rawValue = Math.random();
                     }
-if(i==0)console.log(rawValue)
+
                     colorIndex = (rawValue - this.min[this.currentView]) / (this.max[this.currentView] - this.min[this.currentView]);
                     color = scalepickr(colorIndex, this.scale);
 
