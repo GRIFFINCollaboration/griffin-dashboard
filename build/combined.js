@@ -14804,7 +14804,6 @@ function fetchDetectorData(returnObj){
         extends: 'div',
         lifecycle: {
             created: function() {
-                //console.log(this)
                 //initializeSingleViewDetector.bind(this, 'DEMO', ['DEMOCHAN00'], null)();
             },
             inserted: function() {},
@@ -15010,7 +15009,6 @@ function fetchDetectorData(returnObj){
 }
 
 function initializeSingleViewDetector(name, channelNames, URL){
-    console.log(this.id)
     var headWrapper = document.createElement('div')
     ,   title = document.createElement('h1')
     ,   viewTitles = ['HV', 'Threshold', 'Rate']
@@ -15332,7 +15330,6 @@ function fetchODB(returnObj){
         extends: 'detector-demo',
         lifecycle: {
             created: function() {
-                console.log(this)
                 initializeSingleViewDetector.bind(this, 'TIP', ['TIPWCHAN00'], null)();                
             },
             inserted: function() {},
