@@ -15688,13 +15688,13 @@ function fetchODB(returnObj){
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
-                    console.log(this.channelNames[i])
                     iOffset = i;
                     if(i>11) iOffset++; //skip the middle square in the grid
 
                     //coords of top left corner of this cell
                     X = this.x0 + this.cellSide*(iOffset%5);    
                     Y = this.y0 + this.cellSide*Math.floor(iOffset/5);
+                    console.log([X,Y])
 
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
