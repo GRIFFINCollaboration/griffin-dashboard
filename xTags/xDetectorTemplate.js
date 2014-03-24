@@ -153,7 +153,7 @@
                     this.tickLabels[i] = new Kinetic.Text({
                         x: (0.1+i*0.08)*this.width,
                         y: 0.86*this.height + 2,
-                        text: (this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0),
+                        text: generateTickLabel(this.min[this.currentView], this.max[this.currentView], 11, i),//(this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0),
                         fontSize: 14,
                         fontFamily: 'Arial',
                         fill: '#999999'
@@ -185,7 +185,7 @@
                 //refresh tick labels
                 for(i=0; i<11; i++){
                     //update text
-                    this.tickLabels[i].setText((this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0));
+                    this.tickLabels[i].setText(generateTickLabel(this.min[this.currentView], this.max[this.currentView], 11, i));
                     //update position
                     this.tickLabels[i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[i].getTextWidth()/2);
                 }

@@ -252,6 +252,24 @@ function parseThreshold(data){
             window.currentData.threshold[key.toUpperCase().slice(0,10)] = data['parameters']['thresholds'][key];
         }        
     }    
+}
+
+//function to make a reasonable decision on how many decimal places to show, whether to to use 
+//sci. notation on an axis tick mark, where <min> and <max> are the axis minimum and maximum,
+//<nTicks> is the number of tickmarks on the axis, and we are returning the label for the <n>th
+//tick mark
+function generateTickLabel(min, max, nTicks, n){
+    var range = max - min,
+        smallestPrecision = range / nTicks,
+        tickValue = min + (max-min)/(nTicks-1)*n;
+
+    //tickmark needs to be labeled to enough precision to show the difference between subsequent ticks:
+    smallestPrecision = Math.floor(Math.log(smallestPrecision) / Math.log(10));
+
+    tickValue = Math.floor(tickValue/Math.pow(10, smallestPrecision));
+
+    return tickValue+'';
+
 }//pull in data from the URLs listed in URL; <callback> executes on successful fetch.
 function assembleData(callback) {
     var i, element, script;
@@ -15115,7 +15133,7 @@ function fetchDetectorData(returnObj){
                     this.tickLabels[i] = new Kinetic.Text({
                         x: (0.1+i*0.08)*this.width,
                         y: 0.86*this.height + 2,
-                        text: (this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0),
+                        text: generateTickLabel(this.min[this.currentView], this.max[this.currentView], 11, i),//(this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0),
                         fontSize: 14,
                         fontFamily: 'Arial',
                         fill: '#999999'
@@ -15147,7 +15165,7 @@ function fetchDetectorData(returnObj){
                 //refresh tick labels
                 for(i=0; i<11; i++){
                     //update text
-                    this.tickLabels[i].setText((this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0));
+                    this.tickLabels[i].setText(generateTickLabel(this.min[this.currentView], this.max[this.currentView], 11, i));
                     //update position
                     this.tickLabels[i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[i].getTextWidth()/2);
                 }

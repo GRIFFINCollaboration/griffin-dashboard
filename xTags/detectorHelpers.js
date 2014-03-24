@@ -156,3 +156,21 @@ function parseThreshold(data){
         }        
     }    
 }
+
+//function to make a reasonable decision on how many decimal places to show, whether to to use 
+//sci. notation on an axis tick mark, where <min> and <max> are the axis minimum and maximum,
+//<nTicks> is the number of tickmarks on the axis, and we are returning the label for the <n>th
+//tick mark
+function generateTickLabel(min, max, nTicks, n){
+    var range = max - min,
+        smallestPrecision = range / nTicks,
+        tickValue = min + (max-min)/(nTicks-1)*n;
+
+    //tickmark needs to be labeled to enough precision to show the difference between subsequent ticks:
+    smallestPrecision = Math.floor(Math.log(smallestPrecision) / Math.log(10));
+
+    tickValue = Math.floor(tickValue/Math.pow(10, smallestPrecision));
+
+    return tickValue+'';
+
+}
