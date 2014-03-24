@@ -178,7 +178,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     plotControlMin.setAttribute('step', 'any');
     plotControlWrap.appendChild(plotControlMin);
 
-    plotControlMaxLabel.setAttribute('id', thisid+'PlotControlMaxLabel');
+    plotControlMaxLabel.setAttribute('id', this.id+'PlotControlMaxLabel');
     plotControlWrap.appendChild(plotControlMaxLabel)    
     document.getElementById(this.id+'PlotControlMaxLabel').innerHTML = 'Max: ';
     plotControlMax.setAttribute('id', this.id + 'PlotControlMax');
