@@ -103,6 +103,12 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     ,   title = document.createElement('h1')
     ,   viewTitles = ['HV', 'Threshold', 'Rate']
     ,   drawTarget = document.createElement('div')
+    ,   plotControlWrap = document.createElement('form')
+    ,   plotControlTitle = document.createElement('h3')
+    ,   plotControlMinLabel = document.createElement('label')
+    ,   plotControlMaxLabel = document.createElement('label')
+    ,   plotControlMin = document.createElement('input')
+    ,   plotControlMax = document.createElement('input')
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
     ,   width = this.offsetWidth
     ,   height = 2*width/3
@@ -114,6 +120,22 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     //////////////////////
     //Build DOM
     //////////////////////
+    //the DOM layout for a detector view is roughly:
+
+    //-----------------------------------
+    // h1 Title
+    //-----------------------------------
+    // input[radio] HV / Thresh / Rate
+    //-----------------------------------
+    // div drawing area for Kinetic plot
+    //
+    //
+    //
+    //-----------------------------------
+    // form plot control widget
+    //-----------------------------------
+
+
     headWrapper.setAttribute('id', this.id+'titleWrapper');
     headWrapper.setAttribute('class', 'subdetectorHeadlineWrap')
     this.appendChild(headWrapper);
@@ -140,10 +162,31 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
         document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
     }
-
     //div to paint detector in
     drawTarget.setAttribute('id', this.id+'Draw');
     this.appendChild(drawTarget);
+    //plot control widget
+    plotControlWrap.setAttribute('id', this.id+'PlotControl');
+    plotControlWrap.setAttribute('class', 'plotControlWidget');
+    this.appendChild(plotControlWrap);
+
+    plotControlMinLabel.setAttribute('id', this.id+'PlotControlMinLabel');
+    plotControlWrap.appendChild(plotControlMinLabel)
+    document.getElementById(this.id+'plotControlMinLabel').innerHTML = 'Min: ';
+    plotControlMin.setAttribute('id', this.id + 'PlotControlMin');
+    plotControlMin.setAttribute('type', 'number');
+    plotControlMin.setAttribute('step', 'any');
+    plotControlWrap.appendChild(plotControlMin);
+
+    plotControlMaxLabel.setAttribute('id', thisid+'PlotControlMaxLabel');
+    plotControlWrap.appendChild(plotControlMaxLabel)    
+    document.getElementById(this.id+'plotControlMaxLabel').innerHTML = 'Max: ';
+    plotControlMax.setAttribute('id', this.id + 'PlotControlMax');
+    plotControlMax.setAttribute('type', 'number');
+    plotControlMax.setAttribute('step', 'any');
+    plotControlWrap.appendChild(plotControlMax);
+
+
 
     ///////////////////////
     //State variables

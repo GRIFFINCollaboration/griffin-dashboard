@@ -366,6 +366,14 @@ detector-TIPWall input[type='radio']:checked + label{
 
 div.subdetectorHeadlineWrap{
 	display:block;
+}
+
+form.plotControlWidget input,
+form.plotControlWIdget label{
+	line-height: 1.2em;
+	background-color: '#222222';
+	border-radius: 5px;
+	padding: 0.5em;
 }widget-status{
 	float:left;
 	background: #333333;
