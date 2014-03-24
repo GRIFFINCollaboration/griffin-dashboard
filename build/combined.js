@@ -387,6 +387,10 @@ function selected(selectID){
 
     return value;
 }
+
+Math.log10 = function(x){
+	return Math.log(x) / Math.log(10);
+}
 /*
  * KineticJS JavaScript Framework v5.0.1
  * http://www.kineticjs.com/
@@ -15264,8 +15268,8 @@ function fetchDetectorData(returnObj){
                 currentMin = this.min[this.currentView];
                 currentMax = this.max[this.currentView];
                 if(isLog){
-                    currentMin = Math.log(currentMin);
-                    currentMax = Math.log(currentMax);
+                    currentMin = Math.log10(currentMin);
+                    currentMax = Math.log10(currentMax);
                     logTitle = 'log ';
                 } else
                     logTitle = '';

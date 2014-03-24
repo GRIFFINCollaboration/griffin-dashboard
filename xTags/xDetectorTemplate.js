@@ -211,8 +211,8 @@
                 currentMin = this.min[this.currentView];
                 currentMax = this.max[this.currentView];
                 if(isLog){
-                    currentMin = Math.log(currentMin);
-                    currentMax = Math.log(currentMax);
+                    currentMin = Math.log10(currentMin);
+                    currentMax = Math.log10(currentMax);
                     logTitle = 'log ';
                 } else
                     logTitle = '';
