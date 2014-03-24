@@ -138,6 +138,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     this.scale = 'ROOT Rainbow';
     this.min = {HV: 0, Threshold: 0, Rate: 1000};
     this.max = {HV: 1, Threshold: 1000, Rate: 1001};
+    this.scaleType = {HV: 'lin', Threshold: 'lin', Rate: 'lin'};
 
     ///////////////////////////
     //Tooltip state

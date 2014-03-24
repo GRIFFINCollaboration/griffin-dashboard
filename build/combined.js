@@ -235,6 +235,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     this.scale = 'ROOT Rainbow';
     this.min = {HV: 0, Threshold: 0, Rate: 1000};
     this.max = {HV: 1, Threshold: 1000, Rate: 1001};
+    this.scaleType = {HV: 'lin', Threshold: 'lin', Rate: 'lin'};
 
     ///////////////////////////
     //Tooltip state
@@ -15158,7 +15159,7 @@ function fetchDetectorData(returnObj){
                 this.max[this.currentView] = parseFloat(document.getElementById(this.id + 'PlotControlMax').value);
 
                 //update lin / log option
-                this.scaleType = selected(this.id+'PlotControlScale');
+                this.scaleType[this.currentView] = selected(this.id+'PlotControlScale');
 
                 //redraw
                 this.updateCells();
@@ -15254,18 +15255,31 @@ function fetchDetectorData(returnObj){
 
             //refresh the color scale labeling / coloring:
             'refreshColorScale': function(){
-                var i;
+                var i, isLog, currentMin, currentMax, logTitle;
+
+                //are we in log mode?
+                isLog = this.scaleType[this.currentView] == 'log';
+
+                //what minima and maxima are we using?
+                currentMin = this.min[this.currentView];
+                currentMax = this.max[this.currentView];
+                if(isLog){
+                    currentMin = Math.log(currentMin);
+                    currentMax = Math.log(currentMax);
+                    logTitle = 'log ';
+                } else
+                    logTitle = '';
 
                 //refresh tick labels
                 for(i=0; i<11; i++){
                     //update text
-                    this.tickLabels[i].setText(generateTickLabel(this.min[this.currentView], this.max[this.currentView], 11, i));
+                    this.tickLabels[i].setText(generateTickLabel(currentMin, currentMax, 11, i));
                     //update position
                     this.tickLabels[i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[i].getTextWidth()/2);
                 }
 
                 //update title
-                this.scaleTitle.setText(this.currentView + ' [' + this.currentUnit + ']');
+                this.scaleTitle.setText(logTitle + this.currentView + ' [' + this.currentUnit + ']');
                 this.scaleTitle.setAttr('x', this.width/2 - this.scaleTitle.getTextWidth()/2);
             }
         }
