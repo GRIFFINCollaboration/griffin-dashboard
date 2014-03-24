@@ -375,7 +375,8 @@ form.plotControlWidget{
 }
 
 form.plotControlWidget input,
-form.plotControlWIdget label{
+form.plotControlWidget label,
+form.plotControlWidget select{
 	font-size: 120%;
 	line-height: 2em;
 	border-radius: 5px;

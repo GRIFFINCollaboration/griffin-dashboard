@@ -109,6 +109,9 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     ,   plotControlMaxLabel = document.createElement('label')
     ,   plotControlMin = document.createElement('input')
     ,   plotControlMax = document.createElement('input')
+    ,   plotScale = document.createElement('select')
+    ,   plotScaleLin = document.createElement('option')
+    ,   plotScaleLog = document.createElement('option')
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
     ,   width = this.offsetWidth
     ,   height = 2*width/3
@@ -191,6 +194,18 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     plotControlMax.setAttribute('step', 'any');
     plotControlWrap.appendChild(plotControlMax);
 
+    plotScale.setAttribute('id', this.id+'PlotControlScale');
+    plotControlWrap.appendChild(plotScale);
+
+    plotScaleLin.setAttribute('id', this.id+'PlotScaleLin');
+    plotScaleLin.setAttribute('value', 'lin');
+    plotScale.appendChild(plotScaleLin);
+    document.getElementById(this.id+'PlotScaleLin').innerHTML = 'Linear';
+
+    plotScaleLog.setAttribute('id', this.id+'PlotScaleLog');
+    plotScaleLog.setAttribute('value', 'log');
+    plotScale.appendChild(plotScaleLog);
+    document.getElementById(this.id+'PlotScaleLog').innerHTML = 'Log';
 
 
     ///////////////////////
