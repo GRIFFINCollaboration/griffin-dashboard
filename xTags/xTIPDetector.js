@@ -24,7 +24,7 @@
                 //////////////////////////////////////
                 //TIP Wall specific drawing parameters
                 //////////////////////////////////////
-                this.cellSide = this.height*0.7/5;              //length of cell side
+                this.cellSide = this.height*0.8/5;              //length of cell side
                 this.x0 = this.width/2 - 2.5*this.cellSide;     //x coordinate of upper left corner of TIP image
                 this.y0 = 0;                                    //y ''
 

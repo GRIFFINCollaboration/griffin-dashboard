@@ -126,7 +126,7 @@
                 //draw the gradient itself
                 this.colorScale = new Kinetic.Rect({
                     x: 0.1*this.width,
-                    y: 0.8*this.height,
+                    y: 0.9*this.height,
                     width: 0.8*this.width,
                     height: 0.05*this.height,
                     fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
@@ -143,7 +143,7 @@
                 for(i=0; i<11; i++){
                     //tick line
                     tick = new Kinetic.Line({
-                        points: [(0.1+i*0.08)*this.width, 0.85*this.height, (0.1+i*0.08)*this.width, 0.86*this.height],
+                        points: [(0.1+i*0.08)*this.width, 0.95*this.height, (0.1+i*0.08)*this.width, 0.96*this.height],
                         stroke: '#999999',
                         strokeWidth: 2
                     });
@@ -152,7 +152,7 @@
                     //tick label
                     this.tickLabels[i] = new Kinetic.Text({
                         x: (0.1+i*0.08)*this.width,
-                        y: 0.86*this.height + 2,
+                        y: 0.96*this.height + 2,
                         text: generateTickLabel(this.min[this.currentView], this.max[this.currentView], 11, i),//(this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0),
                         fontSize: 14,
                         fontFamily: 'Arial',
@@ -166,7 +166,7 @@
                 //place title on scale
                 this.scaleTitle = new Kinetic.Text({
                     x: this.width/2,
-                    y: 0.8*this.height - 22,
+                    y: 0.9*this.height - 22,
                     text: this.currentView + ' [' + this.currentUnit + ']',
                     fontSize : 20,
                     fontFamily: 'Arial',
