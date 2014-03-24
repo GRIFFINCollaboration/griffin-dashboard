@@ -163,13 +163,13 @@ function parseThreshold(data){
 //tick mark
 function generateTickLabel(min, max, nTicks, n){
     var range = max - min,
-        smallestPrecision = range / nTicks,
+        smallestPrecision = range / (nTicks-1),
         tickValue = min + (max-min)/(nTicks-1)*n;
 
     //tickmark needs to be labeled to enough precision to show the difference between subsequent ticks:
     smallestPrecision = Math.floor(Math.log(smallestPrecision) / Math.log(10));
 
-    tickValue = Math.floor(tickValue/Math.pow(10, smallestPrecision));
+    tickValue = Math.floor(tickValue/Math.pow(10, smallestPrecision)) * Math.pow(10, smallestPrecision);
 console.log([min, max, smallestPrecision, tickValue])
 
     return tickValue+'';
