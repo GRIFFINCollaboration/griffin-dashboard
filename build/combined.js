@@ -15055,8 +15055,8 @@ function fetchDetectorData(returnObj){
                 }
 
                 //make sure the scale control widget is up to date
-                document.getElementById(this.id + 'PlotControlMin').value = this.min;
-                document.getElementById(this.id + 'PlotControlMax').value = this.max;
+                document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min);
+                document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max);
 
                 //update the cell colors and tooltip content
                 this.updateCells();
