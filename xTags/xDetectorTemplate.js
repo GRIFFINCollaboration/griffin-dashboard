@@ -96,7 +96,6 @@
 
                 this.updateCells();
                 this.refreshColorScale();
-
                 this.mainLayer.draw();
             },
 
@@ -108,6 +107,8 @@
 
                 //redraw
                 this.updateCells();
+                this.refreshColorScale();
+                this.mainLayer.draw();
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.

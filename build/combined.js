@@ -15127,7 +15127,6 @@ function fetchDetectorData(returnObj){
 
                 this.updateCells();
                 this.refreshColorScale();
-
                 this.mainLayer.draw();
             },
 
@@ -15139,6 +15138,8 @@ function fetchDetectorData(returnObj){
 
                 //redraw
                 this.updateCells();
+                this.refreshColorScale();
+                this.mainLayer.draw();
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
