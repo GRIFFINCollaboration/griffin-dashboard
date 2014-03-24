@@ -379,6 +379,12 @@ function repopulate(callback){
 
     if(callback)
         callback();
+}//return the value of a selected option from a <select> element
+function selected(selectID){
+    var select = document.getElementById(selectID),
+        value = select.options[select.selectedIndex].value;
+
+    return value;
 }
 /*
  * KineticJS JavaScript Framework v5.0.1
@@ -15151,6 +15157,9 @@ function fetchDetectorData(returnObj){
                 this.min[this.currentView] = parseFloat(document.getElementById(this.id + 'PlotControlMin').value);
                 this.max[this.currentView] = parseFloat(document.getElementById(this.id + 'PlotControlMax').value);
 
+                //update lin / log option
+                this.scale = selected(this.id+'PlotControlScale');
+console.log(this.scale)
                 //redraw
                 this.updateCells();
                 this.refreshColorScale();

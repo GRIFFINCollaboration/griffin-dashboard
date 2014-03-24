@@ -105,6 +105,9 @@
                 this.min[this.currentView] = parseFloat(document.getElementById(this.id + 'PlotControlMin').value);
                 this.max[this.currentView] = parseFloat(document.getElementById(this.id + 'PlotControlMax').value);
 
+                //update lin / log option
+                this.scale = selected(this.id+'PlotControlScale');
+console.log(this.scale)
                 //redraw
                 this.updateCells();
                 this.refreshColorScale();
