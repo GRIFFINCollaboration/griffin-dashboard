@@ -93,6 +93,8 @@
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').value = this.min[this.currentView];
                 document.getElementById(this.id + 'PlotControlMax').value = this.max[this.currentView];
+                document.getElementById(this.id + 'PlotControlScale').value = this.scaleType[this.currentView];
+
 
                 this.updateCells();
                 this.refreshColorScale();

@@ -55,4 +55,5 @@ form.plotControlWidget select{
 	color:#EEEEEE;
 	background-color: #111111;
 	margin-right: 2px;
+	cursor:pointer;
 }
