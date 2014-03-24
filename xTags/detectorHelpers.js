@@ -75,7 +75,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
 
     plotControlMinLabel.setAttribute('id', this.id+'PlotControlMinLabel');
     plotControlWrap.appendChild(plotControlMinLabel)
-    document.getElementById(this.id+'plotControlMinLabel').innerHTML = 'Min: ';
+    document.getElementById(this.id+'PlotControlMinLabel').innerHTML = 'Min: ';
     plotControlMin.setAttribute('id', this.id + 'PlotControlMin');
     plotControlMin.setAttribute('type', 'number');
     plotControlMin.setAttribute('step', 'any');
@@ -83,7 +83,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
 
     plotControlMaxLabel.setAttribute('id', thisid+'PlotControlMaxLabel');
     plotControlWrap.appendChild(plotControlMaxLabel)    
-    document.getElementById(this.id+'plotControlMaxLabel').innerHTML = 'Max: ';
+    document.getElementById(this.id+'PlotControlMaxLabel').innerHTML = 'Max: ';
     plotControlMax.setAttribute('id', this.id + 'PlotControlMax');
     plotControlMax.setAttribute('type', 'number');
     plotControlMax.setAttribute('step', 'any');
