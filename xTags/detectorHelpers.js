@@ -72,6 +72,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     plotControlWrap.setAttribute('id', this.id+'PlotControl');
     plotControlWrap.setAttribute('class', 'plotControlWidget');
     this.appendChild(plotControlWrap);
+    document.getElementById(this.id+'PlotControl').onchange = this.updatePlotParameters.bind(this);
 
     plotControlTitle.setAttribute('id', this.id+'PlotControlTitle');
     plotControlWrap.appendChild(plotControlTitle);

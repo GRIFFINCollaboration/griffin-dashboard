@@ -169,6 +169,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     plotControlWrap.setAttribute('id', this.id+'PlotControl');
     plotControlWrap.setAttribute('class', 'plotControlWidget');
     this.appendChild(plotControlWrap);
+    document.getElementById(this.id+'PlotControl').onchange = this.updatePlotParameters.bind(this);
 
     plotControlTitle.setAttribute('id', this.id+'PlotControlTitle');
     plotControlWrap.appendChild(plotControlTitle);
@@ -15128,6 +15129,16 @@ function fetchDetectorData(returnObj){
                 this.refreshColorScale();
 
                 this.mainLayer.draw();
+            },
+
+            //update scale minima and maxima and other plotting parameters both locally and if necessary, in the ODB
+            'updatePlotParameters': function(){
+                //update local minima and maxima
+                this.min[this.currentView] = parseFloat(document.getElementById(this.id + 'PlotControlMin').value);
+                this.max[this.currentView] = parseFloat(document.getElementById(this.id + 'PlotControlMax').value);
+
+                //redraw
+                this.updateCells();
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
