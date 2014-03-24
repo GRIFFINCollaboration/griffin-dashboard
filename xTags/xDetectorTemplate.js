@@ -25,8 +25,8 @@
                 }
 
                 //make sure the scale control widget is up to date
-                document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min);
-                document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max);
+                document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
+                document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
 
                 //update the cell colors and tooltip content
                 this.updateCells();
