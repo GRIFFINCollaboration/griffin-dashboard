@@ -267,6 +267,7 @@ function generateTickLabel(min, max, nTicks, n){
     smallestPrecision = Math.floor(Math.log(smallestPrecision) / Math.log(10));
 
     tickValue = Math.floor(tickValue/Math.pow(10, smallestPrecision));
+console.log([min, max, smallestPrecision, tickValue])
 
     return tickValue+'';
 
