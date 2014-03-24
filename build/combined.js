@@ -170,6 +170,10 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     plotControlWrap.setAttribute('class', 'plotControlWidget');
     this.appendChild(plotControlWrap);
 
+    plotControlTitle.setAttribute('id', this.id+'PlotControlTitle');
+    plotControlWrap.appendChild(plotControlTitle);
+    document.getElementById(this.id + 'PlotControlTitle').innerHTML = 'Scale Control'
+
     plotControlMinLabel.setAttribute('id', this.id+'PlotControlMinLabel');
     plotControlWrap.appendChild(plotControlMinLabel)
     document.getElementById(this.id+'PlotControlMinLabel').innerHTML = 'Min: ';

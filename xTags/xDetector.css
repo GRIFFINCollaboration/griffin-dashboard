@@ -38,7 +38,7 @@ form.plotControlWidget{
 	margin-bottom: 1em;
 }
 
-form.plotControlWidget input
+form.plotControlWidget input,
 form.plotControlWIdget label{
 	font-size: 120%;
 	line-height: 2em;
