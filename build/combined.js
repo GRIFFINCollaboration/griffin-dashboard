@@ -170,8 +170,8 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     //Scale Parameters
     ///////////////////////////
     this.scale = 'ROOT Rainbow';
-    this.min = {HV: 0, Threshold: 0, Rate: 0};
-    this.max = {HV: 1, Threshold: 1, Rate: 1};
+    this.min = {HV: 0, Threshold: 0, Rate: 1000};
+    this.max = {HV: 1, Threshold: 1000, Rate: 1001};
 
     ///////////////////////////
     //Tooltip state
@@ -266,9 +266,11 @@ function generateTickLabel(min, max, nTicks, n){
     //tickmark needs to be labeled to enough precision to show the difference between subsequent ticks:
     smallestPrecision = Math.floor(Math.log(smallestPrecision) / Math.log(10));
 
-    tickValue = Math.floor(tickValue/Math.pow(10, smallestPrecision)) * Math.pow(10, smallestPrecision);
-console.log([min, max, smallestPrecision, tickValue])
 
+    if(smallestPrecision < 0)
+        return tickValue.toFixed(-smallestPrecision)
+
+    tickValue = Math.floor(tickValue/Math.pow(10, smallestPrecision)) * Math.pow(10, smallestPrecision);
     return tickValue+'';
 
 }//pull in data from the URLs listed in URL; <callback> executes on successful fetch.
