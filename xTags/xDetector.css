@@ -36,6 +36,7 @@ div.subdetectorHeadlineWrap{
 /*plot control widget*/
 form.plotControlWidget{
 	margin-bottom: 1em;
+	margin-left: 10%;
 }
 
 form.plotControlWidget input,

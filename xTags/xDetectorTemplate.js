@@ -24,6 +24,10 @@
                     this.min = {HV: window.currentData.ODB[this.name].HVscale[1], Threshold: window.currentData.ODB[this.name].thresholdScale[1], Rate: window.currentData.ODB[this.name].rateScale[1]};
                 }
 
+                //make sure the scale control widget is up to date
+                document.getElementById(this.id + 'PlotControlMin').value = this.min;
+                document.getElementById(this.id + 'PlotControlMax').value = this.max;
+
                 //update the cell colors and tooltip content
                 this.updateCells();
                 this.writeTooltip(this.lastTTindex);
