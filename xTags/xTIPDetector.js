@@ -82,7 +82,16 @@
             },
 
             'updateCells': function(){
-                var i, color, rawValue, colorIndex;
+                var i, color, rawValue, colorIndex, 
+                    currentMin = this.min[this.currentView], 
+                    currentMax = this.max[this.currentView],
+                    isLog = this.scaleType[this.currentView] == 'log';
+
+                //get the scale limits right
+                if(isLog){
+                    currentMin = Math.log10(currentMin);
+                    currentMax = Math.log10(currentMax);
+                }
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
@@ -95,7 +104,10 @@
                         rawValue = Math.random();
                     }
 
-                    colorIndex = (rawValue - this.min[this.currentView]) / (this.max[this.currentView] - this.min[this.currentView]);
+                    if(isLog)
+                        rawValue = Math.log10(rawValue);
+
+                    colorIndex = (rawValue - currentMin) / (currentMax - currentMin);
                     color = scalepickr(colorIndex, this.scale);
 
                     //recolor the cell:
