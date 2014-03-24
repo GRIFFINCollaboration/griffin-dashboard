@@ -33,10 +33,22 @@ div.subdetectorHeadlineWrap{
 	display:block;
 }
 
-form.plotControlWidget input,
+/*plot control widget*/
+form.plotControlWidget{
+	margin-bottom: 1em;
+}
+
+form.plotControlWidget input
 form.plotControlWIdget label{
-	line-height: 1.2em;
-	background-color: '#222222';
+	font-size: 120%;
+	line-height: 2em;
 	border-radius: 5px;
-	padding: 0.5em;
+	border: 0px;
+	width: 6em;
+	padding:0 0 0 0.5em;
+}
+
+form.plotControlWidget input{
+	color:#EEEEEE;
+	background-color: #111111;
 }
