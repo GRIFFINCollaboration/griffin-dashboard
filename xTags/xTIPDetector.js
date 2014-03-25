@@ -99,11 +99,11 @@
                 for(i=0; i<this.channelNames.length; i++){
                     //fetch the most recent raw value from the currentData store:
                     if(this.currentView == 'HV'){
-                        rawValue = 0xDEADBEEF;
+                        rawValue = Math.random();
                     } else if (this.currentView == 'Threshold'){
-                        rawValue = 0xDEADBEEF;// window.currentData.threshold[this.channelNames[i]];
+                        rawValue = window.currentData.threshold[this.channelNames[i]];
                     } else if (this.currentView == 'Rate'){
-                        rawValue = 0xDEADBEEF; // window.currentData.rate[this.channelNames[i]];
+                        rawValue = window.currentData.rate[this.channelNames[i]];
                     }
 
                     //if no data was found, raise exception code:

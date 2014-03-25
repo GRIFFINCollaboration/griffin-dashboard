@@ -41,6 +41,4 @@ function repopulate(callback){
 
     if(callback)
         callback();
-
-    console.log(window.currentData)
 }
