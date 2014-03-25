@@ -164,7 +164,8 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
         width:100,
         height:100,
         fill:'rgba(0,0,0,0.5)',
-        stroke: 'rgba(0,0,0,0)'
+        stroke: 'rgba(0,0,0,0)',
+        listening: false
     });
     this.tooltipLayer.add(this.TTbkg);
 
@@ -175,7 +176,8 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
         fontFamily: 'Arial',
         fontSize: 16,
         text: '',
-        fill: '#999999'
+        fill: '#999999',
+        listening: false
     });
     this.tooltipLayer.add(this.text);
 
