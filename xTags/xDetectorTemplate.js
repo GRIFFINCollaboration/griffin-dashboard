@@ -76,23 +76,34 @@
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
-                    //determine the color of the cell as a function of the view state:
+                    //fetch the most recent raw value from the currentData store:
                     if(this.currentView == 'HV'){
                         rawValue = Math.random();
                     } else if (this.currentView == 'Threshold'){
-                        rawValue = Math.random();
+                        rawValue = window.currentData.threshold[this.channelNames[i]];
                     } else if (this.currentView == 'Rate'){
-                        rawValue = Math.random();
+                        rawValue = window.currentData.rate[this.channelNames[i]];
                     }
 
-                    if(isLog)
-                        rawValue = Math.log10(rawValue);
+                    //if no data was found, raise exception code:
+                    if(!rawValue && rawValue!=0)
+                        rawValue = 0xDEADBEEF;
 
-                    colorIndex = (rawValue - currentMin) / (currentMax - currentMin);
-                    color = scalepickr(colorIndex, this.scale);
+                    //value found and parsable, recolor cell:
+                    if(rawValue != 0xDEADBEEF){
+                        if(isLog)
+                            rawValue = Math.log10(rawValue);
 
-                    //recolor the cell:
-                    this.cells[this.channelNames[i]].fill(color);
+                        colorIndex = (rawValue - currentMin) / (currentMax - currentMin);
+                        color = scalepickr(colorIndex, this.scale);
+
+                        this.cells[this.channelNames[i]].fill(color);
+                        this.cells[this.channelNames[i]].setFillPriority('color');
+
+                    //no value reporting, show error pattern
+                    } else{
+                        this.cells[this.channelNames[i]].setFillPriority('pattern')
+                    }
                 }
             },
 
@@ -130,16 +141,20 @@
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeTooltip': function(i){
-                var text;
+                var text, HV, thresh, rate;
 
                 if(i!=-1){
                     text = this.channelNames[i];
                     text += '\nHV: ';
                     text += Math.random();
                     text += '\nThreshold: ';
-                    text += Math.random();
+                    thresh = window.currentData.threshold[this.channelNames[i]];
+                    if(!thresh && thresh!=0) thresh = 'Not Reporting'  
+                    text += thresh;
                     text += '\nRate: ';
-                    text += Math.random();
+                    rate = window.currentData.rate[this.channelNames[i]];
+                    if(!rate && rate!=0) rate = 'Not Reporting'
+                    text += rate;
                 } else {
                     text = '';
                 }
