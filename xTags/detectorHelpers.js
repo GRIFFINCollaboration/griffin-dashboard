@@ -24,7 +24,8 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
 
     //set up data store for detectors
     if(!window.currentData)
-        window.currentData = {}
+        window.currentData = {};
+    window.currentData.HV = {};
     window.currentData.threshold = {};
     window.currentData.rate = {};
 

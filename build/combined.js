@@ -121,7 +121,8 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
 
     //set up data store for detectors
     if(!window.currentData)
-        window.currentData = {}
+        window.currentData = {};
+    window.currentData.HV = {};
     window.currentData.threshold = {};
     window.currentData.rate = {};
 
@@ -15224,7 +15225,9 @@ function fetchDetectorData(returnObj){
                 if(i!=-1){
                     text = this.channelNames[i];
                     text += '\nHV: ';
-                    text += Math.random();
+                    HV = window.currentData.threshold[this.channelNames[i]];
+                    if(!HV && HV!=0) HV = 'Not Reporting';
+                    text += HV;
                     text += '\nThreshold: ';
                     thresh = window.currentData.threshold[this.channelNames[i]];
                     if(!thresh && thresh!=0) thresh = 'Not Reporting'  
