@@ -101,9 +101,9 @@
                     if(this.currentView == 'HV'){
                         rawValue = 0xDEADBEEF;
                     } else if (this.currentView == 'Threshold'){
-                        rawValue = window.currentData.threshold[this.channelNames[i]];
+                        rawValue = 0xDEADBEEF;// window.currentData.threshold[this.channelNames[i]];
                     } else if (this.currentView == 'Rate'){
-                        rawValue = window.currentData.rate[this.channelNames[i]];
+                        rawValue = 0xDEADBEEF; // window.currentData.rate[this.channelNames[i]];
                     }
 
                     //if no data was found, raise exception code:
