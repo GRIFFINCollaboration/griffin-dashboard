@@ -366,6 +366,7 @@ detector-TIPWall input[type='radio']:checked + label{
 
 div.subdetectorHeadlineWrap{
 	display:block;
+	margin-bottom: 1em;
 }
 
 /*plot control widget*/
