@@ -183,7 +183,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
         fontSize: 16,
         text: '',
         lineHeight: 1.2,
-        fill: '#999999',
+        fill: '#EEEEEE',
         listening: false
     });
     this.tooltipLayer.add(this.text);

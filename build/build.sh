@@ -5,7 +5,10 @@ rm ./*.css
 #Concat all JS:
 cp ../lib/*.js .
 cp ../utilities/*.js .
-cp ../xTags/*.js .
+cp ../xTags/branding/* .
+cp ../xTags/runControl/* .
+cp ../xTags/detectors/*.js .
+cp ../xTags/detectors/TIPwall/* .
 if [ -e combined.js ]; then rm combined.js; fi
 cat *.js > combined.js
 
@@ -20,7 +23,7 @@ mv temp combined.js
 #Concat all CSS:
 cp ../lib/*.css .
 cp ../*.css .
-cp ../xTags/*.css .
+cp ../xTags/detectors/*.css .
 if [ -e combined.css ]; then rm combined.css; fi
 cat *.css > combined.css
 
