@@ -15216,11 +15216,11 @@ function fetchDetectorData(returnObj){
                 if(text != ''){
                     mousePos = this.stage.getPointerPosition();
                     //adjust the background size & position
-                    this.TTbkg.setAttrs( {'width': this.text.getAttr('width') + 20, 'x': mousePos.x} );
-                    this.TTbkg.setAttrs( {'height': this.text.getAttr('height') + 20, 'y': mousePos.y} );
+                    this.TTbkg.setAttrs( {'width': this.text.getAttr('width') + 20, 'x': mousePos.x + 10} );
+                    this.TTbkg.setAttrs( {'height': this.text.getAttr('height') + 20, 'y': mousePos.y + 10} );
                     //make text follow the mouse too
-                    this.text.setAttr( 'x', mousePos.x + 10 );
-                    this.text.setAttr( 'y', mousePos.y + 10 );                    
+                    this.text.setAttr( 'x', mousePos.x + 20 );
+                    this.text.setAttr( 'y', mousePos.y + 20 );                    
                 } else {
                     this.TTbkg.setAttr('width', 0);
                     this.TTbkg.setAttr('height', 0);                    
