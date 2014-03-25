@@ -23,6 +23,8 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     this.detectorName = name;
 
     //set up data store for detectors
+    if(!window.currentData)
+        window.currentData = {}
     window.currentData.threshold = {};
     window.currentData.rate = {};
 
