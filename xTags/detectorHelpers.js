@@ -157,12 +157,24 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     this.mainLayer = new Kinetic.Layer();       //main rendering layer
     this.tooltipLayer = new Kinetic.Layer();    //layer for tooltip info
 
+    //tooltip background:
+    this.TTbkg = new Kinetic.Rect({
+        x:0,
+        y:0,
+        width:100,
+        height:100,
+        fill:'rgba(0,0,0,0.5)',
+        stroke: 'rgba(0,0,0,0)'
+
+    });
+    this.tooltipLayer.add(this.TTbkg);
+
     //tooltip text:
     this.text = new Kinetic.Text({
         x: 70,
         y: 10,
         fontFamily: 'Arial',
-        fontSize: 14,
+        fontSize: 16,
         text: '',
         fill: '#999999'
     });

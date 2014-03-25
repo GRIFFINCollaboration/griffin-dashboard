@@ -254,12 +254,24 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     this.mainLayer = new Kinetic.Layer();       //main rendering layer
     this.tooltipLayer = new Kinetic.Layer();    //layer for tooltip info
 
+    //tooltip background:
+    this.TTbkg = new Kinetic.Rect({
+        x:0,
+        y:0,
+        width:100,
+        height:100,
+        fill:'rgba(0,0,0,0.5)',
+        stroke: 'rgba(0,0,0,0)'
+
+    });
+    this.tooltipLayer.add(this.TTbkg);
+
     //tooltip text:
     this.text = new Kinetic.Text({
         x: 70,
         y: 10,
         fontFamily: 'Arial',
-        fontSize: 14,
+        fontSize: 16,
         text: '',
         fill: '#999999'
     });
@@ -15201,6 +15213,8 @@ function fetchDetectorData(returnObj){
                 }
                 this.lastTTindex = i;
                 this.text.setText(text);
+                this.TTbkg.setAttr('width', this.text.getAttr('width') + 10);
+                this.TTbkg.setAttr('height', this.text.getAttr('height') + 10);
                 this.tooltipLayer.draw();
             },
 
@@ -15521,11 +15535,8 @@ function fetchODBrunControl(returnObj){
                 //TIP Wall specific drawing parameters
                 //////////////////////////////////////
                 this.cellSide = this.height*0.8/5;              //length of cell side
-                this.x0 = this.width*0.1;                       //x coordinate of upper left corner of TIP image
+                this.x0 = this.width/2 - 2.5*this.cellSide;     //x coordinate of upper left corner of TIP image
                 this.y0 = 0;                                    //y ''
-
-                //move the tooltip over to the right of TIP:
-                this.text.setAttr('x', this.width*0.1 + 5*this.cellSide + 5);
 
                 /////////////////////////////
                 //Initialize visualization

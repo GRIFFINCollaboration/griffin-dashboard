@@ -144,6 +144,8 @@
                 }
                 this.lastTTindex = i;
                 this.text.setText(text);
+                this.TTbkg.setAttr('width', this.text.getAttr('width') + 10);
+                this.TTbkg.setAttr('height', this.text.getAttr('height') + 10);
                 this.tooltipLayer.draw();
             },
 

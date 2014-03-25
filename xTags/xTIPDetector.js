@@ -25,11 +25,8 @@
                 //TIP Wall specific drawing parameters
                 //////////////////////////////////////
                 this.cellSide = this.height*0.8/5;              //length of cell side
-                this.x0 = this.width*0.1;                       //x coordinate of upper left corner of TIP image
+                this.x0 = this.width/2 - 2.5*this.cellSide;     //x coordinate of upper left corner of TIP image
                 this.y0 = 0;                                    //y ''
-
-                //move the tooltip over to the right of TIP:
-                this.text.setAttr('x', this.width*0.1 + 5*this.cellSide + 5);
 
                 /////////////////////////////
                 //Initialize visualization
