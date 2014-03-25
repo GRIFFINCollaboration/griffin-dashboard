@@ -256,13 +256,12 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
 
     //tooltip background:
     this.TTbkg = new Kinetic.Rect({
-        x:0,
+        x:60,
         y:0,
         width:100,
         height:100,
         fill:'rgba(0,0,0,0.5)',
         stroke: 'rgba(0,0,0,0)'
-
     });
     this.tooltipLayer.add(this.TTbkg);
 
@@ -15213,8 +15212,8 @@ function fetchDetectorData(returnObj){
                 }
                 this.lastTTindex = i;
                 this.text.setText(text);
-                this.TTbkg.setAttr('width', this.text.getAttr('width') + 10);
-                this.TTbkg.setAttr('height', this.text.getAttr('height') + 10);
+                this.TTbkg.setAttr('width', this.text.getAttr('width') + 20);
+                this.TTbkg.setAttr('height', this.text.getAttr('height') + 20);
                 this.tooltipLayer.draw();
             },
 

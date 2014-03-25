@@ -159,13 +159,12 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
 
     //tooltip background:
     this.TTbkg = new Kinetic.Rect({
-        x:0,
+        x:60,
         y:0,
         width:100,
         height:100,
         fill:'rgba(0,0,0,0.5)',
         stroke: 'rgba(0,0,0,0)'
-
     });
     this.tooltipLayer.add(this.TTbkg);
 
