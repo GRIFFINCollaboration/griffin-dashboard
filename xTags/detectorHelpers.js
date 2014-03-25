@@ -163,7 +163,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
         y:0,
         width:100,
         height:100,
-        fill:'rgba(0,0,0,0.5)',
+        fill:'rgba(0,0,0,0.8)',
         stroke: 'rgba(0,0,0,0)',
         listening: false
     });

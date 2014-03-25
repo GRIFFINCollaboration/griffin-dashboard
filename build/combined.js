@@ -260,7 +260,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
         y:0,
         width:100,
         height:100,
-        fill:'rgba(0,0,0,0.5)',
+        fill:'rgba(0,0,0,0.8)',
         stroke: 'rgba(0,0,0,0)',
         listening: false
     });
@@ -15594,6 +15594,7 @@ function fetchODBrunControl(returnObj){
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
                         fill: '#000000',
+                        fillPatternImage: 'static.gif',
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         closed: true,
@@ -15634,17 +15635,24 @@ function fetchODBrunControl(returnObj){
                     } else if (this.currentView == 'Threshold'){
                         rawValue = Math.random();
                     } else if (this.currentView == 'Rate'){
-                        rawValue = Math.random();
+                        rawValue = 0xDEADBEEF;//Math.random();
                     }
 
-                    if(isLog)
-                        rawValue = Math.log10(rawValue);
+                    //value found and parsable, recolor cell:
+                    if(rawValue != 0xDEADBEEF){
+                        if(isLog)
+                            rawValue = Math.log10(rawValue);
 
-                    colorIndex = (rawValue - currentMin) / (currentMax - currentMin);
-                    color = scalepickr(colorIndex, this.scale);
+                        colorIndex = (rawValue - currentMin) / (currentMax - currentMin);
+                        color = scalepickr(colorIndex, this.scale);
 
-                    //recolor the cell:
-                    this.cells[this.channelNames[i]].fill(color);
+                        this.cells[this.channelNames[i]].fill(color);
+                        this.cells[this.channelNames[i]].setFillPriority('color');
+
+                    //no value reporting, show error pattern
+                    } else{
+                        this.cells[this.channelNames[i]].setFillPriority('pattern')
+                    }
                 }
             }
         }
