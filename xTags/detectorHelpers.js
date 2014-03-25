@@ -136,8 +136,8 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     //Scale Parameters
     ///////////////////////////
     this.scale = 'ROOT Rainbow';
-    this.min = {HV: 0, Threshold: 0, Rate: 1000};
-    this.max = {HV: 1, Threshold: 1000, Rate: 1001};
+    this.min = {HV: 0, Threshold: 0, Rate: 0};
+    this.max = {HV: 3000, Threshold: 1000, Rate: 10000};
     this.scaleType = {HV: 'lin', Threshold: 'lin', Rate: 'lin'};
 
     ///////////////////////////

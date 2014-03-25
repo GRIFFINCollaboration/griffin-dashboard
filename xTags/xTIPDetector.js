@@ -97,14 +97,18 @@
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
-                    //determine the color of the cell as a function of the view state:
+                    //fetch the most recent raw value from the currentData store:
                     if(this.currentView == 'HV'){
-                        rawValue = Math.random();
+                        rawValue = 0xDEADBEEF;
                     } else if (this.currentView == 'Threshold'){
-                        rawValue = Math.random();
+                        rawValue = window.currentData.threshold[this.channelNames[i]];
                     } else if (this.currentView == 'Rate'){
-                        rawValue = 0xDEADBEEF;//Math.random();
+                        rawValue = window.currentData.rate[this.channelNames[i]];
                     }
+
+                    //if no data was found, raise exception code:
+                    if(!rawValue && rawValue!=0)
+                        rawValue = 0xDEADBEEF;
 
                     //value found and parsable, recolor cell:
                     if(rawValue != 0xDEADBEEF){
