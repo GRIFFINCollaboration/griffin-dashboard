@@ -15198,7 +15198,7 @@ function fetchDetectorData(returnObj){
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeTooltip': function(i){
-                var text, mousePos;
+                var text;
 
                 if(i!=-1){
                     text = this.channelNames[i];
@@ -15214,21 +15214,28 @@ function fetchDetectorData(returnObj){
                 this.lastTTindex = i;
                 this.text.setText(text);
                 if(text != ''){
-                    mousePos = this.stage.getPointerPosition();
-                    //adjust the background size & position
-                    this.TTbkg.setAttrs( {'width': this.text.getAttr('width') + 20, 'x': mousePos.x + 10} );
-                    this.TTbkg.setAttrs( {'height': this.text.getAttr('height') + 20, 'y': mousePos.y + 10} );
-                    //make text follow the mouse too
-                    this.text.setAttr( 'x', mousePos.x + 20 );
-                    this.text.setAttr( 'y', mousePos.y + 20 );                    
+                    //adjust the background size
+                    this.TTbkg.setAttr( 'width', this.text.getAttr('width') + 20 );
+                    this.TTbkg.setAttr( 'height', this.text.getAttr('height') + 20 ); 
                 } else {
                     this.TTbkg.setAttr('width', 0);
                     this.TTbkg.setAttr('height', 0);                    
                 }
-
-
                 this.tooltipLayer.draw();
             },
+
+            //move the tooltip around
+            'moveTooltip': function(){
+                var mousePos = this.stage.getPointerPosition();
+
+                //adjust the background size & position
+                this.TTbkg.setAttr( 'x', mousePos.x + 10 );
+                this.TTbkg.setAttr( 'y', mousePos.y + 10 );
+                //make text follow the mouse too
+                this.text.setAttr( 'x', mousePos.x + 20 );
+                this.text.setAttr( 'y', mousePos.y + 20 ); 
+
+            }
 
             //generate the color scale
             'generateColorScale': function(){
@@ -15592,6 +15599,7 @@ function fetchODBrunControl(returnObj){
 
                     //set up the tooltip listeners:
                     this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this, i) );
                     this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
 
                     //add the cell to the main layer
