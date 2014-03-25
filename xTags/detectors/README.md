@@ -24,12 +24,47 @@ All custom web components execute a callback upon creation, found in `lifecycle.
  - `<URLs>` (array of strings) - the same `URLs` array described above.
 
 This function then goes through the following steps, described in greater detail below as required:
- - Ensure the necessary objects are available on the `window.currentData` object, ready to recieve data as it comes in.  These are the `currentData.HV`, `.threshold`, and `.rate` objects.
+ - Ensure the necessary objects are available on the `window.currentData` object, ready to receive data as it comes in.  These are the `currentData.HV`, `.threshold`, and `.rate` objects.
  - Establish the custom element's internal DOM structure.
- - Establish some initial state parameters.
- - Establish the Kinetic.js environment
+ - Establish some initial state parameters & other member variables.
+ - Establish the Kinetic.js environment.
  - Set up data fetching and routing for this detector.
 
+###Internal DOM Structure
+The DOM for any single-view detector looks roughly like this:
+```
+____________________________________________________________
+headline wrapper div
+  [h1 Title]
+  [radio HV, Threshold, Rate]
+____________________________________________________________
+Kinetic.js target div
+
+
+
+
+____________________________________________________________
+plot control wrapper form
+  [plot minimum label & input:number]
+  [plot maximum label & input:number]
+  [select linear / log scale]
+____________________________________________________________
+```
+
+###State Variables
+ - `this.currentView` ['HV', 'Threhsold', 'Rate'] (default: 'Rate') - indicated what information is currently being visualized.
+ - `this.currentUnit` ['V', 'ADC Units', 'Hz'] (default: 'Hz') - units for current view, correspond by index to `this.currentView`
+ - `this.scale` ['ROOT Rainbow'] (default: 'ROOT Rainbow') - color scale name for temperature scale. 
+ - `this.min = {HV: 0, Threshold: 0, Rate: 0}` - object containing scale minima for respective views
+ - `this.max = {HV: x, Threshold: y, Rate: z}` - object containing scale maxima for respective views
+ - `this.scaleType = {HV: 'lin', Threshold: 'lin', Rate: 'lin'}` - object containing strings describing scale type for respective views, either 'lin' or 'log'. 
+
+###Static Member Variables
+ - `this.channelNames` - final resting place of the `channels` array passed around above.
+ - `this.cells` - Object which will hold pointers to the Kinetic.js cells that make up the detector visualization.
+ - `this.frameLineWidth` (default: 2) - Line width to use for detector visualization.
+ - `this.frameColor` (default: '#999999') - Frame color for detector visualization.
+ - `this.width` & `.height` - dimensions in pixels of Kinetic's rendering area.
 
 ##JSONP Services & Callbacks
 
