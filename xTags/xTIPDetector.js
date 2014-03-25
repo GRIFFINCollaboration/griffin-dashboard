@@ -62,7 +62,7 @@
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
                         fill: '#000000',
-                        fillPatternImage: 'static.gif',
+                        fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         closed: true,

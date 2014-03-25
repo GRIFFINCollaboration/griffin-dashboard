@@ -278,6 +278,10 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     });
     this.tooltipLayer.add(this.text);
 
+    this.errorPattern = new Kinetic.Image({
+        src = 'static.gif'
+    });
+
     //append data location information to list of URLs to fetch from:
     if(!window.fetchURL)
         window.fetchURL = [];
@@ -15594,7 +15598,7 @@ function fetchODBrunControl(returnObj){
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
                         fill: '#000000',
-                        fillPatternImage: 'static.gif',
+                        fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         closed: true,
