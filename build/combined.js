@@ -279,6 +279,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
         fontFamily: 'Arial',
         fontSize: 16,
         text: '',
+        lineHeight: 1.2,
         fill: '#999999',
         listening: false
     });
