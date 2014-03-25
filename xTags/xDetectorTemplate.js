@@ -167,6 +167,7 @@
                 this.text.setAttr( 'x', mousePos.x + 20 );
                 this.text.setAttr( 'y', mousePos.y + 20 ); 
 
+                this.tooltipLayer.draw();
             },
 
             //generate the color scale

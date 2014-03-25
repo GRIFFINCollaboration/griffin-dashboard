@@ -15235,6 +15235,7 @@ function fetchDetectorData(returnObj){
                 this.text.setAttr( 'x', mousePos.x + 20 );
                 this.text.setAttr( 'y', mousePos.y + 20 ); 
 
+                this.tooltipLayer.draw();
             },
 
             //generate the color scale
@@ -15599,7 +15600,7 @@ function fetchODBrunControl(returnObj){
 
                     //set up the tooltip listeners:
                     this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
-                    this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this, i) );
+                    this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
                     this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
 
                     //add the cell to the main layer
