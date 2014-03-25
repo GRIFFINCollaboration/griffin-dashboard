@@ -314,7 +314,7 @@ function parseRate(data){
         if (data.hasOwnProperty(key)) {
             for(subkey in data[key]){
                 if(data[key].hasOwnProperty(subkey)){
-                    window.currentData.rate[subkey.toUpperCase()] = data[key][subkey];
+                    window.currentData.rate[subkey.toUpperCase().slice(0,10)] = data[key][subkey];
                 }
             }
         }
@@ -332,8 +332,6 @@ function parseThreshold(data){
             window.currentData.threshold[key.toUpperCase().slice(0,10)] = data['parameters']['thresholds'][key];
         }        
     }    
-
-    console.log(window.currentData)
 }
 
 //function to make a reasonable decision on how many decimal places to show, whether to to use 
@@ -398,6 +396,8 @@ function repopulate(callback){
 
     if(callback)
         callback();
+
+    console.log(window.currentData)
 }//return the value of a selected option from a <select> element
 function selected(selectID){
     var select = document.getElementById(selectID),
