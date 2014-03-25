@@ -278,9 +278,8 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     });
     this.tooltipLayer.add(this.text);
 
-    this.errorPattern = new Kinetic.Image({
-        src: 'static.gif'
-    });
+    this.errorPattern = new Image();
+    this.errorPattern.src = 'static.gif'
 
     //append data location information to list of URLs to fetch from:
     if(!window.fetchURL)
