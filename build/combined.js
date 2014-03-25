@@ -332,6 +332,8 @@ function parseThreshold(data){
             window.currentData.threshold[key.toUpperCase().slice(0,10)] = data['parameters']['thresholds'][key];
         }        
     }    
+
+    console.log(window.currentData)
 }
 
 //function to make a reasonable decision on how many decimal places to show, whether to to use 
