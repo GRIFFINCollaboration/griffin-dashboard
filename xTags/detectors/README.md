@@ -52,19 +52,22 @@ ____________________________________________________________
 ```
 
 ###State Variables
- - `this.currentView` ['HV', 'Threhsold', 'Rate'] (default: 'Rate') - indicated what information is currently being visualized.
- - `this.currentUnit` ['V', 'ADC Units', 'Hz'] (default: 'Hz') - units for current view, correspond by index to `this.currentView`
- - `this.scale` ['ROOT Rainbow'] (default: 'ROOT Rainbow') - color scale name for temperature scale. 
+ - `this.currentView` ['HV', 'Threhsold', 'Rate'] default: 'Rate' - indicated what information is currently being visualized.
+ - `this.currentUnit` ['V', 'ADC Units', 'Hz'] default: 'Hz' - units for current view, correspond by index to `this.currentView`
+ - `this.scale` ['ROOT Rainbow'] default: 'ROOT Rainbow' - color scale name for temperature scale. 
  - `this.min = {HV: 0, Threshold: 0, Rate: 0}` - object containing scale minima for respective views
  - `this.max = {HV: x, Threshold: y, Rate: z}` - object containing scale maxima for respective views
  - `this.scaleType = {HV: 'lin', Threshold: 'lin', Rate: 'lin'}` - object containing strings describing scale type for respective views, either 'lin' or 'log'. 
+ - `this.lastTTindex` [-2 < integer < `this.channelNames.length`] default: -1 - number indicating the index of `this.channelNames` wherein the name of the last channel that the mouse passed over is found; -1 indicates mouse not pointing at any channels.
 
 ###Static Member Variables
  - `this.channelNames` - final resting place of the `channels` array passed around above.
  - `this.cells` - Object which will hold pointers to the Kinetic.js cells that make up the detector visualization.
- - `this.frameLineWidth` (default: 2) - Line width to use for detector visualization.
- - `this.frameColor` (default: '#999999') - Frame color for detector visualization.
+ - `this.frameLineWidth` default: 2 - Line width to use for detector visualization.
+ - `this.frameColor` default: '#999999' - Frame color for detector visualization.
  - `this.width` & `.height` - dimensions in pixels of Kinetic's rendering area.
+
+###Kinetic.js Setup
 
 ##JSONP Services & Callbacks
 
