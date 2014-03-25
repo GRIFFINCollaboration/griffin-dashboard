@@ -116,9 +116,12 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     ,   width = this.offsetWidth
     ,   height = 2*width/3
     ,   i, subdetectorNav, subdetectorNavLabel
-    //,   URL = null //fetch /DashboardConfig/<this.detectorName>, put it on window.currentData.ODB.<this.detectorName>, should contain at least HVscale, ThresholdScale and RateScale arrays of scale limits
 
     this.detectorName = name;
+
+    //set up data store for detectors
+    window.currentData.threshold = {};
+    window.currentData.rate = {};
 
     //////////////////////
     //Build DOM
