@@ -167,7 +167,7 @@
                 this.text.setAttr( 'x', mousePos.x + 20 );
                 this.text.setAttr( 'y', mousePos.y + 20 ); 
 
-            }
+            },
 
             //generate the color scale
             'generateColorScale': function(){
