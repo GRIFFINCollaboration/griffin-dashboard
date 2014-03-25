@@ -130,7 +130,8 @@
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeTooltip': function(i){
-                var text; 
+                var text, mousePos;
+
                 if(i!=-1){
                     text = this.channelNames[i];
                     text += '\nHV: ';
@@ -144,8 +145,20 @@
                 }
                 this.lastTTindex = i;
                 this.text.setText(text);
-                this.TTbkg.setAttr('width', this.text.getAttr('width') + 20);
-                this.TTbkg.setAttr('height', this.text.getAttr('height') + 20);
+                if(text != ''){
+                    mousePos = this.stage.getPointerPosition();
+                    //adjust the background size & position
+                    this.TTbkg.setAttrs( {'width': this.text.getAttr('width') + 20, 'x': mousePos.x} );
+                    this.TTbkg.setAttrs( {'height': this.text.getAttr('height') + 20, 'y': mousePos.y} );
+                    //make text follow the mouse too
+                    this.text.setAttr( 'x', mousePos.x + 10 );
+                    this.text.setAttr( 'y', mousePos.y + 10 );                    
+                } else {
+                    this.TTbkg.setAttr('width', 0);
+                    this.TTbkg.setAttr('height', 0);                    
+                }
+
+
                 this.tooltipLayer.draw();
             },
 
