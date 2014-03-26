@@ -146,7 +146,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
                 Threshold: canHas(localStorage.getItem(name+'Thresholdmin'), 0), 
                 Rate: canHas(localStorage.getItem(name+'Ratemin'), 0)
             };
-    this.max = {HV: canHas(localStorage.getItem(name+'HVmax'), 3000), 
+    this.max = {HV: canHas(JSON.parse(localStorage.getItem(name+'HVmax')), 3000), 
                 Threshold: canHas(localStorage.getItem(name+'Thresholdmax'), 1000),
                 Rate: canHas(localStorage.getItem(name+'Ratemax'), 10000)
             };

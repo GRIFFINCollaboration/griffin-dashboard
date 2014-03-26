@@ -243,7 +243,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
                 Threshold: canHas(localStorage.getItem(name+'Thresholdmin'), 0), 
                 Rate: canHas(localStorage.getItem(name+'Ratemin'), 0)
             };
-    this.max = {HV: canHas(localStorage.getItem(name+'HVmax'), 3000), 
+    this.max = {HV: canHas(JSON.parse(localStorage.getItem(name+'HVmax')), 3000), 
                 Threshold: canHas(localStorage.getItem(name+'Thresholdmax'), 1000),
                 Rate: canHas(localStorage.getItem(name+'Ratemax'), 10000)
             };
@@ -15064,7 +15064,7 @@ var Kinetic = {};
 
                 //save the change for later in localStorage
                 localStorage.setItem(this.name + this.currentView + 'min', this.min[this.currentView]);
-                localStorage.setItem(this.name + this.currentView + 'max', this.max[this.currentView]);
+                localStorage.setItem(this.name + this.currentView + 'max', JSON.stringify(this.max[this.currentView]));
                 localStorage.setItem(this.name + this.currentView + 'scaleType', this.scaleType[this.currentView]);
 
 console.log(localStorage.getItem(this.name + this.currentView + 'max') )

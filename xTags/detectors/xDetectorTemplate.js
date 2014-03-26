@@ -135,7 +135,7 @@
 
                 //save the change for later in localStorage
                 localStorage.setItem(this.name + this.currentView + 'min', this.min[this.currentView]);
-                localStorage.setItem(this.name + this.currentView + 'max', this.max[this.currentView]);
+                localStorage.setItem(this.name + this.currentView + 'max', JSON.stringify(this.max[this.currentView]));
                 localStorage.setItem(this.name + this.currentView + 'scaleType', this.scaleType[this.currentView]);
 
 console.log(localStorage.getItem(this.name + this.currentView + 'max') )
