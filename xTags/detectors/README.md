@@ -9,8 +9,8 @@ All custom web components execute a callback upon creation, found in `lifecycle.
 
  - Declare `channels[]`, an array of strings corresponding to the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature) names of each detector channel to be rendered, **in the order that they will be drawn**.
  - Declare `URLs[]`, an array of strings corresponding to the URLs that will respond with JSONP posts of the data this detector needs to update itself.  These will typically be:
-  - `<host>:<port>/<path>?jsonp=parseThreshold`, a JSONP post of threshold data (spec below), wrapped in the `parseThreshold` function.
-  - `<host>:<port>/<path>?jsonp=parseRate`, a JSONP post of rate data (spec below), wrapped in the `parseRate` function.
+  - `<host>:<port>/<route>?jsonp=parseThreshold`, a JSONP post of threshold data (spec below), wrapped in the `parseThreshold` function.
+  - `<host>:<port>/<route>?jsonp=parseRate`, a JSONP post of rate data (spec below), wrapped in the `parseRate` function.
   - `<ODB host>:<port>/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment`, a JSONP packing of this experiment's `/Equipment` directory, wrapped in the `fetchODBEquipment` function (spec below).
  - Run `initializeSingleViewDetector()`, a function that factors out all the generic detector setup steps, spec below. 
  - Declare detector specific drawing parameters and other member variables
@@ -80,6 +80,68 @@ ALl the detector cells in `this.cells` are painted on `this.mainLayer`, while th
 The last step of `initializeSingleViewDetector()` is to populate `window.fetchURL` with all the data URLs passed in to the `<URLs>` parameter; `assembleData()` will then manage the periodic refresh of the data returned by these requests.  Finally, `this` detector is appended to `window.refreshTargets`, so that `repopulate()` will know to take the information gathered by `assembleData()` and put it where this custom element is expecting it on refresh.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
 
 ##JSONP Services & Callbacks
+All detector components rely on being able to acquire live information about detector thresholds and scalar rates from URLs serving JSONP that obey the spec below.  The `<host>:<port>/<route>?<queryString>` strings for these services are exacty the string elements of `URLs[]` discussed above in the context of `lifecycle.created`.
+
+###Threshold Service
+Present detector threshold levels must be reported at `<host>:<port>/<route>?jsonp=parseThreshold` via the following JSONP:
+
+```
+parseThreshold({
+    parameters: {
+        thresholds: {
+            <channel code 0> : <threshold 0 in ADC units>,
+            <channel code 1> : <threshold 1 in ADC units>,
+            ...
+        }
+    }
+})
+```
+
+where `<channel code n>` is the 10 character channel code defined in the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).  Other parallel information may be packed in this object, as long as the structure above is present.
+
+`parseThreshold()` will take the above structure and sort it into `window.currentData.threshold` as:
+```
+window.currentData.threshold = {
+        <channel code 0> : <threshold 0 in ADC units>,
+        <channel code 1> : <threshold 1 in ADC units>,
+        ...
+}
+```
+
+###Rate Service
+Present detector scalar rates must be reported at `<host>:<port>/<route>?jsonp=parseRate` via the following JSONP:
+
+```
+parseRate({
+    <key 0>: {
+        <channel code 0> : <rate 0 in Hz>,
+        <channel code 1> : <rate 1 in Hz>,
+        ...
+    },
+
+    <key 1>: {
+        <channel code 2> : <rate 2 in Hz>,
+        <channel code 3> : <rate 3 in Hz>,
+        ...
+    }
+})
+```
+
+where `<channel code n>` is the 10 character channel code defined in the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).  `<key n>` can be any valid key name, and any number of these groups can be declared.
+
+`parseRate()` will take the above structure and sort it into `window.currentData.rate` as:
+```
+window.currentData.rate = {
+        <channel code 0> : <rate 0 in Hz>,
+        <channel code 1> : <rate 1 in Hz>,
+        <channel code 2> : <rate 2 in Hz>,
+        <channel code 3> : <rate 3 in Hz>,
+        ...
+}
+```
+
+
+##HV Data Acquisition
 
 ##localStorage Structure
 
