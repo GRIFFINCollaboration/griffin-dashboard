@@ -5,6 +5,7 @@ All detectors inherit most of their functionality from the `<detector-template>`
 
 ####Contents
  - [Creation & Instantiation](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#web-component-creation---lifecyclecreated)
+ - [Participation in the Main Event Loop](https://github.com/BillMills/griffinMarkII/blob/master/xTags/detectors/README.md#detectors-in-the-main-event-loop)
  - [Member Functions](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#member-functions)
  - [Tooltip Infrastructure](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#tooltip-infrastructure)
  - [JSONP Services & Callbacks](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#jsonp-services--callbacks)
