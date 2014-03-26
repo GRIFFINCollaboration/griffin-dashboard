@@ -15067,6 +15067,8 @@ var Kinetic = {};
                 localStorage.setItem(this.name + this.currentView + 'max', this.max[this.currentView]);
                 localStorage.setItem(this.name + this.currentView + 'scaleType', this.scaleType[this.currentView]);
 
+console.log(localStorage.getItem(this.name + this.currentView + 'max') )
+
                 //redraw
                 this.updateCells();
                 this.refreshColorScale();
