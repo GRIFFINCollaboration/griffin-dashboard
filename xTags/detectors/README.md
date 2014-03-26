@@ -56,7 +56,7 @@ ____________________________________________________________
  - `this.currentUnit` ['V', 'ADC Units', 'Hz'] default: 'Hz' - units for current view, correspond by index to `this.currentView`
  - `this.scale` ['ROOT Rainbow'] default: 'ROOT Rainbow' - color scale name for temperature scale. 
  - `this.min = {HV: 0, Threshold: 0, Rate: 0}` - object containing scale minima for respective views
- - `this.max = {HV: x, Threshold: y, Rate: z}` - object containing scale maxima for respective views
+ - `this.max = {HV: 3000, Threshold: 1000, Rate: 10000}` - object containing scale maxima for respective views
  - `this.scaleType = {HV: 'lin', Threshold: 'lin', Rate: 'lin'}` - object containing strings describing scale type for respective views, either 'lin' or 'log'. 
  - `this.lastTTindex` [-2 < integer < `this.channelNames.length`] default: -1 - number indicating the index of `this.channelNames` wherein the name of the last channel that the mouse passed over is found; -1 indicates mouse not pointing at any channels.
 
@@ -146,10 +146,24 @@ Various MarkII components acquire HV data from the Midas ODB via a JSONP fetch o
 
 The appropriate ODB structure is generated under `/Equipment` automatically by [this MIDAS HV frontend](https://github.com/BillMills/MIDASfrontends/tree/master/CAENHV).  Currently only CAEN HV cards are supported for this purpose, but any JSONP fetch massaged to populate the same variables on `window.currentData` could be substituted to report voltages from arbitrary sources.
 
-
-
 ##localStorage Structure
+Detector components make use of `localStorage` to persist some per-user information about their state.  The structure built and read from is as follows:
 
+```
+localStorage = {
+    <this.name>HVmin : <minimum for HV scale for this detector>,
+    <this.name>Thresholdmin : <minimum for threshold scale for this detector>,
+    <this.name>Ratemin : <minimum for rate scale for this detector>,
+    
+    <this.name>HVmax : <maximum for HV scale for this detector>,
+    <this.name>Thresholdmax : <maximum for threshold scale for this detector>,
+    <this.name>Ratemax : <maximum for rate scale for this detector>,
+
+    <this.name>HVscaleType : <lin/log for HV scale for this detector>,
+    <this.name>ThresholdscaleType : <lin/log for threshold scale for this detector>,
+    <this.name>RatescaleType : <lin/log for rate scale for this detector> 
+}
+```
 
 
 
