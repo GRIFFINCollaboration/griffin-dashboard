@@ -18,12 +18,6 @@
         methods: {
 
             'update': function(){
-                //get scale limits from local ODB if this detector has an entry there: 
-                if(window.currentData.ODB[this.name]){
-                    this.min = {HV: window.currentData.ODB[this.name].HVscale[0], Threshold: window.currentData.ODB[this.name].thresholdScale[0], Rate: window.currentData.ODB[this.name].rateScale[0]};
-                    this.min = {HV: window.currentData.ODB[this.name].HVscale[1], Threshold: window.currentData.ODB[this.name].thresholdScale[1], Rate: window.currentData.ODB[this.name].rateScale[1]};
-                }
-
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
@@ -137,8 +131,6 @@
                 localStorage.setItem(this.name + this.currentView + 'min', this.min[this.currentView]);
                 localStorage.setItem(this.name + this.currentView + 'max', this.max[this.currentView]);
                 localStorage.setItem(this.name + this.currentView + 'scaleType', this.scaleType[this.currentView]);
-
-console.log(this.name + this.currentView + 'max' )
 
                 //redraw
                 this.updateCells();

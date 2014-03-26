@@ -20,7 +20,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     ,   height = 2*width/3
     ,   i, subdetectorNav, subdetectorNavLabel
 
-    this.detectorName = name;
+    this.name = name;
 
     //set up data store for detectors
     if(!window.currentData)
