@@ -30,7 +30,7 @@ This function then goes through the following steps, described in greater detail
  - Establish the Kinetic.js environment.
  - Set up data fetching and routing for this detector.
 
-###Internal DOM Structure
+####Internal DOM Structure
 The DOM for any single-view detector looks roughly like this:
 ```
 ____________________________________________________________
@@ -51,7 +51,7 @@ plot control wrapper form
 ____________________________________________________________
 ```
 
-###State Variables
+####State Variables
  - `this.currentView` ['HV', 'Threhsold', 'Rate'] default: 'Rate' - indicated what information is currently being visualized.
  - `this.currentUnit` ['V', 'ADC Units', 'Hz'] default: 'Hz' - units for current view, correspond by index to `this.currentView`
  - `this.scale` ['ROOT Rainbow'] default: 'ROOT Rainbow' - color scale name for temperature scale. 
@@ -60,16 +60,28 @@ ____________________________________________________________
  - `this.scaleType = {HV: 'lin', Threshold: 'lin', Rate: 'lin'}` - object containing strings describing scale type for respective views, either 'lin' or 'log'. 
  - `this.lastTTindex` [-2 < integer < `this.channelNames.length`] default: -1 - number indicating the index of `this.channelNames` wherein the name of the last channel that the mouse passed over is found; -1 indicates mouse not pointing at any channels.
 
-###Static Member Variables
+####Static Member Variables
+ - `this.name` - name prefix for this detector
  - `this.channelNames` - final resting place of the `channels` array passed around above.
  - `this.cells` - Object which will hold pointers to the Kinetic.js cells that make up the detector visualization.
  - `this.frameLineWidth` default: 2 - Line width to use for detector visualization.
  - `this.frameColor` default: '#999999' - Frame color for detector visualization.
  - `this.width` & `.height` - dimensions in pixels of Kinetic's rendering area.
 
-###Kinetic.js Setup
+####Kinetic.js Setup
+All detectors are drawn in a simple Kinetic.js environment, built and pointed at as follows:
+ - `this.stage` (Kinetic.Stage) - the top level wrapper for the Kinetic environment.
+ - `this.mainLayer` (Kinetic.Layer) - the Kinetic layer on which the detector is drawn.
+ - `this.tooltipLayer` (Kinetic.Layer) - the Kinetic layer on which the tooltip is drawn.
+
+ALl the detector cells in `this.cells` are painted on `this.mainLayer`, while the tooltip text (`this.text`) and background (`this.TTbkg`) are painted on `this.tooltipLayer`.
+
+####Data Fetching & Routing
+The last step of `initializeSingleViewDetector()` is to populate `window.fetchURL` with all the data URLs passed in to the `<URLs>` parameter; `assembleData()` will then manage the periodic refresh of the data returned by these requests.  Finally, `this` detector is appended to `window.refreshTargets`, so that `repopulate()` will know to take the information gathered by `assembleData()` and put it where this custom element is expecting it on refresh.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
 
 ##JSONP Services & Callbacks
+
+##localStorage Structure
 
 
 
