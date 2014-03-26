@@ -80,17 +80,18 @@ ALl the detector cells in `this.cells` are painted on `this.mainLayer`, as are t
 The last step of `initializeSingleViewDetector()` is to populate `window.fetchURL` with all the data URLs passed in to the `<URLs>` parameter; `assembleData()` will then manage the periodic refresh of the data returned by these requests.  Finally, `this` detector is appended to `window.refreshTargets`, so that `repopulate()` will know to take the information gathered by `assembleData()` and put it where this custom element is expecting it on refresh.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
 
 ##Member Functions
-Most of the plumbing for detector components is generic, and inherited as the collection of functions registered on the `methods` member of `<detector-template>`.  These member functions are described as follows.
+Most of the plumbing for detector components is generic, and inherited as the collection of functions registered on the `methods` member of `<detector-template>`.  These member functions are described qualitatively as follows.
 
 ###generateColorScale()
 Establishes all the Kinetic.js objects involved in the color scale, and attaches them to `this.mainLayer`.  These are pointed at as follows:
  - `this.colorScale` - Kinetic.Rect for the color gradient rectangle itself.
  - `this.tickLabels[]` - Kinetic.Text objects labeling the tickmarks on the color scale, ordered left to right.
  - `this.scaleTitle` - Kinetic.Text object for the scale title.
+
 Tickmarks are also declared here, but no pointers to them are persisted.
 
 ###instantiateCells()
-This is the only function reimplemented as a rule for each specific detector.  It's generic pattern is:
+This is the only function reimplemented as a rule for each specific detector.  Its generic pattern is:
  - Populate `this.cells` with Kinetic objects representing each channel, in the same order as `this.channelNames`.
  - Attatch event listeners to the members of `this.cells` for governing the tooltip.
  - Add these Kinetic objects to `this.mainLayer`.
@@ -100,7 +101,7 @@ This is the only function reimplemented as a rule for each specific detector.  I
 Moves `this.TTbkg` and `this.text` around to follow the mouse; intended as the callback to the `mousemove` event listener of the Kinetic objects in `this.cells`.
 
 ###refreshColorScale()
-Refreshes the contents and positions of the Kinetic objects in `this.tickLabels[]` and `this.scaleTitle` as a function of whatever is registered in `this.scaleType`, `.min` and `.max` under the `this.currentView` key.  Intended as the `onchange` callback after modifying scale parameters in the plot control form, and for updating after changing the view.
+Refreshes the contents and positions of the Kinetic objects in `this.tickLabels[]` and `this.scaleTitle` as a function of whatever is registered in `this.scaleType`, `.min` and `.max` under the `this.currentView` key.  Intended as part of the `onchange` callback after modifying scale parameters in the plot control form, and for updating after changing the view.
 
 ###trackView()
 Keeps `this.currentView` and `this.currentUnit` and the values of the inputs in the plot control form up to date with whatever the user has chosen from the view selection radio.
@@ -126,6 +127,10 @@ Update this object and `localStorage` with values entered into the plot control 
 Populate tooltip with appropriate text for the channel named at `this.channelNames[i]`, and decide whether or not to show the tooltip.
 
 ##Tooltip Infrastructure
+The tooltip for detector elements is handled by the event listeners Kineitc exposes on its objects.  The Kinetic object in `this.cells[i]` must have the following event listeners bound as part of `instantiateCells()`:
+ - `mouseover` : `this.writeTooltip.bind(this, i)`
+ - `mousemove` : `this.moveTooltip.bind(this)`
+ - `mouseout` : `this.writeTooltip.bind(this, -1)`
 
 ##JSONP Services & Callbacks
 All detector components rely on being able to acquire live information about detector thresholds and scalar rates from URLs serving JSONP that obey the spec below.  The `<host>:<port>/<route>?<queryString>` strings for these services are exacty the string elements of `URLs[]` discussed above in the context of `lifecycle.created`.
