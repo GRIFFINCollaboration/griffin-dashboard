@@ -1,8 +1,15 @@
 #Detector Elements
 
-##Inheritance Structure
 Each detector subsystem supported by MarkII has its own custom element for one-line deployment on a dashboard page.  
 All detectors inherit most of their functionality from the `<detector-template>` object, and only detector-specific functionality is declared on the detector classes themselves; as such, this document focuses on the patterns established in `<detector-template>`, the `initializeSingleViewDetector()` setup function, and the peripheral data these objects expect to have available when building a detector component.
+
+####Contents
+ - [Creation & Instantiation](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#web-component-creation---lifecyclecreated)
+ - [Member Functions](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#member-functions)
+ - [Tooltip Infrastructure](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#tooltip-infrastructure)
+ - [JSONP Services & Callbacks](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#jsonp-services--callbacks)
+ - [HV Data Acquisition](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#hv-data-acquisition)
+ - [localStorage structure](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#localstorage-structure)
 
 ##Web Component Creation - `lifecycle.created`
 All custom web components execute a callback upon creation, found in `lifecycle.created` for each detector; this function declares a lot of detector-specific information, so it is left empty in the `<detector-template>` object, to be defined individually for each detector; nevertheless, `lifecycle.created` typically follows a standard pattern which we describe here:
@@ -78,6 +85,14 @@ ALl the detector cells in `this.cells` are painted on `this.mainLayer`, as are t
 
 ####Data Fetching & Routing
 The last step of `initializeSingleViewDetector()` is to populate `window.fetchURL` with all the data URLs passed in to the `<URLs>` parameter; `assembleData()` will then manage the periodic refresh of the data returned by these requests.  Finally, `this` detector is appended to `window.refreshTargets`, so that `repopulate()` will know to take the information gathered by `assembleData()` and put it where this custom element is expecting it on refresh.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
+
+##Detectors in the Main Event Loop
+As with all updatable objects, detector components participate in the main event loop via their `update()` method as called by `repopulate()`.  The basic flow is as follows:
+
+ - `update()`
+   - `updateCells()` - refreshes and repaints all the detector cells based on info in `window.currentData` and state variables.
+   - `writeTooltip(this.lastTTindex)` - refresh the tooltip text, necessary if mouse is sitting passively on a channel.
+   - repaint the `this.mainLayer`.
 
 ##Member Functions
 Most of the plumbing for detector components is generic, and inherited as the collection of functions registered on the `methods` member of `<detector-template>`.  These member functions are described qualitatively as follows.
