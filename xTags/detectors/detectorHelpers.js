@@ -142,9 +142,18 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     //Scale Parameters
     ///////////////////////////
     this.scale = 'ROOT Rainbow';
-    this.min = {HV: 0, Threshold: 0, Rate: 0};
-    this.max = {HV: 3000, Threshold: 1000, Rate: 10000};
-    this.scaleType = {HV: 'lin', Threshold: 'lin', Rate: 'lin'};
+    this.min = {HV: canHas(localStorage.getItem(name+'HVmin'), 0), 
+                Threshold: canHas(localStorage.getItem(name+'Thresholdmin'), 0), 
+                Rate: canHas(localStorage.getItem(name+'Ratemin'), 0)
+            };
+    this.max = {HV: canHas(localStorage.getItem(name+'HVmax'), 3000), 
+                Threshold: canHas(localStorage.getItem(name+'Thresholdmax'), 1000),
+                Rate: canHas(localStorage.getItem(name+'Ratemax'), 10000)
+            };
+    this.scaleType = {  HV: canHas(localStorage.getItem(name+'HVscaleType'), 'lin'),
+                        Threshold: canHas(localStorage.getItem(name+'ThresholdscaleType'), 'lin'), 
+                        Rate: canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
+                    };
 
     ///////////////////////////
     //Tooltip state

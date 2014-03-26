@@ -133,6 +133,11 @@
                 //update lin / log option
                 this.scaleType[this.currentView] = selected(this.id+'PlotControlScale');
 
+                //save the change for later in localStorage
+                localStorage.setItem(this.name + this.currentView + 'min') = this.min[this.currentView];
+                localStorage.setItem(this.name + this.currentView + 'max') = this.max[this.currentView];
+                localStorage.setItem(this.name + this.currentView + 'scaleType') = this.scaleType[this.currentView];
+
                 //redraw
                 this.updateCells();
                 this.refreshColorScale();
