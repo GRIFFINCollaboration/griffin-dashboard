@@ -142,6 +142,11 @@ window.currentData.rate = {
 
 
 ##HV Data Acquisition
+Various MarkII components acquire HV data from the Midas ODB via a JSONP fetch of the form `<ODB host>:<port>/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment`, included in the same `URLs[]` list as discussed above.  The `fetchODBEquipment()` callback takes the JSON representation of the `/Equipment` directory of the ODB returned by the request, and sticks it unmodified on `window.currentData.ODB.Equipment`.
+
+The appropriate ODB structure is generated under `/Equipment` automatically by [this MIDAS HV frontend](https://github.com/BillMills/MIDASfrontends/tree/master/CAENHV).  Currently only CAEN HV cards are supported for this purpose, but any JSONP fetch massaged to populate the same variables on `window.currentData` could be substituted to report voltages from arbitrary sources.
+
+
 
 ##localStorage Structure
 
