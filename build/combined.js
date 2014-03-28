@@ -16101,20 +16101,27 @@ var Kinetic = {};
 
                 //dummy plot generator for demo
                 channelSelect.onchange = function(){
-                    for(var j=0; j<5; j++){
-                        var center = Math.random()*1000,
-                            sigma = Math.random()*5,
-                            amp = Math.random()*1000,
-                            i, 
-                            energies = [],
-                            SV = document.getElementById('spectrumViewer');
+                    var center = []
+                        sigma = [],
+                        amp = [],
+                        i, j,
+                        energies = [],
+                        SV = document.getElementById('spectrumViewer');
 
-                        for(i=0; i<1000; i++){
-                            energies[i] = amp*Math.exp(-(i-center)*(i-center)/2/sigma/sigma);
-                        }
-                        SV.viewer.removeData('dummy'+j)
-                        SV.viewer.addData('dummy'+j, energies)
+                    for(i=0; i<5; i++){
+                        center[i] = Math.random()*1000;
+                        sigma[i] = Math.random()*5;
+                        amp[i] = Math.random()*1000;
                     }
+
+                    for(i=0; i<1000; i++){
+                        energies[i] = 0;
+                        for(j=0; j<5; j++){
+                            energies[i] += amp[j]*Math.exp(-(i-center[j])*(i-center[j])/2/sigma[j]/sigma[j]);
+                        }
+                    }
+                    SV.viewer.removeData('dummy0')
+                    SV.viewer.addData('dummy0', energies)
                     SV.viewer.plotData();
                 }
                 
