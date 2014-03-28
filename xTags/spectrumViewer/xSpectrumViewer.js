@@ -11,6 +11,7 @@
                 //headline
                 title.setAttribute('id', 'SVTitle');
                 this.appendChild(title);
+                title.innerHTML = 'Spectrum Viewer';
 
                 //spectrum canvas
                 spectrum.setAttribute('id', 'SVplot');
