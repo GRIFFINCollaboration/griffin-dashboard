@@ -25,7 +25,7 @@
                 //initialize viewer
                 this.viewer = new spectrumViewer('SVplot');
                 this.viewer.canvas.style.backgroundColor = '#111111';
-                this.viewer.addData('dummy0', viewer.fakeData.energydata0);
+                this.viewer.addData('dummy0', this.viewer.fakeData.energydata0);
                 this.viewer.plotData();
 
                 //set up channel selector
