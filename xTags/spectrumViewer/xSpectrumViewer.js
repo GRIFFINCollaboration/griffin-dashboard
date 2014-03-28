@@ -9,7 +9,7 @@
                 ,   spectrum = document.createElement('canvas')
                 ,   channelSelect = document.createElement('select')
                 ,   channel
-                ,   viewer, i, dummyString;
+                ,   i, dummyString;
 
                 //headline
                 title.setAttribute('id', 'SVTitle');
@@ -23,10 +23,10 @@
                 spectrum.height = 0.75*spectrum.width;                
 
                 //initialize viewer
-                viewer = new spectrumViewer('SVplot');
-                viewer.canvas.style.backgroundColor = '#111111';
-                viewer.addData('dummy0', viewer.fakeData.energydata0);
-                viewer.plotData();
+                this.viewer = new spectrumViewer('SVplot');
+                this.viewer.canvas.style.backgroundColor = '#111111';
+                this.viewer.addData('dummy0', viewer.fakeData.energydata0);
+                this.viewer.plotData();
 
                 //set up channel selector
                 channelSelect.setAttribute('id', 'SVselector');
@@ -41,6 +41,23 @@
                     channel.setAttribute('id', dummyString)
                     channelSelect.appendChild(channel);
                     channel.innerHTML = dummyString;
+                }
+
+                //dummy plot generator for demo
+                channelSelect.onchange = function(){
+                    var center = Math.rand()*1000,
+                        sigma = Math.rand()*500,
+                        amp = Math.rand()*1000,
+                        i, 
+                        energies = [],
+                        SV = document.getElementById('spectrumViewer');
+
+                    for(i=0; i<1000; i++){
+                        energies[i] = Math.exp(-(i-center)*(i-center)/2/sigma/sigma);
+                    }
+                    SV.viewer.removeData('dummy0')
+                    SV.viewer.addData('dummy0', energies)
+                    SV.viewer.plotData();
                 }
                 
             },

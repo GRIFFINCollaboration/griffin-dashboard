@@ -412,6 +412,7 @@ widget-spectrumViewer select{
 	line-height: 1em;
 	color: #EEEEEE;
 	background-color: #222222;
+	border: 0px;
 }
 
 widget-status{
