@@ -46,7 +46,7 @@
                 //dummy plot generator for demo
                 channelSelect.onchange = function(){
                     var center = Math.random()*1000,
-                        sigma = Math.random()*500,
+                        sigma = Math.random()*5,
                         amp = Math.random()*1000,
                         i, 
                         energies = [],
