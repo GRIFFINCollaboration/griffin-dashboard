@@ -47,7 +47,7 @@
                 channelSelect.onchange = function(){
                     var center = Math.random()*1000,
                         sigma = Math.random()*5,
-                        amp = Math.random()*1000,
+                        amp = Math.random()*10000,
                         i, 
                         energies = [],
                         SV = document.getElementById('spectrumViewer');
