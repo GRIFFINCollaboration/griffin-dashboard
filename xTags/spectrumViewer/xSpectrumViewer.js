@@ -22,6 +22,7 @@
                 viewer = new spectrumViewer('SVplot');
                 viewer.canvas.style.backgroundColor = '#111111';
                 viewer.addData('dummy0', viewer.fakeData.energydata0);
+                viewer.plotData();
                 
             },
             inserted: function() {},

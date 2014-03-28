@@ -399,8 +399,6 @@ form.plotControlWidget select{
 	padding: 1em;
 	margin: 1em;
 	max-width: 20%;
-
-	clear:both;
 }widget-status{
 	float:left;
 	background: #333333;
