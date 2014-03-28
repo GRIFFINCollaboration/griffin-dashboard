@@ -335,7 +335,7 @@ img#gitLogo{
 	margin-bottom:3px;
 }detector-demo, detector-TIPWall{
 	float:left;
-	width:60%;
+	width:58%;
 }
 
 detector-demo input[type=radio],
@@ -393,7 +393,7 @@ form.plotControlWidget select{
 	margin-right: 2px;
 	cursor:pointer;
 }widget-spectrumViewer{
-	float:left;
+	float:right;
 	background: #333333;
 	border-radius: 1em;
 	padding: 1em;
