@@ -16109,7 +16109,7 @@ var Kinetic = {};
                         SV = document.getElementById('spectrumViewer');
 
                     for(i=0; i<1000; i++){
-                        energies[i] = Math.exp(-(i-center)*(i-center)/2/sigma/sigma);
+                        energies[i] = amp*Math.exp(-(i-center)*(i-center)/2/sigma/sigma);
                     }
                     SV.viewer.removeData('dummy0')
                     SV.viewer.addData('dummy0', energies)
