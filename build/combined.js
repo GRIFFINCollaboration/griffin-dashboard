@@ -16062,7 +16062,8 @@ var Kinetic = {};
         lifecycle: {
             created: function() {
                 var title = document.createElement('h2')
-                ,   spectrum = document.createElement('canvas');
+                ,   spectrum = document.createElement('canvas')
+                ,   viewer;
 
                 //headline
                 title.setAttribute('id', 'SVTitle');
@@ -16072,6 +16073,9 @@ var Kinetic = {};
                 //spectrum canvas
                 spectrum.setAttribute('id', 'SVplot');
                 this.appendChild(spectrum);                
+
+                //initialize viewer
+                viewer = new spectrumViewer('SVplot');
                 
             },
             inserted: function() {},
