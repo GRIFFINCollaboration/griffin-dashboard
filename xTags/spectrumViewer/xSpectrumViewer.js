@@ -6,7 +6,7 @@
         lifecycle: {
             created: function() {
                 var title = document.createElement('h2')
-                ,   spectrum = document.createElement('canvas')
+                ,   spectrum = document.createElement('canvas');
 
                 //headline
                 title.setAttribute('id', 'SVTitle');
