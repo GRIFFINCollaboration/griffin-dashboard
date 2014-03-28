@@ -198,7 +198,7 @@
                 for(i=0; i<this.channelNames.length; i++){
                     //fetch the most recent raw value from the currentData store:
                     if(this.currentView == 'HV'){
-                        rawValue = Math.random();
+                        rawValue = window.currentData.HV[this.channelNames[i]];
                     } else if (this.currentView == 'Threshold'){
                         rawValue = window.currentData.threshold[this.channelNames[i]];
                     } else if (this.currentView == 'Rate'){

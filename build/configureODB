@@ -24,3 +24,9 @@ cd GRIFFIN_Logo_White_small.gif
 create string Background[1][128]
 set Background $PWD/img/GRIFFIN_Logo_White_small.gif
 cd ..
+
+mkdir static.gif
+cd static.gif
+create string Background[1][128]
+set Background $PWD/img/static.gif
+cd ..
