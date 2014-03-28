@@ -16076,6 +16076,8 @@ var Kinetic = {};
 
                 //initialize viewer
                 viewer = new spectrumViewer('SVplot');
+                viewer.canvas.style.backgroundColor = '#111111';
+                viewer.addData('dummy0', viewer.fakeData.energydata0);
                 
             },
             inserted: function() {},

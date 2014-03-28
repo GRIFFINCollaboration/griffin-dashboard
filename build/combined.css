@@ -392,7 +392,7 @@ form.plotControlWidget select{
 	background-color: #111111;
 	margin-right: 2px;
 	cursor:pointer;
-}widget-status{
+}widget-spectrumViewer{
 	float:left;
 	background: #333333;
 	border-radius: 1em;
