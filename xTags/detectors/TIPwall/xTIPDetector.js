@@ -81,51 +81,6 @@
                 //add the layers to the stage
                 this.stage.add(this.mainLayer);
                 this.stage.add(this.tooltipLayer);
-            },
-
-            'updateCells': function(){
-                var i, color, rawValue, colorIndex, 
-                    currentMin = this.min[this.currentView], 
-                    currentMax = this.max[this.currentView],
-                    isLog = this.scaleType[this.currentView] == 'log';
-
-                //get the scale limits right
-                if(isLog){
-                    currentMin = Math.log10(currentMin);
-                    currentMax = Math.log10(currentMax);
-                }
-
-                //change the color of each cell to whatever it should be now:
-                for(i=0; i<this.channelNames.length; i++){
-                    //fetch the most recent raw value from the currentData store:
-                    if(this.currentView == 'HV'){
-                        rawValue = Math.random();
-                    } else if (this.currentView == 'Threshold'){
-                        rawValue = window.currentData.threshold[this.channelNames[i]];
-                    } else if (this.currentView == 'Rate'){
-                        rawValue = window.currentData.rate[this.channelNames[i]];
-                    }
-
-                    //if no data was found, raise exception code:
-                    if(!rawValue && rawValue!=0)
-                        rawValue = 0xDEADBEEF;
-
-                    //value found and parsable, recolor cell:
-                    if(rawValue != 0xDEADBEEF){
-                        if(isLog)
-                            rawValue = Math.log10(rawValue);
-
-                        colorIndex = (rawValue - currentMin) / (currentMax - currentMin);
-                        color = scalepickr(colorIndex, this.scale);
-
-                        this.cells[this.channelNames[i]].fill(color);
-                        this.cells[this.channelNames[i]].setFillPriority('color');
-
-                    //no value reporting, show error pattern
-                    } else{
-                        this.cells[this.channelNames[i]].setFillPriority('pattern')
-                    }
-                }
             }
         }
     });

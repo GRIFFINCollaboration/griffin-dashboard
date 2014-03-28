@@ -154,7 +154,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
                         Threshold: canHas(localStorage.getItem(name+'ThresholdscaleType'), 'lin'), 
                         Rate: canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
                     };
-console.log(name+'HVmax')
+
     ///////////////////////////
     //Tooltip state
     ///////////////////////////

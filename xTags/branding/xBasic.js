@@ -21,13 +21,13 @@
                 titleWrap.setAttribute('id', 'title');
 
                 headline.setAttribute('id', 'headline');
-                headline.innerHTML = 'GRIFFIN'
+                headline.innerHTML = this.experiment;//'GRIFFIN'
 
                 subline.setAttribute('id', 'subline');
-                subline.innerHTML = 'TOOLKIT';
+                subline.innerHTML = 'DASHBOARD';
 
                 this.appendChild(wrap);
-                document.getElementById('header').appendChild(logo);
+                if(this.experiment == 'GRIFFIN')document.getElementById('header').appendChild(logo);
                 document.getElementById('header').appendChild(titleWrap);
                 document.getElementById('title').appendChild(headline);
                 document.getElementById('title').appendChild(subline);
@@ -42,7 +42,9 @@
 
         },
         accessors: {
-
+            'experiment':{
+                attribute: {} //this just needs to be declared
+            }
         }, 
         methods: {
 
@@ -50,7 +52,7 @@
                 //kern title nicely
                 var headlineWidth = document.getElementById('headline').offsetWidth,
                     sublineWidth  = document.getElementById('subline').offsetWidth,
-                    sublineKern   = (headlineWidth - sublineWidth) / 6;
+                    sublineKern   = (headlineWidth - sublineWidth) / 8;
                 document.getElementById('subline').style.letterSpacing = sublineKern;
             }
         }
