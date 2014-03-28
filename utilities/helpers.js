@@ -13,7 +13,6 @@ Math.log10 = function(x){
 
 //returns a if it isn't undefined or null, returns b otherwise
 function canHas(a, b){
-	console.log([a,b])
 
 	if(a === undefined || a === null) return b;
 
