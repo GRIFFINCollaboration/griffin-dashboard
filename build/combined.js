@@ -16072,7 +16072,9 @@ var Kinetic = {};
 
                 //spectrum canvas
                 spectrum.setAttribute('id', 'SVplot');
-                this.appendChild(spectrum);                
+                this.appendChild(spectrum);
+                spectrum.width = 0.9*this.offsetWidth
+                spectrum.height = 0.75*spectrum.width;                
 
                 //initialize viewer
                 viewer = new spectrumViewer('SVplot');
