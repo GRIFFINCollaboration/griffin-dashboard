@@ -1,8 +1,8 @@
 mkdir /Custom
 cd Custom
 
-create string MarkII&[1][128]
-set MarkII& $PWD/build/index.html
+create string Dashboard&[1][128]
+set Dashboard& $PWD/build/index.html
 
 create string combinedJS![1][128]
 set combinedJS! $PWD/build/combined.js
