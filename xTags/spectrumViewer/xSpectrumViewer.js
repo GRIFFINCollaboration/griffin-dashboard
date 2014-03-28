@@ -17,7 +17,7 @@
                 //spectrum canvas
                 spectrum.setAttribute('id', 'SVplot');
                 this.appendChild(spectrum);
-                spectrum.width = 0.8*this.offsetWidth
+                spectrum.width = 0.9*this.offsetWidth
                 spectrum.height = 0.75*spectrum.width;                
 
                 //initialize viewer
