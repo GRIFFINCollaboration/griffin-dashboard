@@ -403,6 +403,24 @@ form.plotControlWidget select{
 
 widget-spectrumViewer h2{
 	margin-top: 0px;
+}
+
+widget-spectrumViewer select{
+	margin-top: 1em;
+}
+
+widget-spectrumViewer select option{
+	padding: 0.5em;
+	font-size: 120%;
+	line-height: 1em;
+}
+
+widget-spectrumViewer select:nth-child(odd){
+	background-color: #222222;
+}
+
+widget-spectrumViewer select:nth-child(even){
+	background-color: #333333;
 }widget-status{
 	float:left;
 	background: #333333;
