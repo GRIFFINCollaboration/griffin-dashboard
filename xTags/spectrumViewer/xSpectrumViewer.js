@@ -7,7 +7,9 @@
             created: function() {
                 var title = document.createElement('h2')
                 ,   spectrum = document.createElement('canvas')
-                ,   viewer;
+                ,   channelSelect = document.createElement('select')
+                ,   channel
+                ,   viewer, i, dummyString;
 
                 //headline
                 title.setAttribute('id', 'SVTitle');
@@ -25,6 +27,21 @@
                 viewer.canvas.style.backgroundColor = '#111111';
                 viewer.addData('dummy0', viewer.fakeData.energydata0);
                 viewer.plotData();
+
+                //set up channel selector
+                channelSelect.setAttribute('id', 'SVselector');
+                this.appendChild(channelSelect);
+                for(i=1; i<25; i++){
+                    if(i<10)
+                        dummyString = 'TPW00' + i + 'P00X';
+                    else
+                        dummyString = 'TPW0' + i + 'P00X';
+
+                    channel = document.createElement('option')
+                    channel.setAttribute('id', dummyString)
+                    channelSelect.appendChild(channel);
+                    channel.innerHTML = dummyString;
+                }
                 
             },
             inserted: function() {},
