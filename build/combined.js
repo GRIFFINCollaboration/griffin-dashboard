@@ -330,6 +330,7 @@ function parseRate(data){
         if (data.hasOwnProperty(key)) {
             for(subkey in data[key]){
                 if(data[key].hasOwnProperty(subkey)){
+                    console.log(data[key][subkey])
                     window.currentData.rate[subkey.toUpperCase().slice(0,10)] = data[key][subkey];
                 }
             }
