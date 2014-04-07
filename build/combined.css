@@ -415,7 +415,7 @@ form.plotControlWidget select{
 	background: #333333;
 	border-radius: 1em;
 	padding: 1em;
-	margin: 1em;
+	margin: 1em 1em 1em 0;
 	width: 18%;
 }
 
