@@ -38,7 +38,7 @@
                         dummyString = 'TPW0' + i + 'P00X';
 
                     channel = document.createElement('option')
-                    channel.setAttribute('id', dummyString)
+                    channel.setAttribute('id', 'SV' + dummyString)
                     channelSelect.appendChild(channel);
                     channel.innerHTML = dummyString;
                 }
