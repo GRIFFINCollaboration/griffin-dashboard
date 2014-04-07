@@ -14,14 +14,14 @@ function assembleData(callback) {
 
         script.setAttribute('id', 'tempScript'+i);
 
-        //only do the callback on the first script
-        //if(i==0){
+        //only do the callback on the last script
+        if(i==window.fetchURL.length-1){
             script.onload = function(){
                 if(callback){
                     callback()
                 }
             }
-        //}
+        }
 
         script.onerror = function(){
             console.log('failed fetch!')
