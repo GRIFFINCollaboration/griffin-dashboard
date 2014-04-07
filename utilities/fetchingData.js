@@ -15,13 +15,13 @@ function assembleData(callback) {
         script.setAttribute('id', 'tempScript'+i);
 
         //only do the callback on the first script
-        if(i==0){
+        //if(i==0){
             script.onload = function(){
                 if(callback){
                     callback()
                 }
             }
-        }
+        //}
 
         script.onerror = function(){
             console.log('failed fetch!')
