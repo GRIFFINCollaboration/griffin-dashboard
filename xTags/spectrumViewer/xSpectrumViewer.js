@@ -71,8 +71,6 @@
 
                 //ready to catch events to change the channel
                 this.addEventListener('changeChannel', function(evt){
-                    console.log(evt.detail.channel)
-
                     document.getElementById('SVselector').value = evt.detail.channel;
                     document.getElementById('SVselector').onchange();
                 }, false);

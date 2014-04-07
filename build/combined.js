@@ -16048,6 +16048,18 @@ var Kinetic = {};
                     this.TTbkg.setAttr('height', 0);                    
                 }
                 this.tooltipLayer.draw();
+            },
+
+            //fire an event at interested parties, if they exist:
+            'clickCell' : function(cellName){
+                var evt,
+                    SV = document.getElementById('spectrumViewer');
+
+                //send the clicked channel to the spectrum viewer:
+                if(SV){
+                    evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
+                    SV.dispatchEvent(evt);
+                }
             }
 
         }
@@ -16127,8 +16139,6 @@ var Kinetic = {};
 
                 //ready to catch events to change the channel
                 this.addEventListener('changeChannel', function(evt){
-                    console.log(evt.detail.channel)
-
                     document.getElementById('SVselector').value = evt.detail.channel;
                     document.getElementById('SVselector').onchange();
                 }, false);
@@ -16433,18 +16443,6 @@ function fetchODBrunControl(returnObj){
                 //add the layers to the stage
                 this.stage.add(this.mainLayer);
                 this.stage.add(this.tooltipLayer);
-            },
-
-            //fire an event at interested parties, if they exist:
-            'clickCell' : function(cellName){
-                var evt,
-                    SV = document.getElementById('spectrumViewer');
-
-                //send the clicked channel to the spectrum viewer:
-                if(SV){
-                    evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
-                    SV.dispatchEvent(evt);
-                }
             }
         }
     });

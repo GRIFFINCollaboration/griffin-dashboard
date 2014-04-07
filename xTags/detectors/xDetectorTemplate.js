@@ -280,6 +280,18 @@
                     this.TTbkg.setAttr('height', 0);                    
                 }
                 this.tooltipLayer.draw();
+            },
+
+            //fire an event at interested parties, if they exist:
+            'clickCell' : function(cellName){
+                var evt,
+                    SV = document.getElementById('spectrumViewer');
+
+                //send the clicked channel to the spectrum viewer:
+                if(SV){
+                    evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
+                    SV.dispatchEvent(evt);
+                }
             }
 
         }

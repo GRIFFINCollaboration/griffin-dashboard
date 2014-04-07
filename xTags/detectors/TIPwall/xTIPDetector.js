@@ -84,18 +84,6 @@
                 //add the layers to the stage
                 this.stage.add(this.mainLayer);
                 this.stage.add(this.tooltipLayer);
-            },
-
-            //fire an event at interested parties, if they exist:
-            'clickCell' : function(cellName){
-                var evt,
-                    SV = document.getElementById('spectrumViewer');
-
-                //send the clicked channel to the spectrum viewer:
-                if(SV){
-                    evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
-                    SV.dispatchEvent(evt);
-                }
             }
         }
     });
