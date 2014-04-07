@@ -1,20 +1,7 @@
 <html>
 	<head>
-		<!--link rel="stylesheet" type="text/css" href="main.css"/>
-		<script type='text/javascript' src='utilities/fetchingData.js'></script>
-		<script type='text/javascript' src='utilities/colorScales.js'></script>
-
-		<script type='text/javascript' src='lib/brick-0.9.1.js'></script>
-		<link rel='stylesheet' type='text/css' href='lib/brick-0.9.1.css'>
-
-		<script type="text/javascript" src="xTags/xBasic.js"></script>
-		<link rel='stylesheet' type='text/css' href='xTags/xBasic.css'>
-
-		<script type="text/javascript" src="xTags/xStatus.js"></script>
-		<link rel='stylesheet' type='text/css' href='xTags/xStatus.css'>
-
-		<script type="text/javascript" src="xTags/xDemoDetector.js"></script>
-		<link rel='stylesheet' type='text/css' href='xTags/xDemoDetector.css'-->
+		<!--link rel="stylesheet" type="text/css" href="build/combined.css"/>
+		<script type='text/javascript' src='build/combined.js'></script-->
 	</head>
 
 	<body>
@@ -35,7 +22,6 @@
 
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
-
 				//begin data fetch loop:
 				assembleData(repopulate)
 				window.setInterval(assembleData.bind(null, repopulate), 3000);

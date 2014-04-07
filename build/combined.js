@@ -16167,7 +16167,7 @@ var Kinetic = {};
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
                 ,   i
-                ,   URL = 'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
+                ,   URL = 'http://midtig06.triumf.ca:8081/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
 
                 //make sure data store is available
                 if(!window.currentData)
@@ -16232,7 +16232,7 @@ var Kinetic = {};
                 redirectKludge.setAttribute('id', 'statusRedirect');
                 redirectKludge.setAttribute('name', 'redir');
                 redirectKludge.setAttribute('type', 'hidden');
-                redirectKludge.setAttribute('value', 'http://annikal.triumf.ca:8082/CS/MarkII')
+                redirectKludge.setAttribute('value', 'http://midtig06.triumf.ca:8081/CS/Dashboard')
                 document.getElementById('runControl').appendChild(redirectKludge)
 
                 //message list
@@ -16357,7 +16357,7 @@ function fetchODBrunControl(returnObj){
                     
                     URLs = ["http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold",    //threshold server
                             "http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate",             //rate server
-                            'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
+                            'http://midtig06.triumf.ca:8081/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 //deploy the standard stuff
                 initializeSingleViewDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();

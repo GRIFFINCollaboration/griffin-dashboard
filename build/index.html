@@ -23,7 +23,6 @@
 
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
-
 				//begin data fetch loop:
 				assembleData(repopulate)
 				window.setInterval(assembleData.bind(null, repopulate), 3000);

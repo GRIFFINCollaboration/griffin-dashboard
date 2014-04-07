@@ -20,7 +20,7 @@
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
                 ,   i
-                ,   URL = 'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
+                ,   URL = 'http://midtig06.triumf.ca:8081/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
 
                 //make sure data store is available
                 if(!window.currentData)
@@ -85,7 +85,7 @@
                 redirectKludge.setAttribute('id', 'statusRedirect');
                 redirectKludge.setAttribute('name', 'redir');
                 redirectKludge.setAttribute('type', 'hidden');
-                redirectKludge.setAttribute('value', 'http://annikal.triumf.ca:8082/CS/MarkII')
+                redirectKludge.setAttribute('value', 'http://midtig06.triumf.ca:8081/CS/Dashboard')
                 document.getElementById('runControl').appendChild(redirectKludge)
 
                 //message list
