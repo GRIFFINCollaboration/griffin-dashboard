@@ -16023,7 +16023,7 @@ var Kinetic = {};
                 if(i!=-1){
                     text = this.channelNames[i];
                     text += '\nHV: ';
-                    HV = window.currentData.threshold[this.channelNames[i]];
+                    HV = window.currentData.HV[this.channelNames[i]];
                     if(!HV && HV!=0) HV = 'Not Reporting';
                     text += HV;
                     text += '\nThreshold: ';
