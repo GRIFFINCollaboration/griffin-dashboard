@@ -68,6 +68,11 @@
                     SV.viewer.addData('dummy0', energies)
                     SV.viewer.plotData();
                 }
+
+                //ready to catch events to change the channel
+                this.addEventListener('changeChannel', function(evt){
+                    console.log(evt.channel)
+                }, false);
                 
             },
             inserted: function() {},

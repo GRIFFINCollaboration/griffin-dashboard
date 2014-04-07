@@ -16124,6 +16124,11 @@ var Kinetic = {};
                     SV.viewer.addData('dummy0', energies)
                     SV.viewer.plotData();
                 }
+
+                //ready to catch events to change the channel
+                this.addEventListener('changeChannel', function(evt){
+                    console.log(evt.channel)
+                }, false);
                 
             },
             inserted: function() {},
@@ -16415,6 +16420,9 @@ function fetchODBrunControl(returnObj){
                     this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
                     this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
 
+                    //set up onclick listeners:
+                    this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
+
                     //add the cell to the main layer
                     this.mainLayer.add(this.cells[this.channelNames[i]]);
                 }
@@ -16422,6 +16430,18 @@ function fetchODBrunControl(returnObj){
                 //add the layers to the stage
                 this.stage.add(this.mainLayer);
                 this.stage.add(this.tooltipLayer);
+            },
+
+            //fire an event at interested parties, if they exist:
+            'clickCell' : function(cellName){
+                var evt,
+                    SV = document.getElementById('spectrumViewer');
+
+                //send the clicked channel to the spectrum viewer:
+                if(SV){
+                    evt = new Event('changeChannel', {'channel': cellName});
+                    SV.dispatchEvent(evt);
+                }
             }
         }
     });
