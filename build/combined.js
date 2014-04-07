@@ -16127,7 +16127,7 @@ var Kinetic = {};
 
                 //ready to catch events to change the channel
                 this.addEventListener('changeChannel', function(evt){
-                    console.log(evt.channel)
+                    console.log(evt)
                 }, false);
                 
             },
