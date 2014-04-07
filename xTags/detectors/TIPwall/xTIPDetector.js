@@ -93,7 +93,7 @@
 
                 //send the clicked channel to the spectrum viewer:
                 if(SV){
-                    evt = new CustomEvent('changeChannel', {'channel': cellName});
+                    evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
                     SV.dispatchEvent(evt);
                 }
             }
