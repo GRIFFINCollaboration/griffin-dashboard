@@ -252,7 +252,8 @@ a.linkRow{
 	padding: 0.5em;
 	border:0px;
 	color:#EEEEEE;
-	background-color: #222222;
+	background-color: #333333;
+	float:left;
 }
 
 a.linkRow:hover{
