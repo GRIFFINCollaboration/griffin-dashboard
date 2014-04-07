@@ -254,6 +254,7 @@ a.linkRow{
 	color:#EEEEEE;
 	background-color: #333333;
 	float:left;
+	text-decoration: none;
 }
 
 a.linkRow:hover{
