@@ -16129,7 +16129,7 @@ var Kinetic = {};
                     for(i=0; i<1000; i++){
                         energies[i] = 0;
                         for(j=0; j<5; j++){
-                            energies[i] += amp[j]*Math.exp(-(i-center[j])*(i-center[j])/2/sigma[j]/sigma[j]);
+                            energies[i] += Math.floor(amp[j]*Math.exp(-(i-center[j])*(i-center[j])/2/sigma[j]/sigma[j]));
                         }
                     }
                     SV.viewer.removeData('dummy0')
