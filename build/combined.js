@@ -214,6 +214,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     document.getElementById(this.id+'PlotScaleLog').innerHTML = 'Log';
 
     plotScale.value = canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
+    this.refreshColorScale();
 
     ///////////////////////
     //State variables
