@@ -319,10 +319,6 @@ div#footer div.textBlock{
     margin-top:33px;
 }
 
-div.textBlock{
-    overflow: hidden;
-}
-
 div#footer p{
     text-align: left;
     line-height: 1.5em;
@@ -350,7 +346,8 @@ div#footer a:visited{
 }
 
 canvas#footerImage{
-    float: right;
+    position: absolute;
+    right:0px;
 }
 
 img#gitLogo{
