@@ -204,7 +204,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     plotControlWrap.appendChild(plotScale);
 
     plotScaleLin.setAttribute('id', this.id+'PlotScaleLin');
-    plotScaleLin.setAttribute('value', 'lin');
+    plotScaleLin.setAttribute('value', canHas(localStorage.getItem(name+'RatescaleType'), 'lin'));
     plotScale.appendChild(plotScaleLin);
     document.getElementById(this.id+'PlotScaleLin').innerHTML = 'Linear';
 
