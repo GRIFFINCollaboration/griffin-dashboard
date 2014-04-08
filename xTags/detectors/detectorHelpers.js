@@ -107,7 +107,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     plotControlWrap.appendChild(plotScale);
 
     plotScaleLin.setAttribute('id', this.id+'PlotScaleLin');
-    plotScaleLin.setAttribute('value', canHas(localStorage.getItem(name+'RatescaleType'), 'lin'));
+    plotScaleLin.setAttribute('value', 'lin');
     plotScale.appendChild(plotScaleLin);
     document.getElementById(this.id+'PlotScaleLin').innerHTML = 'Linear';
 
@@ -116,6 +116,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     plotScale.appendChild(plotScaleLog);
     document.getElementById(this.id+'PlotScaleLog').innerHTML = 'Log';
 
+    plotScale.value = canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
 
     ///////////////////////
     //State variables
