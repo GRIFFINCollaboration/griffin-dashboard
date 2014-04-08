@@ -319,6 +319,10 @@ div#footer div.textBlock{
     margin-top:33px;
 }
 
+div.textBlock{
+    max-width: 570px;
+}
+
 div#footer p{
     text-align: left;
     line-height: 1.5em;
