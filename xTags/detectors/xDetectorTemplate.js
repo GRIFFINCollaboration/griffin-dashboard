@@ -259,19 +259,19 @@
                     if(!HV && HV!=0) 
                         text += 'Not Reporting';
                     else
-                        text += HV.toFixed();
+                        text += parseFloat(HV).toFixed();
                     text += '\nThreshold: ';
                     thresh = window.currentData.threshold[this.channelNames[i]].toFixed();
                     if(!thresh && thresh!=0) 
                         text += 'Not Reporting'
                     else
-                        text += thresh.toFixed();
+                        text += parseFloat(thresh).toFixed();
                     text += '\nRate: ';
                     rate = window.currentData.rate[this.channelNames[i]].toFixed();
                     if(!rate && rate!=0) 
                         text += 'Not Reporting'
                     else
-                        text += rate.toFixed();
+                        text += parseFloat(rate).toFixed();
                 } else {
                     text = '';
                 }
