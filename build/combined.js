@@ -214,7 +214,6 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     document.getElementById(this.id+'PlotScaleLog').innerHTML = 'Log';
 
     plotScale.value = canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
-    this.refreshColorScale();
 
     ///////////////////////
     //State variables
@@ -298,6 +297,9 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
 
     this.errorPattern = new Image();
     this.errorPattern.src = 'static.gif'
+
+    //make sure the scale drew correctly
+    this.refreshColorScale();
 
     //append data location information to list of URLs to fetch from:
     if(!window.fetchURL)
