@@ -35,6 +35,9 @@
                 this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+
+                //make sure the scale drew correctly
+                this.refreshColorScale();
             },
             inserted: function() {},
             removed: function() {},
