@@ -234,7 +234,7 @@ function parseRate(data){
         if (data.hasOwnProperty(key)) {
             for(subkey in data[key]){
                 if(data[key].hasOwnProperty(subkey)){
-                    window.currentData.rate[subkey.toUpperCase().slice(0,10)] = data[key][subkey].dataRate;
+                    window.currentData.rate[subkey.toUpperCase().slice(0,10)] = data[key][subkey].TRIGREQ;
                 }
             }
         }

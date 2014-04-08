@@ -331,7 +331,7 @@ function parseRate(data){
         if (data.hasOwnProperty(key)) {
             for(subkey in data[key]){
                 if(data[key].hasOwnProperty(subkey)){
-                    window.currentData.rate[subkey.toUpperCase().slice(0,10)] = data[key][subkey].dataRate;
+                    window.currentData.rate[subkey.toUpperCase().slice(0,10)] = data[key][subkey].TRIGREQ;
                 }
             }
         }
@@ -16402,7 +16402,7 @@ function fetchODBrunControl(returnObj){
                 //generate the color scale
                 this.generateColorScale();
 
-                //make sure the scale drew correctly
+                //make sure the scale drew correctly - hack to make sure the info from localstorage is getting used, fix plz
                 this.refreshColorScale();
             },
             inserted: function() {},

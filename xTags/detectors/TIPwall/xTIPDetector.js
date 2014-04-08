@@ -36,7 +36,7 @@
                 //generate the color scale
                 this.generateColorScale();
 
-                //make sure the scale drew correctly
+                //make sure the scale drew correctly - hack to make sure the info from localstorage is getting used, fix plz
                 this.refreshColorScale();
             },
             inserted: function() {},
