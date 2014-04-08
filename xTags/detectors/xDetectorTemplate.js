@@ -58,13 +58,13 @@
                     this.tickLabels[i] = new Kinetic.Text({
                         x: (0.1+i*0.08)*this.width,
                         y: 0.96*this.height + 2,
-                        text: generateTickLabel(this.min[this.currentView], this.max[this.currentView], 11, i),//(this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0),
+                        text: '',//generateTickLabel(this.min[this.currentView], this.max[this.currentView], 11, i),//(this.min[this.currentView] + (this.max[this.currentView]-this.min[this.currentView])/10*i).toFixed(0),
                         fontSize: 14,
                         fontFamily: 'Arial',
                         fill: '#999999'
                     });
                     //center lable under tick
-                    this.tickLabels[i].setAttr('x', this.tickLabels[i].getAttr('x') - this.tickLabels[i].getTextWidth()/2);
+                    //this.tickLabels[i].setAttr('x', this.tickLabels[i].getAttr('x') - this.tickLabels[i].getTextWidth()/2);
                     this.mainLayer.add(this.tickLabels[i]);
                 }
 
@@ -72,13 +72,16 @@
                 this.scaleTitle = new Kinetic.Text({
                     x: this.width/2,
                     y: 0.9*this.height - 22,
-                    text: this.currentView + ' [' + this.currentUnit + ']',
+                    text: '',//this.currentView + ' [' + this.currentUnit + ']',
                     fontSize : 20,
                     fontFamily: 'Arial',
                     fill: '#999999'
                 })
-                this.scaleTitle.setAttr('x', this.width/2 - this.scaleTitle.getTextWidth()/2);
+                //this.scaleTitle.setAttr('x', this.width/2 - this.scaleTitle.getTextWidth()/2);
                 this.mainLayer.add(this.scaleTitle);
+
+                //populate labels
+                this.refreshColorScale();
 
                 this.mainLayer.draw();
             },
