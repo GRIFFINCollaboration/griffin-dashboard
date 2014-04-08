@@ -37,6 +37,7 @@ div#footer div.textBlock{
 
 div.textBlock{
     max-width: 570px;
+    overflow: hidden;
 }
 
 div#footer p{
