@@ -63,7 +63,7 @@ div#footer a:visited{
 
 canvas#footerImage{
     position: absolute;
-    right:0px;
+    right:calc((100% - 1120px) / 2);
 }
 
 img#gitLogo{
