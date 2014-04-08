@@ -16023,17 +16023,23 @@ var Kinetic = {};
                 if(i!=-1){
                     text = this.channelNames[i];
                     text += '\nHV: ';
-                    HV = window.currentData.HV[this.channelNames[i]].toFixed();
-                    if(!HV && HV!=0) HV = 'Not Reporting';
-                    text += HV;
+                    HV = window.currentData.HV[this.channelNames[i]];
+                    if(!HV && HV!=0) 
+                        text += 'Not Reporting';
+                    else
+                        text += HV.toFixed();
                     text += '\nThreshold: ';
                     thresh = window.currentData.threshold[this.channelNames[i]].toFixed();
-                    if(!thresh && thresh!=0) thresh = 'Not Reporting'  
-                    text += thresh;
+                    if(!thresh && thresh!=0) 
+                        text += 'Not Reporting'
+                    else
+                        text += thresh.toFixed();
                     text += '\nRate: ';
                     rate = window.currentData.rate[this.channelNames[i]].toFixed();
-                    if(!rate && rate!=0) rate = 'Not Reporting'
-                    text += rate;
+                    if(!rate && rate!=0) 
+                        text += 'Not Reporting'
+                    else
+                        text += rate.toFixed();
                 } else {
                     text = '';
                 }
