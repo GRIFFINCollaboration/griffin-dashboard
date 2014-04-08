@@ -213,8 +213,6 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     plotScale.appendChild(plotScaleLog);
     document.getElementById(this.id+'PlotScaleLog').innerHTML = 'Log';
 
-    plotScale.value = canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
-
     ///////////////////////
     //State variables
     ///////////////////////
@@ -252,6 +250,11 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
                         Threshold: canHas(localStorage.getItem(name+'ThresholdscaleType'), 'lin'), 
                         Rate: canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
                     };
+
+    //if anything was in local storage, communicate this to the UI:
+    plotControlMin.value = this.min[this.currentView];
+    plotControlMax.value = this.max[this.currentView];
+    plotScale.value = this.scaleType[this.currentView];
 
     ///////////////////////////
     //Tooltip state
@@ -16403,7 +16406,7 @@ function fetchODBrunControl(returnObj){
                 this.generateColorScale();
 
                 //make sure the scale drew correctly - hack to make sure the info from localstorage is getting used, fix plz
-                this.refreshColorScale();
+                //this.refreshColorScale();
             },
             inserted: function() {},
             removed: function() {},

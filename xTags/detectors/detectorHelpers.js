@@ -116,8 +116,6 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
     plotScale.appendChild(plotScaleLog);
     document.getElementById(this.id+'PlotScaleLog').innerHTML = 'Log';
 
-    plotScale.value = canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
-
     ///////////////////////
     //State variables
     ///////////////////////
@@ -155,6 +153,11 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
                         Threshold: canHas(localStorage.getItem(name+'ThresholdscaleType'), 'lin'), 
                         Rate: canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
                     };
+
+    //if anything was in local storage, communicate this to the UI:
+    plotControlMin.value = this.min[this.currentView];
+    plotControlMax.value = this.max[this.currentView];
+    plotScale.value = this.scaleType[this.currentView];
 
     ///////////////////////////
     //Tooltip state
