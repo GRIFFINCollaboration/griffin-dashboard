@@ -261,13 +261,13 @@
                     else
                         text += parseFloat(HV).toFixed();
                     text += '\nThreshold: ';
-                    thresh = window.currentData.threshold[this.channelNames[i]].toFixed();
+                    thresh = window.currentData.threshold[this.channelNames[i]];
                     if(!thresh && thresh!=0) 
                         text += 'Not Reporting'
                     else
                         text += parseFloat(thresh).toFixed();
                     text += '\nRate: ';
-                    rate = window.currentData.rate[this.channelNames[i]].toFixed();
+                    rate = window.currentData.rate[this.channelNames[i]];
                     if(!rate && rate!=0) 
                         text += 'Not Reporting'
                     else
