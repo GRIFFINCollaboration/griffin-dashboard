@@ -77,24 +77,6 @@ div#mainContent{
 	width:100%
 }
 
-a.linkRow{
-	font-size: 120%;
-	line-height: 1em;
-	border-radius: 5px;
-	cursor:pointer;
-	margin: 1em 1px 0em 1em;
-	padding: 0.5em;
-	border:0px;
-	color:#EEEEEE;
-	background-color: #333333;
-	float:left;
-	text-decoration: none;
-}
-
-a.linkRow:hover{
-	background-color: #555555;
-}
-
 /*Footer and footer-related styles////////////////////////////////////////////////////*/
 div#footer{
     background-color: #111111;
