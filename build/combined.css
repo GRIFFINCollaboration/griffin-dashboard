@@ -393,7 +393,8 @@ form.plotControlWidget select{
 	background-color: #111111;
 	margin-right: 2px;
 	cursor:pointer;
-}widget-nav{
+}
+widget-nav{
 	width:100%;
 }
 
@@ -413,7 +414,8 @@ a.linkRow{
 
 a.linkRow:hover{
 	background-color: #555555;
-}widget-spectrumViewer{
+}
+widget-spectrumViewer{
 	float:right;
 	background: #333333;
 	border-radius: 1em;
