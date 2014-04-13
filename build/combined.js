@@ -16119,9 +16119,9 @@ var Kinetic = {};
                 for(i=0; i<customPages.length; i++){
                     link = document.createElement('a');
                     link.href = 'http://'+window.location.host + '/CS/' + customPages[i];
-                    link.class = 'linkRow';
                     link.innerHTML = customPages[i];
                     this.appendChild(link);
+                    link.setAttribute('class', 'linkRow')
                 }
             }
         }
