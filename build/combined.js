@@ -16124,7 +16124,7 @@ var Kinetic = {};
 //callback to trigger nav population once data is returned
 function parseCustomPages(data){
     var i,
-        navBars = document.getElementByTagName('widget-nav'),
+        navBars = document.getElementsByTagName('widget-nav'),
         links = {};
 
     console.log(data)
