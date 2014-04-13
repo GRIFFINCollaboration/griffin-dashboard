@@ -20,7 +20,7 @@
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
                 ,   i
-                ,   URL = 'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
+                ,   URL = 'http://'+window.location.host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
 
                 //make sure data store is available
                 if(!window.currentData)
