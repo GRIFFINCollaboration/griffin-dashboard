@@ -16112,9 +16112,15 @@ var Kinetic = {};
             }
         }, 
         methods: {
+            //deploy buttons; <customPages> == array of names of custom pages
+            'setup': function(customPages){
+                var i, link;
 
-            'setup': function(){
-
+                for(i=0; i<customPages.length; i++){
+                    link = document.createElement('a');
+                    link.href = 'http://'+window.location.host + '/CS/' + customPages[i];
+                    this.appendChild(link);
+                }
             }
         }
     });
@@ -16129,16 +16135,12 @@ function parseCustomPages(data){
 
     //scrape out custom pages, they end in '&'
     for(key in data){
-        console.log(key)
         if(key[key.length-1] == '&')
             links[links.length] = key.slice(0,key.length-1);
     }
 
-    console.log(links)
-    console.log(data)
-
     for(i=0; i<navBars.length; i++){
-
+        navBars[i].setup(links)
     }
 
 }//status bar
