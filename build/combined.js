@@ -16134,6 +16134,7 @@ function parseCustomPages(data){
     }
 
     console.log(links)
+    console.log(data)
 
     for(i=0; i<navBars.length; i++){
 
