@@ -16129,6 +16129,7 @@ function parseCustomPages(data){
 
     //scrape out custom pages, they end in '&'
     for(key in data){
+        console.log(key)
         if(key[key.length-1] == '&')
             links[links.length] = key.slice(0,key.length-1);
     }
