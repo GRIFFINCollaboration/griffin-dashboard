@@ -16084,7 +16084,7 @@ var Kinetic = {};
         lifecycle: {
             created: function() {
                 var script = document.createElement('script'),
-                    baseURL = window.location.host;
+                    baseURL = 'http://'+window.location.host;
 
                 script.setAttribute('src', baseURL+'/?cmd=jcopy&odb0=Custom/&encoding=json-p-nokeys&callback=parseCustomPages');
 
