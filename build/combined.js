@@ -16262,7 +16262,7 @@ function parseCustomPages(data){
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
                 ,   i
-                ,   URL = 'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
+                ,   URL = 'http://'+window.location.host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
 
                 //make sure data store is available
                 if(!window.currentData)
@@ -16452,7 +16452,7 @@ function fetchODBrunControl(returnObj){
                     
                     URLs = ["http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold",    //threshold server
                             "http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate",             //rate server
-                            'http://annikal.triumf.ca:8082/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
+                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 //deploy the standard stuff
                 initializeSingleViewDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();
