@@ -16116,12 +16116,20 @@ var Kinetic = {};
             'setup': function(customPages){
                 var i, link;
 
+                //always link to the status page first
+                link = document.createElement('a');
+                link.href = 'http://'+window.location.host;
+                link.innerHTML = 'Status';
+                this.appendChild(link);
+                link.setAttribute('class', 'linkRow');                
+
+                //link to all the custom pages
                 for(i=0; i<customPages.length; i++){
                     link = document.createElement('a');
                     link.href = 'http://'+window.location.host + '/CS/' + customPages[i];
                     link.innerHTML = customPages[i];
                     this.appendChild(link);
-                    link.setAttribute('class', 'linkRow')
+                    link.setAttribute('class', 'linkRow');
                 }
             }
         }
