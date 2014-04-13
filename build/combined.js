@@ -16086,7 +16086,7 @@ var Kinetic = {};
                 var script = document.createElement('script'),
                     baseURL = 'http://'+window.location.host;
 
-                script.setAttribute('src', baseURL+'/?cmd=jcopy&odb0=Custom/&encoding=json-p-nokeys&callback=parseCustomPages');
+                script.setAttribute('src', baseURL+'/?cmd=jcopy&odb=Custom/&encoding=json-p-nokeys&callback=parseCustomPages');
 
                 script.setAttribute('id', 'customScrapeScript');
 
