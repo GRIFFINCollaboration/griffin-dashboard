@@ -16076,7 +16076,64 @@ var Kinetic = {};
     });
 
 })();
-//status bar
+//navigation - auto populates with status page and custom pages
+(function(){  
+
+    xtag.register('widget-nav', {
+        extends: 'div',
+        lifecycle: {
+            created: function() {
+                var script = document.createElement('script'),
+                    baseURL = window.location.host;
+
+                script.setAttribute('src', baseURL+'/?cmd=jcopy&odb0=Custom/&encoding=json-p-nokeys&callback=parseCustomPages');
+
+                script.setAttribute('id', 'customScrapeScript');
+
+                //dump the script after it's done
+                script.onload = function(){
+                    var element = document.getElementById('customScrapeScript');
+                    if(element)
+                        element.parentNode.removeChild(element);
+                }
+                
+                document.head.appendChild(script);
+            },
+            inserted: function() {},
+            removed: function() {},
+            attributeChanged: function() {}
+        }, 
+        events: { 
+
+        },
+        accessors: {
+            'experiment':{
+                attribute: {} //this just needs to be declared
+            }
+        }, 
+        methods: {
+
+            'setup': function(){
+
+            }
+        }
+    });
+
+})();
+
+//callback to trigger nav population once data is returned
+function parseCustomPages(data){
+    var i,
+        navBars = document.getElementByTagName('widget-nav'),
+        links = {};
+
+    console.log(data)
+
+    for(i=0; i<navBars.length; i++){
+
+    }
+
+}//status bar
 (function(){  
 
     xtag.register('widget-spectrumViewer', {
