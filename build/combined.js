@@ -16123,11 +16123,17 @@ var Kinetic = {};
 
 //callback to trigger nav population once data is returned
 function parseCustomPages(data){
-    var i,
+    var i, key
         navBars = document.getElementsByTagName('widget-nav'),
-        links = {};
+        links = [];
 
-    console.log(data)
+    //scrape out custom pages, they end in '&'
+    for(key in data){
+        if(key.pop() == '&')
+            links[links.length] = key;
+    }
+
+    console.log(links)
 
     for(i=0; i<navBars.length; i++){
 
