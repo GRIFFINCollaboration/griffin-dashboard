@@ -469,7 +469,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     if(!window.refreshTargets)
         window.refreshTargets = [];
     window.refreshTargets[window.refreshTargets.length] = this;
-*/
+
 }
 
 //stick the ODB equipment directory into its local slot:
