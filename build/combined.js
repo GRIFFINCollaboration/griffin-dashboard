@@ -16732,13 +16732,12 @@ function fetchODBrunControl(returnObj){
 
                 //deploy the standard stuff
                 initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs, ['Main', 'TIG01', 'TIG02'])();
-/*
+
                 //////////////////////////////////////
-                //TIP Wall specific drawing parameters
+                //TIGRESS specific drawing parameters
                 //////////////////////////////////////
-                this.cellSide = this.height*0.8/5;              //length of cell side
-                this.x0 = this.width/2 - 2.5*this.cellSide;     //x coordinate of upper left corner of TIP image
-                this.y0 = 0;                                    //y ''
+    
+                //TBD
 
                 /////////////////////////////
                 //Initialize visualization
@@ -16747,7 +16746,7 @@ function fetchODBrunControl(returnObj){
                 this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
-*/
+
             },
             inserted: function() {},
             removed: function() {},
@@ -16766,6 +16765,7 @@ function fetchODBrunControl(returnObj){
         }, 
         methods: {
             'instantiateCells': function(){
+                /*
                 var i, iOffset, X, Y;
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
@@ -16802,6 +16802,7 @@ function fetchODBrunControl(returnObj){
                 //add the layers to the stage
                 this.stage.add(this.mainLayer);
                 this.stage.add(this.tooltipLayer);
+                */
             }
         }
     });
