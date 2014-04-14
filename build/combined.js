@@ -331,8 +331,8 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     ,   plotScale = document.createElement('select')
     ,   plotScaleLin = document.createElement('option')
     ,   plotScaleLog = document.createElement('option')
-    ,   plotDeck = document.createElement('x-deck')
-    ,   plotCard = document.createElement('x-card')
+    ,   plotDeck //= document.createElement('x-deck')
+    ,   plotCard //= document.createElement('x-card')
     ,   deckNavigator
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
     ,   width = this.offsetWidth
