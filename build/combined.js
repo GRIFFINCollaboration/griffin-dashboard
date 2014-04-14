@@ -16462,8 +16462,8 @@ function fetchODBrunControl(returnObj){
                                 'TPW023P00X', 'TPW022P00X', 'TPW021P00X', 'TPW020P00X', 'TPW019P00X'
                                 ]
                     
-                    URLs = ["http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold",    //threshold server
-                            "http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate",             //rate server
+                    URLs = [this.thresholdServer,    //threshold server
+                            this.rateServer,             //rate server
                             'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 //deploy the standard stuff
@@ -16492,7 +16492,12 @@ function fetchODBrunControl(returnObj){
 
         },
         accessors: {
-
+            'rateServer':{
+                attribute: {} //this just needs to be declared
+            },
+            'thresholdServer':{
+                attribute: {} //this just needs to be declared
+            }
         }, 
         methods: {
             'instantiateCells': function(){
