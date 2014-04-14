@@ -16123,8 +16123,10 @@ var Kinetic = {};
                 this.appendChild(link);
                 link.setAttribute('class', 'linkRow');                
 
-                //link to all the custom pages
+                //link to all the custom pages, except this one
                 for(i=0; i<customPages.length; i++){
+                    if('http://'+window.location.host + '/CS/' + customPages[i] == window.location)
+                        continue;
                     link = document.createElement('a');
                     link.href = 'http://'+window.location.host + '/CS/' + customPages[i];
                     link.innerHTML = customPages[i];
