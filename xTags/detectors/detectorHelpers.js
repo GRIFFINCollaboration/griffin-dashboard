@@ -234,8 +234,10 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     ,   plotScale = document.createElement('select')
     ,   plotScaleLin = document.createElement('option')
     ,   plotScaleLog = document.createElement('option')
-    ,   plotDeck = document.createElement('x-deck')
+    ,   deckWrap = document.createElement('div')
+    ,   plotDeck //= document.createElement('x-deck')
     ,   plotCard //= document.createElement('x-card')
+    ,   xString
     ,   deckNavigator
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
     ,   width = this.offsetWidth
@@ -298,6 +300,14 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
         document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
     }
+    //plot deck wrapper:
+    deckWrap.setAttribute('id', this.id+'DeckWrap');
+    this.appendChild(deckWrap);
+
+    //declaring x-tags from within other x-tags needs special treatment via innerHTML; must build HTML string and set it.
+    xString = '<x-deck id="' + this.id + 'Deck">';
+
+    deckWrap.innerHTML = xString;
 /*
     //x-deck for views
     plotDeck.setAttribute('id', this.id+'Deck');
