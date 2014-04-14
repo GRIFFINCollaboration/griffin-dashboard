@@ -426,7 +426,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
         }
         this.appendChild(deckNavigator);
     }
-/*
+
     //plot control widget
     plotControlWrap.setAttribute('id', this.id+'PlotControl');
     plotControlWrap.setAttribute('class', 'plotControlWidget');
@@ -517,39 +517,49 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     ////////////////////////////
     //Kinetic.js setup
     ////////////////////////////
-    //point kinetic at the div and set up the staging and layers:
-    this.stage = new Kinetic.Stage({
-        container: this.id+'Draw',
-        width: width,
-        height: height
-    });
-    this.mainLayer = new Kinetic.Layer();       //main rendering layer
-    this.tooltipLayer = new Kinetic.Layer();    //layer for tooltip info
 
-    //tooltip background:
-    this.TTbkg = new Kinetic.Rect({
-        x:60,
-        y:0,
-        width:100,
-        height:100,
-        fill:'rgba(0,0,0,0.8)',
-        stroke: 'rgba(0,0,0,0)',
-        listening: false
-    });
-    this.tooltipLayer.add(this.TTbkg);
+    //indices for these arrays correspond to the x-card index on display
+    this.stage = [];
+    this.mainLayer = [];
+    this.tooltipLayer = [];
+    this.TTbkg = [];
+    this.text = [];
+    for(i=0; i<viewNames.length; i++){
 
-    //tooltip text:
-    this.text = new Kinetic.Text({
-        x: 70,
-        y: 10,
-        fontFamily: 'Arial',
-        fontSize: 16,
-        text: '',
-        lineHeight: 1.2,
-        fill: '#EEEEEE',
-        listening: false
-    });
-    this.tooltipLayer.add(this.text);
+        //point kinetic at the div and set up the staging and layers:
+        this.stage[i] = new Kinetic.Stage({
+            container: this.id+viewNames[i]+'Draw',
+            width: width,
+            height: height
+        });
+        this.mainLayer[i] = new Kinetic.Layer();       //main rendering layer
+        this.tooltipLayer[i] = new Kinetic.Layer();    //layer for tooltip info
+
+        //tooltip background:
+        this.TTbkg[i] = new Kinetic.Rect({
+            x:60,
+            y:0,
+            width:100,
+            height:100,
+            fill:'rgba(0,0,0,0.8)',
+            stroke: 'rgba(0,0,0,0)',
+            listening: false
+        });
+        this.tooltipLayer[i].add(this.TTbkg[i]);
+
+        //tooltip text:
+        this.text[i] = new Kinetic.Text({
+            x: 70,
+            y: 10,
+            fontFamily: 'Arial',
+            fontSize: 16,
+            text: '',
+            lineHeight: 1.2,
+            fill: '#EEEEEE',
+            listening: false
+        });
+        this.tooltipLayer[i].add(this.text[i]);
+    }
 
     this.errorPattern = new Image();
     this.errorPattern.src = 'static.gif'
@@ -567,7 +577,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     if(!window.refreshTargets)
         window.refreshTargets = [];
     window.refreshTargets[window.refreshTargets.length] = this;
-*/
+
 }
 
 //stick the ODB equipment directory into its local slot:
