@@ -402,7 +402,10 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     this.appendChild(deckWrap);
 
     //declaring x-tags from within other x-tags needs special treatment via innerHTML; must build HTML string and set it.
-    xString = '<x-deck id="' + this.id + 'Deck" selected-index=0></x-deck>';
+    xString = '<x-deck id="' + this.id + 'Deck" selected-index=0>';
+    for(i=0; i<viewNames.length; i++){
+        xString += '<x-card id="' + this.id+viewNames[i] + 'Card"></x-card>';
+    }
 
     deckWrap.innerHTML = xString;
 /*
