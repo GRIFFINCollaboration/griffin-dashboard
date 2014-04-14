@@ -395,6 +395,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
         document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
     }
+/*
     //x-deck for views
     plotDeck.setAttribute('id', this.id+'Deck');
     plotDeck.setAttribute('selected-index', 0);
@@ -422,7 +423,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
             document.getElementById(testID).shuffleNext();
         }
     }
-
+*/
     //plot control widget
     plotControlWrap.setAttribute('id', this.id+'PlotControl');
     plotControlWrap.setAttribute('class', 'plotControlWidget');
