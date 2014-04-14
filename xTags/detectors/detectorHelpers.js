@@ -327,6 +327,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
         deckNavigator.onclick = function(){
             document.getElementById(testID).shuffleNext();
         }
+        this.appendChild(deckNavigator);
     }
 /*
     //plot control widget
