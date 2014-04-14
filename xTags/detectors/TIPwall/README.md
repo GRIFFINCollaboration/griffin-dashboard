@@ -1,6 +1,6 @@
 ###TIPWall
 
-The TIP Wall inherits all the standard functionality from `xDetectorTemplate` and `setupSingleViewDetector`; since it is a very simple visualization, the TIP Wall serves as a good first example of real use of these objects.
+`<detector-TIPWall>` inherits all the standard functionality from `xDetectorTemplate` and `setupSingleViewDetector`; since it is a very simple visualization, the TIP Wall serves as a good first example of real use of these objects.
 
 ####Attributes
 
