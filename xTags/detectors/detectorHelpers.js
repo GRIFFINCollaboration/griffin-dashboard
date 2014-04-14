@@ -309,25 +309,14 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     for(i=0; i<viewNames.length; i++){
         xString += '<x-card id="' + this.id+viewNames[i] + 'Card"></x-card>';
     }
-
     deckWrap.innerHTML = xString;
-/*
-    //x-deck for views
-    plotDeck.setAttribute('id', this.id+'Deck');
-    plotDeck.setAttribute('selected-index', 0);
-    this.appendChild(plotDeck);
 
     //plot buffers
     for(i=0; i<viewNames.length; i++){
-        //x-cards for views
-        plotCard = document.createElement('x-card');
-        plotCard.setAttribute('id', this.id+viewNames[i]+'Card');
-        plotDeck.appendChild(plotCard);
-
         //divs to hold kinetic contexts
         drawTarget = document.createElement('div');
         drawTarget.setAttribute('id', this.id+viewNames[i]+'Draw');
-        plotCard.appendChild(drawTarget);
+        document.getElementById(this.id+viewNames[i] + 'Card').appendChild(drawTarget);
     }
 
     //x-deck navigation
