@@ -425,7 +425,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
             document.getElementById(testID).shuffleNext();
         }
     }
-
+/*
     //plot control widget
     plotControlWrap.setAttribute('id', this.id+'PlotControl');
     plotControlWrap.setAttribute('class', 'plotControlWidget');
@@ -566,7 +566,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     if(!window.refreshTargets)
         window.refreshTargets = [];
     window.refreshTargets[window.refreshTargets.length] = this;
-
+*/
 }
 
 //stick the ODB equipment directory into its local slot:
