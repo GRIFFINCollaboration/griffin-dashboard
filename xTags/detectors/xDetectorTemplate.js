@@ -171,22 +171,26 @@
             },
 
             'update': function(){
+                var displayIndex = document.getElementById(this.id+'Deck').selected-index;
+
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
 
                 //update the cell colors and tooltip content
                 this.updateCells();
-                this.writeTooltip(this.lastTTindex);
+                //this.writeTooltip(this.lastTTindex);
+
                 //repaint
-                this.mainLayer.draw();
+                this.mainLayer[displayIndex].draw();
             },
 
             'updateCells': function(){
                 var i, color, rawValue, colorIndex, 
                     currentMin = this.min[this.currentView], 
                     currentMax = this.max[this.currentView],
-                    isLog = this.scaleType[this.currentView] == 'log';
+                    isLog = this.scaleType[this.currentView] == 'log',
+                    displayIndex = document.getElementById(this.id+'Deck').selected-index;
 
                 //get the scale limits right
                 if(isLog){
@@ -196,6 +200,10 @@
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
+                    //bail out if this cell isn't in the current view
+                    if(displayIndex != parseInt(this.channelNames[i].slice(3,5),10) )
+                        continue;
+                    
                     //fetch the most recent raw value from the currentData store:
                     if(this.currentView == 'HV'){
                         rawValue = window.currentData.HV[this.channelNames[i]];

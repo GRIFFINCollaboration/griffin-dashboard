@@ -332,8 +332,8 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     ,   plotScaleLin = document.createElement('option')
     ,   plotScaleLog = document.createElement('option')
     ,   deckWrap = document.createElement('div')
-    ,   plotDeck //= document.createElement('x-deck')
-    ,   plotCard //= document.createElement('x-card')
+    ,   plotDeck
+    ,   plotCard
     ,   xString
     ,   deckNavigator
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
@@ -402,7 +402,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     this.appendChild(deckWrap);
 
     //declaring x-tags from within other x-tags needs special treatment via innerHTML; must build HTML string and set it.
-    xString = '<x-deck id="' + this.id + 'Deck" selected-index=0>';
+    xString = '<x-deck id="' + this.id + 'Deck" selected-index=1>';
     for(i=0; i<viewNames.length; i++){
         xString += '<x-card id="' + this.id+viewNames[i] + 'Card"></x-card>';
     }
@@ -16207,22 +16207,26 @@ var Kinetic = {};
             },
 
             'update': function(){
+                var displayIndex = document.getElementById(this.id+'Deck').selected-index;
+
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
 
                 //update the cell colors and tooltip content
                 this.updateCells();
-                this.writeTooltip(this.lastTTindex);
+                //this.writeTooltip(this.lastTTindex);
+
                 //repaint
-                this.mainLayer.draw();
+                this.mainLayer[displayIndex].draw();
             },
 
             'updateCells': function(){
                 var i, color, rawValue, colorIndex, 
                     currentMin = this.min[this.currentView], 
                     currentMax = this.max[this.currentView],
-                    isLog = this.scaleType[this.currentView] == 'log';
+                    isLog = this.scaleType[this.currentView] == 'log',
+                    displayIndex = document.getElementById(this.id+'Deck').selected-index;
 
                 //get the scale limits right
                 if(isLog){
@@ -16232,6 +16236,10 @@ var Kinetic = {};
 
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
+                    //bail out if this cell isn't in the current view
+                    if(displayIndex != parseInt(this.channelNames[i].slice(3,5),10) )
+                        continue;
+                    
                     //fetch the most recent raw value from the currentData store:
                     if(this.currentView == 'HV'){
                         rawValue = window.currentData.HV[this.channelNames[i]];
@@ -16767,7 +16775,7 @@ function fetchODBrunControl(returnObj){
         methods: {
             'instantiateCells': function(){
                 
-                var i, cardIndex,
+                var i, cardIndex, cellKey,
                     g = this.grid, 
                     cellCoords = {};
 
@@ -16846,9 +16854,10 @@ function fetchODBrunControl(returnObj){
 
                     //determine which card this cell belongs to:
                     cardIndex = parseInt( this.channelNames[i].slice(3,5) ,10);
+                    cellKey = this.channelNames[i].slice(5);
 
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
-                        points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
+                        points: cellCoords[cellKey],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
@@ -16870,8 +16879,10 @@ function fetchODBrunControl(returnObj){
                 }
 
                 //add the layers to the stage
-                this.stage.add(this.mainLayer);
-                this.stage.add(this.tooltipLayer);
+                for(i=0; i<17; i++){
+                    this.stage.add(this.mainLayer[i]);
+                    this.stage.add(this.tooltipLayer[i]);
+                }
                 
             }
         }

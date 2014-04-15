@@ -55,7 +55,7 @@
         methods: {
             'instantiateCells': function(){
                 
-                var i, cardIndex,
+                var i, cardIndex, cellKey,
                     g = this.grid, 
                     cellCoords = {};
 
@@ -134,9 +134,10 @@
 
                     //determine which card this cell belongs to:
                     cardIndex = parseInt( this.channelNames[i].slice(3,5) ,10);
+                    cellKey = this.channelNames[i].slice(5);
 
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
-                        points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
+                        points: cellCoords[cellKey],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
@@ -158,8 +159,10 @@
                 }
 
                 //add the layers to the stage
-                this.stage.add(this.mainLayer);
-                this.stage.add(this.tooltipLayer);
+                for(i=0; i<17; i++){
+                    this.stage.add(this.mainLayer[i]);
+                    this.stage.add(this.tooltipLayer[i]);
+                }
                 
             }
         }
