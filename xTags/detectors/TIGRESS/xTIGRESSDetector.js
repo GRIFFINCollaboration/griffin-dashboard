@@ -169,12 +169,14 @@
                     //add the cell to the appropriate main layer
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
-console.log(this.stage)
+
                 //add the layers to the stage
+                /*
                 for(i=0; i<17; i++){
                     this.stage[i].add(this.mainLayer[i]);
                     this.stage[i].add(this.tooltipLayer[i]);
                 }
+                */
                 
             }
         }

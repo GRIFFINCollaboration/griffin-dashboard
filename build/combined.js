@@ -559,6 +559,10 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
             listening: false
         });
         this.tooltipLayer[i].add(this.text[i]);
+
+        this.stage[i].add(this.mainLayer[i]);
+        this.stage[i].add(this.tooltipLayer[i]);
+
     }
 
     this.errorPattern = new Image();
@@ -16889,12 +16893,14 @@ function fetchODBrunControl(returnObj){
                     //add the cell to the appropriate main layer
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
-console.log(this.stage)
+
                 //add the layers to the stage
+                /*
                 for(i=0; i<17; i++){
                     this.stage[i].add(this.mainLayer[i]);
                     this.stage[i].add(this.tooltipLayer[i]);
                 }
+                */
                 
             }
         }
