@@ -10,7 +10,7 @@
                 var channels = [], i, j, k,
                     HPGEprefixes = ['TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'],
                     colors = ['R', 'G', 'B', 'W'],
-                    HPGEcellCodes = ['N00A', 'N00B', 'P01X', 'P02X,', 'P03X', 'P04X,', 'P05X', 'P06X,', 'P07X', 'P08X,'],
+                    HPGEcellCodes = ['N00A', 'N00B', 'P01X', 'P02X', 'P03X', 'P04X', 'P05X', 'P06X', 'P07X', 'P08X'],
                     BGOprefixes = ['TIS01', 'TIS02', 'TIS03', 'TIS04', 'TIS05', 'TIS06', 'TIS07', 'TIS08', 'TIS09', 'TIS10', 'TIS11', 'TIS12', 'TIS13', 'TIS14', 'TIS15', 'TIS16'],
                     BGOcellCodes = ['N01X', 'N02X', 'N03X', 'N04X', 'N05X'],
                     //throw in URLs while we're at it:
@@ -147,7 +147,7 @@
                     //determine which card this cell belongs to:
                     cardIndex = parseInt( this.channelNames[i].slice(3,5) ,10);
                     cellKey = this.channelNames[i].slice(5);
-console.log(cellKey)
+
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellCoords[cellKey],
                         fill: '#000000',
@@ -171,13 +171,10 @@ console.log(cellKey)
                 }
 
                 //add the layers to the stage
-                /*
                 for(i=0; i<17; i++){
                     this.stage[i].add(this.mainLayer[i]);
                     this.stage[i].add(this.tooltipLayer[i]);
-                }
-                */
-                
+                }       
             }
         }
     });
