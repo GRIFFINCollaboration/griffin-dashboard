@@ -334,18 +334,21 @@ canvas#footerImage{
 
 img#gitLogo{
 	margin-bottom:3px;
-}detector-demo, detector-TIPWall{
+}detector-demo, detector-TIPWall, detector-TIGRESS{
 	float:left;
 	width:58%;
 }
 
 detector-demo input[type=radio],
-detector-TIPWall input[type=radio]{
+detector-TIPWall input[type=radio],
+detector-TIGRESS input[type=radio]
+{
 	display:none;
 }
 
 detector-demo input[type='radio'] + label,
-detector-TIPWall input[type='radio'] + label
+detector-TIPWall input[type='radio'] + label,
+detector-TIGRESS input[type='radio'] + label
 {
 	font-size: 100%;
 	line-height: 1.2em;
@@ -361,7 +364,8 @@ detector-TIPWall input[type='radio'] + label
 }
 
 detector-demo input[type='radio']:checked + label,
-detector-TIPWall input[type='radio']:checked + label{
+detector-TIPWall input[type='radio']:checked + label,
+detector-TIGRESS input[type='radio']:checked + label{
 	background-color: #555555;
 }
 
