@@ -16149,16 +16149,17 @@ var Kinetic = {};
 
             //move the tooltip around
             'moveTooltip': function(){
-                var mousePos = this.stage.getPointerPosition();
+                var mousePos = this.stage.getPointerPosition(),
+                    displayIndex = document.getElementById(this.id+'Deck').selectedIndex;
 
                 //adjust the background size & position
                 this.TTbkg.setAttr( 'x', mousePos.x + 10 );
                 this.TTbkg.setAttr( 'y', mousePos.y + 10 );
                 //make text follow the mouse too
-                this.text.setAttr( 'x', mousePos.x + 20 );
-                this.text.setAttr( 'y', mousePos.y + 20 ); 
+                this.text[displayIndex].setAttr( 'x', mousePos.x + 20 );
+                this.text[displayIndex].setAttr( 'y', mousePos.y + 20 ); 
 
-                this.tooltipLayer.draw();
+                this.tooltipLayer[displayIndex].draw();
             },
 
             //refresh the color scale labeling / coloring:
