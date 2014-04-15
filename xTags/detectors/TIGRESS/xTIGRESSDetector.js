@@ -159,12 +159,12 @@
                     });
 
                     //set up the tooltip listeners:
-                    //this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
-                    //this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
-                    //this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
+                    this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
+                    this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
 
                     //set up onclick listeners:
-                    //this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
+                    this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
 
                     //add the cell to the appropriate main layer
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);

@@ -16120,6 +16120,33 @@ var Kinetic = {};
                 this.mainLayer.draw();
             },
 
+            'instantiateCells': function(){
+                var i;
+
+                //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
+                for(i=0; i<this.channelNames.length; i++){
+                    this.cells[this.channelNames[i]] = new Kinetic.Line({
+                        points: [100,100,200,100,200,200,100,200,100,100],
+                        fill: '#000000',
+                        stroke: this.frameColor,
+                        strokeWidth: this.frameLineWidth,
+                        closed: true,
+                        listening: true
+                    });
+
+                    //set up the tooltip listeners:
+                    this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
+
+                    //add the cell to the main layer
+                    this.mainLayer.add(this.cells[this.channelNames[i]]);
+                }
+
+                //add the layers to the stage
+                this.stage.add(this.mainLayer);
+                this.stage.add(this.tooltipLayer);
+            },
+
             //move the tooltip around
             'moveTooltip': function(){
                 var mousePos = this.stage.getPointerPosition();
@@ -16189,7 +16216,7 @@ var Kinetic = {};
 
                 //update the cell colors and tooltip content
                 this.updateCells();
-                //this.writeTooltip(this.lastTTindex);
+                this.writeTooltip(this.lastTTindex);
 
                 //repaint
                 this.mainLayer[displayIndex].draw();
@@ -16268,7 +16295,8 @@ var Kinetic = {};
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeTooltip': function(i){
-                var text, HV, thresh, rate;
+                var text, HV, thresh, rate,
+                    displayIndex = document.getElementById(this.id+'Deck').selectedIndex;
 
                 if(i!=-1){
                     text = this.channelNames[i];
@@ -16294,14 +16322,14 @@ var Kinetic = {};
                     text = '';
                 }
                 this.lastTTindex = i;
-                this.text.setText(text);
+                this.text[displayIndex].setText(text);
                 if(text != ''){
                     //adjust the background size
-                    this.TTbkg.setAttr( 'width', this.text.getAttr('width') + 20 );
-                    this.TTbkg.setAttr( 'height', this.text.getAttr('height') + 20 ); 
+                    this.TTbkg[displayIndex].setAttr( 'width', this.text.getAttr('width') + 20 );
+                    this.TTbkg[displayIndex].setAttr( 'height', this.text.getAttr('height') + 20 ); 
                 } else {
-                    this.TTbkg.setAttr('width', 0);
-                    this.TTbkg.setAttr('height', 0);                    
+                    this.TTbkg[displayIndex].setAttr('width', 0);
+                    this.TTbkg[displayIndex].setAttr('height', 0);                    
                 }
                 this.tooltipLayer.draw();
             },
@@ -16853,12 +16881,12 @@ function fetchODBrunControl(returnObj){
                     });
 
                     //set up the tooltip listeners:
-                    //this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
-                    //this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
-                    //this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
+                    this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
+                    this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
 
                     //set up onclick listeners:
-                    //this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
+                    this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
 
                     //add the cell to the appropriate main layer
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
