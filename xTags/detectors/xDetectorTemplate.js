@@ -288,8 +288,8 @@
                 this.text[displayIndex].setText(text);
                 if(text != ''){
                     //adjust the background size
-                    this.TTbkg[displayIndex].setAttr( 'width', this.text.getAttr('width') + 20 );
-                    this.TTbkg[displayIndex].setAttr( 'height', this.text.getAttr('height') + 20 ); 
+                    this.TTbkg[displayIndex].setAttr( 'width', this.text[displayIndex].getAttr('width') + 20 );
+                    this.TTbkg[displayIndex].setAttr( 'height', this.text[displayIndex].getAttr('height') + 20 ); 
                 } else {
                     this.TTbkg[displayIndex].setAttr('width', 0);
                     this.TTbkg[displayIndex].setAttr('height', 0);                    
