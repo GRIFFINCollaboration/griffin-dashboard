@@ -427,7 +427,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     this.tooltipLayer = [];
     this.TTbkg = [];
     this.text = [];
-console.log([width, height])
+
     for(i=0; i<viewNames.length; i++){
 
         //point kinetic at the div and set up the staging and layers:

@@ -178,7 +178,7 @@
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
 
                 //update the cell colors and tooltip content
-                //this.updateCells();
+                this.updateCells();
                 //this.writeTooltip(this.lastTTindex);
 
                 //repaint

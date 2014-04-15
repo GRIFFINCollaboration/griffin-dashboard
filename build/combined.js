@@ -524,7 +524,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     this.tooltipLayer = [];
     this.TTbkg = [];
     this.text = [];
-console.log([width, height])
+
     for(i=0; i<viewNames.length; i++){
 
         //point kinetic at the div and set up the staging and layers:
@@ -16215,7 +16215,7 @@ var Kinetic = {};
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
 
                 //update the cell colors and tooltip content
-                //this.updateCells();
+                this.updateCells();
                 //this.writeTooltip(this.lastTTindex);
 
                 //repaint
