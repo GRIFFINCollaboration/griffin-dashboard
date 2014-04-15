@@ -16207,7 +16207,7 @@ var Kinetic = {};
             },
 
             'update': function(){
-                var displayIndex = document.getElementById(this.id+'Deck').selected-index;
+                var displayIndex = document.getElementById(this.id+'Deck').selectedIndex;
 
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
@@ -16226,7 +16226,7 @@ var Kinetic = {};
                     currentMin = this.min[this.currentView], 
                     currentMax = this.max[this.currentView],
                     isLog = this.scaleType[this.currentView] == 'log',
-                    displayIndex = document.getElementById(this.id+'Deck').selected-index;
+                    displayIndex = document.getElementById(this.id+'Deck').selectedIndex;
 
                 //get the scale limits right
                 if(isLog){
@@ -16239,7 +16239,7 @@ var Kinetic = {};
                     //bail out if this cell isn't in the current view
                     if(displayIndex != parseInt(this.channelNames[i].slice(3,5),10) )
                         continue;
-                    
+
                     //fetch the most recent raw value from the currentData store:
                     if(this.currentView == 'HV'){
                         rawValue = window.currentData.HV[this.channelNames[i]];
