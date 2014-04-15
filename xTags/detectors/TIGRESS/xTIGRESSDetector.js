@@ -123,7 +123,7 @@
                 cellCoords['GN02X'] = [1*g,12*g, 0*g,12*g, 0*g,1*g, 1*g,2*g];
                 cellCoords['GN01X'] = [1*g,0*g, 12*g,0*g, 12*g,1*g, 2*g,1*g];
                 //Blue BGO
-                cellCoords['BN05X'] = [12*g,4*g, 12*g,5*g, 19*g,5*g, 19*g,12*g, 20*g,12*g, 4*g,20*g];
+                cellCoords['BN05X'] = [12*g,4*g, 12*g,5*g, 19*g,5*g, 19*g,12*g, 20*g,12*g, 20*g,4*g];
                 cellCoords['BN04X'] = [12*g,3*g, 12*g,2*g, 22*g,2*g, 21*g,3*g];
                 cellCoords['BN03X'] = [21*g,12*g, 22*g,12*g, 22*g,2*g, 21*g,3*g];
                 cellCoords['BN02X'] = [12*g,0*g, 12*g,1*g, 22*g,1*g, 23*g,0*g];
