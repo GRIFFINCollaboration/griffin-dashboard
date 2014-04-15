@@ -6,17 +6,28 @@
         extends: 'detector-template',
         lifecycle: {
             created: function() {
-                //channels start at top left hand corner and walk across in rows
-                var channels = ['TPW011P00X', 'TPW012P00X', 'TPW013P00X', 'TPW014P00X', 'TPW015P00X',
-                                'TPW010P00X', 'TPW002P00X', 'TPW003P00X', 'TPW004P00X', 'TPW016P00X',
-                                'TPW009P00X', 'TPW001P00X', 'TPW005P00X', 'TPW017P00X',
-                                'TPW024P00X', 'TPW008P00X', 'TPW007P00X', 'TPW006P00X', 'TPW018P00X',
-                                'TPW023P00X', 'TPW022P00X', 'TPW021P00X', 'TPW020P00X', 'TPW019P00X'
-                                ]
-                    
+                //need to build up names of all ~1000 channels:
+                var channels = [], i, j, k,
+                    HPGEprefixes = ['TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'],
+                    colors = ['R', 'G', 'B', 'W'],
+                    HPGEcellCodes = ['N00A', 'N00B', 'P01X', 'P02X,', 'P03X', 'P04X,', 'P05X', 'P06X,', 'P07X', 'P08X,'],
+                    BGOprefixes = ['TIS01', 'TIS02', 'TIS03', 'TIS04', 'TIS05', 'TIS06', 'TIS07', 'TIS08', 'TIS09', 'TIS10', 'TIS11', 'TIS12', 'TIS13', 'TIS14', 'TIS15', 'TIS16'],
+                    BGOcellCodes = ['N01X', 'N02X', 'N03X', 'N04X', 'N05X'],
+                    //throw in URLs while we're at it:
                     URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
                             'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
+                //build up channel names
+                for(i=0; i<HPGEprefixes.length; i++){
+                    for(j=0; j<colors.length; j++){
+                        for(k=0; k<HPGEcellCodes.length; k++){
+                            channels[channels.length] = HPGEprefixes[i] + colors[j] + HPGEcellCodes[k];
+                        }
+                        for(k=0; k<BGOcellCodes.length; k++){
+                            channels[channels.length] = BGOprefixes[i] + colors[j] + BGOcellCodes[k];
+                        }
+                    }
+                }
 
                 //deploy the standard stuff
                 initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs, ['Main', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'])();
@@ -128,7 +139,7 @@
                 cellCoords['RN03X'] = [3*g,21*g, 2*g,22*g, 2*g,12*g, 3*g,12*g];
                 cellCoords['RN02X'] = [12*g,24*g, 12*g,23*g, 2*g,23*g, 1*g,24*g];
                 cellCoords['RN01X'] = [0*g,12*g, 1*g,12*g, 1*g,22*g, 0*g,23*g];
-/*
+
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
 
@@ -157,7 +168,7 @@
                     //add the cell to the appropriate main layer
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
-*/
+
                 //add the layers to the stage
                 for(i=0; i<17; i++){
                     this.stage[i].add(this.mainLayer[i]);
