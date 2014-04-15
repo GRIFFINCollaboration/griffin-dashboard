@@ -16880,6 +16880,8 @@ function fetchODBrunControl(returnObj){
 
                 //add the layers to the stage
                 for(i=0; i<17; i++){
+                    console.log(this.stage[i])
+                    console.log(this.mainLayer[i])
                     this.stage[i].add(this.mainLayer[i]);
                     this.stage[i].add(this.tooltipLayer[i]);
                 }
