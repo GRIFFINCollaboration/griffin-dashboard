@@ -294,7 +294,7 @@
                     this.TTbkg[displayIndex].setAttr('width', 0);
                     this.TTbkg[displayIndex].setAttr('height', 0);                    
                 }
-                this.tooltipLayer.draw();
+                this.tooltipLayer[displayIndex].draw();
             },
 
             //fire an event at interested parties, if they exist:
