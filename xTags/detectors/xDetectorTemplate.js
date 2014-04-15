@@ -83,33 +83,6 @@
                 this.mainLayer.draw();
             },
 
-            'instantiateCells': function(){
-                var i;
-
-                //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
-                for(i=0; i<this.channelNames.length; i++){
-                    this.cells[this.channelNames[i]] = new Kinetic.Line({
-                        points: [100,100,200,100,200,200,100,200,100,100],
-                        fill: '#000000',
-                        stroke: this.frameColor,
-                        strokeWidth: this.frameLineWidth,
-                        closed: true,
-                        listening: true
-                    });
-
-                    //set up the tooltip listeners:
-                    this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
-                    this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
-
-                    //add the cell to the main layer
-                    this.mainLayer.add(this.cells[this.channelNames[i]]);
-                }
-
-                //add the layers to the stage
-                this.stage.add(this.mainLayer);
-                this.stage.add(this.tooltipLayer);
-            },
-
             //move the tooltip around
             'moveTooltip': function(){
                 var mousePos = this.stage.getPointerPosition();
