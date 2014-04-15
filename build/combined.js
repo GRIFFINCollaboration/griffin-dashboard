@@ -16887,8 +16887,7 @@ function fetchODBrunControl(returnObj){
                     //this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
 
                     //add the cell to the appropriate main layer
-                    console.log(cardIndex)
-                    //this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
+                    console.log(this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]));
                 }
 
                 //add the layers to the stage
