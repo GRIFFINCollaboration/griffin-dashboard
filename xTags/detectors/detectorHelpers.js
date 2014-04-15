@@ -462,10 +462,6 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
             listening: false
         });
         this.tooltipLayer[i].add(this.text[i]);
-
-        this.stage[i].add(this.mainLayer[i]);
-        this.stage[i].add(this.tooltipLayer[i]);
-
     }
 
     this.errorPattern = new Image();

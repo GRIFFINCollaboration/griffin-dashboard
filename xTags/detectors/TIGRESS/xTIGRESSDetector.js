@@ -147,7 +147,7 @@
                     //determine which card this cell belongs to:
                     cardIndex = parseInt( this.channelNames[i].slice(3,5) ,10);
                     cellKey = this.channelNames[i].slice(5);
-
+console.log(cellKey)
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellCoords[cellKey],
                         fill: '#000000',
