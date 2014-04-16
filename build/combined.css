@@ -339,6 +339,12 @@ img#gitLogo{
 	width:58%;
 }
 
+detector-demo x-deck, 
+detector-TIPWall x-deck, 
+detector-TIGRESS x-deck{
+	height:60%;
+}
+
 detector-demo input[type=radio],
 detector-TIPWall input[type=radio],
 detector-TIGRESS input[type=radio]

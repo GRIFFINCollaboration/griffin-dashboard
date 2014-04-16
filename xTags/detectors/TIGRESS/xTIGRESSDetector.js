@@ -7,7 +7,7 @@
         lifecycle: {
             created: function() {
                 //need to build up names of all ~1000 channels:
-                var channels = [], i, j, k,
+                var channels = [], i, j, k, deckNavigator, summaryCard, detailCard,
                     HPGEprefixes = ['TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'],
                     colors = ['R', 'G', 'B', 'W'],
                     HPGEcellCodes = ['N00A', 'N00B', 'P01X', 'P02X', 'P03X', 'P04X', 'P05X', 'P06X', 'P07X', 'P08X'],
@@ -32,6 +32,23 @@
 
                 //deploy the standard stuff
                 initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs, ['Main', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'])();
+
+                //x-deck navigation - TIGRESS has one summary card and one detail card
+                deckNavigator = document.createElement('select');
+                summaryCard = document.createElement('option');
+                summaryCard.innerHTML = 'Array Summary';
+                deckNavigator.appendChild(summaryCard);
+                for(i=1; i<17; i++){
+                    detailCard = document.createElement('option');
+                    detailCard.innerHTML = 'Clover ' + i;
+                    deckNavigator.appendChild(detailCard);
+                }
+                this.appendChild(deckNavigator);
+
+                deckNavigator.onclick = function(){
+                    document.getElementById(testID).shuffleNext();
+                }
+                this.appendChild(deckNavigator);
 
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters

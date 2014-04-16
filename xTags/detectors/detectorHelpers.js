@@ -238,7 +238,6 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     ,   plotDeck
     ,   plotCard
     ,   xString
-    ,   deckNavigator
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
     ,   width = this.offsetWidth
     ,   height = 2*width/3
@@ -317,17 +316,6 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
         drawTarget = document.createElement('div');
         drawTarget.setAttribute('id', this.id+viewNames[i]+'Draw');
         document.getElementById(this.id+viewNames[i] + 'Card').appendChild(drawTarget);
-    }
-
-    //x-deck navigation
-    if(viewNames.length > 1){
-        deckNavigator = document.createElement('button');
-        deckNavigator.innerHTML = 'cycle deck';
-        var testID = this.id+'Deck';
-        deckNavigator.onclick = function(){
-            document.getElementById(testID).shuffleNext();
-        }
-        this.appendChild(deckNavigator);
     }
 
     //plot control widget
