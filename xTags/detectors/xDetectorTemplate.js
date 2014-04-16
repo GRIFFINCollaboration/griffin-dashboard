@@ -47,7 +47,6 @@
 
                     this.mainLayer[j].add(colorScale);
 
-/*
                     //place ticks on scale
                     this.tickLabels[j] = [];
                     for(i=0; i<11; i++){
@@ -84,7 +83,7 @@
 
                     //populate labels
                     this.refreshColorScale();
-*/
+
                     this.mainLayer[j].draw();
                 }
             },
@@ -133,7 +132,7 @@
 
             //refresh the color scale labeling / coloring:
             'refreshColorScale': function(){
-                /*
+                
                 var i, j, isLog, currentMin, currentMax, logTitle;
 
                 //are we in log mode?
@@ -166,7 +165,7 @@
                     this.scaleTitle[j].setText(logTitle + this.currentView + ' [' + this.currentUnit + ']');
                     this.scaleTitle[j].setAttr('x', this.width/2 - this.scaleTitle[j].getTextWidth()/2);
                 }
-                */
+                
             },
 
             'trackView': function(){
