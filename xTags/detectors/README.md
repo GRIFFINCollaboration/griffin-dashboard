@@ -15,12 +15,12 @@ All detectors inherit most of their functionality from the `<detector-template>`
 ##Web Component Creation - `lifecycle.created`
 All custom web components execute a callback upon creation, found in `lifecycle.created` for each detector; this function declares a lot of detector-specific information, so it is left empty in the `<detector-template>` object, to be defined individually for each detector; nevertheless, `lifecycle.created` typically follows a standard pattern which we describe here:
 
- - Declare `channels[]`, an array of strings corresponding to the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature) names of each detector channel to be rendered, **in the order that they will be drawn**.
- - Declare `URLs[]`, an array of strings corresponding to the URLs that will respond with JSONP posts of the data this detector needs to update itself.  These will typically be:
+ - Declare `channels[i]`, an array of strings corresponding to the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature) names of each detector channel to be rendered, **in the order that they will be drawn**.
+ - Declare `URLs[i]`, an array of strings corresponding to the URLs that will respond with JSONP posts of the data this detector needs to update itself.  These will typically be:
   - `<host>:<port>/<route>?jsonp=parseThreshold`, a JSONP post of threshold data (spec below), wrapped in the `parseThreshold` function.
   - `<host>:<port>/<route>?jsonp=parseRate`, a JSONP post of rate data (spec below), wrapped in the `parseRate` function.
   - `<ODB host>:<port>/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment`, a JSONP packing of this experiment's `/Equipment` directory, wrapped in the `fetchODBEquipment` function (spec below).
- - Declare `this.viewNames[]`, and array of strings naming each view you want for this detector; a single view detector like the TIP wall only needs one view, while TIGRESS and GRIFFIN use 17 views - one for each clover plus a summary.
+ - Declare `this.viewNames[view]`, and array of strings naming each view you want for this detector; a single view detector like the TIP wall only needs one view, while TIGRESS and GRIFFIN use 17 views - one for each clover plus a summary.
  - Run `initializeDetector()`, a function that factors out all the generic detector setup steps, spec below. 
  - Declare detector specific drawing parameters and other member variables
  - Set up the Kinetic.js visualization of the detector by calling `this.instantiateCells()` and `this.generateColorScale()` (details below).
@@ -83,14 +83,14 @@ ____________________________________________________________
 
 ####Kinetic.js Setup
 All detectors are drawn in a simple Kinetic.js environment, built and pointed at as follows; array indices correspond to the current view, to which each sensitive element should belong to exactly one.
- - `this.stage[]` (Kinetic.Stage) - the top level wrappers for the Kinetic environments.
- - `this.mainLayer[]` (Kinetic.Layer) - the Kinetic layers on which the detectors are drawn.
- - `this.tooltipLayer[]` (Kinetic.Layer) - the Kinetic layers on which the tooltips are drawn.
- - `this.TTbkg[]` (Kinetic.Rect) - backgrounds for tooltips
- - `this.text[]` (Kinetic.Text) - tooltip texts
+ - `this.stage[view]` (Kinetic.Stage) - the top level wrappers for the Kinetic environments.
+ - `this.mainLayer[view]` (Kinetic.Layer) - the Kinetic layers on which the detectors are drawn.
+ - `this.tooltipLayer[view]` (Kinetic.Layer) - the Kinetic layers on which the tooltips are drawn.
+ - `this.TTbkg[view]` (Kinetic.Rect) - backgrounds for tooltips
+ - `this.text[view]` (Kinetic.Text) - tooltip texts
 
 
-All the detector cells in `this.cells` are painted on the appropriate `this.mainLayer[]`, as are the elements that compose the plot legend (described below), while the tooltip text (`this.text[]`) and background (`this.TTbkg[]`) are painted on `this.tooltipLayer[]`.
+All the detector cells in `this.cells` are painted on the appropriate `this.mainLayer[view]`, as are the elements that compose the plot legend (described below), while the tooltip text (`this.text[view]`) and background (`this.TTbkg[view]`) are painted on `this.tooltipLayer[view]`.
 
 ####Data Fetching & Routing
 The last step of `initializeSingleViewDetector()` is to populate `window.fetchURL` with all the data URLs passed in to the `<URLs>` parameter; `assembleData()` will then manage the periodic refresh of the data returned by these requests.  Finally, `this` detector is appended to `window.refreshTargets`, so that `repopulate()` will know to take the information gathered by `assembleData()` and put it where this custom element is expecting it on refresh.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
@@ -107,7 +107,7 @@ As with all updatable objects, detector components participate in the main event
 Most of the plumbing for detector components is generic, and inherited as the collection of functions registered on the `methods` member of `<detector-template>`.  These member functions are described qualitatively as follows.
 
 ###generateColorScale()
-Establishes all the Kinetic.js objects involved in the color scale, and attaches them to `this.mainLayer[]`.  These are pointed at as follows:
+Establishes all the Kinetic.js objects involved in the color scale, and attaches them to `this.mainLayer[view]`.  These are pointed at as follows:
  - `this.colorScale[view]` - Kinetic.Rect for the color gradient rectangle itself.
  - `this.tickLabels[view][tick]` - Kinetic.Text objects labeling the tickmarks on the color scale, ordered left to right.
  - `this.scaleTitle[view]` - Kinetic.Text object for the scale title.
@@ -118,8 +118,8 @@ Tickmarks are also declared here, but no pointers to them are persisted.
 This is one of two function reimplemented as a rule for each specific detector.  Its generic pattern is:
  - Populate `this.cells` with Kinetic objects representing each channel, in the same order as `this.channelNames`.
  - Attatch event listeners to the members of `this.cells` for governing the tooltip.
- - Add these Kinetic objects to the appropriate `this.mainLayer[]`.
- - Add `this.mainLayer[]` and `this.tooltipLayer[]` to `this.stage[]` once they're all set up.
+ - Add these Kinetic objects to the appropriate `this.mainLayer[view]`.
+ - Add `this.mainLayer[view]` and `this.tooltipLayer[view]` to `this.stage[view]` once they're all set up.
 
 ###moveTooltip()
 Moves `this.TTbkg` and `this.text` around to follow the mouse; intended as the callback to the `mousemove` event listener of the Kinetic objects in `this.cells`.
@@ -134,7 +134,7 @@ Keeps `this.currentView` and `this.currentUnit` and the values of the inputs in 
 Function called in the master update loop as part of `repopulate()`; wraps all the updates necessary on this cycle.
 
 ###updateCells()
-Responsible for repainting all the Kinetic objects in `this.cells[]` as part of the master update loop.  Pattern is as follows:
+Responsible for repainting all the Kinetic objects in `this.cells[name]` as part of the master update loop.  Pattern is as follows:
  - Identify appropriate scale limits for current view and state.
 
 For each cell:
@@ -157,7 +157,7 @@ The tooltip for detector elements is handled by the event listeners Kineitc expo
  - `mouseout` : `this.writeTooltip.bind(this, -1)`
 
 ##JSONP Services & Callbacks
-All detector components rely on being able to acquire live information about detector thresholds and scalar rates from URLs serving JSONP that obey the spec below.  The `<host>:<port>/<route>?<queryString>` strings for these services are exacty the string elements of `URLs[]` discussed above in the context of `lifecycle.created`.
+All detector components rely on being able to acquire live information about detector thresholds and scalar rates from URLs serving JSONP that obey the spec below.  The `<host>:<port>/<route>?<queryString>` strings for these services are exacty the string elements of `URLs[i]` discussed above in the context of `lifecycle.created`.
 
 ###Threshold Service
 Present detector threshold levels must be reported at `<host>:<port>/<route>?jsonp=parseThreshold` via the following JSONP:
