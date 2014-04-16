@@ -35,7 +35,7 @@
                 initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs)();
 
                 //temp hack while there's nothing in TIGRESS' summary view
-                document.getElementById(this.id_'Deck').shuffleTo(1);
+                document.getElementById(this.id+'Deck').shuffleTo(1);
 
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters
