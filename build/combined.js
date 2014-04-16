@@ -120,7 +120,6 @@ function initializeDetector(name, channelNames, headline, URL){
     ,   i, subdetectorNav, subdetectorNavLabel
 
     this.name = name;
-    this.displayIndex = 0;  //always start on the first card, guarnateed to exist.
 
     //set up data store for detectors
     if(!window.currentData)
@@ -259,6 +258,7 @@ function initializeDetector(name, channelNames, headline, URL){
     ///////////////////////
     this.currentView = 'Rate';
     this.currentUnit = 'Hz';
+    this.displayIndex = 0;  //always start on the first card, guarnateed to exist.
 
     ////////////////////////////
     //Define Channels
@@ -15913,6 +15913,10 @@ var Kinetic = {};
                 }
             },
 
+            'inCurrentView': function(channelName){
+                return 0; //appropriate for a detector with only a single view, reimplement if >1 view.
+            },
+
             'instantiateCells': function(){
                 var i;
 
@@ -16005,7 +16009,7 @@ var Kinetic = {};
 
                 this.updateCells();
                 this.refreshColorScale();
-                this.mainLayer.draw();
+                this.mainLayer[this.displayIndex].draw();
             },
 
             'update': function(){
@@ -16803,10 +16807,6 @@ function fetchODBrunControl(returnObj){
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
                 this.stage[0].add(this.tooltipLayer[0]);
-            },
-
-            'inCurrentView': function(){
-                return true; //all TIP detectors live in the same view
             }
         }
     });

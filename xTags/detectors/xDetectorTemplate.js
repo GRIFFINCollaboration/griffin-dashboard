@@ -184,7 +184,7 @@
 
                 this.updateCells();
                 this.refreshColorScale();
-                this.mainLayer.draw();
+                this.mainLayer[this.displayIndex].draw();
             },
 
             'update': function(){
