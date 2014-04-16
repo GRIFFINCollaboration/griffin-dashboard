@@ -101,7 +101,7 @@ As with all updatable objects, detector components participate in the main event
  - `update()`
    - `updateCells()` - refreshes and repaints all the detector cells based on info in `window.currentData` and state variables.
    - `writeTooltip(this.lastTTindex)` - refresh the tooltip text, necessary if mouse is sitting passively on a channel.
-   - repaint the `this.mainLayer`.
+   - repaint the currently displayed `this.mainLayer[view]`.
 
 ##Member Functions
 Most of the plumbing for detector components is generic, and inherited as the collection of functions registered on the `methods` member of `<detector-template>`.  These member functions are described qualitatively as follows.
