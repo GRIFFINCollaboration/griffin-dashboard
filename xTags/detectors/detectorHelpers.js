@@ -23,7 +23,6 @@ function initializeDetector(name, channelNames, headline, URL){
     ,   i, subdetectorNav, subdetectorNavLabel
 
     this.name = name;
-    this.displayIndex = 0;  //always start on the first card, guarnateed to exist.
 
     //set up data store for detectors
     if(!window.currentData)
@@ -162,6 +161,7 @@ function initializeDetector(name, channelNames, headline, URL){
     ///////////////////////
     this.currentView = 'Rate';
     this.currentUnit = 'Hz';
+    this.displayIndex = 0;  //always start on the first card, guarnateed to exist.
 
     ////////////////////////////
     //Define Channels
