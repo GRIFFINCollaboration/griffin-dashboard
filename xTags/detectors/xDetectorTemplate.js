@@ -31,19 +31,7 @@
                 this.tickLabels = [];
                 this.scaleTitle = [];
                 for(j=0; j<this.viewNames.length; j++){
-                    colorScale = new Kinetic.Text({
-                            x: (0.1+i*0.08)*this.width,
-                            y: 0.96*this.height + 2,
-                            text: 'channel' + j,
-                            fontSize: 14,
-                            fontFamily: 'Arial',
-                            fill: '#999999'
-                    })
 
-                    this.mainLayer[j].add(colorScale)
-                    this.mainLayer[j].draw();
-
-                    /*
                     //draw the gradient itself
                     colorScale = new Kinetic.Rect({
                         x: 0.1*this.width,
@@ -59,7 +47,7 @@
 
                     this.mainLayer[j].add(colorScale);
                     console.log([this.width, this.height])
-
+/*
                     //place ticks on scale
                     this.tickLabels[j] = [];
                     for(i=0; i<11; i++){
@@ -96,9 +84,8 @@
 
                     //populate labels
                     this.refreshColorScale();
-
+*/
                     this.mainLayer[j].draw();
-                    */
                 }
             },
 
