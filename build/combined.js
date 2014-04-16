@@ -16089,7 +16089,7 @@ var Kinetic = {};
                     });
 
                     this.mainLayer[j].add(colorScale);
-                    console.log(this.mainLayer[j])
+                    console.log([this.width, this.height])
 /*
                     //place ticks on scale
                     this.tickLabels[j] = [];
