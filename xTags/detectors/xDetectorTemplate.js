@@ -117,17 +117,16 @@
 
             //move the tooltip around
             'moveTooltip': function(){
-                var displayIndex = document.getElementById(this.id+'Deck').selectedIndex,
-                    mousePos = this.stage[displayIndex].getPointerPosition();
+                var mousePos = this.stage[this.displayIndex].getPointerPosition();
 
                 //adjust the background size & position
-                this.TTbkg[displayIndex].setAttr( 'x', mousePos.x + 10 );
-                this.TTbkg[displayIndex].setAttr( 'y', mousePos.y + 10 );
+                this.TTbkg[this.displayIndex].setAttr( 'x', mousePos.x + 10 );
+                this.TTbkg[this.displayIndex].setAttr( 'y', mousePos.y + 10 );
                 //make text follow the mouse too
-                this.text[displayIndex].setAttr( 'x', mousePos.x + 20 );
-                this.text[displayIndex].setAttr( 'y', mousePos.y + 20 ); 
+                this.text[this.displayIndex].setAttr( 'x', mousePos.x + 20 );
+                this.text[this.displayIndex].setAttr( 'y', mousePos.y + 20 ); 
 
-                this.tooltipLayer[displayIndex].draw();
+                this.tooltipLayer[this.displayIndex].draw();
             },
 
             //refresh the color scale labeling / coloring:
@@ -185,8 +184,6 @@
             },
 
             'update': function(){
-                var displayIndex = document.getElementById(this.id+'Deck').selectedIndex;
-
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
@@ -196,15 +193,14 @@
                 this.writeTooltip(this.lastTTindex);
 
                 //repaint
-                this.mainLayer[displayIndex].draw();
+                this.mainLayer[this.displayIndex].draw();
             },
 
             'updateCells': function(){
                 var i, color, rawValue, colorIndex, 
                     currentMin = this.min[this.currentView], 
                     currentMax = this.max[this.currentView],
-                    isLog = this.scaleType[this.currentView] == 'log',
-                    displayIndex = selected(this.id+'viewSelect');
+                    isLog = this.scaleType[this.currentView] == 'log';
 
                 //get the scale limits right
                 if(isLog){
@@ -215,7 +211,7 @@
                 //change the color of each cell to whatever it should be now:
                 for(i=0; i<this.channelNames.length; i++){
                     //bail out if this cell isn't in the current view
-                    if(displayIndex != parseInt(this.channelNames[i].slice(3,5),10) )
+                    if(!this.inCurrentView(this.channelNames[i]))
                         continue;
 
                     //fetch the most recent raw value from the currentData store:
@@ -272,8 +268,7 @@
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeTooltip': function(i){
-                var text, HV, thresh, rate,
-                    displayIndex = document.getElementById(this.id+'Deck').selectedIndex;
+                var text, HV, thresh, rate;
 
                 if(i!=-1){
                     text = this.channelNames[i];
@@ -299,16 +294,16 @@
                     text = '';
                 }
                 this.lastTTindex = i;
-                this.text[displayIndex].setText(text);
+                this.text[this.displayIndex].setText(text);
                 if(text != ''){
                     //adjust the background size
-                    this.TTbkg[displayIndex].setAttr( 'width', this.text[displayIndex].getAttr('width') + 20 );
-                    this.TTbkg[displayIndex].setAttr( 'height', this.text[displayIndex].getAttr('height') + 20 ); 
+                    this.TTbkg[this.displayIndex].setAttr( 'width', this.text[this.displayIndex].getAttr('width') + 20 );
+                    this.TTbkg[this.displayIndex].setAttr( 'height', this.text[this.displayIndex].getAttr('height') + 20 ); 
                 } else {
-                    this.TTbkg[displayIndex].setAttr('width', 0);
-                    this.TTbkg[displayIndex].setAttr('height', 0);                    
+                    this.TTbkg[this.displayIndex].setAttr('width', 0);
+                    this.TTbkg[this.displayIndex].setAttr('height', 0);                    
                 }
-                this.tooltipLayer[displayIndex].draw();
+                this.tooltipLayer[this.displayIndex].draw();
             },
 
             //fire an event at interested parties, if they exist:

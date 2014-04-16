@@ -21,7 +21,7 @@
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
                 initializeDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();
-                
+
                 //////////////////////////////////////
                 //TIP Wall specific drawing parameters
                 //////////////////////////////////////
@@ -93,6 +93,10 @@
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
                 this.stage[0].add(this.tooltipLayer[0]);
+            },
+
+            'inCurrentView': function(){
+                return true; //all TIP detectors live in the same view
             }
         }
     });

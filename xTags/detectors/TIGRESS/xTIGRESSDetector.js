@@ -177,6 +177,13 @@
                     this.stage[i].add(this.mainLayer[i]);
                     this.stage[i].add(this.tooltipLayer[i]);
                 }       
+            },
+
+            'inCurrentView': function(channelName){
+                if(this.displayIndex == parseInt(channelName.slice(3,5),10))
+                    return true;
+                else
+                    return false;
             }
         }
     });
