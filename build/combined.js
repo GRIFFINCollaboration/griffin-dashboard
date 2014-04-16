@@ -16073,13 +16073,12 @@ var Kinetic = {};
 
                 this.tickLabels = [];
                 this.scaleTitle = [];
-                j=1;
-                //for(j=0; j<this.viewNames.length; j++){
+                for(j=0; j<this.viewNames.length; j++){
 
                     //draw the gradient itself
                     colorScale = new Kinetic.Rect({
-                        x: 0.1*this.width,
-                        y: 0.9*this.height,
+                        x: 0,//0.1*this.width,
+                        y: 0,//0.9*this.height,
                         width: 0.8*this.width,
                         height: 0.05*this.height,
                         fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
@@ -16130,7 +16129,7 @@ var Kinetic = {};
                     this.refreshColorScale();
 */
                     this.mainLayer[j].draw();
-                //}
+                }
             },
 
             'instantiateCells': function(){
