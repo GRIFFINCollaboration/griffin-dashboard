@@ -31,7 +31,7 @@
                 this.tickLabels = [];
                 this.scaleTitle = [];
                 for(j=0; j<this.viewNames.length; j++){
-console.log(j)
+
                     //draw the gradient itself
                     colorScale = new Kinetic.Rect({
                         x: 0.1*this.width,
@@ -46,6 +46,7 @@ console.log(j)
                     });
 
                     this.mainLayer[j].add(colorScale);
+                    console.log(this.mainLayer[j])
 /*
                     //place ticks on scale
                     this.tickLabels[j] = [];
