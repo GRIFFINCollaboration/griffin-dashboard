@@ -33,6 +33,7 @@
                 for(j=0; j<this.viewNames.length; j++){
 
                     //draw the gradient itself
+                    console.log(this.height)
                     colorScale = new Kinetic.Rect({
                         x: 0.1*this.width,
                         y: 0.9*this.height,
