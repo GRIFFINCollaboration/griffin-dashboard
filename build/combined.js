@@ -16199,7 +16199,7 @@ var Kinetic = {};
                         //update text
                         this.tickLabels[j][i].setText(generateTickLabel(currentMin, currentMax, 11, i));
                         //update position
-                        this.tickLabels[]j[i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[j][i].getTextWidth()/2);
+                        this.tickLabels[j][i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[j][i].getTextWidth()/2);
                     }
 
                     //update title
