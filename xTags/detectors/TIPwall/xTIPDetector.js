@@ -19,6 +19,7 @@
                             'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 //deploy the standard stuff
+                this.viewNames = ['SingleView'];
                 initializeSingleViewDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();
 
                 //////////////////////////////////////
@@ -53,10 +54,13 @@
         }, 
         methods: {
             'instantiateCells': function(){
-                var i, iOffset, X, Y;
+                var i, iOffset, X, Y, cardIndex;
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
+                    //determine which card this cell belongs to:
+                    cardIndex = 0; //simple, only one card
+
                     iOffset = i;
                     if(i>11) iOffset++; //skip the middle square in the grid
 
@@ -83,12 +87,12 @@
                     this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
 
                     //add the cell to the main layer
-                    this.mainLayer.add(this.cells[this.channelNames[i]]);
+                    this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
 
                 //add the layers to the stage
-                this.stage.add(this.mainLayer);
-                this.stage.add(this.tooltipLayer);
+                this.stage[0].add(this.mainLayer[0]);
+                this.stage[0].add(this.tooltipLayer[0]);
             }
         }
     });

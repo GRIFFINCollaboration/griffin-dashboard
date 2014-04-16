@@ -1,6 +1,7 @@
 mkdir /Custom
 cd Custom
 
+#change / copy this block to deploy the *.html you want
 create string Dashboard&[1][128]
 set Dashboard& $PWD/build/index.html
 
