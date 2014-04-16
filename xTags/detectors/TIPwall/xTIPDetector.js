@@ -20,8 +20,8 @@
 
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
-                initializeSingleViewDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();
-
+                initializeDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();
+                
                 //////////////////////////////////////
                 //TIP Wall specific drawing parameters
                 //////////////////////////////////////
