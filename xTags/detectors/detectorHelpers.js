@@ -220,7 +220,7 @@ function initializeSingleViewDetector(name, channelNames, headline, URL){
 }
 
 
-function initializeDetector(name, channelNames, headline, URL, viewNames){
+function initializeDetector(name, channelNames, headline, URL){
     var headWrapper = document.createElement('div')
     ,   title = document.createElement('h1')
     ,   viewTitles = ['HV', 'Threshold', 'Rate']
@@ -306,17 +306,17 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
 
     //declaring x-tags from within other x-tags needs special treatment via innerHTML; must build HTML string and set it.
     xString = '<x-deck id="' + this.id + 'Deck" selected-index=1>';
-    for(i=0; i<viewNames.length; i++){
-        xString += '<x-card id="' + this.id+viewNames[i] + 'Card"></x-card>';
+    for(i=0; i<this.viewNames.length; i++){
+        xString += '<x-card id="' + this.id+this.viewNames[i] + 'Card"></x-card>';
     }
     deckWrap.innerHTML = xString;
 
     //plot buffers
-    for(i=0; i<viewNames.length; i++){
+    for(i=0; i<this.viewNames.length; i++){
         //divs to hold kinetic contexts
         drawTarget = document.createElement('div');
-        drawTarget.setAttribute('id', this.id+viewNames[i]+'Draw');
-        document.getElementById(this.id+viewNames[i] + 'Card').appendChild(drawTarget);
+        drawTarget.setAttribute('id', this.id+this.viewNames[i]+'Draw');
+        document.getElementById(this.id+this.viewNames[i] + 'Card').appendChild(drawTarget);
     }
 
     //plot control widget
@@ -332,9 +332,9 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     //x-deck navigation
     deckNavigator = document.createElement('select');
     deckNavigator.id = this.id + 'viewSelect';
-    for(i=0; i<viewNames.length; i++){
+    for(i=0; i<this.viewNames.length; i++){
         deckOption = document.createElement('option');
-        deckOption.innerHTML = viewNames[i];
+        deckOption.innerHTML = this.viewNames[i];
         deckOption.value = i;
         deckNavigator.appendChild(deckOption);
     }
@@ -434,11 +434,11 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     this.TTbkg = [];
     this.text = [];
 
-    for(i=0; i<viewNames.length; i++){
+    for(i=0; i<this.viewNames.length; i++){
 
         //point kinetic at the div and set up the staging and layers:
         this.stage[i] = new Kinetic.Stage({
-            container: this.id+viewNames[i]+'Draw',
+            container: this.id+this.viewNames[i]+'Draw',
             width: width,
             height: height
         });

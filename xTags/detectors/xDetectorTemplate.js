@@ -19,8 +19,8 @@
             //generate the color scale
             'generateColorScale': function(){
                 var colorStops = [],
-                    i,
-                    tick;
+                    i, j,
+                    tick, colorScale;
 
                 //generate a bunch of color stop points for the gradient
                 for(i=0; i<101; i++){
@@ -29,7 +29,7 @@
                 }
 
                 //draw the gradient itself
-                this.colorScale = new Kinetic.Rect({
+                colorScale = new Kinetic.Rect({
                     x: 0.1*this.width,
                     y: 0.9*this.height,
                     width: 0.8*this.width,
@@ -41,46 +41,50 @@
                     strokeWidth: 2                    
                 });
 
-                this.mainLayer.add(this.colorScale);
-
-                //place ticks on scale
                 this.tickLabels = [];
-                for(i=0; i<11; i++){
-                    //tick line
-                    tick = new Kinetic.Line({
-                        points: [(0.1+i*0.08)*this.width, 0.95*this.height, (0.1+i*0.08)*this.width, 0.96*this.height],
-                        stroke: '#999999',
-                        strokeWidth: 2
-                    });
-                    this.mainLayer.add(tick);
+                this.scaleTitle = [];
+                for(j=0; j<this.viewNames; j++){
+                    this.mainLayer[j].add(colorScale);
 
-                    //tick label
-                    this.tickLabels[i] = new Kinetic.Text({
-                        x: (0.1+i*0.08)*this.width,
-                        y: 0.96*this.height + 2,
+                    //place ticks on scale
+                    this.tickLabels[j] = [];
+                    for(i=0; i<11; i++){
+                        //tick line
+                        tick = new Kinetic.Line({
+                            points: [(0.1+i*0.08)*this.width, 0.95*this.height, (0.1+i*0.08)*this.width, 0.96*this.height],
+                            stroke: '#999999',
+                            strokeWidth: 2
+                        });
+                        this.mainLayer[j].add(tick);
+
+                        //tick label
+                        this.tickLabels[j][i] = new Kinetic.Text({
+                            x: (0.1+i*0.08)*this.width,
+                            y: 0.96*this.height + 2,
+                            text: '',
+                            fontSize: 14,
+                            fontFamily: 'Arial',
+                            fill: '#999999'
+                        });
+                        this.mainLayer[j].add(this.tickLabels[j][i]);
+                    }
+
+                    //place title on scale
+                    this.scaleTitle[j] = new Kinetic.Text({
+                        x: this.width/2,
+                        y: 0.9*this.height - 22,
                         text: '',
-                        fontSize: 14,
+                        fontSize : 20,
                         fontFamily: 'Arial',
                         fill: '#999999'
-                    });
-                    this.mainLayer.add(this.tickLabels[i]);
+                    })
+                    this.mainLayer[j].add(this.scaleTitle[j]);
+
+                    //populate labels
+                    this.refreshColorScale();
+
+                    this.mainLayer[j].draw();
                 }
-
-                //place title on scale
-                this.scaleTitle = new Kinetic.Text({
-                    x: this.width/2,
-                    y: 0.9*this.height - 22,
-                    text: '',
-                    fontSize : 20,
-                    fontFamily: 'Arial',
-                    fill: '#999999'
-                })
-                this.mainLayer.add(this.scaleTitle);
-
-                //populate labels
-                this.refreshColorScale();
-
-                this.mainLayer.draw();
             },
 
             'instantiateCells': function(){
@@ -127,7 +131,7 @@
 
             //refresh the color scale labeling / coloring:
             'refreshColorScale': function(){
-                var i, isLog, currentMin, currentMax, logTitle;
+                var i, j, isLog, currentMin, currentMax, logTitle;
 
                 //are we in log mode?
                 isLog = this.scaleType[this.currentView] == 'log';
@@ -143,16 +147,22 @@
                     logTitle = '';
 
                 //refresh tick labels
-                for(i=0; i<11; i++){
-                    //update text
-                    this.tickLabels[i].setText(generateTickLabel(currentMin, currentMax, 11, i));
-                    //update position
-                    this.tickLabels[i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[i].getTextWidth()/2);
-                }
+                for(j=0; j<this.viewNames.length; j++){
+                    //bail out if this scale isn't on display:
+                    if(j != document.getElementById(this.id+'Deck').selectedIndex)
+                        continue
 
-                //update title
-                this.scaleTitle.setText(logTitle + this.currentView + ' [' + this.currentUnit + ']');
-                this.scaleTitle.setAttr('x', this.width/2 - this.scaleTitle.getTextWidth()/2);
+                    for(i=0; i<11; i++){
+                        //update text
+                        this.tickLabels[j][i].setText(generateTickLabel(currentMin, currentMax, 11, i));
+                        //update position
+                        this.tickLabels[]j[i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[j][i].getTextWidth()/2);
+                    }
+
+                    //update title
+                    this.scaleTitle[j].setText(logTitle + this.currentView + ' [' + this.currentUnit + ']');
+                    this.scaleTitle[j].setAttr('x', this.width/2 - this.scaleTitle[j].getTextWidth()/2);
+                }
             },
 
             'trackView': function(){
