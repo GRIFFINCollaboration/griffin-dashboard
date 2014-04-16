@@ -16234,7 +16234,7 @@ var Kinetic = {};
                     currentMin = this.min[this.currentView], 
                     currentMax = this.max[this.currentView],
                     isLog = this.scaleType[this.currentView] == 'log',
-                    displayIndex = document.getElementById(this.id+'Deck').selectedIndex;
+                    displayIndex = selected(this.id+'viewSelect');
 
                 //get the scale limits right
                 if(isLog){
