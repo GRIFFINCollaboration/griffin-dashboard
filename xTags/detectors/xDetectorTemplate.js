@@ -264,7 +264,7 @@
                 //redraw
                 this.updateCells();
                 this.refreshColorScale();
-                this.mainLayer.draw();
+                this.mainLayer[document.getElementById(this.id+'Deck').selectedIndex].draw();
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
