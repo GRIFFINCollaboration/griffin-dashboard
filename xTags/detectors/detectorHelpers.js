@@ -238,7 +238,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     ,   plotDeck
     ,   plotCard
     ,   xString
-    ,   deckNavigator, deckOption,
+    ,   deckNavigator, deckOption
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
     ,   width = this.offsetWidth
     ,   height = 2*width/3
