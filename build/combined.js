@@ -335,7 +335,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     ,   plotDeck
     ,   plotCard
     ,   xString
-    ,   deckNavigator
+    ,   deckNavigator, deckOption,
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
     ,   width = this.offsetWidth
     ,   height = 2*width/3
@@ -417,15 +417,19 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     }
 
     //x-deck navigation
-    if(viewNames.length > 1){
-        deckNavigator = document.createElement('button');
-        deckNavigator.innerHTML = 'cycle deck';
-        var testID = this.id+'Deck';
-        deckNavigator.onclick = function(){
-            document.getElementById(testID).shuffleNext();
-        }
-        this.appendChild(deckNavigator);
+    deckNavigator = document.createElement('select');
+    deckNavigator.id = this.id + 'viewSelect';
+    for(i=0; i<viewNames.length; i++){
+        deckOption = document.createElement('option');
+        deckOption.innerHTML = viewNames[i];
+        deckOption.value = i;
+        deckNavigator.appendChild(deckOption);
     }
+    deckNavigator.onchange = function(){
+        var viewVal = selected(this.id+'viewSelect'); 
+        document.getElementById(this.id+'Deck').shuffleTo(viewVal);
+    }
+    this.appendChild(deckNavigator);
 
     //plot control widget
     plotControlWrap.setAttribute('id', this.id+'PlotControl');
@@ -16755,25 +16759,6 @@ function fetchODBrunControl(returnObj){
 
                 //deploy the standard stuff
                 initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs, ['Main', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'])();
-
-                //x-deck navigation - TIGRESS has one summary card and one detail card
-                deckNavigator = document.createElement('select');
-                deckNavigator.id = 'TIGRESSviewSelect';
-                summaryCard = document.createElement('option');
-                summaryCard.innerHTML = 'Array Summary';
-                summaryCard.value = 0;
-                deckNavigator.appendChild(summaryCard);
-                for(i=1; i<17; i++){
-                    detailCard = document.createElement('option');
-                    detailCard.innerHTML = 'Clover ' + i;
-                    detailCard.value = i;
-                    deckNavigator.appendChild(detailCard);
-                }
-                deckNavigator.onchange = function(){
-                    var viewVal = Math.ceil(selected('TIGRESSviewSelect') / 16); //0 on card 0, 1 to 16 on card 1 
-                    document.getElementById(this.id+'Deck').shuffleTo(viewVal);
-                }
-                this.appendChild(deckNavigator);
 
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters

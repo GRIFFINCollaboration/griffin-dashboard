@@ -238,7 +238,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     ,   plotDeck
     ,   plotCard
     ,   xString
-    ,   deckNavigator
+    ,   deckNavigator, deckOption,
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
     ,   width = this.offsetWidth
     ,   height = 2*width/3
@@ -320,15 +320,19 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     }
 
     //x-deck navigation
-    if(viewNames.length > 1){
-        deckNavigator = document.createElement('button');
-        deckNavigator.innerHTML = 'cycle deck';
-        var testID = this.id+'Deck';
-        deckNavigator.onclick = function(){
-            document.getElementById(testID).shuffleNext();
-        }
-        this.appendChild(deckNavigator);
+    deckNavigator = document.createElement('select');
+    deckNavigator.id = this.id + 'viewSelect';
+    for(i=0; i<viewNames.length; i++){
+        deckOption = document.createElement('option');
+        deckOption.innerHTML = viewNames[i];
+        deckOption.value = i;
+        deckNavigator.appendChild(deckOption);
     }
+    deckNavigator.onchange = function(){
+        var viewVal = selected(this.id+'viewSelect'); 
+        document.getElementById(this.id+'Deck').shuffleTo(viewVal);
+    }
+    this.appendChild(deckNavigator);
 
     //plot control widget
     plotControlWrap.setAttribute('id', this.id+'PlotControl');
