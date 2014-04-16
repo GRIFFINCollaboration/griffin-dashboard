@@ -34,6 +34,9 @@
                 this.viewNames = ['Summary', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16']
                 initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs)();
 
+                //temp hack while there's nothing in TIGRESS' summary view
+                document.getElementById(this.id_'Deck').shuffleTo(1);
+
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters
                 //////////////////////////////////////

@@ -181,7 +181,7 @@ function initializeDetector(name, channelNames, headline, URL){
     this.appendChild(deckWrap);
 
     //declaring x-tags from within other x-tags needs special treatment via innerHTML; must build HTML string and set it.
-    xString = '<x-deck id="' + this.id + 'Deck" selected-index=1 style="height:'+height+'">';
+    xString = '<x-deck id="' + this.id + 'Deck" selected-index=0 style="height:'+height+'">';
     for(i=0; i<this.viewNames.length; i++){
         xString += '<x-card id="' + this.id+this.viewNames[i] + 'Card"></x-card>';
     }
@@ -15975,8 +15975,8 @@ var Kinetic = {};
                 //refresh tick labels
                 for(j=0; j<this.viewNames.length; j++){
                     //bail out if this scale isn't on display:
-                    //if(j != document.getElementById(this.id+'Deck').selectedIndex)
-                    //    continue
+                    if(j != document.getElementById(this.id+'Deck').selectedIndex)
+                        continue
 
                     for(i=0; i<11; i++){
                         //update text
@@ -16552,6 +16552,9 @@ function fetchODBrunControl(returnObj){
                 //deploy the standard stuff
                 this.viewNames = ['Summary', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16']
                 initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs)();
+
+                //temp hack while there's nothing in TIGRESS' summary view
+                document.getElementById(this.id_'Deck').shuffleTo(1);
 
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters
