@@ -116,8 +116,8 @@
                     mousePos = this.stage[displayIndex].getPointerPosition();
 
                 //adjust the background size & position
-                this.TTbkg.setAttr( 'x', mousePos.x + 10 );
-                this.TTbkg.setAttr( 'y', mousePos.y + 10 );
+                this.TTbkg[displayIndex].setAttr( 'x', mousePos.x + 10 );
+                this.TTbkg[displayIndex].setAttr( 'y', mousePos.y + 10 );
                 //make text follow the mouse too
                 this.text[displayIndex].setAttr( 'x', mousePos.x + 20 );
                 this.text[displayIndex].setAttr( 'y', mousePos.y + 20 ); 
