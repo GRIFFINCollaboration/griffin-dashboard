@@ -20,7 +20,7 @@ All custom web components execute a callback upon creation, found in `lifecycle.
   - `<host>:<port>/<route>?jsonp=parseThreshold`, a JSONP post of threshold data (spec below), wrapped in the `parseThreshold` function.
   - `<host>:<port>/<route>?jsonp=parseRate`, a JSONP post of rate data (spec below), wrapped in the `parseRate` function.
   - `<ODB host>:<port>/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment`, a JSONP packing of this experiment's `/Equipment` directory, wrapped in the `fetchODBEquipment` function (spec below).
- - Declare `this.viewNames[view]`, and array of strings naming each view you want for this detector; a single view detector like the TIP wall only needs one view, while TIGRESS and GRIFFIN use 17 views - one for each clover plus a summary.
+ - Declare `this.viewNames[view]`, an array of strings naming each view you want for this detector; a single view detector like the TIP wall only needs one view, while TIGRESS and GRIFFIN use 17 views - one for each clover plus a summary.
  - Run `initializeDetector()`, a function that factors out all the generic detector setup steps, spec below. 
  - Declare detector specific drawing parameters and other member variables
  - Set up the Kinetic.js visualization of the detector by calling `this.instantiateCells()` and `this.generateColorScale()` (details below).
