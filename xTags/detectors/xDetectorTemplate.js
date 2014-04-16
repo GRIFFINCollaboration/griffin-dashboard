@@ -192,7 +192,7 @@
                     currentMax = this.max[this.currentView],
                     isLog = this.scaleType[this.currentView] == 'log',
                     displayIndex = selected(this.id+'viewSelect');
-
+console.log(this.id+'viewSelect')
                 //get the scale limits right
                 if(isLog){
                     currentMin = Math.log10(currentMin);
