@@ -16089,7 +16089,11 @@ var Kinetic = {};
                     });
 
                     this.mainLayer[j].add(colorScale);
-                    console.log([this.width, this.height])
+                //add the layers to the stage
+                for(i=0; i<17; i++){
+                    this.stage[i].add(this.mainLayer[i]);
+                    this.stage[i].add(this.tooltipLayer[i]);
+                }
 /*
                     //place ticks on scale
                     this.tickLabels[j] = [];
@@ -16788,10 +16792,10 @@ function fetchODBrunControl(returnObj){
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //generate the color scale
-                this.generateColorScale();
                 //initialize all the cells:
                 this.instantiateCells();
+                //generate the color scale
+                this.generateColorScale();
 
             },
             inserted: function() {},
@@ -16915,11 +16919,7 @@ function fetchODBrunControl(returnObj){
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
 
-                //add the layers to the stage
-                for(i=0; i<17; i++){
-                    this.stage[i].add(this.mainLayer[i]);
-                    this.stage[i].add(this.tooltipLayer[i]);
-                }       
+       
             }
         }
     });
