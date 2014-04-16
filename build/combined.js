@@ -416,6 +416,16 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
         document.getElementById(this.id+viewNames[i] + 'Card').appendChild(drawTarget);
     }
 
+    //plot control widget
+    plotControlWrap.setAttribute('id', this.id+'PlotControl');
+    plotControlWrap.setAttribute('class', 'plotControlWidget');
+    this.appendChild(plotControlWrap);
+    document.getElementById(this.id+'PlotControl').onchange = this.updatePlotParameters.bind(this);
+
+    plotControlTitle.setAttribute('id', this.id+'PlotControlTitle');
+    plotControlWrap.appendChild(plotControlTitle);
+    document.getElementById(this.id + 'PlotControlTitle').innerHTML = 'Plot Control'
+
     //x-deck navigation
     deckNavigator = document.createElement('select');
     deckNavigator.id = this.id + 'viewSelect';
@@ -431,17 +441,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
         document.getElementById(this.id+'Deck').shuffleTo(viewVal);
         this.update();  //repaint right away
     }.bind(this)
-    this.appendChild(deckNavigator);
-
-    //plot control widget
-    plotControlWrap.setAttribute('id', this.id+'PlotControl');
-    plotControlWrap.setAttribute('class', 'plotControlWidget');
-    this.appendChild(plotControlWrap);
-    document.getElementById(this.id+'PlotControl').onchange = this.updatePlotParameters.bind(this);
-
-    plotControlTitle.setAttribute('id', this.id+'PlotControlTitle');
-    plotControlWrap.appendChild(plotControlTitle);
-    document.getElementById(this.id + 'PlotControlTitle').innerHTML = 'Scale Control'
+    plotControlWrap.appendChild(deckNavigator);
 
     plotControlMinLabel.setAttribute('id', this.id+'PlotControlMinLabel');
     plotControlWrap.appendChild(plotControlMinLabel)
