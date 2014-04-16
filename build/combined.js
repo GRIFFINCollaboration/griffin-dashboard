@@ -16149,8 +16149,8 @@ var Kinetic = {};
 
             //move the tooltip around
             'moveTooltip': function(){
-                var mousePos = this.stage.getPointerPosition(),
-                    displayIndex = document.getElementById(this.id+'Deck').selectedIndex;
+                var displayIndex = document.getElementById(this.id+'Deck').selectedIndex,
+                    mousePos = this.stage[displayIndex].getPointerPosition();
 
                 //adjust the background size & position
                 this.TTbkg.setAttr( 'x', mousePos.x + 10 );
