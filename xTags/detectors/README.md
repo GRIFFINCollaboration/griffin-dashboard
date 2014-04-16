@@ -1,7 +1,7 @@
 #Detector Elements
 
 Each detector subsystem supported by MarkII has its own custom element for one-line deployment on a dashboard page.  
-All detectors inherit most of their functionality from the `<detector-template>` object, and only detector-specific functionality is declared on the detector classes themselves; as such, this document focuses on the patterns established in `<detector-template>`, the `initializeSingleViewDetector()` setup function, and the peripheral data these objects expect to have available when building a detector component.
+All detectors inherit most of their functionality from the `<detector-template>` object, and only detector-specific functionality is declared on the detector classes themselves; as such, this document focuses on the patterns established in `<detector-template>`, the `initializeDetector()` setup function, and the peripheral data these objects expect to have available when building a detector component.
 
 ####Contents
  - [Creation & Instantiation](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#web-component-creation---lifecyclecreated)
@@ -20,12 +20,13 @@ All custom web components execute a callback upon creation, found in `lifecycle.
   - `<host>:<port>/<route>?jsonp=parseThreshold`, a JSONP post of threshold data (spec below), wrapped in the `parseThreshold` function.
   - `<host>:<port>/<route>?jsonp=parseRate`, a JSONP post of rate data (spec below), wrapped in the `parseRate` function.
   - `<ODB host>:<port>/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment`, a JSONP packing of this experiment's `/Equipment` directory, wrapped in the `fetchODBEquipment` function (spec below).
- - Run `initializeSingleViewDetector()`, a function that factors out all the generic detector setup steps, spec below. 
+ - Declare `this.viewNames[]`, and array of strings naming each view you want for this detector; a single view detector like the TIP wall only needs one view, while TIGRESS and GRIFFIN use 17 views - one for each clover plus a summary.
+ - Run `initializeDetector()`, a function that factors out all the generic detector setup steps, spec below. 
  - Declare detector specific drawing parameters and other member variables
  - Set up the Kinetic.js visualization of the detector by calling `this.instantiateCells()` and `this.generateColorScale()` (details below).
 
-###initializeSingleViewDetector()
-`initializeSingleViewDetector(name, channels, title, URLs)` is declared in `detectorHelpers.js` and factors out the generic steps of setting up a detector with a single layer of visualization.  Its arguments are as follows:
+###initializeDetector()
+`initializeDetector(name, channels, title, URLs)` is declared in `detectorHelpers.js` and factors out the generic steps of setting up a detector with a single layer of visualization.  Its arguments are as follows:
  - `<name>` (string) - a tag name for this detector, intended for use as a key prefix or other identifying purposes.
  - `<channels>` (array of strings) - the same `channels` array described above.
  - `<title>` (string) - the title to be displayed in the header at the top of the detector visualization
@@ -46,13 +47,16 @@ headline wrapper div
   [h1 Title]
   [radio HV, Threshold, Rate]
 ____________________________________________________________
-Kinetic.js target div
+Brick.js x-deck to shuffle through views
+  Brick.js x-cards, one for each view
+    Kinetic.js drawing context, one in each x-card
 
 
 
 
 ____________________________________________________________
 plot control wrapper form
+  View selector widget
   [plot minimum label & input:number]
   [plot maximum label & input:number]
   [select linear / log scale]
@@ -62,6 +66,7 @@ ____________________________________________________________
 ####State Variables
  - `this.currentView` ['HV', 'Threhsold', 'Rate'] default: 'Rate' - indicated what information is currently being visualized.
  - `this.currentUnit` ['V', 'ADC Units', 'Hz'] default: 'Hz' - units for current view, correspond by index to `this.currentView`
+ - `this.displayIndex` default: 0 - `x-card` index for the currently displayed card.
  - `this.scale` ['ROOT Rainbow'] default: 'ROOT Rainbow' - color scale name for temperature scale. 
  - `this.min = {HV: 0, Threshold: 0, Rate: 0}` - object containing scale minima for respective views
  - `this.max = {HV: 3000, Threshold: 1000, Rate: 10000}` - object containing scale maxima for respective views
@@ -77,12 +82,15 @@ ____________________________________________________________
  - `this.width` & `.height` - dimensions in pixels of Kinetic's rendering area.
 
 ####Kinetic.js Setup
-All detectors are drawn in a simple Kinetic.js environment, built and pointed at as follows:
- - `this.stage` (Kinetic.Stage) - the top level wrapper for the Kinetic environment.
- - `this.mainLayer` (Kinetic.Layer) - the Kinetic layer on which the detector is drawn.
- - `this.tooltipLayer` (Kinetic.Layer) - the Kinetic layer on which the tooltip is drawn.
+All detectors are drawn in a simple Kinetic.js environment, built and pointed at as follows; array indices correspond to the current view, to which each sensitive element should belong to exactly one.
+ - `this.stage[]` (Kinetic.Stage) - the top level wrappers for the Kinetic environments.
+ - `this.mainLayer[]` (Kinetic.Layer) - the Kinetic layers on which the detectors are drawn.
+ - `this.tooltipLayer[]` (Kinetic.Layer) - the Kinetic layers on which the tooltips are drawn.
+ - `this.TTbkg[]` (Kinetic.Rect) - backgrounds for tooltips
+ - `this.text[]` (Kinetic.Text) - tooltip texts
 
-ALl the detector cells in `this.cells` are painted on `this.mainLayer`, as are the elements that compose the plot legend (described below), while the tooltip text (`this.text`) and background (`this.TTbkg`) are painted on `this.tooltipLayer`.
+
+All the detector cells in `this.cells` are painted on the appropriate `this.mainLayer[]`, as are the elements that compose the plot legend (described below), while the tooltip text (`this.text[]`) and background (`this.TTbkg[]`) are painted on `this.tooltipLayer[]`.
 
 ####Data Fetching & Routing
 The last step of `initializeSingleViewDetector()` is to populate `window.fetchURL` with all the data URLs passed in to the `<URLs>` parameter; `assembleData()` will then manage the periodic refresh of the data returned by these requests.  Finally, `this` detector is appended to `window.refreshTargets`, so that `repopulate()` will know to take the information gathered by `assembleData()` and put it where this custom element is expecting it on refresh.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
@@ -99,25 +107,25 @@ As with all updatable objects, detector components participate in the main event
 Most of the plumbing for detector components is generic, and inherited as the collection of functions registered on the `methods` member of `<detector-template>`.  These member functions are described qualitatively as follows.
 
 ###generateColorScale()
-Establishes all the Kinetic.js objects involved in the color scale, and attaches them to `this.mainLayer`.  These are pointed at as follows:
- - `this.colorScale` - Kinetic.Rect for the color gradient rectangle itself.
- - `this.tickLabels[]` - Kinetic.Text objects labeling the tickmarks on the color scale, ordered left to right.
- - `this.scaleTitle` - Kinetic.Text object for the scale title.
+Establishes all the Kinetic.js objects involved in the color scale, and attaches them to `this.mainLayer[]`.  These are pointed at as follows:
+ - `this.colorScale[view]` - Kinetic.Rect for the color gradient rectangle itself.
+ - `this.tickLabels[view][tick]` - Kinetic.Text objects labeling the tickmarks on the color scale, ordered left to right.
+ - `this.scaleTitle[view]` - Kinetic.Text object for the scale title.
 
 Tickmarks are also declared here, but no pointers to them are persisted.
 
 ###instantiateCells()
-This is the only function reimplemented as a rule for each specific detector.  Its generic pattern is:
+This is one of two function reimplemented as a rule for each specific detector.  Its generic pattern is:
  - Populate `this.cells` with Kinetic objects representing each channel, in the same order as `this.channelNames`.
  - Attatch event listeners to the members of `this.cells` for governing the tooltip.
- - Add these Kinetic objects to `this.mainLayer`.
- - Add `this.mainLayer` and `this.tooltipLayer` to `this.stage` once they're all set up.
+ - Add these Kinetic objects to the appropriate `this.mainLayer[]`.
+ - Add `this.mainLayer[]` and `this.tooltipLayer[]` to `this.stage[]` once they're all set up.
 
 ###moveTooltip()
 Moves `this.TTbkg` and `this.text` around to follow the mouse; intended as the callback to the `mousemove` event listener of the Kinetic objects in `this.cells`.
 
 ###refreshColorScale()
-Refreshes the contents and positions of the Kinetic objects in `this.tickLabels[]` and `this.scaleTitle` as a function of whatever is registered in `this.scaleType`, `.min` and `.max` under the `this.currentView` key.  Intended as part of the `onchange` callback after modifying scale parameters in the plot control form, and for updating after changing the view.
+Refreshes the contents and positions of the Kinetic objects in `this.tickLabels[view][tick]` and `this.scaleTitle[view]` as a function of whatever is registered in `this.scaleType`, `.min` and `.max` under the `this.currentView` key.  Intended as part of the `onchange` callback after modifying scale parameters in the plot control form, and for updating after changing the view.
 
 ###trackView()
 Keeps `this.currentView` and `this.currentUnit` and the values of the inputs in the plot control form up to date with whatever the user has chosen from the view selection radio.
