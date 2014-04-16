@@ -16086,7 +16086,7 @@ var Kinetic = {};
 
                 this.tickLabels = [];
                 this.scaleTitle = [];
-                for(j=0; j<this.viewNames; j++){
+                for(j=0; j<this.viewNames.length; j++){
                     this.mainLayer[j].add(colorScale);
 
                     //place ticks on scale
