@@ -15975,8 +15975,7 @@ var Kinetic = {};
                 //refresh tick labels
                 for(j=0; j<this.viewNames.length; j++){
                     //bail out if this scale isn't on display:
-                    console.log(document.getElementById(this.id+'Deck').selectedIndex)
-                    if(j != document.getElementById(this.id+'Deck').selectedIndex)
+                    if(j != this.displayIndex)
                         continue
 
                     for(i=0; i<11; i++){
