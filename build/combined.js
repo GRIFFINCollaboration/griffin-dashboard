@@ -16073,7 +16073,8 @@ var Kinetic = {};
 
                 this.tickLabels = [];
                 this.scaleTitle = [];
-                for(j=0; j<this.viewNames.length; j++){
+                j=1;
+                //for(j=0; j<this.viewNames.length; j++){
 
                     //draw the gradient itself
                     colorScale = new Kinetic.Rect({
@@ -16129,7 +16130,7 @@ var Kinetic = {};
                     this.refreshColorScale();
 */
                     this.mainLayer[j].draw();
-                }
+                //}
             },
 
             'instantiateCells': function(){
@@ -16236,8 +16237,8 @@ var Kinetic = {};
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
 
                 //update the cell colors and tooltip content
-                //this.updateCells();
-                //this.writeTooltip(this.lastTTindex);
+                this.updateCells();
+                this.writeTooltip(this.lastTTindex);
 
                 //repaint
                 this.mainLayer[displayIndex].draw();
