@@ -33,6 +33,25 @@
                 //deploy the standard stuff
                 initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs, ['Main', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'])();
 
+                //x-deck navigation - TIGRESS has one summary card and one detail card
+                deckNavigator = document.createElement('select');
+                deckNavigator.id = 'TIGRESSviewSelect';
+                summaryCard = document.createElement('option');
+                summaryCard.innerHTML = 'Array Summary';
+                summaryCard.value = 0;
+                deckNavigator.appendChild(summaryCard);
+                for(i=1; i<17; i++){
+                    detailCard = document.createElement('option');
+                    detailCard.innerHTML = 'Clover ' + i;
+                    detailCard.value = i;
+                    deckNavigator.appendChild(detailCard);
+                }
+                deckNavigator.onchange = function(){
+                    var viewVal = Math.ceil(selected('TIGRESSviewSelect') / 16); //0 on card 0, 1 to 16 on card 1 
+                    document.getElementById(this.id+'Deck').shuffleTo(viewVal);
+                }
+                this.appendChild(deckNavigator);
+
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters
                 //////////////////////////////////////
