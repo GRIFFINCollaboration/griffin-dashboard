@@ -429,7 +429,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
         var viewVal = selected(this.id+'viewSelect'); 
 
         document.getElementById(this.id+'Deck').shuffleTo(viewVal);
-        this.updateCells();  //repaint right away
+        this.update();  //repaint right away
     }.bind(this)
     this.appendChild(deckNavigator);
 
@@ -16235,7 +16235,7 @@ var Kinetic = {};
                     currentMax = this.max[this.currentView],
                     isLog = this.scaleType[this.currentView] == 'log',
                     displayIndex = selected(this.id+'viewSelect');
-console.log(displayIndex)
+
                 //get the scale limits right
                 if(isLog){
                     currentMin = Math.log10(currentMin);

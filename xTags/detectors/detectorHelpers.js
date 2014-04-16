@@ -332,7 +332,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
         var viewVal = selected(this.id+'viewSelect'); 
 
         document.getElementById(this.id+'Deck').shuffleTo(viewVal);
-        this.updateCells();  //repaint right away
+        this.update();  //repaint right away
     }.bind(this)
     this.appendChild(deckNavigator);
 
