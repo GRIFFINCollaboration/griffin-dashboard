@@ -16063,7 +16063,7 @@ var Kinetic = {};
             'generateColorScale': function(){
                 var colorStops = [],
                     i, j,
-                    tick, colorScale = [];
+                    tick, colorScale;
 
                 //generate a bunch of color stop points for the gradient
                 for(i=0; i<101; i++){
@@ -16076,7 +16076,7 @@ var Kinetic = {};
                 for(j=0; j<this.viewNames.length; j++){
 
                     //draw the gradient itself
-                    colorScale[j] = new Kinetic.Rect({
+                    colorScale = new Kinetic.Rect({
                         x: 0.1*this.width,
                         y: 0.9*this.height,
                         width: 0.8*this.width,
@@ -16088,7 +16088,7 @@ var Kinetic = {};
                         strokeWidth: 2                    
                     });
 
-                    this.mainLayer[j].add(colorScale[j]);
+                    this.mainLayer[j].add(colorScale);
 
 /*
                     //place ticks on scale
@@ -16885,7 +16885,7 @@ function fetchODBrunControl(returnObj){
                 cellCoords['RN03X'] = [this.xMargin+3*g,21*g, this.xMargin+2*g,22*g, this.xMargin+2*g,12*g, this.xMargin+3*g,12*g];
                 cellCoords['RN02X'] = [this.xMargin+12*g,24*g, this.xMargin+12*g,23*g, this.xMargin+2*g,23*g, this.xMargin+1*g,24*g];
                 cellCoords['RN01X'] = [this.xMargin+0*g,12*g, this.xMargin+1*g,12*g, this.xMargin+1*g,22*g, this.xMargin+0*g,23*g];
-
+/*
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
 
@@ -16914,7 +16914,7 @@ function fetchODBrunControl(returnObj){
                     //add the cell to the appropriate main layer
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
-
+*/
                 //add the layers to the stage
                 for(i=0; i<17; i++){
                     this.stage[i].add(this.mainLayer[i]);

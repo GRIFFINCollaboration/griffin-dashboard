@@ -20,7 +20,7 @@
             'generateColorScale': function(){
                 var colorStops = [],
                     i, j,
-                    tick, colorScale = [];
+                    tick, colorScale;
 
                 //generate a bunch of color stop points for the gradient
                 for(i=0; i<101; i++){
@@ -33,7 +33,7 @@
                 for(j=0; j<this.viewNames.length; j++){
 
                     //draw the gradient itself
-                    colorScale[j] = new Kinetic.Rect({
+                    colorScale = new Kinetic.Rect({
                         x: 0.1*this.width,
                         y: 0.9*this.height,
                         width: 0.8*this.width,
@@ -45,7 +45,7 @@
                         strokeWidth: 2                    
                     });
 
-                    this.mainLayer[j].add(colorScale[j]);
+                    this.mainLayer[j].add(colorScale);
 
 /*
                     //place ticks on scale
