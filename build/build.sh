@@ -31,8 +31,14 @@ if [ -e combined.css ]; then rm combined.css; fi
 cat *.css > combined.css
 
 #Put a MIDAS-appropriate head on the html:
-cp ../index.html .
-sed '1,/<\/head>/d' index.html > html
+cp ../*.html .
+sed '1,/<\/head>/d' TIGRESS.html > html
 cat MIDAShead html >> test2
 rm html
-mv test2 index.html
+mv test2 TIGRESS.html
+
+cp ../*.html .
+sed '1,/<\/head>/d' TIPWall.html > html
+cat MIDAShead html >> test2
+rm html
+mv test2 TIPWall.html
