@@ -28,22 +28,23 @@
                     colorStops.push(scalepickr(i/100, this.scale));
                 }
 
-                //draw the gradient itself
-                colorScale = new Kinetic.Rect({
-                    x: 0.1*this.width,
-                    y: 0.9*this.height,
-                    width: 0.8*this.width,
-                    height: 0.05*this.height,
-                    fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
-                    fillLinearGradientEndPoint: {x: 0.8*this.width, y: 0},
-                    fillLinearGradientColorStops: colorStops,
-                    stroke: '#999999',
-                    strokeWidth: 2                    
-                });
-
                 this.tickLabels = [];
                 this.scaleTitle = [];
                 for(j=0; j<this.viewNames.length; j++){
+
+                    //draw the gradient itself
+                    colorScale = new Kinetic.Rect({
+                        x: 0.1*this.width,
+                        y: 0.9*this.height,
+                        width: 0.8*this.width,
+                        height: 0.05*this.height,
+                        fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
+                        fillLinearGradientEndPoint: {x: 0.8*this.width, y: 0},
+                        fillLinearGradientColorStops: colorStops,
+                        stroke: '#999999',
+                        strokeWidth: 2                    
+                    });
+                
                     this.mainLayer[j].add(colorScale);
 
                     //place ticks on scale
