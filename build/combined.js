@@ -16077,7 +16077,7 @@ var Kinetic = {};
 
                     //draw the gradient itself
                     colorScale = new Kinetic.Rect({
-                        x: 0,//0.1*this.width,
+                        x: 0.1*this.width,
                         y: 0,//0.9*this.height,
                         width: 0.8*this.width,
                         height: 0.05*this.height,
