@@ -354,7 +354,8 @@ detector-TIGRESS input[type=radio]
 
 detector-demo input[type='radio'] + label,
 detector-TIPWall input[type='radio'] + label,
-detector-TIGRESS input[type='radio'] + label
+detector-TIGRESS input[type='radio'] + label,
+detector-TIGRESS select
 {
 	font-size: 100%;
 	line-height: 1.2em;

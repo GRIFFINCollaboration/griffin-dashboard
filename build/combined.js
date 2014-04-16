@@ -427,7 +427,9 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     }
     deckNavigator.onchange = function(){
         var viewVal = selected(this.id+'viewSelect'); 
+
         document.getElementById(this.id+'Deck').shuffleTo(viewVal);
+        this.updateCells();  //repaint right away
     }.bind(this)
     this.appendChild(deckNavigator);
 
@@ -16758,7 +16760,7 @@ function fetchODBrunControl(returnObj){
                 }
 
                 //deploy the standard stuff
-                initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs, ['Main', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'])();
+                initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs, ['TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'])();
 
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters
