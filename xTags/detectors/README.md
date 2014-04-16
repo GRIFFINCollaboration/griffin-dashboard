@@ -114,6 +114,9 @@ Establishes all the Kinetic.js objects involved in the color scale, and attaches
 
 Tickmarks are also declared here, but no pointers to them are persisted.
 
+###inCurrentView(channelName)
+This is one of the two functions reimplemented as a rule for each specific detector.  It takes the 10 character `channelName` of a detector element as an argument, and returns an integer corresponding to the view index that detector element is drawn in.
+
 ###instantiateCells()
 This is one of two function reimplemented as a rule for each specific detector.  Its generic pattern is:
  - Populate `this.cells` with Kinetic objects representing each channel, in the same order as `this.channelNames`.
