@@ -142,7 +142,7 @@
                 cellCoords['RN03X'] = [this.xMargin+3*g,21*g, this.xMargin+2*g,22*g, this.xMargin+2*g,12*g, this.xMargin+3*g,12*g];
                 cellCoords['RN02X'] = [this.xMargin+12*g,24*g, this.xMargin+12*g,23*g, this.xMargin+2*g,23*g, this.xMargin+1*g,24*g];
                 cellCoords['RN01X'] = [this.xMargin+0*g,12*g, this.xMargin+1*g,12*g, this.xMargin+1*g,22*g, this.xMargin+0*g,23*g];
-/*
+
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
 
@@ -171,7 +171,7 @@
                     //add the cell to the appropriate main layer
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
-*/
+
                 //add the layers to the stage
                 for(i=0; i<17; i++){
                     this.stage[i].add(this.mainLayer[i]);
