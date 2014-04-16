@@ -16063,7 +16063,7 @@ var Kinetic = {};
             'generateColorScale': function(){
                 var colorStops = [],
                     i, j,
-                    tick, colorScale;
+                    tick, colorScale = [];
 
                 //generate a bunch of color stop points for the gradient
                 for(i=0; i<101; i++){
@@ -16076,7 +16076,7 @@ var Kinetic = {};
                 for(j=0; j<this.viewNames.length; j++){
 
                     //draw the gradient itself
-                    colorScale = new Kinetic.Rect({
+                    colorScale[j] = new Kinetic.Rect({
                         x: 0.1*this.width,
                         y: 0.9*this.height,
                         width: 0.8*this.width,
@@ -16088,12 +16088,8 @@ var Kinetic = {};
                         strokeWidth: 2                    
                     });
 
-                    this.mainLayer[j].add(colorScale);
-                //add the layers to the stage
-                for(i=0; i<17; i++){
-                    this.stage[i].add(this.mainLayer[i]);
-                    this.stage[i].add(this.tooltipLayer[i]);
-                }
+                    this.mainLayer[j].add(colorScale[j]);
+
 /*
                     //place ticks on scale
                     this.tickLabels[j] = [];
@@ -16919,7 +16915,11 @@ function fetchODBrunControl(returnObj){
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
 
-       
+                //add the layers to the stage
+                for(i=0; i<17; i++){
+                    this.stage[i].add(this.mainLayer[i]);
+                    this.stage[i].add(this.tooltipLayer[i]);
+                }       
             }
         }
     });
