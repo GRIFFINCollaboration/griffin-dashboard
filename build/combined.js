@@ -16776,7 +16776,7 @@ function fetchODBrunControl(returnObj){
                 //initialize all the cells:
                 this.instantiateCells();
                 //generate the color scale
-                //this.generateColorScale();
+                this.generateColorScale();
 
             },
             inserted: function() {},
