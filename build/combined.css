@@ -337,7 +337,6 @@ img#gitLogo{
 }detector-demo, detector-TIPWall, detector-TIGRESS{
 	float:left;
 	width:58%;
-	height: 37%;
 }
 
 detector-demo input[type=radio],
