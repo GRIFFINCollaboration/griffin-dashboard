@@ -16087,9 +16087,9 @@ var Kinetic = {};
                         stroke: '#999999',
                         strokeWidth: 2                    
                     });
-                
-                    this.mainLayer[j].add(colorScale);
 
+                    this.mainLayer[j].add(colorScale);
+/*
                     //place ticks on scale
                     this.tickLabels[j] = [];
                     for(i=0; i<11; i++){
@@ -16126,7 +16126,7 @@ var Kinetic = {};
 
                     //populate labels
                     this.refreshColorScale();
-
+*/
                     this.mainLayer[j].draw();
                 }
             },
@@ -16175,6 +16175,7 @@ var Kinetic = {};
 
             //refresh the color scale labeling / coloring:
             'refreshColorScale': function(){
+                /*
                 var i, j, isLog, currentMin, currentMax, logTitle;
 
                 //are we in log mode?
@@ -16207,6 +16208,7 @@ var Kinetic = {};
                     this.scaleTitle[j].setText(logTitle + this.currentView + ' [' + this.currentUnit + ']');
                     this.scaleTitle[j].setAttr('x', this.width/2 - this.scaleTitle[j].getTextWidth()/2);
                 }
+                */
             },
 
             'trackView': function(){
