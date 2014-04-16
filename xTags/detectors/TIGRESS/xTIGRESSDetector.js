@@ -31,7 +31,7 @@
                 }
 
                 //deploy the standard stuff
-                initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs, ['TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'])();
+                initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs, ['Summary', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'])();
 
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters
