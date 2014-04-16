@@ -366,6 +366,7 @@ detector-TIGRESS select
 	display:inline-block;
 	background-color: #111111;
 	color: #EEEEEE;
+	border: none;
 	cursor: pointer;
 	margin-right: 2px;
 	transition:background-color 0.3s; 
