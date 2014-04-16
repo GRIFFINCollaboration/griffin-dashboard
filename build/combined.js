@@ -428,7 +428,7 @@ function initializeDetector(name, channelNames, headline, URL, viewNames){
     deckNavigator.onchange = function(){
         var viewVal = selected(this.id+'viewSelect'); 
         document.getElementById(this.id+'Deck').shuffleTo(viewVal);
-    }
+    }.bind(this)
     this.appendChild(deckNavigator);
 
     //plot control widget
