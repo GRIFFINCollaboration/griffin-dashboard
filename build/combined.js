@@ -16730,6 +16730,7 @@ function fetchODBrunControl(returnObj){
                 baseCoords['TISR'] = [3*g,5*g, 3*g,6*g, 0*g,6*g, 0*g,3*g, 1*g,3*g, 1*g,5*g];
 console.log([2*g,2*g, 3*g,2*g, 3*g,3*g, 2*g,3*g])
 console.log(baseCoords['TIGG'])
+console.log(baseCoords)
                 //tabulate offsets in [x,y] relative to TIG04:
                 offset[1] = [14*g, 0*g];
                 offset[2] = [30*g, 0*g];
