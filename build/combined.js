@@ -16774,7 +16774,7 @@ function fetchODBrunControl(returnObj){
                         }                        
                     }
                 }
-
+console.log(cellCoords)
                 //each channel listed in this.summaryChannelNames gets an entry in this.summaryCells as a Kinetic object:
                 for(i=0; i<this.summaryChannelNames.length; i++){
                     //all summaries go on card 0:
