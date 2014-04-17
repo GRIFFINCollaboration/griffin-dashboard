@@ -43,7 +43,7 @@
                 this.xMargin = (this.width - this.grid*24)/2
                 //TIGRSS summary is laid out on a 58x20 square grid.
                 this.summaryGrid = Math.min(0.8*this.height/20, this.width/58);
-console.log(this.summaryGrid)
+
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
@@ -251,7 +251,8 @@ console.log(this.summaryGrid)
                         }                        
                     }
                 }
-console.log(cellCoords)
+console.log(g)
+console.log(baseCoords)
                 //each channel listed in this.summaryChannelNames gets an entry in this.summaryCells as a Kinetic object:
                 for(i=0; i<this.summaryChannelNames.length; i++){
                     //all summaries go on card 0:
