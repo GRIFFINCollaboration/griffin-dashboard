@@ -186,7 +186,7 @@
                 var cellCoords = {},
                     baseCoords = {}
                     offset = {},
-                    colors = ['G', 'B', 'W', 'R']
+                    colors = ['G', 'B', 'W', 'R'],
                     i, j, k, index;
 
                 //analogs of this.channelNames & this.cells
