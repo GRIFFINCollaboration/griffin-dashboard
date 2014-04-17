@@ -179,6 +179,70 @@
                 }       
             },
 
+            //TIGRESS has a summary level in addition to the usual detector reporting - declare the summary cells with
+            //this function:
+            'instantiateSummaryCells': function(){
+                var cellCoords = {},
+                    baseCoords = {}
+                    offset = {},
+                    colors = ['G', 'B', 'W', 'R']
+                    i, j, k, index;
+
+                //TIG04 appears in upper left corner, state these explicitly and build other 15 from there. 
+                baseCoords['TIGG'] = [2,2, 3,2, 3,3, 2,3];
+                baseCoords['TIGB'] = [3,2, 4,2, 4,3, 3,3];
+                baseCoords['TIGW'] = [3,3, 4,3, 4,4, 3,4];
+                baseCoords['TIGR'] = [3,3, 3,4, 2,4, 2,3];
+                baseCoords['TISG'] = [0,0, 3,0, 3,1, 1,1, 1,3, 0,3];
+                baseCoords['TISB'] = [3,0, 6,0, 6,3, 5,3, 5,1, 3,1];
+                baseCoords['TISW'] = [5,3, 6,3, 6,6, 3,6, 3,5, 5,5];
+                baseCoords['TISR'] = [3,5, 3,6, 0,6, 0,3, 1,3, 1,5];
+
+                //tabulate offsets in [x,y] relative to TIG04:
+                offset[1] = [14, 0];
+                offset[2] = [30, 0];
+                offset[3] = [44, 0];
+                offset[4] = [0, 0];
+                offset[5] = [14, 7];
+                offset[6] = [21, 7];
+                offset[7] = [30, 7];
+                offset[8] = [37, 7];
+                offset[9] = [44, 7];
+                offset[10] = [51, 7];
+                offset[11] = [0, 7];
+                offset[12] = [7, 7];
+                offset[13] = [14, 14];
+                offset[14] = [30, 14];
+                offset[15] = [44, 14];
+                offset[16] = [0, 14];
+
+                //add offsets to the base values to build all 16 summaries
+                for(i=1; i<offset.length; i++ ){
+                    index = (i<10) ? '0'+i : i;
+                    for(j=0 j<colors.length; j++){
+                        //HPGE summaries
+                        cellCoords['TIG' + index + colors[j]] = baseCoords['TIG'+colors[j]];
+                        //now add offsets:
+                        for(k=0; k<baseCoords['TIG'+colors[j]].length; k++){
+                            if(k%2) //even == x coords
+                                cellCoords['TIG' + index + colors[j]][k] += offset[i][0];
+                            else
+                                cellCoords['TIG' + index + colors[j]][k] += offset[i][1];
+                        }
+
+                        //and again for BGO summaries:
+                        cellCoords['TIS' + index + colors[j]] = baseCoords['TIS'+colors[j]];
+                        //now add offsets:
+                        for(k=0; k<baseCoords['TIS'+colors[j]].length; k++){
+                            if(k%2) //even == x coords
+                                cellCoords['TIS' + index + colors[j]][k] += offset[i][0];
+                            else
+                                cellCoords['TIS' + index + colors[j]][k] += offset[i][1];
+                        }                        
+                    }
+                }
+            },
+
             'inCurrentView': function(channelName){
                 if(this.displayIndex == parseInt(channelName.slice(3,5),10))
                     return true;
