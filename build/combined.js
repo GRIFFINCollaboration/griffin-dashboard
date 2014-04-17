@@ -16800,6 +16800,8 @@ function fetchODBrunControl(returnObj){
                     this.mainLayer[cardIndex].add(this.summaryCells[this.summaryChannelNames[i]]);
                 }
 
+                this.mainLayer[0].draw();
+
             },
 
             'inCurrentView': function(channelName){
