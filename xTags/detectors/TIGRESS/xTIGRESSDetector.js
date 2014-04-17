@@ -43,7 +43,7 @@
                 this.xMargin = (this.width - this.grid*24)/2
                 //TIGRSS summary is laid out on a 58x20 square grid.
                 this.summaryGrid = Math.min(0.8*this.height/20, this.width/58);
-
+console.log(this.summaryGrid)
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
