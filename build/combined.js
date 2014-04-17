@@ -16564,6 +16564,8 @@ function fetchODBrunControl(returnObj){
                 //TIGRESS clovers are laid out on a 24x24 square grid.
                 this.grid = this.height*0.8/24;
                 this.xMargin = (this.width - this.grid*24)/2
+                //TIGRSS summary is laid out on a 58x20 square grid.
+                this.summaryGrid = Math.min(0.8*this.height/20, this.width/58);
 
                 /////////////////////////////
                 //Initialize visualization
@@ -16710,39 +16712,40 @@ function fetchODBrunControl(returnObj){
                     baseCoords = {},
                     offset = {},
                     colors = ['G', 'B', 'W', 'R'],
-                    i, j, k, index;
+                    i, j, k, index,
+                    g = this.summaryGrid;
 
                 //analogs of this.channelNames & this.cells
                 this.summaryChannelNames = [];
                 this.summaryCells = {};
 
                 //TIG04 appears in upper left corner, state these explicitly and build other 15 from there. 
-                baseCoords['TIGG'] = [2,2, 3,2, 3,3, 2,3];
-                baseCoords['TIGB'] = [3,2, 4,2, 4,3, 3,3];
-                baseCoords['TIGW'] = [3,3, 4,3, 4,4, 3,4];
-                baseCoords['TIGR'] = [3,3, 3,4, 2,4, 2,3];
-                baseCoords['TISG'] = [0,0, 3,0, 3,1, 1,1, 1,3, 0,3];
-                baseCoords['TISB'] = [3,0, 6,0, 6,3, 5,3, 5,1, 3,1];
-                baseCoords['TISW'] = [5,3, 6,3, 6,6, 3,6, 3,5, 5,5];
-                baseCoords['TISR'] = [3,5, 3,6, 0,6, 0,3, 1,3, 1,5];
+                baseCoords['TIGG'] = [2*g,2*g, 3*g,2*g, 3*g,3*g, 2*g,3*g];
+                baseCoords['TIGB'] = [3*g,2*g, 4*g,2*g, 4*g,3*g, 3*g,3*g];
+                baseCoords['TIGW'] = [3*g,3*g, 4*g,3*g, 4*g,4*g, 3*g,4*g];
+                baseCoords['TIGR'] = [3*g,3*g, 3*g,4*g, 2*g,4*g, 2*g,3*g];
+                baseCoords['TISG'] = [0*g,0*g, 3*g,0*g, 3*g,1*g, 1*g,1*g, 1*g,3*g, 0*g,3*g];
+                baseCoords['TISB'] = [3*g,0*g, 6*g,0*g, 6*g,3*g, 5*g,3*g, 5*g,1*g, 3*g,1*g];
+                baseCoords['TISW'] = [5*g,3*g, 6*g,3*g, 6*g,6*g, 3*g,6*g, 3*g,5*g, 5*g,5*g];
+                baseCoords['TISR'] = [3*g,5*g, 3*g,6*g, 0*g,6*g, 0*g,3*g, 1*g,3*g, 1*g,5*g];
 
                 //tabulate offsets in [x,y] relative to TIG04:
-                offset[1] = [14, 0];
-                offset[2] = [30, 0];
-                offset[3] = [44, 0];
-                offset[4] = [0, 0];
-                offset[5] = [14, 7];
-                offset[6] = [21, 7];
-                offset[7] = [30, 7];
-                offset[8] = [37, 7];
-                offset[9] = [44, 7];
-                offset[10] = [51, 7];
-                offset[11] = [0, 7];
-                offset[12] = [7, 7];
-                offset[13] = [14, 14];
-                offset[14] = [30, 14];
-                offset[15] = [44, 14];
-                offset[16] = [0, 14];
+                offset[1] = [14*g, 0*g];
+                offset[2] = [30*g, 0*g];
+                offset[3] = [44*g, 0*g];
+                offset[4] = [0*g, 0*g];
+                offset[5] = [14*g, 7*g];
+                offset[6] = [21*g, 7*g];
+                offset[7] = [30*g, 7*g];
+                offset[8] = [37*g, 7*g];
+                offset[9] = [44*g, 7*g];
+                offset[10] = [51*g, 7*g];
+                offset[11] = [0*g, 7*g];
+                offset[12] = [7*g, 7*g];
+                offset[13] = [14*g, 14*g];
+                offset[14] = [30*g, 14*g];
+                offset[15] = [44*g, 14*g];
+                offset[16] = [0*g, 14*g];
 
                 //add offsets to the base values to build all 16 summaries
                 for(i=1; i<offset.length; i++ ){
@@ -16799,8 +16802,6 @@ function fetchODBrunControl(returnObj){
                     //add the cell to the appropriate main layer
                     this.mainLayer[cardIndex].add(this.summaryCells[this.summaryChannelNames[i]]);
                 }
-
-                this.mainLayer[0].draw();
 
             },
 
