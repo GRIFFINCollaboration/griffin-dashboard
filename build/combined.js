@@ -16570,6 +16570,7 @@ function fetchODBrunControl(returnObj){
                 /////////////////////////////
                 //initialize all the cells:
                 this.instantiateCells();
+                this.instantiateSummaryCells();
                 //generate the color scale
                 this.generateColorScale();
 
@@ -16711,6 +16712,10 @@ function fetchODBrunControl(returnObj){
                     colors = ['G', 'B', 'W', 'R']
                     i, j, k, index;
 
+                //analogs of this.channelNames & this.cells
+                this.summaryChannelNames = [];
+                this.summaryCells = {};
+
                 //TIG04 appears in upper left corner, state these explicitly and build other 15 from there. 
                 baseCoords['TIGG'] = [2,2, 3,2, 3,3, 2,3];
                 baseCoords['TIGB'] = [3,2, 4,2, 4,3, 3,3];
@@ -16743,7 +16748,8 @@ function fetchODBrunControl(returnObj){
                 for(i=1; i<offset.length; i++ ){
                     index = (i<10) ? '0'+i : i;
                     for(j=0 j<colors.length; j++){
-                        //HPGE summaries
+                        //HPGE summaries - names & coordinates
+                        this.summaryChannelNames[this.summaryChannelNames.length] = 'TIG' + index + colors[j];
                         cellCoords['TIG' + index + colors[j]] = baseCoords['TIG'+colors[j]];
                         //now add offsets:
                         for(k=0; k<baseCoords['TIG'+colors[j]].length; k++){
@@ -16753,7 +16759,8 @@ function fetchODBrunControl(returnObj){
                                 cellCoords['TIG' + index + colors[j]][k] += offset[i][1];
                         }
 
-                        //and again for BGO summaries:
+                        //and again for BGO summaries - names & coordinates
+                        this.summaryChannelNames[this.summaryChannelNames.length] = 'TIS' + index + colors[j];
                         cellCoords['TIS' + index + colors[j]] = baseCoords['TIS'+colors[j]];
                         //now add offsets:
                         for(k=0; k<baseCoords['TIS'+colors[j]].length; k++){
@@ -16764,6 +16771,35 @@ function fetchODBrunControl(returnObj){
                         }                        
                     }
                 }
+
+                //each channel listed in this.summaryChannelNames gets an entry in this.summaryCells as a Kinetic object:
+                for(i=0; i<this.summaryChannelNames.length; i++){
+                    //all summaries go on card 0:
+                    cardIndex = 0;
+                    cellKey = this.summaryChannelNames[i];
+
+                    this.summaryCells[this.summaryChannelNames[i]] = new Kinetic.Line({
+                        points: cellCoords[cellKey],
+                        fill: '#000000',
+                        fillPatternImage: this.errorPattern,
+                        stroke: this.frameColor,
+                        strokeWidth: this.frameLineWidth,
+                        closed: true,
+                        listening: true
+                    });
+
+                    //set up the tooltip listeners:
+                    this.summaryCells[this.summaryChannelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.summaryCells[this.summaryChannelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
+                    this.summaryCells[this.summaryChannelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
+
+                    //set up onclick listeners:
+                    this.summaryCells[this.summaryChannelNames[i]].on('click', this.clickCell.bind(this, this.summaryChannelNames[i]) );
+
+                    //add the cell to the appropriate main layer
+                    this.mainLayer[cardIndex].add(this.summaryCells[this.summaryChannelNames[i]]);
+                }
+
             },
 
             'inCurrentView': function(channelName){
