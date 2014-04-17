@@ -16710,7 +16710,7 @@ function fetchODBrunControl(returnObj){
             'instantiateSummaryCells': function(){
                 var cellCoords = {},
                     baseCoords = {},
-                    offset = {},
+                    offset = [],
                     colors = ['G', 'B', 'W', 'R'],
                     i, j, k, index,
                     g = this.summaryGrid;
