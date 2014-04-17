@@ -16728,7 +16728,8 @@ function fetchODBrunControl(returnObj){
                 baseCoords['TISB'] = [3*g,0*g, 6*g,0*g, 6*g,3*g, 5*g,3*g, 5*g,1*g, 3*g,1*g];
                 baseCoords['TISW'] = [5*g,3*g, 6*g,3*g, 6*g,6*g, 3*g,6*g, 3*g,5*g, 5*g,5*g];
                 baseCoords['TISR'] = [3*g,5*g, 3*g,6*g, 0*g,6*g, 0*g,3*g, 1*g,3*g, 1*g,5*g];
-
+console.log(g)
+console.log(baseCoords)
                 //tabulate offsets in [x,y] relative to TIG04:
                 offset[1] = [14*g, 0*g];
                 offset[2] = [30*g, 0*g];
@@ -16774,8 +16775,7 @@ function fetchODBrunControl(returnObj){
                         }                        
                     }
                 }
-console.log(g)
-console.log(baseCoords)
+
                 //each channel listed in this.summaryChannelNames gets an entry in this.summaryCells as a Kinetic object:
                 for(i=0; i<this.summaryChannelNames.length; i++){
                     //all summaries go on card 0:
