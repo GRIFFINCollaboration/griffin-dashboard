@@ -16707,7 +16707,7 @@ function fetchODBrunControl(returnObj){
             //this function:
             'instantiateSummaryCells': function(){
                 var cellCoords = {},
-                    baseCoords = {}
+                    baseCoords = {},
                     offset = {},
                     colors = ['G', 'B', 'W', 'R'],
                     i, j, k, index;
