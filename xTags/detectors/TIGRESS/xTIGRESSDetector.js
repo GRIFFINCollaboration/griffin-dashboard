@@ -236,14 +236,14 @@ console.log(baseCoords)
                         this.summaryChannelNames[this.summaryChannelNames.length] = 'TIG' + index + colors[j];
                         cellCoords['TIG' + index + colors[j]] = baseCoords['TIG'+colors[j]];
                         //now add offsets:
-                        /*
+                        
                         for(k=0; k<baseCoords['TIG'+colors[j]].length; k++){
                             if(k%2) //even == x coords
                                 cellCoords['TIG' + index + colors[j]][k] += offset[i][0];
-                            else
-                                cellCoords['TIG' + index + colors[j]][k] += offset[i][1];
+                            //else
+                            //    cellCoords['TIG' + index + colors[j]][k] += offset[i][1];
                         }
-                        */
+                        
                         //and again for BGO summaries - names & coordinates
                         this.summaryChannelNames[this.summaryChannelNames.length] = 'TIS' + index + colors[j];
                         cellCoords['TIS' + index + colors[j]] = baseCoords['TIS'+colors[j]];
