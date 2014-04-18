@@ -203,8 +203,7 @@
                     i, j, k, index,
                     g = this.summaryGrid;
 
-                //analogs of this.channelNames & this.cells
-                this.summaryChannelNames = [];
+                //analog of this.cells
                 this.summaryCells = {};
 
                 //TIG04 appears in upper left corner, state these explicitly and build other 15 from there. 
