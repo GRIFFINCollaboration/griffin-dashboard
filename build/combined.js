@@ -16734,7 +16734,8 @@ function fetchODBrunControl(returnObj){
                     offset = [],
                     colors = ['G', 'B', 'W', 'R'],
                     i, j, k, index,
-                    g = this.summaryGrid;
+                    g = this.summaryGrid,
+                    northLabel, southLabel, beamLabel, beamArrow;
 
                 //analog of this.cells
                 this.summaryCells = {};
@@ -16831,6 +16832,30 @@ function fetchODBrunControl(returnObj){
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
 
+                //label hemispheres and beam direction
+                northLabel = new Kinetic.Text({
+                    x: 0,
+                    y: 0.82*this.height,
+                    text: 'North Hemisphere',
+                    fontSize: 28,
+                    fontFamily: 'Arial',
+                    fill: '#999999'
+                });
+                this.mainLayer[0].add(northLabel);
+                //center label nicely
+                northLabel.setAttr('x', 13.5*this.summaryGrid - northLabel.getTextWidth()/2);
+
+                southLabel = new Kinetic.Text({
+                    x: 0,
+                    y: 0.82*this.height,
+                    text: 'North Hemisphere',
+                    fontSize: 28,
+                    fontFamily: 'Arial',
+                    fill: '#999999'
+                });
+                this.mainLayer[0].add(northLabel);
+                //center label nicely
+                northLabel.setAttr('x', 43.5*this.summaryGrid - southLabel.getTextWidth()/2);                
             },
 
             'inCurrentView': function(channelName){
