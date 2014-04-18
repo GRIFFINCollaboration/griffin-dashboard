@@ -122,14 +122,15 @@
             //move the tooltip around
             'moveTooltip': function(){
                 var mousePos = this.stage[this.displayIndex].getPointerPosition(),
-                    TTwidth = this.TTbkg[this.displayIndex].getAttr('width');
+                    TTwidth = this.TTbkg[this.displayIndex].getAttr('width'),
+                    TTheight = this.TTbkg[this.displayIndex].getAttr('height');
 
                 //adjust the background size & position
                 this.TTbkg[this.displayIndex].setAttr( 'x', Math.min(mousePos.x + 10, this.width - TTwidth) );
-                this.TTbkg[this.displayIndex].setAttr( 'y', mousePos.y + 10 );
+                this.TTbkg[this.displayIndex].setAttr( 'y', Math.min(mousePos.y + 10, this.height - TTheight) );
                 //make text follow the mouse too
-                this.text[this.displayIndex].setAttr( 'x', Math.min(mousePos.x + 20, this.width-TTwidth) );
-                this.text[this.displayIndex].setAttr( 'y', mousePos.y + 20 ); 
+                this.text[this.displayIndex].setAttr( 'x', Math.min(mousePos.x + 20, this.width - TTwidth - 10) );
+                this.text[this.displayIndex].setAttr( 'y', Math.min(mousePos.y + 20, this.width - TTwidth - 10) ); 
 
                 this.tooltipLayer[this.displayIndex].draw();
             },
