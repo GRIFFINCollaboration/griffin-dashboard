@@ -16844,7 +16844,7 @@ function fetchODBrunControl(returnObj){
             },
 
             'summarizeData': function(){
-                var i, j, k index;
+                var i, j, k, index;
 
                 
                 for(i=0; i<16; i++){
