@@ -359,7 +359,9 @@
 
                 //summary -> details
                 if(cellName.length == 6){
+                    console.log(selected(this.id+'viewSelect'))
                     viewSelect.value = viewVal;
+                    console.log(selected(this.id+'viewSelect'))
                     viewSelect.onchange();
                 }
 
