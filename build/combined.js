@@ -16012,6 +16012,10 @@ var Kinetic = {};
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
 
+                //sort data into summary statistics if necessary
+                if(this.summarizeData)
+                    this.summarizeData();
+
                 //update the cell colors and tooltip content
                 this.updateCells();
                 this.writeTooltip(this.lastTTindex);
@@ -16526,39 +16530,44 @@ function fetchODBrunControl(returnObj){
             created: function() {
                 //need to build up names of all ~1000 channels:
                 var i, j, k,
-                    HPGEprefixes = ['TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'],
-                    colors = ['R', 'G', 'B', 'W'],
-                    HPGEcellCodes = ['N00A', 'N00B', 'P01X', 'P02X', 'P03X', 'P04X', 'P05X', 'P06X', 'P07X', 'P08X'],
-                    BGOprefixes = ['TIS01', 'TIS02', 'TIS03', 'TIS04', 'TIS05', 'TIS06', 'TIS07', 'TIS08', 'TIS09', 'TIS10', 'TIS11', 'TIS12', 'TIS13', 'TIS14', 'TIS15', 'TIS16'],
-                    BGOcellCodes = ['N01X', 'N02X', 'N03X', 'N04X', 'N05X'],
                     //throw in URLs while we're at it:
                     URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
                             'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
+                //put these ones on the object, since we'll need them later
+                this.HPGEprefixes = [];
+                this.BGOprefixes = [];
+                this.colors = ['R', 'G', 'B', 'W'];
+                this.HPGEcellCodes = ['N00A', 'N00B', 'P01X', 'P02X', 'P03X', 'P04X', 'P05X', 'P06X', 'P07X', 'P08X'],
+                this.BGOcellCodes = ['N01X', 'N02X', 'N03X', 'N04X', 'N05X'],
+                for(i=1; i<17; i++){
+                    j = (i<10) ? '0'+i : i;
+                    this.HPGEprefixes.push('TIG' + j);
+                    this.BGOprefixes.push('TIS' + j);
+                }
 
                 //build up channel names
                 this.channelNames = [];
-                for(i=0; i<HPGEprefixes.length; i++){
+                for(i=0; i<this.HPGEprefixes.length; i++){
                     for(j=0; j<colors.length; j++){
-                        for(k=0; k<HPGEcellCodes.length; k++){
-                            this.channelNames.push(HPGEprefixes[i] + colors[j] + HPGEcellCodes[k]);
+                        for(k=0; k<this.HPGEcellCodes.length; k++){
+                            this.channelNames.push(this.HPGEprefixes[i] + this.colors[j] + this.HPGEcellCodes[k]);
                         }
-                        for(k=0; k<BGOcellCodes.length; k++){
-                            this.channelNames.push(BGOprefixes[i] + colors[j] + BGOcellCodes[k]);
+                        for(k=0; k<this.BGOcellCodes.length; k++){
+                            this.channelNames.push(this.BGOprefixes[i] + this.colors[j] + this.BGOcellCodes[k]);
                         }
                     }
                 }
                 //build up summary channel names
-                this.summaryChannelNames = [];
                 for(i=0; i<16; i++){
                     for(j=0; j<4; j++){
-                        this.summaryChannelNames.push(HPGEprefixes[i] + colors[j]);
-                        this.summaryChannelNames.push(BGOprefixes[i] + colors[j]);
+                        this.channelNames.push(this.HPGEprefixes[i] + this.colors[j]);
+                        this.channelNames.push(this.BGOprefixes[i] + this.colors[j]);
                     }
                 }
 
                 //deploy the standard stuff
-                this.viewNames = ['Summary', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16']
+                this.viewNames = ['Summary'].concat(this.HPGEprefixes)
                 initializeDetector.bind(this, 'TIGRESS', 'TIGRESS', URLs)();
 
                 //////////////////////////////////////
@@ -16677,6 +16686,9 @@ function fetchODBrunControl(returnObj){
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
+                    //not dealing with summary channels here, skip them:
+                    if(this.channelNames[i].length < 10)
+                        continue;
 
                     //determine which card this cell belongs to:
                     cardIndex = parseInt( this.channelNames[i].slice(3,5) ,10);
@@ -16784,13 +16796,17 @@ function fetchODBrunControl(returnObj){
                     }
                 }
 
-                //each channel listed in this.summaryChannelNames gets an entry in this.summaryCells as a Kinetic object:
-                for(i=0; i<this.summaryChannelNames.length; i++){
+                //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
+                for(i=0; i<this.channelNames.length; i++){
+                    //only doing summaries here
+                    if(this.channelNames[i].length == 10)
+                        continue;
+
                     //all summaries go on card 0:
                     cardIndex = 0;
-                    cellKey = this.summaryChannelNames[i];
+                    cellKey = this.channelNames[i];
 
-                    this.summaryCells[this.summaryChannelNames[i]] = new Kinetic.Line({
+                    this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellCoords[cellKey],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
@@ -16801,24 +16817,59 @@ function fetchODBrunControl(returnObj){
                     });
 
                     //set up the tooltip listeners:
-                    this.summaryCells[this.summaryChannelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
-                    this.summaryCells[this.summaryChannelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
-                    this.summaryCells[this.summaryChannelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
+                    this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
+                    this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
 
                     //set up onclick listeners:
-                    this.summaryCells[this.summaryChannelNames[i]].on('click', this.clickCell.bind(this, this.summaryChannelNames[i]) );
+                    this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
 
                     //add the cell to the appropriate main layer
-                    this.mainLayer[cardIndex].add(this.summaryCells[this.summaryChannelNames[i]]);
+                    this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
 
             },
 
             'inCurrentView': function(channelName){
+                //summary
+                if(this.displayIndex == 0 && channelName.length==6)
+                    return true;
+                else if(this.displayIndex == 0 && channelName.length!=6)
+                    return false;
+                //detail
                 if(this.displayIndex == parseInt(channelName.slice(3,5),10))
                     return true;
                 else
                     return false;
+            },
+
+            'summarizeData': function(){
+                var i, j, k index;
+
+                
+                for(i=0; i<16; i++){
+                    for(j=0; j<4; j++){
+                        //HPGE
+                        window.currentData.HV[this.HPGEprefixes[i] + this.colors[j]] = 0;
+                        window.currentData.threshold[this.HPGEprefixes[i] + this.colors[j]] = 0;
+                        window.currentData.rate[this.HPGEprefixes[i] + this.colors[j]] = 0;
+                        for(k=0; k<10; k++){
+                            window.currentData.HV[this.HPGEprefixes[i] + this.colors[j]] += window.currentData.HV[this.HPGEprefixes[i] + this.colors[j] + this.HPGEcellCodes[k]]/10;
+                            window.currentData.threshold[this.HPGEprefixes[i] + this.colors[j]] += window.currentData.threshold[this.HPGEprefixes[i] + this.colors[j] + this.HPGEcellCodes[k]]/10;
+                            window.currentData.rate[this.HPGEprefixes[i] + this.colors[j]] += window.currentData.rate[this.HPGEprefixes[i] + this.colors[j] + this.HPGEcellCodes[k]]/10;
+                        }
+
+                        //BGO
+                        window.currentData.HV[this.BGOprefixes[i] + this.colors[j]] = 0;
+                        window.currentData.threshold[this.BGOprefixes[i] + this.colors[j]] = 0;
+                        window.currentData.rate[this.BGOprefixes[i] + this.colors[j]] = 0;
+                        for(k=0; k<5; k++){
+                            window.currentData.HV[this.BGOprefixes[i] + this.colors[j]] += window.currentData.HV[this.BGOprefixes[i] + this.colors[j] + this.BGOcellCodes[k]]/5;
+                            window.currentData.threshold[this.BGOprefixes[i] + this.colors[j]] += window.currentData.threshold[this.BGOprefixes[i] + this.colors[j] + this.BGOcellCodes[k]]/5;
+                            window.currentData.rate[this.BGOprefixes[i] + this.colors[j]] += window.currentData.rate[this.BGOprefixes[i] + this.colors[j] + this.BGOcellCodes[k]]/5;
+                        }
+                    }
+                }
             }
         }
     });
