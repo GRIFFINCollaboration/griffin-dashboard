@@ -16735,7 +16735,7 @@ function fetchODBrunControl(returnObj){
                     colors = ['G', 'B', 'W', 'R'],
                     i, j, k, index,
                     g = this.summaryGrid,
-                    northLabel, southLabel, beamLabel, beamArrow;
+                    northLabel, southLabel, beamArrow;
 
                 //analog of this.cells
                 this.summaryCells = {};
@@ -16844,7 +16844,7 @@ function fetchODBrunControl(returnObj){
                 this.mainLayer[0].add(northLabel);
                 //center label nicely
                 northLabel.setAttr('x', 13.5*this.summaryGrid - northLabel.getTextWidth()/2);
-                northLabel.setAttr('y', 0.8*this.height - northLabel.getTextHeight()/2);
+                northLabel.setAttr('y', 0.8*this.height - northLabel.getTextHeight());
 
                 southLabel = new Kinetic.Text({
                     x: 0,
@@ -16857,7 +16857,17 @@ function fetchODBrunControl(returnObj){
                 this.mainLayer[0].add(southLabel);
                 //center label nicely
                 southLabel.setAttr('x', 43.5*this.summaryGrid - southLabel.getTextWidth()/2);
-                southLabel.setAttr('y', 0.8*this.height - southLabel.getTextHeight()/2);              
+                southLabel.setAttr('y', 0.8*this.height - southLabel.getTextHeight());      
+
+                beamArrow = new Kinetic.Line({
+                    points: [28.5*this.summaryGrid, 1*this.summaryGrid, 29*this.summaryGrid,2*this.summaryGrid, 28*this.summaryGrid,2*this.summaryGrid, 28.5*this.summaryGrid,5*this.summaryGrid, 28.5*this.summaryGrid,this.height*0.8],
+                    fill: this.frameColor,
+                    stroke: this.frameColor,
+                    strokeWidth: this.frameLineWidth,
+                    closed: true,
+                    listening: true
+                });      
+                this.mainLayer[0].add(beamArrow);  
             },
 
             'inCurrentView': function(channelName){
