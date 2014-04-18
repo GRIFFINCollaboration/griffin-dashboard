@@ -16713,7 +16713,7 @@ function fetchODBrunControl(returnObj){
                     offset = [],
                     colors = ['G', 'B', 'W', 'R'],
                     i, j, k, index,
-                    g = this.summaryGrid;
+                    g = parseFloat(this.summaryGrid);
 
                 //analogs of this.channelNames & this.cells
                 this.summaryChannelNames = [];
