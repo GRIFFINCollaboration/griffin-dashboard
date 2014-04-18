@@ -16757,7 +16757,7 @@ console.log(baseCoords)
                         
                         //HPGE summaries - names & coordinates
                         this.summaryChannelNames[this.summaryChannelNames.length] = 'TIG' + index + colors[j];
-                        //cellCoords['TIG' + index + colors[j]] = baseCoords['TIG'+colors[j]];
+                        cellCoords['TIG' + index + colors[j]] = baseCoords['TIG'+colors[j]];
                         //now add offsets:
                         /*
                         for(k=0; k<baseCoords['TIG'+colors[j]].length; k++){
