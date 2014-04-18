@@ -16759,10 +16759,10 @@ function fetchODBrunControl(returnObj){
                             cellCoords['TIG' + index + colors[j]][k] = baseCoords['TIG'+colors[j]][k];
                         //now add offsets:
                         for(k=0; k<baseCoords['TIG'+colors[j]].length; k++){
-                            if(k%2) //odd == x coords
-                                cellCoords['TIG' + index + colors[j]][k] += offset[i][0];
-                            else
+                            if(k%2) //odd == y coords
                                 cellCoords['TIG' + index + colors[j]][k] += offset[i][1];
+                            else
+                                cellCoords['TIG' + index + colors[j]][k] += offset[i][0];
                         }
                         
                         //and again for BGO summaries - names & coordinates
@@ -16772,10 +16772,10 @@ function fetchODBrunControl(returnObj){
                             cellCoords['TIS' + index + colors[j]][k] = baseCoords['TIS'+colors[j]][k];
                         //now add offsets:
                         for(k=0; k<baseCoords['TIS'+colors[j]].length; k++){
-                            if(k%2) //odd == x coords
-                                cellCoords['TIS' + index + colors[j]][k] += offset[i][0];
-                            else
+                            if(k%2) //odd == y coords
                                 cellCoords['TIS' + index + colors[j]][k] += offset[i][1];
+                            else
+                                cellCoords['TIS' + index + colors[j]][k] += offset[i][0];
                         } 
 
                     }
