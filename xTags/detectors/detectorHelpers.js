@@ -123,6 +123,7 @@ function initializeDetector(name, headline, URL){
             document.getElementById(this.id+'Deck').shuffleTo(viewVal);
             this.displayIndex = viewVal;
             this.update();  //repaint right away
+            this.refreshColorScale();
         }.bind(this)
         plotControlWrap.appendChild(deckNavigator);
     }

@@ -220,6 +220,7 @@ function initializeDetector(name, headline, URL){
             document.getElementById(this.id+'Deck').shuffleTo(viewVal);
             this.displayIndex = viewVal;
             this.update();  //repaint right away
+            this.refreshColorScale();
         }.bind(this)
         plotControlWrap.appendChild(deckNavigator);
     }
@@ -16881,9 +16882,7 @@ function fetchODBrunControl(returnObj){
 
                 //summary -> details
                 if(cellName.length == 6){
-                    console.log(selected(this.id+'viewSelect'))
                     viewSelect.value = viewVal;
-                    console.log(selected(this.id+'viewSelect'))
                     viewSelect.onchange();
                 }
 
