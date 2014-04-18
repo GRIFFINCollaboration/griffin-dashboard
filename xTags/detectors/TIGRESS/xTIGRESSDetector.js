@@ -335,7 +335,7 @@
                 southLabel.setAttr('y', 0.8*this.height - southLabel.getTextHeight());      
 
                 beamArrow = new Kinetic.Line({
-                    points: [28.5*this.summaryGrid, 1*this.summaryGrid, 29*this.summaryGrid,2*this.summaryGrid, 28*this.summaryGrid,2*this.summaryGrid, 28.5*this.summaryGrid,1*this.summaryGrid, 28.5*this.summaryGrid,this.height*0.8],
+                    points: [28.5*this.summaryGrid, 2*this.summaryGrid, 29*this.summaryGrid,2*this.summaryGrid, 28.5*this.summaryGrid,1*this.summaryGrid, 28*this.summaryGrid,2*this.summaryGrid, 28.5*this.summaryGrid,2*this.summaryGrid, 28.5*this.summaryGrid,this.height*0.8],
                     fill: this.frameColor,
                     stroke: this.frameColor,
                     strokeWidth: this.frameLineWidth,
