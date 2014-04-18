@@ -319,20 +319,20 @@
                 this.mainLayer[0].add(northLabel);
                 //center label nicely
                 northLabel.setAttr('x', 13.5*this.summaryGrid - northLabel.getTextWidth()/2);
-                northLabel.setAttr('y', 0.8*this.height + northLabel.getTextHeight()/2);
+                northLabel.setAttr('y', 0.8*this.height - northLabel.getTextHeight()/2);
 
                 southLabel = new Kinetic.Text({
                     x: 0,
                     y: 0,
-                    text: 'North Hemisphere',
+                    text: 'South Hemisphere',
                     fontSize: 28,
                     fontFamily: 'Arial',
                     fill: '#999999'
                 });
-                this.mainLayer[0].add(northLabel);
+                this.mainLayer[0].add(southLabel);
                 //center label nicely
                 southLabel.setAttr('x', 43.5*this.summaryGrid - southLabel.getTextWidth()/2);
-                southLabel.setAttr('y', 0.8*this.height + southLabel.getTextHeight()/2);              
+                southLabel.setAttr('y', 0.8*this.height - southLabel.getTextHeight()/2);              
             },
 
             'inCurrentView': function(channelName){
