@@ -16754,11 +16754,12 @@ console.log(baseCoords)
                 for(i=1; i<offset.length; i++ ){
                     index = (i<10) ? '0'+i : i;
                     for(j=0; j<colors.length; j++){
-                        /*
+                        
                         //HPGE summaries - names & coordinates
                         this.summaryChannelNames[this.summaryChannelNames.length] = 'TIG' + index + colors[j];
-                        cellCoords['TIG' + index + colors[j]] = baseCoords['TIG'+colors[j]];
+                        //cellCoords['TIG' + index + colors[j]] = baseCoords['TIG'+colors[j]];
                         //now add offsets:
+                        /*
                         for(k=0; k<baseCoords['TIG'+colors[j]].length; k++){
                             if(k%2) //even == x coords
                                 cellCoords['TIG' + index + colors[j]][k] += offset[i][0];
