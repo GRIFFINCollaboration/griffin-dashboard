@@ -16580,7 +16580,7 @@ function fetchODBrunControl(returnObj){
                 //TIGRESS clovers are laid out on a 24x24 square grid.
                 this.grid = this.height*0.8/24;
                 this.xMargin = (this.width - this.grid*24)/2
-                //TIGRSS summary is laid out on a 58x20 square grid.
+                //TIGRESS summary is laid out on a 58x20 square grid.
                 this.summaryGrid = Math.min(0.8*this.height/20, this.width/58);
                 this.summaryXmargin = (this.width - 58*this.summaryGrid)/2;
                 this.summaryYmargin = (0.8*this.height - 20*this.summaryGrid)/2;
@@ -16835,7 +16835,7 @@ function fetchODBrunControl(returnObj){
                 //label hemispheres and beam direction
                 northLabel = new Kinetic.Text({
                     x: 0,
-                    y: 0.82*this.height,
+                    y: 0,
                     text: 'North Hemisphere',
                     fontSize: 28,
                     fontFamily: 'Arial',
@@ -16844,10 +16844,11 @@ function fetchODBrunControl(returnObj){
                 this.mainLayer[0].add(northLabel);
                 //center label nicely
                 northLabel.setAttr('x', 13.5*this.summaryGrid - northLabel.getTextWidth()/2);
+                northLabel.setAttr('y', 0.8*this.height + northLabel.getTextHeight()/2);
 
                 southLabel = new Kinetic.Text({
                     x: 0,
-                    y: 0.82*this.height,
+                    y: 0,
                     text: 'North Hemisphere',
                     fontSize: 28,
                     fontFamily: 'Arial',
@@ -16855,7 +16856,8 @@ function fetchODBrunControl(returnObj){
                 });
                 this.mainLayer[0].add(northLabel);
                 //center label nicely
-                northLabel.setAttr('x', 43.5*this.summaryGrid - southLabel.getTextWidth()/2);                
+                southLabel.setAttr('x', 43.5*this.summaryGrid - southLabel.getTextWidth()/2);
+                southLabel.setAttr('y', 0.8*this.height + southLabel.getTextHeight()/2);              
             },
 
             'inCurrentView': function(channelName){
