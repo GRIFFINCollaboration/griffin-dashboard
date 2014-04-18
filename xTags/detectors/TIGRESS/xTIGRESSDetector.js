@@ -348,6 +348,26 @@
                         }
                     }
                 }
+            },
+
+            //usual behavior for detail cells, click through to detail from summary view
+            'clickCell' : function(cellName){
+                var evt, viewVal,
+                    SV = document.getElementById('spectrumViewer');
+
+                //summary -> details
+                if(cellName.length == 6){
+                    viewVal = parseInt(cellName.slice(3,5),10);
+                    document.getElementById(this.id+'Deck').shuffleTo(viewVal);
+                    this.displayIndex = viewVal;
+                    this.update();  //repaint right away
+                }
+
+                //send the clicked channel to the spectrum viewer:
+                if(SV){
+                    evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
+                    SV.dispatchEvent(evt);
+                }
             }
         }
     });
