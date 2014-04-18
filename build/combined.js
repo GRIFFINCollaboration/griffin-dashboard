@@ -95,7 +95,7 @@ function constructHexColor(color){
 
     return '#'+R+G+B;
 }
-function initializeDetector(name, channelNames, headline, URL){
+function initializeDetector(name, headline, URL){
     var headWrapper = document.createElement('div')
     ,   title = document.createElement('h1')
     ,   viewTitles = ['HV', 'Threshold', 'Rate']
@@ -259,12 +259,7 @@ function initializeDetector(name, channelNames, headline, URL){
     this.currentView = 'Rate';
     this.currentUnit = 'Hz';
     this.displayIndex = 0;  //always start on the first card, guarnateed to exist.
-
-    ////////////////////////////
-    //Define Channels
-    ////////////////////////////
-    //declare the detector cell names for this detector:
-    this.channelNames = channelNames; //['DEMOCHAN00'];
+    //cells
     this.cells = {};
 
     ////////////////////////////
@@ -16530,7 +16525,7 @@ function fetchODBrunControl(returnObj){
         lifecycle: {
             created: function() {
                 //need to build up names of all ~1000 channels:
-                var channels = [], i, j, k,
+                var i, j, k,
                     HPGEprefixes = ['TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'],
                     colors = ['R', 'G', 'B', 'W'],
                     HPGEcellCodes = ['N00A', 'N00B', 'P01X', 'P02X', 'P03X', 'P04X', 'P05X', 'P06X', 'P07X', 'P08X'],
@@ -16542,20 +16537,29 @@ function fetchODBrunControl(returnObj){
                             'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 //build up channel names
+                this.channelNames = [];
                 for(i=0; i<HPGEprefixes.length; i++){
                     for(j=0; j<colors.length; j++){
                         for(k=0; k<HPGEcellCodes.length; k++){
-                            channels[channels.length] = HPGEprefixes[i] + colors[j] + HPGEcellCodes[k];
+                            this.channelNames[channels.length] = HPGEprefixes[i] + colors[j] + HPGEcellCodes[k];
                         }
                         for(k=0; k<BGOcellCodes.length; k++){
-                            channels[channels.length] = BGOprefixes[i] + colors[j] + BGOcellCodes[k];
+                            this.channelNames[channels.length] = BGOprefixes[i] + colors[j] + BGOcellCodes[k];
                         }
+                    }
+                }
+                //build up summary channel names
+                this.summaryChannelNames = [];
+                for(i=0; i<16; i++){
+                    for(j=0; j<4; j++){
+                        this.summaryChannelNames.push(HPGEprefixes[i] + colors[j]);
+                        this.summaryChannelNames.push(BGOprefixes[i] + colors[j]);
                     }
                 }
 
                 //deploy the standard stuff
                 this.viewNames = ['Summary', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16']
-                initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs)();
+                initializeDetector.bind(this, 'TIGRESS', 'TIGRESS', URLs)();
 
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters
@@ -16754,8 +16758,7 @@ function fetchODBrunControl(returnObj){
                     index = (i<10) ? '0'+i : i;
                     for(j=0; j<colors.length; j++){
                         
-                        //HPGE summaries - names & coordinates
-                        this.summaryChannelNames[this.summaryChannelNames.length] = 'TIG' + index + colors[j];
+                        //HPGE summary coords
                         cellCoords['TIG' + index + colors[j]] = [];
                         for(k=0; k<baseCoords['TIG'+colors[j]].length; k++)
                             cellCoords['TIG' + index + colors[j]][k] = baseCoords['TIG'+colors[j]][k];
@@ -16767,8 +16770,7 @@ function fetchODBrunControl(returnObj){
                                 cellCoords['TIG' + index + colors[j]][k] += offset[i][0];
                         }
                         
-                        //and again for BGO summaries - names & coordinates
-                        this.summaryChannelNames[this.summaryChannelNames.length] = 'TIS' + index + colors[j];
+                        //and again for BGO summary coords
                         cellCoords['TIS' + index + colors[j]] = [];
                         for(k=0; k<baseCoords['TIS'+colors[j]].length; k++)
                             cellCoords['TIS' + index + colors[j]][k] = baseCoords['TIS'+colors[j]][k];
@@ -16831,21 +16833,20 @@ function fetchODBrunControl(returnObj){
         extends: 'detector-template',
         lifecycle: {
             created: function() {
-                //channels start at top left hand corner and walk across in rows
-                var channels = ['TPW011P00X', 'TPW012P00X', 'TPW013P00X', 'TPW014P00X', 'TPW015P00X',
-                                'TPW010P00X', 'TPW002P00X', 'TPW003P00X', 'TPW004P00X', 'TPW016P00X',
-                                'TPW009P00X', 'TPW001P00X', 'TPW005P00X', 'TPW017P00X',
-                                'TPW024P00X', 'TPW008P00X', 'TPW007P00X', 'TPW006P00X', 'TPW018P00X',
-                                'TPW023P00X', 'TPW022P00X', 'TPW021P00X', 'TPW020P00X', 'TPW019P00X'
-                                ]
-                    
-                    URLs = [this.thresholdServer,    //threshold server
+                var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
                             'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
-                initializeDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();
+                //channels start at top left hand corner and walk across in rows
+                this.channelNames = [   'TPW011P00X', 'TPW012P00X', 'TPW013P00X', 'TPW014P00X', 'TPW015P00X',
+                                        'TPW010P00X', 'TPW002P00X', 'TPW003P00X', 'TPW004P00X', 'TPW016P00X',
+                                        'TPW009P00X', 'TPW001P00X', 'TPW005P00X', 'TPW017P00X',
+                                        'TPW024P00X', 'TPW008P00X', 'TPW007P00X', 'TPW006P00X', 'TPW018P00X',
+                                        'TPW023P00X', 'TPW022P00X', 'TPW021P00X', 'TPW020P00X', 'TPW019P00X'
+                                    ]
+                initializeDetector.bind(this, 'TIP', 'TIP Wall', URLs)();
 
                 //////////////////////////////////////
                 //TIP Wall specific drawing parameters

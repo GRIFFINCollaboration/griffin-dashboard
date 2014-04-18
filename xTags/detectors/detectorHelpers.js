@@ -1,4 +1,4 @@
-function initializeDetector(name, channelNames, headline, URL){
+function initializeDetector(name, headline, URL){
     var headWrapper = document.createElement('div')
     ,   title = document.createElement('h1')
     ,   viewTitles = ['HV', 'Threshold', 'Rate']
@@ -162,12 +162,7 @@ function initializeDetector(name, channelNames, headline, URL){
     this.currentView = 'Rate';
     this.currentUnit = 'Hz';
     this.displayIndex = 0;  //always start on the first card, guarnateed to exist.
-
-    ////////////////////////////
-    //Define Channels
-    ////////////////////////////
-    //declare the detector cell names for this detector:
-    this.channelNames = channelNames; //['DEMOCHAN00'];
+    //cells
     this.cells = {};
 
     ////////////////////////////

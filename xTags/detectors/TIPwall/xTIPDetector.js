@@ -6,21 +6,20 @@
         extends: 'detector-template',
         lifecycle: {
             created: function() {
-                //channels start at top left hand corner and walk across in rows
-                var channels = ['TPW011P00X', 'TPW012P00X', 'TPW013P00X', 'TPW014P00X', 'TPW015P00X',
-                                'TPW010P00X', 'TPW002P00X', 'TPW003P00X', 'TPW004P00X', 'TPW016P00X',
-                                'TPW009P00X', 'TPW001P00X', 'TPW005P00X', 'TPW017P00X',
-                                'TPW024P00X', 'TPW008P00X', 'TPW007P00X', 'TPW006P00X', 'TPW018P00X',
-                                'TPW023P00X', 'TPW022P00X', 'TPW021P00X', 'TPW020P00X', 'TPW019P00X'
-                                ]
-                    
-                    URLs = [this.thresholdServer,    //threshold server
+                var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
                             'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
-                initializeDetector.bind(this, 'TIP', channels, 'TIP Wall', URLs)();
+                //channels start at top left hand corner and walk across in rows
+                this.channelNames = [   'TPW011P00X', 'TPW012P00X', 'TPW013P00X', 'TPW014P00X', 'TPW015P00X',
+                                        'TPW010P00X', 'TPW002P00X', 'TPW003P00X', 'TPW004P00X', 'TPW016P00X',
+                                        'TPW009P00X', 'TPW001P00X', 'TPW005P00X', 'TPW017P00X',
+                                        'TPW024P00X', 'TPW008P00X', 'TPW007P00X', 'TPW006P00X', 'TPW018P00X',
+                                        'TPW023P00X', 'TPW022P00X', 'TPW021P00X', 'TPW020P00X', 'TPW019P00X'
+                                    ]
+                initializeDetector.bind(this, 'TIP', 'TIP Wall', URLs)();
 
                 //////////////////////////////////////
                 //TIP Wall specific drawing parameters

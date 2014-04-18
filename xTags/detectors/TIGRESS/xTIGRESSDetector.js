@@ -7,7 +7,7 @@
         lifecycle: {
             created: function() {
                 //need to build up names of all ~1000 channels:
-                var channels = [], i, j, k,
+                var i, j, k,
                     HPGEprefixes = ['TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16'],
                     colors = ['R', 'G', 'B', 'W'],
                     HPGEcellCodes = ['N00A', 'N00B', 'P01X', 'P02X', 'P03X', 'P04X', 'P05X', 'P06X', 'P07X', 'P08X'],
@@ -19,20 +19,29 @@
                             'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 //build up channel names
+                this.channelNames = [];
                 for(i=0; i<HPGEprefixes.length; i++){
                     for(j=0; j<colors.length; j++){
                         for(k=0; k<HPGEcellCodes.length; k++){
-                            channels[channels.length] = HPGEprefixes[i] + colors[j] + HPGEcellCodes[k];
+                            this.channelNames[channels.length] = HPGEprefixes[i] + colors[j] + HPGEcellCodes[k];
                         }
                         for(k=0; k<BGOcellCodes.length; k++){
-                            channels[channels.length] = BGOprefixes[i] + colors[j] + BGOcellCodes[k];
+                            this.channelNames[channels.length] = BGOprefixes[i] + colors[j] + BGOcellCodes[k];
                         }
+                    }
+                }
+                //build up summary channel names
+                this.summaryChannelNames = [];
+                for(i=0; i<16; i++){
+                    for(j=0; j<4; j++){
+                        this.summaryChannelNames.push(HPGEprefixes[i] + colors[j]);
+                        this.summaryChannelNames.push(BGOprefixes[i] + colors[j]);
                     }
                 }
 
                 //deploy the standard stuff
                 this.viewNames = ['Summary', 'TIG01', 'TIG02', 'TIG03', 'TIG04', 'TIG05', 'TIG06', 'TIG07', 'TIG08', 'TIG09', 'TIG10', 'TIG11', 'TIG12', 'TIG13', 'TIG14', 'TIG15', 'TIG16']
-                initializeDetector.bind(this, 'TIGRESS', channels, 'TIGRESS', URLs)();
+                initializeDetector.bind(this, 'TIGRESS', 'TIGRESS', URLs)();
 
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters
@@ -231,8 +240,7 @@
                     index = (i<10) ? '0'+i : i;
                     for(j=0; j<colors.length; j++){
                         
-                        //HPGE summaries - names & coordinates
-                        this.summaryChannelNames[this.summaryChannelNames.length] = 'TIG' + index + colors[j];
+                        //HPGE summary coords
                         cellCoords['TIG' + index + colors[j]] = [];
                         for(k=0; k<baseCoords['TIG'+colors[j]].length; k++)
                             cellCoords['TIG' + index + colors[j]][k] = baseCoords['TIG'+colors[j]][k];
@@ -244,8 +252,7 @@
                                 cellCoords['TIG' + index + colors[j]][k] += offset[i][0];
                         }
                         
-                        //and again for BGO summaries - names & coordinates
-                        this.summaryChannelNames[this.summaryChannelNames.length] = 'TIS' + index + colors[j];
+                        //and again for BGO summary coords
                         cellCoords['TIS' + index + colors[j]] = [];
                         for(k=0; k<baseCoords['TIS'+colors[j]].length; k++)
                             cellCoords['TIS' + index + colors[j]][k] = baseCoords['TIS'+colors[j]][k];
