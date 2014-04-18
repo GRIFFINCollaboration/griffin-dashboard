@@ -27,7 +27,7 @@
                 //build up channel names
                 this.channelNames = [];
                 for(i=0; i<this.HPGEprefixes.length; i++){
-                    for(j=0; j<colors.length; j++){
+                    for(j=0; j<this.colors.length; j++){
                         for(k=0; k<this.HPGEcellCodes.length; k++){
                             this.channelNames.push(this.HPGEprefixes[i] + this.colors[j] + this.HPGEcellCodes[k]);
                         }
