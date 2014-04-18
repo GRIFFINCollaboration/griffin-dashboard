@@ -122,7 +122,7 @@
             //move the tooltip around
             'moveTooltip': function(){
                 var mousePos = this.stage[this.displayIndex].getPointerPosition();
-
+console.log(this.TTbkg[this.displayIndex].getAttr('width'))
                 //adjust the background size & position
                 this.TTbkg[this.displayIndex].setAttr( 'x', mousePos.x + 10 );
                 this.TTbkg[this.displayIndex].setAttr( 'y', mousePos.y + 10 );
