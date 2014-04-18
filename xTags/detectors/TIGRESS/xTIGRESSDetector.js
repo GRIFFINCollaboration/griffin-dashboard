@@ -234,14 +234,15 @@ console.log(baseCoords)
                         
                         //HPGE summaries - names & coordinates
                         this.summaryChannelNames[this.summaryChannelNames.length] = 'TIG' + index + colors[j];
-                        cellCoords['TIG' + index + colors[j]] = baseCoords['TIG'+colors[j]];
+                        cellCoords['TIG' + index + colors[j]][k] = [];
+                        for(k=0; k<baseCoords['TIG'+colors[j]].length; k++)
+                            cellCoords['TIG' + index + colors[j]][k] = baseCoords['TIG'+colors[j]][k];
                         //now add offsets:
-                        
                         for(k=0; k<baseCoords['TIG'+colors[j]].length; k++){
-                            if(k%2) //even == x coords
+                            if(k%2) //odd == x coords
                                 cellCoords['TIG' + index + colors[j]][k] += offset[i][0];
-                            //else
-                            //    cellCoords['TIG' + index + colors[j]][k] += offset[i][1];
+                            else
+                                cellCoords['TIG' + index + colors[j]][k] += offset[i][1];
                         }
                         
                         //and again for BGO summaries - names & coordinates
@@ -249,7 +250,7 @@ console.log(baseCoords)
                         cellCoords['TIS' + index + colors[j]] = baseCoords['TIS'+colors[j]];
                         //now add offsets:
                         for(k=0; k<baseCoords['TIS'+colors[j]].length; k++){
-                            if(k%2) //even == x coords
+                            if(k%2) //odd == x coords
                                 cellCoords['TIS' + index + colors[j]][k] += offset[i][0];
                             else
                                 cellCoords['TIS' + index + colors[j]][k] += offset[i][1];
@@ -257,7 +258,7 @@ console.log(baseCoords)
 
                     }
                 }
-/*
+
                 //each channel listed in this.summaryChannelNames gets an entry in this.summaryCells as a Kinetic object:
                 for(i=0; i<this.summaryChannelNames.length; i++){
                     //all summaries go on card 0:
@@ -285,7 +286,7 @@ console.log(baseCoords)
                     //add the cell to the appropriate main layer
                     this.mainLayer[cardIndex].add(this.summaryCells[this.summaryChannelNames[i]]);
                 }
-*/
+
             },
 
             'inCurrentView': function(channelName){
