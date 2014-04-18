@@ -16754,6 +16754,7 @@ console.log(baseCoords)
                 for(i=1; i<offset.length; i++ ){
                     index = (i<10) ? '0'+i : i;
                     for(j=0; j<colors.length; j++){
+                        /*
                         //HPGE summaries - names & coordinates
                         this.summaryChannelNames[this.summaryChannelNames.length] = 'TIG' + index + colors[j];
                         cellCoords['TIG' + index + colors[j]] = baseCoords['TIG'+colors[j]];
@@ -16774,7 +16775,8 @@ console.log(baseCoords)
                                 cellCoords['TIS' + index + colors[j]][k] += offset[i][0];
                             else
                                 cellCoords['TIS' + index + colors[j]][k] += offset[i][1];
-                        }                        
+                        } 
+                        */                       
                     }
                 }
 /*
