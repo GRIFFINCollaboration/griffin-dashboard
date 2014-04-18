@@ -205,9 +205,6 @@
                 baseCoords['TISB'] = [3*g,0*g, 6*g,0*g, 6*g,3*g, 5*g,3*g, 5*g,1*g, 3*g,1*g];
                 baseCoords['TISW'] = [5*g,3*g, 6*g,3*g, 6*g,6*g, 3*g,6*g, 3*g,5*g, 5*g,5*g];
                 baseCoords['TISR'] = [3*g,5*g, 3*g,6*g, 0*g,6*g, 0*g,3*g, 1*g,3*g, 1*g,5*g];
-console.log([2*g,2*g, 3*g,2*g, 3*g,3*g, 2*g,3*g])
-console.log(baseCoords['TIGG'])
-console.log(baseCoords)
 
                 //tabulate offsets in [x,y] relative to TIG04:
                 offset[1] = [14*g, 0*g];
@@ -247,7 +244,9 @@ console.log(baseCoords)
                         
                         //and again for BGO summaries - names & coordinates
                         this.summaryChannelNames[this.summaryChannelNames.length] = 'TIS' + index + colors[j];
-                        cellCoords['TIS' + index + colors[j]] = baseCoords['TIS'+colors[j]];
+                        cellCoords['TIS' + index + colors[j]] = [];
+                        for(k=0; k<baseCoords['TIS'+colors[j]].length; k++)
+                            cellCoords['TIS' + index + colors[j]][k] = baseCoords['TIS'+colors[j]][k];
                         //now add offsets:
                         for(k=0; k<baseCoords['TIS'+colors[j]].length; k++){
                             if(k%2) //odd == x coords
