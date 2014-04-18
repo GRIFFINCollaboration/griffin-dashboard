@@ -208,7 +208,7 @@
 console.log([2*g,2*g, 3*g,2*g, 3*g,3*g, 2*g,3*g])
 console.log(baseCoords['TIGG'])
 console.log(baseCoords)
-/*
+
                 //tabulate offsets in [x,y] relative to TIG04:
                 offset[1] = [14*g, 0*g];
                 offset[2] = [30*g, 0*g];
@@ -226,7 +226,7 @@ console.log(baseCoords)
                 offset[14] = [30*g, 14*g];
                 offset[15] = [44*g, 14*g];
                 offset[16] = [0*g, 14*g];
-
+/*
                 //add offsets to the base values to build all 16 summaries
                 for(i=1; i<offset.length; i++ ){
                     index = (i<10) ? '0'+i : i;
