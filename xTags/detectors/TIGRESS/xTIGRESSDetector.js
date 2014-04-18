@@ -16,8 +16,8 @@
                 this.HPGEprefixes = [];
                 this.BGOprefixes = [];
                 this.colors = ['R', 'G', 'B', 'W'];
-                this.HPGEcellCodes = ['N00A', 'N00B', 'P01X', 'P02X', 'P03X', 'P04X', 'P05X', 'P06X', 'P07X', 'P08X'],
-                this.BGOcellCodes = ['N01X', 'N02X', 'N03X', 'N04X', 'N05X'],
+                this.HPGEcellCodes = ['N00A', 'N00B', 'P01X', 'P02X', 'P03X', 'P04X', 'P05X', 'P06X', 'P07X', 'P08X'];
+                this.BGOcellCodes = ['N01X', 'N02X', 'N03X', 'N04X', 'N05X'];
                 for(i=1; i<17; i++){
                     j = (i<10) ? '0'+i : i;
                     this.HPGEprefixes.push('TIG' + j);
