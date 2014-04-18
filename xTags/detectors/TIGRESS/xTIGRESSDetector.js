@@ -242,7 +242,7 @@ console.log(baseCoords)
                             else
                                 cellCoords['TIG' + index + colors[j]][k] += offset[i][1];
                         }
-
+                        */
                         //and again for BGO summaries - names & coordinates
                         this.summaryChannelNames[this.summaryChannelNames.length] = 'TIS' + index + colors[j];
                         cellCoords['TIS' + index + colors[j]] = baseCoords['TIS'+colors[j]];
@@ -253,7 +253,7 @@ console.log(baseCoords)
                             else
                                 cellCoords['TIS' + index + colors[j]][k] += offset[i][1];
                         } 
-                        */                       
+
                     }
                 }
 /*
