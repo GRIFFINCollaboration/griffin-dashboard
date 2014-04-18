@@ -16566,6 +16566,8 @@ function fetchODBrunControl(returnObj){
                 this.xMargin = (this.width - this.grid*24)/2
                 //TIGRSS summary is laid out on a 58x20 square grid.
                 this.summaryGrid = Math.min(0.8*this.height/20, this.width/58);
+                this.summaryXmargin = (this.width - 58*this.summaryGrid)/2;
+                this.summaryYmargin = (0.8*this.height - 20*this.summaryGrid)/2;
 
                 /////////////////////////////
                 //Initialize visualization
@@ -16720,14 +16722,14 @@ function fetchODBrunControl(returnObj){
                 this.summaryCells = {};
 
                 //TIG04 appears in upper left corner, state these explicitly and build other 15 from there. 
-                baseCoords['TIGG'] = [2*g,2*g, 3*g,2*g, 3*g,3*g, 2*g,3*g];
-                baseCoords['TIGB'] = [3*g,2*g, 4*g,2*g, 4*g,3*g, 3*g,3*g];
-                baseCoords['TIGW'] = [3*g,3*g, 4*g,3*g, 4*g,4*g, 3*g,4*g];
-                baseCoords['TIGR'] = [3*g,3*g, 3*g,4*g, 2*g,4*g, 2*g,3*g];
-                baseCoords['TISG'] = [0*g,0*g, 3*g,0*g, 3*g,1*g, 1*g,1*g, 1*g,3*g, 0*g,3*g];
-                baseCoords['TISB'] = [3*g,0*g, 6*g,0*g, 6*g,3*g, 5*g,3*g, 5*g,1*g, 3*g,1*g];
-                baseCoords['TISW'] = [5*g,3*g, 6*g,3*g, 6*g,6*g, 3*g,6*g, 3*g,5*g, 5*g,5*g];
-                baseCoords['TISR'] = [3*g,5*g, 3*g,6*g, 0*g,6*g, 0*g,3*g, 1*g,3*g, 1*g,5*g];
+                baseCoords['TIGG'] = [this.summaryXmargin+2*g,2*g+this.summaryYmargin, this.summaryXmargin+3*g,2*g+this.summaryYmargin, this.summaryXmargin+3*g,3*g+this.summaryYmargin, this.summaryXmargin+2*g,3*g+this.summaryYmargin]; 
+                baseCoords['TIGB'] = [this.summaryXmargin+3*g,2*g+this.summaryYmargin, this.summaryXmargin+4*g,2*g+this.summaryYmargin, this.summaryXmargin+4*g,3*g+this.summaryYmargin, this.summaryXmargin+3*g,3*g+this.summaryYmargin]; 
+                baseCoords['TIGW'] = [this.summaryXmargin+3*g,3*g+this.summaryYmargin, this.summaryXmargin+4*g,3*g+this.summaryYmargin, this.summaryXmargin+4*g,4*g+this.summaryYmargin, this.summaryXmargin+3*g,4*g+this.summaryYmargin]; 
+                baseCoords['TIGR'] = [this.summaryXmargin+3*g,3*g+this.summaryYmargin, this.summaryXmargin+3*g,4*g+this.summaryYmargin, this.summaryXmargin+2*g,4*g+this.summaryYmargin, this.summaryXmargin+2*g,3*g+this.summaryYmargin]; 
+                baseCoords['TISG'] = [this.summaryXmargin+0*g,0*g+this.summaryYmargin, this.summaryXmargin+3*g,0*g+this.summaryYmargin, this.summaryXmargin+3*g,1*g+this.summaryYmargin, this.summaryXmargin+1*g,1*g+this.summaryYmargin, this.summaryXmargin+1*g,3*g+this.summaryYmargin, this.summaryXmargin+0*g,3*g+this.summaryYmargin]; 
+                baseCoords['TISB'] = [this.summaryXmargin+3*g,0*g+this.summaryYmargin, this.summaryXmargin+6*g,0*g+this.summaryYmargin, this.summaryXmargin+6*g,3*g+this.summaryYmargin, this.summaryXmargin+5*g,3*g+this.summaryYmargin, this.summaryXmargin+5*g,1*g+this.summaryYmargin, this.summaryXmargin+3*g,1*g+this.summaryYmargin]; 
+                baseCoords['TISW'] = [this.summaryXmargin+5*g,3*g+this.summaryYmargin, this.summaryXmargin+6*g,3*g+this.summaryYmargin, this.summaryXmargin+6*g,6*g+this.summaryYmargin, this.summaryXmargin+3*g,6*g+this.summaryYmargin, this.summaryXmargin+3*g,5*g+this.summaryYmargin, this.summaryXmargin+5*g,5*g+this.summaryYmargin]; 
+                baseCoords['TISR'] = [this.summaryXmargin+3*g,5*g+this.summaryYmargin, this.summaryXmargin+3*g,6*g+this.summaryYmargin, this.summaryXmargin+0*g,6*g+this.summaryYmargin, this.summaryXmargin+0*g,3*g+this.summaryYmargin, this.summaryXmargin+1*g,3*g+this.summaryYmargin, this.summaryXmargin+1*g,5*g+this.summaryYmargin]; 
 
                 //tabulate offsets in [x,y] relative to TIG04:
                 offset[1] = [14*g, 0*g];
