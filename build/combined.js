@@ -16749,7 +16749,7 @@ console.log(baseCoords)
                 offset[14] = [30*g, 14*g];
                 offset[15] = [44*g, 14*g];
                 offset[16] = [0*g, 14*g];
-/*
+
                 //add offsets to the base values to build all 16 summaries
                 for(i=1; i<offset.length; i++ ){
                     index = (i<10) ? '0'+i : i;
@@ -16777,7 +16777,7 @@ console.log(baseCoords)
                         }                        
                     }
                 }
-
+/*
                 //each channel listed in this.summaryChannelNames gets an entry in this.summaryCells as a Kinetic object:
                 for(i=0; i<this.summaryChannelNames.length; i++){
                     //all summaries go on card 0:
