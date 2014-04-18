@@ -15,7 +15,7 @@ All detectors inherit most of their functionality from the `<detector-template>`
 ##Web Component Creation - `lifecycle.created`
 All custom web components execute a callback upon creation, found in `lifecycle.created` for each detector; this function declares a lot of detector-specific information, so it is left empty in the `<detector-template>` object, to be defined individually for each detector; nevertheless, `lifecycle.created` typically follows a standard pattern which we describe here:
 
- - Declare `channels[i]`, an array of strings corresponding to the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature) names of each detector channel to be rendered, **in the order that they will be drawn**.
+ - Declare `this.channelNames[i]`, an array of strings corresponding to the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature) names of each detector channel to be rendered, **in the order that they will be drawn**.
  - Declare `URLs[i]`, an array of strings corresponding to the URLs that will respond with JSONP posts of the data this detector needs to update itself.  These will typically be:
   - `<host>:<port>/<route>?jsonp=parseThreshold`, a JSONP post of threshold data (spec below), wrapped in the `parseThreshold` function.
   - `<host>:<port>/<route>?jsonp=parseRate`, a JSONP post of rate data (spec below), wrapped in the `parseRate` function.
@@ -26,9 +26,8 @@ All custom web components execute a callback upon creation, found in `lifecycle.
  - Set up the Kinetic.js visualization of the detector by calling `this.instantiateCells()` and `this.generateColorScale()` (details below).
 
 ###initializeDetector()
-`initializeDetector(name, channels, title, URLs)` is declared in `detectorHelpers.js` and factors out the generic steps of setting up a detector with a single layer of visualization.  Its arguments are as follows:
+`initializeDetector(name, title, URLs)` is declared in `detectorHelpers.js` and factors out the generic steps of setting up a detector.  Its arguments are as follows:
  - `<name>` (string) - a tag name for this detector, intended for use as a key prefix or other identifying purposes.
- - `<channels>` (array of strings) - the same `channels` array described above.
  - `<title>` (string) - the title to be displayed in the header at the top of the detector visualization
  - `<URLs>` (array of strings) - the same `URLs` array described above.
 
@@ -75,7 +74,6 @@ ____________________________________________________________
 
 ####Static Member Variables
  - `this.name` - name prefix for this detector
- - `this.channelNames` - final resting place of the `channels` array passed around above.
  - `this.cells` - Object which will hold pointers to the Kinetic.js cells that make up the detector visualization.
  - `this.frameLineWidth` default: 2 - Line width to use for detector visualization.
  - `this.frameColor` default: '#999999' - Frame color for detector visualization.
@@ -90,10 +88,10 @@ All detectors are drawn in a simple Kinetic.js environment, built and pointed at
  - `this.text[view]` (Kinetic.Text) - tooltip texts
 
 
-All the detector cells in `this.cells` are painted on the appropriate `this.mainLayer[view]`, as are the elements that compose the plot legend (described below), while the tooltip text (`this.text[view]`) and background (`this.TTbkg[view]`) are painted on `this.tooltipLayer[view]`.
+All the detector cells in `this.cells[name]` are painted on the appropriate `this.mainLayer[view]`, as are the elements that compose the plot legend (described below), while the tooltip text (`this.text[view]`) and background (`this.TTbkg[view]`) are painted on `this.tooltipLayer[view]`.
 
 ####Data Fetching & Routing
-The last step of `initializeSingleViewDetector()` is to populate `window.fetchURL` with all the data URLs passed in to the `<URLs>` parameter; `assembleData()` will then manage the periodic refresh of the data returned by these requests.  Finally, `this` detector is appended to `window.refreshTargets`, so that `repopulate()` will know to take the information gathered by `assembleData()` and put it where this custom element is expecting it on refresh.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
+The last step of `initializeDetector()` is to populate `window.fetchURL` with all the data URLs passed in to the `<URLs>` parameter; `assembleData()` will then manage the periodic refresh of the data returned by these requests.  Finally, `this` detector is appended to `window.refreshTargets`, so that `repopulate()` will know to take the information gathered by `assembleData()` and put it where this custom element is expecting it on refresh.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
 
 ##Detectors in the Main Event Loop
 As with all updatable objects, detector components participate in the main event loop via their `update()` method as called by `repopulate()`.  The basic flow is as follows:
