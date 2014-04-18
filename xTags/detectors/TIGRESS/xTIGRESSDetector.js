@@ -352,15 +352,15 @@
 
             //usual behavior for detail cells, click through to detail from summary view
             'clickCell' : function(cellName){
-                var evt, viewVal,
+                var evt, 
+                    viewVal = parseInt(cellName.slice(3,5),10),
+                    viewSelect = document.getElementById(this.id+'viewSelect'),
                     SV = document.getElementById('spectrumViewer');
 
                 //summary -> details
                 if(cellName.length == 6){
-                    viewVal = parseInt(cellName.slice(3,5),10);
-                    document.getElementById(this.id+'Deck').shuffleTo(viewVal);
-                    this.displayIndex = viewVal;
-                    this.update();  //repaint right away
+                    viewSelect.value = viewVal;
+                    viewSelect.onchange();
                 }
 
                 //send the clicked channel to the spectrum viewer:
