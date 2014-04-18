@@ -16541,10 +16541,10 @@ function fetchODBrunControl(returnObj){
                 for(i=0; i<HPGEprefixes.length; i++){
                     for(j=0; j<colors.length; j++){
                         for(k=0; k<HPGEcellCodes.length; k++){
-                            this.channelNames.push() = HPGEprefixes[i] + colors[j] + HPGEcellCodes[k];
+                            this.channelNames.push(HPGEprefixes[i] + colors[j] + HPGEcellCodes[k]);
                         }
                         for(k=0; k<BGOcellCodes.length; k++){
-                            this.channelNames.push() = BGOprefixes[i] + colors[j] + BGOcellCodes[k];
+                            this.channelNames.push(BGOprefixes[i] + colors[j] + BGOcellCodes[k]);
                         }
                     }
                 }
