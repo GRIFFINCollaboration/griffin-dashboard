@@ -16713,7 +16713,7 @@ function fetchODBrunControl(returnObj){
                     offset = [],
                     colors = ['G', 'B', 'W', 'R'],
                     i, j, k, index,
-                    g = parseFloat(this.summaryGrid);
+                    g = this.summaryGrid;
 
                 //analogs of this.channelNames & this.cells
                 this.summaryChannelNames = [];
@@ -16731,6 +16731,7 @@ function fetchODBrunControl(returnObj){
 console.log([2*g,2*g, 3*g,2*g, 3*g,3*g, 2*g,3*g])
 console.log(baseCoords['TIGG'])
 console.log(baseCoords)
+/*
                 //tabulate offsets in [x,y] relative to TIG04:
                 offset[1] = [14*g, 0*g];
                 offset[2] = [30*g, 0*g];
@@ -16804,7 +16805,7 @@ console.log(baseCoords)
                     //add the cell to the appropriate main layer
                     this.mainLayer[cardIndex].add(this.summaryCells[this.summaryChannelNames[i]]);
                 }
-
+*/
             },
 
             'inCurrentView': function(channelName){
