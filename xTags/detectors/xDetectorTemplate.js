@@ -89,7 +89,7 @@
             },
 
             'inCurrentView': function(channelName){
-                return 0; //appropriate for a detector with only a single view, reimplement if >1 view.
+                return true; //appropriate for a detector with only a single view, reimplement if >1 view.
             },
 
             'instantiateCells': function(){
