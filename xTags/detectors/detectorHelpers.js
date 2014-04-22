@@ -124,6 +124,7 @@ function initializeDetector(name, headline, URL){
             this.displayIndex = viewVal;
             this.update();  //repaint right away
             this.refreshColorScale();
+            console.log('deck change')
         }.bind(this)
         plotControlWrap.appendChild(deckNavigator);
     }
