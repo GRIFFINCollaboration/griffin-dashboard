@@ -334,14 +334,15 @@ canvas#footerImage{
 
 img#gitLogo{
 	margin-bottom:3px;
-}detector-demo, detector-TIPWall, detector-TIGRESS{
+}detector-demo, detector-TIPWall, detector-TIGRESS, detector-SPICE{
 	float:left;
 	width:58%;
 }
 
 detector-demo input[type=radio],
 detector-TIPWall input[type=radio],
-detector-TIGRESS input[type=radio]
+detector-TIGRESS input[type=radio],
+detector-SPICE input[type=radio]
 {
 	display:none;
 }
@@ -349,9 +350,11 @@ detector-TIGRESS input[type=radio]
 detector-demo input[type='radio'] + label,
 detector-TIPWall input[type='radio'] + label,
 detector-TIGRESS input[type='radio'] + label,
+detector-SPICE input[type='radio'] + label,
 detector-demo select,
 detector-TIPwall select,
 detector-TIGRESS select
+detector-SPICE select
 {
 	font-size: 100%;
 	line-height: 1.2em;
@@ -370,7 +373,8 @@ detector-TIGRESS select
 
 detector-demo input[type='radio']:checked + label,
 detector-TIPWall input[type='radio']:checked + label,
-detector-TIGRESS input[type='radio']:checked + label{
+detector-TIGRESS input[type='radio']:checked + label,
+detector-SPICE input[type='radio']:checked + label{
 	background-color: #555555;
 }
 

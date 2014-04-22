@@ -98,7 +98,6 @@
 
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
-                this.mainLayer[0].draw()
                 this.stage[0].add(this.tooltipLayer[0]);
             }
         }
