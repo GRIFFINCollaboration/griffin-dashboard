@@ -219,7 +219,6 @@ function initializeDetector(name, headline, URL){
 
             document.getElementById(this.id+'Deck').shuffleTo(viewVal);
             this.displayIndex = viewVal;
-            //this.refreshColorScale();
             this.update();  //repaint right away
         }.bind(this)
         plotControlWrap.appendChild(deckNavigator);
@@ -15958,7 +15957,7 @@ var Kinetic = {};
 
             //refresh the color scale labeling / coloring:
             'refreshColorScale': function(){
-console.log(this.currentView);
+
                 var i, j, isLog, currentMin, currentMax, logTitle;
 
                 //are we in log mode?
