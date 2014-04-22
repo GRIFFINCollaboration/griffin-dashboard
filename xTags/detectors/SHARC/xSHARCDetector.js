@@ -1,7 +1,7 @@
 
 (function(){  
 
-    xtag.register('detector-SHARC, {
+    xtag.register('detector-SHARC', {
         //prototype: Object.create(HTMLElement.prototype),
         extends: 'detector-template',
         lifecycle: {
