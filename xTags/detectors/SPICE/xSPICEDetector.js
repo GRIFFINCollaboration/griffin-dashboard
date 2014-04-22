@@ -82,7 +82,7 @@
                         });
 
                         //set up the tooltip listeners:
-                        this.cells[this.channelNames[chan]].on('mouseover', this.writeTooltip.bind(this, i) );
+                        this.cells[this.channelNames[chan]].on('mouseover', this.writeTooltip.bind(this, chan) );
                         this.cells[this.channelNames[chan]].on('mousemove', this.moveTooltip.bind(this) );
                         this.cells[this.channelNames[chan]].on('mouseout', this.writeTooltip.bind(this, -1));
 
