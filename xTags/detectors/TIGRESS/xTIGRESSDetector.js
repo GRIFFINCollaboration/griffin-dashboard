@@ -335,8 +335,8 @@
 
                 beamArrow = new Kinetic.Line({
                     points: [28.5*this.summaryGrid, 2*this.summaryGrid, 29*this.summaryGrid,2*this.summaryGrid, 28.5*this.summaryGrid,1*this.summaryGrid, 28*this.summaryGrid,2*this.summaryGrid, 28.5*this.summaryGrid,2*this.summaryGrid, 28.5*this.summaryGrid,this.height*0.8],
-                    fill: this.frameColor,
-                    stroke: this.frameColor,
+                    fill: '#999999',
+                    stroke: '#999999',
                     strokeWidth: this.frameLineWidth,
                     closed: true,
                     listening: true
