@@ -16253,7 +16253,6 @@ function parseCustomPages(data){
                         chan++;
                     }
                 }
-                console.log(this.channelNames)
                 initializeDetector.bind(this, 'SPICE', 'SPICE', URLs)();
 
                 //////////////////////////////////////
@@ -16307,7 +16306,7 @@ function parseCustomPages(data){
                             stroke: this.frameColor,
                             strokeWidth: this.frameLineWidth,
                             angle: 30,
-                            clockwise: false,
+                            clockwise: true,
                             rotationDeg: -30*j,
                             x: this.x0,
                             y: this.y0,
