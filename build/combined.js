@@ -16241,7 +16241,7 @@ function parseCustomPages(data){
             created: function() {
                 var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
-                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
+                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
                     i,j,chan=0;
 
                 //deploy the standard stuff
