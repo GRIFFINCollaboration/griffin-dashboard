@@ -322,8 +322,8 @@ function initializeDetector(name, headline, URL){
 
         //tooltip background:
         this.TTbkg[i] = new Kinetic.Rect({
-            x:60,
-            y:0,
+            x:-1000,
+            y:-1000,
             width:100,
             height:100,
             fill:'rgba(0,0,0,0.8)',
@@ -334,8 +334,8 @@ function initializeDetector(name, headline, URL){
 
         //tooltip text:
         this.text[i] = new Kinetic.Text({
-            x: 70,
-            y: 10,
+            x: -1000,
+            y: -1000,
             fontFamily: 'Arial',
             fontSize: 16,
             text: '',
