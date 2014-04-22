@@ -16307,7 +16307,7 @@ function parseCustomPages(data){
                             strokeWidth: this.frameLineWidth,
                             angle: 30,
                             clockwise: false,
-                            rotationDeg: -30*(j-1),
+                            rotationDeg: -30*(j+1),
                             x: this.x0,
                             y: this.y0,
                             closed: true,
