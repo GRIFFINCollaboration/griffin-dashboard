@@ -16262,7 +16262,7 @@ function parseCustomPages(data){
                 this.innerRad = 0.02*this.height;
                 this.radStep  = (this.outerRad - this.innerRad) / 10;
                 this.x0 = this.width/2;
-                this.y0 = 0.4*this.height;
+                this.y0 = 0.4*this.height + this.frameLineWidth;
 
                 /////////////////////////////
                 //Initialize visualization
