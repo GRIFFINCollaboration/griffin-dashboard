@@ -16231,7 +16231,8 @@ function parseCustomPages(data){
         navBars[i].setup(links)
     }
 
-}(function(){  
+}
+(function(){  
 
     xtag.register('detector-SHARC, {
         //prototype: Object.create(HTMLElement.prototype),

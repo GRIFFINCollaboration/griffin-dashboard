@@ -1,3 +1,4 @@
+
 (function(){  
 
     xtag.register('detector-SHARC, {
