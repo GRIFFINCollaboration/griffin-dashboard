@@ -170,7 +170,7 @@ function initializeDetector(name, headline, URL){
     //Drawing parameters
     ////////////////////////////
     this.frameLineWidth = 2;
-    this.frameColor = '#999999';
+    this.frameColor = '#000000';//'#999999';
     this.width = width;
     this.height = height;
 
