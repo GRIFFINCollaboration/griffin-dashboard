@@ -219,9 +219,8 @@ function initializeDetector(name, headline, URL){
 
             document.getElementById(this.id+'Deck').shuffleTo(viewVal);
             this.displayIndex = viewVal;
-            this.update();  //repaint right away
             this.refreshColorScale();
-            console.log('deck change')
+            this.update();  //repaint right away
         }.bind(this)
         plotControlWrap.appendChild(deckNavigator);
     }
