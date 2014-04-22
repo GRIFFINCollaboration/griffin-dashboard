@@ -15958,7 +15958,7 @@ var Kinetic = {};
 
             //refresh the color scale labeling / coloring:
             'refreshColorScale': function(){
-                
+console.log(this.currentView);
                 var i, j, isLog, currentMin, currentMax, logTitle;
 
                 //are we in log mode?
