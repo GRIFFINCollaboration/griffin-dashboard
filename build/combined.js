@@ -16323,7 +16323,7 @@ function parseCustomPages(data){
                         this.cells[this.channelNames[chan]].on('click', this.clickCell.bind(this, this.channelNames[chan]) );
 
                         //add the cell to the main layer
-                        this.mainLayer[cardIndex].add(this.cells[this.channelNames[chan]]);
+                        this.mainLayer[0].add(this.cells[this.channelNames[chan]]);
 
                         chan++;
                     }
