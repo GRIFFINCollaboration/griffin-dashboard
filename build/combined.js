@@ -219,7 +219,7 @@ function initializeDetector(name, headline, URL){
 
             document.getElementById(this.id+'Deck').shuffleTo(viewVal);
             this.displayIndex = viewVal;
-            this.refreshColorScale();
+            //this.refreshColorScale();
             this.update();  //repaint right away
         }.bind(this)
         plotControlWrap.appendChild(deckNavigator);
@@ -17022,12 +17022,14 @@ function fetchODBrunControl(returnObj){
                 var evt, 
                     viewVal = parseInt(cellName.slice(3,5),10),
                     viewSelect = document.getElementById(this.id+'viewSelect'),
-                    SV = document.getElementById('spectrumViewer');
+                    SV = document.getElementById('spectrumViewer'),
+                    plotControlForm = document.getElementById(this.id+'PlotControl');
 
                 //summary -> details
                 if(cellName.length == 6){
                     viewSelect.value = viewVal;
                     viewSelect.onchange();
+                    plotControlForm.onchange();
                 }
 
                 //send the clicked channel to the spectrum viewer:
