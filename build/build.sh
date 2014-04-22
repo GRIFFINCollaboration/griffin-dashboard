@@ -42,3 +42,8 @@ sed '1,/<\/head>/d' TIPWall.html > html
 cat MIDAShead html >> test2
 rm html
 mv test2 TIPWall.html
+
+sed '1,/<\/head>/d' SPICE.html > html
+cat MIDAShead html >> test2
+rm html
+mv test2 SPICE.html
