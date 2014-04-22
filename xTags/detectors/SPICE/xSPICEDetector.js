@@ -19,6 +19,7 @@
                         chan++;
                     }
                 }
+                console.log(this.channelNames)
                 initializeDetector.bind(this, 'SPICE', 'SPICE', URLs)();
 
                 //////////////////////////////////////
