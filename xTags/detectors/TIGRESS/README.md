@@ -1,6 +1,6 @@
 ###TIGRESS
 
-`<detector-TIGRESS>` inherits all the standard functionality from `xDetectorTemplate` and `setupSingleViewDetector`.  It supports 17 views, one for each clover and one summary view.
+`<detector-TIGRESS>` inherits all the standard functionality from `xDetectorTemplate` and `setupDetector`.  It supports 17 views, one for each clover and one summary view.
 
 ####Attributes
 

@@ -10,6 +10,7 @@ cp ../xTags/runControl/* .
 cp ../xTags/detectors/*.js .
 cp ../xTags/detectors/TIPwall/* .
 cp ../xTags/detectors/TIGRESS/* .
+cp ../xTags/detectors/SPICE/* .
 cp ../xTags/spectrumViewer/* .
 cp ../xTags/nav/* .
 if [ -e combined.js ]; then rm combined.js; fi
