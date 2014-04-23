@@ -141,17 +141,18 @@
                     this.mainLayer[0].add(this.cells[this.channelNames[i]]);
                 }
 
+                var alignment = new Kinetic.Line({
+                    points:[0,0.4*this.height, this.width,0.4*this.height],
+                    stroke: '#FF0000'
+                })
+                this.mainLayer[0].add(alignment)
+
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
                 this.stage[0].add(this.tooltipLayer[0]);
-                
-            }
+             
 
-            var alignment = new Kinetic.Line({
-                points:[0,0.4*this.height, this.width,0.4*this.height],
-                stroke: '#FF0000'
-            })
-            this.mainLayer[0].add(alignment)
+            }
         }
     });
 
