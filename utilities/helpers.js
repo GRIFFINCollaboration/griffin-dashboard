@@ -25,8 +25,10 @@ function kineticArrow(fromx, fromy, tox, toy){
     var angle = Math.atan2(toy-fromy,tox-fromx);
 
     line = new Kinetic.Line({
-        points: [fromx, fromy, tox, toy, tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6),tox, toy, tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6)],
-        stroke: "#999999"
+        points: [tox,toy, tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6), tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6), tox,toy, fromx,fromy],
+        stroke: '#999999',
+        fill: '#999999',
+        closed: true
     });
 
     return line;

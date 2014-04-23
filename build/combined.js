@@ -1329,8 +1329,10 @@ function kineticArrow(fromx, fromy, tox, toy){
     var angle = Math.atan2(toy-fromy,tox-fromx);
 
     line = new Kinetic.Line({
-        points: [fromx, fromy, tox, toy, tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6),tox, toy, tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6)],
-        stroke: "#999999"
+        points: [tox,toy, tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6), tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6), tox,toy, fromx,fromy],
+        stroke: '#999999',
+        fill: '#999999',
+        closed: true
     });
 
     return line;
@@ -16409,7 +16411,7 @@ function parseCustomPages(data){
                 }
 
                 //beam arrow
-                this.mainLayer[0].add(kineticArrow(0.25*this.width, 0.4*this.height + Math.tan(this.theta)*0.25*this.width, 0.75*this.width, 0.4*this.height - Math.tan(this.theta)*0.25*this.width ));
+                this.mainLayer[0].add(kineticArrow(0.4*this.width, 0.4*this.height + Math.tan(this.theta)*0.4*this.width, 0.6*this.width, 0.4*this.height - Math.tan(this.theta)*0.4*this.width ));
 
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);

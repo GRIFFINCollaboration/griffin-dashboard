@@ -164,7 +164,7 @@
                 }
 
                 //beam arrow
-                this.mainLayer[0].add(kineticArrow(0.25*this.width, 0.4*this.height + Math.tan(this.theta)*0.25*this.width, 0.75*this.width, 0.4*this.height - Math.tan(this.theta)*0.25*this.width ));
+                this.mainLayer[0].add(kineticArrow(0.4*this.width, 0.4*this.height + Math.tan(this.theta)*0.4*this.width, 0.6*this.width, 0.4*this.height - Math.tan(this.theta)*0.4*this.width ));
 
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
