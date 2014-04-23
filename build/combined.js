@@ -16253,7 +16253,7 @@ function parseCustomPages(data){
                                         'SHB09f', 'SHB10f', 'SHB11f', 'SHB12f', 'SHQ13f', 'SHQ14f', 'SHQ15f', 'SHQ16f'
                                     ];
                 */
-                this.channelNames = [   'SHQ01b', 'SHQ02b', 'SHQ03b', 'SHQ04b'
+                this.channelNames = [   'SHQ01b', 'SHQ02b', 'SHQ03b', 'SHQ04b', 'SHB05b', 'SHB06b', 'SHB07b', 'SHB08b'
                                     ];
 
                 initializeDetector.bind(this, 'SHARC', 'SHARC', URLs)();
@@ -16266,7 +16266,7 @@ function parseCustomPages(data){
                 this.grid = Math.min(this.width/2/6, this.diag/8); //grid separation of layers, make sure it fits
                 this.long = 1.8*this.grid*Math.sin(this.theta);  //long parallelogram side
                 this.short = 0.9*this.grid; //short parallelogram side
-                this.rad = this.short / 2;   //SHQ radius
+                this.rad = this.long / 2;   //SHQ radius
 
                 /////////////////////////////
                 //Initialize visualization
@@ -16308,6 +16308,10 @@ function parseCustomPages(data){
                 cellCoords['SHQ02b'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), -90];
                 cellCoords['SHQ03b'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), 0];
                 cellCoords['SHQ04b'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), 90];
+                cellCoords['SHQ13b'] = [0.25*this.width - 4*this.grid*Math.cos(this.theta), 0.4*this.height + 4*this.grid*Math.sin(this.theta), 180];
+                cellCoords['SHQ14b'] = [0.25*this.width - 4*this.grid*Math.cos(this.theta), 0.4*this.height + 4*this.grid*Math.sin(this.theta), -90];
+                cellCoords['SHQ15b'] = [0.25*this.width - 4*this.grid*Math.cos(this.theta), 0.4*this.height + 4*this.grid*Math.sin(this.theta), 0];
+                cellCoords['SHQ16b'] = [0.25*this.width - 4*this.grid*Math.cos(this.theta), 0.4*this.height + 4*this.grid*Math.sin(this.theta), 90];
 
                 for(i=0; i<this.channelNames.length; i++){
                     this.cells[this.channelNames[i]] = new Kinetic.Wedge({
