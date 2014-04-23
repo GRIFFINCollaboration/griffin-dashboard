@@ -19,16 +19,33 @@
                         chan++;
                     }
                 }
+                //append S2 or S3 names as necessary
+                if(this.auxiliary == 'S2'){
+
+                } else if(this.auxiliary == 'S3'){
+                    for(i=0; i<24; i++)
+                        this.channelNames.push('SPE00DP' + ((i<10) ? '0'+i : i ) + 'X');
+                    for(i=0; i<32; i++)
+                        this.channelNames.push('SPE00DN' + ((i<10) ? '0'+i : i ) + 'X');
+                }
+
                 initializeDetector.bind(this, 'SPICE', 'SPICE', URLs)();
 
                 //////////////////////////////////////
                 //SPICE specific drawing parameters
                 //////////////////////////////////////
+                //SPICE
                 this.outerRad = 0.4*this.height;
                 this.innerRad = 0.02*this.height;
                 this.radStep  = (this.outerRad - this.innerRad) / 10;
                 this.x0 = this.width/2;
                 this.y0 = 0.4*this.height + this.frameLineWidth;
+                //auxiliaries
+                this.auxPhiSteps = ((this.auxiliary == 'S2') ? 16 : ((this.auxiliary == 'S3') ? 32 : 0))
+                this.auxRad = Math.min(0.19*this.height, 0.23*this.width);
+                this.innerAuxRad = 0.05*this.auxRad;
+                this.auxRadStep = (this.auxRad - this.innerAuxRad) / 24;
+                this.auxPhiStep = 360 / Math.max(1, this.auxPhiSteps);
 
                 /////////////////////////////
                 //Initialize visualization
@@ -60,6 +77,7 @@
             'instantiateCells': function(){
                 var i, j, chan=0;
 
+                //SPICE cells
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<10; i++){ //10 rings
                     for(j=0; j<12; j++){ //12 phi sectors
@@ -80,25 +98,69 @@
                             listening: true
                         });
 
-                        //set up the tooltip listeners:
-                        this.cells[this.channelNames[chan]].on('mouseover', this.writeTooltip.bind(this, chan) );
-                        this.cells[this.channelNames[chan]].on('mousemove', this.moveTooltip.bind(this) );
-                        this.cells[this.channelNames[chan]].on('mouseout', this.writeTooltip.bind(this, -1));
-
-                        //set up onclick listeners:
-                        this.cells[this.channelNames[chan]].on('click', this.clickCell.bind(this, this.channelNames[chan]) );
-
-                        //add the cell to the main layer
-                        this.mainLayer[0].add(this.cells[this.channelNames[chan]]);
-
                         chan++;
                     }
 
                 }
 
+                //auxiliary cells as required
+                if(this.auxPhiSteps){
+                    for(i=0; i<24; i++){
+                        this.cells[this.channelNames[chan]] = new Kinetic.Arc({
+                            innerRadius: this.innerAuxRad + i*this.auxRadStep,
+                            outerRadius: this.innerAuxRad + (i+1)*this.auxRadStep,
+                            fill: '#000000',
+                            fillPatternImage: this.errorPattern,
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
+                            angle: 360,
+                            x: 0.25*this.width,
+                            y: this.height*0.4,
+                            closed: true,
+                            listening: true
+                        });  
+
+                        chan++;                      
+                    }
+
+                    for(i=0; i<this.auxPhiSteps; i++){
+                        this.cells[this.channelNames[chan]] = new Kinetic.Wedge({
+                            x: 0.75*this.width,
+                            y: 0.4*this.height,
+                            radius: this.auxRad,
+                            angle: this.auxPhiStep*i,
+                            fill: '#000000',
+                            fillPatternImage: this.errorPattern,
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
+                            closed: true,
+                            listening: true
+                        }); 
+
+                        chan++;                      
+                    }                    
+                }
+
+                for(i=0; i<this.channelNames.length; i++){
+                    //set up the tooltip listeners:
+                    this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
+                    this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
+
+                    //set up onclick listeners:
+                    this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
+
+                    //add the cell to the main layer
+                    this.mainLayer[Math.floor(i/120)].add(this.cells[this.channelNames[i]]);
+                }
+
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
                 this.stage[0].add(this.tooltipLayer[0]);
+                if(this.auxPhiSteps){
+                    this.stage[1].add(this.mainLayer[1]);
+                    this.stage[1].add(this.tooltipLayer[1]);
+                }
             }
         }
     });
