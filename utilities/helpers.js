@@ -19,3 +19,15 @@ function canHas(a, b){
 	return a;
 }
 
+//return a KineticJS object in the shape of an arrow
+function kineticArrow(fromx, fromy, tox, toy){
+    var headlen = 20;   // how long you want the head of the arrow to be, you could calculate this as a fraction of the distance between the points as well.
+    var angle = Math.atan2(toy-fromy,tox-fromx);
+
+    line = new Kinetic.Line({
+        points: [fromx, fromy, tox, toy, tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6),tox, toy, tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6)],
+        stroke: "#999999"
+    });
+
+    return line;
+}

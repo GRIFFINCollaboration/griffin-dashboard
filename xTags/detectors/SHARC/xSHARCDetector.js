@@ -163,11 +163,8 @@
                     this.mainLayer[0].add(this.cells[this.channelNames[i]]);
                 }
 
-                var alignment = new Kinetic.Line({
-                    points:[0,0.6*this.height, this.width,0.6*this.height],
-                    stroke: '#FF0000'
-                })
-                //this.mainLayer[0].add(alignment)
+                //beam arrow
+                this.mainLayer[0].add(kineticArrow(0.25*this.width, 0.4*this.height + Math.tan(this.theta)*0.25*this.width, 0.75*this.width, 0.4*this.height - Math.tan(this.theta)*0.25*this.width ));
 
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
