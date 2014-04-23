@@ -16249,7 +16249,7 @@ function parseCustomPages(data){
 
                 this.channelNames = [   'SHQ01DN', 'SHQ02DN', 'SHQ03DN', 'SHQ04DN', 'SHQ13DN', 'SHQ14DN', 'SHQ15DN', 'SHQ16DN',
                                         'SHQ01DP', 'SHQ02DP', 'SHQ03DP', 'SHQ04DP', 'SHQ13DP', 'SHQ14DP', 'SHQ15DP', 'SHQ16DP',
-                                        'SHB05DP'/*, 'SHB06DP', 'SHB07DP', 'SHB08DP', 'SHB05DN', 'SHB06DN', 'SHB07DN', 'SHB08DN'*/
+                                        'SHB05DP', 'SHB06DP', 'SHB07DP', 'SHB08DP', 'SHB05DN', 'SHB06DN', 'SHB07DN', 'SHB08DN'
                                     ];
 
                 initializeDetector.bind(this, 'SHARC', 'SHARC', URLs)();
@@ -16320,6 +16320,13 @@ function parseCustomPages(data){
                 cellCoords['SHQ16DP'] = [0.25*this.width - 3*this.grid*Math.cos(this.theta), 0.4*this.height + 3*this.grid*Math.sin(this.theta), 90];
 
                 cellCoords['SHB05DP'] = [{x: -0.75*this.width + this.grid, y: -0.4*this.height}, 'tall'];
+                cellCoords['SHB06DP'] = [{x: -0.75*this.width - this.grid*Math.cos(this.theta), y: -0.4*this.height/2 + this.grid*Math.sin(this.theta)}, 'long'];
+                cellCoords['SHB07DP'] = [{x: -0.75*this.width - this.grid, y: -0.4*this.height}, 'tall'];
+                cellCoords['SHB06DP'] = [{x: -0.75*this.width + this.grid*Math.cos(this.theta), y: -0.4*this.height/2 - this.grid*Math.sin(this.theta)}, 'long'];
+                cellCoords['SHB05DN'] = [{x: -0.75*this.width + 2*this.grid, y: -0.4*this.height}, 'tall'];
+                cellCoords['SHB06DN'] = [{x: -0.75*this.width - 2*this.grid*Math.cos(this.theta), y: -0.4*this.height/2 + 2*this.grid*Math.sin(this.theta)}, 'long'];
+                cellCoords['SHB07DN'] = [{x: -0.75*this.width - 2*this.grid, y: -0.4*this.height}, 'tall'];
+                cellCoords['SHB06DN'] = [{x: -0.75*this.width + 2*this.grid*Math.cos(this.theta), y: -0.4*this.height/2 - 2*this.grid*Math.sin(this.theta)}, 'long'];
 
                 //upright and sideways parallelogram coords for SHB summaries
                 parallelogramCoords['tall'] = [0,this.short*Math.cos(this.theta), 0,this.long, this.short,this.long - this.short*Math.cos(this.theta), this.short,0];
