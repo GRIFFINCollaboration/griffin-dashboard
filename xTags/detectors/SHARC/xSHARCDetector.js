@@ -82,6 +82,7 @@
                         y: cellCoords[this.channelNames[i]][1],
                         rotation: cellCoords[this.channelNames[i]][2],
                         radius: this.rad,
+                        angle: 90,
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
