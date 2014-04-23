@@ -16421,9 +16421,9 @@ function parseCustomPages(data){
                 //append S2 or S3 names as necessary
                 if(this.auxiliary == 'S2'){
                     for(i=0; i<24; i++)
-                        this.channelNames.push('SPE00DP' + ((i<10) ? '0'+i : i ) + 'X');
+                        this.channelNames.push('SPZ00DP' + ((i<10) ? '0'+i : i ) + 'X');
                     for(i=0; i<16; i++)
-                        this.channelNames.push('SPE00DN' + ((i<10) ? '0'+i : i ) + 'X');
+                        this.channelNames.push('SPZ00DN' + ((i<10) ? '0'+i : i ) + 'X');
                 } else if(this.auxiliary == 'S3'){
                     for(i=0; i<24; i++)
                         this.channelNames.push('SPE00DP' + ((i<10) ? '0'+i : i ) + 'X');
