@@ -42,7 +42,7 @@
                 this.y0 = 0.4*this.height + this.frameLineWidth;
                 //auxiliaries
                 this.auxPhiSteps = ((this.auxiliary == 'S2') ? 16 : ((this.auxiliary == 'S3') ? 32 : 0))
-                this.auxRad = Math.min(0.19*this.height, 0.23*this.width);
+                this.auxRad = Math.min(0.39*this.height, 0.23*this.width);
                 this.innerAuxRad = 0.05*this.auxRad;
                 this.auxRadStep = (this.auxRad - this.innerAuxRad) / 24;
                 this.auxPhiStep = 360 / Math.max(1, this.auxPhiSteps);
@@ -113,7 +113,6 @@
                             fillPatternImage: this.errorPattern,
                             stroke: this.frameColor,
                             strokeWidth: this.frameLineWidth,
-                            clockwise: false,
                             angle: 360,
                             x: 0.25*this.width,
                             y: this.height*0.4,
@@ -130,6 +129,7 @@
                             y: 0.4*this.height,
                             radius: this.auxRad,
                             angle: this.auxPhiStep*i,
+                            clockwise: false,
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
                             stroke: this.frameColor,
