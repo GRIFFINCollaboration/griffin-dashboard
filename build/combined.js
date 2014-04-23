@@ -16300,7 +16300,7 @@ function parseCustomPages(data){
                 //summary layout
                 //cell coords packed as: 
                 //SHQ***: [center X, center Y, rotation]
-                //SHB***: [{offsetX, offsetY}, rotation, chirality] - note Kinetic offsets 'move the viewport'; ie -100 offset in x moves the shape 100px *right* 
+                //SHB***: [{offsetX, offsetY}, orientation] - note Kinetic offsets 'move the viewport'; ie -100 offset in x moves the shape 100px *right* 
                 cellCoords['SHQ01DN'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), 180];
                 cellCoords['SHQ02DN'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), -90];
                 cellCoords['SHQ03DN'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), 0];
@@ -16319,11 +16319,11 @@ function parseCustomPages(data){
                 cellCoords['SHQ15DP'] = [0.25*this.width - 3*this.grid*Math.cos(this.theta), 0.4*this.height + 3*this.grid*Math.sin(this.theta), 0];
                 cellCoords['SHQ16DP'] = [0.25*this.width - 3*this.grid*Math.cos(this.theta), 0.4*this.height + 3*this.grid*Math.sin(this.theta), 90];
 
-                cellCoords['SHB05DP'] = [{x: -0.75*this.width + this.grid, y: -0.4*this.height}, 90, 'left'];
+                cellCoords['SHB05DP'] = [{x: -0.75*this.width + this.grid, y: -0.4*this.height}, 'tall'];
 
-                //left- and right-leaning parallelogram coords for SHB summaries
-                parallelogramCoords['left'] = [0,0, this.long - this.short*Math.cos(this.theta),0, this.long,this.short, this.short*Math.cos(this.theta),this.short];
-                parallelogramCoords['right'] = [0,this.short, this.short*Math.cos(this.theta),0, this.long, 0, this.long - this.short*Math.cos(this.theta), this.short];
+                //upright and sideways parallelogram coords for SHB summaries
+                parallelogramCoords['tall'] = [0,this.short*Math.cos(this.theta), 0,this.long, this.short,this.long - this.short*Math.cos(this.theta), this.short,0];
+                parallelogramCoords['long'] = [0,this.short, this.short*Math.cos(this.theta),0, this.long, 0, this.long - this.short*Math.cos(this.theta), this.short];
 
                 for(i=0; i<this.channelNames.length; i++){
                     //SHQ summaries
@@ -16346,7 +16346,6 @@ function parseCustomPages(data){
                         this.cells[this.channelNames[i]] = new Kinetic.Line({
                             points: parallelogramCoords[cellCoords[this.channelNames[i]][2]],
                             offset: cellCoords[this.channelNames[i]][0],
-                            rotation: 0,//cellCoords[this.channelNames[i]][1],
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
                             stroke: this.frameColor,
