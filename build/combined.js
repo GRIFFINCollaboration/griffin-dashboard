@@ -16344,7 +16344,7 @@ function parseCustomPages(data){
                     //SHB summaries
                     } else if(i<32){
                         this.cells[this.channelNames[i]] = new Kinetic.Line({
-                            points: parallelogramCoords[cellCoords[this.channelNames[i]][2]],
+                            points: parallelogramCoords[cellCoords[this.channelNames[i]][1]],
                             offset: cellCoords[this.channelNames[i]][0],
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
