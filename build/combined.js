@@ -16346,7 +16346,7 @@ function parseCustomPages(data){
                         this.cells[this.channelNames[i]] = new Kinetic.Line({
                             points: parallelogramCoords[cellCoords[this.channelNames[i]][2]],
                             offset: cellCoords[this.channelNames[i]][0],
-                            rotation: cellCoords[this.channelNames[i]][1],
+                            rotation: 0,//cellCoords[this.channelNames[i]][1],
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
                             stroke: this.frameColor,
