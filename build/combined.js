@@ -16308,12 +16308,13 @@ function parseCustomPages(data){
                 cellCoords['SHQ02b'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), 0];
                 cellCoords['SHQ03b'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), 270];
                 cellCoords['SHQ04b'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), 180];
-console.log(cellCoords)
+
                 for(i=0; i<this.channelNames.length; i++){
                     this.cells[this.channelNames[i]] = new Kinetic.Wedge({
                         x: cellCoords[this.channelNames[i]][0],
                         y: cellCoords[this.channelNames[i]][1],
                         rotation: cellCoords[this.channelNames[i]][2],
+                        radius: this.rad,
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
