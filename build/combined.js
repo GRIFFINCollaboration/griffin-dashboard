@@ -16267,7 +16267,7 @@ function parseCustomPages(data){
                 this.diag = 0.8*this.height / Math.sin(this.theta) //length of beam axis on a half-diagram
                 this.grid = Math.min(this.width/2/6, this.diag/8); //grid separation of layers, make sure it fits
                 this.long = 1.8*this.grid*Math.sin(this.theta);  //long parallelogram side
-                this.short = 0.9*this.grid; //short parallelogram side
+                this.short = this.long/2; //short parallelogram side
                 this.rad = this.long / 2;   //SHQ radius
 
                 /////////////////////////////
@@ -16344,7 +16344,7 @@ function parseCustomPages(data){
                     } else if(i<32){
                         this.cells[this.channelNames[i]] = new Kinetic.Line({
                             points: [0,this.short, this.short*Math.cos(this.theta),0, this.long, 0, this.long - this.short*Math.cos(this.theta), this.short],
-                            offset: 0,
+                            offsetX: this.width/2,
                             rotation: 0,
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
