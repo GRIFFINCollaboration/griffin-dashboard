@@ -11,7 +11,9 @@
                     i,j,chan=0;
 
                 //deploy the standard stuff
-                this.viewNames = ['SPICE', 'aux'];
+                this.viewNames = ['SPICE'];
+                if(this.auxiliary)
+                    this.viewNames.push(this.auxiliary);
                 this.channelNames = [ ];
                 for(i=0; i<10; i++){
                     for(j=0; j<12; j++){
