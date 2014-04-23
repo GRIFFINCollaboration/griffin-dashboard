@@ -16512,6 +16512,7 @@ function parseCustomPages(data){
                             fillPatternImage: this.errorPattern,
                             stroke: this.frameColor,
                             strokeWidth: this.frameLineWidth,
+                            clockwise: false,
                             angle: 360,
                             x: 0.25*this.width,
                             y: this.height*0.4,
