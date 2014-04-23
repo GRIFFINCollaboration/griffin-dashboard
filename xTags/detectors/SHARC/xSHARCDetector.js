@@ -55,11 +55,11 @@
                 //detail views
                 this.boxWidth = 0.4*this.width;
                 this.boxHeight = 0.7*this.height;
-                this.quadCenterLeftX = 0.4*this.width;
+                this.quadCenterLeftX = 0.45*this.width;
                 this.quadCenterLeftY = 0.7*this.height;
-                this.quadCenterRightX = 0.9*this.width;
+                this.quadCenterRightX = 0.95*this.width;
                 this.quadCenterRightY = 0.7*this.height;
-                this.quadRad = 0.3*this.width;
+                this.quadRad = 0.4*this.width;
 
                 /////////////////////////////
                 //Initialize visualization
@@ -89,7 +89,7 @@
         }, 
         methods: {
             'instantiateCells': function(){
-                var i, upstreamLabel, downstreamLabel,
+                var i, upstreamLabel, downstreamLabel, frontLabel, backLabel,
                     cardIndex, isBox, isFront, cellIndex,
                     cellCoords = {},
                     parallelogramCoords = {},
@@ -290,6 +290,35 @@
                 //center label nicely
                 downstreamLabel.setAttr('x', -downstreamBoxCenterX - downstreamLabel.getTextWidth()/2);
                 downstreamLabel.setAttr('y', 0.8*this.height - downstreamLabel.getTextHeight());  
+
+                //labels for detail views:
+                for(i=1; i<16; i++){
+                    frontLabel = new Kinetic.Text({
+                        x: 0,
+                        y: 0,
+                        text: 'Front',
+                        fontSize: 28,
+                        fontFamily: 'Arial',
+                        fill: '#999999'
+                    });
+                    this.mainLayer[i].add(frontLabel);
+                    //center label nicely
+                    frontLabel.setAttr('x', 0.25*this.width - frontLabel.getTextWidth()/2);
+                    frontLabel.setAttr('y', 0.8*this.height - frontLabel.getTextHeight());
+
+                    backLabel = new Kinetic.Text({
+                        x: 0,
+                        y: 0,
+                        text: 'Back',
+                        fontSize: 28,
+                        fontFamily: 'Arial',
+                        fill: '#999999'
+                    });
+                    this.mainLayer[i].add(backLabel);
+                    //center label nicely
+                    backLabel.setAttr('x', 0.75*this.width - backLabel.getTextWidth()/2);
+                    backLabel.setAttr('y', 0.8*this.height - backLabel.getTextHeight());
+                }
 
                 //add the layers to the stage
                 for(i=0; i<this.viewNames.length; i++){
