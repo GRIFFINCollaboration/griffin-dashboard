@@ -16262,7 +16262,7 @@ function parseCustomPages(data){
                 this.grid = Math.min(this.width/2/6, this.diag/8); //grid separation of layers, make sure it fits
                 this.long = 1.8*this.grid*Math.sin(this.theta);  //long parallelogram side
                 this.short = this.long/2; //short parallelogram side
-                this.rad = this.long / 2;   //SHQ radius
+                this.rad = this.short / 2;   //SHQ radius
 
                 /////////////////////////////
                 //Initialize visualization
