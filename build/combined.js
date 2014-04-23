@@ -16307,7 +16307,7 @@ function parseCustomPages(data){
                     upstreamSHQfrontCenterX = -upstreamBoxCenterX - 2*this.grid,
                     upstreamSHQfrontCenterY = -upstreamBoxCenterY +2*this.grid*Math.tan(this.theta),
                     upstreamSHQbackCenterX = -upstreamBoxCenterX - 3*this.grid,
-                    upstreamSHQbackCenterY = -upstreamBoxCenterY +3*this.grid*Math.tan(this.theta),
+                    upstreamSHQbackCenterY = -upstreamBoxCenterY +3*this.grid*Math.tan(this.theta);
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 //summary layout
