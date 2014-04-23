@@ -63,14 +63,14 @@
                 var i, 
                     cellCoords = {},
                     parallelogramCoords = {},
-                    downstreamBoxCenterX = -0.625*this.width,
-                    downstreamBoxCenterY = -0.8*this.height + this.width/8*Math.tan(this.theta) + this.long/2,
+                    downstreamBoxCenterX = -0.7*this.width,
+                    downstreamBoxCenterY = -0.8*this.height + 0.2*this.width*Math.tan(this.theta) + this.long/2,
                     downstreamSHQfrontCenterX = -downstreamBoxCenterX + 2*this.grid,
                     downstreamSHQfrontCenterY = -downstreamBoxCenterY - 2*this.grid*Math.tan(this.theta),
                     downstreamSHQbackCenterX = -downstreamBoxCenterX + 3*this.grid,
                     downstreamSHQbackCenterY = -downstreamBoxCenterY - 3*this.grid*Math.tan(this.theta),
-                    upstreamBoxCenterX = -0.375*this.width,
-                    upstreamBoxCenterY = -this.width/8*Math.tan(this.theta) - this.long/2,
+                    upstreamBoxCenterX = -0.3*this.width,
+                    upstreamBoxCenterY = -0.2*this.width*Math.tan(this.theta) - this.long/2,
                     upstreamSHQfrontCenterX = -upstreamBoxCenterX - 2*this.grid,
                     upstreamSHQfrontCenterY = -upstreamBoxCenterY +2*this.grid*Math.tan(this.theta),
                     upstreamSHQbackCenterX = -upstreamBoxCenterX - 3*this.grid,
@@ -167,7 +167,7 @@
                     points:[0,0.6*this.height, this.width,0.6*this.height],
                     stroke: '#FF0000'
                 })
-                this.mainLayer[0].add(alignment)
+                //this.mainLayer[0].add(alignment)
 
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
