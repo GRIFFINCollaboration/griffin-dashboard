@@ -80,7 +80,7 @@
         }, 
         methods: {
             'instantiateCells': function(){
-                var i, j, chan=0;
+                var i, j, chan=0, centerDot;
 
                 //SPICE cells
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
@@ -125,6 +125,16 @@
                         chan++;                      
                     }
 
+                    centerDot = new Kinetic.Circle({
+                        radius: this.innerAuxRad,
+                        fill: '#222222',
+                        fillPatternImage: this.errorPattern,
+                        stroke: this.frameColor,
+                        strokeWidth: this.frameLineWidth,
+                        x: 0.25*this.width,
+                        y: this.height*0.4
+                    });
+
                     for(i=0; i<this.auxPhiSteps; i++){
                         this.cells[this.channelNames[chan]] = new Kinetic.Wedge({
                             x: 0.75*this.width,
@@ -157,6 +167,9 @@
                     //add the cell to the main layer
                     this.mainLayer[Math.floor(i/120)].add(this.cells[this.channelNames[i]]);
                 }
+                //black out center dot of auxiliary rings
+                if(this.auxPhiSteps)
+                    this.mainLayer[1].add(centerDot);
 
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
