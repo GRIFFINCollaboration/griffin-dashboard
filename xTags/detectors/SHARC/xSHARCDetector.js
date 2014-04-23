@@ -20,7 +20,7 @@
                                         'SHB09f', 'SHB10f', 'SHB11f', 'SHB12f', 'SHQ13f', 'SHQ14f', 'SHQ15f', 'SHQ16f'
                                     ];
                 */
-                this.channelNames = [   'SHQ01b', 'SHQ02b', 'SHQ03b', 'SHQ04b', 'SHB05b', 'SHB06b', 'SHB07b', 'SHB08b'
+                this.channelNames = [   'SHQ01b', 'SHQ02b', 'SHQ03b', 'SHQ04b', 'SHQ13b', 'SHQ14b', 'SHQ15b', 'SHQ16b'
                                     ];
 
                 initializeDetector.bind(this, 'SHARC', 'SHARC', URLs)();
