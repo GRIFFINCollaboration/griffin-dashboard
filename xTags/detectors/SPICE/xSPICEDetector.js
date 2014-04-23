@@ -119,7 +119,6 @@
                             strokeWidth: this.frameLineWidth,
                             x: 0.25*this.width,
                             y: this.height*0.4,
-                            closed: true,
                             listening: true
                         });  
 
