@@ -16319,13 +16319,14 @@ function parseCustomPages(data){
                 cellCoords['SHQ15DP'] = [0.25*this.width - 3*this.grid*Math.cos(this.theta), 0.4*this.height + 3*this.grid*Math.sin(this.theta), 0];
                 cellCoords['SHQ16DP'] = [0.25*this.width - 3*this.grid*Math.cos(this.theta), 0.4*this.height + 3*this.grid*Math.sin(this.theta), 90];
 
-                cellCoords['SHB05DP'] = [{x: -0.75*this.width + this.grid, y: -0.4*this.height}, 'tall'];
-                cellCoords['SHB06DP'] = [{x: -0.75*this.width - this.grid*Math.cos(this.theta), y: -0.4*this.height + this.grid*Math.sin(this.theta)}, 'long'];
-                cellCoords['SHB07DP'] = [{x: -0.75*this.width - this.grid, y: -0.4*this.height}, 'tall'];
+                cellCoords['SHB05DP'] = [{x: -0.75*this.width + this.grid, y: -0.4*this.height + this.long/2}, 'tall'];
+                //cellCoords['SHB06DP'] = [{x: -0.75*this.width - this.grid*Math.cos(this.theta), y: -0.4*this.height + this.grid*Math.sin(this.theta)}, 'long'];
+                cellCoords['SHB06DP'] = [{x: -0.75*this.width - this.grid*Math.cos(this.theta), y: -0.4*this.height}, 'long'];
+                cellCoords['SHB07DP'] = [{x: -0.75*this.width - this.grid, y: -0.4*this.height + this.long/2}, 'tall'];
                 cellCoords['SHB08DP'] = [{x: -0.75*this.width + this.grid*Math.cos(this.theta), y: -0.4*this.height - this.grid*Math.sin(this.theta)}, 'long'];
-                cellCoords['SHB05DN'] = [{x: -0.75*this.width + 2*this.grid, y: -0.4*this.height}, 'tall'];
+                cellCoords['SHB05DN'] = [{x: -0.75*this.width + 2*this.grid, y: -0.4*this.height + this.long/2}, 'tall'];
                 cellCoords['SHB06DN'] = [{x: -0.75*this.width - 2*this.grid*Math.cos(this.theta), y: -0.4*this.height + 2*this.grid*Math.sin(this.theta)}, 'long'];
-                cellCoords['SHB07DN'] = [{x: -0.75*this.width - 2*this.grid, y: -0.4*this.height}, 'tall'];
+                cellCoords['SHB07DN'] = [{x: -0.75*this.width - 2*this.grid, y: -0.4*this.height + this.long/2}, 'tall'];
                 cellCoords['SHB08DN'] = [{x: -0.75*this.width + 2*this.grid*Math.cos(this.theta), y: -0.4*this.height - 2*this.grid*Math.sin(this.theta)}, 'long'];
 
                 //upright and sideways parallelogram coords for SHB summaries
