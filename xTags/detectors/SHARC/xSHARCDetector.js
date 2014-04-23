@@ -111,7 +111,7 @@
                     } else if(i<32){
                         this.cells[this.channelNames[i]] = new Kinetic.Line({
                             points: [0,this.short, this.short*Math.cos(this.theta),0, this.long, 0, this.long - this.short*Math.cos(this.theta), this.short],
-                            offset: {x: this.long/2, y: this.short/2},
+                            offset: {x: -100, y: 0},
                             rotation: 0,
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
