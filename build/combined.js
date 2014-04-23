@@ -16249,7 +16249,8 @@ function parseCustomPages(data){
 
                 this.channelNames = [   'SHQ01DN', 'SHQ02DN', 'SHQ03DN', 'SHQ04DN', 'SHQ13DN', 'SHQ14DN', 'SHQ15DN', 'SHQ16DN',
                                         'SHQ01DP', 'SHQ02DP', 'SHQ03DP', 'SHQ04DP', 'SHQ13DP', 'SHQ14DP', 'SHQ15DP', 'SHQ16DP',
-                                        'SHB05DP', 'SHB06DP', 'SHB07DP', 'SHB08DP', 'SHB05DN', 'SHB06DN', 'SHB07DN', 'SHB08DN'
+                                        'SHB05DP', 'SHB06DP', 'SHB07DP', 'SHB08DP', 'SHB05DN', 'SHB06DN', 'SHB07DN', 'SHB08DN',
+                                        'SHB13DP', 'SHB14DP', 'SHB15DP', 'SHB16DP', 'SHB13DN', 'SHB14DN', 'SHB15DN', 'SHB16DN'
                                     ];
 
                 initializeDetector.bind(this, 'SHARC', 'SHARC', URLs)();
@@ -16301,10 +16302,12 @@ function parseCustomPages(data){
                     downstreamSHQfrontCenterY = -downstreamBoxCenterY - 2*this.grid*Math.tan(this.theta),
                     downstreamSHQbackCenterX = -downstreamBoxCenterX + 3*this.grid,
                     downstreamSHQbackCenterY = -downstreamBoxCenterY - 3*this.grid*Math.tan(this.theta),
-                    upstreamSHQfrontCenterX = 0.25*this.width - 3*this.grid*Math.cos(this.theta),
-                    upstreamSHQfrontCenterY = 0.4*this.height + 3*this.grid*Math.sin(this.theta),
-                    upstreamSHQbackCenterX = 0.25*this.width - 4*this.grid*Math.cos(this.theta),
-                    upstreamSHQbackCenterY = 0.4*this.height + 4*this.grid*Math.sin(this.theta)
+                    upstreamBoxCenterX = -0.375*this.width,
+                    upstreamBoxCenterY = -this.width/8*Math.tan(this.theta) - this.long/2,
+                    upstreamSHQfrontCenterX = -upstreamBoxCenterX - 2*this.grid,
+                    upstreamSHQfrontCenterY = -upstreamBoxCenterY +2*this.grid*Math.tan(this.theta),
+                    upstreamSHQbackCenterX = -upstreamBoxCenterX - 3*this.grid,
+                    upstreamSHQbackCenterY = -upstreamBoxCenterY +3*this.grid*Math.tan(this.theta),
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 //summary layout
@@ -16337,6 +16340,15 @@ function parseCustomPages(data){
                 cellCoords['SHB06DN'] = [{x: downstreamBoxCenterX, y: downstreamBoxCenterY + 2*this.grid + this.short/2}, 'long'];
                 cellCoords['SHB07DN'] = [{x: downstreamBoxCenterX - 2*this.grid, y: downstreamBoxCenterY + this.long/2}, 'tall'];
                 cellCoords['SHB08DN'] = [{x: downstreamBoxCenterX, y: downstreamBoxCenterY - 2*this.grid + this.short/2}, 'long'];
+
+                cellCoords['SHB13DP'] = [{x: upstreamBoxCenterX + this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB14DP'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY + this.grid + this.short/2}, 'long'];
+                cellCoords['SHB15DP'] = [{x: upstreamBoxCenterX - this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB16DP'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY - this.grid + this.short/2}, 'long'];
+                cellCoords['SHB13DN'] = [{x: upstreamBoxCenterX + 2*this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB14DN'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY + 2*this.grid + this.short/2}, 'long'];
+                cellCoords['SHB15DN'] = [{x: upstreamBoxCenterX - 2*this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB16DN'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY - 2*this.grid + this.short/2}, 'long'];
 
                 //upright and sideways parallelogram coords for SHB summaries
                 parallelogramCoords['tall'] = [0,this.short*Math.tan(this.theta), 0,this.long, this.short,this.long - this.short/Math.tan(this.theta), this.short,0];
