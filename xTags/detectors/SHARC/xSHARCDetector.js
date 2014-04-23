@@ -60,7 +60,7 @@
         }, 
         methods: {
             'instantiateCells': function(){
-                var i, 
+                var i, upstreamLabel, downstreamLabel,
                     cellCoords = {},
                     parallelogramCoords = {},
                     downstreamBoxCenterX = -0.7*this.width,
@@ -164,7 +164,34 @@
                 }
 
                 //beam arrow
-                this.mainLayer[0].add(kineticArrow(0.4*this.width, 0.4*this.height + Math.tan(this.theta)*0.1*this.width, 0.6*this.width, 0.4*this.height - Math.tan(this.theta)*0.1*this.width ));
+                this.mainLayer[0].add(kineticArrow(0.4*this.width, 0.35*this.height + Math.tan(this.theta)*0.15*this.width, 0.65*this.width, 0.4*this.height - Math.tan(this.theta)*0.15*this.width ));
+
+                //label upstream / downstream halves
+                upstreamLabel = new Kinetic.Text({
+                    x: 0,
+                    y: 0,
+                    text: 'Upstream',
+                    fontSize: 28,
+                    fontFamily: 'Arial',
+                    fill: '#999999'
+                });
+                this.mainLayer[0].add(upstreamLabel);
+                //center label nicely
+                upstreamLabel.setAttr('x', -upstreamBoxCenterX - upstreamLabel.getTextWidth()/2);
+                upstreamLabel.setAttr('y', 0.8*this.height - upstreamLabel.getTextHeight());
+
+                downstreamLabel = new Kinetic.Text({
+                    x: 0,
+                    y: 0,
+                    text: 'Downstream',
+                    fontSize: 28,
+                    fontFamily: 'Arial',
+                    fill: '#999999'
+                });
+                this.mainLayer[0].add(downstreamLabel);
+                //center label nicely
+                downstreamLabel.setAttr('x', -downstreamBoxCenterX - downstreamLabel.getTextWidth()/2);
+                downstreamLabel.setAttr('y', 0.8*this.height - downstreamLabel.getTextHeight());  
 
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
