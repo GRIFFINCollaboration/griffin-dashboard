@@ -16344,7 +16344,7 @@ function parseCustomPages(data){
                     } else if(i<32){
                         this.cells[this.channelNames[i]] = new Kinetic.Line({
                             points: [0,this.short, this.short*Math.cos(this.theta),0, this.long, 0, this.long - this.short*Math.cos(this.theta), this.short],
-                            offsetX: this.width/2,
+                            offset: 0,
                             rotation: 0,
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
