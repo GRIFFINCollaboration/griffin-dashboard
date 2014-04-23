@@ -16411,7 +16411,7 @@ function parseCustomPages(data){
                 }
 
                 //beam arrow
-                this.mainLayer[0].add(kineticArrow(0.4*this.width, 0.3*this.height + Math.tan(this.theta)*0.2*this.width, 0.7*this.width, 0.4*this.height - Math.tan(this.theta)*0.2*this.width ));
+                this.mainLayer[0].add(kineticArrow(0.35*this.width, 0.4*this.height + Math.tan(this.theta)*0.15*this.width, 0.65*this.width, 0.4*this.height - Math.tan(this.theta)*0.15*this.width ));
 
                 //label upstream / downstream halves
                 upstreamLabel = new Kinetic.Text({
