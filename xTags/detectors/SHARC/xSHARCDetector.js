@@ -246,6 +246,7 @@
                                 closed: true,
                                 listening: true                                 
                             });
+                        }
                     }
 
                     //set up the tooltip listeners:

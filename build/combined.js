@@ -16493,6 +16493,7 @@ function parseCustomPages(data){
                                 closed: true,
                                 listening: true                                 
                             });
+                        }
                     }
 
                     //set up the tooltip listeners:
