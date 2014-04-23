@@ -13,13 +13,7 @@
 
                 //deploy the standard stuff
                 this.viewNames = ['SHARC', 'aux'];
-                /*
-                this.channelNames = [   'SHQ01b', 'SHQ02b', 'SHQ03b', 'SHQ04b', 'SHB05b', 'SHB06b', 'SHB07b', 'SHB08b',
-                                        'SHB09b', 'SHB10b', 'SHB11b', 'SHB12b', 'SHQ13b', 'SHQ14b', 'SHQ15b', 'SHQ16b',
-                                        'SHQ01f', 'SHQ02f', 'SHQ03f', 'SHQ04f', 'SHB05f', 'SHB06f', 'SHB07f', 'SHB08f',
-                                        'SHB09f', 'SHB10f', 'SHB11f', 'SHB12f', 'SHQ13f', 'SHQ14f', 'SHQ15f', 'SHQ16f'
-                                    ];
-                */
+
                 this.channelNames = [   'SHQ01DN', 'SHQ02DN', 'SHQ03DN', 'SHQ04DN', 'SHQ13DN', 'SHQ14DN', 'SHQ15DN', 'SHQ16DN',
                                         'SHQ01DP', 'SHQ02DP', 'SHQ03DP', 'SHQ04DP', 'SHQ13DP', 'SHQ14DP', 'SHQ15DP', 'SHQ16DP',
                                         'SHB05DP'/*, 'SHB06DP', 'SHB07DP', 'SHB08DP', 'SHB05DN', 'SHB06DN', 'SHB07DN', 'SHB08DN'*/
@@ -67,12 +61,13 @@
             'instantiateCells': function(){
                 var i, 
                     cellCoords = {};
+                    parallelogramCoords = {}
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 //summary layout
                 //cell coords packed as: 
                 //SHQ***: [center X, center Y, rotation]
-                //SHB***: []
+                //SHB***: [{offsetX, offsetY}, rotation, chirality] - note Kinetic offsets 'move the viewport'; ie -100 offset in x moves the shape 100px *right* 
                 cellCoords['SHQ01DN'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), 180];
                 cellCoords['SHQ02DN'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), -90];
                 cellCoords['SHQ03DN'] = [0.75*this.width + 4*this.grid*Math.cos(this.theta), 0.4*this.height - 4*this.grid*Math.sin(this.theta), 0];
@@ -90,6 +85,12 @@
                 cellCoords['SHQ14DP'] = [0.25*this.width - 3*this.grid*Math.cos(this.theta), 0.4*this.height + 3*this.grid*Math.sin(this.theta), -90];
                 cellCoords['SHQ15DP'] = [0.25*this.width - 3*this.grid*Math.cos(this.theta), 0.4*this.height + 3*this.grid*Math.sin(this.theta), 0];
                 cellCoords['SHQ16DP'] = [0.25*this.width - 3*this.grid*Math.cos(this.theta), 0.4*this.height + 3*this.grid*Math.sin(this.theta), 90];
+
+                cellCoords['SHB05DP'] = [{x: 0.75*this.width - this.grid, y: 0.4*this.height}, 90, 'left'];
+                
+                //left- and right-leaning parallelogram coords for SHB summaries
+                parallelogramCoords['left'] = [0,0, this.long - this.short*Math.cos(this.theta),0, this.long,this.short, this.short*Math.cos(this.theta),this.short];
+                parallelogramCoords['right'] = [0,this.short, this.short*Math.cos(this.theta),0, this.long, 0, this.long - this.short*Math.cos(this.theta), this.short];
 
                 for(i=0; i<this.channelNames.length; i++){
                     //SHQ summaries
@@ -110,9 +111,9 @@
                     //SHB summaries
                     } else if(i<32){
                         this.cells[this.channelNames[i]] = new Kinetic.Line({
-                            points: [0,this.short, this.short*Math.cos(this.theta),0, this.long, 0, this.long - this.short*Math.cos(this.theta), this.short],
-                            offset: {x: -100, y: 0},
-                            rotation: 0,
+                            points: parallelogramCoords[cellCoords[this.channelNames[i]][2]],
+                            offset: cellCoords[this.channelNames[i]][0],
+                            rotation: cellCoords[this.channelNames[i]][1],
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
                             stroke: this.frameColor,
