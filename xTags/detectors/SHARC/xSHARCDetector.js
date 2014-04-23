@@ -58,7 +58,7 @@
                 this.quadCenterLeftX = 0.4*this.width;
                 this.quadCenterLeftY = 0.7*this.height;
                 this.quadCenterRightX = 0.9*this.width;
-                this.quadCenterRightY = 0.7*this.width;
+                this.quadCenterRightY = 0.7*this.height;
                 this.quadRad = 0.3*this.width;
 
                 /////////////////////////////
@@ -226,6 +226,7 @@
                                 angle: 90,
                                 rotationDeg: 180,
                                 fill: '#000000',
+                                clockwise: false,
                                 fillPatternImage: this.errorPattern,
                                 stroke: this.frameColor,
                                 strokeWidth: this.frameLineWidth,
