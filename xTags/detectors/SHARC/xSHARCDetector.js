@@ -9,28 +9,57 @@
                 var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
                             'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
-                    i,j,chan=0;
+                    i,j;
 
                 //deploy the standard stuff
-                this.viewNames = ['SHARC', 'aux'];
+                this.viewNames = ['SHARC', 'SHQ01', 'SHQ02', 'SHQ03', 'SHQ04', 'SHB05', 'SHB06', 'SHB07', 'SHB08', 'SHB09', 'SHB10', 'SHB11', 'SHB12', 'SHQ13', 'SHQ14', 'SHQ15', 'SHQ16'];
 
                 this.channelNames = [   'SHQ01DN', 'SHQ02DN', 'SHQ03DN', 'SHQ04DN', 'SHQ13DN', 'SHQ14DN', 'SHQ15DN', 'SHQ16DN',
                                         'SHQ01DP', 'SHQ02DP', 'SHQ03DP', 'SHQ04DP', 'SHQ13DP', 'SHQ14DP', 'SHQ15DP', 'SHQ16DP',
                                         'SHB05DP', 'SHB06DP', 'SHB07DP', 'SHB08DP', 'SHB05DN', 'SHB06DN', 'SHB07DN', 'SHB08DN',
                                         'SHB13DP', 'SHB14DP', 'SHB15DP', 'SHB16DP', 'SHB13DN', 'SHB14DN', 'SHB15DN', 'SHB16DN'
                                     ];
+                //generate individual channel names from summary names explicity stated
+                for(i=0; i<32; i++){
+                    //SHQ back
+                    if(this.channelNames[i].indexOf('Q') != -1 && this.channelNames[i].indexOf('N') != -1 ){
+                        for(j=0; j<24; j++)
+                            this.channelNames.push(this.channelNames[i] + ((j<10)?'0'+j:j) + 'X' )
+                    //SHQ front
+                    } else if(this.channelNames[i].indexOf('Q') != -1 && this.channelNames[i].indexOf('P') != -1 ){
+                        for(j=0; j<16; j++)
+                            this.channelNames.push(this.channelNames[i] + ((j<10)?'0'+j:j) + 'X' )
+                    //SHB back
+                    } else if(this.channelNames[i].indexOf('B') != -1 && this.channelNames[i].indexOf('N') != -1 ){
+                        for(j=0; j<48; j++)
+                            this.channelNames.push(this.channelNames[i] + ((j<10)?'0'+j:j) + 'X' )
+                    //SHB front
+                    } else if(this.channelNames[i].indexOf('B') != -1 && this.channelNames[i].indexOf('P') != -1 ){
+                        for(j=0; j<24; j++)
+                            this.channelNames.push(this.channelNames[i] + ((j<10)?'0'+j:j) + 'X' )
+                    }
+                }
 
                 initializeDetector.bind(this, 'SHARC', 'SHARC', URLs)();
 
                 //////////////////////////////////////
                 //SHARC specific drawing parameters
                 //////////////////////////////////////
+                //summary view
                 this.theta = Math.atan(0.8*this.height / this.width * 2) //angle with horizontal that beam axis will make
                 this.diag = 0.8*this.height / Math.sin(this.theta) //length of beam axis on a half-diagram
                 this.grid = Math.min(this.width/2/8, this.diag/10); //grid separation of layers, make sure it fits
                 this.long = 1.8*this.grid*Math.sin(this.theta);  //long parallelogram side
                 this.short = this.long/2; //short parallelogram side
                 this.rad = this.grid/2;   //SHQ radius
+                //detail views
+                this.boxWidth = 0.4*this.width;
+                this.boxHeight = 0.7*this.height;
+                this.quadCenterLeftX = 0.4*this.width;
+                this.quadCenterLeftY = 0.7*this.height;
+                this.quadCenterRightX = 0.9*this.width;
+                this.quadCenterRightY = 0.7*this.width;
+                this.quadRad = 0.3*this.width;
 
                 /////////////////////////////
                 //Initialize visualization
@@ -61,6 +90,7 @@
         methods: {
             'instantiateCells': function(){
                 var i, upstreamLabel, downstreamLabel,
+                    cardIndex, isBox, isFront, cellIndex,
                     cellCoords = {},
                     parallelogramCoords = {},
                     downstreamBoxCenterX = -0.7*this.width,
@@ -122,6 +152,12 @@
                 parallelogramCoords['long'] = [0,this.short, this.short*Math.tan(this.theta),0, this.long,0, this.long - this.short/Math.tan(this.theta),this.short];
 
                 for(i=0; i<this.channelNames.length; i++){
+                    //determine which view this cell belongs to
+                    if(this.channelNames[i].length == 7)
+                        cardIndex = 0;
+                    else
+                        cardIndex = parseInt(this.channelNames[i].slice(3,5), 10);
+
                     //SHQ summaries
                     if(i<16){
                         this.cells[this.channelNames[i]] = new Kinetic.Wedge({
@@ -149,6 +185,67 @@
                             closed: true,
                             listening: true                            
                         })
+                    //detail channels
+                    } else{
+                        isBox = (this.channelNames[i].indexOf('B') != -1);
+                        isFront = (this.channelNames[i].indexOf('P') != -1);
+                        cellIndex = parseInt(this.channelNames[i].slice(7,9),10);
+
+                        if(isBox && isFront){
+                            this.cells[this.channelNames[i]] = new Kinetic.Rect({
+                                x: (this.width/2 - this.boxWidth)/2,
+                                y: (0.8*this.height - this.boxHeight)/2 + cellIndex*this.boxHeight/24,
+                                width: this.boxWidth,
+                                height: this.boxHeight / 24,
+                                fill: '#000000',
+                                fillPatternImage: this.errorPattern,
+                                stroke: this.frameColor,
+                                strokeWidth: this.frameLineWidth,
+                                closed: true,
+                                listening: true                                 
+                            });
+                        } else if(isBox && !isFront){
+                            this.cells[this.channelNames[i]] = new Kinetic.Rect({
+                                x: (this.width/2 - this.boxWidth)/2 + this.width/2 + cellIndex*this.boxWidth/48,
+                                y: (0.8*this.height - this.boxHeight)/2,
+                                width: this.boxWidth/48,
+                                height: this.boxHeight,
+                                fill: '#000000',
+                                fillPatternImage: this.errorPattern,
+                                stroke: this.frameColor,
+                                strokeWidth: this.frameLineWidth,
+                                closed: true,
+                                listening: true                                 
+                            });
+                        } else if(!isBox && isFront){
+                            this.cells[this.channelNames[i]] = new Kinetic.Arc({
+                                x: this.quadCenterLeftX,
+                                y: this.quadCenterLeftY,
+                                innerRad: cellIndex*this.quadRad/16,
+                                outerRad: (cellIndex+1)*this.quadRad/16,
+                                angle: 90,
+                                rotationDeg: 180,
+                                fill: '#000000',
+                                fillPatternImage: this.errorPattern,
+                                stroke: this.frameColor,
+                                strokeWidth: this.frameLineWidth,
+                                closed: true,
+                                listening: true                                 
+                            });
+                        } else if(!isBox && !isFront){
+                            this.cells[this.channelNames[i]] = new Kinetic.Wedge({
+                                x: this.quadCenterRightX,
+                                y: this.quadCenterRightY,
+                                radius: this.quadRad,
+                                angle: 90 / 24,
+                                rotation: 180 + cellIndex*90/24,
+                                fill: '#000000',
+                                fillPatternImage: this.errorPattern,
+                                stroke: this.frameColor,
+                                strokeWidth: this.frameLineWidth,
+                                closed: true,
+                                listening: true                                 
+                            });
                     }
 
                     //set up the tooltip listeners:
@@ -160,7 +257,7 @@
                     this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
 
                     //add the cell to the main layer
-                    this.mainLayer[0].add(this.cells[this.channelNames[i]]);
+                    this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
 
                 //beam arrow
@@ -194,9 +291,10 @@
                 downstreamLabel.setAttr('y', 0.8*this.height - downstreamLabel.getTextHeight());  
 
                 //add the layers to the stage
-                this.stage[0].add(this.mainLayer[0]);
-                this.stage[0].add(this.tooltipLayer[0]);
-             
+                for(i=0; i<this.viewNames.length; i++){
+                    this.stage[i].add(this.mainLayer[i]);
+                    this.stage[i].add(this.tooltipLayer[i]);
+                }
 
             }
         }
