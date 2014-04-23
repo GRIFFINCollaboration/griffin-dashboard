@@ -16330,7 +16330,7 @@ function parseCustomPages(data){
 
                 //upright and sideways parallelogram coords for SHB summaries
                 parallelogramCoords['tall'] = [0,this.short*Math.cos(this.theta), 0,this.long, this.short,this.long - this.short*Math.cos(this.theta), this.short,0];
-                parallelogramCoords['long'] = [0,this.short, this.short*Math.cos(this.theta),0, this.long, 0, this.long - this.short*Math.cos(this.theta), this.short];
+                parallelogramCoords['long'] = [0,this.short, this.short*Math.sin(this.theta),0, this.long, 0, this.long - this.short*Math.sin(this.theta), this.short];
 
                 for(i=0; i<this.channelNames.length; i++){
                     //SHQ summaries
