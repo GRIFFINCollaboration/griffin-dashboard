@@ -16322,11 +16322,11 @@ function parseCustomPages(data){
                 cellCoords['SHB05DP'] = [{x: -0.75*this.width + this.grid, y: -0.6*this.height + this.long/2}, 'tall'];
                 cellCoords['SHB06DP'] = [{x: -0.75*this.width, y: -0.6*this.height + this.grid + this.short/2}, 'long'];
                 cellCoords['SHB07DP'] = [{x: -0.75*this.width - this.grid, y: -0.6*this.height + this.long/2}, 'tall'];
-                cellCoords['SHB08DP'] = [{x: -0.75*this.width + this.grid, y: -0.6*this.height - this.grid + this.short/2}, 'long'];
+                cellCoords['SHB08DP'] = [{x: -0.75*this.width, y: -0.6*this.height - this.grid + this.short/2}, 'long'];
                 cellCoords['SHB05DN'] = [{x: -0.75*this.width + 2*this.grid, y: -0.6*this.height + this.long/2}, 'tall'];
-                cellCoords['SHB06DN'] = [{x: -0.75*this.width - 2*this.grid, y: -0.6*this.height + 2*this.grid + this.short/2}, 'long'];
+                cellCoords['SHB06DN'] = [{x: -0.75*this.width, y: -0.6*this.height + 2*this.grid + this.short/2}, 'long'];
                 cellCoords['SHB07DN'] = [{x: -0.75*this.width - 2*this.grid, y: -0.6*this.height + this.long/2}, 'tall'];
-                cellCoords['SHB08DN'] = [{x: -0.75*this.width + 2*this.grid, y: -0.6*this.height - 2*this.grid + this.short/2}, 'long'];
+                cellCoords['SHB08DN'] = [{x: -0.75*this.width, y: -0.6*this.height - 2*this.grid + this.short/2}, 'long'];
 
                 //upright and sideways parallelogram coords for SHB summaries
                 parallelogramCoords['tall'] = [0,this.short*Math.tan(this.theta), 0,this.long, this.short,this.long - this.short/Math.tan(this.theta), this.short,0];
