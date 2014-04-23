@@ -16319,8 +16319,8 @@ function parseCustomPages(data){
                 cellCoords['SHQ15DP'] = [0.25*this.width - 3*this.grid*Math.cos(this.theta), 0.4*this.height + 3*this.grid*Math.sin(this.theta), 0];
                 cellCoords['SHQ16DP'] = [0.25*this.width - 3*this.grid*Math.cos(this.theta), 0.4*this.height + 3*this.grid*Math.sin(this.theta), 90];
 
-                cellCoords['SHB05DP'] = [{x: 0.75*this.width - this.grid, y: 0.4*this.height}, 90, 'left'];
-                
+                cellCoords['SHB05DP'] = [{x: -0.75*this.width + this.grid, y: -0.4*this.height}, 90, 'left'];
+
                 //left- and right-leaning parallelogram coords for SHB summaries
                 parallelogramCoords['left'] = [0,0, this.long - this.short*Math.cos(this.theta),0, this.long,this.short, this.short*Math.cos(this.theta),this.short];
                 parallelogramCoords['right'] = [0,this.short, this.short*Math.cos(this.theta),0, this.long, 0, this.long - this.short*Math.cos(this.theta), this.short];
