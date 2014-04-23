@@ -118,7 +118,7 @@
                             fillPatternImage: this.errorPattern,
                             stroke: this.frameColor,
                             strokeWidth: this.frameLineWidth,
-                            angle: 360,
+                            angle: 365,
                             x: 0.25*this.width,
                             y: this.height*0.4,
                             closed: true,
