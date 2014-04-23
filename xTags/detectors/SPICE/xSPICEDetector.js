@@ -129,7 +129,7 @@
                             y: 0.4*this.height,
                             radius: this.auxRad,
                             angle: this.auxPhiStep,
-                            rotation: this.auxPhiStep*i,
+                            rotation: -this.auxPhiStep*i,
                             clockwise: false,
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
