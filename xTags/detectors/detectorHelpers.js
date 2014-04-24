@@ -164,6 +164,7 @@ function initializeDetector(name, headline, URL){
     this.displayIndex = 0;  //always start on the first card, guarnateed to exist.
     //cells
     this.cells = {};
+    this.summaryDepth = 0;
 
     ////////////////////////////
     //Drawing parameters

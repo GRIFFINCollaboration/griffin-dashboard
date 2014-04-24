@@ -41,6 +41,7 @@
                 }
 
                 initializeDetector.bind(this, 'SHARC', 'SHARC', URLs)();
+                this.summaryDepth = 7;
 
                 //////////////////////////////////////
                 //SHARC specific drawing parameters

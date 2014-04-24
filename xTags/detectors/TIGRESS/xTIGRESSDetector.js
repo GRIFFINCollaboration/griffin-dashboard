@@ -46,6 +46,7 @@
                 //deploy the standard stuff
                 this.viewNames = ['Summary'].concat(this.HPGEprefixes)
                 initializeDetector.bind(this, 'TIGRESS', 'TIGRESS', URLs)();
+                this.summaryDepth = 6;
 
                 //////////////////////////////////////
                 //TIGRESS specific drawing parameters
@@ -360,7 +361,7 @@
                 else
                     return false;
             },
-
+/*
             'summarizeData': function(){
                 var i, j, k, index;
 
@@ -389,7 +390,7 @@
                     }
                 }
             },
-
+*/
             //usual behavior for detail cells, click through to detail from summary view
             'clickCell' : function(cellName){
                 var evt, 
