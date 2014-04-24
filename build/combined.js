@@ -16010,7 +16010,7 @@ var Kinetic = {};
 
             'summarizeData': function(){
                 var i, j, summaryKey, newValue,
-                    targets = ['HV', 'threhsold', 'rate'];
+                    targets = ['HV', 'threshold', 'rate'];
 
                 for(j=0; j<targets.length; j++){
                     //bail out if we haven't fetched anything yet
@@ -16165,19 +16165,19 @@ var Kinetic = {};
                     text = this.channelNames[i];
                     text += '\nHV: ';
                     HV = window.currentData.HV[this.channelNames[i]];
-                    if(!HV && HV!=0) 
+                    if((!HV && HV!=0) || HV==0xDEADBEEF ) 
                         text += 'Not Reporting';
                     else
                         text += parseFloat(HV).toFixed();
                     text += '\nThreshold: ';
                     thresh = window.currentData.threshold[this.channelNames[i]];
-                    if(!thresh && thresh!=0) 
+                    if((!thresh && thresh!=0) || thresh==0xDEADBEEF ) 
                         text += 'Not Reporting'
                     else
                         text += parseFloat(thresh).toFixed();
                     text += '\nRate: ';
                     rate = window.currentData.rate[this.channelNames[i]];
-                    if(!rate && rate!=0) 
+                    if((!rate && rate!=0) || rate==0xDEADBEEF ) 
                         text += 'Not Reporting'
                     else
                         text += parseFloat(rate).toFixed();
