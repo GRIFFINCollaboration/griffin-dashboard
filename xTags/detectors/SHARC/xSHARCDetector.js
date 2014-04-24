@@ -138,14 +138,14 @@
                 cellCoords['SHB07DN'] = [{x: downstreamBoxCenterX - 2*this.grid, y: downstreamBoxCenterY + this.long/2}, 'tall'];
                 cellCoords['SHB08DN'] = [{x: downstreamBoxCenterX, y: downstreamBoxCenterY - 2*this.grid + this.short/2}, 'long'];
 
-                cellCoords['SHB13DP'] = [{x: upstreamBoxCenterX + this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
-                cellCoords['SHB14DP'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY + this.grid + this.short/2}, 'long'];
-                cellCoords['SHB15DP'] = [{x: upstreamBoxCenterX - this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
-                cellCoords['SHB16DP'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY - this.grid + this.short/2}, 'long'];
-                cellCoords['SHB13DN'] = [{x: upstreamBoxCenterX + 2*this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
-                cellCoords['SHB14DN'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY + 2*this.grid + this.short/2}, 'long'];
-                cellCoords['SHB15DN'] = [{x: upstreamBoxCenterX - 2*this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
-                cellCoords['SHB16DN'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY - 2*this.grid + this.short/2}, 'long'];
+                cellCoords['SHB09DP'] = [{x: upstreamBoxCenterX + this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB10DP'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY + this.grid + this.short/2}, 'long'];
+                cellCoords['SHB11DP'] = [{x: upstreamBoxCenterX - this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB12DP'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY - this.grid + this.short/2}, 'long'];
+                cellCoords['SHB09DN'] = [{x: upstreamBoxCenterX + 2*this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB10DN'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY + 2*this.grid + this.short/2}, 'long'];
+                cellCoords['SHB11DN'] = [{x: upstreamBoxCenterX - 2*this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB12DN'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY - 2*this.grid + this.short/2}, 'long'];
 
                 //upright and sideways parallelogram coords for SHB summaries
                 parallelogramCoords['tall'] = [0,this.short*Math.tan(this.theta), 0,this.long, this.short,this.long - this.short/Math.tan(this.theta), this.short,0];
