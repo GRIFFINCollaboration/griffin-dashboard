@@ -16044,7 +16044,7 @@ var Kinetic = {};
 
                     //finally, go through all the summaries and turn the [sum, nNterms] pairs into averages:
                     for(i=0; i<this.channelNames.length; i++){
-                        if(this.channelNames.[i].length == this.summaryDepth && this.currentData[targets[j]][this.channelNames[i]] != 0xDEADBEEF)
+                        if(this.channelNames[i].length == this.summaryDepth && this.currentData[targets[j]][this.channelNames[i]] != 0xDEADBEEF)
                             this.currentData[targets[j]][this.channelNames[i]] = this.currentData[targets[j]][this.channelNames[i]][0] / this.currentData[targets[j]][this.channelNames[i]][1];
                     }
                 }
