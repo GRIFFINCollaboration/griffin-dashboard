@@ -16024,28 +16024,28 @@ var Kinetic = {};
                     //flagged as not reporting.
                     for(i=0; i<this.channelNames.length; i++){
                         summaryKey = this.channelNames[i].slice(0,this.summaryDepth);
-                        if(this.channelNames[i].length == 10 && this.currentData[targets[j]].hasOwnProperty(summaryKey) ){
+                        if(this.channelNames[i].length == 10 && window.currentData[targets[j]].hasOwnProperty(summaryKey) ){
 
                             //bail out if summary flagged as nonreporting
-                            if(this.currentData[targets[j]][summaryKey] == 0xDEADBEEF) continue;
+                            if(window.currentData[targets[j]][summaryKey] == 0xDEADBEEF) continue;
 
-                            newValue = this.currentData[targets[j]][this.channelNames[i]];
+                            newValue = window.currentData[targets[j]][this.channelNames[i]];
                             //value sought and non found, mark nonreporting:
                             if(!newValue && newValue!=0){
-                                this.currentData[targets[j]][summaryKey] = 0xDEADBEEF;
+                                window.currentData[targets[j]][summaryKey] = 0xDEADBEEF;
                                 continue; 
                             }
 
                             //looks good, increment the sum and count of terms
-                            this.currentData[targets[j]][summaryKey][0] += newValue;
-                            this.currentData[targets[j]][summaryKey][1]++;
+                            window.currentData[targets[j]][summaryKey][0] += newValue;
+                            window.currentData[targets[j]][summaryKey][1]++;
                         }
                     }
 
                     //finally, go through all the summaries and turn the [sum, nNterms] pairs into averages:
                     for(i=0; i<this.channelNames.length; i++){
-                        if(this.channelNames[i].length == this.summaryDepth && this.currentData[targets[j]][this.channelNames[i]] != 0xDEADBEEF)
-                            this.currentData[targets[j]][this.channelNames[i]] = this.currentData[targets[j]][this.channelNames[i]][0] / this.currentData[targets[j]][this.channelNames[i]][1];
+                        if(this.channelNames[i].length == this.summaryDepth && window.currentData[targets[j]][this.channelNames[i]] != 0xDEADBEEF)
+                            window.currentData[targets[j]][this.channelNames[i]] = window.currentData[targets[j]][this.channelNames[i]][0] / window.currentData[targets[j]][this.channelNames[i]][1];
                     }
                 }
             },
