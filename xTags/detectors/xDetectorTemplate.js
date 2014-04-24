@@ -240,6 +240,13 @@
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
 
+                //fake test data
+                window.currentData.rate.TIS01GN01X = 100
+                window.currentData.rate.TIS01GN02X = 100
+                window.currentData.rate.TIS01GN03X = 100
+                window.currentData.rate.TIS01GN04X = 100
+                window.currentData.rate.TIS01GN05X = 100
+
                 //sort data into summary statistics if necessary
                 if(this.summaryDepth)
                     this.summarizeData();
