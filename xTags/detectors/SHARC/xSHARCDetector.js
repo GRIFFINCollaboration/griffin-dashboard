@@ -168,10 +168,12 @@
                             angle: 90,
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
                             strokeWidth: this.frameLineWidth,
                             closed: true,
-                            listening: true               
+                            listening: true             
                         })
                     //SHB summaries
                     } else if(i<32){
@@ -180,10 +182,12 @@
                             offset: cellCoords[this.channelNames[i]][0],
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
                             strokeWidth: this.frameLineWidth,
                             closed: true,
-                            listening: true                            
+                            listening: true                          
                         })
                     //detail channels
                     } else{
@@ -214,10 +218,12 @@
                                 height: this.boxHeight,
                                 fill: '#000000',
                                 fillPatternImage: this.errorPattern,
+                                fillPatternOffsetX: 100*Math.random(),
+                                fillPatternOffsetY: 100*Math.random(),
                                 stroke: this.frameColor,
                                 strokeWidth: this.frameLineWidth,
                                 closed: true,
-                                listening: true                                 
+                                listening: true                                
                             });
                         } else if(!isBox && isFront){
                             this.cells[this.channelNames[i]] = new Kinetic.Arc({
@@ -229,10 +235,12 @@
                                 rotationDeg: 180,
                                 fill: '#000000',
                                 fillPatternImage: this.errorPattern,
+                                fillPatternOffsetX: 100*Math.random(),
+                                fillPatternOffsetY: 100*Math.random(),
                                 stroke: this.frameColor,
                                 strokeWidth: this.frameLineWidth,
                                 closed: true,
-                                listening: true                                 
+                                listening: true                                
                             });
                         } else if(!isBox && !isFront){
                             this.cells[this.channelNames[i]] = new Kinetic.Wedge({
@@ -243,10 +251,12 @@
                                 rotation: 180 + cellIndex*90/24,
                                 fill: '#000000',
                                 fillPatternImage: this.errorPattern,
+                                fillPatternOffsetX: 100*Math.random(),
+                                fillPatternOffsetY: 100*Math.random(),
                                 stroke: this.frameColor,
                                 strokeWidth: this.frameLineWidth,
                                 closed: true,
-                                listening: true                                 
+                                listening: true                                
                             });
                         }
                     }
