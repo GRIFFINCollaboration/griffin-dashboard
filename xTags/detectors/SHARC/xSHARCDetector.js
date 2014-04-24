@@ -199,6 +199,8 @@
                                 height: this.boxHeight / 24,
                                 fill: '#000000',
                                 fillPatternImage: this.errorPattern,
+                                fillPatternOffsetX: 10*Math.random(),
+                                fillPatternOffsetY: 10*Math.random(),
                                 stroke: this.frameColor,
                                 strokeWidth: this.frameLineWidth,
                                 closed: true,
