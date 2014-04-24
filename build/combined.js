@@ -16295,7 +16295,7 @@ function parseCustomPages(data){
                 //summary view
                 this.theta = Math.atan(0.8*this.height / this.width * 2) //angle with horizontal that beam axis will make
                 this.diag = 0.8*this.height / Math.sin(this.theta) //length of beam axis on a half-diagram
-                this.grid = Math.min(this.width/2/7, this.diag/9); //grid separation of layers, make sure it fits
+                this.grid = Math.min(this.width/2/6, this.diag/8); //grid separation of layers, make sure it fits
                 this.long = 1.8*this.grid*Math.sin(this.theta);  //long parallelogram side
                 this.short = this.long/2; //short parallelogram side
                 this.rad = this.grid/2;   //SHQ radius
