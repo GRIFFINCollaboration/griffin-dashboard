@@ -16295,7 +16295,7 @@ function parseCustomPages(data){
                 //summary view
                 this.theta = Math.atan(0.8*this.height / this.width * 2) //angle with horizontal that beam axis will make
                 this.diag = 0.8*this.height / Math.sin(this.theta) //length of beam axis on a half-diagram
-                this.grid = Math.min(this.width/2/8, this.diag/10); //grid separation of layers, make sure it fits
+                this.grid = Math.min(this.width/2/7, this.diag/9); //grid separation of layers, make sure it fits
                 this.long = 1.8*this.grid*Math.sin(this.theta);  //long parallelogram side
                 this.short = this.long/2; //short parallelogram side
                 this.rad = this.grid/2;   //SHQ radius
@@ -16573,6 +16573,28 @@ function parseCustomPages(data){
                     this.stage[i].add(this.tooltipLayer[i]);
                 }
 
+            },
+
+            //usual behavior for detail cells, click through to detail from summary view
+            'clickCell' : function(cellName){
+                var evt, 
+                    viewVal = parseInt(cellName.slice(3,5),10),
+                    viewSelect = document.getElementById(this.id+'viewSelect'),
+                    SV = document.getElementById('spectrumViewer'),
+                    plotControlForm = document.getElementById(this.id+'PlotControl');
+
+                //summary -> details
+                if(cellName.length == 7){
+                    viewSelect.value = viewVal;
+                    viewSelect.onchange();
+                    plotControlForm.onchange();
+                }
+
+                //send the clicked channel to the spectrum viewer:
+                if(SV){
+                    evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
+                    SV.dispatchEvent(evt);
+                }
             }
         }
     });
