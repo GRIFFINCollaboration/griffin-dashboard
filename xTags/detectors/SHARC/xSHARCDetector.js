@@ -48,7 +48,7 @@
                 //summary view
                 this.theta = Math.atan(0.8*this.height / this.width * 2) //angle with horizontal that beam axis will make
                 this.diag = 0.8*this.height / Math.sin(this.theta) //length of beam axis on a half-diagram
-                this.grid = Math.min(this.width/2/6.5, this.diag/8.5); //grid separation of layers, make sure it fits
+                this.grid = Math.min(this.width/2/6, this.diag/8); //grid separation of layers, make sure it fits
                 this.long = 1.8*this.grid*Math.sin(this.theta);  //long parallelogram side
                 this.short = this.long/2; //short parallelogram side
                 this.rad = this.grid/2;   //SHQ radius
@@ -262,7 +262,7 @@
                 }
 
                 //beam arrow
-                this.mainLayer[0].add(kineticArrow(0.3*this.width, 0.4*this.height + Math.tan(this.theta)*0.2*this.width, 0.7*this.width, 0.4*this.height - Math.tan(this.theta)*0.2*this.width ));
+                this.mainLayer[0].add(kineticArrow(0.35*this.width, 0.4*this.height + Math.tan(this.theta)*0.2*this.width, 0.75*this.width, 0.4*this.height - Math.tan(this.theta)*0.2*this.width ));
 
                 //label upstream / downstream halves
                 upstreamLabel = new Kinetic.Text({
