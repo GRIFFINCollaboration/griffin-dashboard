@@ -17,7 +17,7 @@
                 this.channelNames = [   'SHQ01DN', 'SHQ02DN', 'SHQ03DN', 'SHQ04DN', 'SHQ13DN', 'SHQ14DN', 'SHQ15DN', 'SHQ16DN',
                                         'SHQ01DP', 'SHQ02DP', 'SHQ03DP', 'SHQ04DP', 'SHQ13DP', 'SHQ14DP', 'SHQ15DP', 'SHQ16DP',
                                         'SHB05DP', 'SHB06DP', 'SHB07DP', 'SHB08DP', 'SHB05DN', 'SHB06DN', 'SHB07DN', 'SHB08DN',
-                                        'SHB13DP', 'SHB14DP', 'SHB15DP', 'SHB16DP', 'SHB13DN', 'SHB14DN', 'SHB15DN', 'SHB16DN'
+                                        'SHB09DP', 'SHB10DP', 'SHB11DP', 'SHB12DP', 'SHB09DN', 'SHB10DN', 'SHB11DN', 'SHB12DN'
                                     ];
                 //generate individual channel names from summary names explicity stated
                 for(i=0; i<32; i++){
