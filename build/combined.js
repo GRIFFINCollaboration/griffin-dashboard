@@ -16013,7 +16013,11 @@ var Kinetic = {};
                     targets = ['HV', 'threhsold', 'rate'];
 
                 for(j=0; j<targets.length; j++){
-                    //first, zero out old summaries at this depth
+                    //bail out if we haven't fetched anything yet
+                    if(!window.currentData[targets[j]])
+                        continue;
+
+                    //zero out old summaries at this depth
                     for(i=0; i<this.channelNames.length; i++){
                         if(this.channelNames[i].length == this.summaryDepth){
                             window.currentData[targets[j]][this.channelNames[i]] = [0,0];                            
