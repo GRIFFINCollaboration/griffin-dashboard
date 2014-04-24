@@ -16438,8 +16438,8 @@ function parseCustomPages(data){
                         })
                     //detail channels
                     } else{
-                        isBox = (this.channelNames[i].indexOf('B') != -1);
-                        isFront = (this.channelNames[i].indexOf('P') != -1);
+                        isBox = (this.channelNames[i].indexOf('B') == 2);
+                        isFront = (this.channelNames[i].indexOf('P') == 6);
                         cellIndex = parseInt(this.channelNames[i].slice(7,9),10);
 
                         if(isBox && isFront){
@@ -16704,15 +16704,17 @@ function parseCustomPages(data){
                         this.cells[this.channelNames[chan]] = new Kinetic.Arc({
                             innerRadius: this.innerRad + i*this.radStep,
                             outerRadius: this.innerRad + (i+1)*this.radStep,
-                            fill: '#000000',
-                            fillPatternImage: this.errorPattern,
-                            stroke: this.frameColor,
-                            strokeWidth: this.frameLineWidth,
                             angle: 30,
                             clockwise: false,
                             rotationDeg: -30*(j+1),
                             x: this.x0,
                             y: this.y0,
+                            fill: '#000000',
+                            fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
                             closed: true,
                             listening: true
                         });
@@ -16727,12 +16729,15 @@ function parseCustomPages(data){
                     for(i=0; i<24; i++){
                         this.cells[this.channelNames[chan]] = new Kinetic.Circle({
                             radius: this.auxRad - i*this.auxRadStep,
-                            fill: '#000000',
-                            fillPatternImage: this.errorPattern,
-                            stroke: this.frameColor,
-                            strokeWidth: this.frameLineWidth,
                             x: 0.25*this.width,
                             y: this.height*0.4,
+                            fill: '#000000',
+                            fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
+                            closed: true,
                             listening: true
                         });  
 
@@ -16759,6 +16764,8 @@ function parseCustomPages(data){
                             clockwise: false,
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
                             strokeWidth: this.frameLineWidth,
                             closed: true,
@@ -17265,6 +17272,8 @@ function fetchODBrunControl(returnObj){
                         points: cellCoords[cellKey],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
+                        fillPatternOffsetX: 100*Math.random(),
+                        fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         closed: true,
@@ -17378,6 +17387,8 @@ function fetchODBrunControl(returnObj){
                         points: cellCoords[cellKey],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
+                        fillPatternOffsetX: 100*Math.random(),
+                        fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         closed: true,
@@ -17573,6 +17584,8 @@ function fetchODBrunControl(returnObj){
                         points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
+                        fillPatternOffsetX: 100*Math.random(),
+                        fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         closed: true,

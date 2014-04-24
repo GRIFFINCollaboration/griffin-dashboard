@@ -191,8 +191,8 @@
                         })
                     //detail channels
                     } else{
-                        isBox = (this.channelNames[i].indexOf('B') != -1);
-                        isFront = (this.channelNames[i].indexOf('P') != -1);
+                        isBox = (this.channelNames[i].indexOf('B') == 2);
+                        isFront = (this.channelNames[i].indexOf('P') == 6);
                         cellIndex = parseInt(this.channelNames[i].slice(7,9),10);
 
                         if(isBox && isFront){

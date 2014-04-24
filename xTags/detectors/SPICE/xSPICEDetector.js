@@ -90,15 +90,17 @@
                         this.cells[this.channelNames[chan]] = new Kinetic.Arc({
                             innerRadius: this.innerRad + i*this.radStep,
                             outerRadius: this.innerRad + (i+1)*this.radStep,
-                            fill: '#000000',
-                            fillPatternImage: this.errorPattern,
-                            stroke: this.frameColor,
-                            strokeWidth: this.frameLineWidth,
                             angle: 30,
                             clockwise: false,
                             rotationDeg: -30*(j+1),
                             x: this.x0,
                             y: this.y0,
+                            fill: '#000000',
+                            fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
                             closed: true,
                             listening: true
                         });
@@ -113,12 +115,15 @@
                     for(i=0; i<24; i++){
                         this.cells[this.channelNames[chan]] = new Kinetic.Circle({
                             radius: this.auxRad - i*this.auxRadStep,
-                            fill: '#000000',
-                            fillPatternImage: this.errorPattern,
-                            stroke: this.frameColor,
-                            strokeWidth: this.frameLineWidth,
                             x: 0.25*this.width,
                             y: this.height*0.4,
+                            fill: '#000000',
+                            fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
+                            closed: true,
                             listening: true
                         });  
 
@@ -145,6 +150,8 @@
                             clockwise: false,
                             fill: '#000000',
                             fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
                             strokeWidth: this.frameLineWidth,
                             closed: true,
