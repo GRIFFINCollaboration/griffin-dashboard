@@ -15,7 +15,7 @@ All detectors inherit most of their functionality from the `<detector-template>`
 ##Web Component Creation - `lifecycle.created`
 All custom web components execute a callback upon creation, found in `lifecycle.created` for each detector; this function declares a lot of detector-specific information, so it is left empty in the `<detector-template>` object, to be defined individually for each detector; nevertheless, `lifecycle.created` typically follows a standard pattern which we describe here:
 
- - Declare `this.channelNames[i]`, an array of strings corresponding to the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature) names of each detector channel to be rendered, **in the order that they will be drawn**.
+ - Declare `this.channelNames[i]`, an array of strings corresponding to the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature) names of each detector channel to be rendered, **in the order that they will be drawn**.  May also include strings describing summary cells; valid summary names are prefixes of the individual detector elements they will summarize.  For example, `TIS01G` would summarize the BGO channels `TIS01GN01X`, `TIS01GN02X`, `TIS01GN03X`, `TIS01GN04X`, and `TIS01GN05X`.  
  - Declare `URLs[i]`, an array of strings corresponding to the URLs that will respond with JSONP posts of the data this detector needs to update itself.  These will typically be:
   - `<host>:<port>/<route>?jsonp=parseThreshold`, a JSONP post of threshold data (spec below), wrapped in the `parseThreshold` function.
   - `<host>:<port>/<route>?jsonp=parseRate`, a JSONP post of rate data (spec below), wrapped in the `parseRate` function.
@@ -78,6 +78,7 @@ ____________________________________________________________
  - `this.frameLineWidth` default: 2 - Line width to use for detector visualization.
  - `this.frameColor` default: '#999999' - Frame color for detector visualization.
  - `this.width` & `.height` - dimensions in pixels of Kinetic's rendering area.
+ - `this.summaryDepth` default: 0 - number of characters in the summary cell keys for this detector (ie roughly corresponds to granularity of summary, since summary cell key names prefix the detector keys they summarize).  Note values > 9 will be ignored (since a 10 character prefix will only ever include at most one detector element, and so isn't really a summary).
 
 ####Kinetic.js Setup
 All detectors are drawn in a simple Kinetic.js environment, built and pointed at as follows; array indices correspond to the current view, to which each sensitive element should belong to exactly one.
@@ -127,6 +128,9 @@ Moves `this.TTbkg` and `this.text` around to follow the mouse; intended as the c
 
 ###refreshColorScale()
 Refreshes the contents and positions of the Kinetic objects in `this.tickLabels[view][tick]` and `this.scaleTitle[view]` as a function of whatever is registered in `this.scaleType`, `.min` and `.max` under the `this.currentView` key.  Intended as part of the `onchange` callback after modifying scale parameters in the plot control form, and for updating after changing the view.
+
+###summarizeData()
+Called by `this.update()` iff `this.summaryDepth` is truthy.  Constructs the average rate, threshold and HV for the summary cells declared in `this.channelNames[]` iff the summary cell key's length equals `this.summaryDepth`.  Averages are stored alongside raw channel values in `window.currentData[HV/threshold/rate][summaryKey]` for parsing by the same logic as the individual cells.  Note that if any individual detector is supposed to contribute to this average and fails to report, the whole summary cell will be marked as failing to report.
 
 ###trackView()
 Keeps `this.currentView` and `this.currentUnit` and the values of the inputs in the plot control form up to date with whatever the user has chosen from the view selection radio.
