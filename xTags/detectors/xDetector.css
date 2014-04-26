@@ -1,4 +1,4 @@
-detector-demo, detector-TIPWall, detector-TIGRESS, detector-SPICE, detector-SHARC{
+detector-demo, detector-TIPWall, detector-TIGRESS, detector-SPICE, detector-SHARC, detector-DESCANT{
 	float:left;
 	width:58%;
 }
@@ -7,7 +7,8 @@ detector-demo input[type=radio],
 detector-TIPWall input[type=radio],
 detector-TIGRESS input[type=radio],
 detector-SPICE input[type=radio],
-detector-SHARC input[type=radio]
+detector-SHARC input[type=radio],
+detector-DESCANT input[type=radio]
 {
 	display:none;
 }
@@ -17,11 +18,13 @@ detector-TIPWall input[type='radio'] + label,
 detector-TIGRESS input[type='radio'] + label,
 detector-SPICE input[type='radio'] + label,
 detector-SHARC input[type='radio'] + label,
+detector-DESCANT input[type='radio'] + label,
 detector-demo select,
 detector-TIPwall select,
 detector-TIGRESS select
 detector-SPICE select,
-detector-SHARC select
+detector-SHARC select,
+detector-DESCANT select
 {
 	font-size: 100%;
 	line-height: 1.2em;
@@ -42,7 +45,8 @@ detector-demo input[type='radio']:checked + label,
 detector-TIPWall input[type='radio']:checked + label,
 detector-TIGRESS input[type='radio']:checked + label,
 detector-SPICE input[type='radio']:checked + label,
-detector-SHARC input[type='radio']:checked + label
+detector-SHARC input[type='radio']:checked + label,
+detector-DESCANT input[type='radio']:checked + label
 {
 	background-color: #555555;
 }

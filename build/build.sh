@@ -12,6 +12,7 @@ cp ../xTags/detectors/TIPwall/* .
 cp ../xTags/detectors/TIGRESS/* .
 cp ../xTags/detectors/SPICE/* .
 cp ../xTags/detectors/SHARC/* .
+cp ../xTags/detectors/DESCANT/* .
 cp ../xTags/spectrumViewer/* .
 cp ../xTags/nav/* .
 if [ -e combined.js ]; then rm combined.js; fi
@@ -53,3 +54,8 @@ sed '1,/<\/head>/d' SHARC.html > html
 cat MIDAShead html >> test2
 rm html
 mv test2 SHARC.html
+
+sed '1,/<\/head>/d' DESCANT.html > html
+cat MIDAShead html >> test2
+rm html
+mv test2 DESCANT.html
