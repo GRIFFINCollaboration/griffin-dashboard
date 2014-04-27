@@ -60,7 +60,7 @@
                                     [this.width/2, 0.4*this.height-3*grid],
                                     [this.width/2, 0.4*this.height-4*grid],
                                     [Math.sin(10/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(10/180*Math.PI)*4.8*grid + 0.4*this.height],
-                                    [Math.sin(25/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(25/180*Math.PI)*4.8*grid + 0.4*this.height]
+                                    [Math.sin(20/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(20/180*Math.PI)*4.8*grid + 0.4*this.height]
                                 ],
                     internalRotation = [0,0,0,0,-78,-78];
 
