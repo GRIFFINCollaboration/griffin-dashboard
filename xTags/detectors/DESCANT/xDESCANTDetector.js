@@ -44,7 +44,7 @@
         }, 
         methods: {
             'instantiateCells': function(){
-                var i,
+                var i, j, points,
                     scale = 0.0005*this.height,
                     grid = 0.08*this.height,
                     cellVertices = {
@@ -55,21 +55,26 @@
                         'greenRight': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-62.3),scale*47.6, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*93,0]
                     },
                     cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
-                    baseCoords = [  {'x':-this.width/2, 'y':-0.4*this.height+grid},
-                                    {'x':-this.width/2, 'y':-0.4*this.height+2*grid},
-                                    {'x':-this.width/2, 'y':-0.4*this.height+3*grid},
-                                    {'x':-this.width/2, 'y':-0.4*this.height+4*grid},
-                                    {'x':-Math.sin(12/180*Math.PI)*4*grid - this.width/2, 'y':Math.cos(12/180*Math.PI)*4*grid - 0.4*this.height}
+                    baseCoords = [  [this.width/2, 0.4*this.height-grid],
+                                    [this.width/2, 0.4*this.height-2*grid],
+                                    [this.width/2, 0.4*this.height-3*grid],
+                                    [this.width/2, 0.4*this.height-4*grid],
+                                    [Math.sin(12/180*Math.PI)*4*grid + this.width/2, -Math.cos(12/180*Math.PI)*4*grid + 0.4*this.height]
                                 ],
                     internalRotation = [0,0,0,0,10];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
-
+                    //move cell into position
+                    points = [];
+                    for(j=0; j<6; j++){
+                        points[2*j] = cellVertices[cellOrder[i%14]][2*j] + baseCoords[i%14][0];
+                        points[2*j+1] = cellVertices[cellOrder[i%14]][2*j+1] + baseCoords[i%14][1];
+                    }
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
-                        points: cellVertices[cellOrder[i%14]],
-                        offset: baseCoords[i%14],
+                        points: points,
+                        //offset: baseCoords[i%14],
                         rotation: internalRotation[i%14],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
