@@ -16278,7 +16278,7 @@ var Kinetic = {};
                                     [Math.sin(22/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(22/180*Math.PI)*4.8*grid + 0.4*this.height],
                                     [Math.sin(-10/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(-10/180*Math.PI)*4.8*grid + 0.4*this.height],
                                     [Math.sin(-22/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(-22/180*Math.PI)*4.8*grid + 0.4*this.height],
-                                    [Math.sin(30/180*Math.PI)*1.5*grid + this.width/2, -Math.cos(30/180*Math.PI)*1.5*grid + 0.4*this.height]
+                                    [Math.sin(30/180*Math.PI)*1.7*grid + this.width/2, -Math.cos(30/180*Math.PI)*1.7*grid + 0.4*this.height]
                                 ],
                     internalRotation = [0,0,0,0,-78,-72,78,72,120];
 
