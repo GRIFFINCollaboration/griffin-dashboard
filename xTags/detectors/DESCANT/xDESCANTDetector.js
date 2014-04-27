@@ -57,8 +57,8 @@
                     baseCoords = [  [this.width/2, 0.4*this.height-scale],
                                     [this.width/2, 0.4*this.height-2*scale],
                                     [this.width/2, 0.4*this.height-3*scale],
-                                    [this.width/2, 0.4*this.height-4*scale],
-                                    [this.width/2, 0.4*this.height-pentagonNormal-(706.25 + explode)*scale]
+                                    [this.width/2, 0.4*this.height-4*scale]
+                                    //[this.width/2, 0.4*this.height-pentagonNormal-(706.25 + explode)*scale]
                                 ],
                     internalRotation = [0,0,0,0,0];
 
