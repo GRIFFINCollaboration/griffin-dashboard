@@ -45,7 +45,8 @@
         methods: {
             'instantiateCells': function(){
                 var i,
-                    scale = 0.005*this.height,
+                    scale = 0.00005*this.height,  //mm to px
+                    grid = 0.05*this.height,
                     cellVertices = {
                         'white': [scale*41.5,scale*(71.9), scale*(-41.5),scale*(71.9), scale*(-93),0, scale*(-41.5),scale*(-79.6), scale*41.5,scale*(-79.6), scale*93,0],
                         'red': [scale*37.4,scale*(-87.1), scale*(-51.6),scale*(-83.3), scale*(-101.8),0, scale*(-51.6),scale*(83.3), scale*37.4,scale*(87.1), scale*73.1,0],
@@ -54,10 +55,10 @@
                         'greenRight': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-62.3),scale*47.6, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*93,0]
                     },
                     cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
-                    baseCoords = [  [this.width/2, 0.4*this.height-scale],
-                                    [this.width/2, 0.4*this.height-2*scale],
-                                    [this.width/2, 0.4*this.height-3*scale],
-                                    [this.width/2, 0.4*this.height-4*scale]
+                    baseCoords = [  [this.width/2, 0.4*this.height-grid],
+                                    [this.width/2, 0.4*this.height-2*grid],
+                                    [this.width/2, 0.4*this.height-3*grid],
+                                    [this.width/2, 0.4*this.height-4*grid]
                                     //[this.width/2, 0.4*this.height-pentagonNormal-(706.25 + explode)*scale]
                                 ],
                     internalRotation = [0,0,0,0,0];
