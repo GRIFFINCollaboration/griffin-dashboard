@@ -66,8 +66,8 @@
                                     [Math.sin(-22/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(-22/180*Math.PI)*4.8*grid + 0.4*this.height],
 
                                     [Math.sin(30/180*Math.PI)*1.7*grid + this.width/2, -Math.cos(30/180*Math.PI)*1.7*grid + 0.4*this.height],
-                                    [Math.sin(15/180*Math.PI)*3.5*grid + this.width/2, -Math.cos(15/180*Math.PI)*3.5*grid + 0.4*this.height],
-                                    [Math.sin(45/180*Math.PI)*3.5*grid + this.width/2, -Math.cos(45/180*Math.PI)*3.5*grid + 0.4*this.height],
+                                    [Math.sin(13/180*Math.PI)*3.5*grid + this.width/2, -Math.cos(13/180*Math.PI)*3.5*grid + 0.4*this.height],
+                                    [Math.sin(50/180*Math.PI)*3.5*grid + this.width/2, -Math.cos(50/180*Math.PI)*3.5*grid + 0.4*this.height],
 
                                     [Math.sin(20/180*Math.PI)*2.7*grid + this.width/2, -Math.cos(20/180*Math.PI)*2.7*grid + 0.4*this.height],
                                     [Math.sin(42/180*Math.PI)*2.7*grid + this.width/2, -Math.cos(42/180*Math.PI)*2.7*grid + 0.4*this.height],
