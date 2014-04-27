@@ -69,7 +69,7 @@
                     this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
 
                     //add the cell to the main layer
-                    this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
+                    this.mainLayer[0].add(this.cells[this.channelNames[i]]);
                 }
 
                 //add the layers to the stage
