@@ -78,7 +78,8 @@
                     }
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: points,
-                        offset: {'x':X, 'y':Y},
+                        x: X,
+                        y: Y,
                         rotation: internalRotation[i%14],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
