@@ -16262,11 +16262,11 @@ var Kinetic = {};
                 var i,
                     scale = 0.28,
                     //side length of pentagon hole:
-                    pentagonSide = 83*this.scale,
+                    pentagonSide = 83*scale,
                     //shortest distance from center of pentagon to side
-                    pentagonNormal = this.pentagonSide / 2 / Math.tan(36/180 * Math.PI),
+                    pentagonNormal = pentagonSide / 2 / Math.tan(36/180 * Math.PI),
                     //longest distance from center of pentagon to side
-                    pentagonVertex = this.pentagonSide / 2 / Math.sin(36/180 * Math.PI),
+                    pentagonVertex = pentagonSide / 2 / Math.sin(36/180 * Math.PI),
                     cellVertices = {
                         'white': [scale*41.5,scale*(71.9), scale*(-41.5),scale*(71.9), scale*(-93),0, scale*(-41.5),scale*(-79.6), scale*41.5,scale*(-79.6), scale*93,0],
                         'red': [scale*37.4,scale*(-87.1), scale*(-51.6),scale*(-83.3), scale*(-101.8),0, scale*(-51.6),scale*(83.3), scale*37.4,scale*(87.1), scale*73.1,0],
