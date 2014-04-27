@@ -45,7 +45,7 @@
         methods: {
             'instantiateCells': function(){
                 var i,
-                    scale = 0.00005*this.height,  //mm to px
+                    scale = 0.0005*this.height,  //mm to px
                     grid = 0.05*this.height,
                     cellVertices = {
                         'white': [scale*41.5,scale*(71.9), scale*(-41.5),scale*(71.9), scale*(-93),0, scale*(-41.5),scale*(-79.6), scale*41.5,scale*(-79.6), scale*93,0],
