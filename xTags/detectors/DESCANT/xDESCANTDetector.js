@@ -60,10 +60,10 @@
                                     [this.width/2, 0.4*this.height-3*grid],
                                     [this.width/2, 0.4*this.height-4*grid],
 
-                                    [Math.sin(10/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(10/180*Math.PI)*4.8*grid + 0.4*this.height],
-                                    [Math.sin(22/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(22/180*Math.PI)*4.8*grid + 0.4*this.height],
-                                    [Math.sin(-10/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(-10/180*Math.PI)*4.8*grid + 0.4*this.height],
-                                    [Math.sin(-22/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(-22/180*Math.PI)*4.8*grid + 0.4*this.height],
+                                    [Math.sin(10/180*Math.PI)*4.7*grid + this.width/2, -Math.cos(10/180*Math.PI)*4.7*grid + 0.4*this.height],
+                                    [Math.sin(22/180*Math.PI)*4.7*grid + this.width/2, -Math.cos(22/180*Math.PI)*4.7*grid + 0.4*this.height],
+                                    [Math.sin(-10/180*Math.PI)*4.7*grid + this.width/2, -Math.cos(-10/180*Math.PI)*4.7*grid + 0.4*this.height],
+                                    [Math.sin(-22/180*Math.PI)*4.7*grid + this.width/2, -Math.cos(-22/180*Math.PI)*4.7*grid + 0.4*this.height],
 
                                     [Math.sin(30/180*Math.PI)*1.7*grid + this.width/2, -Math.cos(30/180*Math.PI)*1.7*grid + 0.4*this.height],
                                     [Math.sin(14/180*Math.PI)*3.6*grid + this.width/2, -Math.cos(14/180*Math.PI)*3.6*grid + 0.4*this.height],
@@ -73,7 +73,7 @@
                                     [Math.sin(42/180*Math.PI)*2.7*grid + this.width/2, -Math.cos(42/180*Math.PI)*2.7*grid + 0.4*this.height],
                                     [Math.sin(31/180*Math.PI)*3.6*grid + this.width/2, -Math.cos(31/180*Math.PI)*3.6*grid + 0.4*this.height]
                                 ],
-                    internalRotation = [0,0,0,0, -80,-75,80,75, 120,115,130, 0,60,60];
+                    internalRotation = [0,0,0,0, -75,-70,75,70, 120,115,130, 0,60,60];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
