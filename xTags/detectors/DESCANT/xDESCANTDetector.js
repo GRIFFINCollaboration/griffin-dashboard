@@ -76,8 +76,8 @@
 
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellVertices[cellOrder[i%14]],
-                        offsetX: -Math.cos(positionRotation[i%14])*baseCoords[i%14][0] + Math.sin(positionRotation[i%14])*baseCoords[i%14][1],
-                        offsetY: -Math.sin(positionRotation[i%14])*baseCoords[i%14][0] - Math.cos(positionRotation[i%14])*baseCoords[i%14][1],
+                        offsetX: -Math.cos(positionRotation[i%14]/180*Math.PI)*baseCoords[i%14][0] + Math.sin(positionRotation[i%14]/180*Math.PI)*baseCoords[i%14][1],
+                        offsetY: -Math.sin(positionRotation[i%14]/180*Math.PI)*baseCoords[i%14][0] - Math.cos(positionRotation[i%14]/180*Math.PI)*baseCoords[i%14][1],
                         rotation: internalRotation[i%14],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
