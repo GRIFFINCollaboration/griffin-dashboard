@@ -16259,7 +16259,7 @@ var Kinetic = {};
         }, 
         methods: {
             'instantiateCells': function(){
-                var i, j, points,
+                var i, j, points, X,Y,
                     scale = 0.0005*this.height,
                     grid = 0.08*this.height,
                     cellVertices = {
@@ -16281,15 +16281,19 @@ var Kinetic = {};
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
-                    //move cell into position
+                    //move cell into position & calculate centerish
                     points = [];
+                    X = 0;
+                    Y = 0;
                     for(j=0; j<6; j++){
                         points[2*j] = cellVertices[cellOrder[i%14]][2*j] + baseCoords[i%14][0];
                         points[2*j+1] = cellVertices[cellOrder[i%14]][2*j+1] + baseCoords[i%14][1];
+                        X += points[2*j]/6;
+                        Y += points[2*j+1]/6;
                     }
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: points,
-                        //offset: baseCoords[i%14],
+                        offset: {'x':X, 'y':Y},
                         rotation: internalRotation[i%14],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
