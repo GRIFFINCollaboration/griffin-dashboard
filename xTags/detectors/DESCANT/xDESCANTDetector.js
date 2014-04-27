@@ -12,7 +12,7 @@
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
                 //channels start at top left hand corner and walk across in rows
-                this.channelNames = ['test0']
+                this.channelNames = ['test0', 'test1']
                 initializeDetector.bind(this, 'DESCANT', 'DESCANT', URLs)();
 
                 //////////////////////////////////////
@@ -48,6 +48,7 @@
                     scale = 0.28,
                     //side length of pentagon hole:
                     pentagonSide = 83*scale,
+                    explode = 10,
                     //shortest distance from center of pentagon to side
                     pentagonNormal = pentagonSide / 2 / Math.tan(36/180 * Math.PI),
                     //longest distance from center of pentagon to side
@@ -60,7 +61,9 @@
                         'greenRight': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-62.3),scale*47.6, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*93,0]
                     },
                     cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
-                    baseCoords = [{'x':-this.width/2, 'y':-0.4*this.height + pentagonNormal+71.9*scale}],
+                    baseCoords = [  {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+71.9*scale},
+                                    {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+(223.4 + explode/0.4)*scale}
+                                    ],
                     internalRotation = [0];
 
 
@@ -70,7 +73,7 @@
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellVertices[cellOrder[i%14]],
                         offset: baseCoords[i%14],
-                        rotation: internalRotation[i%14] + 72*(i%14),
+                        rotation: internalRotation[i%14],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
