@@ -16261,7 +16261,7 @@ var Kinetic = {};
             'instantiateCells': function(){
                 var i,
                     scale = 0.0005*this.height,
-                    grid = 0.08*this.height,
+                    grid = 0.07*this.height,
                     cellVertices = {
                         'white': [scale*41.5,scale*(71.9), scale*(-41.5),scale*(71.9), scale*(-93),0, scale*(-41.5),scale*(-79.6), scale*41.5,scale*(-79.6), scale*93,0],
                         'red': [scale*37.4,scale*(-87.1), scale*(-51.6),scale*(-83.3), scale*(-101.8),0, scale*(-51.6),scale*(83.3), scale*37.4,scale*(87.1), scale*73.1,0],
@@ -16276,7 +16276,7 @@ var Kinetic = {};
                                     [this.width/2, 0.4*this.height-4*grid],
                                     [Math.sin(12/180*Math.PI)*5*grid + this.width/2, -Math.cos(12/180*Math.PI)*5*grid + 0.4*this.height]
                                 ],
-                    internalRotation = [0,0,0,0,-12];
+                    internalRotation = [0,0,0,0,-78];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
