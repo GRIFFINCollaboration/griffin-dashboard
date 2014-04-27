@@ -21,7 +21,7 @@ function initializeDetector(name, headline, URL){
     ,   width = this.offsetWidth
     ,   height = 2*width/3
     ,   i, subdetectorNav, subdetectorNavLabel
-console.log(this)
+
     this.name = name;
 
     //set up data store for detectors
