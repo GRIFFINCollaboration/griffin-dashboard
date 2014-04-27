@@ -16283,7 +16283,7 @@ var Kinetic = {};
                                     [this.width/2, 0.4*this.height-pentagonNormal-scale*(706.25 + explode)]
                                     ],
                     positionRotation = [0,0,0,0,12],
-                    internalRotation = [0,0,0,0,10];
+                    internalRotation = [0,0,0,0,-10];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
