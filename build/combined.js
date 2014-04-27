@@ -16277,8 +16277,8 @@ var Kinetic = {};
 
                                     [Math.sin(10/180*Math.PI)*4.7*grid + this.width/2, -Math.cos(10/180*Math.PI)*4.7*grid + 0.4*this.height],
                                     [Math.sin(23/180*Math.PI)*4.6*grid + this.width/2, -Math.cos(23/180*Math.PI)*4.6*grid + 0.4*this.height],
-                                    [Math.sin(62/180*Math.PI)*4.7*grid + this.width/2, -Math.cos(-10/180*Math.PI)*4.7*grid + 0.4*this.height],
-                                    [Math.sin(49/180*Math.PI)*4.6*grid + this.width/2, -Math.cos(-23/180*Math.PI)*4.6*grid + 0.4*this.height],
+                                    [Math.sin(62/180*Math.PI)*4.7*grid + this.width/2, -Math.cos(62/180*Math.PI)*4.7*grid + 0.4*this.height],
+                                    [Math.sin(49/180*Math.PI)*4.6*grid + this.width/2, -Math.cos(49/180*Math.PI)*4.6*grid + 0.4*this.height],
 
                                     [Math.sin(30/180*Math.PI)*1.7*grid + this.width/2, -Math.cos(30/180*Math.PI)*1.7*grid + 0.4*this.height],
                                     [Math.sin(14/180*Math.PI)*3.6*grid + this.width/2, -Math.cos(14/180*Math.PI)*3.6*grid + 0.4*this.height],
