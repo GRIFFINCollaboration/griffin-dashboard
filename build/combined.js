@@ -16292,9 +16292,9 @@ var Kinetic = {};
                         Y += points[2*j+1]/6;
                     }
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
-                        points: points,
-                        x: X,
-                        y: Y,
+                        points: cellVertices[cellOrder[i%14]],
+                        x: baseCoords[i%14][0],
+                        y: baseCoords[i%14][1],
                         rotation: internalRotation[i%14],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
