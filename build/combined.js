@@ -16274,15 +16274,19 @@ var Kinetic = {};
                                     [this.width/2, 0.4*this.height-2*grid],
                                     [this.width/2, 0.4*this.height-3*grid],
                                     [this.width/2, 0.4*this.height-4*grid],
+
                                     [Math.sin(10/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(10/180*Math.PI)*4.8*grid + 0.4*this.height],
                                     [Math.sin(22/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(22/180*Math.PI)*4.8*grid + 0.4*this.height],
                                     [Math.sin(-10/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(-10/180*Math.PI)*4.8*grid + 0.4*this.height],
                                     [Math.sin(-22/180*Math.PI)*4.8*grid + this.width/2, -Math.cos(-22/180*Math.PI)*4.8*grid + 0.4*this.height],
+
                                     [Math.sin(30/180*Math.PI)*1.7*grid + this.width/2, -Math.cos(30/180*Math.PI)*1.7*grid + 0.4*this.height],
                                     [Math.sin(15/180*Math.PI)*3.5*grid + this.width/2, -Math.cos(15/180*Math.PI)*3.5*grid + 0.4*this.height],
-                                    [Math.sin(40/180*Math.PI)*3.5*grid + this.width/2, -Math.cos(40/180*Math.PI)*3.5*grid + 0.4*this.height]
+                                    [Math.sin(60/180*Math.PI)*3.5*grid + this.width/2, -Math.cos(60/180*Math.PI)*3.5*grid + 0.4*this.height],
+
+                                    [Math.sin(30/180*Math.PI)*2.5*grid + this.width/2, -Math.cos(30/180*Math.PI)*2.5*grid + 0.4*this.height]
                                 ],
-                    internalRotation = [0,0,0,0,-78,-72,78,72,120,130,130];
+                    internalRotation = [0,0,0,0,-78,-72,78,72,120,130,130,0];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
