@@ -16266,7 +16266,7 @@ var Kinetic = {};
 
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: [0,-10, 5,5, -5,5],
-                        offset: {x: 100, y: 100},
+                        offset: {x: -100, y: -100},
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
