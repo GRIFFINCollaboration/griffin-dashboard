@@ -59,9 +59,9 @@
                                     [this.width/2, 0.4*this.height-2*grid],
                                     [this.width/2, 0.4*this.height-3*grid],
                                     [this.width/2, 0.4*this.height-4*grid],
-                                    [Math.sin(12/180*Math.PI)*4*grid + this.width/2, -Math.cos(12/180*Math.PI)*4*grid + 0.4*this.height]
+                                    [Math.sin(12/180*Math.PI)*5*grid + this.width/2, -Math.cos(12/180*Math.PI)*5*grid + 0.4*this.height]
                                 ],
-                    internalRotation = [0,0,0,0,-90];
+                    internalRotation = [0,0,0,0,-12];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
