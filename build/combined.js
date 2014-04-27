@@ -16280,10 +16280,10 @@ var Kinetic = {};
                                     [this.width/2, 0.4*this.height-pentagonNormal-(223.4 + explode/0.4)*scale],
                                     [this.width/2, 0.4*this.height-pentagonNormal-(374.9 + 2*explode/0.4)*scale],
                                     [this.width/2, 0.4*this.height-pentagonNormal-(526.4 + 3*explode/0.4)*scale],
-                                    [this.width/2, 0.4*this.height-pentagonNormal-scale*(706.25 + explode)]
-                                    ],
-                    positionRotation = [0,0,0,0,12],
-                    internalRotation = [0,0,0,0,-10];
+                                    [this.width/2, 0.4*this.height-pentagonNormal-(706.25 + explode)*scale]
+                                ],
+                    positionRotation = [0,0,0,0,0],
+                    internalRotation = [0,0,0,0,0];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
