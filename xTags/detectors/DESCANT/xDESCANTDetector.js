@@ -61,13 +61,14 @@
                         'greenRight': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-62.3),scale*47.6, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*93,0]
                     },
                     cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
-                    baseCoords = [  {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+71.9*scale},
-                                    {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+(223.4 + explode/0.4)*scale},
-                                    {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+(374.9 + 2*explode/0.4)*scale},
-                                    {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+(526.4 + 3*explode/0.4)*scale},
-                                    {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+scale*(706.25 + explode)}
+                    baseCoords = [  [this.width/2, 0.4*this.height-pentagonNormal-71.9*scale],
+                                    [this.width/2, 0.4*this.height-pentagonNormal-(223.4 + explode/0.4)*scale],
+                                    [this.width/2, 0.4*this.height-pentagonNormal-(374.9 + 2*explode/0.4)*scale],
+                                    [this.width/2, 0.4*this.height-pentagonNormal-(526.4 + 3*explode/0.4)*scale],
+                                    [this.width/2, 0.4*this.height-pentagonNormal-scale*(706.25 + explode)]
                                     ],
-                    internalRotation = [0];
+                    positionRotation = [0,0,0,0,12],
+                    internalRotation = [0,0,0,0,0];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
@@ -75,7 +76,8 @@
 
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellVertices[cellOrder[i%14]],
-                        offset: baseCoords[i%14],
+                        offsetX: -Math.cos(positionRotation[i%14])*baseCoords[i%14][0] + Math.sin(positionRotation[i%14])*baseCoords[i%14][1],
+                        offsetY: -Math.sin(positionRotation[i%14])*baseCoords[i%14][0] - Math.cos(positionRotation[i%14])*baseCoords[i%14][1],
                         rotation: internalRotation[i%14],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
