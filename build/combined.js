@@ -16227,7 +16227,7 @@ var Kinetic = {};
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
                 //channels start at top left hand corner and walk across in rows
-                this.channelNames = ['test0', 'test1', 'test2', 'test3']
+                this.channelNames = ['test0', 'test1', 'test2', 'test3', 'test4']
                 initializeDetector.bind(this, 'DESCANT', 'DESCANT', URLs)();
 
                 //////////////////////////////////////
@@ -16260,7 +16260,7 @@ var Kinetic = {};
         methods: {
             'instantiateCells': function(){
                 var i,
-                    scale = 0.0004*this.height,  //mm to px
+                    scale = 0.0005*this.height,  //mm to px
                     grid = 0.08*this.height,
                     cellVertices = {
                         'white': [scale*41.5,scale*(71.9), scale*(-41.5),scale*(71.9), scale*(-93),0, scale*(-41.5),scale*(-79.6), scale*41.5,scale*(-79.6), scale*93,0],
@@ -16273,8 +16273,8 @@ var Kinetic = {};
                     baseCoords = [  [this.width/2, 0.4*this.height-grid],
                                     [this.width/2, 0.4*this.height-2*grid],
                                     [this.width/2, 0.4*this.height-3*grid],
-                                    [this.width/2, 0.4*this.height-4*grid]
-                                    //[this.width/2, 0.4*this.height-pentagonNormal-(706.25 + explode)*scale]
+                                    [this.width/2, 0.4*this.height-4*grid],
+                                    [Math.cos(12/180*Math.PI)*this.width/2 + Math.sin(12/180*Math.PI)*4*grid, 0.4*this.height - Math.sin(12/180*Math.PI)*this.width/2 + Math.cos(12/180*Math.PI)*4*grid]
                                 ],
                     internalRotation = [0,0,0,0,0];
 
