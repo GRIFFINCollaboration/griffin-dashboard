@@ -60,7 +60,7 @@
                         'greenRight': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-62.3),scale*47.6, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*93,0]
                     },
                     cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
-                    baseCoords = [{'x':0, 'y':pentagonNormal+71.9*scale}],
+                    baseCoords = [{'x':this.width/2, 'y':-0.4*this.height + pentagonNormal+71.9*scale}],
                     internalRotation = [0];
 
 
