@@ -16,6 +16,7 @@ cp ../xTags/detectors/DESCANT/* .
 cp ../xTags/spectrumViewer/* .
 cp ../xTags/nav/* .
 if [ -e combined.js ]; then rm combined.js; fi
+mv xDetectorTemplate.js a.js  #detector template needs to come before all detectors that inherit it
 cat *.js > combined.js
 
 #MIDAS needs gifs not pngs :(
