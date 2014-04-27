@@ -16227,7 +16227,7 @@ var Kinetic = {};
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
                 //channels start at top left hand corner and walk across in rows
-                this.channelNames = ['test0', 'test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9', 'test10', 'test11', 'test12']
+                this.channelNames = ['test0', 'test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9', 'test10', 'test11', 'test12', 'test13']
                 initializeDetector.bind(this, 'DESCANT', 'DESCANT', URLs)();
 
                 //////////////////////////////////////
@@ -16285,9 +16285,10 @@ var Kinetic = {};
                                     [Math.sin(60/180*Math.PI)*3.5*grid + this.width/2, -Math.cos(60/180*Math.PI)*3.5*grid + 0.4*this.height],
 
                                     [Math.sin(20/180*Math.PI)*2.7*grid + this.width/2, -Math.cos(20/180*Math.PI)*2.7*grid + 0.4*this.height],
-                                    [Math.sin(42/180*Math.PI)*2.7*grid + this.width/2, -Math.cos(42/180*Math.PI)*2.7*grid + 0.4*this.height]
+                                    [Math.sin(42/180*Math.PI)*2.7*grid + this.width/2, -Math.cos(42/180*Math.PI)*2.7*grid + 0.4*this.height],
+                                    [Math.sin(31/180*Math.PI)*3.7*grid + this.width/2, -Math.cos(31/180*Math.PI)*3.7*grid + 0.4*this.height]
                                 ],
-                    internalRotation = [0,0,0,0,-78,-72,78,72,120,130,130,0,60];
+                    internalRotation = [0,0,0,0,-78,-72,78,72,120,130,130,0,60,30];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
