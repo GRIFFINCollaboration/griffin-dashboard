@@ -16261,6 +16261,12 @@ var Kinetic = {};
             'instantiateCells': function(){
                 var i,
                     scale = 0.28,
+                    //side length of pentagon hole:
+                    pentagonSide = 83*this.scale,
+                    //shortest distance from center of pentagon to side
+                    pentagonNormal = this.pentagonSide / 2 / Math.tan(36/180 * Math.PI),
+                    //longest distance from center of pentagon to side
+                    pentagonVertex = this.pentagonSide / 2 / Math.sin(36/180 * Math.PI),
                     cellVertices = {
                         'white': [scale*41.5,scale*(71.9), scale*(-41.5),scale*(71.9), scale*(-93),0, scale*(-41.5),scale*(-79.6), scale*41.5,scale*(-79.6), scale*93,0],
                         'red': [scale*37.4,scale*(-87.1), scale*(-51.6),scale*(-83.3), scale*(-101.8),0, scale*(-51.6),scale*(83.3), scale*37.4,scale*(87.1), scale*73.1,0],
@@ -16268,7 +16274,9 @@ var Kinetic = {};
                         'greenLeft': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-93),0, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*62.3,scale*47.6],
                         'greenRight': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-62.3),scale*47.6, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*93,0]
                     },
-                    cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'];
+                    cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
+                    baseCoords = [{'x':0, 'y':pentagonNormal+71.9*scale}].
+                    internalRotation = [0];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
@@ -16276,8 +16284,8 @@ var Kinetic = {};
 
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellVertices[cellOrder[i%14]],
-                        offset: {x: -100, y: -100},
-                        rotation: 0,
+                        offset: baseCoords[i%14],
+                        rotation: internalRotation[i%14] + 72*(i%14),
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
