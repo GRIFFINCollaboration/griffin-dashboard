@@ -16260,7 +16260,7 @@ var Kinetic = {};
         methods: {
             'instantiateCells': function(){
                 var i,
-                    scale = 0.0005*this.height,  //mm to px
+                    scale = 0.0005*this.height,
                     grid = 0.08*this.height,
                     cellVertices = {
                         'white': [scale*41.5,scale*(71.9), scale*(-41.5),scale*(71.9), scale*(-93),0, scale*(-41.5),scale*(-79.6), scale*41.5,scale*(-79.6), scale*93,0],
@@ -16270,11 +16270,11 @@ var Kinetic = {};
                         'greenRight': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-62.3),scale*47.6, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*93,0]
                     },
                     cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
-                    baseCoords = [  [this.width/2, 0.4*this.height-grid],
-                                    [this.width/2, 0.4*this.height-2*grid],
-                                    [this.width/2, 0.4*this.height-3*grid],
-                                    [this.width/2, 0.4*this.height-4*grid],
-                                    [Math.sin(12/180*Math.PI)*4*grid + this.width/2, -Math.cos(12/180*Math.PI)*4*grid + 0.4*this.height]
+                    baseCoords = [  {'x':-this.width/2, 'y':-0.4*this.height+grid},
+                                    {'x':-this.width/2, 'y':-0.4*this.height+2*grid},
+                                    {'x':-this.width/2, 'y':-0.4*this.height+3*grid},
+                                    {'x':-this.width/2, 'y':-0.4*this.height+4*grid},
+                                    {'x':-Math.sin(12/180*Math.PI)*4*grid - this.width/2, 'y':Math.cos(12/180*Math.PI)*4*grid - 0.4*this.height}
                                 ],
                     internalRotation = [0,0,0,0,10];
 
@@ -16284,8 +16284,7 @@ var Kinetic = {};
 
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellVertices[cellOrder[i%14]],
-                        offsetX: -baseCoords[i%14][0],
-                        offsetY: -baseCoords[i%14][1],
+                        offset: baseCoords[i%14],
                         rotation: internalRotation[i%14],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
