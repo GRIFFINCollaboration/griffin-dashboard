@@ -16282,7 +16282,7 @@ var Kinetic = {};
                                     [this.width/2, 0.4*this.height-pentagonNormal-(526.4 + 3*explode/0.4)*scale],
                                     [this.width/2, 0.4*this.height-pentagonNormal-(706.25 + explode)*scale]
                                 ],
-                    positionRotation = [0,0,0,0,0],
+                    positionRotation = [0,0,0,0,12],
                     internalRotation = [0,0,0,0,0];
 
 
