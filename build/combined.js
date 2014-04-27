@@ -16227,7 +16227,7 @@ var Kinetic = {};
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
                 //channels start at top left hand corner and walk across in rows
-                this.channelNames = ['test0', 'test1']
+                this.channelNames = ['test0', 'test1', 'test2']
                 initializeDetector.bind(this, 'DESCANT', 'DESCANT', URLs)();
 
                 //////////////////////////////////////
@@ -16277,7 +16277,8 @@ var Kinetic = {};
                     },
                     cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
                     baseCoords = [  {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+71.9*scale},
-                                    {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+(223.4 + explode/0.4)*scale}
+                                    {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+(223.4 + explode/0.4)*scale},
+                                    {'x':-this.width/2, 'y':-0.4*this.height+pentagonNormal+(374.9 + 2*explode/0.4)*scale}
                                     ],
                     internalRotation = [0];
 
