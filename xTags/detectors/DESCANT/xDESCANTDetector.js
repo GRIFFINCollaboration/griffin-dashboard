@@ -102,10 +102,10 @@
                                 [Math.sin(72*phi/180*Math.PI)*2.8*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*2.8*grid +  0.4*this.height],
                                 [Math.sin(72*phi/180*Math.PI)*3.8*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*3.8*grid +  0.4*this.height],
 
-                                [Math.sin((72*phi+10)/180*Math.PI)*4.7*grid + this.width/2, -Math.cos((72*phi+10)/180*Math.PI)*4.7*grid + 0.4*this.height],
-                                [Math.sin((72*phi+23)/180*Math.PI)*4.6*grid + this.width/2, -Math.cos((72*phi+23)/180*Math.PI)*4.6*grid + 0.4*this.height],
-                                [Math.sin((72*phi+52)/180*Math.PI)*4.7*grid + this.width/2, -Math.cos((72*phi+52)/180*Math.PI)*4.7*grid + 0.4*this.height],
-                                [Math.sin((72*phi+39)/180*Math.PI)*4.6*grid + this.width/2, -Math.cos((72*phi+39)/180*Math.PI)*4.6*grid + 0.4*this.height],
+                                [Math.sin((72*phi+15)/180*Math.PI)*4.5*grid + this.width/2, -Math.cos((72*phi+15)/180*Math.PI)*4.5*grid + 0.4*this.height],
+                                [Math.sin((72*phi+33)/180*Math.PI)*4.4*grid + this.width/2, -Math.cos((72*phi+33)/180*Math.PI)*4.4*grid + 0.4*this.height],
+                                [Math.sin((72*phi+72)/180*Math.PI)*4.5*grid + this.width/2, -Math.cos((72*phi+72)/180*Math.PI)*4.5*grid + 0.4*this.height],
+                                [Math.sin((72*phi+54)/180*Math.PI)*4.4*grid + this.width/2, -Math.cos((72*phi+54)/180*Math.PI)*4.4*grid + 0.4*this.height],
 
                                 [Math.sin((72*phi+36)/180*Math.PI)*1.5*grid + this.width/2, -Math.cos((72*phi+36)/180*Math.PI)*1.5*grid + 0.4*this.height],
                                 [Math.sin((72*phi+16)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+16)/180*Math.PI)*3.4*grid + 0.4*this.height],
