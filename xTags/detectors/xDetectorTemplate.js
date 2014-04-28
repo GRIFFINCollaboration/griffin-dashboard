@@ -244,9 +244,10 @@
                 //sort data into summary statistics if necessary
                 if(this.summaryDepth)
                     this.summarizeData();
-                /*
+
                 //update the cell colors and tooltip content
                 this.updateCells();
+                /*
                 this.writeTooltip(this.lastTTindex);
 
                 //repaint
