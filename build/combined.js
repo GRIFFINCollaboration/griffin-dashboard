@@ -367,7 +367,7 @@ function initializeDetector(name, headline, URL){
 
 //stick the ODB equipment directory into its local slot:
 function fetchODBEquipment(returnObj){
-    if(!window.currentData.ODB)
+    //if(!window.currentData.ODB)
         window.currentData.ODB = {};
     window.currentData.ODB.Equipment = returnObj;
 }
@@ -376,7 +376,7 @@ function fetchODBEquipment(returnObj){
 function parseRate(data){
     var key, subkey;
 
-    if(!window.currentData.rate)
+    //if(!window.currentData.rate)
         window.currentData.rate = {};
 
     for(key in data){
@@ -393,7 +393,7 @@ function parseRate(data){
 //similar function for the threshold service:
 function parseThreshold(data){
     var key;
-    if(!window.currentData.threshold)
+    //if(!window.currentData.threshold)
         window.currentData.threshold = {};
 
     if(data['parameters']['thresholds']){
