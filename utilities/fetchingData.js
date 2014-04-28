@@ -1,7 +1,7 @@
 //pull in data from the URLs listed in URL; <callback> executes on successful fetch.
 function assembleData(callback) {
     var i, element, script;
-
+/*
     for(i=0; i<window.fetchURL.length; i++){
         //delete last instance of this script so they don't accrue:
         element = document.getElementById('tempScript'+i);
@@ -29,6 +29,9 @@ function assembleData(callback) {
 
         document.head.appendChild(script);
     }
+*/
+
+repopulate()
 }
 
 //tell everybody to refresh their data from the in-memory buffers:
