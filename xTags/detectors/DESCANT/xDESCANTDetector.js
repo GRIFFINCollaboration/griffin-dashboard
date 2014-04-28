@@ -95,9 +95,9 @@
             //returns [x,y] for the center of the ith cell
             'generateCoords': function(i){
                 var phi = Math.floor(i / 14),
-                    grid = 0.06*this.height,
+                    grid = 0.07*this.height,
                     baseCoords = [  
-                                [Math.sin(72*phi/180*Math.PI)*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*grid +  0.4*this.height],
+                                [Math.sin(72*phi/180*Math.PI)*0.8*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*0.8*grid +  0.4*this.height],
                                 [Math.sin(72*phi/180*Math.PI)*2*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*2*grid +  0.4*this.height],
                                 [Math.sin(72*phi/180*Math.PI)*3*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*3*grid +  0.4*this.height],
                                 [Math.sin(72*phi/180*Math.PI)*4*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*4*grid +  0.4*this.height],
