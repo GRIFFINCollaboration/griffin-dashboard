@@ -251,7 +251,7 @@
                 this.writeTooltip(this.lastTTindex);
 
                 //repaint
-                this.mainLayer[this.displayIndex].draw();
+                this.mainLayer[this.displayIndex].batchDraw();
                 
             },
 
