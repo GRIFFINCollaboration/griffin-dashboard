@@ -16227,7 +16227,10 @@ var Kinetic = {};
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
                 //channels start at top left hand corner and walk across in rows
-                this.channelNames = ['test0', 'test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9', 'test10', 'test11', 'test12', 'test13']
+                this.channelNames = [];
+                for(i=0; i<70; i++){
+                    this.channelNames[i] = 'TESTCANT' + i;
+                }
                 initializeDetector.bind(this, 'DESCANT', 'DESCANT', URLs)();
 
                 //////////////////////////////////////
