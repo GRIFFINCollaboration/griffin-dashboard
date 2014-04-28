@@ -236,6 +236,7 @@
             },
 
             'update': function(){
+                /*
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
@@ -250,6 +251,7 @@
 
                 //repaint
                 this.mainLayer[this.displayIndex].draw();
+                */
             },
 
             'updateCells': function(){
