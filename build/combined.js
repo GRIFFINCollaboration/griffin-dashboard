@@ -16272,7 +16272,7 @@ var Kinetic = {};
                         'greenRight': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-62.3),scale*47.6, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*93,0]
                     },
                     cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
-                    internalRotation = [0,0,0,0, -75,-70,135,130, 130,115,130, 10,70,60];
+                    internalRotation = [0,0,0,0, -75,-70,135,130, 130,125,140, 10,70,70];
 
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
@@ -16323,12 +16323,12 @@ var Kinetic = {};
                                 [Math.sin((72*phi+39)/180*Math.PI)*4.6*grid + this.width/2, -Math.cos((72*phi+39)/180*Math.PI)*4.6*grid + 0.4*this.height],
 
                                 [Math.sin((72*phi+36)/180*Math.PI)*1.5*grid + this.width/2, -Math.cos((72*phi+36)/180*Math.PI)*1.5*grid + 0.4*this.height],
-                                [Math.sin((72*phi+17)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+17)/180*Math.PI)*3.4*grid + 0.4*this.height],
-                                [Math.sin((72*phi+57)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+57)/180*Math.PI)*3.4*grid + 0.4*this.height],
+                                [Math.sin((72*phi+16)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+16)/180*Math.PI)*3.4*grid + 0.4*this.height],
+                                [Math.sin((72*phi+56)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+56)/180*Math.PI)*3.4*grid + 0.4*this.height],
 
                                 [Math.sin((72*phi+23)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((72*phi+23)/180*Math.PI)*2.5*grid + 0.4*this.height],
                                 [Math.sin((72*phi+50)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((72*phi+50)/180*Math.PI)*2.5*grid + 0.4*this.height],
-                                [Math.sin((72*phi+37)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+37)/180*Math.PI)*3.4*grid + 0.4*this.height]
+                                [Math.sin((72*phi+36)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+36)/180*Math.PI)*3.4*grid + 0.4*this.height]
                 ]
 
                 return baseCoords[i%14]
