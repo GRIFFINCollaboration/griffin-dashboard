@@ -15660,10 +15660,10 @@ var Kinetic = {};
                 this.updateCells();
 
                 this.writeTooltip(this.lastTTindex);
-                /*
+
                 //repaint
                 this.mainLayer[this.displayIndex].draw();
-                */
+                
             },
 
             'updateCells': function(){
