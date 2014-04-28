@@ -16263,7 +16263,7 @@ var Kinetic = {};
         methods: {
             'instantiateCells': function(){
                 var i,
-                    scale = 1.1*0.0004*this.height,
+                    scale = 1.2*0.0004*this.height,
                     cellVertices = {
                         'white': [scale*41.5,scale*(71.9), scale*(-41.5),scale*(71.9), scale*(-93),0, scale*(-41.5),scale*(-79.6), scale*41.5,scale*(-79.6), scale*93,0],
                         'red': [scale*37.4,scale*(-87.1), scale*(-51.6),scale*(-83.3), scale*(-101.8),0, scale*(-51.6),scale*(83.3), scale*37.4,scale*(87.1), scale*73.1,0],
@@ -16310,7 +16310,7 @@ var Kinetic = {};
             //returns [x,y] for the center of the ith cell
             'generateCoords': function(i){
                 var phi = Math.floor(i / 14),
-                    grid = 1.1*0.07*this.height,
+                    grid = 1.2*0.07*this.height,
                     baseCoords = [  
                                 [Math.sin(72*phi/180*Math.PI)*0.8*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*0.8*grid +  0.4*this.height],
                                 [Math.sin(72*phi/180*Math.PI)*1.8*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*1.8*grid +  0.4*this.height],
