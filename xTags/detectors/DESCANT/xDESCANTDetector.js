@@ -99,7 +99,7 @@
                     baseCoords = [  
                                 [Math.sin(72*phi/180*Math.PI)*0.8*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*0.8*grid +  0.4*this.height],
                                 [Math.sin(72*phi/180*Math.PI)*1.8*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*1.8*grid +  0.4*this.height],
-                                [Math.sin(72*phi/180*Math.PI)*3*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*3*grid +  0.4*this.height],
+                                [Math.sin(72*phi/180*Math.PI)*2.8*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*2.8*grid +  0.4*this.height],
                                 [Math.sin(72*phi/180*Math.PI)*4*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*4*grid +  0.4*this.height],
 
                                 [Math.sin((72*phi+10)/180*Math.PI)*4.7*grid + this.width/2, -Math.cos((72*phi+10)/180*Math.PI)*4.7*grid + 0.4*this.height],
@@ -111,8 +111,8 @@
                                 [Math.sin((72*phi+14)/180*Math.PI)*3.6*grid + this.width/2, -Math.cos((72*phi+14)/180*Math.PI)*3.6*grid + 0.4*this.height],
                                 [Math.sin((72*phi+48)/180*Math.PI)*3.6*grid + this.width/2, -Math.cos((72*phi+48)/180*Math.PI)*3.6*grid + 0.4*this.height],
 
-                                [Math.sin((72*phi+20)/180*Math.PI)*2.7*grid + this.width/2, -Math.cos((72*phi+20)/180*Math.PI)*2.7*grid + 0.4*this.height],
-                                [Math.sin((72*phi+42)/180*Math.PI)*2.7*grid + this.width/2, -Math.cos((72*phi+42)/180*Math.PI)*2.7*grid + 0.4*this.height],
+                                [Math.sin((72*phi+25)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((72*phi+25)/180*Math.PI)*2.5*grid + 0.4*this.height],
+                                [Math.sin((72*phi+52)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((72*phi+52)/180*Math.PI)*2.5*grid + 0.4*this.height],
                                 [Math.sin((72*phi+31)/180*Math.PI)*3.6*grid + this.width/2, -Math.cos((72*phi+31)/180*Math.PI)*3.6*grid + 0.4*this.height]
                 ]
 
