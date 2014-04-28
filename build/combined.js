@@ -16323,12 +16323,12 @@ var Kinetic = {};
                                 [Math.sin((72*phi+39)/180*Math.PI)*4.6*grid + this.width/2, -Math.cos((72*phi+39)/180*Math.PI)*4.6*grid + 0.4*this.height],
 
                                 [Math.sin((72*phi+36)/180*Math.PI)*1.5*grid + this.width/2, -Math.cos((72*phi+36)/180*Math.PI)*1.5*grid + 0.4*this.height],
-                                [Math.sin((72*phi+19)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+19)/180*Math.PI)*3.4*grid + 0.4*this.height],
-                                [Math.sin((72*phi+63)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+63)/180*Math.PI)*3.4*grid + 0.4*this.height],
+                                [Math.sin((72*phi+17)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+17)/180*Math.PI)*3.4*grid + 0.4*this.height],
+                                [Math.sin((72*phi+57)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+57)/180*Math.PI)*3.4*grid + 0.4*this.height],
 
                                 [Math.sin((72*phi+23)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((72*phi+23)/180*Math.PI)*2.5*grid + 0.4*this.height],
                                 [Math.sin((72*phi+50)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((72*phi+50)/180*Math.PI)*2.5*grid + 0.4*this.height],
-                                [Math.sin((72*phi+41)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+41)/180*Math.PI)*3.4*grid + 0.4*this.height]
+                                [Math.sin((72*phi+37)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+37)/180*Math.PI)*3.4*grid + 0.4*this.height]
                 ]
 
                 return baseCoords[i%14]
