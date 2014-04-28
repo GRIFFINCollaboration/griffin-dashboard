@@ -97,7 +97,7 @@
                         points: cellVertices[cellOrder[i%14]],
                         x: this.generateCoords(i)[0],
                         y: this.generateCoords(i)[1],
-                        rotation: internalRotation[i%14] + 72*Math.floor(i/14) - 36,
+                        rotation: internalRotation[i%14] + 72*Math.floor(i/14) - 72,
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
@@ -127,25 +127,25 @@
             'generateCoords': function(i){
                 var phi = Math.floor(i / 14),
                     grid = 1.2*0.07*this.height,
-                    phase = 
+                    phase = -72,
                     baseCoords = [  
-                                [Math.sin((72*phi-36)/180*Math.PI)*0.8*grid + this.width/2, -Math.cos((72*phi-36)/180*Math.PI)*0.8*grid +  0.4*this.height],
-                                [Math.sin((72*phi-36)/180*Math.PI)*1.8*grid + this.width/2, -Math.cos((72*phi-36)/180*Math.PI)*1.8*grid +  0.4*this.height],
-                                [Math.sin((72*phi-36)/180*Math.PI)*2.8*grid + this.width/2, -Math.cos((72*phi-36)/180*Math.PI)*2.8*grid +  0.4*this.height],
-                                [Math.sin((72*phi-36)/180*Math.PI)*3.8*grid + this.width/2, -Math.cos((72*phi-36)/180*Math.PI)*3.8*grid +  0.4*this.height],
+                                [Math.sin((72*phi+phase)/180*Math.PI)*0.8*grid + this.width/2, -Math.cos((72*phi+phase)/180*Math.PI)*0.8*grid +  0.4*this.height],
+                                [Math.sin((72*phi+phase)/180*Math.PI)*1.8*grid + this.width/2, -Math.cos((72*phi+phase)/180*Math.PI)*1.8*grid +  0.4*this.height],
+                                [Math.sin((72*phi+phase)/180*Math.PI)*2.8*grid + this.width/2, -Math.cos((72*phi+phase)/180*Math.PI)*2.8*grid +  0.4*this.height],
+                                [Math.sin((72*phi+phase)/180*Math.PI)*3.8*grid + this.width/2, -Math.cos((72*phi+phase)/180*Math.PI)*3.8*grid +  0.4*this.height],
 
-                                [Math.sin((72*phi+12-36)/180*Math.PI)*4.5*grid + this.width/2, -Math.cos((72*phi+12-36)/180*Math.PI)*4.5*grid + 0.4*this.height],
-                                [Math.sin((72*phi+27-36)/180*Math.PI)*4.3*grid + this.width/2, -Math.cos((72*phi+27-36)/180*Math.PI)*4.3*grid + 0.4*this.height],
-                                [Math.sin((72*phi+60-36)/180*Math.PI)*4.5*grid + this.width/2, -Math.cos((72*phi+60-36)/180*Math.PI)*4.5*grid + 0.4*this.height],
-                                [Math.sin((72*phi+45-36)/180*Math.PI)*4.3*grid + this.width/2, -Math.cos((72*phi+45-36)/180*Math.PI)*4.3*grid + 0.4*this.height],
+                                [Math.sin((72*phi+12+phase)/180*Math.PI)*4.5*grid + this.width/2, -Math.cos((72*phi+12+phase)/180*Math.PI)*4.5*grid + 0.4*this.height],
+                                [Math.sin((72*phi+27+phase)/180*Math.PI)*4.3*grid + this.width/2, -Math.cos((72*phi+27+phase)/180*Math.PI)*4.3*grid + 0.4*this.height],
+                                [Math.sin((72*phi+60+phase)/180*Math.PI)*4.5*grid + this.width/2, -Math.cos((72*phi+60+phase)/180*Math.PI)*4.5*grid + 0.4*this.height],
+                                [Math.sin((72*phi+45+phase)/180*Math.PI)*4.3*grid + this.width/2, -Math.cos((72*phi+45+phase)/180*Math.PI)*4.3*grid + 0.4*this.height],
 
-                                [Math.sin((72*phi+36-36)/180*Math.PI)*1.5*grid + this.width/2, -Math.cos((72*phi+36-36)/180*Math.PI)*1.5*grid + 0.4*this.height],
-                                [Math.sin((72*phi+16-36)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+16-36)/180*Math.PI)*3.4*grid + 0.4*this.height],
-                                [Math.sin((72*phi+56-36)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+56-36)/180*Math.PI)*3.4*grid + 0.4*this.height],
+                                [Math.sin((72*phi+36+phase)/180*Math.PI)*1.5*grid + this.width/2, -Math.cos((72*phi+36+phase)/180*Math.PI)*1.5*grid + 0.4*this.height],
+                                [Math.sin((72*phi+16+phase)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+16+phase)/180*Math.PI)*3.4*grid + 0.4*this.height],
+                                [Math.sin((72*phi+56+phase)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+56+phase)/180*Math.PI)*3.4*grid + 0.4*this.height],
 
-                                [Math.sin((72*phi+23-36)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((72*phi+23-36)/180*Math.PI)*2.5*grid + 0.4*this.height],
-                                [Math.sin((72*phi+50-36)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((72*phi+50-36)/180*Math.PI)*2.5*grid + 0.4*this.height],
-                                [Math.sin((72*phi+36-36)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+36-36)/180*Math.PI)*3.4*grid + 0.4*this.height]
+                                [Math.sin((72*phi+23+phase)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((72*phi+23+phase)/180*Math.PI)*2.5*grid + 0.4*this.height],
+                                [Math.sin((72*phi+50+phase)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((72*phi+50+phase)/180*Math.PI)*2.5*grid + 0.4*this.height],
+                                [Math.sin((72*phi+36+phase)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((72*phi+36+phase)/180*Math.PI)*3.4*grid + 0.4*this.height]
                 ]
 
                 return baseCoords[i%14]
