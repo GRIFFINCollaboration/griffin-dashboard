@@ -16226,7 +16226,7 @@ var Kinetic = {};
                             i, index;
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
-                //5-fold symmetry in DESCANT, build one fifth at a time:
+                //5-fold symmetry in DESCANT, build one fifth at a time, lowest numbers not necessarily in the first fifth :/
                 this.channelNames = [];
                 for(i=0; i<5; i++){
                     //white
@@ -16243,23 +16243,23 @@ var Kinetic = {};
                     index = 54+ 4*i;
                     this.channelNames[i*14 + 5] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
                     //green right
-                    index = 55+ 4*i;
+                    index = 55+ 4*i; if(index==71) index = 51;
                     this.channelNames[i*14 + 6] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
-                    index = 56+ 4*i;
+                    index = 56+ 4*i; if(index==72) index = 52;
                     this.channelNames[i*14 + 7] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
                     //red
-                    index = 8+ 2*i;
+                    index = 8+ 2*i; if(index==16) index = 6;
                     this.channelNames[i*14 + 8] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
-                    index = 34+ 4*i;
+                    index = 34+ 4*i; if(index==54) index = 34;
                     this.channelNames[i*14 + 9] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
-                    index = 36+ 4*i;
+                    index = 36+ 4*i; if(index==52) index = 32;
                     this.channelNames[i*14 + 10] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
                     //blue
                     index = 18+ 3*i;
                     this.channelNames[i*14 + 11] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
-                    index = 19+ 3*i;
+                    index = 19+ 3*i; if(index==31) index = 16;
                     this.channelNames[i*14 + 12] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
-                    index = 35+ 4*i;
+                    index = 35+ 4*i; if(index==51) index = 31;
                     this.channelNames[i*14 + 13] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
                 }
                 initializeDetector.bind(this, 'DESCANT', 'DESCANT', URLs)();
