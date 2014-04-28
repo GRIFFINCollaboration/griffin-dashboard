@@ -7,14 +7,45 @@
             created: function() {
                 var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
-                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
-
+                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
+                            i, index;
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
-                //channels start at top left hand corner and walk across in rows
+                //5-fold symmetry in DESCANT, build one fifth at a time:
                 this.channelNames = [];
-                for(i=0; i<70; i++){
-                    this.channelNames[i] = 'TESTCANT' + i;
+                for(i=0; i<5; i++){
+                    //white
+                    this.channelNames[i*14]     = 'DSC0' + (1+i) + 'XN00X';
+                    index = 7 + 2*i;
+                    this.channelNames[i*14 + 1] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    index = 17+ 3*i;
+                    this.channelNames[i*14 + 2] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    index = 33+ 4*i;
+                    this.channelNames[i*14 + 3] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    //green left
+                    index = 53+ 4*i;
+                    this.channelNames[i*14 + 4] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    index = 54+ 4*i;
+                    this.channelNames[i*14 + 5] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    //green right
+                    index = 55+ 4*i;
+                    this.channelNames[i*14 + 6] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    index = 56+ 4*i;
+                    this.channelNames[i*14 + 7] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    //red
+                    index = 8+ 2*i;
+                    this.channelNames[i*14 + 8] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    index = 34+ 4*i;
+                    this.channelNames[i*14 + 9] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    index = 36+ 4*i;
+                    this.channelNames[i*14 + 10] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    //blue
+                    index = 18+ 3*i;
+                    this.channelNames[i*14 + 11] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    index = 19+ 3*i;
+                    this.channelNames[i*14 + 12] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    index = 35+ 4*i;
+                    this.channelNames[i*14 + 13] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
                 }
                 initializeDetector.bind(this, 'DESCANT', 'DESCANT', URLs)();
 
