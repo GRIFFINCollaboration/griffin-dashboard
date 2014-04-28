@@ -251,7 +251,7 @@
                 this.writeTooltip(this.lastTTindex);
 
                 //repaint
-                this.mainLayer[this.displayIndex].batchDraw();
+                this.mainLayer[this.displayIndex].draw();
                 
             },
 
@@ -301,7 +301,7 @@
 
                     //no value reporting, show error pattern
                     } else{
-                        this.cells[this.channelNames[i]].setFillPriority('pattern')
+                        //this.cells[this.channelNames[i]].setFillPriority('pattern')
                     }
                 }
             },
