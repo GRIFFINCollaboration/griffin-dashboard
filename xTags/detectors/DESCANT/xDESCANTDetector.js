@@ -28,9 +28,9 @@
                     index = 54+ 4*i;
                     this.channelNames[i*14 + 5] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
                     //green right
-                    index = 55+ 4*i; if(index==71) index = 51;
-                    this.channelNames[i*14 + 6] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
                     index = 56+ 4*i; if(index==72) index = 52;
+                    this.channelNames[i*14 + 6] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+                    index = 55+ 4*i; if(index==71) index = 51;
                     this.channelNames[i*14 + 7] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
                     //red
                     index = 8+ 2*i; if(index==16) index = 6;
