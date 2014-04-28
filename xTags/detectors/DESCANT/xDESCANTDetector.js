@@ -97,7 +97,7 @@
                         points: cellVertices[cellOrder[i%14]],
                         x: this.generateCoords(i)[0],
                         y: this.generateCoords(i)[1],
-                        rotation: internalRotation[i%14] + 72*Math.floor(i/14) - 72,
+                        rotation: internalRotation[i%14] + 72*Math.floor(i/14) - 54,
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
@@ -127,7 +127,7 @@
             'generateCoords': function(i){
                 var phi = Math.floor(i / 14),
                     grid = 1.2*0.07*this.height,
-                    phase = -72,
+                    phase = -54,
                     baseCoords = [  
                                 [Math.sin((72*phi+phase)/180*Math.PI)*0.8*grid + this.width/2, -Math.cos((72*phi+phase)/180*Math.PI)*0.8*grid +  0.4*this.height],
                                 [Math.sin((72*phi+phase)/180*Math.PI)*1.8*grid + this.width/2, -Math.cos((72*phi+phase)/180*Math.PI)*1.8*grid +  0.4*this.height],
