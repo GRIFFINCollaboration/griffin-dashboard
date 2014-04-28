@@ -54,25 +54,7 @@
                         'greenLeft': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-93),0, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*62.3,scale*47.6],
                         'greenRight': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-62.3),scale*47.6, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*93,0]
                     },
-                    cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
-                    baseCoords = [  [this.width/2, 0.4*this.height-grid],
-                                    [this.width/2, 0.4*this.height-2*grid],
-                                    [this.width/2, 0.4*this.height-3*grid],
-                                    [this.width/2, 0.4*this.height-4*grid],
-
-                                    [Math.sin(10/180*Math.PI)*4.7*grid + this.width/2, -Math.cos(10/180*Math.PI)*4.7*grid + 0.4*this.height],
-                                    [Math.sin(23/180*Math.PI)*4.6*grid + this.width/2, -Math.cos(23/180*Math.PI)*4.6*grid + 0.4*this.height],
-                                    [Math.sin(52/180*Math.PI)*4.7*grid + this.width/2, -Math.cos(52/180*Math.PI)*4.7*grid + 0.4*this.height],
-                                    [Math.sin(39/180*Math.PI)*4.6*grid + this.width/2, -Math.cos(39/180*Math.PI)*4.6*grid + 0.4*this.height],
-
-                                    [Math.sin(30/180*Math.PI)*1.7*grid + this.width/2, -Math.cos(30/180*Math.PI)*1.7*grid + 0.4*this.height],
-                                    [Math.sin(14/180*Math.PI)*3.6*grid + this.width/2, -Math.cos(14/180*Math.PI)*3.6*grid + 0.4*this.height],
-                                    [Math.sin(48/180*Math.PI)*3.6*grid + this.width/2, -Math.cos(48/180*Math.PI)*3.6*grid + 0.4*this.height],
-
-                                    [Math.sin(20/180*Math.PI)*2.7*grid + this.width/2, -Math.cos(20/180*Math.PI)*2.7*grid + 0.4*this.height],
-                                    [Math.sin(42/180*Math.PI)*2.7*grid + this.width/2, -Math.cos(42/180*Math.PI)*2.7*grid + 0.4*this.height],
-                                    [Math.sin(31/180*Math.PI)*3.6*grid + this.width/2, -Math.cos(31/180*Math.PI)*3.6*grid + 0.4*this.height]
-                                ],
+                    cellOrder = ['white', 'white', 'white', 'white', 'greenLeft', 'greenLeft', 'greenRight', 'greenRight', 'red', 'red', 'red', 'blue', 'blue', 'blue'],,
                     internalRotation = [0,0,0,0, -75,-70,135,130, 120,115,130, 0,60,60];
 
 
@@ -80,8 +62,8 @@
                 for(i=0; i<this.channelNames.length; i++){
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellVertices[cellOrder[i%14]],
-                        x: baseCoords[i%14][0],
-                        y: baseCoords[i%14][1],
+                        x: this.generateCoords[i][0],
+                        y: this.generateCoords[i][1],
                         rotation: internalRotation[i%14],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
@@ -106,6 +88,32 @@
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
                 this.stage[0].add(this.tooltipLayer[0]);
+            },
+
+            //returns [x,y] for the center of the ith cell
+            'generateCoords': function(i){
+                var phi = Math.floor(i / 14),
+                    baseCoords = [  
+                                [Math.sin(72*phi/180*Math.PI)*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*grid +  0.4*this.height],
+                                [Math.sin(72*phi/180*Math.PI)*2*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*2*grid +  0.4*this.height],
+                                [Math.sin(72*phi/180*Math.PI)*3*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*3*grid +  0.4*this.height],
+                                [Math.sin(72*phi/180*Math.PI)*4*grid + this.width/2, -Math.cos(72*phi/180*Math.PI)*4*grid +  0.4*this.height],
+
+                                [Math.sin((72*phi+10)/180*Math.PI)*4.7*grid + this.width/2, -Math.cos((72*phi+10)/180*Math.PI)*4.7*grid + 0.4*this.height],
+                                [Math.sin((72*phi+23)/180*Math.PI)*4.6*grid + this.width/2, -Math.cos((72*phi+23)/180*Math.PI)*4.6*grid + 0.4*this.height],
+                                [Math.sin((72*phi+52)/180*Math.PI)*4.7*grid + this.width/2, -Math.cos((72*phi+52)/180*Math.PI)*4.7*grid + 0.4*this.height],
+                                [Math.sin((72*phi+39)/180*Math.PI)*4.6*grid + this.width/2, -Math.cos((72*phi+39)/180*Math.PI)*4.6*grid + 0.4*this.height],
+
+                                [Math.sin((72*phi+30)/180*Math.PI)*1.7*grid + this.width/2, -Math.cos((72*phi+30)/180*Math.PI)*1.7*grid + 0.4*this.height],
+                                [Math.sin((72*phi+14)/180*Math.PI)*3.6*grid + this.width/2, -Math.cos((72*phi+14)/180*Math.PI)*3.6*grid + 0.4*this.height],
+                                [Math.sin((72*phi+48)/180*Math.PI)*3.6*grid + this.width/2, -Math.cos((72*phi+48)/180*Math.PI)*3.6*grid + 0.4*this.height],
+
+                                [Math.sin((72*phi+20)/180*Math.PI)*2.7*grid + this.width/2, -Math.cos((72*phi+20)/180*Math.PI)*2.7*grid + 0.4*this.height],
+                                [Math.sin((72*phi+42)/180*Math.PI)*2.7*grid + this.width/2, -Math.cos((72*phi+42)/180*Math.PI)*2.7*grid + 0.4*this.height],
+                                [Math.sin((72*phi+31)/180*Math.PI)*3.6*grid + this.width/2, -Math.cos((72*phi+31)/180*Math.PI)*3.6*grid + 0.4*this.height]
+                ]
+
+                return baseCoords[i%14]
             }
         }
     });
