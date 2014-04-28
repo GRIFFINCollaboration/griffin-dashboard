@@ -15647,7 +15647,7 @@ var Kinetic = {};
             },
 
             'update': function(){
-                /*
+                
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
@@ -15655,7 +15655,7 @@ var Kinetic = {};
                 //sort data into summary statistics if necessary
                 if(this.summaryDepth)
                     this.summarizeData();
-
+                /*
                 //update the cell colors and tooltip content
                 this.updateCells();
                 this.writeTooltip(this.lastTTindex);
