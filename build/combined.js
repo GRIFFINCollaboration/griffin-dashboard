@@ -15658,9 +15658,9 @@ var Kinetic = {};
 
                 //update the cell colors and tooltip content
                 this.updateCells();
-                /*
-                this.writeTooltip(this.lastTTindex);
 
+                this.writeTooltip(this.lastTTindex);
+                /*
                 //repaint
                 this.mainLayer[this.displayIndex].draw();
                 */
