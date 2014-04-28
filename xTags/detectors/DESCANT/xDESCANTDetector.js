@@ -62,8 +62,8 @@
                 for(i=0; i<this.channelNames.length; i++){
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellVertices[cellOrder[i%14]],
-                        x: this.generateCoords[i][0],
-                        y: this.generateCoords[i][1],
+                        x: this.generateCoords(i)[0],
+                        y: this.generateCoords(i)[1],
                         rotation: internalRotation[i%14],
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
