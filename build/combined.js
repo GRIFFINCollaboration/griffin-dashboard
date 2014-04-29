@@ -129,8 +129,8 @@ function initializeDetector(name, headline, URL){
     if(!window.currentData)
         window.currentData = {};
     window.currentData.HV = {};
-    window.currentData.threshold = {};
-    window.currentData.rate = {};
+    window.currentData.Threshold = {};
+    window.currentData.Rate = {};
 
     //////////////////////
     //Build DOM
