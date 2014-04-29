@@ -26,7 +26,7 @@
                 this.outerBGORad = 0.1*0.8*this.height;
                 this.innerBGOrad = 0.09*0.8*this.height;
                 this.LaBrRad = 0.06*0.8*this.height;
-                this.ringRad = Math.min(0.3*this.height, 0.25*this.width - this.outerBGORad);
+                this.ringRad = Math.min(0.3*this.height, 0.5*0.45*this.width - this.outerBGORad);
                 this.westCenterX = this.ringRad+this.outerBGORad;
                 this.westCenterY = 0.4*this.height;
                 this.eastCenterX = this.width - this.ringRad - this.outerBGORad;

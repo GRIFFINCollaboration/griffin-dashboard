@@ -31,9 +31,9 @@ function initializeDetector(name, headline, URL){
     //set up data store for detectors
     if(!window.currentData)
         window.currentData = {};
-    window.currentData.HV = {};
-    window.currentData.Threshold = {};
-    window.currentData.Rate = {};
+    for(i=0; i<this.views.length; i++){
+        window.currentData[this.views[i]] = {};
+    }
 
     //////////////////////
     //Build DOM
