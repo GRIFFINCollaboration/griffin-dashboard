@@ -16239,12 +16239,12 @@ var Kinetic = {};
                 //DANTE specific drawing parameters
                 //////////////////////////////////////
                 this.outerBGORad = 0.1*0.8*this.height;
-                this.innerBGOrad = 0.08*0.8*this.height;
+                this.innerBGOrad = 0.09*0.8*this.height;
                 this.LaBrRad = 0.06*0.8*this.height;
                 this.ringRad = Math.min(0.3*this.height, 0.25*this.width - this.outerBGORad);
-                this.westCenterX = 0.4*this.width;
+                this.westCenterX = this.ringRad+this.outerBGORad;
                 this.westCenterY = 0.4*this.height;
-                this.eastCenterX = 0.6*this.width;
+                this.eastCenterX = this.width - this.ringRad - this.outerBGORad;
                 this.eastCenterY = 0.4*this.height;
                 this.detCenterX = [ this.westCenterX + this.ringRad, this.westCenterX, this.westCenterX - this.ringRad, this.westCenterX,
                                     this.eastCenterX + this.ringRad, this.eastCenterX, this.eastCenterX - this.ringRad, this.eastCenterX];
