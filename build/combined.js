@@ -16276,7 +16276,7 @@ var Kinetic = {};
         }, 
         methods: {
             'instantiateCells': function(){
-                var i, cardIndex, X, Y, mask;
+                var i, cardIndex, X, Y, mask = [];
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<8; i++){
@@ -16302,7 +16302,7 @@ var Kinetic = {};
                     });
 
                     //center mask (so BGO appears as annulus)
-                    mask = new Kinetic.Circle({
+                    mask[i] = new Kinetic.Circle({
                         radius: this.innerBGORad,
                         x: X,
                         y: Y,
@@ -16310,7 +16310,7 @@ var Kinetic = {};
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth
                     });
-console.log(mask)
+
                     //LaBr
                     this.cells['DAL0'+(i+1)+'XN00X'] = new Kinetic.Circle({
                         radius: this.LaBrRad,
@@ -16340,7 +16340,7 @@ console.log(mask)
 
                     //add the cell to the main layer
                     //this.mainLayer[cardIndex].add(this.cells[this.channelNames[8+i]]);
-                    this.mainLayer[cardIndex].add(mask);
+                    this.mainLayer[cardIndex].add(mask[i]);
                     //this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                     
                 }
