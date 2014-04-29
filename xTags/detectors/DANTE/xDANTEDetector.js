@@ -26,7 +26,7 @@
                 this.outerBGORad = 0.1*0.8*this.height;
                 this.innerBGOrad = 0.08*0.8*this.height;
                 this.LaBrRad = 0.06*0.8*this.height;
-                this.ringRad = 0.3*this.height;
+                this.ringRad = Math.min(0.3*this.height, 0.25*this.width - this.outerBGORad;
                 this.westCenterX = 0.4*this.width;
                 this.westCenterY = 0.4*this.height;
                 this.eastCenterX = 0.6*this.width;
@@ -126,8 +126,10 @@
                     this.cells[this.channelNames[8+i]].on('click', this.clickCell.bind(this, this.channelNames[8+i]) );
 
                     //add the cell to the main layer
-                    this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[8+i]]);
+                    this.mainLayer[cardIndex].add(mask);
+                    this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
+                    
                 }
 
                 //add the layers to the stage
