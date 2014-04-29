@@ -98,7 +98,6 @@ function constructHexColor(color){
 function initializeDetector(name, headline, URL){
     var headWrapper = document.createElement('div')
     ,   title = document.createElement('h1')
-    ,   viewTitles = ['HV', 'Threshold', 'Rate']
     ,   drawTarget = document.createElement('div')
     ,   plotControlWrap = document.createElement('form')
     ,   plotControlTitle = document.createElement('h3')
@@ -120,6 +119,11 @@ function initializeDetector(name, headline, URL){
     ,   i, subdetectorNav, subdetectorNavLabel
 
     this.name = name;
+    //declare default views and units if none pre-defined
+    if(!this.views)
+        this.views = ['HV', 'Threshold', 'Rate'];
+    if(!this.units)
+        this.units = ['V', 'ADC Units', 'Hz'];
 
     //set up data store for detectors
     if(!window.currentData)
@@ -158,22 +162,22 @@ function initializeDetector(name, headline, URL){
     document.getElementById(this.id+'titleWrapper').appendChild(title);
     document.getElementById(this.id+'title').innerHTML = headline;
     //state nav radio
-    for(i=0; i<viewTitles.length; i++){
+    for(i=0; i<this.views.length; i++){
         subdetectorNav = document.createElement('input')
-        subdetectorNav.setAttribute('id', this.id+'goto'+viewTitles[i]);
+        subdetectorNav.setAttribute('id', this.id+'goto'+this.views[i]);
         subdetectorNav.setAttribute('class', 'subdetectorNavRadio');
         subdetectorNav.setAttribute('type', 'radio');
         subdetectorNav.setAttribute('name', this.id+'Nav');
-        subdetectorNav.setAttribute('value', viewTitles[i]);
+        subdetectorNav.setAttribute('value', this.views[i]);
         subdetectorNav.onchange = this.trackView.bind(this);
         if(i==2) subdetectorNav.setAttribute('checked', true); //default to rate view
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
         subdetectorNavLabel = document.createElement('label');
-        subdetectorNavLabel.setAttribute('id', this.id+'goto'+viewTitles[i]+'Label');
+        subdetectorNavLabel.setAttribute('id', this.id+'goto'+this.views[i]+'Label');
         subdetectorNavLabel.setAttribute('class', 'subdetectorNavLabel');
-        subdetectorNavLabel.setAttribute('for', this.id+'goto'+viewTitles[i]);
+        subdetectorNavLabel.setAttribute('for', this.id+'goto'+this.views[i]);
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
-        document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
+        document.getElementById(this.id+'goto'+this.views[i]+'Label').innerHTML = this.views[i];
     }
     //plot deck wrapper:
     deckWrap.setAttribute('id', this.id+'DeckWrap');
@@ -275,6 +279,15 @@ function initializeDetector(name, headline, URL){
     //Scale Parameters
     ///////////////////////////
     this.scale = 'ROOT Rainbow';
+    this.min = {};
+    this.max = {};
+    this.scaleType = {};
+    for(i=0; i<this.views.length; i++){
+        this.min[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'min'), 0);
+        this.max[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'max'), 3000);
+        this.scaleType[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'scaleType'), 'lin');
+    }
+/*
     this.min = {HV: canHas(localStorage.getItem(name+'HVmin'), 0), 
                 Threshold: canHas(localStorage.getItem(name+'Thresholdmin'), 0), 
                 Rate: canHas(localStorage.getItem(name+'Ratemin'), 0)
@@ -287,7 +300,7 @@ function initializeDetector(name, headline, URL){
                         Threshold: canHas(localStorage.getItem(name+'ThresholdscaleType'), 'lin'), 
                         Rate: canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
                     };
-
+*/
     //if anything was in local storage, communicate this to the UI:
     plotControlMin.value = this.min[this.currentView];
     plotControlMax.value = this.max[this.currentView];
@@ -376,14 +389,14 @@ function fetchODBEquipment(returnObj){
 function parseRate(data){
     var key, subkey;
 
-    if(!window.currentData.rate)
-        window.currentData.rate = {};
+    if(!window.currentData.Rate)
+        window.currentData.Rate = {};
 
     for(key in data){
         if (data.hasOwnProperty(key)) {
             for(subkey in data[key]){
                 if(data[key].hasOwnProperty(subkey)){
-                    window.currentData.rate[subkey.toUpperCase().slice(0,10)] = data[key][subkey].TRIGREQ;
+                    window.currentData.Rate[subkey.toUpperCase().slice(0,10)] = data[key][subkey].TRIGREQ;
                 }
             }
         }
@@ -393,12 +406,12 @@ function parseRate(data){
 //similar function for the threshold service:
 function parseThreshold(data){
     var key;
-    if(!window.currentData.threshold)
-        window.currentData.threshold = {};
+    if(!window.currentData.Threshold)
+        window.currentData.Threshold = {};
 
     if(data['parameters']['thresholds']){
         for(key in data['parameters']['thresholds']){
-            window.currentData.threshold[key.toUpperCase().slice(0,10)] = data['parameters']['thresholds'][key];
+            window.currentData.Threshold[key.toUpperCase().slice(0,10)] = data['parameters']['thresholds'][key];
         }        
     }    
 }
@@ -15585,18 +15598,17 @@ var Kinetic = {};
             },
 
             'summarizeData': function(){
-                var i, j, summaryKey, newValue,
-                    targets = ['HV', 'threshold', 'rate'];
+                var i, j, summaryKey, newValue;
 
-                for(j=0; j<targets.length; j++){
+                for(j=0; j<this.views.length; j++){
                     //bail out if we haven't fetched anything yet
-                    if(!window.currentData[targets[j]])
+                    if(!window.currentData[this.views[j]])
                         continue;
 
                     //zero out old summaries at this depth
                     for(i=0; i<this.channelNames.length; i++){
                         if(this.channelNames[i].length == this.summaryDepth){
-                            window.currentData[targets[j]][this.channelNames[i]] = [0,0];                            
+                            window.currentData[this.views[j]][this.channelNames[i]] = [0,0];                            
                         }
                     }
 
@@ -15604,28 +15616,28 @@ var Kinetic = {};
                     //flagged as not reporting.
                     for(i=0; i<this.channelNames.length; i++){
                         summaryKey = this.channelNames[i].slice(0,this.summaryDepth);
-                        if(this.channelNames[i].length == 10 && window.currentData[targets[j]].hasOwnProperty(summaryKey) ){
+                        if(this.channelNames[i].length == 10 && window.currentData[this.views[j]].hasOwnProperty(summaryKey) ){
 
                             //bail out if summary flagged as nonreporting
-                            if(window.currentData[targets[j]][summaryKey] == 0xDEADBEEF) continue;
+                            if(window.currentData[this.views[j]][summaryKey] == 0xDEADBEEF) continue;
 
-                            newValue = window.currentData[targets[j]][this.channelNames[i]];
+                            newValue = window.currentData[this.views[j]][this.channelNames[i]];
                             //value sought and non found, mark nonreporting:
                             if(!newValue && newValue!=0){
-                                window.currentData[targets[j]][summaryKey] = 0xDEADBEEF;
+                                window.currentData[this.views[j]][summaryKey] = 0xDEADBEEF;
                                 continue; 
                             }
 
                             //looks good, increment the sum and count of terms
-                            window.currentData[targets[j]][summaryKey][0] += newValue;
-                            window.currentData[targets[j]][summaryKey][1]++;
+                            window.currentData[this.views[j]][summaryKey][0] += newValue;
+                            window.currentData[this.views[j]][summaryKey][1]++;
                         }
                     }
 
                     //finally, go through all the summaries and turn the [sum, nNterms] pairs into averages:
                     for(i=0; i<this.channelNames.length; i++){
-                        if(this.channelNames[i].length == this.summaryDepth && window.currentData[targets[j]][this.channelNames[i]] != 0xDEADBEEF)
-                            window.currentData[targets[j]][this.channelNames[i]] = window.currentData[targets[j]][this.channelNames[i]][0] / window.currentData[targets[j]][this.channelNames[i]][1];
+                        if(this.channelNames[i].length == this.summaryDepth && window.currentData[this.views[j]][this.channelNames[i]] != 0xDEADBEEF)
+                            window.currentData[this.views[j]][this.channelNames[i]] = window.currentData[this.views[j]][this.channelNames[i]][0] / window.currentData[this.views[j]][this.channelNames[i]][1];
                     }
                 }
             },
@@ -15634,7 +15646,7 @@ var Kinetic = {};
                 //keep track of what state the view state radio is in in a convenient variable right on the detector-demo object
                 //intended for binding to the onchange of the radio.
                 this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
-                this.currentUnit = (this.currentView == 'Rate') ? 'Hz' : ((this.currentView == 'HV') ? 'V' : 'ADC Units' );
+                this.currentUnit = this.units[this.views.indexOf(this.currentView)];
 
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').value = this.min[this.currentView];
@@ -15685,13 +15697,7 @@ var Kinetic = {};
                         continue;
 
                     //fetch the most recent raw value from the currentData store:
-                    if(this.currentView == 'HV'){
-                        rawValue = window.currentData.HV[this.channelNames[i]];
-                    } else if (this.currentView == 'Threshold'){
-                        rawValue = window.currentData.threshold[this.channelNames[i]];
-                    } else if (this.currentView == 'Rate'){
-                        rawValue = window.currentData.rate[this.channelNames[i]];
-                    }
+                    rawValue = window.currentData[this.currentView][this.channelNames[i]];
 
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
@@ -15738,28 +15744,19 @@ var Kinetic = {};
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeTooltip': function(i){
-                var text, HV, thresh, rate;
+                var text, value, j;
 
                 if(i!=-1){
                     text = this.channelNames[i];
-                    text += '\nHV: ';
-                    HV = window.currentData.HV[this.channelNames[i]];
-                    if((!HV && HV!=0) || HV==0xDEADBEEF ) 
-                        text += 'Not Reporting';
-                    else
-                        text += parseFloat(HV).toFixed();
-                    text += '\nThreshold: ';
-                    thresh = window.currentData.threshold[this.channelNames[i]];
-                    if((!thresh && thresh!=0) || thresh==0xDEADBEEF ) 
-                        text += 'Not Reporting'
-                    else
-                        text += parseFloat(thresh).toFixed();
-                    text += '\nRate: ';
-                    rate = window.currentData.rate[this.channelNames[i]];
-                    if((!rate && rate!=0) || rate==0xDEADBEEF ) 
-                        text += 'Not Reporting'
-                    else
-                        text += parseFloat(rate).toFixed();
+
+                    for(j=0; j<this.views.length; j++){
+                        text += '\n'+this.views[j]+': ';
+                        value = window.currentData[this.views[j]][this.channelNames[i]];
+                        if((!value && value!=0) || value==0xDEADBEEF ) 
+                            text += 'Not Reporting';
+                        else
+                            text += parseFloat(value).toFixed();                        
+                    }
                 } else {
                     text = '';
                 }

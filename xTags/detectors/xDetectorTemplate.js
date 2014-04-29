@@ -174,18 +174,17 @@
             },
 
             'summarizeData': function(){
-                var i, j, summaryKey, newValue,
-                    targets = ['HV', 'threshold', 'rate'];
+                var i, j, summaryKey, newValue;
 
-                for(j=0; j<targets.length; j++){
+                for(j=0; j<this.views.length; j++){
                     //bail out if we haven't fetched anything yet
-                    if(!window.currentData[targets[j]])
+                    if(!window.currentData[this.views[j]])
                         continue;
 
                     //zero out old summaries at this depth
                     for(i=0; i<this.channelNames.length; i++){
                         if(this.channelNames[i].length == this.summaryDepth){
-                            window.currentData[targets[j]][this.channelNames[i]] = [0,0];                            
+                            window.currentData[this.views[j]][this.channelNames[i]] = [0,0];                            
                         }
                     }
 
@@ -193,28 +192,28 @@
                     //flagged as not reporting.
                     for(i=0; i<this.channelNames.length; i++){
                         summaryKey = this.channelNames[i].slice(0,this.summaryDepth);
-                        if(this.channelNames[i].length == 10 && window.currentData[targets[j]].hasOwnProperty(summaryKey) ){
+                        if(this.channelNames[i].length == 10 && window.currentData[this.views[j]].hasOwnProperty(summaryKey) ){
 
                             //bail out if summary flagged as nonreporting
-                            if(window.currentData[targets[j]][summaryKey] == 0xDEADBEEF) continue;
+                            if(window.currentData[this.views[j]][summaryKey] == 0xDEADBEEF) continue;
 
-                            newValue = window.currentData[targets[j]][this.channelNames[i]];
+                            newValue = window.currentData[this.views[j]][this.channelNames[i]];
                             //value sought and non found, mark nonreporting:
                             if(!newValue && newValue!=0){
-                                window.currentData[targets[j]][summaryKey] = 0xDEADBEEF;
+                                window.currentData[this.views[j]][summaryKey] = 0xDEADBEEF;
                                 continue; 
                             }
 
                             //looks good, increment the sum and count of terms
-                            window.currentData[targets[j]][summaryKey][0] += newValue;
-                            window.currentData[targets[j]][summaryKey][1]++;
+                            window.currentData[this.views[j]][summaryKey][0] += newValue;
+                            window.currentData[this.views[j]][summaryKey][1]++;
                         }
                     }
 
                     //finally, go through all the summaries and turn the [sum, nNterms] pairs into averages:
                     for(i=0; i<this.channelNames.length; i++){
-                        if(this.channelNames[i].length == this.summaryDepth && window.currentData[targets[j]][this.channelNames[i]] != 0xDEADBEEF)
-                            window.currentData[targets[j]][this.channelNames[i]] = window.currentData[targets[j]][this.channelNames[i]][0] / window.currentData[targets[j]][this.channelNames[i]][1];
+                        if(this.channelNames[i].length == this.summaryDepth && window.currentData[this.views[j]][this.channelNames[i]] != 0xDEADBEEF)
+                            window.currentData[this.views[j]][this.channelNames[i]] = window.currentData[this.views[j]][this.channelNames[i]][0] / window.currentData[this.views[j]][this.channelNames[i]][1];
                     }
                 }
             },
@@ -223,7 +222,7 @@
                 //keep track of what state the view state radio is in in a convenient variable right on the detector-demo object
                 //intended for binding to the onchange of the radio.
                 this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
-                this.currentUnit = (this.currentView == 'Rate') ? 'Hz' : ((this.currentView == 'HV') ? 'V' : 'ADC Units' );
+                this.currentUnit = this.units[this.views.indexOf(this.currentView)];
 
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').value = this.min[this.currentView];
@@ -274,13 +273,7 @@
                         continue;
 
                     //fetch the most recent raw value from the currentData store:
-                    if(this.currentView == 'HV'){
-                        rawValue = window.currentData.HV[this.channelNames[i]];
-                    } else if (this.currentView == 'Threshold'){
-                        rawValue = window.currentData.threshold[this.channelNames[i]];
-                    } else if (this.currentView == 'Rate'){
-                        rawValue = window.currentData.rate[this.channelNames[i]];
-                    }
+                    rawValue = window.currentData[this.currentView][this.channelNames[i]];
 
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
@@ -327,28 +320,19 @@
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeTooltip': function(i){
-                var text, HV, thresh, rate;
+                var text, value, j;
 
                 if(i!=-1){
                     text = this.channelNames[i];
-                    text += '\nHV: ';
-                    HV = window.currentData.HV[this.channelNames[i]];
-                    if((!HV && HV!=0) || HV==0xDEADBEEF ) 
-                        text += 'Not Reporting';
-                    else
-                        text += parseFloat(HV).toFixed();
-                    text += '\nThreshold: ';
-                    thresh = window.currentData.threshold[this.channelNames[i]];
-                    if((!thresh && thresh!=0) || thresh==0xDEADBEEF ) 
-                        text += 'Not Reporting'
-                    else
-                        text += parseFloat(thresh).toFixed();
-                    text += '\nRate: ';
-                    rate = window.currentData.rate[this.channelNames[i]];
-                    if((!rate && rate!=0) || rate==0xDEADBEEF ) 
-                        text += 'Not Reporting'
-                    else
-                        text += parseFloat(rate).toFixed();
+
+                    for(j=0; j<this.views.length; j++){
+                        text += '\n'+this.views[j]+': ';
+                        value = window.currentData[this.views[j]][this.channelNames[i]];
+                        if((!value && value!=0) || value==0xDEADBEEF ) 
+                            text += 'Not Reporting';
+                        else
+                            text += parseFloat(value).toFixed();                        
+                    }
                 } else {
                     text = '';
                 }

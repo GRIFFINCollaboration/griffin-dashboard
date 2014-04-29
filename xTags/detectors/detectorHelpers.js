@@ -1,7 +1,6 @@
 function initializeDetector(name, headline, URL){
     var headWrapper = document.createElement('div')
     ,   title = document.createElement('h1')
-    ,   viewTitles = ['HV', 'Threshold', 'Rate']
     ,   drawTarget = document.createElement('div')
     ,   plotControlWrap = document.createElement('form')
     ,   plotControlTitle = document.createElement('h3')
@@ -23,6 +22,11 @@ function initializeDetector(name, headline, URL){
     ,   i, subdetectorNav, subdetectorNavLabel
 
     this.name = name;
+    //declare default views and units if none pre-defined
+    if(!this.views)
+        this.views = ['HV', 'Threshold', 'Rate'];
+    if(!this.units)
+        this.units = ['V', 'ADC Units', 'Hz'];
 
     //set up data store for detectors
     if(!window.currentData)
@@ -61,22 +65,22 @@ function initializeDetector(name, headline, URL){
     document.getElementById(this.id+'titleWrapper').appendChild(title);
     document.getElementById(this.id+'title').innerHTML = headline;
     //state nav radio
-    for(i=0; i<viewTitles.length; i++){
+    for(i=0; i<this.views.length; i++){
         subdetectorNav = document.createElement('input')
-        subdetectorNav.setAttribute('id', this.id+'goto'+viewTitles[i]);
+        subdetectorNav.setAttribute('id', this.id+'goto'+this.views[i]);
         subdetectorNav.setAttribute('class', 'subdetectorNavRadio');
         subdetectorNav.setAttribute('type', 'radio');
         subdetectorNav.setAttribute('name', this.id+'Nav');
-        subdetectorNav.setAttribute('value', viewTitles[i]);
+        subdetectorNav.setAttribute('value', this.views[i]);
         subdetectorNav.onchange = this.trackView.bind(this);
         if(i==2) subdetectorNav.setAttribute('checked', true); //default to rate view
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
         subdetectorNavLabel = document.createElement('label');
-        subdetectorNavLabel.setAttribute('id', this.id+'goto'+viewTitles[i]+'Label');
+        subdetectorNavLabel.setAttribute('id', this.id+'goto'+this.views[i]+'Label');
         subdetectorNavLabel.setAttribute('class', 'subdetectorNavLabel');
-        subdetectorNavLabel.setAttribute('for', this.id+'goto'+viewTitles[i]);
+        subdetectorNavLabel.setAttribute('for', this.id+'goto'+this.views[i]);
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
-        document.getElementById(this.id+'goto'+viewTitles[i]+'Label').innerHTML = viewTitles[i];
+        document.getElementById(this.id+'goto'+this.views[i]+'Label').innerHTML = this.views[i];
     }
     //plot deck wrapper:
     deckWrap.setAttribute('id', this.id+'DeckWrap');
@@ -178,6 +182,15 @@ function initializeDetector(name, headline, URL){
     //Scale Parameters
     ///////////////////////////
     this.scale = 'ROOT Rainbow';
+    this.min = {};
+    this.max = {};
+    this.scaleType = {};
+    for(i=0; i<this.views.length; i++){
+        this.min[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'min'), 0);
+        this.max[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'max'), 3000);
+        this.scaleType[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'scaleType'), 'lin');
+    }
+/*
     this.min = {HV: canHas(localStorage.getItem(name+'HVmin'), 0), 
                 Threshold: canHas(localStorage.getItem(name+'Thresholdmin'), 0), 
                 Rate: canHas(localStorage.getItem(name+'Ratemin'), 0)
@@ -190,7 +203,7 @@ function initializeDetector(name, headline, URL){
                         Threshold: canHas(localStorage.getItem(name+'ThresholdscaleType'), 'lin'), 
                         Rate: canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
                     };
-
+*/
     //if anything was in local storage, communicate this to the UI:
     plotControlMin.value = this.min[this.currentView];
     plotControlMax.value = this.max[this.currentView];
@@ -279,14 +292,14 @@ function fetchODBEquipment(returnObj){
 function parseRate(data){
     var key, subkey;
 
-    if(!window.currentData.rate)
-        window.currentData.rate = {};
+    if(!window.currentData.Rate)
+        window.currentData.Rate = {};
 
     for(key in data){
         if (data.hasOwnProperty(key)) {
             for(subkey in data[key]){
                 if(data[key].hasOwnProperty(subkey)){
-                    window.currentData.rate[subkey.toUpperCase().slice(0,10)] = data[key][subkey].TRIGREQ;
+                    window.currentData.Rate[subkey.toUpperCase().slice(0,10)] = data[key][subkey].TRIGREQ;
                 }
             }
         }
@@ -296,12 +309,12 @@ function parseRate(data){
 //similar function for the threshold service:
 function parseThreshold(data){
     var key;
-    if(!window.currentData.threshold)
-        window.currentData.threshold = {};
+    if(!window.currentData.Threshold)
+        window.currentData.Threshold = {};
 
     if(data['parameters']['thresholds']){
         for(key in data['parameters']['thresholds']){
-            window.currentData.threshold[key.toUpperCase().slice(0,10)] = data['parameters']['thresholds'][key];
+            window.currentData.Threshold[key.toUpperCase().slice(0,10)] = data['parameters']['thresholds'][key];
         }        
     }    
 }
