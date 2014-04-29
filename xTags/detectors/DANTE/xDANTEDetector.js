@@ -69,7 +69,7 @@
                     cardIndex = 0; //simple, only one card
 
                     X = this.detCenterX[i];
-                    Y = this.detCentery[i];
+                    Y = this.detCenterY[i];
 
                     //BGO
                     this.cells['DAS0'+i+'XN00X'] = new Kinetic.Circle({
