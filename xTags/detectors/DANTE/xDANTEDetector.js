@@ -124,7 +124,7 @@
                     this.cells[this.channelNames[8+i]].on('click', this.clickCell.bind(this, this.channelNames[8+i]) );
 
                     //add the cell to the main layer
-                    //this.mainLayer[cardIndex].add(this.cells[this.channelNames[8+i]]);
+                    this.mainLayer[cardIndex].add(this.cells[this.channelNames[8+i]]);
                     this.mainLayer[cardIndex].add(mask[i]);
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                     
