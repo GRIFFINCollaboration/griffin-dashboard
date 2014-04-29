@@ -301,9 +301,9 @@
 
                     //no value reporting, show error pattern
                     } else{
-                        this.cells[this.channelNames[i]].filters([]);
+                        //this.cells[this.channelNames[i]].filters([]);
                         //this.cells[this.channelNames[i]].setAttr('fillPaternImage', this.errorPattern)
-                        this.cells[this.channelNames[i]].setFillPriority('pattern')
+                        //this.cells[this.channelNames[i]].setFillPriority('pattern')
                     }
                 }
             },
