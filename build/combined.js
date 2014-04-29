@@ -15712,7 +15712,7 @@ var Kinetic = {};
 
                     //no value reporting, show error pattern
                     } else{
-                        this.cells[this.channelNames[i]].clearFilter()
+                        //this.cells[this.channelNames[i]].clearFilter()
                         this.cells[this.channelNames[i]].setFillPriority('pattern')
                     }
                 }
