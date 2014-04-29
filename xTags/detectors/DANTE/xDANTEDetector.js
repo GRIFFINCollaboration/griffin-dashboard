@@ -61,7 +61,7 @@
         }, 
         methods: {
             'instantiateCells': function(){
-                var i, cardIndex, X, Y, mask = [], bkgRing;
+                var i, cardIndex, X, Y, mask = [], bkgRing, westLabel, eastLabel;
 
                 //draw background rings:
                 for(i=0; i<2; i++){
@@ -69,7 +69,7 @@
                         radius: this.ringRad,
                         x: (i==0) ? this.westCenterX : this.eastCenterX,
                         y: (i==0) ? this.westCenterY : this.eastCenterY,
-                        stroke: this.frameColor,
+                        stroke: '#999999',
                         strokeWidth: this.frameLineWidth
                     })
                     this.mainLayer[0].add(bkgRing);
@@ -141,6 +141,33 @@
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                     
                 }
+
+                //labels
+                westLabel = new Kinetic.Text({
+                    x: 0,
+                    y: 0,
+                    text: 'West Ring',
+                    fontSize: 28,
+                    fontFamily: 'Arial',
+                    fill: '#999999'
+                });
+                this.mainLayer[0].add(westLabel);
+                //center label nicely
+                westLabel.setAttr('x', this.westCenterX - westLabel.getTextWidth()/2);
+                westLabel.setAttr('y', 0.8*this.height - westLabel.getTextHeight());
+
+                eastLabel = new Kinetic.Text({
+                    x: 0,
+                    y: 0,
+                    text: 'East Ring',
+                    fontSize: 28,
+                    fontFamily: 'Arial',
+                    fill: '#999999'
+                });
+                this.mainLayer[0].add(eastLabel);
+                //center label nicely
+                eastLabel.setAttr('x', this.eastCenterX - eastLabel.getTextWidth()/2);
+                eastLabel.setAttr('y', 0.8*this.height - eastLabel.getTextHeight());
 
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
