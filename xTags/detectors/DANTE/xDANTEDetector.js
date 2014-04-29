@@ -88,7 +88,7 @@
 
                     //center mask (so BGO appears as annulus)
                     mask[i] = new Kinetic.Circle({
-                        radius: this.innerBGORad,
+                        radius: this.innerBGOrad,
                         x: X,
                         y: Y,
                         fill: '#222222',
