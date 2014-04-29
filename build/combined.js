@@ -16310,7 +16310,7 @@ var Kinetic = {};
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth
                     });
-
+console.log(mask)
                     //LaBr
                     this.cells['DAL0'+(i+1)+'XN00X'] = new Kinetic.Circle({
                         radius: this.LaBrRad,
