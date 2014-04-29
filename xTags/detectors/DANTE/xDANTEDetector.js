@@ -74,6 +74,8 @@
                     //BGO
                     this.cells['DAS0'+(i+1)+'XN00X'] = new Kinetic.Circle({
                         radius: this.outerBGORad,
+                        x: X,
+                        y: Y,
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
@@ -87,6 +89,8 @@
                     //center mask (so BGO appears as annulus)
                     mask = new Kinetic.Circle({
                         radius: this.innerBGORad,
+                        x: X,
+                        y: Y,
                         fill: '#222222',
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
@@ -97,6 +101,8 @@
                     //LaBr
                     this.cells['DAL0'+(i+1)+'XN00X'] = new Kinetic.Circle({
                         radius: this.LaBrRad,
+                        x: X,
+                        y: Y,
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
