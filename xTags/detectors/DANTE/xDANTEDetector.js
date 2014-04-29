@@ -24,8 +24,8 @@
                 //DANTE specific drawing parameters
                 //////////////////////////////////////
                 this.outerBGORad = 0.1*0.8*this.height;
-                this.innerBGOrad = 0.09*0.8*this.height;
-                this.LaBrRad = 0.06*0.8*this.height;
+                this.innerBGOrad = 0.08*0.8*this.height;
+                this.LaBrRad = 0.05*0.8*this.height;
                 this.ringRad = Math.min(0.3*this.height, 0.5*0.45*this.width - this.outerBGORad);
                 this.westCenterX = this.ringRad+this.outerBGORad;
                 this.westCenterY = 0.4*this.height;
@@ -61,7 +61,19 @@
         }, 
         methods: {
             'instantiateCells': function(){
-                var i, cardIndex, X, Y, mask = [];
+                var i, cardIndex, X, Y, mask = [], bkgRing;
+
+                //draw background rings:
+                for(i=0; i<2; i++){
+                    bkgRing = new Kinetic.Circle({
+                        radius: this.ringRad,
+                        x: (i==0) ? this.westCenterX : this.eastCenterX,
+                        y: (i==0) ? this.westCenterY : this.eastCenterY,
+                        stroke: this.frameColor,
+                        strokeWidth: this.frameLineWidth
+                    })
+                    this.mainLayer[0].add(bkgRing);
+                }
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<8; i++){
