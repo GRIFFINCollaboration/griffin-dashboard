@@ -93,9 +93,7 @@
                         y: Y,
                         fill: '#222222',
                         stroke: this.frameColor,
-                        strokeWidth: this.frameLineWidth,
-                        closed: true,
-                        listening: false
+                        strokeWidth: this.frameLineWidth
                     });
 
                     //LaBr
