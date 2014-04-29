@@ -72,7 +72,7 @@
                     Y = this.detCenterY[i];
 
                     //BGO
-                    this.cells['DAS0'+i+'XN00X'] = new Kinetic.Circle({
+                    this.cells['DAS0'+(i+1)+'XN00X'] = new Kinetic.Circle({
                         radius: this.outerBGORad,
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
@@ -95,7 +95,7 @@
                     });
 
                     //LaBr
-                    this.cells['DAL0'+i+'XN00X'] = new Kinetic.Circle({
+                    this.cells['DAL0'+(i+1)+'XN00X'] = new Kinetic.Circle({
                         radius: this.LaBrRad,
                         fill: '#000000',
                         fillPatternImage: this.errorPattern,
@@ -108,12 +108,12 @@
                     });
 
                     //set up the tooltip listeners:
-                    this.cells['DAS0'+i+'XN00X'].on('mouseover', this.writeTooltip.bind(this, 8+i) );
-                    this.cells['DAL0'+i+'XN00X'].on('mouseover', this.writeTooltip.bind(this, i) );
-                    this.cells['DAS0'+i+'XN00X'].on('mousemove', this.moveTooltip.bind(this) );
-                    this.cells['DAL0'+i+'XN00X'].on('mousemove', this.moveTooltip.bind(this) );
-                    this.cells['DAS0'+i+'XN00X'].on('mouseout', this.writeTooltip.bind(this, -1));
-                    this.cells['DAL0'+i+'XN00X'].on('mouseout', this.writeTooltip.bind(this, -1));
+                    this.cells['DAS0'+(i+1)+'XN00X'].on('mouseover', this.writeTooltip.bind(this, 8+i) );
+                    this.cells['DAL0'+(i+1)+'XN00X'].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.cells['DAS0'+(i+1)+'XN00X'].on('mousemove', this.moveTooltip.bind(this) );
+                    this.cells['DAL0'+(i+1)+'XN00X'].on('mousemove', this.moveTooltip.bind(this) );
+                    this.cells['DAS0'+(i+1)+'XN00X'].on('mouseout', this.writeTooltip.bind(this, -1));
+                    this.cells['DAL0'+(i+1)+'XN00X'].on('mouseout', this.writeTooltip.bind(this, -1));
 
                     //set up onclick listeners:
                     this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
