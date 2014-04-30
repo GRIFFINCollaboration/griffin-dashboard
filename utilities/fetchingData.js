@@ -42,3 +42,10 @@ function repopulate(callback){
     if(callback)
         callback();
 }
+
+//(re)start the data fetching loop
+function rebootFetch(){
+    clearInterval(window.masterLoop);
+    assembleData(repopulate);
+    window.masterLoop = window.setInterval(assembleData.bind(null, repopulate), 3000);
+} 

@@ -13,7 +13,7 @@ widget-status h2{
 	margin-top: 0;
 }
 
-widget-status input{
+widget-status button{
 	font-size: 120%;
 	line-height: 1em;
 	border-radius: 5px;

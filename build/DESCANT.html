@@ -12,8 +12,8 @@
 
 			<div id='mainContent'>
 				<widget-nav id='navBar'></widget-nav>
-				<widget-status id='statusBar'></widget-status>
-				<detector-DESCANT id='DESCANT' rateServer="http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate", thresholdServer="http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold"></detector-DESCANT>
+				<widget-status id='statusBar' MIDAS='annikal.triumf.ca:8082'></widget-status>
+				<detector-DESCANT id='DESCANT' MIDAS='annikal.triumf.ca:8082' rateServer="http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate", thresholdServer="http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold"></detector-DESCANT>
 				<!--widget-spectrumViewer id='spectrumViewer'></widget-spectrumViewer-->
 			</div>
 
@@ -25,8 +25,7 @@
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
 				//begin data fetch loop:
-				assembleData(repopulate)
-				window.setInterval(assembleData.bind(null, repopulate), 3000);
+				rebootFetch();
 			});
 		</script>
 

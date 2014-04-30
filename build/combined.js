@@ -491,7 +491,14 @@ function repopulate(callback){
 
     if(callback)
         callback();
-}/*
+}
+
+//(re)start the data fetching loop
+function rebootFetch(){
+    clearInterval(window.masterLoop);
+    assembleData(repopulate);
+    window.masterLoop = window.setInterval(assembleData.bind(null, repopulate), 3000);
+} /*
 Copyright (c) 2014 Bill Mills
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -16401,7 +16408,7 @@ var Kinetic = {};
             created: function() {
                 var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
-                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
+                            'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
                             i, index;
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
@@ -16463,6 +16470,9 @@ var Kinetic = {};
 
         },
         accessors: {
+            'MIDAS':{
+                attribute: {} //this just needs to be declared
+            },
             'rateServer':{
                 attribute: {} //this just needs to be declared
             },
@@ -17297,16 +17307,16 @@ function parseCustomPages(data){
                 ,   startTime = document.createElement('li')
                 ,   upTime = document.createElement('li')
                 ,   stopTime = document.createElement('li')
-                ,   runControl = document.createElement('form')
-                ,   start = document.createElement('input')
-                ,   stop = document.createElement('input')
-                ,   pause = document.createElement('input')
-                ,   resume = document.createElement('input')
-                ,   redirectKludge = document.createElement('input')
+                ,   runControl = document.createElement('div')
+                ,   start = document.createElement('button')
+                ,   stop = document.createElement('button')
+                ,   pause = document.createElement('button')
+                ,   resume = document.createElement('button')
+                ,   redirectKludge = document.createElement('button')
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
                 ,   i
-                ,   URL = 'http://'+window.location.host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
+                ,   URL = 'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
 
                 //make sure data store is available
                 if(!window.currentData)
@@ -17341,38 +17351,24 @@ function parseCustomPages(data){
                 this.appendChild(runControl);
 
                 start.setAttribute('id', 'statusStart');
-                start.setAttribute('name', 'cmd');
-                start.setAttribute('type', 'submit');
-                start.setAttribute('value', 'Start');
+                start.setAttribute('onclick', 'runTransition("'+this.MIDAS+'", "Start")');
                 document.getElementById('runControl').appendChild(start);
                 document.getElementById('statusStart').innerHTML = 'Start';
 
                 stop.setAttribute('id', 'statusStop');
-                stop.setAttribute('name', 'cmd');
-                stop.setAttribute('type', 'submit');
-                stop.setAttribute('value', 'Stop');
+                stop.setAttribute('onclick', 'runTransition("'+this.MIDAS+'", "Stop")');
                 document.getElementById('runControl').appendChild(stop);
                 document.getElementById('statusStop').innerHTML = 'Stop';
 
                 pause.setAttribute('id', 'statusPause');
-                pause.setAttribute('name', 'cmd');
-                pause.setAttribute('type', 'submit');
-                pause.setAttribute('value', 'Pause');
+                pause.setAttribute('onclick', 'runTransition("'+this.MIDAS+'", "Pause")');
                 document.getElementById('runControl').appendChild(pause);
                 document.getElementById('statusPause').innerHTML = 'Pause';
 
                 resume.setAttribute('id', 'statusResume');
-                resume.setAttribute('name', 'cmd');
-                resume.setAttribute('type', 'submit');
-                resume.setAttribute('value', 'Resume');
+                resume.setAttribute('onclick', 'runTransition("'+this.MIDAS+'", "Resume")');
                 document.getElementById('runControl').appendChild(resume);
                 document.getElementById('statusResume').innerHTML = 'Resume';
-
-                redirectKludge.setAttribute('id', 'statusRedirect');
-                redirectKludge.setAttribute('name', 'redir');
-                redirectKludge.setAttribute('type', 'hidden');
-                redirectKludge.setAttribute('value', 'http://annikal.triumf.ca:8082/CS/Dashboard')
-                document.getElementById('runControl').appendChild(redirectKludge)
 
                 //message list
                 messageList.setAttribute('id', 'statusMessageList');
@@ -17404,7 +17400,9 @@ function parseCustomPages(data){
 
         },
         accessors: {
-
+            'MIDAS':{
+                attribute: {} //this just needs to be declared
+            }
         }, 
         methods: {
 
@@ -17460,11 +17458,7 @@ function parseCustomPages(data){
                     document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
                 }
 
-
-                messages = ODBGetMsg(5);
-                for(i=0; i<5; i++){
-                    document.getElementById('statusMessage'+i).innerHTML = messages[4-i];
-                }
+                ODBGetMsg(this.MIDAS, 5);                
                 
             }
         }
@@ -17478,6 +17472,53 @@ function fetchODBrunControl(returnObj){
         window.currentData.ODB = {};
     window.currentData.ODB.Experiment = returnObj[0];
     window.currentData.ODB.Runinfo = returnObj[1];
+}
+
+//run control
+function runTransition(host,command){
+    
+    var xmlhttp = new XMLHttpRequest(),
+        cmd;
+
+    //Start is too dumb to know how to increment the run number by itself :/
+    if(command == 'Start'){
+        cmd = command + '&value=' + (window.currentData.ODB.Runinfo['Run number']+1)
+    } else
+        cmd = command;
+
+    //once this is all dealt with, refresh the display immediately
+    xmlhttp.onreadystatechange = function(){
+        if(this.readyState == 4)
+            rebootFetch();
+    }
+
+    //fire
+    xmlhttp.open('GET', 'http://'+host+'/?cmd='+cmd, false);
+    xmlhttp.send();
+    
+}
+
+//message fetch
+function ODBGetMsg(host, n){
+    var xmlhttp = new XMLHttpRequest();
+
+    //once this is all dealt with, refresh the display immediately
+    xmlhttp.onreadystatechange = function(){
+        var i, messages;
+
+        if(this.readyState == 4){
+            messages = this.responseText.split('\n');
+            for(i=0; i<messages.length; i++){
+                document.getElementById('statusMessage'+i).innerHTML = messages[messages.length-1-i];
+            }
+        }
+            
+    }
+
+    //fire
+    xmlhttp.open('GET', 'http://'+host+'/?cmd=jmsg&n='+n, false);
+    xmlhttp.send();
+
 }(function(){  
 
     xtag.register('detector-TIGRESS', {

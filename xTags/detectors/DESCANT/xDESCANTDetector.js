@@ -7,7 +7,7 @@
             created: function() {
                 var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
-                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
+                            'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
                             i, index;
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
@@ -69,6 +69,9 @@
 
         },
         accessors: {
+            'MIDAS':{
+                attribute: {} //this just needs to be declared
+            },
             'rateServer':{
                 attribute: {} //this just needs to be declared
             },
