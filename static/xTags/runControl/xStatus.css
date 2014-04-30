@@ -1,0 +1,44 @@
+widget-status{
+	float:left;
+	background: #333333;
+	border-radius: 1em;
+	padding: 1em;
+	margin: 1em;
+	max-width: 20%;
+
+	clear:both;
+}
+
+widget-status h2{
+	margin-top: 0;
+}
+
+widget-status button{
+	font-size: 120%;
+	line-height: 1em;
+	border-radius: 5px;
+	cursor:pointer;
+	margin: 1em 1px 0em 1px;
+	padding: 0.5em;
+	border:0px;
+	color:#EEEEEE;
+	background-color: #222222;
+}
+
+widget-status input:hover{
+	background-color: #555555;
+}
+
+widget-status ul#statusMessageList{
+	margin-top: 1em;
+	
+}
+
+widget-status ul#statusMessageList li{
+	line-height: 1.2em;
+	padding: 0.5em;
+}
+
+widget-status ul#statusMessageList li:nth-child(odd){
+	background-color: #222222
+}

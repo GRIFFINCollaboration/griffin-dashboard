@@ -1,0 +1,101 @@
+/*//////////////////////////////////////
+CSS Reset///////////////////////////////
+//////////////////////////////////////*/
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font-family: sans-serif;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+select{
+    -webkit-appearance:none;
+    -moz-appearance:none;
+	appearance:none;
+}
+
+/*Enforce more intuitive box-sizing, suppress selection*/
+* { 
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+	box-sizing: border-box; 
+	-webkit-user-select:none;
+	-moz-user-select:none;
+}
+
+body {
+	min-width: 1120px;
+	background-color: #222222;
+	color: #DDDDDD;
+
+}
+
+/*Main content*/
+div#mainContent{
+	display:inline-block; 
+	width:100%
+}
+
+/*Footer and footer-related styles////////////////////////////////////////////////////*/
+div#footer{
+    background-color: #111111;
+    text-align: center;
+    font: 120%;
+    color: #DDDDDD;
+    padding-left: calc((100% - 1120px) / 2);
+    padding-right: calc((100% - 1120px) / 2);
+    padding-bottom: 50px;
+    height: 350px
+}
+
+div#push{
+	height:350px;
+}
+
+div#wrapper{
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -350px;
+}

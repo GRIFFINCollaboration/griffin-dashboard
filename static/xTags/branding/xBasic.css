@@ -1,0 +1,71 @@
+/*Header banner/////////////////////////////////////////*/
+#header{
+	background-color: #111111;
+    padding-left: calc((100% - 1120px) / 2);
+    padding-right: calc((100% - 1120px) / 2);
+    padding-top:1em;
+    padding-bottom:1em;
+}
+
+img#logo{
+	float:left;
+}
+
+h1#headline, h2#subline{
+	margin: 0px;
+	display: table;
+}
+
+h1#headline{
+	font-size: 400%;
+}
+
+h2#subline{
+	font-size: 200%;
+}
+
+/*Footer styles*/
+div#footer table{
+    margin-left:0px;
+    margin-top:1.5em;
+}
+
+div#footer div.textBlock{
+    float: left;
+    margin-top:33px;
+}
+
+div#footer p{
+    text-align: left;
+    line-height: 1.5em;
+}
+
+div#footer table td{
+    padding: 0px 40px 0px 00px;
+}
+
+div#footer h3{
+	font-size: 150%;
+}
+
+div#footer a{
+    text-decoration: none !important;
+    color: #999999;
+} 
+
+div#footer a:hover{
+    color: #EEEEEE !important;
+}
+    
+div#footer a:visited{
+    color: #999999;
+}
+
+canvas#footerImage{
+    position: absolute;
+    right:calc((100% - 1120px) / 2);
+}
+
+img#gitLogo{
+	margin-bottom:3px;
+}

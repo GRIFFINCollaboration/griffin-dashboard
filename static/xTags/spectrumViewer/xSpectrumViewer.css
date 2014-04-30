@@ -1,0 +1,23 @@
+widget-spectrumViewer{
+	float:right;
+	background: #333333;
+	border-radius: 1em;
+	padding: 1em;
+	margin: 1em 1em 1em 0;
+	width: 18%;
+}
+
+widget-spectrumViewer h2{
+	margin-top: 0px;
+}
+
+widget-spectrumViewer select{
+	margin-top: 1em;
+	padding: 0.5em;
+	font-size: 120%;
+	line-height: 1em;
+	color: #EEEEEE;
+	background-color: #222222;
+	border: 0px;
+}
+
