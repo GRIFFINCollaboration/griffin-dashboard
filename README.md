@@ -21,7 +21,7 @@ npm install express
 node server.js
 ```
 
-And voila!  Visit `host:port/whatever.html` to see any of the pages living in `/static`.
+And voila!  Visit `host:3000/whatever.html` to see any of the pages living in `/static`.
 
 
 ##For Developers
