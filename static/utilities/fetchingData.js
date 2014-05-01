@@ -11,7 +11,7 @@ function assembleData(callback) {
         //refetch the ith repo:
         script = document.createElement('script');
         script.setAttribute('src', window.fetchURL[i]);
-
+        script.setAttribute('async', true);
         script.setAttribute('id', 'tempScript'+i);
 
         //only do the callback on the last script

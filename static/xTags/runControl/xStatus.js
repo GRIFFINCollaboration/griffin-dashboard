@@ -19,8 +19,7 @@
                 ,   redirectKludge = document.createElement('button')
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
-                ,   i
-                ,   URL = 'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-p-nokeys&callback=fetchODBrunControl';
+                ,   i;
 
                 //make sure data store is available
                 if(!window.currentData)
@@ -83,13 +82,6 @@
                     document.getElementById('statusMessageList').appendChild(messages[i]);
                 }
 
-                //append data location information to list of URLs to fetch from:
-                if(!window.fetchURL)
-                    window.fetchURL = [];
-                if(window.fetchURL.indexOf(URL) == -1){
-                    window.fetchURL[window.fetchURL.length] = URL;
-                }
-
                 //let repopulate know that the status bar would like to be updated every loop:
                 if(!window.refreshTargets)
                     window.refreshTargets = [];
@@ -111,59 +103,8 @@
         methods: {
 
             'update': function(){
-                var i,
-                    date = new Date(),
-                    now, uptime, hours, minutes, seconds,
-                    runNumber, stoptime,
-                    messages;
-
-                //check to make sure the requisite buffers exist:
-                if(!window.currentData.ODB.Experiment || !window.currentData.ODB.Runinfo) return;
-
-                runNumber = 'Run ' + window.currentData.ODB.Runinfo['Run number'];
-                //show different stuff depending on run state:
-                if(window.currentData.ODB.Runinfo.State == 1){
-                    //run is stopped
-                    runNumber += ' Stopped';
-                    document.getElementById('statusStart').style.display = 'inline';
-                    document.getElementById('statusStop').style.display = 'none';
-                    document.getElementById('statusPause').style.display = 'none';
-                    document.getElementById('statusResume').style.display = 'none';
-                    stoptime = 'Stopped ' + window.currentData.ODB.Runinfo['Stop time'];
-                } else if(window.currentData.ODB.Runinfo.State == 2){
-                    //run is paused
-                    runNumber += ' Paused';
-                    document.getElementById('statusStart').style.display = 'none';
-                    document.getElementById('statusStop').style.display = 'none';
-                    document.getElementById('statusPause').style.display = 'none';
-                    document.getElementById('statusResume').style.display = 'inline';
-                } else if(window.currentData.ODB.Runinfo.State == 3){
-                    //run is live
-                    runNumber += ' Live';
-                    document.getElementById('statusStart').style.display = 'none';
-                    document.getElementById('statusStop').style.display = 'inline';
-                    document.getElementById('statusPause').style.display = 'inline';
-                    document.getElementById('statusResume').style.display = 'none';
-                }
-
-                //data is present if we get this far, stick it in the correct DOM elements:
-                document.getElementById('statusTitle').innerHTML = window.currentData.ODB.Experiment.Name;
-                document.getElementById('statusRunNumber').innerHTML = runNumber;
-                document.getElementById('statusStartTime').innerHTML = 'Started ' + window.currentData.ODB.Runinfo['Start time'];
-                if(stoptime)
-                    document.getElementById('statusUpTime').innerHTML = stoptime;
-                else{
-                    //calculate uptime:
-                    now = date.getTime() / 1000;
-                    uptime = now - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
-                    hours = Math.floor(uptime / 3600);
-                    minutes = Math.floor( (uptime%3600)/60 );
-                    seconds = Math.floor(uptime%60);
-                    document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
-                }
-
+                getRunSummary(this.MIDAS);
                 ODBGetMsg(this.MIDAS, 5);                
-                
             }
         }
     });
@@ -218,9 +159,82 @@ function ODBGetMsg(host, n){
         }
             
     }
-
-    //fire
-    xmlhttp.open('GET', 'http://'+host+'/?cmd=jmsg&n='+n, false);
+    //fire async
+    xmlhttp.open('GET', 'http://'+host+'/?cmd=jmsg&n='+n);
     xmlhttp.send();
+}
 
+//run summary fetch
+function getRunSummary(host){
+    var xmlhttp = new XMLHttpRequest();
+
+    //once this is all dealt with, refresh the display immediately
+    xmlhttp.onreadystatechange = function(){
+        var data,
+            i,
+            date = new Date(),
+            now, uptime, hours, minutes, seconds,
+            runNumber, stoptime,           
+            messages;
+
+        if(this.readyState == 4){
+            //register the new data
+            data = JSON.parse(this.responseText);
+            if(!window.currentData.ODB)
+                window.currentData.ODB = {};
+            window.currentData.ODB.Experiment = data[0];
+            window.currentData.ODB.Runinfo = data[1];
+
+            //check to make sure the requisite buffers exist before populating all the fields
+            if(window.currentData.ODB.Experiment && window.currentData.ODB.Runinfo){
+
+                runNumber = 'Run ' + window.currentData.ODB.Runinfo['Run number'];
+                //show different stuff depending on run state:
+                if(window.currentData.ODB.Runinfo.State == 1){
+                    //run is stopped
+                    runNumber += ' Stopped';
+                    document.getElementById('statusStart').style.display = 'inline';
+                    document.getElementById('statusStop').style.display = 'none';
+                    document.getElementById('statusPause').style.display = 'none';
+                    document.getElementById('statusResume').style.display = 'none';
+                    stoptime = 'Stopped ' + window.currentData.ODB.Runinfo['Stop time'];
+                } else if(window.currentData.ODB.Runinfo.State == 2){
+                    //run is paused
+                    runNumber += ' Paused';
+                    document.getElementById('statusStart').style.display = 'none';
+                    document.getElementById('statusStop').style.display = 'none';
+                    document.getElementById('statusPause').style.display = 'none';
+                    document.getElementById('statusResume').style.display = 'inline';
+                } else if(window.currentData.ODB.Runinfo.State == 3){
+                    //run is live
+                    runNumber += ' Live';
+                    document.getElementById('statusStart').style.display = 'none';
+                    document.getElementById('statusStop').style.display = 'inline';
+                    document.getElementById('statusPause').style.display = 'inline';
+                    document.getElementById('statusResume').style.display = 'none';
+                }
+
+                //data is present if we get this far, stick it in the correct DOM elements:
+                document.getElementById('statusTitle').innerHTML = window.currentData.ODB.Experiment.Name;
+                document.getElementById('statusRunNumber').innerHTML = runNumber;
+                document.getElementById('statusStartTime').innerHTML = 'Started ' + window.currentData.ODB.Runinfo['Start time'];
+                if(stoptime)
+                    document.getElementById('statusUpTime').innerHTML = stoptime;
+                else{
+                    //calculate uptime:
+                    now = date.getTime() / 1000;
+                    uptime = now - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
+                    hours = Math.floor(uptime / 3600);
+                    minutes = Math.floor( (uptime%3600)/60 );
+                    seconds = Math.floor(uptime%60);
+                    document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
+                }
+            }
+
+        }
+            
+    }
+    //fire async
+    xmlhttp.open('GET', 'http://'+host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-nokeys');
+    xmlhttp.send();
 }

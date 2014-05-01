@@ -12,7 +12,7 @@
 			<div id='mainContent'>
 				<!--widget-nav id='navBar'></widget-nav-->
 				<widget-status id='statusBar' MIDAS='annikal.triumf.ca:8082'></widget-status>
-				<detector-SCEPTAR id='SCEPTAR' MIDAS='annikal.triumf.ca:8082' rateServer="http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate", thresholdServer="http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold" auxiliary='S2'></detector-SCEPTAR>
+				<detector-SCEPTAR id='SCEPTAR' MIDAS='annikal.triumf.ca:8082' rateServer="http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate", thresholdServer="http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold"></detector-SCEPTAR>
 			</div>
 
 			<div id='push'></div>
@@ -23,8 +23,7 @@
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
 				//begin data fetch loop:
-				assembleData(repopulate)
-				window.setInterval(assembleData.bind(null, repopulate), 3000);
+				rebootFetch();
 			});
 		</script>
 
