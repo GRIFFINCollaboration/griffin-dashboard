@@ -16228,7 +16228,7 @@ var Kinetic = {};
             created: function() {
                 var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
-                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
+                            'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
@@ -16274,6 +16274,9 @@ var Kinetic = {};
 
         },
         accessors: {
+            'MIDAS':{
+                attribute: {} //this just needs to be declared
+            },
             'rateServer':{
                 attribute: {} //this just needs to be declared
             },
@@ -16647,7 +16650,7 @@ function parseCustomPages(data){
             created: function() {
                 var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
-                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
+                            'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
                     i,j;
 
                 //deploy the standard stuff
@@ -16717,6 +16720,9 @@ function parseCustomPages(data){
 
         },
         accessors: {
+            'MIDAS':{
+                attribute: {} //this just needs to be declared
+            },
             'rateServer':{
                 attribute: {} //this just needs to be declared
             },
@@ -17014,7 +17020,7 @@ function parseCustomPages(data){
             created: function() {
                 var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
-                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
+                            'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
                     i,j,chan=0;
 
                 //deploy the standard stuff
@@ -17075,6 +17081,9 @@ function parseCustomPages(data){
 
         },
         accessors: {
+            'MIDAS':{
+                attribute: {} //this just needs to be declared
+            },
             'rateServer':{
                 attribute: {} //this just needs to be declared
             },
@@ -17531,7 +17540,7 @@ function ODBGetMsg(host, n){
                     //throw in URLs while we're at it:
                     URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
-                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
+                            'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
                 //put these ones on the object, since we'll need them later
                 this.HPGEprefixes = [];
                 this.BGOprefixes = [];
@@ -17599,6 +17608,9 @@ function ODBGetMsg(host, n){
 
         },
         accessors: {
+            'MIDAS':{
+                attribute: {} //this just needs to be declared
+            },
             'rateServer':{
                 attribute: {} //this just needs to be declared
             },
@@ -17946,7 +17958,7 @@ function ODBGetMsg(host, n){
             created: function() {
                 var URLs = [this.thresholdServer,    //threshold server
                             this.rateServer,             //rate server
-                            'http://'+window.location.host+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
+                            'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
@@ -17982,6 +17994,9 @@ function ODBGetMsg(host, n){
 
         },
         accessors: {
+            'MIDAS':{
+                attribute: {} //this just needs to be declared
+            },
             'rateServer':{
                 attribute: {} //this just needs to be declared
             },
