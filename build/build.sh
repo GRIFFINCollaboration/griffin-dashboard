@@ -14,6 +14,7 @@ cp ../static/xTags/detectors/SPICE/* .
 cp ../static/xTags/detectors/SHARC/* .
 cp ../static/xTags/detectors/DESCANT/* .
 cp ../static/xTags/detectors/DANTE/* .
+cp ../static/xTags/detectors/SCEPTAR/* .
 cp ../static/xTags/spectrumViewer/* .
 cp ../static/xTags/nav/* .
 if [ -e combined.js ]; then rm combined.js; fi
