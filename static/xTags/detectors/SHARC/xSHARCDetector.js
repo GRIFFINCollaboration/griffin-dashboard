@@ -14,11 +14,19 @@
                 //deploy the standard stuff
                 this.viewNames = ['SHARC', 'SHQ01', 'SHQ02', 'SHQ03', 'SHQ04', 'SHB05', 'SHB06', 'SHB07', 'SHB08', 'SHB09', 'SHB10', 'SHB11', 'SHB12', 'SHQ13', 'SHQ14', 'SHQ15', 'SHQ16'];
 
+                //first 32 are summaries; next 16 are pads (no summary required); rest are individual channels.
                 this.channelNames = [   'SHQ01DN', 'SHQ02DN', 'SHQ03DN', 'SHQ04DN', 'SHQ13DN', 'SHQ14DN', 'SHQ15DN', 'SHQ16DN',
                                         'SHQ01DP', 'SHQ02DP', 'SHQ03DP', 'SHQ04DP', 'SHQ13DP', 'SHQ14DP', 'SHQ15DP', 'SHQ16DP',
                                         'SHB05DP', 'SHB06DP', 'SHB07DP', 'SHB08DP', 'SHB05DN', 'SHB06DN', 'SHB07DN', 'SHB08DN',
                                         'SHB09DP', 'SHB10DP', 'SHB11DP', 'SHB12DP', 'SHB09DN', 'SHB10DN', 'SHB11DN', 'SHB12DN'
                                     ];
+                //pads:
+                this.channelNames = this.channelNames.concat([  'SHQ01EP00X', 'SHQ02EP00X', 'SHQ03EP00X', 'SHQ04EP00X',
+                                            'SHQ13EP00X', 'SHQ14EP00X', 'SHQ15EP00X', 'SHQ16EP00X',
+                                            'SHB05EP00X', 'SHB06EP00X', 'SHB07EP00X', 'SHB08EP00X',
+                                            'SHB09EP00X', 'SHB10EP00X', 'SHB11EP00X', 'SHB12EP00X'
+                    ]);
+                
                 //generate individual channel names from summary names explicity stated
                 for(i=0; i<32; i++){
                     //SHQ back
@@ -49,7 +57,7 @@
                 //summary view
                 this.theta = Math.atan(0.8*this.height / this.width * 2) //angle with horizontal that beam axis will make
                 this.diag = 0.8*this.height / Math.sin(this.theta) //length of beam axis on a half-diagram
-                this.grid = Math.min(this.width/2/7, this.diag/9); //grid separation of layers, make sure it fits
+                this.grid = Math.min(this.width/2/9, this.diag/11); //grid separation of layers, make sure it fits
                 this.long = 1.8*this.grid*Math.sin(this.theta);  //long parallelogram side
                 this.short = this.long/2; //short parallelogram side
                 this.rad = this.grid/2;   //SHQ radius
@@ -103,12 +111,16 @@
                     downstreamSHQfrontCenterY = -downstreamBoxCenterY - 2*this.grid*Math.tan(this.theta),
                     downstreamSHQbackCenterX = -downstreamBoxCenterX + 3*this.grid,
                     downstreamSHQbackCenterY = -downstreamBoxCenterY - 3*this.grid*Math.tan(this.theta),
+                    downstreamSHQpadCenterX = -downstreamBoxCenterX + 4*this.grid,
+                    downstreamSHQpadCenterY = -downstreamBoxCenterY - 4*this.grid*Math.tan(this.theta),
                     upstreamBoxCenterX = -0.3*this.width,
                     upstreamBoxCenterY = -0.2*this.width*Math.tan(this.theta) - this.long/2,
                     upstreamSHQfrontCenterX = -upstreamBoxCenterX - 2*this.grid,
                     upstreamSHQfrontCenterY = -upstreamBoxCenterY +2*this.grid*Math.tan(this.theta),
                     upstreamSHQbackCenterX = -upstreamBoxCenterX - 3*this.grid,
                     upstreamSHQbackCenterY = -upstreamBoxCenterY +3*this.grid*Math.tan(this.theta);
+                    upstreamSHQpadCenterX = -upstreamBoxCenterX - 4*this.grid,
+                    upstreamSHQpadCenterY = -upstreamBoxCenterY +4*this.grid*Math.tan(this.theta);
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 //summary layout
@@ -150,6 +162,24 @@
                 cellCoords['SHB10DN'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY + 2*this.grid + this.short/2}, 'long'];
                 cellCoords['SHB11DN'] = [{x: upstreamBoxCenterX - 2*this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
                 cellCoords['SHB12DN'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY - 2*this.grid + this.short/2}, 'long'];
+                //pads
+                cellCoords['SHQ01EP00X'] = [downstreamSHQpadCenterX, downstreamSHQpadCenterY, 180];
+                cellCoords['SHQ02EP00X'] = [downstreamSHQpadCenterX, downstreamSHQpadCenterY, -90];
+                cellCoords['SHQ03EP00X'] = [downstreamSHQpadCenterX, downstreamSHQpadCenterY, 0];
+                cellCoords['SHQ04EP00X'] = [downstreamSHQpadCenterX, downstreamSHQpadCenterY, 90];
+                cellCoords['SHQ13EP00X'] = [upstreamSHQpadCenterX, upstreamSHQpadCenterY, 180];
+                cellCoords['SHQ14EP00X'] = [upstreamSHQpadCenterX, upstreamSHQpadCenterY, -90];
+                cellCoords['SHQ15EP00X'] = [upstreamSHQpadCenterX, upstreamSHQpadCenterY, 0];
+                cellCoords['SHQ16EP00X'] = [upstreamSHQpadCenterX, upstreamSHQpadCenterY, 90];
+
+                cellCoords['SHB05EP00X'] = [{x: downstreamBoxCenterX + 3*this.grid, y: downstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB06EP00X'] = [{x: downstreamBoxCenterX, y: downstreamBoxCenterY + 3*this.grid + this.short/2}, 'long'];
+                cellCoords['SHB07EP00X'] = [{x: downstreamBoxCenterX - 3*this.grid, y: downstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB08EP00X'] = [{x: downstreamBoxCenterX, y: downstreamBoxCenterY - 3*this.grid + this.short/2}, 'long'];
+                cellCoords['SHB09EP00X'] = [{x: upstreamBoxCenterX + 3*this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB10EP00X'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY + 3*this.grid + this.short/2}, 'long'];
+                cellCoords['SHB11EP00X'] = [{x: upstreamBoxCenterX - 3*this.grid, y: upstreamBoxCenterY + this.long/2}, 'tall'];
+                cellCoords['SHB12EP00X'] = [{x: upstreamBoxCenterX, y: upstreamBoxCenterY - 3*this.grid + this.short/2}, 'long'];
 
                 //upright and sideways parallelogram coords for SHB summaries
                 parallelogramCoords['tall'] = [0,this.short*Math.tan(this.theta), 0,this.long, this.short,this.long - this.short/Math.tan(this.theta), this.short,0];
@@ -157,7 +187,7 @@
 
                 for(i=0; i<this.channelNames.length; i++){
                     //determine which view this cell belongs to
-                    if(this.channelNames[i].length == 7)
+                    if(this.channelNames[i].length == 7 || this.channelNames[i].indexOf('E') != -1)
                         cardIndex = 0;
                     else
                         cardIndex = parseInt(this.channelNames[i].slice(3,5), 10);
@@ -181,6 +211,37 @@
                         })
                     //SHB summaries
                     } else if(i<32){
+                        this.cells[this.channelNames[i]] = new Kinetic.Line({
+                            points: parallelogramCoords[cellCoords[this.channelNames[i]][1]],
+                            offset: cellCoords[this.channelNames[i]][0],
+                            fill: '#000000',
+                            fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
+                            closed: true,
+                            listening: true                          
+                        })
+                    //SHQ pads
+                    } else if(i<40){
+                        this.cells[this.channelNames[i]] = new Kinetic.Wedge({
+                            x: cellCoords[this.channelNames[i]][0],
+                            y: cellCoords[this.channelNames[i]][1],
+                            rotation: cellCoords[this.channelNames[i]][2],
+                            radius: this.rad,
+                            angle: 90,
+                            fill: '#000000',
+                            fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
+                            closed: true,
+                            listening: true             
+                        })
+                    //SHB pads
+                    } else if(i<48){
                         this.cells[this.channelNames[i]] = new Kinetic.Line({
                             points: parallelogramCoords[cellCoords[this.channelNames[i]][1]],
                             offset: cellCoords[this.channelNames[i]][0],
@@ -278,7 +339,7 @@
                 }
 
                 //beam arrow
-                this.mainLayer[0].add(kineticArrow(0.35*this.width, 0.4*this.height + Math.tan(this.theta)*0.2*this.width, 0.75*this.width, 0.4*this.height - Math.tan(this.theta)*0.2*this.width ));
+                this.mainLayer[0].add(kineticArrow(0.32*this.width, 0.4*this.height + Math.tan(this.theta)*0.2*this.width, 0.72*this.width, 0.4*this.height - Math.tan(this.theta)*0.2*this.width ));
 
                 //label upstream / downstream halves
                 upstreamLabel = new Kinetic.Text({

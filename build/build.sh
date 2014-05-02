@@ -8,7 +8,7 @@ cp ../static/utilities/*.js .
 cp ../static/xTags/branding/* .
 cp ../static/xTags/runControl/* .
 cp ../static/xTags/detectors/*.js .
-cp ../static/xTags/detectors/TIPwall/* .
+cp ../static/xTags/detectors/TIP/* .
 cp ../static/xTags/detectors/TIGRESS/* .
 cp ../static/xTags/detectors/SPICE/* .
 cp ../static/xTags/detectors/SHARC/* .
