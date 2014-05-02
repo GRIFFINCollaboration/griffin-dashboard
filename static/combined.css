@@ -334,7 +334,15 @@ canvas#footerImage{
 
 img#gitLogo{
 	margin-bottom:3px;
-}detector-demo, detector-TIPWall, detector-TIGRESS, detector-SPICE, detector-SHARC, detector-DESCANT, detector-DANTE, detector-SCEPTAR{
+}detector-demo, 
+detector-TIPWall, 
+detector-TIGRESS, 
+detector-SPICE, 
+detector-SHARC, 
+detector-DESCANT, 
+detector-DANTE, 
+detector-SCEPTAR, 
+detector-PACES{
 	float:left;
 	width:58%;
 }
@@ -346,7 +354,8 @@ detector-SPICE input[type=radio],
 detector-SHARC input[type=radio],
 detector-DESCANT input[type=radio],
 detector-DANTE input[type=radio],
-detector-SCEPTAR input[type=radio]
+detector-SCEPTAR input[type=radio],
+detector-PACES input[type=radio]
 {
 	display:none;
 }
@@ -359,6 +368,7 @@ detector-SHARC input[type='radio'] + label,
 detector-DESCANT input[type='radio'] + label,
 detector-DANTE input[type='radio'] + label,
 detector-SCEPTAR input[type='radio'] + label,
+detector-PACES input[type='radio'] + label,
 detector-demo select,
 detector-TIPwall select,
 detector-TIGRESS select
@@ -366,7 +376,8 @@ detector-SPICE select,
 detector-SHARC select,
 detector-DESCANT select,
 detector-DANTE select,
-detector-SCEPTAR select
+detector-SCEPTAR select,
+detector-PACES select
 {
 	font-size: 100%;
 	line-height: 1.2em;
@@ -390,7 +401,8 @@ detector-SPICE input[type='radio']:checked + label,
 detector-SHARC input[type='radio']:checked + label,
 detector-DESCANT input[type='radio']:checked + label,
 detector-DANTE input[type='radio']:checked + label,
-detector-SCEPTAR input[type='radio']:checked + label
+detector-SCEPTAR input[type='radio']:checked + label,
+detector-PACES input[type='radio']:checked + label
 {
 	background-color: #555555;
 }
