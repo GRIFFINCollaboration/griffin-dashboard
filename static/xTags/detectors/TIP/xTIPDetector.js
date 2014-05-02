@@ -101,6 +101,7 @@
 
 })();
 
+
 (function(){  
 
     xtag.register('detector-TIPBall', {
@@ -126,6 +127,7 @@
                 this.cellSide = Math.min(this.width/25, 0.8*this.height/15);
                 this.gutter = this.cellSide/3;
                 this.rowLenghts = [4, 6, 12, 16, 20, 18, 18, 14, 12, 8];
+                this.theta = ['8.0', '17.5', '33.0', '48.5', '64.0', '79.5', '95.0', '111.9', '130.2', '148.5'];
 
                 /////////////////////////////
                 //Initialize visualization
@@ -155,7 +157,10 @@
         }, 
         methods: {
             'instantiateCells': function(){
-                var i, X, Y, cardIndex;
+                var i, cardIndex, thetaLabel, ringLabel,
+                    rowIndex = 0,
+                    X = this.width/2 - this.rowLenghts[0]/2*this.cellSide,
+                    Y = this.gutter + this.cellSide;
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
@@ -163,8 +168,8 @@
                     cardIndex = 0; //simple, only one card
 
                     this.cells[this.channelNames[i]] = new Kinetic.Rect({
-                        //x:
-                        //y:
+                        x: X,
+                        y: Y,
                         width: this.cellSide,
                         height: this.cellSide,
                         fill: '#000000',
@@ -176,6 +181,17 @@
                         closed: true,
                         listening: true
                     });
+
+                    //move along to the next cell position:
+                    if(X < this.width/2 + (this.rowLenghts[rowIndex]/2 - 1)*this.cellSide)
+                        X += this.cellSide;
+                    else{
+                        rowIndex++;
+                        X = this.width/2 - this.rowLenghts[rowIndex]/2*this.cellSide,
+                        Y += this.cellSide + this.gutter;
+                        if(rowIndex==1)
+                            Y += this.gutter; //extra gutter after top ring, user request
+                    }
 
                     //set up the tooltip listeners:
                     this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
@@ -189,6 +205,54 @@
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
 
+                //add some labels
+                //add some labels
+                thetaLabel = new Kinetic.Text({
+                    x: 0,
+                    y: this.cellSide/2 - 14,
+                    text: 'Mean Theta',
+                    fontSize: 28,
+                    fontFamily: 'Arial',
+                    fill: '#999999'
+                });
+                ringLabel = new Kinetic.Text({
+                    x: 0,
+                    y: this.cellSide/2 - 14,
+                    text: 'Ring Number',
+                    fontSize: 28,
+                    fontFamily: 'Arial',
+                    fill: '#999999'
+                });
+                this.mainLayer[0].add(thetaLabel);
+                this.mainLayer[0].add(ringLabel);
+                ringLabel.setAttr('x', this.width - ringLabel.getTextWidth());
+
+                Y = this.gutter + 2*this.cellSide;
+                for(i=0; i<10; i++){
+                    thetaLabel = new Kinetic.Text({
+                        x: 0,
+                        y: Y - this.cellSide/2 - 14,
+                        text: this.theta[i] + '\u00B0',
+                        fontSize: 28,
+                        fontFamily: 'Arial',
+                        fill: '#999999'
+                    });
+                    ringLabel = new Kinetic.Text({
+                        x: 0,
+                        y: Y - this.cellSide/2 - 14,
+                        text: i,
+                        fontSize: 28,
+                        fontFamily: 'Arial',
+                        fill: '#999999'
+                    });
+                    this.mainLayer[0].add(thetaLabel);
+                    this.mainLayer[0].add(ringLabel);
+                    ringLabel.setAttr('x', this.width - ringLabel.getTextWidth());
+                    Y += this.cellSide + this.gutter;
+                    if(i==0)
+                        Y+= this.gutter;
+                }
+
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
                 this.stage[0].add(this.tooltipLayer[0]);
@@ -197,3 +261,4 @@
     });
 
 })();
+

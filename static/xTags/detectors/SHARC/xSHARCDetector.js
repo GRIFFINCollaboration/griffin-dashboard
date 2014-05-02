@@ -12,7 +12,7 @@
                     i,j;
 
                 //deploy the standard stuff
-                this.viewNames = ['SHARC', 'SHQ01', 'SHQ02', 'SHQ03', 'SHQ04', 'SHB05', 'SHB06', 'SHB07', 'SHB08', 'SHB09', 'SHB10', 'SHB11', 'SHB12', 'SHQ13', 'SHQ14', 'SHQ15', 'SHQ16'];
+                this.viewNames = ['Summary', 'SHQ01', 'SHQ02', 'SHQ03', 'SHQ04', 'SHB05', 'SHB06', 'SHB07', 'SHB08', 'SHB09', 'SHB10', 'SHB11', 'SHB12', 'SHQ13', 'SHQ14', 'SHQ15', 'SHQ16'];
 
                 //first 32 are summaries; next 16 are pads (no summary required); rest are individual channels.
                 this.channelNames = [   'SHQ01DN', 'SHQ02DN', 'SHQ03DN', 'SHQ04DN', 'SHQ13DN', 'SHQ14DN', 'SHQ15DN', 'SHQ16DN',
