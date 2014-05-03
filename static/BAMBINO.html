@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="combined.css"/>
+		<script type='text/javascript' src='combined.js'></script>
+	</head>
+
+	<body>
+
+		<div id='wrapper'>
+			<branding-head experiment='GRIFFIN'></branding-head>
+
+			<div id='mainContent'>
+				<!--widget-nav id='navBar'></widget-nav-->
+				<widget-status id='statusBar' MIDAS='annikal.triumf.ca:8082'></widget-status>
+				<detector-BAMBINO id='BAMBINO' MIDAS='annikal.triumf.ca:8082' rateServer="http://midtig06.triumf.ca:8091/mother/scalar?jsonp=parseRate" thresholdServer="http://midtig06.triumf.ca:8091/mother/parameters?jsonp=parseThreshold" config='{"upstream":["S2", "S2"], "downstream":["S3", "S3"]}'></detector-BAMBINO>
+			</div>
+
+			<div id='push'></div>
+		</div>
+
+		<branding-foot></branding-foot>
+
+		<script>
+			document.addEventListener('DOMComponentsLoaded', function(){
+				//begin data fetch loop:
+				rebootFetch();
+			});
+		</script>
+
+	</body>
+</html>
