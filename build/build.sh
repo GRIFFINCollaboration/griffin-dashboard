@@ -10,6 +10,7 @@ cp ../static/xTags/runControl/* .
 cp ../static/xTags/detectors/*.js .
 cp ../static/xTags/detectors/TIP/* .
 cp ../static/xTags/detectors/TIGRESS/* .
+cp ../static/xTags/detectors/GRIFFIN/* .
 cp ../static/xTags/detectors/SPICE/* .
 cp ../static/xTags/detectors/SHARC/* .
 cp ../static/xTags/detectors/DESCANT/* .
