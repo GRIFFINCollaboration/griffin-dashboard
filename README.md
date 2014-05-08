@@ -21,7 +21,7 @@ npm install express
 node server.js
 ```
 
-And voila!  Visit `host:3000/whatever.html` to see any of the pages living in `/static`.
+And voila!  Visit `host:3000/whatever.html` to see any of the pages living in `/static`.  A more complete and sophisticated node server is in the works for production on GRIFFIN - stay tuned!
 
 
 ##For Developers
@@ -43,8 +43,8 @@ In addition, all components who want to participate in the update loop must decl
 ####The Main Event Loop
 Every Mark II page relies on a loop of the following form to update itself continuously:
 
- - call a function `assembleData`, whose job it is to query all the URLs listed in `window.fetchURL`, so that the JSONP wrapper functions defined along with their respective xTags can repopulate the `window.currentData` object
- - call a function `repopulate` as the callback to `assembleData`, which fires the `update` methods of all the x-tags queued in `window.refreshTargets`.
+ - call a function `repopulate`, which fires the `update()` methods of all the x-tags queued in `window.refreshTargets`.
+ - Each update() called above will fire XHRs at URLs (nominally defined as attributes on the object in question) and expect some JSON response, which it will parse and route appropriately.  Additionally, update() is expected to trigger any other per-cycle bookkeeping or visualization updates its parent object needs.  Note that this expects [an appropriate CORS policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) to be defined on the server posting the data of interest.
  
 Stick that in a `setInterval` loop and you have a basic Mark II page.
 
