@@ -29,22 +29,21 @@ And voila!  Visit `host:3000/whatever.html` to see any of the pages living in `/
 ###Overall Programmatic Logic
 
 ####x-tags
-As advertised, Mark II is meant to be modular.  The web components that live in `xTags` can be included at will in any page, and all follow the same pattern on instantiation:
+As advertised, Mark II is meant to be modular.  The web components that live in `xTags` can be included at will in any page, and all follow the same (minimal) pattern on instantiation:
 
  - configure their internal DOM structure 
- - append a URL to the array `window.fetchURL` which will respond with JSONP containing the information this element needs to refresh itself
  - append itself to the array `window.refreshTargets`, which puts it in the queue for being refreshed every update.
 
 In addition, all components who want to participate in the update loop must declare:
  
- - an `update()` method (exactly that - named `update`, with no arguments), which goes looking for new information in memory to populate itself with, nominally from the object `window.currentData`.  The key design element in that sentence was 'in memory' - all network requests for new information are handled in the main event loop, and not by the components themselves.
- - a definition for the JSONP wrapper function which will be returned by the request to the URL inserted into `window.fetchURL` above
+ - an `update()` method (exactly that - named `update`, with no arguments), which goes looking for new information in memory to populate itself with, nominally from the object `window.currentData`, and triggers the requests for new data to be fetched.
+ - functionality to parse the JSON acquired during `update()` into some convenient form.
 
 ####The Main Event Loop
 Every Mark II page relies on a loop of the following form to update itself continuously:
 
  - call a function `repopulate`, which fires the `update()` methods of all the x-tags queued in `window.refreshTargets`.
- - Each update() called above will fire XHRs at URLs (nominally defined as attributes on the object in question) and expect some JSON response, which it will parse and route appropriately.  Additionally, update() is expected to trigger any other per-cycle bookkeeping or visualization updates its parent object needs.  Note that this expects [an appropriate CORS policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) to be defined on the server posting the data of interest.
+ - Each update() called above will fire XHRs at URLs (nominally defined as attributes on the object in question) and expect some JSON response, which it will parse and route appropriately.  Additionally, `update()` is expected to trigger any other per-cycle bookkeeping or visualization updates its parent object needs.  Note that this expects [an appropriate CORS policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) to be defined on the server posting the data of interest.
  
 Stick that in a `setInterval` loop and you have a basic Mark II page.
 
