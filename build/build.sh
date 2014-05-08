@@ -19,6 +19,7 @@ cp ../static/xTags/detectors/SCEPTAR/* .
 cp ../static/xTags/detectors/PACES/* .
 cp ../static/xTags/detectors/BAMBINO/* .
 cp ../static/xTags/spectrumViewer/* .
+cp ../static/xTags/HV/waffle/* .
 cp ../static/xTags/nav/* .
 if [ -e combined.js ]; then rm combined.js; fi
 mv xDetectorTemplate.js xAAADetector.js  #detector template needs to come before all detectors that inherit it

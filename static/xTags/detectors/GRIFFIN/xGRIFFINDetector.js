@@ -44,7 +44,7 @@
 
                 //deploy the standard stuff
                 this.viewNames = ['Summary'].concat(this.HPGEprefixes)
-                initializeDetector.bind(this, 'GRIFFIN', 'GRIFFIN', URLs)();
+                initializeDetector.bind(this, 'GRIFFIN', 'GRIFFIN')();
                 this.summaryDepth = 6;
 
                 //////////////////////////////////////

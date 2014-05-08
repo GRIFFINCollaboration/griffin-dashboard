@@ -17,7 +17,7 @@
                                         'TPW024P00X', 'TPW008P00X', 'TPW007P00X', 'TPW006P00X', 'TPW018P00X',
                                         'TPW023P00X', 'TPW022P00X', 'TPW021P00X', 'TPW020P00X', 'TPW019P00X'
                                     ]
-                initializeDetector.bind(this, 'TIP', 'TIP Wall', URLs)();
+                initializeDetector.bind(this, 'TIP', 'TIP Wall')();
 
                 //////////////////////////////////////
                 //TIP Wall specific drawing parameters

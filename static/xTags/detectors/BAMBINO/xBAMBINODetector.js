@@ -49,7 +49,7 @@
                     }
                 }       
 
-                initializeDetector.bind(this, 'BAMBINO', 'BAMBINO', URLs)();
+                initializeDetector.bind(this, 'BAMBINO', 'BAMBINO')();
 
                 //////////////////////////////////////
                 //BAMBINO specific drawing parameters

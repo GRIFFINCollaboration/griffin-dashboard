@@ -1,36 +1,3 @@
-//pull in data from the URLs listed in URL; <callback> executes on successful fetch.
-function assembleData(callback) {
-    var i, element, script;
-
-    for(i=0; i<window.fetchURL.length; i++){
-        //delete last instance of this script so they don't accrue:
-        element = document.getElementById('tempScript'+i);
-        if(element)
-            element.parentNode.removeChild(element);
-
-        //refetch the ith repo:
-        script = document.createElement('script');
-        script.setAttribute('src', window.fetchURL[i]);
-        script.setAttribute('async', true);
-        script.setAttribute('id', 'tempScript'+i);
-
-        //only do the callback on the last script
-        if(i==window.fetchURL.length-1){
-            script.onload = function(){
-                if(callback){
-                    callback()
-                }
-            }
-        }
-
-        script.onerror = function(){
-            console.log('failed fetch!')
-        }
-
-        document.head.appendChild(script);
-    }
-}
-
 //tell everybody to refresh their data from the in-memory buffers:
 function repopulate(callback){
     var i;
@@ -46,6 +13,6 @@ function repopulate(callback){
 //(re)start the data fetching loop
 function rebootFetch(){
     clearInterval(window.masterLoop);
-    assembleData(repopulate);
-    window.masterLoop = window.setInterval(assembleData.bind(null, repopulate), 3000);
+    repopulate();
+    window.masterLoop = window.setInterval(repopulate, 3000);
 } 

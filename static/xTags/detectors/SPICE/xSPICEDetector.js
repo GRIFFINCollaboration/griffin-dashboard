@@ -34,7 +34,7 @@
                         this.channelNames.push('SPE00DN' + ((i<10) ? '0'+i : i ) + 'X');
                 }
 
-                initializeDetector.bind(this, 'SPICE', 'SPICE', URLs)();
+                initializeDetector.bind(this, 'SPICE', 'SPICE')();
 
                 //////////////////////////////////////
                 //SPICE specific drawing parameters

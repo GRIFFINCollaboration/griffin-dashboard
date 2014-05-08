@@ -48,7 +48,7 @@
                     }
                 }
 
-                initializeDetector.bind(this, 'SHARC', 'SHARC', URLs)();
+                initializeDetector.bind(this, 'SHARC', 'SHARC')();
                 this.summaryDepth = 7;
 
                 //////////////////////////////////////

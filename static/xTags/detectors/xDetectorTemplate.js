@@ -236,6 +236,10 @@
 
             'update': function(){
                 
+                //trigger a new round of data fetching
+                this.acquireRates();
+                this.acquireThresholds();
+
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
@@ -359,6 +363,44 @@
                     evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
                     SV.dispatchEvent(evt);
                 }
+            },
+
+            //fetch rate information
+            'acquireRates' : function(){
+                var xmlhttp = new XMLHttpRequest();
+
+                //once this is all dealt with, refresh the display immediately
+                xmlhttp.onreadystatechange = function(){
+                    var data;
+
+                    if (this.readyState != 4) return;
+                    data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) )
+
+                    parseRate(data);
+
+                }
+                //fire async
+                xmlhttp.open('GET', this.rateServer);
+                xmlhttp.send();
+            },
+
+            //fetch rate information
+            'acquireThresholds' : function(){
+                var xmlhttp = new XMLHttpRequest();
+
+                //once this is all dealt with, refresh the display immediately
+                xmlhttp.onreadystatechange = function(){
+                    var data;
+
+                    if (this.readyState != 4) return;
+
+                    data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) )
+                    parseThreshold(data);
+
+                }
+                //fire async
+                xmlhttp.open('GET', this.thresholdServer);
+                xmlhttp.send();
             }
 
         }

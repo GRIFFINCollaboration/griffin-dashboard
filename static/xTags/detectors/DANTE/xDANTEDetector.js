@@ -18,7 +18,7 @@
                 //DANTE has special views, define them by hand first
                 this.views = ['HV', 'Threshold', 'Rate', 'TAC-Threshold', 'TAC-Rate'];
                 this.units = ['V', 'ADC Units', 'Hz', 'ADC Units', 'Hz'];
-                initializeDetector.bind(this, 'DANTE', 'DANTE', URLs)();
+                initializeDetector.bind(this, 'DANTE', 'DANTE')();
 
                 //////////////////////////////////////
                 //DANTE specific drawing parameters

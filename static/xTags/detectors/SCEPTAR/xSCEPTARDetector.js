@@ -17,7 +17,7 @@
                     this.channelNames[i-1] = 'SEP' + ((i<10)?'0'+i : i) + 'XN00X';
                 }
                    
-                initializeDetector.bind(this, 'SCEPTAR', 'SCEPTAR', URLs)();
+                initializeDetector.bind(this, 'SCEPTAR', 'SCEPTAR')();
 
                 //////////////////////////////////////
                 //SCEPTAR specific drawing parameters

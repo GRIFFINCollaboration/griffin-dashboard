@@ -1,4 +1,4 @@
-function initializeDetector(name, headline, URL){
+function initializeDetector(name, headline){
     var headWrapper = document.createElement('div')
     ,   title = document.createElement('h1')
     ,   drawTarget = document.createElement('div')
@@ -190,20 +190,7 @@ function initializeDetector(name, headline, URL){
         this.max[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'max'), 3000);
         this.scaleType[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'scaleType'), 'lin');
     }
-/*
-    this.min = {HV: canHas(localStorage.getItem(name+'HVmin'), 0), 
-                Threshold: canHas(localStorage.getItem(name+'Thresholdmin'), 0), 
-                Rate: canHas(localStorage.getItem(name+'Ratemin'), 0)
-            };
-    this.max = {HV: canHas(localStorage.getItem(name+'HVmax'), 3000), 
-                Threshold: canHas(localStorage.getItem(name+'Thresholdmax'), 1000),
-                Rate: canHas(localStorage.getItem(name+'Ratemax'), 10000)
-            };
-    this.scaleType = {  HV: canHas(localStorage.getItem(name+'HVscaleType'), 'lin'),
-                        Threshold: canHas(localStorage.getItem(name+'ThresholdscaleType'), 'lin'), 
-                        Rate: canHas(localStorage.getItem(name+'RatescaleType'), 'lin')
-                    };
-*/
+
     //if anything was in local storage, communicate this to the UI:
     plotControlMin.value = this.min[this.currentView];
     plotControlMax.value = this.max[this.currentView];
@@ -264,15 +251,6 @@ function initializeDetector(name, headline, URL){
 
     this.errorPattern = new Image();
     this.errorPattern.src = 'img/static.gif'
-
-    //append data location information to list of URLs to fetch from:
-    if(!window.fetchURL)
-        window.fetchURL = [];
-    for(i=0; i<URL.length; i++){
-        if(URL[i] && window.fetchURL.indexOf(URL[i]) == -1){
-            window.fetchURL[window.fetchURL.length] = URL[i];
-        }
-    }
     
     //let repopulate know that the status bar would like to be updated every loop:
     if(!window.refreshTargets)

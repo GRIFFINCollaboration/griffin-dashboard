@@ -14,7 +14,7 @@
                 this.channelNames = [   'PAC01XN00A', 'PAC01XN00B', 'PAC02XN00A', 'PAC02XN00B', 'PAC03XN00A',
                                         'PAC03XN00B', 'PAC04XN00A', 'PAC04XN00B', 'PAC05XN00A', 'PAC05XN00B'
                                     ]
-                initializeDetector.bind(this, 'PACES', 'PACES', URLs)();
+                initializeDetector.bind(this, 'PACES', 'PACES')();
 
                 //////////////////////////////////////
                 //PACES specific drawing parameters

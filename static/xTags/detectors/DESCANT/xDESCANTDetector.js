@@ -47,7 +47,7 @@
                     index = 35+ 4*i; if(index==51) index = 31;
                     this.channelNames[i*14 + 13] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
                 }
-                initializeDetector.bind(this, 'DESCANT', 'DESCANT', URLs)();
+                initializeDetector.bind(this, 'DESCANT', 'DESCANT')();
 
                 //////////////////////////////////////
                 //DESCANT specific drawing parameters
