@@ -58,6 +58,18 @@
                 ['Card 2', 8, 4],
                 ['Card 3', 12, 4]
             ]
+            //row titles, starting from the top
+            this.rowTitles = [
+                0,1,2,3,4,5,6,7,8,9,10,11,12      
+            ]
+            //legend
+            this.legend = [
+                ['green', 'All OK'],
+                ['red', 'Alarm!'],
+                ['yellow', 'Ramping'],
+                ['0x222222', 'Off'],
+                ['blue', 'Ext. Trip']
+            ]
 
 
             ////////////////////////////
@@ -128,7 +140,7 @@
             },
 
             'instantiateCells': function(){
-                var i, j, key, text;
+                var i, j, key, text, legendKey;
 
                 //start fresh:
                 this.mainLayer.destroyChildren();
@@ -211,6 +223,50 @@
 
                     this.mainLayer.add(text);
                 }
+
+                //row titles
+                for(i=0; i<this.rowTitles.length; i++){
+                    text = new Kinetic.Text({
+                            x: 0,
+                            y: this.topMargin + (i+0.5)*this.grid - 14,
+                            text: this.rowTitles[i],
+                            fontSize: 28,
+                            fontFamily: 'Arial',
+                            fill: '#999999',
+                        });
+
+                    //center label nicely
+                    text.setAttr('x', this.leftMargin - text.getWidth() - 10);
+
+                    this.mainLayer.add(text);
+                }                
+
+                //legend
+                for(i=0; i<this.legend.length; i++){
+                    legendKey = new Kinetic.Rect({
+                            x: (this.offsetWidth / this.legend.length)*i,
+                            y: 0.92*this.offsetHeight,
+                            width: this.grid,
+                            height: this.grid,
+                            fill: this.legend[i][0],
+                            stroke: 'black',
+                            strokeWidth: 2
+                        });
+                    this.mainLayer.add(legendKey);
+
+                    text = new Kinetic.Text({
+                            x: (this.offsetWidth / this.legend.length)*i + this.grid + 10,
+                            y: 0.92*this.offsetHeight + this.grid/2 - 14,
+                            text: this.legend[i][1],
+                            fontSize: 28,
+                            fontFamily: 'Arial',
+                            fill: '#999999',
+                            width: this.offsetWidth / this.legend.length - this.grid - 10,
+                            align: 'left'
+                        });
+                    this.mainLayer.add(text);
+                }
+
 
                 this.mainLayer.draw();
             },
