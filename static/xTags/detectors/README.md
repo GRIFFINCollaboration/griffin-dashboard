@@ -16,27 +16,22 @@ All detectors inherit most of their functionality from the `<detector-template>`
 All custom web components execute a callback upon creation, found in `lifecycle.created` for each detector; this function declares a lot of detector-specific information, so it is left empty in the `<detector-template>` object, to be defined individually for each detector; nevertheless, `lifecycle.created` typically follows a standard pattern which we describe here:
 
  - Declare `this.channelNames[i]`, an array of strings corresponding to the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature) names of each detector channel to be rendered, **in the order that they will be drawn**.  May also include strings describing summary cells; valid summary names are prefixes of the individual detector elements they will summarize.  For example, `TIS01G` would summarize the BGO channels `TIS01GN01X`, `TIS01GN02X`, `TIS01GN03X`, `TIS01GN04X`, and `TIS01GN05X`.  
- - Declare `URLs[i]`, an array of strings corresponding to the URLs that will respond with JSONP posts of the data this detector needs to update itself.  These will typically be:
-  - `<host>:<port>/<route>?jsonp=parseThreshold`, a JSONP post of threshold data (spec below), wrapped in the `parseThreshold` function.
-  - `<host>:<port>/<route>?jsonp=parseRate`, a JSONP post of rate data (spec below), wrapped in the `parseRate` function.
-  - `<ODB host>:<port>/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment`, a JSONP packing of this experiment's `/Equipment` directory, wrapped in the `fetchODBEquipment` function (spec below).
  - Declare `this.viewNames[view]`, an array of strings naming each view you want for this detector; a single view detector like the TIP wall only needs one view, while TIGRESS and GRIFFIN use 17 views - one for each clover plus a summary.
  - Run `initializeDetector()`, a function that factors out all the generic detector setup steps, spec below. 
  - Declare detector specific drawing parameters and other member variables
  - Set up the Kinetic.js visualization of the detector by calling `this.instantiateCells()` and `this.generateColorScale()` (details below).
 
 ###initializeDetector()
-`initializeDetector(name, title, URLs)` is declared in `detectorHelpers.js` and factors out the generic steps of setting up a detector.  Its arguments are as follows:
+`initializeDetector(name, title)` is declared in `detectorHelpers.js` and factors out the generic steps of setting up a detector.  Its arguments are as follows:
  - `<name>` (string) - a tag name for this detector, intended for use as a key prefix or other identifying purposes.
  - `<title>` (string) - the title to be displayed in the header at the top of the detector visualization
- - `<URLs>` (array of strings) - the same `URLs` array described above.
 
 This function then goes through the following steps, described in greater detail below as required:
  - Ensure the necessary objects are available on the `window.currentData` object, ready to receive data as it comes in.  These are the `currentData.HV`, `.threshold`, and `.rate` objects.
  - Establish the custom element's internal DOM structure.
  - Establish some initial state parameters & other member variables.
  - Establish the Kinetic.js environment.
- - Set up data fetching and routing for this detector.
+ - Add this detector to `window.refreshTargets` to have it updated in the main event loop.
 
 ####Internal DOM Structure
 The DOM for any single-view detector looks roughly like this:
@@ -92,12 +87,15 @@ All detectors are drawn in a simple Kinetic.js environment, built and pointed at
 All the detector cells in `this.cells[name]` are painted on the appropriate `this.mainLayer[view]`, as are the elements that compose the plot legend (described below), while the tooltip text (`this.text[view]`) and background (`this.TTbkg[view]`) are painted on `this.tooltipLayer[view]`.
 
 ####Data Fetching & Routing
-The last step of `initializeDetector()` is to populate `window.fetchURL` with all the data URLs passed in to the `<URLs>` parameter; `assembleData()` will then manage the periodic refresh of the data returned by these requests.  Finally, `this` detector is appended to `window.refreshTargets`, so that `repopulate()` will know to take the information gathered by `assembleData()` and put it where this custom element is expecting it on refresh.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
+The last step of `initializeDetector()` is to appended `this` detector to `window.refreshTargets`, so that `repopulate()` will know to update this object every period.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
 
 ##Detectors in the Main Event Loop
 As with all updatable objects, detector components participate in the main event loop via their `update()` method as called by `repopulate()`.  The basic flow is as follows:
 
  - `update()`
+   - Request new data from external sources
+   - Make sure scale control is up to date
+   - generate data summaries for detectors that have summary levels
    - `updateCells()` - refreshes and repaints all the detector cells based on info in `window.currentData` and state variables.
    - `writeTooltip(this.lastTTindex)` - refresh the tooltip text, necessary if mouse is sitting passively on a channel.
    - repaint the currently displayed `this.mainLayer[view]`.
@@ -165,10 +163,10 @@ The tooltip for detector elements is handled by the event listeners Kineitc expo
 All detector components rely on being able to acquire live information about detector thresholds and scalar rates from URLs serving JSONP that obey the spec below.  The `<host>:<port>/<route>?<queryString>` strings for these services are exacty the string elements of `URLs[i]` discussed above in the context of `lifecycle.created`.
 
 ###Threshold Service
-Present detector threshold levels must be reported at `<host>:<port>/<route>?jsonp=parseThreshold` via the following JSONP:
+Present detector threshold levels must be reported at `<host>:<port>/<route>` via the following JSON:
 
 ```
-parseThreshold({
+{
     parameters: {
         thresholds: {
             <channel code 0> : <threshold 0 in ADC units>,
@@ -176,7 +174,7 @@ parseThreshold({
             ...
         }
     }
-})
+}
 ```
 
 where `<channel code n>` is the 10 character channel code defined in the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).  Other parallel information may be packed in this object, as long as the structure above is present.
@@ -191,10 +189,10 @@ window.currentData.threshold = {
 ```
 
 ###Rate Service
-Present detector scalar rates must be reported at `<host>:<port>/<route>?jsonp=parseRate` via the following JSONP:
+Present detector scalar rates must be reported at `<host>:<port>/<route>` via the following JSON:
 
 ```
-parseRate({
+{
     <key 0>: {
         <channel code 0> : <rate 0 in Hz>,
         <channel code 1> : <rate 1 in Hz>,
@@ -206,7 +204,7 @@ parseRate({
         <channel code 3> : <rate 3 in Hz>,
         ...
     }
-})
+}
 ```
 
 where `<channel code n>` is the 10 character channel code defined in the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).  `<key n>` can be any valid key name, and any number of these groups can be declared.
@@ -246,9 +244,3 @@ localStorage = {
     <this.name>RatescaleType : <lin/log for rate scale for this detector> 
 }
 ```
-
-
-
-
-
-
