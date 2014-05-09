@@ -19067,7 +19067,7 @@ function getRunSummary(host){
             ////////////////////////////
             this.rows = 13;
             this.cols = 16;
-            this.topMargin = 0.05*this.offsetHeight;
+            this.topMargin = 0.1*this.offsetHeight;
             this.leftMargin = 0.1*this.offsetWidth;
             this.grid = Math.min(0.9*this.offsetWidth/this.cols, 0.8*this.offsetHeight/this.rows);
             //multi-cell cells, [top left row, top left column, width, height]
@@ -19099,7 +19099,18 @@ function getRunSummary(host){
                         'dummy': Math.random().toFixed(3)
                     }
                 }
-            }            
+            }
+            //function to call on cell click:
+            this.clickCell = function(name){
+                console.log(name);
+            }
+            //column titles; [text, x-left in grid coords, width in grid cells]
+            this.colTitles = [
+                ['blah blah blah blah blah', 0, 4],
+                ['Card 1', 4, 4],
+                ['Card 2', 8, 4],
+                ['Card 3', 12, 4]
+            ]
 
 
             ////////////////////////////
@@ -19170,7 +19181,7 @@ function getRunSummary(host){
             },
 
             'instantiateCells': function(){
-                var i, j, key;
+                var i, j, key, text;
 
                 //start fresh:
                 this.mainLayer.destroyChildren();
@@ -19179,7 +19190,6 @@ function getRunSummary(host){
                 //default instantiation of single cells:
                 for(i=0; i<this.cols; i++){
                     for(j=0; j<this.rows; j++){
-                        console.log([i,j])
                         this.cells[this.cellNames[j][i]] = new Kinetic.Rect({
                             x: this.leftMargin + i*this.grid,
                             y: this.topMargin + j*this.grid,
@@ -19194,6 +19204,9 @@ function getRunSummary(host){
                         this.cells[this.cellNames[j][i]].on('mouseover', this.writeTooltip.bind(this, this.cellNames[j][i]) );
                         this.cells[this.cellNames[j][i]].on('mousemove', this.moveTooltip.bind(this) );
                         this.cells[this.cellNames[j][i]].on('mouseout', this.writeTooltip.bind(this, -1));
+
+                        //set up onclick listeners:
+                        this.cells[this.cellNames[j][i]].on('click', this.clickCell.bind(this, this.cellNames[j][i]) );
 
                         this.mainLayer.add(this.cells[this.cellNames[j][i]])
                     }
@@ -19216,6 +19229,9 @@ function getRunSummary(host){
                     this.cells[key].on('mousemove', this.moveTooltip.bind(this) );
                     this.cells[key].on('mouseout', this.writeTooltip.bind(this, -1));
 
+                    //set up onclick listeners:
+                    this.cells[key].on('click', this.clickCell.bind(this, key) );
+
                     this.mainLayer.add(this.cells[key])
                 }
 
@@ -19228,6 +19244,25 @@ function getRunSummary(host){
                     });
 
                     this.mainLayer.add(this.cells[key])
+                }
+
+                //column titles
+                for(i=0; i<this.colTitles.length; i++){
+                    text = new Kinetic.Text({
+                            x: this.leftMargin + this.colTitles[i][1]*this.grid,
+                            y: 0,
+                            text: this.colTitles[i][0],
+                            fontSize: 28,
+                            fontFamily: 'Arial',
+                            fill: '#999999',
+                            width: this.colTitles[i][2]*this.grid,
+                            align: 'center'
+                        });
+
+                    //center label nicely
+                    text.setAttr('y', this.topMargin - text.getHeight() - 5);
+
+                    this.mainLayer.add(text);
                 }
 
                 this.mainLayer.draw();
