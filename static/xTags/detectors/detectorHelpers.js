@@ -91,6 +91,7 @@ function initializeDetector(name, headline){
     for(i=0; i<this.viewNames.length; i++){
         xString += '<x-card id="' + this.id+this.viewNames[i] + 'Card"></x-card>';
     }
+    xString += '</x-deck>'
     deckWrap.innerHTML = xString;
 
     //plot buffers

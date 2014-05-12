@@ -33,3 +33,20 @@ function kineticArrow(fromx, fromy, tox, toy){
 
     return line;
 }
+
+//find the length of longest word in a string
+function longestWord(phrase){
+    var words = phrase.split(' '),
+        i;
+
+    for(i=0; i<words.length; i++){
+        words[i] = words[i].length;
+    }
+
+    words.sort(function(a, b){
+        return b - a;
+    });
+
+    return words[0];
+
+}

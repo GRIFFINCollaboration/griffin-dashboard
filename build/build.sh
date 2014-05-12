@@ -20,6 +20,7 @@ cp ../static/xTags/detectors/PACES/* .
 cp ../static/xTags/detectors/BAMBINO/* .
 cp ../static/xTags/spectrumViewer/* .
 cp ../static/xTags/HV/waffle/* .
+cp ../static/xTags/HV/*.js .
 cp ../static/xTags/nav/* .
 if [ -e combined.js ]; then rm combined.js; fi
 mv xDetectorTemplate.js xAAADetector.js  #detector template needs to come before all detectors that inherit it
@@ -29,5 +30,6 @@ cat *.js > ../static/combined.js
 cp ../static/lib/*.css .
 cp ../static/main.css .
 cp ../static/xTags/detectors/*.css .
+cp ../static/xTags/HV/*.css .
 if [ -e combined.css ]; then rm combined.css; fi
 cat *.css > ../static/combined.css

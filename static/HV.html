@@ -3,6 +3,7 @@
 		<link rel="stylesheet" type="text/css" href="combined.css"/>
 		<script type='text/javascript' src='combined.js'></script>
 	</head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 	<body>
 
@@ -12,7 +13,7 @@
 			<div id='mainContent'>
 				<!--widget-nav id='navBar'></widget-nav-->
 				<widget-status id='statusBar' MIDAS='annikal.triumf.ca:8082'></widget-status>
-				<x-waffle id='HVtest' style='width:68%; height:80%; float:left;'><x-waffle>
+				<widget-HV id='HVtest'></widget-HV>
 				<!--widget-spectrumViewer id='spectrumViewer'></widget-spectrumViewer-->
 			</div>
 
@@ -23,6 +24,10 @@
 
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
+				var i, HVgrid;
+
+				document.getElementById('HVtest').instantiateMonitors();
+
 				//begin data fetch loop:
 				rebootFetch();
 			});
