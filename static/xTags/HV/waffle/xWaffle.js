@@ -122,6 +122,9 @@
                 
                 this.stage.add(this.mainLayer);
                 this.stage.add(this.tooltipLayer);
+
+                this.errorPattern = new Image();
+                this.errorPattern.src = 'img/static.gif'
                     
             },
 
@@ -161,9 +164,13 @@
                             height: this.grid,
                             fill: '#111111',
                             stroke: 'black',
-                            strokeWidth: 2
+                            strokeWidth: 2,
+                            fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random()
                         });
-
+                        //start on non-reporting
+                        this.cells[this.cellNames[j][i]].setFillPriority('pattern');
                         //set up the tooltip listeners:
                         this.cells[this.cellNames[j][i]].on('mouseover', this.writeTooltip.bind(this, this.cellNames[j][i]) );
                         this.cells[this.cellNames[j][i]].on('mousemove', this.moveTooltip.bind(this) );

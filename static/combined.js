@@ -17127,6 +17127,15 @@ var Kinetic = {};
                 ////////////////
                 this.width = this.offsetWidth;
                 this.height = this.offsetHeight;
+                this.driftTolerance = 0.05;
+                this.color = {
+                    'ok' : '#2ecc71',
+                    'alarm' : '#c0392b',
+                    'ramp' : '#f1c40f',
+                    'trip' : '#3498db',
+                    'off' : '#95a5a6'
+                }
+
                 //this.crateNames = ['Crate_0', 'Crate_1', 'Crate_2'];
                 //slot occupancy, ie [4,4,4,4] == four 4-slot cards beside each other,
                 //[1,0,1,0] == a one slot card, a space, another 1 slot card, and another empty slot, etc.
@@ -17145,6 +17154,7 @@ var Kinetic = {};
                 this.cratePop = [];
                 this.cardNames = [];
                 this.crateNames = [];
+                this.HVgrid = [];
             },
             inserted: function() {
 
@@ -17178,6 +17188,7 @@ var Kinetic = {};
                     }
                     
                     that.instantiateMonitors();
+                    that.update();
                     
                 });
 
@@ -17201,7 +17212,12 @@ var Kinetic = {};
         methods: {
 
             'update': function(){
-                //console.log('HV update :<');
+                var i;
+
+                for(i=0; i<this.HVgrid.length; i++){
+                    getJSON('http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/HV-'+i+'/&encoding=json-nokeys', this.mapData.bind(this, i) );
+                }
+                
             },
 
             'instantiateMonitors': function(){
@@ -17252,58 +17268,59 @@ var Kinetic = {};
                 //configure HV grids
                 for(i=0; i<this.crateNames.length; i++){
                     //rows and cols
-                    HVgrid = document.getElementById('HVGrid'+i);
+                    this.HVgrid[i] = document.getElementById('HVGrid'+i);
                     nSlots = 0;
                     for(j=0; j<this.cratePop[i].length; j++){
                         nSlots += Math.max(this.cratePop[i][j], 1);
                     }
-                    HVgrid.rows = 13;
-                    HVgrid.cols = nSlots;
+                    this.HVgrid[i].rows = 13;
+                    this.HVgrid[i].cols = nSlots;
 
                     //master cells for 4-channel cards & card dividers & card names
                     colsPassed = 0
-                    HVgrid.specials = {};
-                    HVgrid.dividers = {};
-                    HVgrid.colTitles = [];
+                    this.HVgrid[i].specials = {};
+                    this.HVgrid[i].dividers = {};
+                    this.HVgrid[i].colTitles = [];
+                    this.HVgrid[i].TTdata = {};
                     for(j=0; j<this.cratePop[i].length; j++){
                         //primary cells
                         if(this.cratePop[i][j] == 4){
-                            HVgrid.specials['test'+i+j] = [0,colsPassed, 4,1];
+                            this.HVgrid[i].specials['test'+i+j] = [0,colsPassed, 4,1];
                         }
 
                         //card titles
-                        HVgrid.colTitles[j] = [];
-                        HVgrid.colTitles[j][0] = this.cardNames[i][j];
-                        HVgrid.colTitles[j][1] = colsPassed;
-                        HVgrid.colTitles[j][2] = Math.max(1, this.cratePop[i][j]);
+                        this.HVgrid[i].colTitles[j] = [];
+                        this.HVgrid[i].colTitles[j][0] = this.cardNames[i][j];
+                        this.HVgrid[i].colTitles[j][1] = colsPassed;
+                        this.HVgrid[i].colTitles[j][2] = Math.max(1, this.cratePop[i][j]);
 
                         colsPassed += Math.max(1, this.cratePop[i][j]);
 
                         //dividers
-                        if(colsPassed != HVgrid.cols)
-                            HVgrid.dividers['divider'+j] = [colsPassed,0, colsPassed,HVgrid.rows];
+                        if(colsPassed != this.HVgrid[i].cols)
+                            this.HVgrid[i].dividers['divider'+j] = [colsPassed,0, colsPassed,this.HVgrid[i].rows];
 
                     }
 
                     //row titles
-                    HVgrid.rowTitles = ['Primary',1,2,3,4,5,6,7,8,9,10,11,12];
+                    this.HVgrid[i].rowTitles = ['Primary',1,2,3,4,5,6,7,8,9,10,11,12];
 
                     //cell names
-                    HVgrid.cellNames = [];
-                    for(j=0; j<HVgrid.rows; j++){
-                        HVgrid.cellNames[j] = []
-                        for(k=0; k<HVgrid.cols; k++){
-                            HVgrid.cellNames[j][k] = findChannelName(j, k, this.cratePop[i], window.ODBEquipment['HV-'+i].Settings.Names);
+                    this.HVgrid[i].cellNames = [];
+                    for(j=0; j<this.HVgrid[i].rows; j++){
+                        this.HVgrid[i].cellNames[j] = []
+                        for(k=0; k<this.HVgrid[i].cols; k++){
+                            this.HVgrid[i].cellNames[j][k] = findChannelName(j, k, this.cratePop[i], window.ODBEquipment['HV-'+i].Settings.Names);
                         }
                     }
 
                     //legend
-                    HVgrid.legend = [
-                        ['green', 'All OK'],
-                        ['red', 'Alarm!'],
-                        ['yellow', 'Ramping'],
-                        ['blue', 'Ext. Trip'],
-                        ['#111111', 'Off']
+                    this.HVgrid[i].legend = [
+                        [this.color.ok, 'All OK'],
+                        [this.color.alarm, 'Alarm!'],
+                        [this.color.ramp, 'Ramping'],
+                        [this.color.trip, 'Trip / Disable'],
+                        [this.color.off, 'Off']
                     ]
 
                 }
@@ -17312,6 +17329,67 @@ var Kinetic = {};
 
             'changeView': function(i){
                 document.getElementById(this.id+'Deck').shuffleTo(i);
+            },
+
+            'mapData': function(crate, event){
+                var data, i, demand, measured, color, channelStat, statMessage;
+
+                if(event.explicitOriginalTarget.readyState != 4) return
+
+                data = JSON.parse(event.explicitOriginalTarget.responseText)[0]
+
+                for(i=0; i<data.Settings.Names.length; i++){
+                    demand = data.Variables.Demand[i];
+                    measured = data.Variables.Measured[i];
+                    channelStat = data.Variables.ChStatus[i];
+                    statMessage = 'All Ok';
+                    color = this.color.ok;
+                    this.HVgrid[crate].cells[data.Settings.Names[i]].setFillPriority('color');
+
+                    //require demand and measured voltages be close enough, else throw alarm:
+                    if(measured / demand < (1-this.driftTolerance) || measured / demand > (1+this.driftTolerance)){
+                        color = this.color.alarm;
+                        statMessage = 'VOLTAGE DRIFT'
+                    }
+
+                    //ramping supercedes voltage diff
+                    if(channelStat == 3 || channelStat == 5){
+                        color = this.color.ramp;
+                        statMessage = 'Ramping';
+                    }
+
+                    //trips and disables supercede voltage diff
+                    if(channelStat == 64){
+                        color = this.color.trip;
+                        statMessage = 'EXTERNAL TRIP'
+                    } else if(channelStat == 256){
+                        color = this.color.trip;
+                        statMessage = 'EXTERNAL DISABLE'
+                    } else if(channelStat == 512){
+                        color = this.color.trip;
+                        statMessage = 'INTERNAL TRIP'
+                    }
+
+                    //off supercedes everything
+                    if(channelStat == 0){
+                        color = this.color.off;
+                        statMessage = 'Off';
+                    }
+
+                    //set whatever color we've settled on
+                    this.HVgrid[crate].cells[data.Settings.Names[i]].setAttr('fill', color);
+
+                    //set tooltip for this cell
+                    this.HVgrid[crate].TTdata[data.Settings.Names[i]] = {
+                        'Status' : statMessage,
+                        'Demand' : demand + ' V',
+                        'Measured' : measured + ' V',
+                        'Temp' : data.Variables.Temperature[i] + ' C'
+                    }                    
+                }
+
+                //repaint the grid
+                this.HVgrid[crate].update();
             }
   
         }
@@ -19469,6 +19547,9 @@ function getRunSummary(host){
                 
                 this.stage.add(this.mainLayer);
                 this.stage.add(this.tooltipLayer);
+
+                this.errorPattern = new Image();
+                this.errorPattern.src = 'img/static.gif'
                     
             },
 
@@ -19487,7 +19568,7 @@ function getRunSummary(host){
         methods: {
 
             'update': function(){
-                
+                this.mainLayer.draw();
             },
 
             'instantiateCells': function(){
@@ -19508,9 +19589,13 @@ function getRunSummary(host){
                             height: this.grid,
                             fill: '#111111',
                             stroke: 'black',
-                            strokeWidth: 2
+                            strokeWidth: 2,
+                            fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random()
                         });
-
+                        //start on non-reporting
+                        this.cells[this.cellNames[j][i]].setFillPriority('pattern');
                         //set up the tooltip listeners:
                         this.cells[this.cellNames[j][i]].on('mouseover', this.writeTooltip.bind(this, this.cellNames[j][i]) );
                         this.cells[this.cellNames[j][i]].on('mousemove', this.moveTooltip.bind(this) );
