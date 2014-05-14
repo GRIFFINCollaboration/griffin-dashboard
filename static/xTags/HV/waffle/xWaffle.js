@@ -140,7 +140,7 @@
         methods: {
 
             'update': function(){
-                
+                this.mainLayer.draw();
             },
 
             'instantiateCells': function(){
@@ -159,7 +159,7 @@
                             y: this.topMargin + j*this.grid,
                             width: this.grid,
                             height: this.grid,
-                            fill: 'green',
+                            fill: '#111111',
                             stroke: 'black',
                             strokeWidth: 2
                         });

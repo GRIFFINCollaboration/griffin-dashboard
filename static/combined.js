@@ -350,7 +350,7 @@ function initializeDetector(name, headline){
     this.errorPattern = new Image();
     this.errorPattern.src = 'img/static.gif'
     
-    //let repopulate know that the status bar would like to be updated every loop:
+    //let repopulate know that the detector would like to be updated every loop:
     if(!window.refreshTargets)
         window.refreshTargets = [];
     window.refreshTargets[window.refreshTargets.length] = this;
@@ -1321,6 +1321,22 @@ function longestWord(phrase){
     return words[0];
 
 }
+
+//XHR JSON request
+function getJSON(URL, callback){
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = callback;
+
+    //fire async
+    xmlhttp.overrideMimeType('application/json');
+    xmlhttp.open('GET', URL);
+    xmlhttp.send();
+}
+
+
+
+
 /*
  * KineticJS JavaScript Framework v5.0.1
  * http://www.kineticjs.com/
@@ -17111,9 +17127,10 @@ var Kinetic = {};
                 ////////////////
                 this.width = this.offsetWidth;
                 this.height = this.offsetHeight;
-                this.crateNames = ['Crate_0', 'Crate_1', 'Crate_2'];
+                //this.crateNames = ['Crate_0', 'Crate_1', 'Crate_2'];
                 //slot occupancy, ie [4,4,4,4] == four 4-slot cards beside each other,
                 //[1,0,1,0] == a one slot card, a space, another 1 slot card, and another empty slot, etc.
+                /*
                 this.cratePop = [
                     [4,4,4,4],
                     [1,0,1,0,0,0],
@@ -17124,9 +17141,52 @@ var Kinetic = {};
                     ['Slot 0', 'Slot 1', 'Slot 2', 'Slot 3', 'Slot 4', 'Slot 5'],
                     ['Slot 0', 'Slot 4', 'Slot 5', 'Slot 9', 'Slot 10', 'Slot 14', 'Slot 15']
                 ]
-                
+                */
+                this.cratePop = [];
+                this.cardNames = [];
+                this.crateNames = [];
             },
-            inserted: function() {},
+            inserted: function() {
+
+                var equipmentURL = 'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys',
+                    that = this;
+
+                //get ODB equipment directory, parse number of crates & crate maps, and configure HV tool accordingly
+                getJSON(equipmentURL, function(){
+                    
+                    var nCrates = 0,
+                        i, j;
+
+                    //bail out if data not returned yet
+                    if(this.readyState != 4) return;
+                    
+                    //parse JSON
+                    window.ODBEquipment = JSON.parse(this.responseText)[0];  //comes packed in a one-element array...
+
+                    //start counting HV crates; frontends must be names HV-0, HV-1...
+                    while(window.ODBEquipment['HV-'+nCrates]){
+                        //name that crate:
+                        that.crateNames.push('Crate_'+nCrates);
+
+                        //parse crate map and stick appropriate array into HV widget
+                        that.cratePop.push(unpackHVCrateMap(window.ODBEquipment['HV-'+nCrates].Settings.Devices.sy2527.DD.crateMap) );
+
+                        //generate default card names by slot
+                        that.cardNames.push( generateCardNames(that.cratePop[nCrates]) );
+                        nCrates++;
+
+                    }
+                    
+                    that.instantiateMonitors();
+                    
+                });
+
+                //let repopulate know that the HV grid would like to be updated every loop:
+                if(!window.refreshTargets)
+                    window.refreshTargets = [];
+                window.refreshTargets[window.refreshTargets.length] = this;
+
+            },
             removed: function() {},
             attributeChanged: function() {}
         }, 
@@ -17141,7 +17201,7 @@ var Kinetic = {};
         methods: {
 
             'update': function(){
-                
+                //console.log('HV update :<');
             },
 
             'instantiateMonitors': function(){
@@ -17200,22 +17260,13 @@ var Kinetic = {};
                     HVgrid.rows = 13;
                     HVgrid.cols = nSlots;
 
-                    //cell names
-                    HVgrid.cellNames = [];
-                    for(j=0; j<HVgrid.rows; j++){
-                        HVgrid.cellNames[j] = []
-                        for(k=0; k<HVgrid.cols; k++){
-                            HVgrid.cellNames[j][k] = 'test'+j+'_'+k;
-                        }
-                    }
-
                     //master cells for 4-channel cards & card dividers & card names
                     colsPassed = 0
                     HVgrid.specials = {};
                     HVgrid.dividers = {};
                     HVgrid.colTitles = [];
                     for(j=0; j<this.cratePop[i].length; j++){
-                        //master cells
+                        //primary cells
                         if(this.cratePop[i][j] == 4){
                             HVgrid.specials['test'+i+j] = [0,colsPassed, 4,1];
                         }
@@ -17226,9 +17277,6 @@ var Kinetic = {};
                         HVgrid.colTitles[j][1] = colsPassed;
                         HVgrid.colTitles[j][2] = Math.max(1, this.cratePop[i][j]);
 
-                        //row titles
-                        HVgrid.rowTitles = ['Master',1,2,3,4,5,6,7,8,9,10,11,12];
-
                         colsPassed += Math.max(1, this.cratePop[i][j]);
 
                         //dividers
@@ -17237,13 +17285,25 @@ var Kinetic = {};
 
                     }
 
+                    //row titles
+                    HVgrid.rowTitles = ['Primary',1,2,3,4,5,6,7,8,9,10,11,12];
+
+                    //cell names
+                    HVgrid.cellNames = [];
+                    for(j=0; j<HVgrid.rows; j++){
+                        HVgrid.cellNames[j] = []
+                        for(k=0; k<HVgrid.cols; k++){
+                            HVgrid.cellNames[j][k] = findChannelName(j, k, this.cratePop[i], window.ODBEquipment['HV-'+i].Settings.Names);
+                        }
+                    }
+
                     //legend
                     HVgrid.legend = [
                         ['green', 'All OK'],
                         ['red', 'Alarm!'],
                         ['yellow', 'Ramping'],
                         ['blue', 'Ext. Trip'],
-                        ['0x222222', 'Off']
+                        ['#111111', 'Off']
                     ]
 
                 }
@@ -17257,7 +17317,66 @@ var Kinetic = {};
         }
     });
 
-})();//navigation - auto populates with status page and custom pages
+})();
+
+//helpers
+function unpackHVCrateMap(crateMap){
+    var i, nSlots, cardArray = [];
+    
+    //32-bit integer encodes what size cards are in what slot; each slot is encoded in 2 bits, and slot 0 is the two highest (ie 31 and 30) bits.
+    //00 == empty slot, 01 == 12chan card, 10 == 24chan card, 11 == 48chan card. Crate size is indicated by the lowest two bits;
+    //10 == 6 slot crate, 11 == 12 slot crate, anything else == 16 slot crate.
+    if( (crateMap & 3) == 2) nSlots = 6;
+    else if( (crateMap & 3) == 3) nSlots = 12;
+    else nSlots = 16;
+
+    for(i=0; i<nSlots; i++){
+        if( ((crateMap>>(30-2*i)) & 3) == 0 ) cardArray.push(0);
+        else if( ((crateMap>>(30-2*i)) & 3) == 1 ) cardArray.push(1);
+        else if( ((crateMap>>(30-2*i)) & 3) == 2 ) cardArray.push(2);
+        else if( ((crateMap>>(30-2*i)) & 3) == 3 ) cardArray.push(4);
+    }
+
+    return cardArray;
+}
+
+function generateCardNames(cardArray){
+    var nameArray = [],
+        slotsPassed = 0,
+        i;
+
+    for(i=0; i<cardArray.length; i++){
+        nameArray[i] = 'Slot ' + slotsPassed;
+        slotsPassed += Math.max(1, cardArray[i]);
+    }
+
+    return nameArray;
+
+}
+
+//find the name of the channel at row, col in the grid from the ODB
+function findChannelName(row, col, cardArray, nameArray){
+    var channelNames = [],
+        i,
+        stringified = JSON.stringify(nameArray),
+        nameCopy = JSON.parse(stringified);
+
+    //pad the ODB array with blanks so that it's packed as (row0 col0), (row1 col0), ...., (row last, col last)
+    for(i=0; i<cardArray.length; i++){
+        if(cardArray[i] == 1)
+            channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
+        else if(cardArray[i] == 2){
+            channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
+            channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
+        } else if(cardArray[i] == 4)
+            channelNames = channelNames.concat(nameCopy.splice(0,49));
+        else if(cardArray[i] == 0)
+            channelNames = channelNames.concat(['EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT']);
+    }
+
+    return channelNames[col*13 + row];
+
+}//navigation - auto populates with status page and custom pages
 (function(){  
 
     xtag.register('widget-nav', {
@@ -19387,7 +19506,7 @@ function getRunSummary(host){
                             y: this.topMargin + j*this.grid,
                             width: this.grid,
                             height: this.grid,
-                            fill: 'green',
+                            fill: '#111111',
                             stroke: 'black',
                             strokeWidth: 2
                         });

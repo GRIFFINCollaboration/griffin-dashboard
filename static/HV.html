@@ -13,7 +13,7 @@
 			<div id='mainContent'>
 				<!--widget-nav id='navBar'></widget-nav-->
 				<widget-status id='statusBar' MIDAS='annikal.triumf.ca:8082'></widget-status>
-				<widget-HV id='HVtest'></widget-HV>
+				<widget-HV id='HVtool' MIDAS='annikal.triumf.ca:8082'></widget-HV>
 				<!--widget-spectrumViewer id='spectrumViewer'></widget-spectrumViewer-->
 			</div>
 
@@ -24,10 +24,6 @@
 
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
-				var i, HVgrid;
-
-				document.getElementById('HVtest').instantiateMonitors();
-
 				//begin data fetch loop:
 				rebootFetch();
 			});

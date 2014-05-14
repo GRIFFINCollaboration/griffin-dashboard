@@ -253,7 +253,7 @@ function initializeDetector(name, headline){
     this.errorPattern = new Image();
     this.errorPattern.src = 'img/static.gif'
     
-    //let repopulate know that the status bar would like to be updated every loop:
+    //let repopulate know that the detector would like to be updated every loop:
     if(!window.refreshTargets)
         window.refreshTargets = [];
     window.refreshTargets[window.refreshTargets.length] = this;
