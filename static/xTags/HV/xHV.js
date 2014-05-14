@@ -11,6 +11,7 @@
                 this.width = this.offsetWidth;
                 this.height = this.offsetHeight;
                 this.driftTolerance = 0.05;
+                this.temperatureMax = 40;
                 this.color = {
                     'ok' : '#2ecc71',
                     'alarm' : '#c0392b',
@@ -153,6 +154,7 @@
                     //rows and cols
                     this.HVgrid[i] = document.getElementById('HVGrid'+i);
                     nSlots = 0;
+
                     for(j=0; j<this.cratePop[i].length; j++){
                         nSlots += Math.max(this.cratePop[i][j], 1);
                     }
@@ -215,7 +217,7 @@
             },
 
             'mapData': function(crate, event){
-                var data, i, demand, measured, color, channelStat, statMessage;
+                var data, i, demand, measured, color, channelStat, statMessage, current, currentLimit, temperature;
 
                 if(event.explicitOriginalTarget.readyState != 4) return
 
@@ -224,39 +226,54 @@
                 for(i=0; i<data.Settings.Names.length; i++){
                     demand = data.Variables.Demand[i];
                     measured = data.Variables.Measured[i];
+                    current = data.Variables.Current[i];
+                    currentLimit = data.Settings['Current Limit'][i];
                     channelStat = data.Variables.ChStatus[i];
-                    statMessage = 'All Ok';
+                    temperature = data.Variables.Temperature[i];
+                    statMessage = 'All Ok\n';
                     color = this.color.ok;
                     this.HVgrid[crate].cells[data.Settings.Names[i]].setFillPriority('color');
 
                     //require demand and measured voltages be close enough, else throw alarm:
                     if(measured / demand < (1-this.driftTolerance) || measured / demand > (1+this.driftTolerance)){
                         color = this.color.alarm;
-                        statMessage = 'VOLTAGE DRIFT'
+                        statMessage = 'VOLTAGE DRIFT\n'
+                    }
+
+                    //throw alarm if current over limit
+                    if(current > currentLimit){
+                        color = this.color.alarm;
+                        statMessage = 'OVERCURRENT\n';
+                    }
+
+                    //enter alarm state if channel too hot
+                    if(temperature > this.temperatureMax){
+                        color = this.color.alarm;
+                        statMessage = 'OVERHEAT\n';
                     }
 
                     //ramping supercedes voltage diff
                     if(channelStat == 3 || channelStat == 5){
                         color = this.color.ramp;
-                        statMessage = 'Ramping';
+                        statMessage = 'Ramping\n';
                     }
 
                     //trips and disables supercede voltage diff
                     if(channelStat == 64){
                         color = this.color.trip;
-                        statMessage = 'EXTERNAL TRIP'
+                        statMessage = 'EXTERNAL TRIP\n'
                     } else if(channelStat == 256){
                         color = this.color.trip;
-                        statMessage = 'EXTERNAL DISABLE'
+                        statMessage = 'EXTERNAL DISABLE\n'
                     } else if(channelStat == 512){
                         color = this.color.trip;
-                        statMessage = 'INTERNAL TRIP'
+                        statMessage = 'INTERNAL TRIP\n'
                     }
 
                     //off supercedes everything
                     if(channelStat == 0){
                         color = this.color.off;
-                        statMessage = 'Off';
+                        statMessage = 'Off\n';
                     }
 
                     //set whatever color we've settled on
@@ -291,11 +308,24 @@ function unpackHVCrateMap(crateMap){
     else if( (crateMap & 3) == 3) nSlots = 12;
     else nSlots = 16;
 
-    for(i=0; i<nSlots; i++){
-        if( ((crateMap>>(30-2*i)) & 3) == 0 ) cardArray.push(0);
-        else if( ((crateMap>>(30-2*i)) & 3) == 1 ) cardArray.push(1);
-        else if( ((crateMap>>(30-2*i)) & 3) == 2 ) cardArray.push(2);
-        else if( ((crateMap>>(30-2*i)) & 3) == 3 ) cardArray.push(4);
+    for(i=0; i<nSlots;){
+
+        if( ((crateMap>>(30-2*i)) & 3) == 0 ){
+            cardArray.push(0);
+            i++;
+        }
+        else if( ((crateMap>>(30-2*i)) & 3) == 1 ){
+            cardArray.push(1);
+            i++;
+        }
+        else if( ((crateMap>>(30-2*i)) & 3) == 2 ){
+            cardArray.push(2);
+            i+=2;
+        }
+        else if( ((crateMap>>(30-2*i)) & 3) == 3 ){
+            cardArray.push(4);
+            i+=4;
+        }
     }
 
     return cardArray;
