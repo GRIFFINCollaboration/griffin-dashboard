@@ -17284,6 +17284,7 @@ var Kinetic = {};
                     this.HVgrid[i].dividers = {};
                     this.HVgrid[i].colTitles = [];
                     this.HVgrid[i].TTdata = {};
+                    this.HVgrid[i].clickCell = this.clickCell;
                     for(j=0; j<this.cratePop[i].length; j++){
                         //primary cells
                         if(this.cratePop[i][j] == 4){
@@ -17401,12 +17402,28 @@ var Kinetic = {};
                         'Status' : statMessage,
                         'Demand' : demand + ' V',
                         'Measured' : measured + ' V',
+                        'Current': ((current==-9999)? 'Not Reporting' : current+' mA' ),
                         'Temp' : data.Variables.Temperature[i] + ' C'
                     }                    
                 }
 
                 //repaint the grid
                 this.HVgrid[crate].update();
+            },
+
+            'clickCell': function(cellName){
+                if(cellName == 'EMPTY SLOT' || cellName == 'No Primary') return
+                if(this.oldHighlight){
+                    this.cells[this.oldHighlight].setAttr('stroke', 'black');
+                    this.cells[this.oldHighlight].setAttr('strokeWidth', '2'); 
+                    this.cells[this.oldHighlight].moveToBottom();                   
+                }
+                this.cells[cellName].setAttr('stroke', 'red');
+                this.cells[cellName].setAttr('strokeWidth', '6');
+                this.cells[cellName].moveToTop();
+                this.oldHighlight = cellName;
+                this.update();
+
             }
   
         }
@@ -17448,6 +17465,7 @@ function unpackHVCrateMap(crateMap){
     return cardArray;
 }
 
+
 function generateCardNames(cardArray){
     var nameArray = [],
         slotsPassed = 0,
@@ -17462,6 +17480,25 @@ function generateCardNames(cardArray){
 
 }
 
+/*
+function generateCardNames(cardArray, equipmentTree){
+    var nameArray = [],
+        slotsPassed = 0,
+        i;
+
+    for(i=0; i<cardArray.length; i++){
+        if(cardArray[i] == 0)
+            nameArray[i] = 'Empty';
+        else
+            nameArray[i] = equipmentTree.Settings.Devices.sy2527['Slot '+slotsPassed].Description
+
+        slotsPassed += Math.max(1, cardArray[i]);
+    }
+
+    return nameArray;
+
+}
+*/
 //find the name of the channel at row, col in the grid from the ODB
 function findChannelName(row, col, cardArray, nameArray){
     var channelNames = [],
@@ -19661,7 +19698,14 @@ function getRunSummary(host){
                         if(this.clickCell)  
                             this.cells[key].on('click', this.clickCell.bind(this, key) );
 
-                        this.mainLayer.add(this.cells[key])
+                        this.mainLayer.add(this.cells[key]);
+
+                        //remove 1x1 cells now hidden by overlays
+                        for(i=this.specials[key][1]; i<this.grid*this.specials[key][2]; i++){
+                            for(j=this.specials[key][0]; j<this.grid*this.specials[key][3]; j++){
+                                this.cells[this.cellNames[i][j]].remove();
+                            }
+                        }
                     }
                 }
 
