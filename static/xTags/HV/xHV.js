@@ -241,6 +241,12 @@
                         statMessage = 'VOLTAGE DRIFT\n'
                     }
 
+                    //ramping supercedes voltage diff
+                    if(channelStat == 3 || channelStat == 5){
+                        color = this.color.ramp;
+                        statMessage = 'Ramping\n';
+                    }
+
                     //throw alarm if current over limit
                     if(current > currentLimit){
                         color = this.color.alarm;
@@ -251,12 +257,6 @@
                     if(temperature > this.temperatureMax){
                         color = this.color.alarm;
                         statMessage = 'OVERHEAT\n';
-                    }
-
-                    //ramping supercedes voltage diff
-                    if(channelStat == 3 || channelStat == 5){
-                        color = this.color.ramp;
-                        statMessage = 'Ramping\n';
                     }
 
                     //trips and disables supercede voltage diff
