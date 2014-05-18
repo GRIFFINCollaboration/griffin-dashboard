@@ -4,7 +4,7 @@ widget-status{
 	border-radius: 1em;
 	padding: 1em;
 	margin: 1em;
-	max-width: 20%;
+	max-width: calc(20% - 1em);
 
 	clear:both;
 }

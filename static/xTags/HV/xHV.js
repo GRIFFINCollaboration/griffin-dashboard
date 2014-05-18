@@ -1,4 +1,4 @@
-//status bar
+//HV widget
 (function(){  
 
     xtag.register('widget-HV', {
@@ -19,6 +19,7 @@
                     'trip' : '#3498db',
                     'off' : '#95a5a6'
                 }
+                this.currentCrate = 0;
 
                 //this.crateNames = ['Crate_0', 'Crate_1', 'Crate_2'];
                 //slot occupancy, ie [4,4,4,4] == four 4-slot cards beside each other,
@@ -215,10 +216,12 @@
 
             'changeView': function(i){
                 document.getElementById(this.id+'Deck').shuffleTo(i);
+                this.currentCrate = i;
             },
 
             'mapData': function(crate, event){
-                var data, i, demand, measured, color, channelStat, statMessage, current, currentLimit, temperature;
+                var data, i, j, demand, measured, color, channelStat, statMessage, current, currentLimit, temperature, statString,
+                    isVoltageDrift, isRamping, isTripped, isOverheat, isAlarmed;
 
                 if(event.explicitOriginalTarget.readyState != 4) return
 
@@ -231,58 +234,46 @@
                     currentLimit = data.Settings['Current Limit'][i];
                     channelStat = data.Variables.ChStatus[i];
                     temperature = data.Variables.Temperature[i];
-                    statMessage = 'All Ok\n';
+                    statMessage = parseChStatus(channelStat);
                     color = this.color.ok;
                     this.HVgrid[crate].cells[data.Settings.Names[i]].setFillPriority('color');
 
-                    //require demand and measured voltages be close enough, else throw alarm:
-                    if(measured / demand < (1-this.driftTolerance) || measured / demand > (1+this.driftTolerance)){
-                        color = this.color.alarm;
-                        statMessage = 'VOLTAGE DRIFT\n'
-                    }
+                    isVoltageDrift = measured / demand < (1-this.driftTolerance) || measured / demand > (1+this.driftTolerance);
+                    isRamping = statMessage.indexOf('Ramping Down')!=-1 || statMessage.indexOf('Ramping Up')!=-1;
+                    isTripped = statMessage.indexOf('INTERNAL TRIP')!=-1 || statMessage.indexOf('EXTERNAL TRIP')!=-1 || statMessage.indexOf('EXTERNAL DISABLE')!=-1;
+                    isOverheat = temperature > this.temperatureMax;
+                    isAlarmed = channelStat>=8 && !isTripped;
 
-                    //ramping supercedes voltage diff
-                    if(channelStat == 3 || channelStat == 5){
+                    if( (isVoltageDrift && !isRamping && !isTripped) || (isAlarmed && !isTripped) || isOverheat )
+                        color = this.color.alarm;
+
+                    if(isRamping && !isAlarmed)
                         color = this.color.ramp;
-                        statMessage = 'Ramping\n';
-                    }
 
-                    //throw alarm if current over limit
-                    if(current > currentLimit){
-                        color = this.color.alarm;
-                        statMessage = 'OVERCURRENT\n';
-                    }
-
-                    //enter alarm state if channel too hot
-                    if(temperature > this.temperatureMax){
-                        color = this.color.alarm;
-                        statMessage = 'OVERHEAT\n';
-                    }
-
-                    //trips and disables supercede voltage diff
-                    if(channelStat == 64){
+                    if(isTripped && !isAlarmed)
                         color = this.color.trip;
-                        statMessage = 'EXTERNAL TRIP\n'
-                    } else if(channelStat == 256){
-                        color = this.color.trip;
-                        statMessage = 'EXTERNAL DISABLE\n'
-                    } else if(channelStat == 512){
-                        color = this.color.trip;
-                        statMessage = 'INTERNAL TRIP\n'
-                    }
 
-                    //off supercedes everything
-                    if(channelStat == 0){
+                    if(channelStat == 0)
                         color = this.color.off;
-                        statMessage = 'Off\n';
-                    }
+
+                    if(isVoltageDrift && !isRamping && !isTripped)
+                        statMessage.push('VOLTAGE DRIFT');
+
+                    if(isOverheat)
+                        statMessage.push('OVERHEAT');
 
                     //set whatever color we've settled on
                     this.HVgrid[crate].cells[data.Settings.Names[i]].setAttr('fill', color);
 
+                    //build stat string message
+                    statString = '';
+                    for(j=0; j<statMessage.length; j++){
+                        statString += statMessage[j] + '\n'
+                    }
+
                     //set tooltip for this cell
                     this.HVgrid[crate].TTdata[data.Settings.Names[i]] = {
-                        'Status' : statMessage,
+                        'Status' : statString,
                         'Demand' : demand + ' V',
                         'Measured' : measured + ' V',
                         'Current': ((current==-9999)? 'Not Reporting' : current+' mA' ),
@@ -295,6 +286,9 @@
             },
 
             'clickCell': function(cellName){
+                var evt, i,
+                    controlSidebars = document.getElementsByTagName('widget-HVcontrol')
+
                 if(cellName == 'EMPTY SLOT' || cellName == 'No Primary') return
                 if(this.oldHighlight){
                     this.cells[this.oldHighlight].setAttr('stroke', 'black');
@@ -306,6 +300,16 @@
                 this.cells[cellName].moveToTop();
                 this.oldHighlight = cellName;
                 this.update();
+
+                if(controlSidebars){
+                    for(i=0; i<controlSidebars.length; i++){
+                        evt = new CustomEvent('postHVchan', {'detail': {   
+                            'channel' : cellName, 
+                            'ODBblob': window.ODBEquipment['HV-'+this.id.slice(6)], 
+                        } });
+                        controlSidebars[i].dispatchEvent(evt);
+                    }
+                }
 
             }
   
@@ -363,6 +367,74 @@ function generateCardNames(cardArray){
 
 }
 
+function parseChStatus(chStatus){
+    var status = [],
+        remaining = chStatus;
+
+        if(remaining >= 2048){
+            status.push('UNPLUGGED');
+            remaining -= 2048;
+        }
+
+        if(remaining >= 1024){
+            status.push('CALIBRATION ERROR');
+            remaining -= 1024;
+        }
+
+        if(remaining >= 512){
+            status.push('INTERNAL TRIP');
+            remaining -= 512;
+        }
+
+        if(remaining >= 256){
+            status.push('EXTERNAL DISABLE');
+            remaining -= 256;
+        }
+
+        if(remaining >= 128){
+            status.push('MAX V');
+            remaining -= 128;
+        }
+
+        if(remaining >= 64){
+            status.push('EXTERNAL TRIP');
+            remaining -= 64;
+        }
+
+        if(remaining >= 32){
+            status.push('UNDERVOLTAGE');
+            remaining -= 32;
+        }
+
+        if(remaining >= 16){
+            status.push('OVERVOLTAGE');
+            remaining -= 16;
+        }
+
+        if(remaining >= 8){
+            status.push('OVERCURRENT');
+            remaining -= 8;
+        }
+
+        if(remaining >= 4){
+            status.push('Ramping Down');
+            remaining -= 4;
+        }
+
+        if(remaining >= 2){
+            status.push('Ramping Up');
+            remaining -= 2;
+        }
+
+        if(remaining >= 1){
+            status.push('Bias On');
+        } else{
+            status.push('Bias Off');
+        }
+
+        return status;
+}
+
 /*
 function generateCardNames(cardArray, equipmentTree){
     var nameArray = [],
@@ -405,3 +477,307 @@ function findChannelName(row, col, cardArray, nameArray){
     return channelNames[col*13 + row];
 
 }
+
+
+
+
+
+
+//HV control panel
+(function(){  
+
+    xtag.register('widget-HVcontrol', {
+        extends: 'div',
+        lifecycle: {
+            created: function() {
+                var HVcontrol = document.createElement('form')
+                ,   controlTitle = document.createElement('h2')
+                ,   offRadio = document.createElement('input')
+                ,   offRadioLabel = document.createElement('label')
+                ,   onRadio = document.createElement('input')
+                ,   onRadioLabel = document.createElement('label')
+                ,   commit = document.createElement('input')
+                ,   statusBar = document.createElement('ul')
+                ,   meterDiv = document.createElement('div')
+                ,   demandTitle = document.createElement('h3')
+                ,   demandCell = document.createElement('input')
+                ,   demandSlide = document.createElement('input')
+                ,   voltageUpTitle = document.createElement('h3')
+                ,   voltageUpCell = document.createElement('input')
+                ,   voltageUpSlide = document.createElement('input')
+                ,   voltageDownTitle = document.createElement('h3')
+                ,   voltageDownCell = document.createElement('input')
+                ,   voltageDownSlide = document.createElement('input')
+
+                this.temperatureMax = 40;
+
+                ////////////////////
+                //build the DOM
+                ////////////////////
+                controlTitle.setAttribute('id', this.id + 'Title');
+                controlTitle.innerHTML = 'Click on a HV cell to get started.';
+                this.appendChild(controlTitle);
+
+                HVcontrol.setAttribute('id', this.id + 'Control');
+                this.appendChild(HVcontrol);
+
+                commit.setAttribute('id', this.id + 'HVparameterCommit');
+                commit.setAttribute('type', 'button');
+                commit.setAttribute('value', 'Commit');
+                commit.setAttribute('onclick', this.submitParameters);
+                HVcontrol.appendChild(commit);
+
+                offRadio.setAttribute('id', this.id + 'offRadio')
+                offRadio.setAttribute('name', 'powerSwitch');
+                offRadio.setAttribute('value', 'off');
+                offRadio.setAttribute('type', 'radio');
+                HVcontrol.appendChild(offRadio);
+                offRadioLabel.setAttribute('for', this.id + 'offRadio');
+                offRadioLabel.innerHTML = 'Off';
+                HVcontrol.appendChild(offRadioLabel);
+                onRadio.setAttribute('id', this.id + 'onRadio')
+                onRadio.setAttribute('name', 'powerSwitch');
+                onRadio.setAttribute('value', 'on');
+                onRadio.setAttribute('type', 'radio');
+                HVcontrol.appendChild(onRadio);
+                onRadioLabel.setAttribute('for', this.id + 'onRadio');
+                onRadioLabel.innerHTML = 'On';
+                HVcontrol.appendChild(onRadioLabel);
+
+                statusBar.setAttribute('id', this.id + 'statusReport');
+                HVcontrol.appendChild(statusBar);
+
+                meterDiv.setAttribute('id', this.id + 'HVmeterWrapper');
+                HVcontrol.appendChild(meterDiv);
+
+                demandTitle.innerHTML = 'Demand Voltage';
+                HVcontrol.appendChild(demandTitle);
+                demandCell.setAttribute('id', this.id + 'demandVoltage');
+                demandCell.setAttribute('class', 'voltageField');
+                demandCell.setAttribute('type', 'number');
+                demandCell.setAttribute('step', 'any');
+                demandCell.setAttribute('min', 0);
+                HVcontrol.appendChild(demandCell);
+                demandSlide.setAttribute('id', this.id + 'demandVoltageSlide');
+                demandSlide.setAttribute('type', 'range');
+                HVcontrol.appendChild(demandSlide);
+
+                voltageUpTitle.innerHTML = 'Voltage Ramp Up';
+                HVcontrol.appendChild(voltageUpTitle);
+                voltageUpCell.setAttribute('id', this.id + 'voltageUp');
+                voltageUpCell.setAttribute('class', 'rampField');
+                voltageUpCell.setAttribute('type', 'number');
+                voltageUpCell.setAttribute('step', 'any');
+                voltageUpCell.setAttribute('min', 0);
+                voltageUpCell.setAttribute('max', 500);
+                HVcontrol.appendChild(voltageUpCell);
+                voltageUpSlide.setAttribute('id', this.id + 'voltageUpSlide');
+                voltageUpSlide.setAttribute('type', 'range');
+                voltageUpSlide.setAttribute('min', 0);
+                voltageUpSlide.setAttribute('max', 500);
+                HVcontrol.appendChild(voltageUpSlide);
+
+                voltageDownTitle.innerHTML = 'Voltage Ramp Down';
+                HVcontrol.appendChild(voltageDownTitle);
+                voltageDownCell.setAttribute('id', this.id + 'voltageDown');
+                voltageDownCell.setAttribute('class', 'rampField');
+                voltageDownCell.setAttribute('type', 'number');
+                voltageDownCell.setAttribute('step', 'any');
+                voltageDownCell.setAttribute('min', 0);
+                voltageDownCell.setAttribute('max', 500);
+                voltageDownSlide
+                HVcontrol.appendChild(voltageDownCell);
+                voltageDownSlide.setAttribute('id', this.id + 'voltageDownSlide');
+                voltageDownSlide.setAttribute('type', 'range');
+                voltageDownSlide.setAttribute('min', 0);
+                voltageDownSlide.setAttribute('max', 500);
+                HVcontrol.appendChild(voltageDownSlide);
+
+                //set up kinetic objects
+                this.meterWidth = document.getElementById(this.id+'HVmeterWrapper').offsetWidth;
+                this.meterHeight = 0.8*document.getElementById(this.id+'HVmeterWrapper').offsetWidth;
+                this.stage = new Kinetic.Stage({
+                    container: this.id+'HVmeterWrapper',
+                    width: this.meterWidth,
+                    height: this.meterHeight
+                });
+                this.mainLayer = new Kinetic.Layer();       //main rendering layer
+                this.stage.add(this.mainLayer);
+                this.establishFillMeter('Voltage', 'V', this.mainLayer, 0, 0.05*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
+                this.establishFillMeter('Current', 'mA', this.mainLayer, 0, 0.37*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
+                this.establishFillMeter('Temperature', 'C', this.mainLayer, 0, 0.69*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
+
+                this.addEventListener('postHVchan', function(evt){
+                    this.updateForm(evt.detail.channel, evt.detail.ODBblob);
+                }, false);
+
+            },
+            inserted: function() {},
+            removed: function() {},
+            attributeChanged: function() {}
+        }, 
+        events: { 
+
+        },
+        accessors: {
+            'MIDAS':{
+                attribute: {} //this just needs to be declared
+            }
+        }, 
+        methods: {
+
+            'submitParameters' : function(){
+                console.log(this);
+            },
+
+            'updateForm' : function(channelName, ODBfe){
+                var chanIndex = ODBfe.Settings.Names.indexOf(channelName),
+                    chStatus = parseChStatus(ODBfe.Variables.ChStatus[chanIndex]),
+                    demandVoltage = ODBfe.Variables.Demand[chanIndex],
+                    measuredVoltage = ODBfe.Variables.Measured[chanIndex],
+                    voltageLimit = ODBfe.Settings['Voltage Limit'][chanIndex],
+                    currentLimit = ODBfe.Settings['Current Limit'][chanIndex],
+                    current = ODBfe.Variables.Current[chanIndex],
+                    temperature = ODBfe.Variables.Temperature[chanIndex],
+                    vUp = ODBfe.Settings['Ramp Up Speed'][chanIndex],
+                    vDown = ODBfe.Settings['Ramp Down Speed'][chanIndex],
+                    i, listCell;
+
+                if(chanIndex==-1) return;
+
+                document.getElementById(this.id + 'Title').innerHTML = channelName;
+                document.getElementById(this.id + 'Control').style.opacity = 1;
+                if(ODBfe.Variables.ChStatus[chanIndex]%2 == 0)
+                    document.getElementById(this.id+'offRadio').checked = true;
+                else
+                    document.getElementById(this.id+'onRadio').checked = true;
+                document.getElementById(this.id + 'statusReport').innerHTML = '';
+                for(i=0; i<chStatus.length; i++){
+                    listCell = document.createElement('li');
+                    listCell.innerHTML = chStatus[i];
+                    document.getElementById(this.id + 'statusReport').appendChild(listCell);
+                }
+                document.getElementById(this.id + 'demandVoltage').max = voltageLimit;
+                document.getElementById(this.id + 'demandVoltage').value = demandVoltage;
+                document.getElementById(this.id + 'demandVoltageSlide').max = voltageLimit;
+                document.getElementById(this.id + 'demandVoltageSlide').value = demandVoltage;
+                document.getElementById(this.id + 'voltageUp').value = vUp;
+                document.getElementById(this.id + 'voltageUpSlide').value = vUp;
+                document.getElementById(this.id + 'voltageDown').value = vDown;
+                document.getElementById(this.id + 'voltageDownSlide').value = vDown;
+
+                this.updateFillMeter('Voltage', measuredVoltage, voltageLimit);
+                this.updateFillMeter('Current', current, currentLimit);
+                this.updateFillMeter('Temperature', temperature, this.temperatureMax);
+                this.mainLayer.draw();
+
+            },
+
+            'establishFillMeter' : function(title, unit, layer, x0, y0, width, height){
+                var title, shell, meter, value,
+                    fontSize = height/3;
+
+                if(!this.meter)
+                    this.meter = {};
+                if(!this.shell)
+                    this.shell = {};
+                if(!this.meterMax)
+                    this.meterMax = {};
+                if(!this.meterNow)
+                    this.meterNow = {};
+
+                label = new Kinetic.Text({
+                    x: x0,
+                    y: 0,
+                    text: title,
+                    fontSize: fontSize,
+                    fontFamily: 'Arial',
+                    fill: '#999999'
+                });
+                squishFont(label, 0.35*width*0.95)
+                label.setAttr('y', y0 + height/2 - label.getTextHeight()/2 );
+                this.mainLayer.add(label);
+
+                this.meter[title] = meter = new Kinetic.Rect({
+                    x: x0 + 0.35*width,
+                    y: y0 + height/2 - height/6,
+                    width: height/3,
+                    height: height/3,
+                    cornerRadius: height/3/2,
+                    strokeWidth: 2,
+                    stroke: '#000000',
+                    fill: '#f1c40f'
+                });
+                this.mainLayer.add(this.meter[title]);
+
+                this.shell[title] = new Kinetic.Rect({
+                    x: x0 + 0.35*width,
+                    y: y0 + height/2 - height/6,
+                    width: width/2,
+                    height: height/3,
+                    strokeWidth: 2,
+                    fill: '#95a5a6',
+                    stroke: '#000000',
+                    cornerRadius: height/3/2
+                });
+                this.mainLayer.add(this.shell[title]);
+
+                this.meterMax[title] = new Kinetic.Text({
+                    x: x0 + 0.35*width,
+                    y: y0 + height/2 - 0.8*fontSize/2 + height/3 + 2,
+                    text: 'Max: 0 '+unit,
+                    fontSize: 0.8*fontSize,
+                    fontFamily: 'Arial',
+                    fill: '#999999',
+                    align: 'right',
+                    width: width/2
+                });
+                this.mainLayer.add(this.meterMax[title]);
+
+                this.meterNow[title] = new Kinetic.Text({
+                    x: x0 + 0.35*width,
+                    y: y0 + height/2 - 0.8*fontSize/2 - height/3 - 2,
+                    text: 'Now: 0 '+unit,
+                    fontSize: 0.8*fontSize,
+                    fontFamily: 'Arial',
+                    fill: '#999999',
+                    align: 'right',
+                    width: width/2
+                });
+                this.mainLayer.add(this.meterNow[title]);
+            },
+
+            'updateFillMeter' : function(title, val, max){
+                var width = this.shell[title].getAttr('width'),
+                    unit = this.meterMax[title].getAttr('text').split(' '),
+                    barLength = val/max,
+                    color;
+
+                if(barLength<0)
+                    barLength = 0;
+                if(barLength>1)
+                    barLength = 1;
+
+                if(barLength < 0.5)
+                    color = '#2ecc71'
+                if(barLength >= 0.5)
+                    color = '#f1c40f'
+                if(barLength >0.9)
+                    color = '#c0392b'
+
+                barLength = Math.max(barLength*width, this.shell[title].getAttr('height'));
+
+                unit = unit[unit.length-1];
+
+                this.meterNow[title].setAttr('text', 'Now: ' + val.toFixed() + ' ' +unit)
+                this.meterMax[title].setAttr('text', 'Max: ' + max.toFixed() + ' ' +unit);
+                this.meter[title].setAttr('width', barLength);
+                this.meter[title].setAttr('fill', color);
+                this.meter[title].moveToTop();
+
+            }
+  
+        }
+    });
+
+})();

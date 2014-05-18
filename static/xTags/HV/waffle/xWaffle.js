@@ -325,12 +325,13 @@
                 var text, j, key;
 
                 if(name!=-1){
-                    text = name;
+                    text = name + '\n';
                     if(this.TTdata && this.TTdata[name]){
                         for(key in this.TTdata[name]){
                             text += '\n' + key + ': ' + this.TTdata[name][key]
                         }
                     }
+                    if(text == name + '\n') text = name;
                 } else {
                     text = '';
                 }

@@ -434,7 +434,7 @@ form.plotControlWidget select{
 	margin-right: 2px;
 	cursor:pointer;
 }widget-HV{
-	width:58%;  
+	width:calc(60% - 2em);  
 	float:left;
 }
 
@@ -444,11 +444,15 @@ x-card x-waffle{
 	float: left;
 }
 
-input.crateRadio{
+input.crateRadio, 
+widget-HVcontrol input[type='radio']{
 	display:none;
 }
 
-input.crateRadio + label{
+input.crateRadio + label,
+widget-HVcontrol input[type='radio'] + label,
+widget-HVcontrol input[type='button'],
+widget-HVcontrol input[type='number']{
 	font-size: 100%;
 	line-height: 1.2em;
 	padding:0.5em;
@@ -464,13 +468,54 @@ input.crateRadio + label{
 	-webkit-transition:background-color 0.3s;
 }
 
-input.crateRadio:checked + label{
+input.crateRadio:checked + label,
+input[type='radio']:checked + label
+{
 	background-color: #555555;
 }
 
 div.HVcrateNav{
 	margin-top: 1em;
 }
+
+/*Control sidebar*/
+widget-HVcontrol{
+	background-color: #333333;
+	border-radius: 1em;
+	float: right;
+	padding: 1em;
+	margin: 1em;
+	max-width: calc(20% - 1em);
+}
+
+widget-HVcontrol form{
+	opacity: 0;
+	transition:opacity 0.3s; 
+	-moz-transition:opacity 0.3s; 
+	-webkit-transition:opacity 0.3s;
+}
+
+widget-HVcontrol input[type='number']{
+	width: 5em;
+}
+
+widget-HVcontrol input[type='button']{
+	margin-right: 2em;
+}
+
+widget-HVcontrol ul{
+	margin-top: 1em;
+	font-size: 120%;
+	line-height: 1.5em;
+}
+
+input.voltageField:after{
+	content: "V";
+}
+
+
+
+
 widget-nav{
 	width:100%;
 }
@@ -521,7 +566,7 @@ widget-status{
 	border-radius: 1em;
 	padding: 1em;
 	margin: 1em;
-	max-width: 20%;
+	max-width: calc(20% - 1em);
 
 	clear:both;
 }

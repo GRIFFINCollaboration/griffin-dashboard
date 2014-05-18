@@ -63,5 +63,9 @@ function getJSON(URL, callback){
     xmlhttp.send();
 }
 
-
+function squishFont(string, maxWidth){
+    while(string.getTextWidth() > maxWidth){
+        string.setAttr('fontSize', string.getAttr('fontSize') - 1);
+    }
+}
 
