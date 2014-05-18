@@ -1326,7 +1326,10 @@ function longestWord(phrase){
 function getJSON(URL, callback){
     var xmlhttp = new XMLHttpRequest();
 
-    xmlhttp.onreadystatechange = callback;
+    xmlhttp.onreadystatechange = function(){
+        if(this.readyState != 4) return;
+        callback(this.responseText);
+    }
 
     //fire async
     xmlhttp.overrideMimeType('application/json');
@@ -17164,39 +17167,35 @@ var Kinetic = {};
             },
             inserted: function() {
 
-                var equipmentURL = 'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys',
-                    that = this;
+                var equipmentURL = 'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys';
 
                 //get ODB equipment directory, parse number of crates & crate maps, and configure HV tool accordingly
-                getJSON(equipmentURL, function(){
+                getJSON(equipmentURL, function(responseText){
                     
                     var nCrates = 0,
                         i, j;
-
-                    //bail out if data not returned yet
-                    if(this.readyState != 4) return;
                     
                     //parse JSON
-                    window.ODBEquipment = JSON.parse(this.responseText)[0];  //comes packed in a one-element array...
+                    window.ODBEquipment = JSON.parse(responseText)[0];  //comes packed in a one-element array...
 
                     //start counting HV crates; frontends must be names HV-0, HV-1...
                     while(window.ODBEquipment['HV-'+nCrates]){
                         //name that crate:
-                        that.crateNames.push('Crate_'+nCrates);
+                        this.crateNames.push('Crate_'+nCrates);
 
                         //parse crate map and stick appropriate array into HV widget
-                        that.cratePop.push(unpackHVCrateMap(window.ODBEquipment['HV-'+nCrates].Settings.Devices.sy2527.DD.crateMap) );
+                        this.cratePop.push(unpackHVCrateMap(window.ODBEquipment['HV-'+nCrates].Settings.Devices.sy2527.DD.crateMap) );
 
                         //generate default card names by slot
-                        that.cardNames.push( generateCardNames(that.cratePop[nCrates]) );
+                        this.cardNames.push( generateCardNames(this.cratePop[nCrates]) );
                         nCrates++;
 
                     }
                     
-                    that.instantiateMonitors();
-                    that.update();
+                    this.instantiateMonitors();
+                    this.update();
                     
-                });
+                }.bind(this));
 
                 //let repopulate know that the HV grid would like to be updated every loop:
                 if(!window.refreshTargets)
@@ -17340,13 +17339,11 @@ var Kinetic = {};
                 this.currentCrate = i;
             },
 
-            'mapData': function(crate, event){
+            'mapData': function(crate, responseText){
                 var data, i, j, demand, measured, color, channelStat, statMessage, current, currentLimit, temperature, statString,
                     isVoltageDrift, isRamping, isTripped, isOverheat, isAlarmed;
 
-                if(event.explicitOriginalTarget.readyState != 4) return
-
-                data = JSON.parse(event.explicitOriginalTarget.responseText)[0]
+                data = JSON.parse(responseText)[0];
 
                 for(i=0; i<data.Settings.Names.length; i++){
                     demand = data.Variables.Demand[i];

@@ -55,7 +55,10 @@ function longestWord(phrase){
 function getJSON(URL, callback){
     var xmlhttp = new XMLHttpRequest();
 
-    xmlhttp.onreadystatechange = callback;
+    xmlhttp.onreadystatechange = function(){
+        if(this.readyState != 4) return;
+        callback(this.responseText);
+    }
 
     //fire async
     xmlhttp.overrideMimeType('application/json');
