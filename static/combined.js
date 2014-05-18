@@ -17353,7 +17353,7 @@ var Kinetic = {};
                     measured = data.Variables.Measured[i];
                     current = data.Variables.Current[i];
                     currentLimit = data.Settings['Current Limit'][i];
-                    channelStat = data.Variables.ChStatus[i];
+                    channelStat = parseInt(data.Variables.ChStatus[i], 16);
                     temperature = data.Variables.Temperature[i];
                     statMessage = parseChStatus(channelStat);
                     color = this.color.ok;
@@ -17377,7 +17377,7 @@ var Kinetic = {};
                     if(channelStat == 0)
                         color = this.color.off;
 
-                    if(isVoltageDrift && !isRamping && !isTripped)
+                    if(isVoltageDrift && !isRamping && !isTripped && channelStat)
                         statMessage.push('VOLTAGE DRIFT');
 
                     if(isOverheat)
@@ -17556,25 +17556,6 @@ function parseChStatus(chStatus){
         return status;
 }
 
-/*
-function generateCardNames(cardArray, equipmentTree){
-    var nameArray = [],
-        slotsPassed = 0,
-        i;
-
-    for(i=0; i<cardArray.length; i++){
-        if(cardArray[i] == 0)
-            nameArray[i] = 'Empty';
-        else
-            nameArray[i] = equipmentTree.Settings.Devices.sy2527['Slot '+slotsPassed].Description
-
-        slotsPassed += Math.max(1, cardArray[i]);
-    }
-
-    return nameArray;
-
-}
-*/
 //find the name of the channel at row, col in the grid from the ODB
 function findChannelName(row, col, cardArray, nameArray){
     var channelNames = [],
@@ -17622,12 +17603,15 @@ function findChannelName(row, col, cardArray, nameArray){
                 ,   meterDiv = document.createElement('div')
                 ,   demandTitle = document.createElement('h3')
                 ,   demandCell = document.createElement('input')
+                ,   demandUnit = document.createElement('label')
                 ,   demandSlide = document.createElement('input')
                 ,   voltageUpTitle = document.createElement('h3')
                 ,   voltageUpCell = document.createElement('input')
+                ,   voltageUpUnit = document.createElement('label')
                 ,   voltageUpSlide = document.createElement('input')
                 ,   voltageDownTitle = document.createElement('h3')
                 ,   voltageDownCell = document.createElement('input')
+                ,   voltageDownUnit = document.createElement('label')
                 ,   voltageDownSlide = document.createElement('input')
 
                 this.temperatureMax = 40;
@@ -17679,9 +17663,17 @@ function findChannelName(row, col, cardArray, nameArray){
                 demandCell.setAttribute('step', 'any');
                 demandCell.setAttribute('min', 0);
                 HVcontrol.appendChild(demandCell);
+                demandUnit.innerHTML = 'V';
+                HVcontrol.appendChild(demandUnit);
                 demandSlide.setAttribute('id', this.id + 'demandVoltageSlide');
                 demandSlide.setAttribute('type', 'range');
                 HVcontrol.appendChild(demandSlide);
+                demandCell.onchange = function(parentID){
+                    document.getElementById(parentID+'demandVoltageSlide').value = parseInt(this.value, 10);
+                }.bind(demandCell, this.id);
+                demandSlide.onchange = function(parentID){
+                    document.getElementById(parentID+'demandVoltage').value = parseInt(this.value, 10);
+                }.bind(demandSlide, this.id);
 
                 voltageUpTitle.innerHTML = 'Voltage Ramp Up';
                 HVcontrol.appendChild(voltageUpTitle);
@@ -17692,11 +17684,19 @@ function findChannelName(row, col, cardArray, nameArray){
                 voltageUpCell.setAttribute('min', 0);
                 voltageUpCell.setAttribute('max', 500);
                 HVcontrol.appendChild(voltageUpCell);
+                voltageUpUnit.innerHTML = 'V/s';
+                HVcontrol.appendChild(voltageUpUnit);
                 voltageUpSlide.setAttribute('id', this.id + 'voltageUpSlide');
                 voltageUpSlide.setAttribute('type', 'range');
                 voltageUpSlide.setAttribute('min', 0);
                 voltageUpSlide.setAttribute('max', 500);
                 HVcontrol.appendChild(voltageUpSlide);
+                voltageUpCell.onchange = function(parentID){
+                    document.getElementById(parentID+'voltageUpSlide').value = parseInt(this.value, 10);
+                }.bind(voltageUpCell, this.id);
+                voltageUpSlide.onchange = function(parentID){
+                    document.getElementById(parentID+'voltageUp').value = parseInt(this.value, 10);
+                }.bind(voltageUpSlide, this.id);
 
                 voltageDownTitle.innerHTML = 'Voltage Ramp Down';
                 HVcontrol.appendChild(voltageDownTitle);
@@ -17706,13 +17706,20 @@ function findChannelName(row, col, cardArray, nameArray){
                 voltageDownCell.setAttribute('step', 'any');
                 voltageDownCell.setAttribute('min', 0);
                 voltageDownCell.setAttribute('max', 500);
-                voltageDownSlide
                 HVcontrol.appendChild(voltageDownCell);
+                voltageDownUnit.innerHTML = 'V/s';
+                HVcontrol.appendChild(voltageDownUnit);
                 voltageDownSlide.setAttribute('id', this.id + 'voltageDownSlide');
                 voltageDownSlide.setAttribute('type', 'range');
                 voltageDownSlide.setAttribute('min', 0);
                 voltageDownSlide.setAttribute('max', 500);
                 HVcontrol.appendChild(voltageDownSlide);
+                voltageDownCell.onchange = function(parentID){
+                    document.getElementById(parentID+'voltageDownSlide').value = parseInt(this.value, 10);
+                }.bind(voltageDownCell, this.id);
+                voltageDownSlide.onchange = function(parentID){
+                    document.getElementById(parentID+'voltageDown').value = parseInt(this.value, 10);
+                }.bind(voltageDownSlide, this.id);
 
                 //set up kinetic objects
                 this.meterWidth = document.getElementById(this.id+'HVmeterWrapper').offsetWidth;

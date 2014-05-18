@@ -68,14 +68,15 @@ widget-HVcontrol input[type='button']{
 	margin-right: 2em;
 }
 
+widget-HVcontrol input[type='range']{
+	width: 10em;
+	float:right;
+}
+
 widget-HVcontrol ul{
 	margin-top: 1em;
 	font-size: 120%;
 	line-height: 1.5em;
-}
-
-input.voltageField:after{
-	content: "V";
 }
 
 
