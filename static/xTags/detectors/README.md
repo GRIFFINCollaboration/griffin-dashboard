@@ -87,7 +87,7 @@ All detectors are drawn in a simple Kinetic.js environment, built and pointed at
 
 and possibly
 
- - `this.HVlayer[view]` (Kinetic.Text) - Kinetic layers for special HV segmentation.
+ - `this.HVlayer[view]` (Kinetic.Layer) - Kinetic layers for special HV segmentation.
 
 All the detector cells in `this.cells[name]` are painted on the appropriate `this.mainLayer[view]`, while the elements that compose the plot legend (described below) are painted on `this.scaleLayer[view]`, and the tooltip text (`this.text[view]`) and background (`this.TTbkg[view]`) are painted on `this.tooltipLayer[view]`.  If a detector segments its HV connections differently than its rate & threshold connections, then the cell names corresponding the HV channels will have their corresponding cells drawn on `this.HVlayer[view]` instead of `this.mainLayer[view]`.
 
