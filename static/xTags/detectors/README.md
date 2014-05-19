@@ -85,7 +85,7 @@ All detectors are drawn in a simple Kinetic.js environment, built and pointed at
  - `this.text[view]` (Kinetic.Text) - tooltip texts
 
 
-and possible
+and possibly
 
  - `this.HVlayer[view]` (Kinetic.Text) - Kinetic layers for special HV segmentation.
 
