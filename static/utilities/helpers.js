@@ -72,3 +72,13 @@ function squishFont(string, maxWidth){
     }
 }
 
+function scrubNumber(value){
+    var scrubbed;
+
+    if((!value && value!=0) || value==0xDEADBEEF ) 
+        scrubbed = 'Not Reporting';                    
+    else
+        scrubbed = parseFloat(value).toFixed();    
+
+    return scrubbed;
+}

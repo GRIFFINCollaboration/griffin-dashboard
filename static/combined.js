@@ -306,6 +306,7 @@ function initializeDetector(name, headline){
     //indices for these arrays correspond to the x-card index on display
     this.stage = [];
     this.mainLayer = [];
+    this.scaleLayer = [];
     this.tooltipLayer = [];
     this.TTbkg = [];
     this.text = [];
@@ -319,6 +320,7 @@ function initializeDetector(name, headline){
             height: height
         });
         this.mainLayer[i] = new Kinetic.Layer();       //main rendering layer
+        this.scaleLayer[i] = new Kinetic.Layer();      //layer for scales / legends
         this.tooltipLayer[i] = new Kinetic.Layer();    //layer for tooltip info
 
         //tooltip background:
@@ -1343,6 +1345,16 @@ function squishFont(string, maxWidth){
     }
 }
 
+function scrubNumber(value){
+    var scrubbed;
+
+    if((!value && value!=0) || value==0xDEADBEEF ) 
+        scrubbed = 'Not Reporting';                    
+    else
+        scrubbed = parseFloat(value).toFixed();    
+
+    return scrubbed;
+}
 
 /*
  * KineticJS JavaScript Framework v5.0.1
@@ -15461,7 +15473,7 @@ var Kinetic = {};
                         strokeWidth: 2                    
                     });
 
-                    this.mainLayer[j].add(colorScale);
+                    this.scaleLayer[j].add(colorScale);
 
                     //place ticks on scale
                     this.tickLabels[j] = [];
@@ -15472,7 +15484,7 @@ var Kinetic = {};
                             stroke: '#999999',
                             strokeWidth: 2
                         });
-                        this.mainLayer[j].add(tick);
+                        this.scaleLayer[j].add(tick);
 
                         //tick label
                         this.tickLabels[j][i] = new Kinetic.Text({
@@ -15483,7 +15495,7 @@ var Kinetic = {};
                             fontFamily: 'Arial',
                             fill: '#999999'
                         });
-                        this.mainLayer[j].add(this.tickLabels[j][i]);
+                        this.scaleLayer[j].add(this.tickLabels[j][i]);
                     }
 
                     //place title on scale
@@ -15495,12 +15507,12 @@ var Kinetic = {};
                         fontFamily: 'Arial',
                         fill: '#999999'
                     })
-                    this.mainLayer[j].add(this.scaleTitle[j]);
+                    this.scaleLayer[j].add(this.scaleTitle[j]);
 
                     //populate labels
                     this.refreshColorScale();
-
-                    this.mainLayer[j].draw();
+                    this.stage[j].add(this.scaleLayer[j]);
+                    this.scaleLayer[j].draw();
                 }
             },
 
@@ -15585,6 +15597,8 @@ var Kinetic = {};
                     //update title
                     this.scaleTitle[j].setText(logTitle + this.currentView + ' [' + this.currentUnit + ']');
                     this.scaleTitle[j].setAttr('x', this.width/2 - this.scaleTitle[j].getTextWidth()/2);
+
+                    this.scaleLayer[this.displayIndex].draw();
                 }
                 
             },
@@ -15635,10 +15649,26 @@ var Kinetic = {};
             },
 
             'trackView': function(){
-                //keep track of what state the view state radio is in in a convenient variable right on the detector-demo object
+                var i;
+
+                //keep track of what state the view state radio is in in a convenient variable right on the detector object
                 //intended for binding to the onchange of the radio.
                 this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
                 this.currentUnit = this.units[this.views.indexOf(this.currentView)];
+
+                //manage which layer is showing, if there are different layers for different views
+                //(ie different rate / HV segmentation)
+                if(this.HVlayer){
+                    for(i=0; i<this.viewNames.length; i++){
+                        if(this.currentView == 'HV'){
+                            this.mainLayer[i].hide();
+                            this.HVlayer[i].show();
+                        } else {
+                            this.mainLayer[i].show();
+                            this.HVlayer[i].hide();
+                        }
+                    }
+                }
 
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').value = this.min[this.currentView];
@@ -15648,6 +15678,8 @@ var Kinetic = {};
                 this.updateCells();
                 this.refreshColorScale();
                 this.mainLayer[this.displayIndex].draw();
+                if(this.HVlayer)
+                    this.HVlayer[this.displayIndex].draw();
             },
 
             'update': function(){
@@ -15671,6 +15703,8 @@ var Kinetic = {};
 
                 //repaint
                 this.mainLayer[this.displayIndex].draw();
+                if(this.HVlayer)
+                    this.HVlayer[this.displayIndex].draw();
                 
             },
 
@@ -15736,6 +15770,8 @@ var Kinetic = {};
                 this.updateCells();
                 this.refreshColorScale();
                 this.mainLayer[document.getElementById(this.id+'Deck').selectedIndex].draw();
+                if(this.HVlayer)
+                    this.HVlayer[document.getElementById(this.id+'Deck').selectedIndex].draw();
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
@@ -17998,9 +18034,12 @@ function parseCustomPages(data){
                 this.viewNames = ['SingleView'];
                 //channels start at top left hand corner and walk across in rows
                 this.channelNames = [   'PAC01XN00A', 'PAC01XN00B', 'PAC02XN00A', 'PAC02XN00B', 'PAC03XN00A',
-                                        'PAC03XN00B', 'PAC04XN00A', 'PAC04XN00B', 'PAC05XN00A', 'PAC05XN00B'
+                                        'PAC03XN00B', 'PAC04XN00A', 'PAC04XN00B', 'PAC05XN00A', 'PAC05XN00B',
+                                        'PAC01XN00X', 'PAC02XN00X', 'PAC03XN00X', 'PAC04XN00X', 'PAC05XN00X'
                                     ]
                 initializeDetector.bind(this, 'PACES', 'PACES')();
+                //need an extra layer for HV
+                this.HVlayer = [new Kinetic.Layer()];
 
                 //////////////////////////////////////
                 //PACES specific drawing parameters
@@ -18048,22 +18087,40 @@ function parseCustomPages(data){
                     //which crystal is this?
                     SiLiIndex = parseInt(this.channelNames[i].slice(3,5), 10) - 1;
 
-                    this.cells[this.channelNames[i]] = new Kinetic.Wedge({
-                        x: this.arrayVertexX[SiLiIndex],
-                        y: this.arrayVertexY[SiLiIndex],
-                        radius: this.SiLiRad,
-                        angle: 180,
-                        rotation: SiLiIndex*72,
-                        fill: '#000000',
-                        clockwise: (i%2)==1,
-                        fillPatternImage: this.errorPattern,
-                        fillPatternOffsetX: 100*Math.random(),
-                        fillPatternOffsetY: 100*Math.random(),
-                        stroke: this.frameColor,
-                        strokeWidth: this.frameLineWidth,
-                        closed: true,
-                        listening: true
-                    });
+                    if(i<10){
+                        this.cells[this.channelNames[i]] = new Kinetic.Wedge({
+                            x: this.arrayVertexX[SiLiIndex],
+                            y: this.arrayVertexY[SiLiIndex],
+                            radius: this.SiLiRad,
+                            angle: 180,
+                            rotation: SiLiIndex*72,
+                            fill: '#000000',
+                            clockwise: (i%2)==1,
+                            fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
+                            closed: true,
+                            listening: true
+                        });
+                    } else {
+                        this.cells[this.channelNames[i]] = new Kinetic.Circle({
+                            x: this.arrayVertexX[SiLiIndex],
+                            y: this.arrayVertexY[SiLiIndex],
+                            radius: this.SiLiRad,
+                            rotation: SiLiIndex*72,
+                            fill: '#000000',
+                            clockwise: (i%2)==1,
+                            fillPatternImage: this.errorPattern,
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
+                            closed: true,
+                            listening: true
+                        });                        
+                    }
 
                     //set up the tooltip listeners:
                     this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
@@ -18074,12 +18131,78 @@ function parseCustomPages(data){
                     this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
 
                     //add the cell to the main layer
-                    this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
+                    if(i<10)
+                        this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
+                    else
+                        this.HVlayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
 
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
+                this.stage[0].add(this.HVlayer[0]);
+                this.HVlayer[0].hide();
                 this.stage[0].add(this.tooltipLayer[0]);
+            },
+
+            //formulate the tooltip text for cell i and write it on the tooltip layer.
+            //Each SiLi crystal has 1 HV (ch --X) and 2 scalar (ch --A and --B)
+            'writeTooltip': function(i){
+                var text, value, j;
+
+                if(i!=-1){
+                    text = this.channelNames[i];
+
+                    if(this.currentView == 'HV'){
+                        text += '\nHV: ';
+                        value = window.currentData['HV'][this.channelNames[i]]
+                        text += scrubNumber(value);
+
+                        text += '\nThreshold-A: '
+                        value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'A'];
+                        text += scrubNumber(value);
+
+                        text += '\nThreshold-B: '
+                        value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'B'];
+                        text += scrubNumber(value);
+
+                        text += '\nRate-A: '
+                        value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'A'];
+                        text += scrubNumber(value);
+
+                        text += '\nRate-B: '
+                        value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'B'];
+                        text += scrubNumber(value);
+
+                    } else {
+                        text += '\nHV: ';
+                        value = window.currentData['HV'][this.channelNames[i].slice(0,9) + 'X']
+                        text += scrubNumber(value);
+
+                        text += '\nThreshold: '
+                        value = window.currentData['Threshold'][this.channelNames[i]]
+                        text += scrubNumber(value);
+
+                        text += '\nRate: '
+                        value = window.currentData['Rate'][this.channelNames[i]]
+                        text += scrubNumber(value);                        
+
+                    }
+                     
+                    
+                } else {
+                    text = '';
+                }
+                this.lastTTindex = i;
+                this.text[this.displayIndex].setText(text);
+                if(text != ''){
+                    //adjust the background size
+                    this.TTbkg[this.displayIndex].setAttr( 'width', this.text[this.displayIndex].getAttr('width') + 20 );
+                    this.TTbkg[this.displayIndex].setAttr( 'height', this.text[this.displayIndex].getAttr('height') + 20 ); 
+                } else {
+                    this.TTbkg[this.displayIndex].setAttr('width', 0);
+                    this.TTbkg[this.displayIndex].setAttr('height', 0);                    
+                }
+                this.tooltipLayer[this.displayIndex].draw();
             }
         }
     });

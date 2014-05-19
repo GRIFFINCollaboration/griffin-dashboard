@@ -45,7 +45,7 @@
                         strokeWidth: 2                    
                     });
 
-                    this.mainLayer[j].add(colorScale);
+                    this.scaleLayer[j].add(colorScale);
 
                     //place ticks on scale
                     this.tickLabels[j] = [];
@@ -56,7 +56,7 @@
                             stroke: '#999999',
                             strokeWidth: 2
                         });
-                        this.mainLayer[j].add(tick);
+                        this.scaleLayer[j].add(tick);
 
                         //tick label
                         this.tickLabels[j][i] = new Kinetic.Text({
@@ -67,7 +67,7 @@
                             fontFamily: 'Arial',
                             fill: '#999999'
                         });
-                        this.mainLayer[j].add(this.tickLabels[j][i]);
+                        this.scaleLayer[j].add(this.tickLabels[j][i]);
                     }
 
                     //place title on scale
@@ -79,12 +79,12 @@
                         fontFamily: 'Arial',
                         fill: '#999999'
                     })
-                    this.mainLayer[j].add(this.scaleTitle[j]);
+                    this.scaleLayer[j].add(this.scaleTitle[j]);
 
                     //populate labels
                     this.refreshColorScale();
-
-                    this.mainLayer[j].draw();
+                    this.stage[j].add(this.scaleLayer[j]);
+                    this.scaleLayer[j].draw();
                 }
             },
 
@@ -169,6 +169,8 @@
                     //update title
                     this.scaleTitle[j].setText(logTitle + this.currentView + ' [' + this.currentUnit + ']');
                     this.scaleTitle[j].setAttr('x', this.width/2 - this.scaleTitle[j].getTextWidth()/2);
+
+                    this.scaleLayer[this.displayIndex].draw();
                 }
                 
             },
@@ -219,10 +221,26 @@
             },
 
             'trackView': function(){
-                //keep track of what state the view state radio is in in a convenient variable right on the detector-demo object
+                var i;
+
+                //keep track of what state the view state radio is in in a convenient variable right on the detector object
                 //intended for binding to the onchange of the radio.
                 this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
                 this.currentUnit = this.units[this.views.indexOf(this.currentView)];
+
+                //manage which layer is showing, if there are different layers for different views
+                //(ie different rate / HV segmentation)
+                if(this.HVlayer){
+                    for(i=0; i<this.viewNames.length; i++){
+                        if(this.currentView == 'HV'){
+                            this.mainLayer[i].hide();
+                            this.HVlayer[i].show();
+                        } else {
+                            this.mainLayer[i].show();
+                            this.HVlayer[i].hide();
+                        }
+                    }
+                }
 
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').value = this.min[this.currentView];
@@ -232,6 +250,8 @@
                 this.updateCells();
                 this.refreshColorScale();
                 this.mainLayer[this.displayIndex].draw();
+                if(this.HVlayer)
+                    this.HVlayer[this.displayIndex].draw();
             },
 
             'update': function(){
@@ -255,6 +275,8 @@
 
                 //repaint
                 this.mainLayer[this.displayIndex].draw();
+                if(this.HVlayer)
+                    this.HVlayer[this.displayIndex].draw();
                 
             },
 
@@ -320,6 +342,8 @@
                 this.updateCells();
                 this.refreshColorScale();
                 this.mainLayer[document.getElementById(this.id+'Deck').selectedIndex].draw();
+                if(this.HVlayer)
+                    this.HVlayer[document.getElementById(this.id+'Deck').selectedIndex].draw();
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.

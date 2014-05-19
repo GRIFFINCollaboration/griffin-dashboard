@@ -209,6 +209,7 @@ function initializeDetector(name, headline){
     //indices for these arrays correspond to the x-card index on display
     this.stage = [];
     this.mainLayer = [];
+    this.scaleLayer = [];
     this.tooltipLayer = [];
     this.TTbkg = [];
     this.text = [];
@@ -222,6 +223,7 @@ function initializeDetector(name, headline){
             height: height
         });
         this.mainLayer[i] = new Kinetic.Layer();       //main rendering layer
+        this.scaleLayer[i] = new Kinetic.Layer();      //layer for scales / legends
         this.tooltipLayer[i] = new Kinetic.Layer();    //layer for tooltip info
 
         //tooltip background:
