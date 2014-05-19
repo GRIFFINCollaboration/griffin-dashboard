@@ -79,12 +79,17 @@ ____________________________________________________________
 All detectors are drawn in a simple Kinetic.js environment, built and pointed at as follows; array indices correspond to the current view, to which each sensitive element should belong to exactly one.
  - `this.stage[view]` (Kinetic.Stage) - the top level wrappers for the Kinetic environments.
  - `this.mainLayer[view]` (Kinetic.Layer) - the Kinetic layers on which the detectors are drawn.
+ - `this.scaleLayer[view]` (Kinetic.Layer) - the Kinetic layers on which scales and legends are drawn.
  - `this.tooltipLayer[view]` (Kinetic.Layer) - the Kinetic layers on which the tooltips are drawn.
  - `this.TTbkg[view]` (Kinetic.Rect) - backgrounds for tooltips
  - `this.text[view]` (Kinetic.Text) - tooltip texts
 
 
-All the detector cells in `this.cells[name]` are painted on the appropriate `this.mainLayer[view]`, as are the elements that compose the plot legend (described below), while the tooltip text (`this.text[view]`) and background (`this.TTbkg[view]`) are painted on `this.tooltipLayer[view]`.
+and possible
+
+ - `this.HVlayer[view]` (Kinetic.Text) - Kinetic layers for special HV segmentation.
+
+All the detector cells in `this.cells[name]` are painted on the appropriate `this.mainLayer[view]`, while the elements that compose the plot legend (described below) are painted on `this.scaleLayer[view]`, and the tooltip text (`this.text[view]`) and background (`this.TTbkg[view]`) are painted on `this.tooltipLayer[view]`.  If a detector segments its HV connections differently than its rate & threshold connections, then the cell names corresponding the HV channels will have their corresponding cells drawn on `this.HVlayer[view]` instead of `this.mainLayer[view]`.
 
 ####Data Fetching & Routing
 The last step of `initializeDetector()` is to appended `this` detector to `window.refreshTargets`, so that `repopulate()` will know to update this object every period.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
@@ -104,7 +109,7 @@ As with all updatable objects, detector components participate in the main event
 Most of the plumbing for detector components is generic, and inherited as the collection of functions registered on the `methods` member of `<detector-template>`.  These member functions are described qualitatively as follows.
 
 ###generateColorScale()
-Establishes all the Kinetic.js objects involved in the color scale, and attaches them to `this.mainLayer[view]`.  These are pointed at as follows:
+Establishes all the Kinetic.js objects involved in the color scale, and attaches them to `this.scaleLayer[view]`.  These are pointed at as follows:
  - `this.colorScale[view]` - Kinetic.Rect for the color gradient rectangle itself.
  - `this.tickLabels[view][tick]` - Kinetic.Text objects labeling the tickmarks on the color scale, ordered left to right.
  - `this.scaleTitle[view]` - Kinetic.Text object for the scale title.
@@ -131,7 +136,7 @@ Refreshes the contents and positions of the Kinetic objects in `this.tickLabels[
 Called by `this.update()` iff `this.summaryDepth` is truthy.  Constructs the average rate, threshold and HV for the summary cells declared in `this.channelNames[]` iff the summary cell key's length equals `this.summaryDepth`.  Averages are stored alongside raw channel values in `window.currentData[HV/threshold/rate][summaryKey]` for parsing by the same logic as the individual cells.  Note that if any individual detector is supposed to contribute to this average and fails to report, the whole summary cell will be marked as failing to report.
 
 ###trackView()
-Keeps `this.currentView` and `this.currentUnit` and the values of the inputs in the plot control form up to date with whatever the user has chosen from the view selection radio.
+Keeps `this.currentView` and `this.currentUnit` and the values of the inputs in the plot control form up to date with whatever the user has chosen from the view selection radio.  Also shows and hides `mainLayer` and `HVlayer` as necessary, for detectors with different segmentation for HV than they have for rates & thresholds. 
 
 ###update()
 Function called in the master update loop as part of `repopulate()`; wraps all the updates necessary on this cycle.
@@ -151,7 +156,7 @@ For each cell:
 Update this object and `localStorage` with values entered into the plot control form.  Intended as `onchange` callback to updating this form.
 
 ###writeTooltip(i)
-Populate tooltip with appropriate text for the channel named at `this.channelNames[i]`, and decide whether or not to show the tooltip.
+Populate tooltip with appropriate text for the channel named at `this.channelNames[i]`, and decide whether or not to show the tooltip.  The default implementation is appropriate for a detector that has identical segmentation between all its views (ie each counting segment has one rate, one threshold and one HV supply).  Detectors with asymmetric segmentation need special tooltips appropriate to their needs to replace `writeTooltip(i)` in the prototype chain.
 
 ##Tooltip Infrastructure
 The tooltip for detector elements is handled by the event listeners Kineitc exposes on its objects.  The Kinetic object in `this.cells[i]` must have the following event listeners bound as part of `instantiateCells()`:
