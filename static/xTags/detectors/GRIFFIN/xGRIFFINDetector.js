@@ -128,15 +128,15 @@
 
                 cellCoords['GN05A'] = [this.xMargin+5*g,12*g, this.xMargin+4*g,12*g, this.xMargin+4*g,4*g, this.xMargin+5*g,5*g];
                 cellCoords['GN04A'] = [this.xMargin+3*g,12*g, this.xMargin+2*g,12*g, this.xMargin+2*g,7*g, this.xMargin+3*g,7*g];
-                cellCoords['GN03A'] = [this.xMargin+2*g,2*g, this.xMargin+7*g,2*g, this.xMargin+7*g,3*g, this.xMargin+3*g,3*g];
+                cellCoords['GN03A'] = [this.xMargin+7*g,2*g, this.xMargin+7*g,3*g, this.xMargin+12*g,3*g, this.xMargin+12*g,2*g];
                 cellCoords['GN02A'] = [this.xMargin+1*g,12*g, this.xMargin+0*g,12*g, this.xMargin+0*g,7*g, this.xMargin+1*g,7*g];
-                cellCoords['GN01A'] = [this.xMargin+1*g,0*g, this.xMargin+7*g,0*g, this.xMargin+7*g,1*g, this.xMargin+2*g,1*g];
+                cellCoords['GN01A'] = [this.xMargin+7*g,0*g, this.xMargin+12*g,0*g, this.xMargin+12*g,1*g, this.xMargin+7*g,1*g];
 
                 cellCoords['GN05B'] = [this.xMargin+4*g,4*g, this.xMargin+12*g,4*g, this.xMargin+12*g,5*g, this.xMargin+5*g,5*g];
                 cellCoords['GN04B'] = [this.xMargin+3*g,7*g, this.xMargin+2*g,7*g, this.xMargin+2*g,2*g, this.xMargin+3*g,3*g];
-                cellCoords['GN03B'] = [this.xMargin+7*g,2*g, this.xMargin+7*g,3*g, this.xMargin+12*g,3*g, this.xMargin+12*g,2*g];
+                cellCoords['GN03B'] = [this.xMargin+2*g,2*g, this.xMargin+7*g,2*g, this.xMargin+7*g,3*g, this.xMargin+3*g,3*g];
                 cellCoords['GN02B'] = [this.xMargin+1*g,7*g, this.xMargin+0*g,7*g, this.xMargin+0*g,1*g, this.xMargin+1*g,2*g];
-                cellCoords['GN01B'] = [this.xMargin+7*g,0*g, this.xMargin+12*g,0*g, this.xMargin+12*g,1*g, this.xMargin+7*g,1*g];
+                cellCoords['GN01B'] = [this.xMargin+1*g,0*g, this.xMargin+7*g,0*g, this.xMargin+7*g,1*g, this.xMargin+2*g,1*g];
 
                 //Blue BGO
                 cellCoords['BN05X'] = [this.xMargin+12*g,4*g, this.xMargin+12*g,5*g, this.xMargin+19*g,5*g, this.xMargin+19*g,12*g, this.xMargin+20*g,12*g, this.xMargin+20*g,4*g];
@@ -147,13 +147,13 @@
 
                 cellCoords['BN05A'] = [this.xMargin+12*g,4*g, this.xMargin+12*g,5*g, this.xMargin+19*g,5*g, this.xMargin+20*g,4*g];
                 cellCoords['BN04A'] = [this.xMargin+12*g,3*g, this.xMargin+12*g,2*g, this.xMargin+17*g,2*g, this.xMargin+17*g,3*g];
-                cellCoords['BN03A'] = [this.xMargin+21*g,7*g, this.xMargin+22*g,7*g, this.xMargin+22*g,2*g, this.xMargin+21*g,3*g];
+                cellCoords['BN03A'] = [this.xMargin+21*g,12*g, this.xMargin+22*g,12*g, this.xMargin+22*g,7*g, this.xMargin+21*g,7*g];
                 cellCoords['BN02A'] = [this.xMargin+12*g,0*g, this.xMargin+12*g,1*g, this.xMargin+17*g,1*g, this.xMargin+17*g,0*g];
                 cellCoords['BN01A'] = [this.xMargin+24*g,12*g, this.xMargin+23*g,12*g, this.xMargin+23*g,7*g, this.xMargin+24*g,7*g];
 
                 cellCoords['BN05B'] = [this.xMargin+19*g,5*g, this.xMargin+19*g,12*g, this.xMargin+20*g,12*g, this.xMargin+20*g,4*g];
                 cellCoords['BN04B'] = [this.xMargin+17*g,3*g, this.xMargin+17*g,2*g, this.xMargin+22*g,2*g, this.xMargin+21*g,3*g];
-                cellCoords['BN03B'] = [this.xMargin+21*g,12*g, this.xMargin+22*g,12*g, this.xMargin+22*g,7*g, this.xMargin+21*g,7*g];
+                cellCoords['BN03B'] = [this.xMargin+21*g,7*g, this.xMargin+22*g,7*g, this.xMargin+22*g,2*g, this.xMargin+21*g,3*g];
                 cellCoords['BN02B'] = [this.xMargin+17*g,0*g, this.xMargin+17*g,1*g, this.xMargin+22*g,1*g, this.xMargin+23*g,0*g];
                 cellCoords['BN01B'] = [this.xMargin+24*g,7*g, this.xMargin+23*g,7*g, this.xMargin+23*g,2*g, this.xMargin+24*g,1*g];
 
@@ -164,17 +164,17 @@
                 cellCoords['WN02X'] = [this.xMargin+24*g,23*g, this.xMargin+23*g,22*g, this.xMargin+23*g,12*g, this.xMargin+24*g,12*g];
                 cellCoords['WN01X'] = [this.xMargin+23*g,24*g, this.xMargin+22*g,23*g, this.xMargin+12*g,23*g, this.xMargin+12*g,24*g];
 
-                cellCoords['WN05A'] = [this.xMargin+12*g,19*g, this.xMargin+12*g,20*g, this.xMargin+20*g,20*g, this.xMargin+19*g,19*g];
+                cellCoords['WN05A'] = [this.xMargin+20*g,20*g, this.xMargin+20*g,12*g, this.xMargin+19*g,12*g, this.xMargin+19*g,19*g];
                 cellCoords['WN04A'] = [this.xMargin+21*g,12*g, this.xMargin+22*g,12*g, this.xMargin+22*g,17*g, this.xMargin+21*g,17*g];
-                cellCoords['WN03A'] = [this.xMargin+22*g,22*g, this.xMargin+17*g,22*g, this.xMargin+17*g,21*g, this.xMargin+21*g,21*g];
-                cellCoords['WN02A'] = [this.xMargin+24*g,23*g, this.xMargin+23*g,22*g, this.xMargin+23*g,17*g, this.xMargin+24*g,17*g];
-                cellCoords['WN01A'] = [this.xMargin+23*g,24*g, this.xMargin+22*g,23*g, this.xMargin+17*g,23*g, this.xMargin+17*g,24*g];
+                cellCoords['WN03A'] = [this.xMargin+17*g,22*g, this.xMargin+12*g,22*g, this.xMargin+12*g,21*g, this.xMargin+17*g,21*g];
+                cellCoords['WN02A'] = [this.xMargin+24*g,17*g, this.xMargin+23*g,17*g, this.xMargin+23*g,12*g, this.xMargin+24*g,12*g];
+                cellCoords['WN01A'] = [this.xMargin+17*g,24*g, this.xMargin+17*g,23*g, this.xMargin+12*g,23*g, this.xMargin+12*g,24*g];
 
-                cellCoords['WN05B'] = [this.xMargin+20*g,20*g, this.xMargin+20*g,12*g, this.xMargin+19*g,12*g, this.xMargin+19*g,19*g];
+                cellCoords['WN05B'] = [this.xMargin+12*g,19*g, this.xMargin+12*g,20*g, this.xMargin+20*g,20*g, this.xMargin+19*g,19*g];
                 cellCoords['WN04B'] = [this.xMargin+21*g,17*g, this.xMargin+22*g,17*g, this.xMargin+22*g,22*g, this.xMargin+21*g,21*g];
-                cellCoords['WN03B'] = [this.xMargin+17*g,22*g, this.xMargin+12*g,22*g, this.xMargin+12*g,21*g, this.xMargin+17*g,21*g];
-                cellCoords['WN02B'] = [this.xMargin+24*g,17*g, this.xMargin+23*g,17*g, this.xMargin+23*g,12*g, this.xMargin+24*g,12*g];
-                cellCoords['WN01B'] = [this.xMargin+17*g,24*g, this.xMargin+17*g,23*g, this.xMargin+12*g,23*g, this.xMargin+12*g,24*g];
+                cellCoords['WN03B'] = [this.xMargin+22*g,22*g, this.xMargin+17*g,22*g, this.xMargin+17*g,21*g, this.xMargin+21*g,21*g];
+                cellCoords['WN02B'] = [this.xMargin+24*g,23*g, this.xMargin+23*g,22*g, this.xMargin+23*g,17*g, this.xMargin+24*g,17*g];
+                cellCoords['WN01B'] = [this.xMargin+23*g,24*g, this.xMargin+22*g,23*g, this.xMargin+17*g,23*g, this.xMargin+17*g,24*g];
 
                 //Red BGO
                 cellCoords['RN05X'] = [this.xMargin+12*g,19*g, this.xMargin+12*g,20*g, this.xMargin+4*g,20*g, this.xMargin+4*g,12*g, this.xMargin+5*g,12*g, this.xMargin+5*g,19*g];
@@ -185,13 +185,13 @@
 
                 cellCoords['RN05A'] = [this.xMargin+12*g,19*g, this.xMargin+12*g,20*g, this.xMargin+4*g,20*g, this.xMargin+5*g,19*g];
                 cellCoords['RN04A'] = [this.xMargin+12*g,21*g, this.xMargin+12*g,22*g, this.xMargin+7*g,22*g, this.xMargin+7*g,21*g];
-                cellCoords['RN03A'] = [this.xMargin+3*g,21*g, this.xMargin+2*g,22*g, this.xMargin+2*g,17*g, this.xMargin+3*g,17*g];
+                cellCoords['RN03A'] = [this.xMargin+3*g,17*g, this.xMargin+2*g,17*g, this.xMargin+2*g,12*g, this.xMargin+3*g,12*g];
                 cellCoords['RN02A'] = [this.xMargin+12*g,24*g, this.xMargin+12*g,23*g, this.xMargin+7*g,23*g, this.xMargin+7*g,24*g];
                 cellCoords['RN01A'] = [this.xMargin+0*g,12*g, this.xMargin+1*g,12*g, this.xMargin+1*g,17*g, this.xMargin+0*g,17*g];
 
                 cellCoords['RN05B'] = [this.xMargin+4*g,20*g, this.xMargin+4*g,12*g, this.xMargin+5*g,12*g, this.xMargin+5*g,19*g];
                 cellCoords['RN04B'] = [this.xMargin+7*g,21*g, this.xMargin+7*g,22*g, this.xMargin+2*g,22*g, this.xMargin+3*g,21*g];
-                cellCoords['RN03B'] = [this.xMargin+3*g,17*g, this.xMargin+2*g,17*g, this.xMargin+2*g,12*g, this.xMargin+3*g,12*g];
+                cellCoords['RN03B'] = [this.xMargin+3*g,21*g, this.xMargin+2*g,22*g, this.xMargin+2*g,17*g, this.xMargin+3*g,17*g];
                 cellCoords['RN02B'] = [this.xMargin+7*g,24*g, this.xMargin+7*g,23*g, this.xMargin+2*g,23*g, this.xMargin+1*g,24*g];
                 cellCoords['RN01B'] = [this.xMargin+0*g,17*g, this.xMargin+1*g,17*g, this.xMargin+1*g,22*g, this.xMargin+0*g,23*g];
 

@@ -357,7 +357,7 @@
                     for(j=0; j<this.views.length; j++){
                         text += '\n'+this.views[j]+': ';
                         value = window.currentData[this.views[j]][this.channelNames[i]];
-                        scrubNumber(value);                       
+                        text += scrubNumber(value);                       
                     }
                 } else {
                     text = '';
