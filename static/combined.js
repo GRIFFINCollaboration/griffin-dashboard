@@ -15658,9 +15658,10 @@ var Kinetic = {};
 
                 //manage which layer is showing, if there are different layers for different views
                 //(ie different rate / HV segmentation)
+                //summary views never segment differently.
                 if(this.HVlayer){
                     for(i=0; i<this.viewNames.length; i++){
-                        if(this.currentView == 'HV'){
+                        if(this.currentView == 'HV' && this.viewNames[i] != 'Summary'){
                             this.mainLayer[i].hide();
                             this.HVlayer[i].show();
                         } else {
@@ -15784,10 +15785,7 @@ var Kinetic = {};
                     for(j=0; j<this.views.length; j++){
                         text += '\n'+this.views[j]+': ';
                         value = window.currentData[this.views[j]][this.channelNames[i]];
-                        if((!value && value!=0) || value==0xDEADBEEF ) 
-                            text += 'Not Reporting';
-                        else
-                            text += parseFloat(value).toFixed();                        
+                        scrubNumber(value);                       
                     }
                 } else {
                     text = '';
@@ -15862,7 +15860,6 @@ var Kinetic = {};
 (function(){  
 
     xtag.register('detector-BAMBINO', {
-        //prototype: Object.create(HTMLElement.prototype),
         extends: 'detector-template',
         lifecycle: {
             created: function() {
@@ -15922,10 +15919,11 @@ var Kinetic = {};
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
+
             },
             inserted: function() {},
             removed: function() {},
@@ -16499,10 +16497,10 @@ var Kinetic = {};
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
             },
             inserted: function() {},
             removed: function() {},
@@ -16643,7 +16641,6 @@ var Kinetic = {};
 (function(){  
 
     xtag.register('detector-DESCANT', {
-        //prototype: Object.create(HTMLElement.prototype),
         extends: 'detector-template',
         lifecycle: {
             created: function() {
@@ -16698,10 +16695,10 @@ var Kinetic = {};
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
             },
             inserted: function() {},
             removed: function() {},
@@ -16815,8 +16812,10 @@ var Kinetic = {};
                 this.HPGEprefixes = [];
                 this.BGOprefixes = [];
                 this.colors = ['R', 'G', 'B', 'W'];
-                this.HPGEcellCodes = ['N00A', 'N00B'];
-                this.BGOcellCodes = ['N01X', 'N02X', 'N03X', 'N04X', 'N05X'];
+                this.HPGEcellCodes = ['N00A', 'N00B', 'N00X'];
+                this.BGOcellCodes = [   'N01X', 'N02X', 'N03X', 'N04X', 'N05X',
+                                        'N01A', 'N02A', 'N03A', 'N04A', 'N05A',
+                                        'N01B', 'N02B', 'N03B', 'N04B', 'N05B'];
                 for(i=1; i<17; i++){
                     j = (i<10) ? '0'+i : i;
                     this.HPGEprefixes.push('GRG' + j);
@@ -16846,6 +16845,12 @@ var Kinetic = {};
                 //deploy the standard stuff
                 this.viewNames = ['Summary'].concat(this.HPGEprefixes)
                 initializeDetector.bind(this, 'GRIFFIN', 'GRIFFIN')();
+                this.HVlayer = [];
+                for(i=0; i<this.viewNames.length; i++){
+                    this.HVlayer[i] = new Kinetic.Layer();
+                    this.HVlayer[i].hide();
+                }
+
                 this.summaryDepth = 6;
 
                 //////////////////////////////////////
@@ -16863,11 +16868,11 @@ var Kinetic = {};
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
+                //generate the color scale
+                this.generateColorScale();
                 //initialize all the cells:
                 this.instantiateCells();
                 this.instantiateSummaryCells();
-                //generate the color scale
-                this.generateColorScale();
 
             },
             inserted: function() {},
@@ -16899,39 +16904,94 @@ var Kinetic = {};
                 //Green HPGE
                 cellCoords['GN00A'] = [this.xMargin+12*g,6*g, this.xMargin+6*g,6*g, this.xMargin+6*g,12*g];
                 cellCoords['GN00B'] = [this.xMargin+12*g,6*g, this.xMargin+12*g,12*g, this.xMargin+6*g,12*g];
+                cellCoords['GN00X'] = [this.xMargin+12*g,6*g, this.xMargin+6*g,6*g, this.xMargin+6*g,12*g, this.xMargin+12*g,12*g];
                 //Blue HPGE
                 cellCoords['BN00A'] = [this.xMargin+12*g,6*g, this.xMargin+18*g,6*g, this.xMargin+18*g,12*g];
                 cellCoords['BN00B'] = [this.xMargin+12*g,6*g, this.xMargin+12*g,12*g, this.xMargin+18*g,12*g];
+                cellCoords['BN00X'] = [this.xMargin+12*g,6*g, this.xMargin+18*g,6*g, this.xMargin+18*g,12*g, this.xMargin+12*g,12*g];
                 //White HPGE
                 cellCoords['WN00A'] = [this.xMargin+18*g,12*g, this.xMargin+18*g,18*g, this.xMargin+12*g,18*g];
                 cellCoords['WN00B'] = [this.xMargin+18*g,12*g, this.xMargin+12*g,12*g, this.xMargin+12*g,18*g];
+                cellCoords['WN00X'] = [this.xMargin+18*g,12*g, this.xMargin+18*g,18*g, this.xMargin+12*g,18*g, this.xMargin+12*g,12*g];
                 //Red HPGE
                 cellCoords['RN00A'] = [this.xMargin+12*g,18*g, this.xMargin+6*g,18*g, this.xMargin+6*g,12*g];
                 cellCoords['RN00B'] = [this.xMargin+12*g,18*g, this.xMargin+12*g,12*g, this.xMargin+6*g,12*g];
+                cellCoords['RN00X'] = [this.xMargin+12*g,18*g, this.xMargin+6*g,18*g, this.xMargin+6*g,12*g, this.xMargin+12*g,12*g];
                 //Green BGO
                 cellCoords['GN05X'] = [this.xMargin+5*g,12*g, this.xMargin+4*g,12*g, this.xMargin+4*g,4*g, this.xMargin+12*g,4*g, this.xMargin+12*g,5*g, this.xMargin+5*g,5*g];
                 cellCoords['GN04X'] = [this.xMargin+3*g,12*g, this.xMargin+2*g,12*g, this.xMargin+2*g,2*g, this.xMargin+3*g,3*g];
                 cellCoords['GN03X'] = [this.xMargin+2*g,2*g, this.xMargin+12*g,2*g, this.xMargin+12*g,3*g, this.xMargin+3*g,3*g];
                 cellCoords['GN02X'] = [this.xMargin+1*g,12*g, this.xMargin+0*g,12*g, this.xMargin+0*g,1*g, this.xMargin+1*g,2*g];
                 cellCoords['GN01X'] = [this.xMargin+1*g,0*g, this.xMargin+12*g,0*g, this.xMargin+12*g,1*g, this.xMargin+2*g,1*g];
+
+                cellCoords['GN05A'] = [this.xMargin+5*g,12*g, this.xMargin+4*g,12*g, this.xMargin+4*g,4*g, this.xMargin+5*g,5*g];
+                cellCoords['GN04A'] = [this.xMargin+3*g,12*g, this.xMargin+2*g,12*g, this.xMargin+2*g,7*g, this.xMargin+3*g,7*g];
+                cellCoords['GN03A'] = [this.xMargin+2*g,2*g, this.xMargin+7*g,2*g, this.xMargin+7*g,3*g, this.xMargin+3*g,3*g];
+                cellCoords['GN02A'] = [this.xMargin+1*g,12*g, this.xMargin+0*g,12*g, this.xMargin+0*g,7*g, this.xMargin+1*g,7*g];
+                cellCoords['GN01A'] = [this.xMargin+1*g,0*g, this.xMargin+7*g,0*g, this.xMargin+7*g,1*g, this.xMargin+2*g,1*g];
+
+                cellCoords['GN05B'] = [this.xMargin+4*g,4*g, this.xMargin+12*g,4*g, this.xMargin+12*g,5*g, this.xMargin+5*g,5*g];
+                cellCoords['GN04B'] = [this.xMargin+3*g,7*g, this.xMargin+2*g,7*g, this.xMargin+2*g,2*g, this.xMargin+3*g,3*g];
+                cellCoords['GN03B'] = [this.xMargin+7*g,2*g, this.xMargin+7*g,3*g, this.xMargin+12*g,3*g, this.xMargin+12*g,2*g];
+                cellCoords['GN02B'] = [this.xMargin+1*g,7*g, this.xMargin+0*g,7*g, this.xMargin+0*g,1*g, this.xMargin+1*g,2*g];
+                cellCoords['GN01B'] = [this.xMargin+7*g,0*g, this.xMargin+12*g,0*g, this.xMargin+12*g,1*g, this.xMargin+7*g,1*g];
+
                 //Blue BGO
                 cellCoords['BN05X'] = [this.xMargin+12*g,4*g, this.xMargin+12*g,5*g, this.xMargin+19*g,5*g, this.xMargin+19*g,12*g, this.xMargin+20*g,12*g, this.xMargin+20*g,4*g];
                 cellCoords['BN04X'] = [this.xMargin+12*g,3*g, this.xMargin+12*g,2*g, this.xMargin+22*g,2*g, this.xMargin+21*g,3*g];
                 cellCoords['BN03X'] = [this.xMargin+21*g,12*g, this.xMargin+22*g,12*g, this.xMargin+22*g,2*g, this.xMargin+21*g,3*g];
                 cellCoords['BN02X'] = [this.xMargin+12*g,0*g, this.xMargin+12*g,1*g, this.xMargin+22*g,1*g, this.xMargin+23*g,0*g];
                 cellCoords['BN01X'] = [this.xMargin+24*g,12*g, this.xMargin+23*g,12*g, this.xMargin+23*g,2*g, this.xMargin+24*g,1*g];
+
+                cellCoords['BN05A'] = [this.xMargin+12*g,4*g, this.xMargin+12*g,5*g, this.xMargin+19*g,5*g, this.xMargin+20*g,4*g];
+                cellCoords['BN04A'] = [this.xMargin+12*g,3*g, this.xMargin+12*g,2*g, this.xMargin+17*g,2*g, this.xMargin+17*g,3*g];
+                cellCoords['BN03A'] = [this.xMargin+21*g,7*g, this.xMargin+22*g,7*g, this.xMargin+22*g,2*g, this.xMargin+21*g,3*g];
+                cellCoords['BN02A'] = [this.xMargin+12*g,0*g, this.xMargin+12*g,1*g, this.xMargin+17*g,1*g, this.xMargin+17*g,0*g];
+                cellCoords['BN01A'] = [this.xMargin+24*g,12*g, this.xMargin+23*g,12*g, this.xMargin+23*g,7*g, this.xMargin+24*g,7*g];
+
+                cellCoords['BN05B'] = [this.xMargin+19*g,5*g, this.xMargin+19*g,12*g, this.xMargin+20*g,12*g, this.xMargin+20*g,4*g];
+                cellCoords['BN04B'] = [this.xMargin+17*g,3*g, this.xMargin+17*g,2*g, this.xMargin+22*g,2*g, this.xMargin+21*g,3*g];
+                cellCoords['BN03B'] = [this.xMargin+21*g,12*g, this.xMargin+22*g,12*g, this.xMargin+22*g,7*g, this.xMargin+21*g,7*g];
+                cellCoords['BN02B'] = [this.xMargin+17*g,0*g, this.xMargin+17*g,1*g, this.xMargin+22*g,1*g, this.xMargin+23*g,0*g];
+                cellCoords['BN01B'] = [this.xMargin+24*g,7*g, this.xMargin+23*g,7*g, this.xMargin+23*g,2*g, this.xMargin+24*g,1*g];
+
                 //White BGO
                 cellCoords['WN05X'] = [this.xMargin+12*g,19*g, this.xMargin+12*g,20*g, this.xMargin+20*g,20*g, this.xMargin+20*g,12*g, this.xMargin+19*g,12*g, this.xMargin+19*g,19*g];
                 cellCoords['WN04X'] = [this.xMargin+21*g,12*g, this.xMargin+22*g,12*g, this.xMargin+22*g,22*g, this.xMargin+21*g,21*g];
                 cellCoords['WN03X'] = [this.xMargin+22*g,22*g, this.xMargin+12*g,22*g, this.xMargin+12*g,21*g, this.xMargin+21*g,21*g];
                 cellCoords['WN02X'] = [this.xMargin+24*g,23*g, this.xMargin+23*g,22*g, this.xMargin+23*g,12*g, this.xMargin+24*g,12*g];
                 cellCoords['WN01X'] = [this.xMargin+23*g,24*g, this.xMargin+22*g,23*g, this.xMargin+12*g,23*g, this.xMargin+12*g,24*g];
+
+                cellCoords['WN05A'] = [this.xMargin+12*g,19*g, this.xMargin+12*g,20*g, this.xMargin+20*g,20*g, this.xMargin+19*g,19*g];
+                cellCoords['WN04A'] = [this.xMargin+21*g,12*g, this.xMargin+22*g,12*g, this.xMargin+22*g,17*g, this.xMargin+21*g,17*g];
+                cellCoords['WN03A'] = [this.xMargin+22*g,22*g, this.xMargin+17*g,22*g, this.xMargin+17*g,21*g, this.xMargin+21*g,21*g];
+                cellCoords['WN02A'] = [this.xMargin+24*g,23*g, this.xMargin+23*g,22*g, this.xMargin+23*g,17*g, this.xMargin+24*g,17*g];
+                cellCoords['WN01A'] = [this.xMargin+23*g,24*g, this.xMargin+22*g,23*g, this.xMargin+17*g,23*g, this.xMargin+17*g,24*g];
+
+                cellCoords['WN05B'] = [this.xMargin+20*g,20*g, this.xMargin+20*g,12*g, this.xMargin+19*g,12*g, this.xMargin+19*g,19*g];
+                cellCoords['WN04B'] = [this.xMargin+21*g,17*g, this.xMargin+22*g,17*g, this.xMargin+22*g,22*g, this.xMargin+21*g,21*g];
+                cellCoords['WN03B'] = [this.xMargin+17*g,22*g, this.xMargin+12*g,22*g, this.xMargin+12*g,21*g, this.xMargin+17*g,21*g];
+                cellCoords['WN02B'] = [this.xMargin+24*g,17*g, this.xMargin+23*g,17*g, this.xMargin+23*g,12*g, this.xMargin+24*g,12*g];
+                cellCoords['WN01B'] = [this.xMargin+17*g,24*g, this.xMargin+17*g,23*g, this.xMargin+12*g,23*g, this.xMargin+12*g,24*g];
+
                 //Red BGO
                 cellCoords['RN05X'] = [this.xMargin+12*g,19*g, this.xMargin+12*g,20*g, this.xMargin+4*g,20*g, this.xMargin+4*g,12*g, this.xMargin+5*g,12*g, this.xMargin+5*g,19*g];
                 cellCoords['RN04X'] = [this.xMargin+12*g,21*g, this.xMargin+12*g,22*g, this.xMargin+2*g,22*g, this.xMargin+3*g,21*g];
                 cellCoords['RN03X'] = [this.xMargin+3*g,21*g, this.xMargin+2*g,22*g, this.xMargin+2*g,12*g, this.xMargin+3*g,12*g];
                 cellCoords['RN02X'] = [this.xMargin+12*g,24*g, this.xMargin+12*g,23*g, this.xMargin+2*g,23*g, this.xMargin+1*g,24*g];
                 cellCoords['RN01X'] = [this.xMargin+0*g,12*g, this.xMargin+1*g,12*g, this.xMargin+1*g,22*g, this.xMargin+0*g,23*g];
+
+                cellCoords['RN05A'] = [this.xMargin+12*g,19*g, this.xMargin+12*g,20*g, this.xMargin+4*g,20*g, this.xMargin+5*g,19*g];
+                cellCoords['RN04A'] = [this.xMargin+12*g,21*g, this.xMargin+12*g,22*g, this.xMargin+7*g,22*g, this.xMargin+7*g,21*g];
+                cellCoords['RN03A'] = [this.xMargin+3*g,21*g, this.xMargin+2*g,22*g, this.xMargin+2*g,17*g, this.xMargin+3*g,17*g];
+                cellCoords['RN02A'] = [this.xMargin+12*g,24*g, this.xMargin+12*g,23*g, this.xMargin+7*g,23*g, this.xMargin+7*g,24*g];
+                cellCoords['RN01A'] = [this.xMargin+0*g,12*g, this.xMargin+1*g,12*g, this.xMargin+1*g,17*g, this.xMargin+0*g,17*g];
+
+                cellCoords['RN05B'] = [this.xMargin+4*g,20*g, this.xMargin+4*g,12*g, this.xMargin+5*g,12*g, this.xMargin+5*g,19*g];
+                cellCoords['RN04B'] = [this.xMargin+7*g,21*g, this.xMargin+7*g,22*g, this.xMargin+2*g,22*g, this.xMargin+3*g,21*g];
+                cellCoords['RN03B'] = [this.xMargin+3*g,17*g, this.xMargin+2*g,17*g, this.xMargin+2*g,12*g, this.xMargin+3*g,12*g];
+                cellCoords['RN02B'] = [this.xMargin+7*g,24*g, this.xMargin+7*g,23*g, this.xMargin+2*g,23*g, this.xMargin+1*g,24*g];
+                cellCoords['RN01B'] = [this.xMargin+0*g,17*g, this.xMargin+1*g,17*g, this.xMargin+1*g,22*g, this.xMargin+0*g,23*g];
 
                 //each channel listed in this.channelNames gets an entry in this.cells as a Kinetic object:
                 for(i=0; i<this.channelNames.length; i++){
@@ -16963,13 +17023,17 @@ var Kinetic = {};
                     //set up onclick listeners:
                     this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
 
-                    //add the cell to the appropriate main layer
-                    this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
+                    //add the cell to the appropriate main layer or HV layer
+                    if(this.isHV(this.channelNames[i]))
+                        this.HVlayer[cardIndex].add(this.cells[this.channelNames[i]])
+                    else
+                        this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                 }
 
                 //add the layers to the stage
                 for(i=0; i<17; i++){
                     this.stage[i].add(this.mainLayer[i]);
+                    this.stage[i].add(this.HVlayer[i]);
                     this.stage[i].add(this.tooltipLayer[i]);
                 }       
             },
@@ -17153,6 +17217,119 @@ var Kinetic = {};
                     evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
                     SV.dispatchEvent(evt);
                 }
+            },
+
+            'isHV' : function(cellName){
+                var HVcell;
+
+                if(cellName.slice(0,3) == 'GRG' && cellName[9] == 'X') HVcell = true;
+                else if(cellName.slice(0,3) == 'GRS' && cellName[9] != 'X') HVcell = true;
+                else HVcell = false;
+
+                return HVcell;
+            },
+
+            //formulate the tooltip text for cell i and write it on the tooltip layer.
+            'writeTooltip': function(i){
+                var text, value, j;
+
+                if(i!=-1){
+                    text = this.channelNames[i];
+
+                    //HV detail cells
+                    if(this.channelNames[i].length==10 && this.currentView == 'HV'){
+                        //HPGE
+                        if(this.channelNames[i].slice(0,3) == 'GRG'){
+                            text += '\nHV: ';
+                            value = window.currentData['HV'][this.channelNames[i]]
+                            text += scrubNumber(value);
+
+                            text += '\nThreshold-A: '
+                            value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'A'];
+                            text += scrubNumber(value);
+
+                            text += '\nThreshold-B: '
+                            value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'B'];
+                            text += scrubNumber(value);
+
+                            text += '\nRate-A: '
+                            value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'A'];
+                            text += scrubNumber(value);
+
+                            text += '\nRate-B: '
+                            value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'B'];
+                            text += scrubNumber(value);
+                        //BGO
+                        } else {
+                            text += '\nHV: ';
+                            value = window.currentData['HV'][this.channelNames[i]]
+                            text += scrubNumber(value);
+
+                            text += '\nThreshold: '
+                            value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'X'];
+                            text += scrubNumber(value);
+
+                            text += '\nRate: '
+                            value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'X'];
+                            text += scrubNumber(value);                           
+                        }
+                    //Rate and Threshold detail cells
+                    } else if(this.channelNames[i].length==10){
+                        //HPGE
+                        if(this.channelNames[i].slice(0,3) == 'GRG'){
+                            text += '\nHV: '
+                            value = window.currentData['HV'][this.channelNames[i].slice(0,9)+'X'];
+                            text += scrubNumber(value);
+
+                            text += '\nThreshold: '
+                            value = window.currentData['Threshold'][this.channelNames[i]];
+                            text += scrubNumber(value);
+
+                            text += '\nRate: '
+                            value = window.currentData['Rate'][this.channelNames[i]];
+                            text += scrubNumber(value);
+                        //BGO
+                        } else{
+                            text += '\nHV-A: '
+                            value = window.currentData['HV'][this.channelNames[i].slice(0,9)+'A'];
+                            text += scrubNumber(value);
+
+                            text += '\nHV-B: '
+                            value = window.currentData['HV'][this.channelNames[i].slice(0,9)+'B'];
+                            text += scrubNumber(value);
+
+                            text += '\nThreshold: '
+                            value = window.currentData['Threshold'][this.channelNames[i]];
+                            text += scrubNumber(value);
+
+                            text += '\nRate: '
+                            value = window.currentData['Rate'][this.channelNames[i]];
+                            text += scrubNumber(value);
+                        }
+                    //summary
+                    } else {
+                        for(j=0; j<this.views.length; j++){
+                            text += '\n'+this.views[j]+': ';
+                            value = window.currentData[this.views[j]][this.channelNames[i]];
+                            text += scrubNumber(value);                       
+                        }                        
+                    } 
+                } else {
+                    text = '';
+                }
+
+
+                this.lastTTindex = i;
+                this.text[this.displayIndex].setText(text);     
+                if(text != ''){
+                    //adjust the background size
+                    this.TTbkg[this.displayIndex].setAttr( 'width', this.text[this.displayIndex].getAttr('width') + 20 );
+                    this.TTbkg[this.displayIndex].setAttr( 'height', this.text[this.displayIndex].getAttr('height') + 20 ); 
+                } else {
+                    this.TTbkg[this.displayIndex].setAttr('width', 0);
+                    this.TTbkg[this.displayIndex].setAttr('height', 0);                    
+                }
+                this.tooltipLayer[this.displayIndex].draw();
             }
         }
     });
@@ -18052,10 +18229,10 @@ function parseCustomPages(data){
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
             },
             inserted: function() {},
             removed: function() {},
@@ -18244,10 +18421,10 @@ function parseCustomPages(data){
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
             },
             inserted: function() {},
             removed: function() {},
@@ -18353,7 +18530,6 @@ function parseCustomPages(data){
 (function(){  
 
     xtag.register('detector-SHARC', {
-        //prototype: Object.create(HTMLElement.prototype),
         extends: 'detector-template',
         lifecycle: {
             created: function() {
@@ -18424,10 +18600,10 @@ function parseCustomPages(data){
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
             },
             inserted: function() {},
             removed: function() {},
@@ -18784,7 +18960,6 @@ function parseCustomPages(data){
 (function(){  
 
     xtag.register('detector-SPICE', {
-        //prototype: Object.create(HTMLElement.prototype),
         extends: 'detector-template',
         lifecycle: {
             created: function() {
@@ -18838,10 +19013,10 @@ function parseCustomPages(data){
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
             },
             inserted: function() {},
             removed: function() {},
@@ -19377,11 +19552,11 @@ function getRunSummary(host){
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
+                //generate the color scale
+                this.generateColorScale();
                 //initialize all the cells:
                 this.instantiateCells();
                 this.instantiateSummaryCells();
-                //generate the color scale
-                this.generateColorScale();
 
             },
             inserted: function() {},
@@ -19764,10 +19939,11 @@ function getRunSummary(host){
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
+
             },
             inserted: function() {},
             removed: function() {},
@@ -19867,10 +20043,10 @@ function getRunSummary(host){
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
             },
             inserted: function() {},
             removed: function() {},

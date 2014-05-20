@@ -34,10 +34,10 @@
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
             },
             inserted: function() {},
             removed: function() {},

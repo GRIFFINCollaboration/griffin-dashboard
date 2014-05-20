@@ -230,9 +230,10 @@
 
                 //manage which layer is showing, if there are different layers for different views
                 //(ie different rate / HV segmentation)
+                //summary views never segment differently.
                 if(this.HVlayer){
                     for(i=0; i<this.viewNames.length; i++){
-                        if(this.currentView == 'HV'){
+                        if(this.currentView == 'HV' && this.viewNames[i] != 'Summary'){
                             this.mainLayer[i].hide();
                             this.HVlayer[i].show();
                         } else {
@@ -356,10 +357,7 @@
                     for(j=0; j<this.views.length; j++){
                         text += '\n'+this.views[j]+': ';
                         value = window.currentData[this.views[j]][this.channelNames[i]];
-                        if((!value && value!=0) || value==0xDEADBEEF ) 
-                            text += 'Not Reporting';
-                        else
-                            text += parseFloat(value).toFixed();                        
+                        scrubNumber(value);                       
                     }
                 } else {
                     text = '';

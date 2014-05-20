@@ -1,7 +1,6 @@
 (function(){  
 
     xtag.register('detector-DESCANT', {
-        //prototype: Object.create(HTMLElement.prototype),
         extends: 'detector-template',
         lifecycle: {
             created: function() {
@@ -56,10 +55,10 @@
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
-                //initialize all the cells:
-                this.instantiateCells();
                 //generate the color scale
                 this.generateColorScale();
+                //initialize all the cells:
+                this.instantiateCells();
             },
             inserted: function() {},
             removed: function() {},

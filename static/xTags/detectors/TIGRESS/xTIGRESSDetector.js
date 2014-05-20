@@ -63,11 +63,11 @@
                 /////////////////////////////
                 //Initialize visualization
                 /////////////////////////////
+                //generate the color scale
+                this.generateColorScale();
                 //initialize all the cells:
                 this.instantiateCells();
                 this.instantiateSummaryCells();
-                //generate the color scale
-                this.generateColorScale();
 
             },
             inserted: function() {},
