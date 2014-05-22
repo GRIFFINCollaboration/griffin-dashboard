@@ -8,20 +8,19 @@ The main design evolution in Mark II over the original griffin.js is a dramatica
 As always, the GRIFFIN Collaboration's web apps support Chrome and Firefox.
 
 ##Setup
-Setup of Mark II is designed to be as easy as possible, and is ready to be served from either an apache or node server.
-
-####Apache - easiest
-TRIUMF's trshare is a vanilla apache server.  Just clone this repo into your `public_html` directory, and navigate in a browser to any of the `.html` pages under the `/static` directory - that's it!  No further config required.
-
-####Node - awesomest
-MarkII is structured so that even a really simple [node](http://nodejs.org/) server can serve it.  Just install node on your machine (it even comes with [npm](https://www.npmjs.org/) these days), and in the root directory of MarkII do
+Setup of Mark II is designed to be as easy as possible, thanks to the power of [node](http://nodejs.org/).  After installing node (it even comes with [npm](https://www.npmjs.org/) these days), in the root directory of MarkII do
 
 ```
-npm install express
-node server.js
+npm install
 ```
 
-And voila!  Visit `host:3000/whatever.html` to see any of the pages living in `/static`.  A more complete and sophisticated node server is in the works for production on GRIFFIN - stay tuned!
+and all the dependencies will resolve and install; then to launch the app, do
+
+```
+node griffin.js
+```
+
+And voila!  Visit `host:2154/GRIFFIN` to see the GRIFFIN summary; route directory coming soon.
 
 
 ##For Developers
