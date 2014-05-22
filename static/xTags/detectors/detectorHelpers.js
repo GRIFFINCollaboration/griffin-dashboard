@@ -253,7 +253,7 @@ function initializeDetector(name, headline){
     }
 
     this.errorPattern = new Image();
-    this.errorPattern.src = 'img/static.gif'
+    this.errorPattern.src = 'static/img/static.gif'
     
     //let repopulate know that the detector would like to be updated every loop:
     if(!window.refreshTargets)

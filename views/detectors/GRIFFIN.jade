@@ -1,0 +1,23 @@
+include ../partials/head.jade
+
+doctype html5
+html
+  head
+    +head() 
+  body   
+    div(id='wrapper')
+      branding-head(experiment='GRIFFIN')
+
+      div(id='mainContent')
+        widget-status(id='statusBar', MIDAS='annikal.triumf.ca:8082')
+        detector-GRIFFIN(id='GRIFFIN', MIDAS='annikal.triumf.ca:8082', rateServer="http://midtig06.triumf.ca:8091/mother/scalar?json", thresholdServer="http://midtig06.triumf.ca:8091/mother/parameters?json")
+
+      div(id='push')
+
+    branding-foot
+
+    script.
+      document.addEventListener('DOMComponentsLoaded', function(){
+        //begin data fetch loop:
+        rebootFetch();
+      });

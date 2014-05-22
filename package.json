@@ -1,0 +1,29 @@
+{
+  "name": "GRIFFINdashboard",
+  "version": "0.0.0",
+  "description": "A web-app dashboard for the GRIFFIN experiment.",
+  "main": "griffin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BillMills/griffinMarkII"
+  },
+  "keywords": [
+    "griffin"
+  ],
+  "author": "BillMills",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BillMills/griffinMarkII/issues"
+  },
+  "dependencies": {
+    "express": "3.4.8",
+    "jade": "1.1.5"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.32"
+  }
+}
