@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "express": "3.4.8",
-    "jade": "1.1.5"
+    "jade": "1.1.5",
+    "express-minify":"0.0.7"
   },
   "engines": {
     "node": "0.10.x",

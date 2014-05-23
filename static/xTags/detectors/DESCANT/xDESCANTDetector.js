@@ -101,7 +101,6 @@
                         y: this.generateCoords(i)[1],
                         rotation: internalRotation[i%14] + 72*Math.floor(i/14) - 54,
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         closed: true,

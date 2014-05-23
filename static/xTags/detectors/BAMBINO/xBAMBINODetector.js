@@ -107,7 +107,6 @@
                             x: 0.25*this.width,
                             y: this.height*0.4,
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -124,7 +123,6 @@
                             rotation: -360/phiSegments*(segment+1),
                             clockwise: false,
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -156,7 +154,6 @@
                     centerDot = new Kinetic.Circle({
                         radius: this.innerRad,
                         fill: '#222222',
-                        fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         x: 0.25*this.width,

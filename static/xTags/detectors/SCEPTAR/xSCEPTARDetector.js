@@ -83,7 +83,6 @@
                         x: X,
                         y: Y,
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,

@@ -72,7 +72,6 @@
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
@@ -174,7 +173,6 @@
                         width: this.cellSide,
                         height: this.cellSide,
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,

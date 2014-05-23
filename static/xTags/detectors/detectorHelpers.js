@@ -253,6 +253,15 @@ function initializeDetector(name, headline){
     }
 
     this.errorPattern = new Image();
+    this.errorPattern.onload = function(){
+        var key;
+
+        for(key in this.cells){
+            this.cells[key].setAttr('fillPatternImage', this.errorPattern);
+        }
+
+        this.mainLayer[this.displayIndex].draw();
+    }.bind(this)
     this.errorPattern.src = 'static/img/static.gif'
     
     //let repopulate know that the detector would like to be updated every loop:

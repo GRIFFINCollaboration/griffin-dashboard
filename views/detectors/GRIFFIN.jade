@@ -3,7 +3,15 @@ include ../partials/head.jade
 doctype html5
 html
   head
-    +head() 
+    +head()
+    script(type='text/javascript' src='static/xTags/detectors/xDetectorTemplate.js')
+    script(type='text/javascript' src='static/xTags/detectors/detectorHelpers.js')
+    script(type='text/javascript' src='static/xTags/detectors/GRIFFIN/xGRIFFINDetector.js')
+    script(type='text/javascript' src='static/xTags/runControl/xStatus.js')
+    link(rel="stylesheet" type="text/css" href='static/xTags/detectors/xDetector.css')
+    link(rel="stylesheet" type="text/css" href='static/xTags/runControl/xStatus.css')
+
+
   body   
     div(id='wrapper')
       branding-head(experiment='GRIFFIN')
