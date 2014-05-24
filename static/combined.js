@@ -350,6 +350,15 @@ function initializeDetector(name, headline){
     }
 
     this.errorPattern = new Image();
+    this.errorPattern.onload = function(){
+        var key;
+
+        for(key in this.cells){
+            this.cells[key].setAttr('fillPatternImage', this.errorPattern);
+        }
+
+        this.mainLayer[this.displayIndex].draw();
+    }.bind(this)
     this.errorPattern.src = 'static/img/static.gif'
     
     //let repopulate know that the detector would like to be updated every loop:
@@ -15966,7 +15975,6 @@ var Kinetic = {};
                             x: 0.25*this.width,
                             y: this.height*0.4,
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -15983,7 +15991,6 @@ var Kinetic = {};
                             rotation: -360/phiSegments*(segment+1),
                             clockwise: false,
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -16015,7 +16022,6 @@ var Kinetic = {};
                     centerDot = new Kinetic.Circle({
                         radius: this.innerRad,
                         fill: '#222222',
-                        fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         x: 0.25*this.width,
@@ -16550,7 +16556,6 @@ var Kinetic = {};
                         x: X,
                         y: Y,
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
@@ -16575,7 +16580,6 @@ var Kinetic = {};
                         x: X,
                         y: Y,
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
@@ -16741,7 +16745,6 @@ var Kinetic = {};
                         y: this.generateCoords(i)[1],
                         rotation: internalRotation[i%14] + 72*Math.floor(i/14) - 54,
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         closed: true,
@@ -17006,7 +17009,6 @@ var Kinetic = {};
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellCoords[cellKey],
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
@@ -17125,7 +17127,6 @@ var Kinetic = {};
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellCoords[cellKey],
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
@@ -18273,7 +18274,6 @@ function parseCustomPages(data){
                             rotation: SiLiIndex*72,
                             fill: '#000000',
                             clockwise: (i%2)==1,
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -18289,7 +18289,6 @@ function parseCustomPages(data){
                             rotation: SiLiIndex*72,
                             fill: '#000000',
                             clockwise: (i%2)==1,
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -18470,7 +18469,6 @@ function parseCustomPages(data){
                         x: X,
                         y: Y,
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
@@ -18728,7 +18726,6 @@ function parseCustomPages(data){
                             radius: this.rad,
                             angle: 90,
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -18742,7 +18739,6 @@ function parseCustomPages(data){
                             points: parallelogramCoords[cellCoords[this.channelNames[i]][1]],
                             offset: cellCoords[this.channelNames[i]][0],
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -18759,7 +18755,6 @@ function parseCustomPages(data){
                             radius: this.rad,
                             angle: 90,
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -18773,7 +18768,6 @@ function parseCustomPages(data){
                             points: parallelogramCoords[cellCoords[this.channelNames[i]][1]],
                             offset: cellCoords[this.channelNames[i]][0],
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -19057,7 +19051,6 @@ function parseCustomPages(data){
                             x: this.x0,
                             y: this.y0,
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -19079,7 +19072,6 @@ function parseCustomPages(data){
                             x: 0.25*this.width,
                             y: this.height*0.4,
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -19094,7 +19086,6 @@ function parseCustomPages(data){
                     centerDot = new Kinetic.Circle({
                         radius: this.innerAuxRad,
                         fill: '#222222',
-                        fillPatternImage: this.errorPattern,
                         stroke: this.frameColor,
                         strokeWidth: this.frameLineWidth,
                         x: 0.25*this.width,
@@ -19110,7 +19101,6 @@ function parseCustomPages(data){
                             rotation: -this.auxPhiStep*(i+1),
                             clockwise: false,
                             fill: '#000000',
-                            fillPatternImage: this.errorPattern,
                             fillPatternOffsetX: 100*Math.random(),
                             fillPatternOffsetY: 100*Math.random(),
                             stroke: this.frameColor,
@@ -19730,7 +19720,6 @@ function getRunSummary(host){
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellCoords[cellKey],
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
@@ -19849,7 +19838,6 @@ function getRunSummary(host){
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: cellCoords[cellKey],
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
@@ -20148,7 +20136,6 @@ function getRunSummary(host){
                     this.cells[this.channelNames[i]] = new Kinetic.Line({
                         points: [X,Y, X+this.cellSide,Y, X+this.cellSide,Y+this.cellSide, X,Y+this.cellSide],
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
@@ -20250,7 +20237,6 @@ function getRunSummary(host){
                         width: this.cellSide,
                         height: this.cellSide,
                         fill: '#000000',
-                        fillPatternImage: this.errorPattern,
                         fillPatternOffsetX: 100*Math.random(),
                         fillPatternOffsetY: 100*Math.random(),
                         stroke: this.frameColor,
@@ -20493,7 +20479,7 @@ function getRunSummary(host){
                 //start fresh:
                 this.mainLayer.destroyChildren();
                 this.cells = {};
-                this.grid = Math.min(0.9*this.offsetWidth/this.cols, 0.8*this.offsetHeight/this.rows);
+                this.grid = Math.min(0.8*this.offsetWidth/this.cols, 0.8*this.offsetHeight/this.rows);
 
                 //default instantiation of single cells:
                 for(i=0; i<this.cols; i++){

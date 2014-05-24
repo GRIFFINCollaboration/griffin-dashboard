@@ -124,15 +124,13 @@
                 this.stage.add(this.tooltipLayer);
 
                 this.errorPattern = new Image();
-                this.errorPattern.src = 'img/static.gif'
+                this.errorPattern.src = 'static/img/static.gif'
                     
             },
 
-                inserted: function() {
-                    this.instantiateCells();
-                },
-                removed: function() {},
-                attributeChanged: function() {}
+            inserted: function() {},
+            removed: function() {},
+            attributeChanged: function() {}
         }, 
         events: { 
 
@@ -152,7 +150,7 @@
                 //start fresh:
                 this.mainLayer.destroyChildren();
                 this.cells = {};
-                this.grid = Math.min(0.9*this.offsetWidth/this.cols, 0.8*this.offsetHeight/this.rows);
+                this.grid = Math.min(0.8*this.offsetWidth/this.cols, 0.8*this.offsetHeight/this.rows);
 
                 //default instantiation of single cells:
                 for(i=0; i<this.cols; i++){

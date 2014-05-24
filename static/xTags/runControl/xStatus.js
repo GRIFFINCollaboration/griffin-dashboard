@@ -136,7 +136,7 @@ function runTransition(host,command){
         if(this.readyState == 4)
             rebootFetch();
     }
-
+    xmlhttp.withCredentials = true;
     //fire
     xmlhttp.open('GET', 'http://'+host+'/?cmd='+cmd, false);
     xmlhttp.send();
@@ -159,6 +159,7 @@ function ODBGetMsg(host, n){
         }
             
     }
+    xmlhttp.withCredentials = true;
     //fire async
     xmlhttp.open('GET', 'http://'+host+'/?cmd=jmsg&n='+n);
     xmlhttp.send();
@@ -179,6 +180,7 @@ function getRunSummary(host){
 
         if(this.readyState == 4){
             //register the new data
+            console.log(this.responseText)
             data = JSON.parse(this.responseText);
             if(!window.currentData.ODB)
                 window.currentData.ODB = {};
@@ -234,6 +236,7 @@ function getRunSummary(host){
         }
             
     }
+    xmlhttp.withCredentials = true;
     //fire async
     xmlhttp.open('GET', 'http://'+host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-nokeys');
     xmlhttp.send();

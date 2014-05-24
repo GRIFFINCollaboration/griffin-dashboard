@@ -1,5 +1,5 @@
-app.get('/', function(req, res){
-	res.render('HW.jade');
+app.get('/HV', function(req, res){
+	res.render('widgets/HV.jade');
 });
 
 app.get('/GRIFFIN', function(req, res){

@@ -144,12 +144,13 @@
                     xString += '<x-card id="HVCard'+i+'"><x-waffle id="HVGrid'+i+'"></x-waffle></x-card>';
                 }
                 xString += '</x-deck>'
-                deckWrap.innerHTML = xString;
+                xtag.innerHTML(deckWrap, xString);
 
                 //configure HV grids
                 for(i=0; i<this.crateNames.length; i++){
-                    //rows and cols
                     this.HVgrid[i] = document.getElementById('HVGrid'+i);
+
+                    //rows and cols
                     nSlots = 0;
 
                     for(j=0; j<this.cratePop[i].length; j++){
@@ -205,6 +206,8 @@
                         [this.color.trip, 'Trip / Disable'],
                         [this.color.off, 'Off']
                     ]
+
+                    this.HVgrid[i].instantiateCells();
 
                 }
 
