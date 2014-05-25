@@ -152,6 +152,7 @@ function ODBGetMsg(host, n){
         var i, messages;
 
         if(this.readyState == 4){
+            console.log(this)
             messages = this.responseText.split('\n');
             for(i=0; i<messages.length; i++){
                 document.getElementById('statusMessage'+i).innerHTML = messages[messages.length-1-i];
@@ -180,7 +181,6 @@ function getRunSummary(host){
 
         if(this.readyState == 4){
             //register the new data
-            console.log(this.responseText)
             data = JSON.parse(this.responseText);
             if(!window.currentData.ODB)
                 window.currentData.ODB = {};
