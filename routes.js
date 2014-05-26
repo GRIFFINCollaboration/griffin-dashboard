@@ -20,7 +20,7 @@ app.post('/postHV', function(req, res){
 	//cmdString = '?cmd=jset&odb=/Equipment/HV-'+req.body.crateIndex+'/Variables/Demand['+req.body.chIndex+']'
 	//cmdString += '&value='+req.body.demandVoltage
 
-	console.log(cmdString)
+	//console.log(cmdString)
 
 	return res.redirect('/HV');
 });
