@@ -1,6 +1,6 @@
 express = require("express");		
-app = express();						// init app obj
-//minify = require('express-minify');		//minification tool
+app = express();				
+//minify = require('express-minify');								//minification tool
 
 // set up the app
 app.set('views', __dirname + '/views');
@@ -12,6 +12,7 @@ app.use(minify({
 }));
 */
 app.use('/static', express.static(__dirname + '/static'));
+app.use(express.bodyParser());										//need this to parse submitted forms
 
 // Load our routes
 require('./routes.js');

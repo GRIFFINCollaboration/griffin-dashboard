@@ -65,7 +65,7 @@ widget-HVcontrol input[type='number']{
 	width: 5em;
 }
 
-widget-HVcontrol input[type='button']{
+widget-HVcontrol input[type='submit']{
 	margin-right: 2em;
 }
 
