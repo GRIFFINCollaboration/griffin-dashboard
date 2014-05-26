@@ -10,9 +10,9 @@ app.get('/GRIFFIN', function(req, res){
 
 app.post('/postHV', function(req, res){
 
-	var ls = spawn('ls', ['-lsh']);
+	var ls = spawn('ls', ['-lh', '/usr']);
 	ls.stdout.on('data', function(data){
-		console.log(data);
+		console.log('stdout: ' + data);
 	})
 
 	//var cmdString;
