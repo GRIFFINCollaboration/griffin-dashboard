@@ -218,7 +218,7 @@
                     //console.log(this.HVgrid[crate].cells[channel])
                     //this.HVgrid[crate].cells[channel].onclick();
                     //this.HVgrid[crate].clickCell.bind(this.HVgrid[crate], channel)
-                    this.clickCell(channel)
+                    this.clickCell.bind(this.HVgrid[crate], channel);
                 }
 
 
