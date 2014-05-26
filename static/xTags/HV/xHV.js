@@ -470,6 +470,7 @@ function findChannelName(row, col, cardArray, nameArray){
             created: function() {
                 var HVcontrol = document.createElement('form')
                 ,   controlTitle = document.createElement('h2')
+                ,   chNameIn = document.createElement('input')
                 ,   offRadio = document.createElement('input')
                 ,   offRadioLabel = document.createElement('label')
                 ,   onRadio = document.createElement('input')
@@ -500,7 +501,15 @@ function findChannelName(row, col, cardArray, nameArray){
                 this.appendChild(controlTitle);
 
                 HVcontrol.setAttribute('id', this.id + 'Control');
+                HVcontrol.setAttribute('method': 'POST');
+                HVcontrol.setAttribute('action': 'postHV');
                 this.appendChild(HVcontrol);
+
+                chNameIn.setAttribute('id', this.id + 'chName');
+                chNameIn.setAttribute('name', 'chName');
+                chNameIn.setAttribute('style', 'display:none');
+                chNameIn.setAttribute('type', 'text');
+                HVcontrol.appendChild(chNameIn);
 
                 commit.setAttribute('id', this.id + 'HVparameterCommit');
                 commit.setAttribute('type', 'button');
@@ -534,6 +543,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 demandTitle.innerHTML = 'Demand Voltage';
                 HVcontrol.appendChild(demandTitle);
                 demandCell.setAttribute('id', this.id + 'demandVoltage');
+                demandCell.setAttribute('name', 'demandVoltage');
                 demandCell.setAttribute('class', 'voltageField');
                 demandCell.setAttribute('type', 'number');
                 demandCell.setAttribute('step', 'any');
@@ -554,6 +564,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 voltageUpTitle.innerHTML = 'Voltage Ramp Up';
                 HVcontrol.appendChild(voltageUpTitle);
                 voltageUpCell.setAttribute('id', this.id + 'voltageUp');
+                voltageUpCell.setAttribute('name', 'voltageUp');
                 voltageUpCell.setAttribute('class', 'rampField');
                 voltageUpCell.setAttribute('type', 'number');
                 voltageUpCell.setAttribute('step', 'any');
@@ -577,6 +588,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 voltageDownTitle.innerHTML = 'Voltage Ramp Down';
                 HVcontrol.appendChild(voltageDownTitle);
                 voltageDownCell.setAttribute('id', this.id + 'voltageDown');
+                voltageDownCell.setAttribute('name', 'voltageDown');
                 voltageDownCell.setAttribute('class', 'rampField');
                 voltageDownCell.setAttribute('type', 'number');
                 voltageDownCell.setAttribute('step', 'any');
@@ -650,6 +662,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 if(chanIndex==-1) return;
 
                 document.getElementById(this.id + 'Title').innerHTML = channelName;
+                document.getElementById(this.id + 'chName').value = channelName;
                 document.getElementById(this.id + 'Control').style.opacity = 1;
                 if(ODBfe.Variables.ChStatus[chanIndex]%2 == 0)
                     document.getElementById(this.id+'offRadio').checked = true;
