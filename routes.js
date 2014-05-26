@@ -10,6 +10,11 @@ app.get('/GRIFFIN', function(req, res){
 
 app.post('/postHV', function(req, res){
 
+	var ls = spawn('ls', ['-lsh']);
+	ls.stdout.pn('data', function(data){
+		console.log(data);
+	})
+
 	//var cmdString;
 
 	//cmdString = '?cmd=jset&odb=/Equipment/HV-'+req.body.crateIndex+'/Variables/Demand['+req.body.chIndex+']'
