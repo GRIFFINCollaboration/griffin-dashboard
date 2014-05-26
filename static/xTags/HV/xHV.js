@@ -253,7 +253,7 @@
                     if(channelStat == 0)
                         color = this.color.off;
 
-                    if(isVoltageDrift && !isRamping && !isTripped && channelStat)
+                    if(isVoltageDrift && !isRamping && !isTripped && channelStat%2)
                         statMessage.push('VOLTAGE DRIFT');
 
                     if(isOverheat)
