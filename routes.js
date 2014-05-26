@@ -10,10 +10,10 @@ app.get('/GRIFFIN', function(req, res){
 
 app.post('/postHV', function(req, res){
 
-	var ls = spawn('ls', ['-lh', '/usr']);
-	ls.stdout.on('data', function(data){
-		console.log('stdout: ' + data);
-	})
+	var writeODB = spawn("odbedit -c 'set /Equipment/HV-0/Variables/Demand[1] 990'");
+	//ls.stdout.on('data', function(data){
+	//	console.log('stdout: ' + data);
+	//})
 
 	//var cmdString;
 
