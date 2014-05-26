@@ -9,7 +9,7 @@ app.get('/GRIFFIN', function(req, res){
 
 app.post('/postHV', function(req, res){
 
-	console.log(req.body)
+	console.log(req)
 /*
 	console.log(req.body.chName);
 	console.log(req.body.powerSwitch);
@@ -17,4 +17,6 @@ app.post('/postHV', function(req, res){
 	console.log(req.body.voltageUp);
 	console.log(req.body.voltageDown);
 */
+
+	return res.redirect('/HV');
 });
