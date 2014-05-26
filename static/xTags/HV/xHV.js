@@ -470,7 +470,7 @@ function findChannelName(row, col, cardArray, nameArray){
             created: function() {
                 var HVcontrol = document.createElement('form')
                 ,   controlTitle = document.createElement('h2')
-                ,   chNameIn = document.createElement('input')
+                ,   chIndex = document.createElement('input')
                 ,   offRadio = document.createElement('input')
                 ,   offRadioLabel = document.createElement('label')
                 ,   onRadio = document.createElement('input')
@@ -505,11 +505,11 @@ function findChannelName(row, col, cardArray, nameArray){
                 HVcontrol.setAttribute('action', 'postHV');
                 this.appendChild(HVcontrol);
 
-                chNameIn.setAttribute('id', this.id + 'chName');
-                chNameIn.setAttribute('name', 'chName');
-                chNameIn.setAttribute('style', 'display:none');
-                chNameIn.setAttribute('type', 'text');
-                HVcontrol.appendChild(chNameIn);
+                chIndex.setAttribute('id', this.id + 'chIndex');
+                chIndex.setAttribute('name', 'chIndex');
+                chIndex.setAttribute('style', 'display:none');
+                chIndex.setAttribute('type', 'number');
+                HVcontrol.appendChild(chIndex);
 
                 commit.setAttribute('id', this.id + 'HVparameterCommit');
                 commit.setAttribute('type', 'submit');
@@ -661,7 +661,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 if(chanIndex==-1) return;
 
                 document.getElementById(this.id + 'Title').innerHTML = channelName;
-                document.getElementById(this.id + 'chName').value = channelName;
+                document.getElementById(this.id + 'chIndex').value = chanIndex;
                 document.getElementById(this.id + 'Control').style.opacity = 1;
                 if(ODBfe.Variables.ChStatus[chanIndex]%2 == 0)
                     document.getElementById(this.id+'offRadio').checked = true;
