@@ -60,6 +60,7 @@ function getJSON(URL, callback){
         callback(this.responseText);
     }
 
+    xmlhttp.withCredentials = true;
     //fire async
     xmlhttp.overrideMimeType('application/json');
     xmlhttp.open('GET', URL);
