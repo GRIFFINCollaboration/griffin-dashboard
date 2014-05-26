@@ -303,6 +303,7 @@
                         evt = new CustomEvent('postHVchan', {'detail': {   
                             'channel' : cellName, 
                             'ODBblob': window.ODBEquipment['HV-'+this.id.slice(6)], 
+                            'crateIndex': this.id.slice(6)
                         } });
                         controlSidebars[i].dispatchEvent(evt);
                     }
@@ -471,6 +472,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 var HVcontrol = document.createElement('form')
                 ,   controlTitle = document.createElement('h2')
                 ,   chIndex = document.createElement('input')
+                ,   crateIndex = document.createElement('input')
                 ,   offRadio = document.createElement('input')
                 ,   offRadioLabel = document.createElement('label')
                 ,   onRadio = document.createElement('input')
@@ -510,6 +512,12 @@ function findChannelName(row, col, cardArray, nameArray){
                 chIndex.setAttribute('style', 'display:none');
                 chIndex.setAttribute('type', 'number');
                 HVcontrol.appendChild(chIndex);
+
+                crateIndex.setAttribute('id', this.id + 'crateIndex');
+                crateIndex.setAttribute('name', 'crateIndex');
+                crateIndex.setAttribute('style', 'display:none');
+                crateIndex.setAttribute('type', 'number');
+                HVcontrol.appendChild(crateIndex);
 
                 commit.setAttribute('id', this.id + 'HVparameterCommit');
                 commit.setAttribute('type', 'submit');
@@ -623,7 +631,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 this.establishFillMeter('Temperature', 'C', this.mainLayer, 0, 0.69*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
 
                 this.addEventListener('postHVchan', function(evt){
-                    this.updateForm(evt.detail.channel, evt.detail.ODBblob);
+                    this.updateForm(evt.detail.channel, evt.detail.ODBblob, evt.detail.crateIndex);
                 }, false);
 
             },
@@ -645,7 +653,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 console.log(this);
             },
 
-            'updateForm' : function(channelName, ODBfe){
+            'updateForm' : function(channelName, ODBfe, crateIndex){
                 var chanIndex = ODBfe.Settings.Names.indexOf(channelName),
                     chStatus = parseChStatus(ODBfe.Variables.ChStatus[chanIndex]),
                     demandVoltage = ODBfe.Variables.Demand[chanIndex],
@@ -662,6 +670,7 @@ function findChannelName(row, col, cardArray, nameArray){
 
                 document.getElementById(this.id + 'Title').innerHTML = channelName;
                 document.getElementById(this.id + 'chIndex').value = chanIndex;
+                document.getElementById(this.id + 'crateIndex').value = crateIndex;
                 document.getElementById(this.id + 'Control').style.opacity = 1;
                 if(ODBfe.Variables.ChStatus[chanIndex]%2 == 0)
                     document.getElementById(this.id+'offRadio').checked = true;

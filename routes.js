@@ -9,7 +9,12 @@ app.get('/GRIFFIN', function(req, res){
 
 app.post('/postHV', function(req, res){
 
-	console.log(req.body)
+	var cmdString;
+
+	cmdString = '?cmd=jset&odb=/Equipment/HV-'+req.body.crateIndex+'/Variables/Demand['+req.body.chIndex+']'
+	cmdString += '&value='+req.body.demandVoltage
+
+	console.log(cmdString)
 
 	return res.redirect('/HV');
 });
