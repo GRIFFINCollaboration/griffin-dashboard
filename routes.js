@@ -11,7 +11,7 @@ app.get('/GRIFFIN', function(req, res){
 app.post('/postHV', function(req, res){
 
 	var ls = spawn('ls', ['-lsh']);
-	ls.stdout.pn('data', function(data){
+	ls.stdout.on('data', function(data){
 		console.log(data);
 	})
 
