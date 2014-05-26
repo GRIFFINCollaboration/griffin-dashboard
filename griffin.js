@@ -1,7 +1,7 @@
 express = require("express");		
 app = express();				
 //minify = require('express-minify');								//minification tool
-spawn = require('child_process');									//for spawning system calls
+spawn = require('child_process').spawn;									//for spawning system calls
 
 // set up the app
 app.set('views', __dirname + '/views');
