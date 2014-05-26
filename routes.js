@@ -7,7 +7,7 @@ app.get('/GRIFFIN', function(req, res){
 });
 
 
-app.post('postHV', function(req, res){
+app.post('/postHV', function(req, res){
 
 	console.log(req.body.chName);
 	console.log(req.body.powerSwitch);

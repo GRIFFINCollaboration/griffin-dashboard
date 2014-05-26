@@ -512,7 +512,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 HVcontrol.appendChild(chNameIn);
 
                 commit.setAttribute('id', this.id + 'HVparameterCommit');
-                commit.setAttribute('type', 'button');
+                commit.setAttribute('type', 'submit');
                 commit.setAttribute('value', 'Commit');
                 commit.setAttribute('onclick', this.submitParameters);
                 HVcontrol.appendChild(commit);

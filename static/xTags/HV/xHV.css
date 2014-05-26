@@ -17,7 +17,8 @@ widget-HVcontrol input[type='radio']{
 input.crateRadio + label,
 widget-HVcontrol input[type='radio'] + label,
 widget-HVcontrol input[type='button'],
-widget-HVcontrol input[type='number']{
+widget-HVcontrol input[type='number'],
+widget-HVcontrol input[type='submit']{
 	font-size: 100%;
 	line-height: 1.2em;
 	padding:0.5em;
