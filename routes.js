@@ -10,11 +10,14 @@ app.get('/GRIFFIN', function(req, res){
 
 app.post('/postHV', function(req, res){
 
-	var writeODB = spawn("odbedit -c 'set /Equipment/HV-0/Variables/Demand[1] 990'");
-	//ls.stdout.on('data', function(data){
-	//	console.log('stdout: ' + data);
-	//})
+	var writeODB = spawn('odbedit', ['-c', 'set', "'/Equipment/HV-0/Variables/Demand[1] 999'"])
 
+/*
+	var ls = spawn('ls', ['-lh', '/usr']);
+	ls.stdout.on('data', function(data){
+		console.log('stdout: ' + data);
+	})
+*/
 	//var cmdString;
 
 	//cmdString = '?cmd=jset&odb=/Equipment/HV-'+req.body.crateIndex+'/Variables/Demand['+req.body.chIndex+']'
