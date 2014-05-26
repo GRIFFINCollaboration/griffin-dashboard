@@ -215,7 +215,7 @@
                 crate = getParameterByName('crate');
                 channel = getParameterByName('channel');
                 if(crate && channel){
-                    console.log(this.HVgrid[crate])
+                    console.log(this.HVgrid[crate].cells[channel])
                     //this.HVgrid[crate].cells[channel].onclick();
                 }
 
