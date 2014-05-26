@@ -22,6 +22,26 @@ node griffin.js
 
 And voila!  Visit `host:2154/GRIFFIN` to see the GRIFFIN summary; route directory coming soon.
 
+###With Added Security
+MarkII scrapes a lot of stuff from MIDAS' ODB, and if you don't want the whole universe messing with your experiment, you'll want to set up the usual MIDAS security.  On the machine running your experiment:
+
+```
+odbedit
+passwd
+```
+
+and your experiment will be password protected.  But, now all of MarkII's requests will bounce.  To fix this, head into your midas source, open `src/mhttpd.cxx`, and change
+
+    rsprintf("Access-Control-Allow-Origin: *\r\n");
+    
+to
+
+```
+   rsprintf("Access-Control-Allow-Credentials: true\r\n");
+   rsprintf("Access-Control-Allow-Origin: http://<host serving MarkII>:2154\r\n");
+```
+
+Now visit your experiment's MIDAS status page, login, and you will have the credentials to allow MarkII to talk to the ODB.
 
 ##For Developers
 
