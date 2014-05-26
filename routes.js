@@ -7,12 +7,13 @@ app.get('/GRIFFIN', function(req, res){
 });
 
 
+
 app.post('/postHV', function(req, res){
 
-	var cmdString;
+	//var cmdString;
 
-	cmdString = '?cmd=jset&odb=/Equipment/HV-'+req.body.crateIndex+'/Variables/Demand['+req.body.chIndex+']'
-	cmdString += '&value='+req.body.demandVoltage
+	//cmdString = '?cmd=jset&odb=/Equipment/HV-'+req.body.crateIndex+'/Variables/Demand['+req.body.chIndex+']'
+	//cmdString += '&value='+req.body.demandVoltage
 
 	console.log(cmdString)
 

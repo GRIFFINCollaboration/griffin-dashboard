@@ -522,6 +522,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 commit.setAttribute('id', this.id + 'HVparameterCommit');
                 commit.setAttribute('type', 'submit');
                 commit.setAttribute('value', 'Commit');
+                //commit.setAttribute.onclick = this.submitParameters;
                 HVcontrol.appendChild(commit);
 
                 offRadio.setAttribute('id', this.id + 'offRadio')
@@ -650,7 +651,18 @@ function findChannelName(row, col, cardArray, nameArray){
         methods: {
 
             'submitParameters' : function(){
-                console.log(this);
+                var crateIndex = document.getElementById(this.id + 'crateIndex').value,
+                    chanIndex = document.getElementById(this.id +'chIndex').value,
+                    powerOff = document.getElementById(this.id+'offRadio').checked && true,
+                    demandV = document.getElementById(this.id + 'demandVoltage'),
+                    vUp = document.getElementById(this.id + 'voltageUp'),
+                    vDown = document.getElementById(this.id + 'voltageDown'),
+                    cmdString;
+
+                cmdString = '?cmd=jset&odb=/Equipment/HV-'+crateIndex+'/Variables/Demand['+chanIndex+']'
+                cmdString += '&value='+demandV
+
+
             },
 
             'updateForm' : function(channelName, ODBfe, crateIndex){
