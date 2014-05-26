@@ -501,8 +501,8 @@ function findChannelName(row, col, cardArray, nameArray){
                 this.appendChild(controlTitle);
 
                 HVcontrol.setAttribute('id', this.id + 'Control');
-                HVcontrol.setAttribute('method': 'POST');
-                HVcontrol.setAttribute('action': 'postHV');
+                HVcontrol.setAttribute('method', 'POST');
+                HVcontrol.setAttribute('action', 'postHV');
                 this.appendChild(HVcontrol);
 
                 chNameIn.setAttribute('id', this.id + 'chName');
