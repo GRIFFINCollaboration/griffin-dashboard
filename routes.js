@@ -10,7 +10,7 @@ app.get('/GRIFFIN', function(req, res){
 
 app.post('/postHV', function(req, res){
 
-	var writeODB = spawn('odbedit', ['-c', 'set', "'/Equipment/HV-0/Variables/Demand[1] 990'"])
+	var writeODB = spawn('odbedit', ['-c', "'set /Equipment/HV-0/Variables/Demand[1] 990'"])
 
 /*
 	var ls = spawn('ls', ['-lh', '/usr']);
