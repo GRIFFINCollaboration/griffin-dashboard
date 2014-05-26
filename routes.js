@@ -19,5 +19,5 @@ app.post('/postHV', function(req, res){
 	else
 		spawn('odbedit', ['-c', "set /Equipment/HV-"+req.body.crateIndex+"/Settings/ChState["+req.body.chIndex+"] 1"]);
 
-	return res.redirect('/HV');
+	return res.redirect('/HV?crate=0&channel='+req.body.chName);
 });

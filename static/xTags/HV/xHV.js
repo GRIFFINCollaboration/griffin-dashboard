@@ -105,7 +105,7 @@
                 var deckWrap = document.createElement('div'),
                     nav = document.createElement('div'),
                     title = document.createElement('h1'),
-                    crateLabel, crateRadio, xString, HVgrid, i, j, k, nSlots, colsPassed;
+                    crateLabel, crateRadio, xString, HVgrid, i, j, k, nSlots, colsPassed, crate, channel;
 
                 ////////////////
                 //DOM Setup
@@ -210,6 +210,14 @@
                     this.HVgrid[i].instantiateCells();
 
                 }
+
+                //now that the display is built, navigate to the channel indicated by the query string if possible:
+                crate = getParameterByName('crate');
+                channel = getParameterByName('channel');
+                if(crate && channel){
+                    this.HVgrid[crate].cells[channel].onclick();
+                }
+
 
             },
 
@@ -390,7 +398,7 @@ function parseChStatus(chStatus){
         }
 
         if(remaining >= 128){
-            status.push('MAX V');
+            status.push('HV MAX');
             remaining -= 128;
         }
 
@@ -473,6 +481,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 ,   controlTitle = document.createElement('h2')
                 ,   chIndex = document.createElement('input')
                 ,   crateIndex = document.createElement('input')
+                ,   chName = document.createElement('input')
                 ,   offRadio = document.createElement('input')
                 ,   offRadioLabel = document.createElement('label')
                 ,   onRadio = document.createElement('input')
@@ -518,6 +527,12 @@ function findChannelName(row, col, cardArray, nameArray){
                 crateIndex.setAttribute('style', 'display:none');
                 crateIndex.setAttribute('type', 'number');
                 HVcontrol.appendChild(crateIndex);
+
+                chName.setAttribute('id', this.id + 'chName');
+                chName.setAttribute('name', 'chName');
+                chName.setAttribute('style', 'display:none');
+                chName.setAttribute('type', 'text');
+                HVcontrol.appendChild(chName);
 
                 commit.setAttribute('id', this.id + 'HVparameterCommit');
                 commit.setAttribute('type', 'submit');
@@ -683,6 +698,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 document.getElementById(this.id + 'Title').innerHTML = channelName;
                 document.getElementById(this.id + 'chIndex').value = chanIndex;
                 document.getElementById(this.id + 'crateIndex').value = crateIndex;
+                document.getElementById(this.id + 'chName').value = channelName;
                 document.getElementById(this.id + 'Control').style.opacity = 1;
                 if(ODBfe.Variables.ChStatus[chanIndex]%2 == 0)
                     document.getElementById(this.id+'offRadio').checked = true;
