@@ -583,7 +583,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 demandCell.onchange = function(parentID){
                     document.getElementById(parentID+'demandVoltageSlide').value = parseInt(this.value, 10);
                 }.bind(demandCell, this.id);
-                demandSlide.onchange = function(parentID){
+                demandSlide.oninput = function(parentID){
                     document.getElementById(parentID+'demandVoltage').value = parseInt(this.value, 10);
                 }.bind(demandSlide, this.id);
 
@@ -607,7 +607,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 voltageUpCell.onchange = function(parentID){
                     document.getElementById(parentID+'voltageUpSlide').value = parseInt(this.value, 10);
                 }.bind(voltageUpCell, this.id);
-                voltageUpSlide.onchange = function(parentID){
+                voltageUpSlide.oninput = function(parentID){
                     document.getElementById(parentID+'voltageUp').value = parseInt(this.value, 10);
                 }.bind(voltageUpSlide, this.id);
 
@@ -631,7 +631,7 @@ function findChannelName(row, col, cardArray, nameArray){
                 voltageDownCell.onchange = function(parentID){
                     document.getElementById(parentID+'voltageDownSlide').value = parseInt(this.value, 10);
                 }.bind(voltageDownCell, this.id);
-                voltageDownSlide.onchange = function(parentID){
+                voltageDownSlide.oninput = function(parentID){
                     document.getElementById(parentID+'voltageDown').value = parseInt(this.value, 10);
                 }.bind(voltageDownSlide, this.id);
 
