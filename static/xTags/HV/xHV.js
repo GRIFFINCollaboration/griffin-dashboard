@@ -514,7 +514,6 @@ function findChannelName(row, col, cardArray, nameArray){
                 commit.setAttribute('id', this.id + 'HVparameterCommit');
                 commit.setAttribute('type', 'submit');
                 commit.setAttribute('value', 'Commit');
-                commit.setAttribute('onclick', this.submitParameters);
                 HVcontrol.appendChild(commit);
 
                 offRadio.setAttribute('id', this.id + 'offRadio')
