@@ -11,6 +11,19 @@ app.get('/GRIFFIN', function(req, res){
 app.post('/postHV', function(req, res){
 
 	var writeODB = spawn('odbedit', ['-c', "'set /Equipment/HV-0/Variables/Demand[1] 990'"])
+	//odbedit -c 'set /Equipment/HV-0/Variables/Demand[1] 990'
+
+writeODB.stdout.on('data', function (data) {
+  console.log('stdout: ' + data);
+});
+
+writeODB.stderr.on('data', function (data) {
+  console.log('stderr: ' + data);
+});
+
+writeODB.on('close', function (code) {
+  console.log('child process exited with code ' + code);
+});
 
 /*
 	var ls = spawn('ls', ['-lh', '/usr']);
