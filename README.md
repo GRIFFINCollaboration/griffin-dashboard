@@ -43,6 +43,12 @@ to
 
 Now visit your experiment's MIDAS status page, login, and you will have the credentials to allow MarkII to talk to the ODB.
 
+###MIDAS Frontends
+Some dashboard widgets communicate with MIDAS' ODB, and expect certain frontends to be alive and well:
+
+####CAEN HV
+[The CAEN frontend found here](https://github.com/GRIFFINCollaboration/MIDASfrontends) needs to be built and run, one copy each for each CAEN high voltage crate being used.  These frontends must be named `HV-0`, `HV-1`, `HV-2`..., and they rely on version >= 5.22 of CAEN's HV wrapper library.
+
 ##For Developers
 
 ###Overall Programmatic Logic
