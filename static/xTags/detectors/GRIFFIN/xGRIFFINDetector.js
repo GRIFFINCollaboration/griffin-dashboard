@@ -429,6 +429,20 @@
                 return HVcell;
             },
 
+            'vetoSummary' : function(view, channel){
+                var isHPGE = channel.slice(0,3) == 'GRG',
+                    last = channel[10];
+
+                if(view=='HV' && isHPGE && last!='X')
+                    return false;
+                if(view=='HV' && !isHPGE && last=='X')
+                    return false;
+                if(view!='HV' && isHPGE && last=='X')
+                    return false;
+                if(view!='HV' && !isHPGE && last!='X')
+                    return false;
+            },
+
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeTooltip': function(i){
                 var text, value, j;

@@ -193,6 +193,8 @@
                     //now repopulate all summaries; if a constituent is not reporting, the whole summary is 
                     //flagged as not reporting.
                     for(i=0; i<this.channelNames.length; i++){
+                        if(this.vetoSummary(this.view[j], this.channelNames[i])) continue;
+
                         summaryKey = this.channelNames[i].slice(0,this.summaryDepth);
                         if(this.channelNames[i].length == 10 && window.currentData[this.views[j]].hasOwnProperty(summaryKey) ){
 
@@ -200,7 +202,7 @@
                             if(window.currentData[this.views[j]][summaryKey] == 0xDEADBEEF) continue;
 
                             newValue = window.currentData[this.views[j]][this.channelNames[i]];
-                            //value sought and non found, mark nonreporting:
+                            //value sought and not found, mark nonreporting:
                             if(!newValue && newValue!=0){
                                 window.currentData[this.views[j]][summaryKey] = 0xDEADBEEF;
                                 continue; 
@@ -302,7 +304,7 @@
 
                     //fetch the most recent raw value from the currentData store:
                     rawValue = window.currentData[this.currentView][this.channelNames[i]];
-console.log(rawValue)
+
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
                         rawValue = 0xDEADBEEF;
@@ -346,6 +348,11 @@ console.log(rawValue)
                 this.mainLayer[document.getElementById(this.id+'Deck').selectedIndex].draw();
                 if(this.HVlayer)
                     this.HVlayer[document.getElementById(this.id+'Deck').selectedIndex].draw();
+            },
+
+            //return true if <channel> shouldn't be included in the summary stat in <view>
+            'vetoSummary' : function(view, channel){
+                return false
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
