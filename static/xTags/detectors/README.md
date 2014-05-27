@@ -230,7 +230,7 @@ window.currentData.rate = {
 ```
 
 ###HV Service
-Present detector HV is scraped from the `Equipment/HV-*` directories of the ODB being served at `this.MIDAS`.  The correct format for these directories is generated automatically by [this MIDAS HV frontend](https://github.com/BillMills/MIDASfrontends/tree/master/CAENHV); the only setup requirements are that HV frontends be consecutively named `HV-0`, `HV-1`..., and HV channel names as registered on the crate must use the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).
+Present detector HV is scraped from the `Equipment/HV-*` directories of the ODB being served at `this.MIDAS`.  The correct format for these directories is generated automatically by [this MIDAS HV frontend](https://github.com/GRIFFINCollaboration/MIDASfrontends); the only setup requirements are that HV frontends be consecutively named `HV-0`, `HV-1`..., and HV channel names as registered on the crate must use the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).
 
 `parseHV()` will take the above structure and sort it into `window.currentData.HV` as:
 ```
