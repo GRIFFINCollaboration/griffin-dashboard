@@ -433,6 +433,8 @@
                 var isHPGE = channel.slice(0,3) == 'GRG',
                     last = channel[10];
 
+                console.log([view, isHPGE, last])
+
                 if(view=='HV' && isHPGE && last!='X')
                     return false;
                 if(view=='HV' && !isHPGE && last=='X')
