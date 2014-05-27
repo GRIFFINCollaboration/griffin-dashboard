@@ -167,6 +167,8 @@ function initializeDetector(name, headline){
     this.currentView = 'Rate';
     this.currentUnit = 'Hz';
     this.displayIndex = 0;  //always start on the first card, guarnateed to exist.
+    this.HVcrates = 0;
+    detectHVcrates(this.MIDAS, this);
     //cells
     this.cells = {};
     this.summaryDepth = 0;
@@ -328,4 +330,26 @@ function generateTickLabel(min, max, nTicks, n){
     tickValue = Math.floor(tickValue/Math.pow(10, smallestPrecision)) * Math.pow(10, smallestPrecision);
     return tickValue+'';
 
+}
+
+//determine how many HV frontends are in the ODB.  Frontends must be named HV-0, HV-1, HV-2....
+function detectHVcrates(MIDAS, obj){
+    var xmlhttp = new XMLHttpRequest();
+
+    //once this is all dealt with, refresh the display immediately
+    xmlhttp.onreadystatechange = function(target){
+        var data, nCrates = 0;
+
+        if (this.readyState != 4) return;
+
+        data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) )
+        
+        while(data['HV-'+nCrates])
+            nCrates++
+
+        target.HVcrates = nCrates;
+    }.bind(xmlhttp, obj)
+    //fire async
+    xmlhttp.open('GET', MIDAS + 'cmd=jcopy&odb=/Equipment&encoding=json-nokeys');
+    xmlhttp.send();
 }
