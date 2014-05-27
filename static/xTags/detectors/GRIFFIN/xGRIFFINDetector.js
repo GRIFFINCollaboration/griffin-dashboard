@@ -433,16 +433,14 @@
                 var isHPGE = channel.slice(0,3) == 'GRG',
                     last = channel.slice(9);
 
-                console.log([view, isHPGE, last])
-
                 if(view=='HV' && isHPGE && last!='X')
-                    return false;
+                    return true;
                 if(view=='HV' && !isHPGE && last=='X')
-                    return false;
+                    return true;
                 if(view!='HV' && isHPGE && last=='X')
-                    return false;
+                    return true;
                 if(view!='HV' && !isHPGE && last!='X')
-                    return false;
+                    return true;
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
