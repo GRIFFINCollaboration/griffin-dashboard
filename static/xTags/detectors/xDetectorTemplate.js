@@ -302,7 +302,7 @@
 
                     //fetch the most recent raw value from the currentData store:
                     rawValue = window.currentData[this.currentView][this.channelNames[i]];
-
+console.log(rawValue)
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
                         rawValue = 0xDEADBEEF;
@@ -434,16 +434,11 @@
                 for(i=0; i<this.HVcrates; i++)
                     query += '&odb' + i + '=/Equipment/HV-' + i;
 
-
                 getJSON('http://' + this.MIDAS + query, function(res){
                     var data;
-
                     data = JSON.parse(res);
-
-                    console.log(data)
+                    parseHV(data)
                 })
-
-                
             }
 
         }
