@@ -19,6 +19,4 @@ Waffle parameters are controled by the following member variables.
 
 ###Usage
 
-Once the relevant member variables are set, the member function `instantiateCells()` will establish all the Kinetic cells, labels and tooltips.
-
-TODO: a member function `update()` will be implemented to update the color and tooltip content of each cell.
+Once the relevant member variables are set, the member function `instantiateCells()` will establish all the Kinetic cells, labels and tooltips.  Tooltip text can be updated by writing to the appropriate key in the `TTdata` object (keyed by the strings in `cellNames`, and `specials` if applicable).  Cell color is changed by accessing the relevant Kinetic object stored in `this.cells` and keyed the same as the tooltip data, and calling the Kinetic member function `.setAttr('fill', color)`.  Both colors and tooltip info will refresh themselves the next time `this.update()` is called.
