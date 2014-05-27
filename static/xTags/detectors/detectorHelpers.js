@@ -311,6 +311,20 @@ function parseThreshold(data){
     }    
 }
 
+//and again for HV:
+function parseHV(data){
+    var i, j;
+
+    if(!window.currentData.HV)
+        window.currentData.HV = {};
+
+    for(i=0; i<data.length; i++){
+        for(j=0; j<data[i].Settings.Names.length){
+            window.currentData.HV[data[i].Settings.Names[j].toUpperCase().slice(0,10)] = data[i].Variables.Demand[j];
+        }
+    }
+}
+
 //function to make a reasonable decision on how many decimal places to show, whether to to use 
 //sci. notation on an axis tick mark, where <min> and <max> are the axis minimum and maximum,
 //<nTicks> is the number of tickmarks on the axis, and we are returning the label for the <n>th
