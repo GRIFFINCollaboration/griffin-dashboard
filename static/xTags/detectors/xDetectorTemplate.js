@@ -193,10 +193,12 @@
                     //now repopulate all summaries; if a constituent is not reporting, the whole summary is 
                     //flagged as not reporting.
                     for(i=0; i<this.channelNames.length; i++){
-                        if(this.vetoSummary(this.views[j], this.channelNames[i])) continue;
-
+                    
                         summaryKey = this.channelNames[i].slice(0,this.summaryDepth);
                         if(this.channelNames[i].length == 10 && window.currentData[this.views[j]].hasOwnProperty(summaryKey) ){
+
+                            //bail out if this cell isn't appropriate for this summary
+                            if(this.vetoSummary(this.views[j], this.channelNames[i])) continue;
 
                             //bail out if summary flagged as nonreporting
                             if(window.currentData[this.views[j]][summaryKey] == 0xDEADBEEF) continue;
