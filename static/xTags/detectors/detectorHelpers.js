@@ -352,6 +352,7 @@ function detectHVcrates(MIDAS, obj){
 
     xmlhttp.withCredentials = true;
     //fire async
-    xmlhttp.open('GET', MIDAS + '/?cmd=jcopy&odb=/Equipment&encoding=json-nokeys');
-    xmlhttp.send();
+    console.log(MIDAS + '/?cmd=jcopy&odb=/Equipment&encoding=json-nokeys')
+    //xmlhttp.open('GET', MIDAS + '/?cmd=jcopy&odb=/Equipment&encoding=json-nokeys');
+    //xmlhttp.send();
 }
