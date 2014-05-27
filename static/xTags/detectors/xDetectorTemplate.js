@@ -428,7 +428,22 @@
 
             //fetch HV
             'acquireHV' : function(){
-                console.log(this.HVcrates)   
+                var i,
+                    query='/?cmd=jcopy&encoding=json-nokeys';
+
+                for(i=0; i<this.HVcrates; i++)
+                    query += '&odb' + i + '=/Equipment/HV-' + i;
+
+
+                getJSON('http://' + this.MIDAS + query, function(res){
+                    var data;
+
+                    data = JSON.parse(res);
+
+                    console.log(data)
+                })
+
+                
             }
 
         }
