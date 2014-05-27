@@ -431,7 +431,7 @@
 
             'vetoSummary' : function(view, channel){
                 var isHPGE = channel.slice(0,3) == 'GRG',
-                    last = channel[10];
+                    last = channel.slice(10);
 
                 console.log([view, isHPGE, last])
 
