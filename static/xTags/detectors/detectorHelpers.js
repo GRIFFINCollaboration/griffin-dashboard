@@ -320,7 +320,7 @@ function parseHV(data){
 
     for(i=0; i<data.length; i++){
         for(j=0; j<data[i].Settings.Names.length; j++){
-            window.currentData.HV[data[i].Settings.Names[j].toUpperCase().slice(0,10)] = data[i].Variables.Demand[j];
+            window.currentData.HV[data[i].Settings.Names[j].toUpperCase().slice(0,10)] = data[i].Variables.Measured[j];
         }
     }
 }
