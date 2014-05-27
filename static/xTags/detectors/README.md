@@ -74,6 +74,7 @@ ____________________________________________________________
  - `this.frameColor` default: '#999999' - Frame color for detector visualization.
  - `this.width` & `.height` - dimensions in pixels of Kinetic's rendering area.
  - `this.summaryDepth` default: 0 - number of characters in the summary cell keys for this detector (ie roughly corresponds to granularity of summary, since summary cell key names prefix the detector keys they summarize).  Note values > 9 will be ignored (since a 10 character prefix will only ever include at most one detector element, and so isn't really a summary).
+ - `this.HVcrates` default: 0 - number of HV crates plugged into this experiment.  The helper function `detectHVcrates` is run immediately to autodetect an appropriate value from the ODB.
 
 ####Kinetic.js Setup
 All detectors are drawn in a simple Kinetic.js environment, built and pointed at as follows; array indices correspond to the current view, to which each sensitive element should belong to exactly one.
@@ -155,6 +156,9 @@ For each cell:
 ###updatePlotParameters()
 Update this object and `localStorage` with values entered into the plot control form.  Intended as `onchange` callback to updating this form.
 
+###vetoSummary(view, channel)
+Called by `summarizeData` to check if the given channel should indeed be included in the summary for the given view.  By default this function always returns `false`, since it is only required for detectors whose HV and rate segmentation differ (HV channels don't report rates and vice versa in this case).  Detectors which require summary vetoing redefine this member as necessary. 
+
 ###writeTooltip(i)
 Populate tooltip with appropriate text for the channel named at `this.channelNames[i]`, and decide whether or not to show the tooltip.  The default implementation is appropriate for a detector that has identical segmentation between all its views (ie each counting segment has one rate, one threshold and one HV supply).  Detectors with asymmetric segmentation need special tooltips appropriate to their needs to replace `writeTooltip(i)` in the prototype chain.
 
@@ -164,8 +168,8 @@ The tooltip for detector elements is handled by the event listeners Kineitc expo
  - `mousemove` : `this.moveTooltip.bind(this)`
  - `mouseout` : `this.writeTooltip.bind(this, -1)`
 
-##JSONP Services & Callbacks
-All detector components rely on being able to acquire live information about detector thresholds and scalar rates from URLs serving JSONP that obey the spec below.  The `<host>:<port>/<route>?<queryString>` strings for these services are exacty the string elements of `URLs[i]` discussed above in the context of `lifecycle.created`.
+##JSON Services & Callbacks
+All detector components rely on being able to acquire live information about detector thresholds and scalar rates from URLs serving JSON that obey the spec below.  The `<host>:<port>/<route>?<queryString>` strings for these services are exacty the string elements of `URLs[i]` discussed above in the context of `lifecycle.created`.
 
 ###Threshold Service
 Present detector threshold levels must be reported at `<host>:<port>/<route>` via the following JSON:
@@ -225,11 +229,21 @@ window.currentData.rate = {
 }
 ```
 
+###HV Service
+Present detector HV is scraped from the `Equipment/HV-*` directories of the ODB being served at `this.MIDAS`.  The correct format for these directories is generated automatically by [this MIDAS HV frontend](https://github.com/BillMills/MIDASfrontends/tree/master/CAENHV); the only setup requirements are that HV frontends be consecutively named `HV-0`, `HV-1`..., and HV channel names as registered on the crate must use the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).
 
-##HV Data Acquisition
-Various MarkII components acquire HV data from the Midas ODB via a JSONP fetch of the form `<ODB host>:<port>/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment`, included in the same `URLs[]` list as discussed above.  The `fetchODBEquipment()` callback takes the JSON representation of the `/Equipment` directory of the ODB returned by the request, and sticks it unmodified on `window.currentData.ODB.Equipment`.
+`parseHV()` will take the above structure and sort it into `window.currentData.HV` as:
+```
+window.currentData.HV = {
+        <channel code 0> : <voltage 0 in V>,
+        <channel code 1> : <voltage 1 in V>,
+        <channel code 2> : <voltage 2 in V>,
+        <channel code 3> : <voltage 3 in V>,
+        ...
+}
+```
 
-The appropriate ODB structure is generated under `/Equipment` automatically by [this MIDAS HV frontend](https://github.com/BillMills/MIDASfrontends/tree/master/CAENHV).  Currently only CAEN HV cards are supported for this purpose, but any JSONP fetch massaged to populate the same variables on `window.currentData` could be substituted to report voltages from arbitrary sources.
+where the voltages are taken from `Equipment/HV-*/Variables/Measured`.
 
 ##localStorage Structure
 Detector components make use of `localStorage` to persist some per-user information about their state.  The structure built and read from is as follows:
