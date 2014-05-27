@@ -350,6 +350,6 @@ function detectHVcrates(MIDAS, obj){
         target.HVcrates = nCrates;
     }.bind(xmlhttp, obj)
     //fire async
-    xmlhttp.open('GET', MIDAS + 'cmd=jcopy&odb=/Equipment&encoding=json-nokeys');
+    xmlhttp.open('GET', MIDAS + '/?cmd=jcopy&odb=/Equipment&encoding=json-nokeys');
     xmlhttp.send();
 }
