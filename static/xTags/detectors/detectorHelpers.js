@@ -107,7 +107,7 @@ function initializeDetector(name, headline){
     //sidebar deck
     sidebarWrap.setAttribute('id', this.id+'sidebarWrap');
     sidebarWrap.setAttribute('class', 'sidebarWrap');
-    sidebarWrap.setAttribute('style', 'height='+height)
+    sidebarWrap.setAttribute('style', 'height:'+height)
     this.appendChild(sidebarWrap)
     xString = '<x-deck id='+this.id+'SidebarDeck selected-index=0>'
     xString += '<x-card id='+this.id+'HVSideCard class="sidebarCard"><p>HV</p></x-card>'
