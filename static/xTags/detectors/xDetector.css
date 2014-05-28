@@ -115,3 +115,9 @@ form.plotControlWidget select{
 	margin-right: 2px;
 	cursor:pointer;
 }
+
+div.sidebarWrap{
+	width: 18%;
+	height: 100%;
+	float: right;
+}

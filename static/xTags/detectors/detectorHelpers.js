@@ -12,6 +12,7 @@ function initializeDetector(name, headline){
     ,   plotScaleLin = document.createElement('option')
     ,   plotScaleLog = document.createElement('option')
     ,   deckWrap = document.createElement('div')
+    ,   sidebarWrap = document.createElement('div')
     ,   plotDeck
     ,   plotCard
     ,   xString
@@ -160,6 +161,16 @@ function initializeDetector(name, headline){
     plotScaleLog.setAttribute('value', 'log');
     plotScale.appendChild(plotScaleLog);
     document.getElementById(this.id+'PlotScaleLog').innerHTML = 'Log';
+
+    //sidebar deck
+    sidebarWrap.setAttribute('id', this.id+'sidebarWrap');
+    sidebarWrap.setAttribute('class', 'sidebarWrap');
+    this.appendChild(sidebarWrap)
+    xString = '<x-deck id='+this.id+'SidebarDeck selected-index=0>'
+    xString += '<x-card id='+this.id+'HVSideCard class="sidebarCard"><p>HV</p></x-card>'
+    xString += '<x-card id='+this.id+'RateSideCard class="sidebarCard" style="border: 1px solid red"><p>Rate & thresholds</p></x-card>'
+    xString += '</x-deck>'
+    sidebarWrap.innerHTML = xString;
 
     ///////////////////////
     //State variables
