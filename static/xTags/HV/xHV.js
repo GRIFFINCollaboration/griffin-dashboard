@@ -45,10 +45,10 @@
                         this.crateNames.push('Crate_'+nCrates);
 
                         //parse crate map and stick appropriate array into HV widget
-                        this.cratePop.push(unpackHVCrateMap(window.ODBEquipment['HV-'+nCrates].Settings.Devices.sy2527.DD.crateMap) );
+                        this.cratePop.push(this.unpackHVCrateMap(window.ODBEquipment['HV-'+nCrates].Settings.Devices.sy2527.DD.crateMap) );
 
                         //generate default card names by slot
-                        this.cardNames.push( generateCardNames(this.cratePop[nCrates]) );
+                        this.cardNames.push( this.generateCardNames(this.cratePop[nCrates]) );
                         nCrates++;
 
                     }
@@ -107,6 +107,44 @@
                         controlSidebars[i].dispatchEvent(evt);
                     }
                 }
+
+            },
+
+            //find the name of the channel at row, col in the grid from the ODB
+            'findChannelName': function(row, col, cardArray, nameArray){
+                var channelNames = [],
+                    i,
+                    stringified = JSON.stringify(nameArray),
+                    nameCopy = JSON.parse(stringified);
+
+                //pad the ODB array with blanks so that it's packed as (row0 col0), (row1 col0), ...., (row last, col last)
+                for(i=0; i<cardArray.length; i++){
+                    if(cardArray[i] == 1)
+                        channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
+                    else if(cardArray[i] == 2){
+                        channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
+                        channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
+                    } else if(cardArray[i] == 4)
+                        channelNames = channelNames.concat(nameCopy.splice(0,49));
+                    else if(cardArray[i] == 0)
+                        channelNames = channelNames.concat(['EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT']);
+                }
+
+                return channelNames[col*13 + row];
+
+            },
+
+            'generateCardNames' : function(cardArray){
+                var nameArray = [],
+                    slotsPassed = 0,
+                    i;
+
+                for(i=0; i<cardArray.length; i++){
+                    nameArray[i] = 'Slot ' + slotsPassed;
+                    slotsPassed += Math.max(1, cardArray[i]);
+                }
+
+                return nameArray;
 
             },
 
@@ -203,7 +241,7 @@
                     for(j=0; j<this.HVgrid[i].rows; j++){
                         this.HVgrid[i].cellNames[j] = []
                         for(k=0; k<this.HVgrid[i].cols; k++){
-                            this.HVgrid[i].cellNames[j][k] = findChannelName(j, k, this.cratePop[i], window.ODBEquipment['HV-'+i].Settings.Names);
+                            this.HVgrid[i].cellNames[j][k] = this.findChannelName(j, k, this.cratePop[i], window.ODBEquipment['HV-'+i].Settings.Names);
                         }
                     }
 
@@ -294,6 +332,39 @@
                 this.HVgrid[crate].update();
             },
 
+            'unpackHVCrateMap' : function(crateMap){
+                var i, nSlots, cardArray = [];
+                
+                //32-bit integer encodes what size cards are in what slot; each slot is encoded in 2 bits, and slot 0 is the two highest (ie 31 and 30) bits.
+                //00 == empty slot, 01 == 12chan card, 10 == 24chan card, 11 == 48chan card. Crate size is indicated by the lowest two bits;
+                //10 == 6 slot crate, 11 == 12 slot crate, anything else == 16 slot crate.
+                if( (crateMap & 3) == 2) nSlots = 6;
+                else if( (crateMap & 3) == 3) nSlots = 12;
+                else nSlots = 16;
+
+                for(i=0; i<nSlots;){
+
+                    if( ((crateMap>>(30-2*i)) & 3) == 0 ){
+                        cardArray.push(0);
+                        i++;
+                    }
+                    else if( ((crateMap>>(30-2*i)) & 3) == 1 ){
+                        cardArray.push(1);
+                        i++;
+                    }
+                    else if( ((crateMap>>(30-2*i)) & 3) == 2 ){
+                        cardArray.push(2);
+                        i+=2;
+                    }
+                    else if( ((crateMap>>(30-2*i)) & 3) == 3 ){
+                        cardArray.push(4);
+                        i+=4;
+                    }
+                }
+
+                return cardArray;
+            },
+
             'update': function(){
                 var i;
 
@@ -308,146 +379,8 @@
 
 })();
 
-//helpers
-function unpackHVCrateMap(crateMap){
-    var i, nSlots, cardArray = [];
-    
-    //32-bit integer encodes what size cards are in what slot; each slot is encoded in 2 bits, and slot 0 is the two highest (ie 31 and 30) bits.
-    //00 == empty slot, 01 == 12chan card, 10 == 24chan card, 11 == 48chan card. Crate size is indicated by the lowest two bits;
-    //10 == 6 slot crate, 11 == 12 slot crate, anything else == 16 slot crate.
-    if( (crateMap & 3) == 2) nSlots = 6;
-    else if( (crateMap & 3) == 3) nSlots = 12;
-    else nSlots = 16;
-
-    for(i=0; i<nSlots;){
-
-        if( ((crateMap>>(30-2*i)) & 3) == 0 ){
-            cardArray.push(0);
-            i++;
-        }
-        else if( ((crateMap>>(30-2*i)) & 3) == 1 ){
-            cardArray.push(1);
-            i++;
-        }
-        else if( ((crateMap>>(30-2*i)) & 3) == 2 ){
-            cardArray.push(2);
-            i+=2;
-        }
-        else if( ((crateMap>>(30-2*i)) & 3) == 3 ){
-            cardArray.push(4);
-            i+=4;
-        }
-    }
-
-    return cardArray;
-}
 
 
-function generateCardNames(cardArray){
-    var nameArray = [],
-        slotsPassed = 0,
-        i;
-
-    for(i=0; i<cardArray.length; i++){
-        nameArray[i] = 'Slot ' + slotsPassed;
-        slotsPassed += Math.max(1, cardArray[i]);
-    }
-
-    return nameArray;
-
-}
-
-function parseChStatus(chStatus){
-    var status = [],
-        remaining = chStatus;
-
-        if(remaining >= 2048){
-            status.push('UNPLUGGED');
-            remaining -= 2048;
-        }
-
-        if(remaining >= 1024){
-            status.push('CALIBRATION ERROR');
-            remaining -= 1024;
-        }
-
-        if(remaining >= 512){
-            status.push('INTERNAL TRIP');
-            remaining -= 512;
-        }
-
-        if(remaining >= 256){
-            status.push('EXTERNAL DISABLE');
-            remaining -= 256;
-        }
-
-        if(remaining >= 128){
-            status.push('HV MAX');
-            remaining -= 128;
-        }
-
-        if(remaining >= 64){
-            status.push('EXTERNAL TRIP');
-            remaining -= 64;
-        }
-
-        if(remaining >= 32){
-            status.push('UNDERVOLTAGE');
-            remaining -= 32;
-        }
-
-        if(remaining >= 16){
-            status.push('OVERVOLTAGE');
-            remaining -= 16;
-        }
-
-        if(remaining >= 8){
-            status.push('OVERCURRENT');
-            remaining -= 8;
-        }
-
-        if(remaining >= 4){
-            status.push('Ramping Down');
-            remaining -= 4;
-        }
-
-        if(remaining >= 2){
-            status.push('Ramping Up');
-            remaining -= 2;
-        }
-
-        if(remaining >= 1){
-            status.push('Bias On');
-        } else{
-            status.push('Bias Off');
-        }
-
-        return status;
-}
-
-//find the name of the channel at row, col in the grid from the ODB
-function findChannelName(row, col, cardArray, nameArray){
-    var channelNames = [],
-        i,
-        stringified = JSON.stringify(nameArray),
-        nameCopy = JSON.parse(stringified);
-
-    //pad the ODB array with blanks so that it's packed as (row0 col0), (row1 col0), ...., (row last, col last)
-    for(i=0; i<cardArray.length; i++){
-        if(cardArray[i] == 1)
-            channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
-        else if(cardArray[i] == 2){
-            channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
-            channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
-        } else if(cardArray[i] == 4)
-            channelNames = channelNames.concat(nameCopy.splice(0,49));
-        else if(cardArray[i] == 0)
-            channelNames = channelNames.concat(['EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT']);
-    }
-
-    return channelNames[col*13 + row];
-
-}
 
 
 
@@ -818,3 +751,72 @@ function findChannelName(row, col, cardArray, nameArray){
     });
 
 })();
+
+//helpers
+function parseChStatus(chStatus){
+    var status = [],
+        remaining = chStatus;
+
+        if(remaining >= 2048){
+            status.push('UNPLUGGED');
+            remaining -= 2048;
+        }
+
+        if(remaining >= 1024){
+            status.push('CALIBRATION ERROR');
+            remaining -= 1024;
+        }
+
+        if(remaining >= 512){
+            status.push('INTERNAL TRIP');
+            remaining -= 512;
+        }
+
+        if(remaining >= 256){
+            status.push('EXTERNAL DISABLE');
+            remaining -= 256;
+        }
+
+        if(remaining >= 128){
+            status.push('HV MAX');
+            remaining -= 128;
+        }
+
+        if(remaining >= 64){
+            status.push('EXTERNAL TRIP');
+            remaining -= 64;
+        }
+
+        if(remaining >= 32){
+            status.push('UNDERVOLTAGE');
+            remaining -= 32;
+        }
+
+        if(remaining >= 16){
+            status.push('OVERVOLTAGE');
+            remaining -= 16;
+        }
+
+        if(remaining >= 8){
+            status.push('OVERCURRENT');
+            remaining -= 8;
+        }
+
+        if(remaining >= 4){
+            status.push('Ramping Down');
+            remaining -= 4;
+        }
+
+        if(remaining >= 2){
+            status.push('Ramping Up');
+            remaining -= 2;
+        }
+
+        if(remaining >= 1){
+            status.push('Bias On');
+        } else{
+            status.push('Bias Off');
+        }
+
+        return status;
+}
