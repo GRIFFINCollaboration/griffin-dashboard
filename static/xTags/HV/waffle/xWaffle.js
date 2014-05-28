@@ -14,68 +14,6 @@
                 ////////////////////////////
                 this.topMargin = 0.07*this.offsetHeight;
                 this.leftMargin = 0.1*this.offsetWidth;
-                /*
-                //examples - set these programatically, then insert the object to initialize
-                this.rows = 13;
-                this.cols = 16;
-                this.grid = Math.min(0.9*this.offsetWidth/this.cols, 0.8*this.offsetHeight/this.rows);
-                //multi-cell cells, [top left row, top left column, width, height]
-                this.specials = {
-                    'test1': [0,0, 4,1],
-                    'test2': [0,4, 4,1],
-                    'test3': [0,8, 4,1],
-                    'test4': [0,12, 4,1]
-                }
-                //arbitrary bold lines, [starting grid pos x, starting grid pos y, end x, end y]
-                this.dividers = {
-                    'first': [4,0, 4,13],
-                    'second': [8,0, 8,13],
-                    'third': [12,0, 12,13]
-                }
-                //names for each 1x1 cell; specials us their key as their name
-                this.cellNames = [];
-                for(i=0; i<this.rows; i++){
-                    this.cellNames[i] = []
-                    for(j=0; j<this.cols; j++){
-                        this.cellNames[i][j] = 'test'+i+'_'+j;
-                    }
-                }
-                //information to report in the tooltip, keyed by name:
-                this.TTdata = {};
-                for(i=0; i<this.rows; i++){
-                    for(j=0; j<this.cols; j++){
-                        this.TTdata[this.cellNames[i][j]] = {
-                            'dummy': Math.random().toFixed(3)
-                        }
-                    }
-                }
-                
-                //function to call on cell click:
-                this.clickCell = function(name){
-                    console.log(name);
-                }
-
-                //column titles; [text, x-left in grid coords, width in grid cells]
-                this.colTitles = [
-                    ['blah blah blah blah blah', 0, 4],
-                    ['Card 1', 4, 4],
-                    ['Card 2', 8, 4],
-                    ['Card 3', 12, 4]
-                ]
-                //row titles, starting from the top
-                this.rowTitles = [
-                    0,1,2,3,4,5,6,7,8,9,10,11,12      
-                ]
-                //legend
-                this.legend = [
-                    ['green', 'All OK'],
-                    ['red', 'Alarm!'],
-                    ['yellow', 'Ramping'],
-                    ['0x222222', 'Off'],
-                    ['blue', 'Ext. Trip']
-                ]
-                */
-
 
                 ////////////////////////////
                 //DOM Setup
@@ -142,6 +80,7 @@
 
             'update': function(){
                 this.mainLayer.draw();
+                this.writeTooltip(this.lastTTindex);
             },
 
             'instantiateCells': function(){
