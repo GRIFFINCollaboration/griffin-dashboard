@@ -18,10 +18,10 @@ function initializeDetector(name, headline){
     ,   xString
     ,   deckNavigator, deckOption
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
-    ,   width = this.offsetWidth
+    ,   width = 0.75*this.offsetWidth
     ,   height = 2*width/3
     ,   i, subdetectorNav, subdetectorNavLabel
-console.log([width, height])
+
     this.name = name;
     //declare default views and units if none pre-defined
     if(!this.views)
