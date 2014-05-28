@@ -7,7 +7,7 @@
  - `MIDAS`: the `host`:`port` serving MIDAS' web interface, with no extra window-dressing, ie `awesomecomp.triumf.ca:1337`
 
 ##Query String Navigation
-After setting itself up, `<widget-HV>` will internally navigate to a channel indicated in the query string.  For example, `?crate=1&channel=23` would cause the HV widget to immediately highlight channel 23 in crate HV-1.  Channel indexing corresponds to the the order established in the ODB at 'Settings/Names' for the corresponding front end.
+After setting itself up, `<widget-HV>` will internally navigate to a channel indicated in the query string.  For example, `?crate=1&channel=GRG01RN00X` would cause the HV widget to immediately highlight `GRG01RN00X` in crate HV-1.
 
 If no valid query string parameters are found, the widget will display crate HV-0 and wait for the user to choose a channel to highlight.
 
