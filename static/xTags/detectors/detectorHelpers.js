@@ -85,6 +85,7 @@ function initializeDetector(name, headline){
     }
     //plot deck wrapper:
     deckWrap.setAttribute('id', this.id+'DeckWrap');
+    deckWrap.setAttribute('class', 'deckWrap')
     this.appendChild(deckWrap);
 
     //declaring x-tags from within other x-tags needs special treatment via innerHTML; must build HTML string and set it.

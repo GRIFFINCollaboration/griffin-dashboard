@@ -11,7 +11,7 @@ detector-SCEPTAR,
 detector-PACES,
 detector-BAMBINO{
 	float:left;
-	width:58%;
+	width:calc(80% - 2em);
 }
 
 detector-demo input[type=radio],
@@ -95,6 +95,7 @@ div.subdetectorHeadlineWrap{
 form.plotControlWidget{
 	margin-bottom: 1em;
 	margin-left: 10%;
+	clear: both;
 }
 
 form.plotControlWidget input,
@@ -116,8 +117,12 @@ form.plotControlWidget select{
 	cursor:pointer;
 }
 
+div.deckWrap{
+	width: calc(75% - 2em);
+	float:left;
+}
+
 div.sidebarWrap{
-	width: 18%;
-	height: 100%;
+	width: calc(25% - 2em);
 	float: right;
 }
