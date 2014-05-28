@@ -21,7 +21,7 @@ function initializeDetector(name, headline){
     ,   width = this.offsetWidth
     ,   height = 2*width/3
     ,   i, subdetectorNav, subdetectorNavLabel
-
+console.log([width, height])
     this.name = name;
     //declare default views and units if none pre-defined
     if(!this.views)
