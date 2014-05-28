@@ -80,7 +80,8 @@
 
             'update': function(){
                 this.mainLayer.draw();
-                this.writeTooltip(this.lastTTindex);
+                if(this.lastTTindex)   
+                    this.writeTooltip(this.lastTTindex);
             },
 
             'instantiateCells': function(){
