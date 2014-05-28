@@ -18,7 +18,7 @@ function initializeDetector(name, headline){
     ,   xString
     ,   deckNavigator, deckOption
     //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
-    ,   width = 0.75*this.offsetWidth
+    ,   width = 0.70*this.offsetWidth
     ,   height = 2*width/3
     ,   i, subdetectorNav, subdetectorNavLabel
 
@@ -107,6 +107,7 @@ function initializeDetector(name, headline){
     //sidebar deck
     sidebarWrap.setAttribute('id', this.id+'sidebarWrap');
     sidebarWrap.setAttribute('class', 'sidebarWrap');
+    sidebarWrap.setAttribute('style', 'height='+height)
     this.appendChild(sidebarWrap)
     xString = '<x-deck id='+this.id+'SidebarDeck selected-index=0>'
     xString += '<x-card id='+this.id+'HVSideCard class="sidebarCard"><p>HV</p></x-card>'
