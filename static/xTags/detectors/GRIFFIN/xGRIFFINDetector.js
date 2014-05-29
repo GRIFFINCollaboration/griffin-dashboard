@@ -1,7 +1,7 @@
 (function(){  
 
     xtag.register('detector-GRIFFIN', {
-        prototype: Object.create(HTMLElement.prototype),
+        prototype: document.createElement('detector-template').prototype,
         extends: 'detector-template',
         lifecycle: {
             created: function() {
