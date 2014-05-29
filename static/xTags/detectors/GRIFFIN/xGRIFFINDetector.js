@@ -423,9 +423,12 @@
 
                     if(this.lastRateClick){
                         this.cells[this.lastRateClick].setAttr('stroke', this.frameColor);
+                        this.cells[this.lastRateClick].setAttr('strokeWidth', this.frameLineWidth);
+
                     }
                     this.lastRateClick = cellName;
                     this.cells[cellName].setAttr('stroke', '#FF0000');
+                    this.cells[cellName].setAttr('strokeWidth', 6);
                     this.cells[cellName].moveToTop();
                     this.mainLayer[this.displayIndex].draw()
                 }
@@ -437,6 +440,17 @@
                         'crateIndex': crateIndex
                     } });
                     HVsidebar.dispatchEvent(evt);
+
+                    if(this.lastHVClick){
+                        this.cells[this.lastHVClick].setAttr('stroke', this.frameColor);
+                        this.cells[this.lastHVClick].setAttr('strokeWidth', this.frameLineWidth);
+
+                    }
+                    this.lastHVClick = cellName;
+                    this.cells[cellName].setAttr('stroke', '#FF0000');
+                    this.cells[cellName].setAttr('strokeWidth', 6);
+                    this.cells[cellName].moveToTop();
+                    this.HVlayer[this.displayIndex].draw()
                 }
             },
 
