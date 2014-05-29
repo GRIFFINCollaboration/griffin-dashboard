@@ -52,7 +52,7 @@
                         nCrates++;
 
                     }
-console.log(this.cratePop)
+
                     this.instantiateMonitors();
                     this.update();
                     
