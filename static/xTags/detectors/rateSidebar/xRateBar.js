@@ -11,7 +11,7 @@
                 //build the DOM
                 ////////////////////
                 barTitle.setAttribute('id', this.id + 'Title');
-                barTitle.innerHTML = 'Rates & Thresholds.';
+                barTitle.innerHTML = 'Rates & Thresholds';
                 this.appendChild(barTitle);
 
                 this.addEventListener('postRateChan', function(evt){
