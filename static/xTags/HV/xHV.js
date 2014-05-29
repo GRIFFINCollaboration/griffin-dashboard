@@ -219,7 +219,7 @@
                     for(j=0; j<this.cratePop[i].length; j++){
                         //primary cells
                         if(this.cratePop[i][j] == 4){
-                            this.HVgrid[i].specials['3-BGO'] = [0,colsPassed, 4,1];
+                            this.HVgrid[i].specials[findChannelName(0,colsPassed,cratePop[i],window.ODBEquipment['HV-'+i].Settings.Names)] = [0,colsPassed, 4,1];
                         }
 
                         //card titles
