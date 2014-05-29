@@ -6,9 +6,7 @@
  - `clickCell` transitions from summary -> detail views, or when on detailed view, populates sidebar with appropriate widget.
  - `vetoSummary` distinguishes between HV and rate segments for control of the sumarization process in `summarizeData()`
  - `writeTooltip` is re-defined for GRIFFIN so that HV and rate cells cross-post to each other's tooltips in a reasonable manner, accounting for their asymmetric segmentation.
-  
-GRIFFIN also has some unique members:
- - `isHV(cellName)` determines if the given cell is an HV segment.
+ - `isHV(cellName)` and `isRate(cellName)`, for identifying HV and rate cells.
 
 
 
