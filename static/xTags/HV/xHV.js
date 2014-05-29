@@ -186,7 +186,7 @@
                 this.appendChild(deckWrap);
 
                 //declaring x-tags from within other x-tags needs special treatment via innerHTML; must build HTML string and set it.
-                xString = '<x-deck id="' + this.id + 'Deck" selected-index=0>';
+                xString = '<x-deck id="' + this.id + 'Deck" selected-index=0 transition-type="slide-right">';
                 for(i=0; i<this.crateNames.length; i++){
                     xString += '<x-card id="HVCard'+i+'"><x-waffle id="HVGrid'+i+'"></x-waffle></x-card>';
                 }
