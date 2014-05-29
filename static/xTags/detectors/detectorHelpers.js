@@ -85,7 +85,6 @@ function initializeDetector(name, headline){
     }
 
     //sidebar deck
-console.log(headWrapper.offsetHeight)
     sidebarWrap.setAttribute('id', this.id+'sidebarWrap');
     sidebarWrap.setAttribute('class', 'sidebarWrap');
     sidebarWrap.setAttribute('style', 'height:'+ (height + parseInt(headWrapper.offsetHeight,10)) );
