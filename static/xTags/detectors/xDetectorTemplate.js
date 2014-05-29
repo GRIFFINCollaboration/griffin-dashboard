@@ -419,18 +419,18 @@
             'isHV' : function(cellName){
                 if(cellName.length == 10)
                     return true //default for detectors with rate / HV symmetry
-            }
+            },
 
             //decide if the named cell is a rate cell
             'isRate' : function(cellName){
                 if(cellName.length == 10)
                     return true //default for detectors with rate / HV symmetry
-            }
+            },
 
             //given an HV cell name, return the index of the HV crate it is powered by
             'findHVcrate' : function(cellName){
                 return 0 //TODO actually write a function
-            }
+            },
 
             //fetch rate information
             'acquireRates' : function(){
