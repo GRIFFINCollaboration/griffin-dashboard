@@ -331,7 +331,11 @@ function parseHV(data){
     if(!window.currentData.HV)
         window.currentData.HV = {};
 
+    if(!window.ODBEquipment)
+        window.ODBEquipment = {};    
+
     for(i=0; i<data.length; i++){
+        window.ODBEquipment['HV-'+i] = data[i]; //keep the whole blob around for the benefit of the HV sidebar
         for(j=0; j<data[i].Settings.Names.length; j++){
             window.currentData.HV[data[i].Settings.Names[j].toUpperCase().slice(0,10)] = data[i].Variables.Measured[j];
         }
