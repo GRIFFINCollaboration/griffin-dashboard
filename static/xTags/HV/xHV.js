@@ -379,7 +379,7 @@ console.log(this.cratePop)
                 for(key in mapObj){
                     if(key == 'DD') continue
 
-                    crate[ parseInt(key.slice(5),10) ] = parseInt(mapObj[key].Channels,16)/12;
+                    crate[ parseInt(key.slice(5),10) ] = Math.floor(parseInt(mapObj[key].Channels,16)/12);
                 }
 
                 return crate;
