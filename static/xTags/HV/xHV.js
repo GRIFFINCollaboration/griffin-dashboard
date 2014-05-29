@@ -77,7 +77,7 @@
         }, 
         methods: {
             'changeView': function(i){
-                document.getElementById(this.id+'Deck').showCard(i);
+                document.getElementById(this.id+'Deck').shuffleTo(i);
                 this.currentCrate = i;
             },
 

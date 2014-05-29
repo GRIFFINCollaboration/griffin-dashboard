@@ -254,9 +254,9 @@
 
                 //make sure the sidebar is following along
                 if(this.currentView == 'HV')
-                    document.getElementById(this.id + 'SidebarDeck').showCard(0);
+                    document.getElementById(this.id + 'SidebarDeck').shuffleTo(0);
                 else
-                    document.getElementById(this.id + 'SidebarDeck').showCard(1);
+                    document.getElementById(this.id + 'SidebarDeck').shuffleTo(1);
 
                 this.updateCells();
                 this.refreshColorScale();
