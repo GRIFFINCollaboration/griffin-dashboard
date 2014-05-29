@@ -91,7 +91,8 @@ div.subdetectorHeadlineWrap{
 	margin-bottom: 1em;
 	width: -moz-max-content;
 	width: -webkit-max-content;
-	widthL max-content;
+	width: max-content;
+	float:left;
 }
 
 /*plot control widget*/
