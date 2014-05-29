@@ -139,7 +139,7 @@ function initializeDetector(name, headline){
         deckNavigator.onchange = function(){
             var viewVal = selected(this.id+'viewSelect'); 
 
-            document.getElementById(this.id+'Deck').shuffleTo(viewVal);
+            document.getElementById(this.id+'Deck').showCard(viewVal);
             this.displayIndex = viewVal;
             this.update();  //repaint right away
         }.bind(this)
