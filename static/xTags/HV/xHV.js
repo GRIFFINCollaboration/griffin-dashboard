@@ -370,12 +370,13 @@
             },
 
             'unpackHVCrateMap' : function(mapObj){
-                var key, i;
+                var i, occupied;
                     nSlots = mapObj.DD.crateMap & 3,
                     crate = [];
 
                 nSlots = ((nSlots == 2) ? 6 : ((nSlots == 3) ? 12 : 16));
 
+                /*
                 for(i=0; i<nSlots; i++)
                     crate.push(0)
 
@@ -384,6 +385,19 @@
 
                     crate[ parseInt(key.slice(5),10) ] = Math.floor(parseInt(mapObj[key].Channels,16)/12);
                 }
+                */
+
+                i=0;
+                while(i<nSlots){
+                    if(mapObj['Slot '+i]){
+                        occupied = Math.floor(parseInt(mapObj['Slot '+i].Channels,16)/12)
+                    } else {
+                        occupied = 0
+                    }
+                    crate.push(occupied);
+                    i+=Math.max(1,occupied);
+                }
+
 
                 return crate;
             },
