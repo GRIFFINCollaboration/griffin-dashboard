@@ -89,6 +89,9 @@ detector-BAMBINO input[type='radio']:checked + label
 div.subdetectorHeadlineWrap{
 	display:block;
 	margin-bottom: 1em;
+	width: -moz-max-content;
+	width: -webkit-max-content;
+	widthL max-content;
 }
 
 /*plot control widget*/

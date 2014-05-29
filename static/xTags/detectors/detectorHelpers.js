@@ -83,6 +83,18 @@ function initializeDetector(name, headline){
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
         document.getElementById(this.id+'goto'+this.views[i]+'Label').innerHTML = this.views[i];
     }
+
+    //sidebar deck
+    sidebarWrap.setAttribute('id', this.id+'sidebarWrap');
+    sidebarWrap.setAttribute('class', 'sidebarWrap');
+    //sidebarWrap.setAttribute('style', 'height:'+height)
+    this.appendChild(sidebarWrap)
+    xString = '<x-deck id='+this.id+'SidebarDeck selected-index=1>'
+    xString += '<x-card id='+this.id+'HVSideCard class="sidebarCard"><widget-HVcontrol id="HVcontrol" MIDAS='+this.MIDAS+' style="max-width:100%"></widget-HVcontrol></x-card>'
+    xString += '<x-card id='+this.id+'RateSideCard class="sidebarCard"><widget-rateBar id="ratesAndThresholds" MIDAS='+this.MIDAS+'></widget-RateBar></x-card>'
+    xString += '</x-deck>'
+    sidebarWrap.innerHTML = xString;
+
     //plot deck wrapper:
     deckWrap.setAttribute('id', this.id+'DeckWrap');
     deckWrap.setAttribute('class', 'deckWrap')
@@ -103,17 +115,6 @@ function initializeDetector(name, headline){
         drawTarget.setAttribute('id', this.id+this.viewNames[i]+'Draw');
         document.getElementById(this.id+this.viewNames[i] + 'Card').appendChild(drawTarget);
     }
-
-    //sidebar deck
-    sidebarWrap.setAttribute('id', this.id+'sidebarWrap');
-    sidebarWrap.setAttribute('class', 'sidebarWrap');
-    sidebarWrap.setAttribute('style', 'height:'+height)
-    this.appendChild(sidebarWrap)
-    xString = '<x-deck id='+this.id+'SidebarDeck selected-index=1>'
-    xString += '<x-card id='+this.id+'HVSideCard class="sidebarCard"><widget-HVcontrol id="HVcontrol" MIDAS='+this.MIDAS+' style="max-width:100%"></widget-HVcontrol></x-card>'
-    xString += '<x-card id='+this.id+'RateSideCard class="sidebarCard"><widget-rateBar id="ratesAndThresholds" MIDAS='+this.MIDAS+'></widget-RateBar></x-card>'
-    xString += '</x-deck>'
-    sidebarWrap.innerHTML = xString;
 
     //plot control widget
     plotControlWrap.setAttribute('id', this.id+'PlotControl');
