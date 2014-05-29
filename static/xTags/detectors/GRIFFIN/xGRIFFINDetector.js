@@ -444,7 +444,7 @@
 
             'isRate' : function(cellName){
                 return !this.isHV(cellName); //GRIFFIN HV / rate cells completely disjoint              
-            }
+            },
 
             'vetoSummary' : function(view, channel){
                 var isHPGE = channel.slice(0,3) == 'GRG',
