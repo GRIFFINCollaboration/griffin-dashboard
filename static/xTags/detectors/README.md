@@ -36,25 +36,25 @@ This function then goes through the following steps, described in greater detail
 ####Internal DOM Structure
 The DOM for any single-view detector looks roughly like this:
 ```
-____________________________________________________________
-headline wrapper div
-  [h1 Title]
-  [radio HV, Threshold, Rate]
-____________________________________________________________
-Brick.js x-deck to shuffle through views
-  Brick.js x-cards, one for each view
-    Kinetic.js drawing context, one in each x-card
-
-
-
-
-____________________________________________________________
-plot control wrapper form
-  View selector widget
-  [plot minimum label & input:number]
-  [plot maximum label & input:number]
-  [select linear / log scale]
-____________________________________________________________
+_________________________________________________________________________________________
+|headline wrapper div                                        |x-deck for sidebars       |
+|  [h1 Title]                                                |  x-card for HV control   |
+|  [radio HV, Threshold, Rate]                               |    widget-HVcontrol      |
+|____________________________________________________________|  x-card for rate sidebar |
+|Brick.js x-deck to shuffle through views                    |    widget-rateBar        |
+|  Brick.js x-cards, one for each view                       |                          |
+|    Kinetic.js drawing context, one in each x-card          |                          |
+|                                                            |                          |
+|                                                            |                          |
+|                                                            |                          |
+|                                                            |                          |
+|____________________________________________________________|__________________________|
+|plot control wrapper form                                                              | 
+|  View selector widget                                                                 |
+|  [plot minimum label & input:number]                                                  |
+|  [plot maximum label & input:number]                                                  |
+|  [select linear / log scale]                                                          |
+|_______________________________________________________________________________________|
 ```
 
 ####State Variables
