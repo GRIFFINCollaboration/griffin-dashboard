@@ -550,6 +550,7 @@
                 }.bind(voltageDownSlide, this.id);
 
                 //set up kinetic objects
+                console.log(this.offsetWidth)
                 this.meterWidth = this.offsetWidth*0.9;
                 this.meterHeight = 0.8*this.meterWidth;
                 this.stage = new Kinetic.Stage({
