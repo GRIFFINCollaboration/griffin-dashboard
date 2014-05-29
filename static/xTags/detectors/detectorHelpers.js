@@ -89,7 +89,7 @@ function initializeDetector(name, headline){
     sidebarWrap.setAttribute('class', 'sidebarWrap');
     sidebarWrap.setAttribute('style', 'height:'+ (height + parseInt(headWrapper.offsetHeight,10)) );
     this.appendChild(sidebarWrap);
-    xString = '<x-deck id='+this.id+'SidebarDeck selected-index=1 transition-type="slide-up">'
+    xString = '<x-deck id='+this.id+'SidebarDeck selected-index=1>'
     xString += '<x-card id='+this.id+'HVSideCard class="sidebarCard"><widget-HVcontrol id="HVcontrol" MIDAS='+this.MIDAS+' style="max-width:100%"></widget-HVcontrol></x-card>'
     xString += '<x-card id='+this.id+'RateSideCard class="sidebarCard"><widget-rateBar id="ratesAndThresholds" MIDAS='+this.MIDAS+'></widget-RateBar></x-card>'
     xString += '</x-deck>'
@@ -101,7 +101,7 @@ function initializeDetector(name, headline){
     this.appendChild(deckWrap);
 
     //declaring x-tags from within other x-tags needs special treatment via innerHTML; must build HTML string and set it.
-    xString = '<x-deck id="' + this.id + 'Deck" selected-index=0 transition-type="slide-right" style="height:'+height+'">';
+    xString = '<x-deck id="' + this.id + 'Deck" selected-index=0 style="height:'+height+'">';
     for(i=0; i<this.viewNames.length; i++){
         xString += '<x-card id="' + this.id+this.viewNames[i] + 'Card"></x-card>';
     }
