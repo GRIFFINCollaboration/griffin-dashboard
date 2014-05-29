@@ -409,6 +409,7 @@
                     }
                     this.lastRateClick = cellName;
                     this.cells[cellName].setAttr('stroke', '#FF0000');
+                    this.cells[cellName].moveToTop();
                     this.mainLayer[this.displayIndex].draw()
                 }
 
