@@ -52,7 +52,7 @@
                         nCrates++;
 
                     }
-                    
+console.log(this.cratePop)
                     this.instantiateMonitors();
                     this.update();
                     
@@ -283,7 +283,7 @@
                     temperature = data.Variables.Temperature[i];
                     statMessage = parseChStatus(channelStat);
                     color = this.color.ok;
-console.log(data.Settings.Names[i])
+
                     this.HVgrid[crate].cells[data.Settings.Names[i]].setFillPriority('color');
 
                     isVoltageDrift = measured / demand < (1-this.driftTolerance) || measured / demand > (1+this.driftTolerance);
