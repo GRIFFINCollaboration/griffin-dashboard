@@ -110,8 +110,8 @@ function initializeDetector(name, headline){
     sidebarWrap.setAttribute('style', 'height:'+height)
     this.appendChild(sidebarWrap)
     xString = '<x-deck id='+this.id+'SidebarDeck selected-index=1>'
-    xString += '<x-card id='+this.id+'HVSideCard class="sidebarCard"><widget-HVcontrol id="HVcontrol" MIDAS='+this.MIDAS+' style="width:100%"></widget-HVcontrol></x-card>'
-    xString += '<x-card id='+this.id+'RateSideCard class="sidebarCard" style="border: 1px solid red"><p>Rate & thresholds</p></x-card>'
+    xString += '<x-card id='+this.id+'HVSideCard class="sidebarCard"><widget-HVcontrol id="HVcontrol" MIDAS='+this.MIDAS+' style="max-width:100%"></widget-HVcontrol></x-card>'
+    xString += '<x-card id='+this.id+'RateSideCard class="sidebarCard"><widget-rateBar id="ratesAndThresholds" MIDAS='+this.MIDAS+'></widget-RateBar></x-card>'
     xString += '</x-deck>'
     sidebarWrap.innerHTML = xString;
 
