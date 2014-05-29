@@ -372,7 +372,8 @@ console.log(this.cratePop)
                     crate = [];
 
                 nSlots = ((nSlots == 2) ? 6 : ((nSlots == 3) ? 12 : 16));
-
+console.log(mapObj)
+console.log(nSlots)
                 for(i=0; i<nSlots; i++)
                     crate.push(0)
 
