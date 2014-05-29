@@ -125,8 +125,7 @@
                         channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
                         channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
                     } else if(cardArray[i] == 4){
-                        nameCopy.splice(0,1) //skip primaries for now
-                        channelNames = channelNames.concat(['EMPTY SLOT'].concat(nameCopy.splice(0,12)));
+                        channelNames = channelNames.concat([nameCopy.splice(0,1)].concat(nameCopy.splice(0,12)));
                         channelNames = channelNames.concat(['EMPTY SLOT'].concat(nameCopy.splice(0,12)));
                         channelNames = channelNames.concat(['EMPTY SLOT'].concat(nameCopy.splice(0,12)));
                         channelNames = channelNames.concat(['EMPTY SLOT'].concat(nameCopy.splice(0,12)));
