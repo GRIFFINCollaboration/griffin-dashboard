@@ -155,7 +155,7 @@
                 var deckWrap = document.createElement('div'),
                     nav = document.createElement('div'),
                     title = document.createElement('h1'),
-                    crateLabel, crateRadio, xString, HVgrid, i, j, k, nSlots, colsPassed, crate, channel;
+                    crateLabel, crateRadio, xString, HVgrid, i, j, k, nSlots, colsPassed, crate, channel, primName;
 
                 ////////////////
                 //DOM Setup
@@ -219,7 +219,8 @@
                     for(j=0; j<this.cratePop[i].length; j++){
                         //primary cells
                         if(this.cratePop[i][j] == 4){
-                            this.HVgrid[i].specials[this.findChannelName(0,colsPassed,this.cratePop[i],window.ODBEquipment['HV-'+i].Settings.Names)] = [0,colsPassed, 4,1];
+                            primName = this.findChannelName(0,colsPassed,this.cratePop[i],window.ODBEquipment['HV-'+i].Settings.Names)
+                            this.HVgrid[i].specials[primName] = [0,colsPassed, 4,1];
                         }
 
                         //card titles
