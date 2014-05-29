@@ -66,6 +66,8 @@ ________________________________________________________________________________
  - `this.max = {HV: 3000, Threshold: 1000, Rate: 10000}` - object containing scale maxima for respective views
  - `this.scaleType = {HV: 'lin', Threshold: 'lin', Rate: 'lin'}` - object containing strings describing scale type for respective views, either 'lin' or 'log'. 
  - `this.lastTTindex` [-2 < integer < `this.channelNames.length`] default: -1 - number indicating the index of `this.channelNames` wherein the name of the last channel that the mouse passed over is found; -1 indicates mouse not pointing at any channels.
+ - `this.lastRateClick` - name of the last rate cell to be clicked and sent to the sidebar.
+ - `this.lastHVClick` - name of the last HV cell to be clicked and sent to the sidebar.
 
 ####Static Member Variables
  - `this.name` - name prefix for this detector
@@ -109,6 +111,12 @@ As with all updatable objects, detector components participate in the main event
 ##Member Functions
 Most of the plumbing for detector components is generic, and inherited as the collection of functions registered on the `methods` member of `<detector-template>`.  These member functions are described qualitatively as follows.
 
+###clickCell(channelName)
+When a cell is clicked, fires an appropriate custom event at `widget-HVcontrol` or `widget-rateBar` to populate them with the channel of interest.  Also manages highlighting the clicked cell with a red border, and removing it when focus changes.
+
+###findHVcrate(cellName)
+Returns the crate index wherein the named cell can be found.
+
 ###generateColorScale()
 Establishes all the Kinetic.js objects involved in the color scale, and attaches them to `this.scaleLayer[view]`.  These are pointed at as follows:
  - `this.colorScale[view]` - Kinetic.Rect for the color gradient rectangle itself.
@@ -127,6 +135,9 @@ This is one of two function reimplemented as a rule for each specific detector. 
  - Add these Kinetic objects to the appropriate `this.mainLayer[view]`.
  - Add `this.mainLayer[view]` and `this.tooltipLayer[view]` to `this.stage[view]` once they're all set up.
 
+###isHV(cellName), isRate(cellName)
+These functions return a bool to indicate whether the named cell is a valid HV or rate/threshold cell respectively.  For a detector with symmetric segmentation, these just always return `true` for any cell; detectors with asymmetric segmentation reimplement these.
+
 ###moveTooltip()
 Moves `this.TTbkg` and `this.text` around to follow the mouse; intended as the callback to the `mousemove` event listener of the Kinetic objects in `this.cells`.
 
@@ -137,7 +148,7 @@ Refreshes the contents and positions of the Kinetic objects in `this.tickLabels[
 Called by `this.update()` iff `this.summaryDepth` is truthy.  Constructs the average rate, threshold and HV for the summary cells declared in `this.channelNames[]` iff the summary cell key's length equals `this.summaryDepth`.  Averages are stored alongside raw channel values in `window.currentData[HV/threshold/rate][summaryKey]` for parsing by the same logic as the individual cells.  Note that if any individual detector is supposed to contribute to this average and fails to report, the whole summary cell will be marked as failing to report.
 
 ###trackView()
-Keeps `this.currentView` and `this.currentUnit` and the values of the inputs in the plot control form up to date with whatever the user has chosen from the view selection radio.  Also shows and hides `mainLayer` and `HVlayer` as necessary, for detectors with different segmentation for HV than they have for rates & thresholds. 
+Keeps `this.currentView` and `this.currentUnit` and the values of the inputs in the plot control form up to date with whatever the user has chosen from the view selection radio.  Also shows and hides `mainLayer` and `HVlayer` as necessary, for detectors with different segmentation for HV than they have for rates & thresholds.  Also shuffles the sidebar as needed.
 
 ###update()
 Function called in the master update loop as part of `repopulate()`; wraps all the updates necessary on this cycle.
