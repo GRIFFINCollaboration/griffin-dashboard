@@ -394,14 +394,43 @@
             //fire an event at interested parties, if they exist:
             'clickCell' : function(cellName){
                 var evt,
-                    SV = document.getElementById('spectrumViewer');
+                    rateSidebar = document.getElementById('ratesAndThresholds'),
+                    HVsidebar = document.getElementById('HVcontrol'),
+                    HVcell = this.isHV(cellName),
+                    RateCell = this.isRate(cellName),
+                    crateIndex = this.findHVcrate(cellName)
 
-                //send the clicked channel to the spectrum viewer:
-                if(SV){
-                    evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
-                    SV.dispatchEvent(evt);
+                if(rateSidebar && RateCell){
+                    evt = new CustomEvent('postRateChan', {'detail': {'channel' : cellName} });
+                    rateSidebar.dispatchEvent(evt);
+                }
+
+                if(HVsidebar && HVcell){
+                    evt = new CustomEvent('postHVchan', {'detail': {
+                        'channel' : cellName, 
+                        'ODBblob': window.ODBEquipment['HV-' + crateIndex], 
+                        'crateIndex': crateIndex
+                    } });
+                    HVsidebar.dispatchEvent(evt);
                 }
             },
+
+            //decide if the named cell is an HV cell
+            'isHV' : function(cellName){
+                if(cellName.length == 10)
+                    return true //default for detectors with rate / HV symmetry
+            }
+
+            //decide if the named cell is a rate cell
+            'isRate' : function(cellName){
+                if(cellName.length == 10)
+                    return true //default for detectors with rate / HV symmetry
+            }
+
+            //given an HV cell name, return the index of the HV crate it is powered by
+            'findHVcrate' : function(cellName){
+                return 0 //TODO actually write a function
+            }
 
             //fetch rate information
             'acquireRates' : function(){

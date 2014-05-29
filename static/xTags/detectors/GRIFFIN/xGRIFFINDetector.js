@@ -402,20 +402,33 @@
                 var evt, 
                     viewVal = parseInt(cellName.slice(3,5),10),
                     viewSelect = document.getElementById(this.id+'viewSelect'),
-                    SV = document.getElementById('spectrumViewer'),
-                    plotControlForm = document.getElementById(this.id+'PlotControl');
+                    plotControlForm = document.getElementById(this.id+'PlotControl'),
+                    rateSidebar = document.getElementById('ratesAndThresholds'),
+                    HVsidebar = document.getElementById('HVcontrol'),
+                    HVcell = this.isHV(cellName),
+                    RateCell = this.isRate(cellName),
+                    crateIndex = this.findHVcrate(cellName);
 
                 //summary -> details
                 if(cellName.length == 6){
                     viewSelect.value = viewVal;
                     viewSelect.onchange();
                     plotControlForm.onchange();
+                    return;
                 }
 
-                //send the clicked channel to the spectrum viewer:
-                if(SV){
-                    evt = new CustomEvent('changeChannel', {'detail': {'channel' : cellName} });
-                    SV.dispatchEvent(evt);
+                if(rateSidebar && RateCell){
+                    evt = new CustomEvent('postRateChan', {'detail': {'channel' : cellName} });
+                    rateSidebar.dispatchEvent(evt);
+                }
+
+                if(HVsidebar && HVcell){
+                    evt = new CustomEvent('postHVchan', {'detail': {
+                        'channel' : cellName, 
+                        'ODBblob': window.ODBEquipment['HV-' + crateIndex], 
+                        'crateIndex': crateIndex
+                    } });
+                    HVsidebar.dispatchEvent(evt);
                 }
             },
 
@@ -428,6 +441,10 @@
 
                 return HVcell;
             },
+
+            'isRate' : function(cellName){
+                return !this.isHV(cellName); //GRIFFIN HV / rate cells completely disjoint              
+            }
 
             'vetoSummary' : function(view, channel){
                 var isHPGE = channel.slice(0,3) == 'GRG',

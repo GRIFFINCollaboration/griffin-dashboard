@@ -33,7 +33,7 @@
         }, 
         methods: {
             'updateRates' : function(customEventData){
-
+                document.getElementById(this.id + 'Title').innerHTML = customEventData.channel
             }
         }
     });
