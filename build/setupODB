@@ -1,5 +1,0 @@
-sed 's@$PWD@'$PWD'@g' ./configureODB > ODBconfigInstance
-sed -i 's@build/img@'img'@g' ./ODBconfigInstance
-sed -i 's@build/build@'build'@g' ./ODBconfigInstance
-odbedit -c @ODBconfigInstance
-rm ./ODBconfigInstance
