@@ -45,7 +45,7 @@
                         this.crateNames.push('Crate_'+nCrates);
 
                         //parse crate map and stick appropriate array into HV widget
-                        this.cratePop.push(this.unpackHVCrateMap(window.ODBEquipment['HV-'+nCrates].Settings.Devices.sy2527.DD.crateMap) );
+                        this.cratePop.push(this.unpackHVCrateMap(window.ODBEquipment['HV-'+nCrates].Settings.Devices.sy2527) );
 
                         //generate default card names by slot
                         this.cardNames.push( this.generateCardNames(this.cratePop[nCrates]) );
@@ -364,6 +364,25 @@ console.log(this.cratePop)
                 }
 
                 return cardArray;
+            },
+
+            'unpackHVCrateMap' : function(mapObj){
+                var key, i;
+                    nSlots = mapObj.DD.crateMap & 3,
+                    crate = [];
+
+                nSlots = ((nSlots == 2) ? 6 : ((nSlots == 3) ? 12 : 16));
+
+                for(i=0; i<nSlots; i++)
+                    crate.push(0)
+
+                for(key in mapObj){
+                    if(key == 'DD') continue
+
+                    crate[ parseInt(key.slice(5),10) ] = parseInt(mapObj[key].Channels,10)/12;
+                }
+
+                return crate;
             },
 
             'update': function(){
