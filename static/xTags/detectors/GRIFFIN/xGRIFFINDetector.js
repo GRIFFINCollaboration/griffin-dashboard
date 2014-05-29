@@ -1,8 +1,7 @@
 (function(){  
 
     xtag.register('detector-GRIFFIN', {
-        prototype: Object.create(HTMLElement.prototype),
-        extends: 'detector-template',
+        prototype: Object.create(detector-template.prototype),
         lifecycle: {
             created: function() {
                 //need to build up names of all ~1000 channels:
