@@ -549,15 +549,8 @@
                     document.getElementById(parentID+'voltageDown').value = parseInt(this.value, 10);
                 }.bind(voltageDownSlide, this.id);
 
-                this.addEventListener('postHVchan', function(evt){
-                    this.updateForm(evt.detail.channel, evt.detail.ODBblob, evt.detail.crateIndex);
-                }, false);
-
-            },
-            inserted: function() {
                 //set up kinetic objects
                 this.meterWidth = document.getElementById(this.id+'HVmeterWrapper').offsetWidth;
-                console.log(this.meterWidth)
                 this.meterHeight = 0.8*document.getElementById(this.id+'HVmeterWrapper').offsetWidth;
                 this.stage = new Kinetic.Stage({
                     container: this.id+'HVmeterWrapper',
@@ -569,8 +562,13 @@
                 this.establishFillMeter('Voltage', 'V', this.mainLayer, 0, 0.05*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
                 this.establishFillMeter('Current', 'mA', this.mainLayer, 0, 0.37*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
                 this.establishFillMeter('Temperature', 'C', this.mainLayer, 0, 0.69*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
-                
+
+                this.addEventListener('postHVchan', function(evt){
+                    this.updateForm(evt.detail.channel, evt.detail.ODBblob, evt.detail.crateIndex);
+                }, false);
+
             },
+            inserted: function() {},
             removed: function() {},
             attributeChanged: function() {}
         }, 
