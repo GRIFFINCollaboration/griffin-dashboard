@@ -219,7 +219,7 @@
                     for(j=0; j<this.cratePop[i].length; j++){
                         //primary cells
                         if(this.cratePop[i][j] == 4){
-                            //this.HVgrid[i].specials['test'+i+j] = [0,colsPassed, 4,1];
+                            this.HVgrid[i].specials['3-BGO'] = [0,colsPassed, 4,1];
                         }
 
                         //card titles
@@ -336,56 +336,15 @@
                 this.HVgrid[crate].update();
             },
 
-            'unpackHVCrateMap' : function(crateMap){
-                var i, nSlots, cardArray = [];
-                
-                //32-bit integer encodes what size cards are in what slot; each slot is encoded in 2 bits, and slot 0 is the two highest (ie 31 and 30) bits.
-                //00 == empty slot, 01 == 12chan card, 10 == 24chan card, 11 == 48chan card. Crate size is indicated by the lowest two bits;
-                //10 == 6 slot crate, 11 == 12 slot crate, anything else == 16 slot crate.
-                if( (crateMap & 3) == 2) nSlots = 6;
-                else if( (crateMap & 3) == 3) nSlots = 12;
-                else nSlots = 16;
-
-                for(i=0; i<nSlots;){
-
-                    if( ((crateMap>>(30-2*i)) & 3) == 0 ){
-                        cardArray.push(0);
-                        i++;
-                    }
-                    else if( ((crateMap>>(30-2*i)) & 3) == 1 ){
-                        cardArray.push(1);
-                        i++;
-                    }
-                    else if( ((crateMap>>(30-2*i)) & 3) == 2 ){
-                        cardArray.push(2);
-                        i+=2;
-                    }
-                    else if( ((crateMap>>(30-2*i)) & 3) == 3 ){
-                        cardArray.push(4);
-                        i+=4;
-                    }
-                }
-
-                return cardArray;
-            },
-
             'unpackHVCrateMap' : function(mapObj){
                 var i, occupied;
                     nSlots = mapObj.DD.crateMap & 3,
                     crate = [];
 
+                //32-bit integer encodes what size cards are in what slot; each slot is encoded in 2 bits, and slot 0 is the two highest (ie 31 and 30) bits.
+                //00 == empty slot, 01 == 12chan card, 10 == 24chan card, 11 == 48chan card. Crate size is indicated by the lowest two bits;
+                //10 == 6 slot crate, 11 == 12 slot crate, anything else == 16 slot crate.
                 nSlots = ((nSlots == 2) ? 6 : ((nSlots == 3) ? 12 : 16));
-
-                /*
-                for(i=0; i<nSlots; i++)
-                    crate.push(0)
-
-                for(key in mapObj){
-                    if(key == 'DD') continue
-
-                    crate[ parseInt(key.slice(5),10) ] = Math.floor(parseInt(mapObj[key].Channels,16)/12);
-                }
-                */
 
                 i=0;
                 while(i<nSlots){
