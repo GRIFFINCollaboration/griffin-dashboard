@@ -420,6 +420,13 @@
                 if(rateSidebar && RateCell){
                     evt = new CustomEvent('postRateChan', {'detail': {'channel' : cellName} });
                     rateSidebar.dispatchEvent(evt);
+
+                    if(this.lastRateClick){
+                        this.cells[this.lastRateClick].setAttr('stroke', this.frameColor);
+                    }
+                    this.lastRateClick = cellName;
+                    this.cells[cellName].setAttr('stroke', '#FF0000');
+                    this.mainLayer[this.displayIndex].draw()
                 }
 
                 if(HVsidebar && HVcell){
