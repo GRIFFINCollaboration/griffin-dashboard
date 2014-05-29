@@ -206,7 +206,7 @@
                     this.HVgrid[i].rows = 13;
                     this.HVgrid[i].cols = nSlots;
 
-                    //master cells for 4-channel cards & card dividers & card names
+                    //primary cells for 4-slot cards & card dividers & card names
                     colsPassed = 0
                     this.HVgrid[i].specials = {};
                     this.HVgrid[i].dividers = {};
@@ -216,7 +216,7 @@
                     for(j=0; j<this.cratePop[i].length; j++){
                         //primary cells
                         if(this.cratePop[i][j] == 4){
-                            this.HVgrid[i].specials['test'+i+j] = [0,colsPassed, 4,1];
+                            //this.HVgrid[i].specials['test'+i+j] = [0,colsPassed, 4,1];
                         }
 
                         //card titles
