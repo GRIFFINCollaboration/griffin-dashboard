@@ -10,8 +10,8 @@
                 ////////////////////
                 //build the DOM
                 ////////////////////
-                controlTitle.setAttribute('id', this.id + 'Title');
-                controlTitle.innerHTML = 'Rates & Thresholds.';
+                barTitle.setAttribute('id', this.id + 'Title');
+                barTitle.innerHTML = 'Rates & Thresholds.';
                 this.appendChild(barTitle);
 
                 this.addEventListener('postRateChan', function(evt){
@@ -33,7 +33,7 @@
         }, 
         methods: {
             'updateRates' : function(customEventData){
-                
+
             }
         }
     });
