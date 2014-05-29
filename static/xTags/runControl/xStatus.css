@@ -37,6 +37,7 @@ widget-status ul#statusMessageList{
 widget-status ul#statusMessageList li{
 	line-height: 1.2em;
 	padding: 0.5em;
+	overflow: scroll;
 }
 
 widget-status ul#statusMessageList li:nth-child(odd){
