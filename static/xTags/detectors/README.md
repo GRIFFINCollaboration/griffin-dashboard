@@ -34,7 +34,7 @@ This function then goes through the following steps, described in greater detail
  - Add this detector to `window.refreshTargets` to have it updated in the main event loop.
 
 ####Internal DOM Structure
-The DOM for any single-view detector looks roughly like this:
+The DOM looks roughly like this:
 ```
 _________________________________________________________________________________________
 |headline wrapper div                                        |x-deck for sidebars       |
