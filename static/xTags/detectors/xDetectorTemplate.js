@@ -206,7 +206,6 @@
                             newValue = window.currentData[this.views[j]][this.channelNames[i]];
                             //value sought and not found, mark nonreporting:
                             if(!newValue && newValue!=0){
-                                console.log(this.views[j])
                                 window.currentData[this.views[j]][summaryKey] = 0xDEADBEEF;
                                 continue; 
                             }
@@ -503,11 +502,8 @@
                 getJSON('http://' + this.MIDAS + query, function(res){
                     var data;
                     data = JSON.parse(res);
-                    parseHV(data)
-                    console.log('HV received')
+                    parseHV(data);
                 });
-
-                console.log('HV requested')
             }
 
         }

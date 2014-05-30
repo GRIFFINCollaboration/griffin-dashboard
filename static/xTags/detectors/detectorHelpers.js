@@ -328,8 +328,8 @@ function parseThreshold(data){
 //and again for HV:
 function parseHV(data){
     var i, j, firstTimeFlag = false;
-console.log(window.currentData.HV)
-    if(!window.currentData.HV){
+
+    if(!window.currentData.HV || window.currentData.HV == {}){
         window.currentData.HV = {};
         firstTimeFlag = true;
     }
@@ -346,7 +346,6 @@ console.log(window.currentData.HV)
 
     //ODB can be a bit sluggish to respond; after the first fetch, refresh the display right away
     if(firstTimeFlag){
-        console.log(window.refreshTargets)
         repopulate();
     }
 }
