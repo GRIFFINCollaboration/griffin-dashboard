@@ -180,10 +180,8 @@
 
                 for(j=0; j<this.views.length; j++){
                     //bail out if we haven't fetched anything yet
-                    if(!window.currentData[this.views[j]]){
-                        console.log(this.views[j])
+                    if(!window.currentData[this.views[j]])
                         continue;
-                    }
 
                     //zero out old summaries at this depth
                     for(i=0; i<this.channelNames.length; i++){
@@ -208,6 +206,7 @@
                             newValue = window.currentData[this.views[j]][this.channelNames[i]];
                             //value sought and not found, mark nonreporting:
                             if(!newValue && newValue!=0){
+                                console.log(this.views[j])
                                 window.currentData[this.views[j]][summaryKey] = 0xDEADBEEF;
                                 continue; 
                             }
