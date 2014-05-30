@@ -503,7 +503,10 @@
                     var data;
                     data = JSON.parse(res);
                     parseHV(data)
-                })
+                    console.log('HV received')
+                });
+
+                console.log('HV requested')
             }
 
         }
