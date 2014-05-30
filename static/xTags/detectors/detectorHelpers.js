@@ -285,6 +285,9 @@ function initializeDetector(name, headline){
         window.refreshTargets = [];
     window.refreshTargets[window.refreshTargets.length] = this;
 
+    //entertain the user with a fill pattern until data arrives
+    this.populate();
+
 }
 
 //stick the ODB equipment directory into its local slot:
