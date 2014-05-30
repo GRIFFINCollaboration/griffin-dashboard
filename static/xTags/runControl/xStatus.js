@@ -193,7 +193,10 @@ function getRunSummary(host){
                 //show different stuff depending on run state:
                 if(window.currentData.ODB.Runinfo.State == 1){
                     //run is stopped
-                    runNumber += ' Stopped';
+                    if(window.currentData.ODB.Runinfo['Transition in progress'] == 1)
+                        runNumber += ' Spooling Up...'
+                    else
+                        runNumber += ' Stopped';
                     document.getElementById('statusStart').style.display = 'inline';
                     document.getElementById('statusStop').style.display = 'none';
                     document.getElementById('statusPause').style.display = 'none';
@@ -208,7 +211,10 @@ function getRunSummary(host){
                     document.getElementById('statusResume').style.display = 'inline';
                 } else if(window.currentData.ODB.Runinfo.State == 3){
                     //run is live
-                    runNumber += ' Live';
+                    if(window.currentData.ODB.Runinfo['Transition in progress'] == 1)
+                        runNumber += ' Ending Run...';
+                    else
+                        runNumber += ' Live';
                     document.getElementById('statusStart').style.display = 'none';
                     document.getElementById('statusStop').style.display = 'inline';
                     document.getElementById('statusPause').style.display = 'inline';
