@@ -327,10 +327,12 @@ function parseThreshold(data){
 
 //and again for HV:
 function parseHV(data){
-    var i, j;
-console.log(data)
-    if(!window.currentData.HV)
+    var i, j, firstTimeFlag = false;
+
+    if(!window.currentData.HV){
         window.currentData.HV = {};
+        firstTimeFlag = true;
+    }
 
     if(!window.ODBEquipment)
         window.ODBEquipment = {};    
@@ -341,6 +343,10 @@ console.log(data)
             window.currentData.HV[data[i].Settings.Names[j].toUpperCase().slice(0,10)] = data[i].Variables.Measured[j];
         }
     }
+
+    //ODB can be a bit sluggish to respond; after the first fetch, refresh the display right away
+    if(firstTimeFlag)
+        repopulate();
 }
 
 //function to make a reasonable decision on how many decimal places to show, whether to to use 
