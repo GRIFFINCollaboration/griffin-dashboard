@@ -138,7 +138,7 @@ function runTransition(host,command){
     }
     xmlhttp.withCredentials = true;
     //fire
-    xmlhttp.open('GET', 'http://'+host+'/?cmd='+cmd, false);
+    xmlhttp.open('GET', 'http://'+host+'/?cmd='+cmd);
     xmlhttp.send();
     
 }
