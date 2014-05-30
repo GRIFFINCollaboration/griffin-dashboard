@@ -329,7 +329,7 @@ function parseThreshold(data){
 function parseHV(data){
     var i, j, firstTimeFlag = false;
 
-    if(!window.currentData.HV || window.currentData.HV == {}){
+    if(!window.currentData.HV){
         window.currentData.HV = {};
         firstTimeFlag = true;
     }

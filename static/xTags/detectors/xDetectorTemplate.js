@@ -180,7 +180,7 @@
 
                 for(j=0; j<this.views.length; j++){
                     //bail out if we haven't fetched anything yet
-                    if(window.currentData[this.views[j]] = {})
+                    if(!window.currentData[this.views[j]])
                         continue;
 
                     //zero out old summaries at this depth
