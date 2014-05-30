@@ -147,10 +147,9 @@
                         this.mainLayer.add(this.cells[key]);
 
                         //remove 1x1 cells now hidden by overlays
-                        for(i=this.specials[key][1]; i<this.grid*this.specials[key][2]; i++){
-                            for(j=this.specials[key][0]; j<this.grid*this.specials[key][3]; j++){
-                                //this.cells[this.cellNames[i][j]].remove();
-                                console.log([i,j])
+                        for(i=this.specials[key][1]; i<this.specials[key][2]; i++){
+                            for(j=this.specials[key][0]; j<this.specials[key][3]; j++){
+                                this.cells[this.cellNames[i][j]].remove();
                             }
                         }
 
