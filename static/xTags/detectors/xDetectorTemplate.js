@@ -290,7 +290,7 @@
                 this.mainLayer[this.displayIndex].draw();
                 if(this.HVlayer)
                     this.HVlayer[this.displayIndex].draw();
-            }
+            },
 
             'updateCells': function(){
                 var i, color, rawValue, colorIndex, 
