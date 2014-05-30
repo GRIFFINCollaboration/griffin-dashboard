@@ -345,8 +345,10 @@ function parseHV(data){
     }
 
     //ODB can be a bit sluggish to respond; after the first fetch, refresh the display right away
-    if(firstTimeFlag)
+    if(firstTimeFlag){
+        console.log(window.refreshTargets)
         repopulate();
+    }
 }
 
 //function to make a reasonable decision on how many decimal places to show, whether to to use 
