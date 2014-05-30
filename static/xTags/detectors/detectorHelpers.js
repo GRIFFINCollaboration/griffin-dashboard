@@ -32,9 +32,9 @@ function initializeDetector(name, headline){
     //set up data store for detectors
     if(!window.currentData)
         window.currentData = {};
-    for(i=0; i<this.views.length; i++){
-        window.currentData[this.views[i]] = {};
-    }
+    //for(i=0; i<this.views.length; i++){
+    //    window.currentData[this.views[i]] = {};
+    //}
 
     //////////////////////
     //Build DOM
@@ -329,7 +329,7 @@ function parseThreshold(data){
 function parseHV(data){
     var i, j, firstTimeFlag = false;
 
-    if(!window.currentData.HV || window.currentData.HV == {}){
+    if(!window.currentData.HV){
         window.currentData.HV = {};
         firstTimeFlag = true;
     }
