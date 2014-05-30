@@ -451,7 +451,19 @@
 
             //given an HV cell name, return the index of the HV crate it is powered by
             'findHVcrate' : function(cellName){
-                return 0 //TODO actually write a function
+                var i=0,
+                    match = false;
+
+                if(!window.ODBEquipment || window.ODBEquipment == {}) return  //TODO: should actually deal with this
+
+                while(!match){
+                    if(window.ODBEquipment['HV-'+i].Settings.Names.indexOf(cellName) != -1)
+                        match = true
+                    else 
+                        i++;
+                }
+
+                return i;
             },
 
             //fetch rate information

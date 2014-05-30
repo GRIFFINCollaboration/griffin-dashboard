@@ -362,8 +362,6 @@
                     crate.push(occupied);
                     i+=Math.max(1,occupied);
                 }
-
-console.log(crate)
                 return crate;
             },
 
