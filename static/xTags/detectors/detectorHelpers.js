@@ -328,7 +328,7 @@ function parseThreshold(data){
 //and again for HV:
 function parseHV(data){
     var i, j;
-
+console.log(data)
     if(!window.currentData.HV)
         window.currentData.HV = {};
 

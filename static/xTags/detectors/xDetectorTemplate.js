@@ -266,7 +266,6 @@
             },
 
             'update': function(){
-                console.log(window.currentData.HV)
                 //trigger a new round of data fetching
                 this.acquireRates();
                 this.acquireThresholds();
