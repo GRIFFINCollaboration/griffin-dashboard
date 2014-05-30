@@ -265,11 +265,13 @@
                     this.HVlayer[this.displayIndex].draw();
             },
 
-            'update': function(){
+            'update': function(suppressFetch){
                 //trigger a new round of data fetching
-                this.acquireRates();
-                this.acquireThresholds();
-                this.acquireHV();
+                if(!suppressFetch){
+                    this.acquireRates();
+                    this.acquireThresholds();
+                    this.acquireHV();
+                }
 
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
@@ -503,6 +505,7 @@
                     var data;
                     data = JSON.parse(res);
                     parseHV(data);
+                    this.update(true);
                 });
             }
 

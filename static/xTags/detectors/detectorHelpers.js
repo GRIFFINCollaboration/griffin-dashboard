@@ -329,10 +329,8 @@ function parseThreshold(data){
 function parseHV(data){
     var i, j, firstTimeFlag = false;
 
-    if(!window.currentData.HV){
+    if(!window.currentData.HV)
         window.currentData.HV = {};
-        firstTimeFlag = true;
-    }
 
     if(!window.ODBEquipment)
         window.ODBEquipment = {};    
@@ -343,11 +341,6 @@ function parseHV(data){
             window.currentData.HV[data[i].Settings.Names[j].toUpperCase().slice(0,10)] = data[i].Variables.Measured[j];
         }
         console.log(window.currentData.HV)
-    }
-
-    //ODB can be a bit sluggish to respond; after the first fetch, refresh the display right away
-    if(firstTimeFlag){
-        repopulate();
     }
 }
 
