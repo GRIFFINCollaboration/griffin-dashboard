@@ -506,7 +506,7 @@
                     data = JSON.parse(res);
                     parseHV(data);
                     this.update(true);
-                });
+                }.bind(this));
             }
 
         }
