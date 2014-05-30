@@ -113,7 +113,7 @@
             //find the name of the channel at row, col in the grid from the ODB
             'findChannelName': function(row, col, cardArray, nameArray){
                 var channelNames = [],
-                    i,
+                    i, prim,
                     stringified = JSON.stringify(nameArray),
                     nameCopy = JSON.parse(stringified);
 
@@ -125,10 +125,11 @@
                         channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
                         channelNames = channelNames.concat(['No Primary'].concat(nameCopy.splice(0,12)));
                     } else if(cardArray[i] == 4){
-                        channelNames = channelNames.concat([nameCopy.splice(0,1)].concat(nameCopy.splice(0,12)));
-                        channelNames = channelNames.concat(['EMPTY SLOT'].concat(nameCopy.splice(0,12)));
-                        channelNames = channelNames.concat(['EMPTY SLOT'].concat(nameCopy.splice(0,12)));
-                        channelNames = channelNames.concat(['EMPTY SLOT'].concat(nameCopy.splice(0,12)));
+                        prim = nameCopy.splice(0,1)
+                        channelNames = channelNames.concat([prim+'-0'].concat(nameCopy.splice(0,12)));
+                        channelNames = channelNames.concat([prim+'-1'].concat(nameCopy.splice(0,12)));
+                        channelNames = channelNames.concat([prim+'-2'].concat(nameCopy.splice(0,12)));
+                        channelNames = channelNames.concat([prim+'-3'].concat(nameCopy.splice(0,12)));
                     } else if(cardArray[i] == 0)
                         channelNames = channelNames.concat(['EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT', 'EMPTY SLOT']);
                 }
@@ -220,6 +221,7 @@
                         //primary cells
                         if(this.cratePop[i][j] == 4){
                             primName = this.findChannelName(0,colsPassed,this.cratePop[i],window.ODBEquipment['HV-'+i].Settings.Names)
+                            primName = primName.slice(0, primName.length-2);
                             this.HVgrid[i].specials[primName] = [0,colsPassed, 4,1];
                         }
 

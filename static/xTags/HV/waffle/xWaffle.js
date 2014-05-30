@@ -150,7 +150,6 @@
                         for(i=this.specials[key][1]; i<this.specials[key][1]+this.specials[key][2]; i++){
                             for(j=this.specials[key][0]; j< this.specials[key][0]+this.specials[key][3]; j++){
                                 this.cells[this.cellNames[j][i]].remove();
-                                console.log([j,i])
                             }
                         }
 
