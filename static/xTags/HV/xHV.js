@@ -271,6 +271,7 @@
                 crate = getParameterByName('crate');
                 channel = getParameterByName('channel');
                 if(crate && channel){
+                    document.getElementById(this.id+'gotoHV-'+crate).checked = true;
                     this.clickCell.bind(this.HVgrid[crate], channel)();
                 }
 
