@@ -462,24 +462,6 @@
                     parseRate(data);
                     this.populate();
                 }.bind(this));
-
-/*
-                var xmlhttp = new XMLHttpRequest();
-
-                //once this is all dealt with, refresh the display immediately
-                xmlhttp.onreadystatechange = function(){
-                    var data;
-
-                    if (this.readyState != 4) return;
-                    data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) )
-
-                    parseRate(data);
-
-                }
-                //fire async
-                xmlhttp.open('GET', this.rateServer);
-                xmlhttp.send();
-*/
             },
 
             //fetch rate information
@@ -490,23 +472,6 @@
                     parseThreshold(data);
                     this.populate();
                 }.bind(this));
-/*
-                var xmlhttp = new XMLHttpRequest();
-
-                //once this is all dealt with, refresh the display immediately
-                xmlhttp.onreadystatechange = function(){
-                    var data;
-
-                    if (this.readyState != 4) return;
-
-                    data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) )
-                    parseThreshold(data);
-
-                }
-                //fire async
-                xmlhttp.open('GET', this.thresholdServer);
-                xmlhttp.send();
-*/
             },
 
             //fetch HV

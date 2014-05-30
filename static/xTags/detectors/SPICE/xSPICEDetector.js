@@ -58,6 +58,7 @@
                 this.generateColorScale();
                 //initialize all the cells:
                 this.instantiateCells();
+                this.populate();
             },
             inserted: function() {},
             removed: function() {},
