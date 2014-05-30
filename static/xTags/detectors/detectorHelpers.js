@@ -342,12 +342,13 @@ function parseHV(data){
         for(j=0; j<data[i].Settings.Names.length; j++){
             window.currentData.HV[data[i].Settings.Names[j].toUpperCase().slice(0,10)] = data[i].Variables.Measured[j];
         }
+        console.log(window.currentData.HV)
     }
 
     //ODB can be a bit sluggish to respond; after the first fetch, refresh the display right away
-    //if(firstTimeFlag){
+    if(firstTimeFlag){
         repopulate();
-    //}
+    }
 }
 
 //function to make a reasonable decision on how many decimal places to show, whether to to use 
