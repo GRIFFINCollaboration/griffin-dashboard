@@ -42,7 +42,7 @@
                     //start counting HV crates; frontends must be names HV-0, HV-1...
                     while(window.ODBEquipment['HV-'+nCrates]){
                         //name that crate:
-                        this.crateNames.push('Crate_'+nCrates);
+                        this.crateNames.push('HV-'+nCrates);
 
                         //parse crate map and stick appropriate array into HV widget
                         this.cratePop.push(this.unpackHVCrateMap(window.ODBEquipment['HV-'+nCrates].Settings.Devices.sy2527) );

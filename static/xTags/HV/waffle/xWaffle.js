@@ -90,7 +90,7 @@
                 //start fresh:
                 this.mainLayer.destroyChildren();
                 this.cells = {};
-                this.grid = Math.min(0.8*this.offsetWidth/this.cols, 0.8*this.offsetHeight/this.rows);
+                this.grid = Math.min(0.8*this.offsetWidth/this.cols, 0.7*this.offsetHeight/this.rows);
 
                 //default instantiation of single cells:
                 for(i=0; i<this.cols; i++){
