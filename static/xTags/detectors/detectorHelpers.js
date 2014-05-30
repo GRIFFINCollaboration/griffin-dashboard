@@ -381,6 +381,7 @@ function detectHVcrates(MIDAS, obj){
             nCrates++
 
         target.HVcrates = nCrates;
+        target.acquireHV()
     }.bind(xmlhttp, obj)
 
     xmlhttp.withCredentials = true;

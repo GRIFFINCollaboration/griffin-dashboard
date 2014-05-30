@@ -514,9 +514,11 @@
                 var i,
                     query='/?cmd=jcopy&encoding=json-nokeys';
 
+                if(this.HVcrates == 0) return;
+
                 for(i=0; i<this.HVcrates; i++)
                     query += '&odb' + i + '=/Equipment/HV-' + i;
-console.log('http://' + this.MIDAS + query)
+
                 getJSON('http://' + this.MIDAS + query, function(res){
                     var data;
                     data = JSON.parse(res);
