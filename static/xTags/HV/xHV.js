@@ -274,6 +274,8 @@
                     this.clickCell.bind(this.HVgrid[crate], channel)();
                 }
 
+                //...and also refresh the display ASAP:
+                rebootFetch();
 
             },
 
