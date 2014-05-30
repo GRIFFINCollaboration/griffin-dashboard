@@ -455,7 +455,7 @@
                     match = false;
 
                 if(!window.ODBEquipment || window.ODBEquipment == {}) return  //TODO: should actually deal with this
-
+console.log(window.ODBEquipment)
                 while(!match){
                     if(window.ODBEquipment['HV-'+i].Settings.Names.indexOf(cellName) != -1)
                         match = true
