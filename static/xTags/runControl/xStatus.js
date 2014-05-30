@@ -154,7 +154,7 @@ function ODBGetMsg(host, n){
         if(this.readyState == 4){
             messages = this.responseText.split('\n');
             for(i=0; i<messages.length; i++){
-                //document.getElementById('statusMessage'+i).innerHTML = messages[messages.length-1-i];
+                document.getElementById('statusMessage'+i).innerHTML = messages[messages.length-1-i];
             }
         }
             

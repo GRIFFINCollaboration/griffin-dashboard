@@ -220,6 +220,9 @@
                     for(j=0; j<this.cratePop[i].length; j++){
                         //primary cells
                         if(this.cratePop[i][j] == 4){
+                            //1x1 cells hiding under the primaries are constructed to be named the correct primary name, 
+                            //suffixed with -0, -1, -2, -3 for uniqueness; fetch the first cell's name, slice off the last 2
+                            //chars, use that as the correct primary name.
                             primName = this.findChannelName(0,colsPassed,this.cratePop[i],window.ODBEquipment['HV-'+i].Settings.Names)
                             primName = primName.slice(0, primName.length-2);
                             this.HVgrid[i].specials[primName] = [0,colsPassed, 4,1];
