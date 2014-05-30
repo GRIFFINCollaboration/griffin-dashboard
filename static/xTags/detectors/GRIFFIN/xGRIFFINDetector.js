@@ -75,6 +75,7 @@
                 //initialize all the cells:
                 this.instantiateCells();
                 this.instantiateSummaryCells();
+                this.populate();
 
             },
             inserted: function() {},
