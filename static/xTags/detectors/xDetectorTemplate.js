@@ -265,14 +265,14 @@
                     this.HVlayer[this.displayIndex].draw();
             },
 
-            'update': function(suppressFetch){
+            'update': function(){
                 //trigger a new round of data fetching
-                if(!suppressFetch){
-                    this.acquireRates();
-                    this.acquireThresholds();
-                    this.acquireHV();
-                }
+                this.acquireRates();
+                this.acquireThresholds();
+                this.acquireHV();                
+            },
 
+            'populate' : function(){
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').setAttribute('value', this.min[this.currentView]);
                 document.getElementById(this.id + 'PlotControlMax').setAttribute('value', this.max[this.currentView]);
@@ -290,8 +290,7 @@
                 this.mainLayer[this.displayIndex].draw();
                 if(this.HVlayer)
                     this.HVlayer[this.displayIndex].draw();
-                
-            },
+            }
 
             'updateCells': function(){
                 var i, color, rawValue, colorIndex, 
@@ -457,6 +456,14 @@
 
             //fetch rate information
             'acquireRates' : function(){
+                getJSON(this.rateServer, function(res){
+                    var data;
+                    data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) );
+                    parseRate(data);
+                    this.populate();
+                }.bind(this));
+
+/*
                 var xmlhttp = new XMLHttpRequest();
 
                 //once this is all dealt with, refresh the display immediately
@@ -472,10 +479,18 @@
                 //fire async
                 xmlhttp.open('GET', this.rateServer);
                 xmlhttp.send();
+*/
             },
 
             //fetch rate information
             'acquireThresholds' : function(){
+                getJSON(this.thresholdServer, function(res){
+                    var data;
+                    data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) );
+                    parseThreshold(data);
+                    this.populate();
+                }.bind(this));
+/*
                 var xmlhttp = new XMLHttpRequest();
 
                 //once this is all dealt with, refresh the display immediately
@@ -491,6 +506,7 @@
                 //fire async
                 xmlhttp.open('GET', this.thresholdServer);
                 xmlhttp.send();
+*/
             },
 
             //fetch HV
@@ -505,7 +521,7 @@
                     var data;
                     data = JSON.parse(res);
                     parseHV(data);
-                    this.update(true);
+                    this.populate()
                 }.bind(this));
             }
 
