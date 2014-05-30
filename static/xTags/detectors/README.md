@@ -19,7 +19,7 @@ All custom web components execute a callback upon creation, found in `lifecycle.
  - Declare `this.viewNames[view]`, an array of strings naming each view you want for this detector; a single view detector like the TIP wall only needs one view, while TIGRESS and GRIFFIN use 17 views - one for each clover plus a summary.
  - Run `initializeDetector()`, a function that factors out all the generic detector setup steps, spec below. 
  - Declare detector specific drawing parameters and other member variables
- - Set up the Kinetic.js visualization of the detector by calling `this.instantiateCells()` and `this.generateColorScale()` (details below).
+ - Set up the Kinetic.js visualization of the detector by calling `this.instantiateCells()`, `this.generateColorScale()`, and `this.populate()` (details below).
 
 ###initializeDetector()
 `initializeDetector(name, title)` is declared in `detectorHelpers.js` and factors out the generic steps of setting up a detector.  Its arguments are as follows:
@@ -102,6 +102,9 @@ As with all updatable objects, detector components participate in the main event
 
  - `update()`
    - Request new data from external sources
+   - Invoke `this.populate()` as the callback to receiving data.
+
+ - `populate()`
    - Make sure scale control is up to date
    - generate data summaries for detectors that have summary levels
    - `updateCells()` - refreshes and repaints all the detector cells based on info in `window.currentData` and state variables.
@@ -141,6 +144,9 @@ These functions return a bool to indicate whether the named cell is a valid HV o
 ###moveTooltip()
 Moves `this.TTbkg` and `this.text` around to follow the mouse; intended as the callback to the `mousemove` event listener of the Kinetic objects in `this.cells`.
 
+###populate()
+Intended as the callback to receiving data, `populate()` takes care of refreshing the displays, controls and tooltips with the latest information.
+
 ###refreshColorScale()
 Refreshes the contents and positions of the Kinetic objects in `this.tickLabels[view][tick]` and `this.scaleTitle[view]` as a function of whatever is registered in `this.scaleType`, `.min` and `.max` under the `this.currentView` key.  Intended as part of the `onchange` callback after modifying scale parameters in the plot control form, and for updating after changing the view.
 
@@ -151,7 +157,7 @@ Called by `this.update()` iff `this.summaryDepth` is truthy.  Constructs the ave
 Keeps `this.currentView` and `this.currentUnit` and the values of the inputs in the plot control form up to date with whatever the user has chosen from the view selection radio.  Also shows and hides `mainLayer` and `HVlayer` as necessary, for detectors with different segmentation for HV than they have for rates & thresholds.  Also shuffles the sidebar as needed.
 
 ###update()
-Function called in the master update loop as part of `repopulate()`; wraps all the updates necessary on this cycle.
+Function called in the master update loop as part of `repopulate()`; invokes data fetching and passes `populate()` as a callback to these requests.
 
 ###updateCells()
 Responsible for repainting all the Kinetic objects in `this.cells[name]` as part of the master update loop.  Pattern is as follows:
