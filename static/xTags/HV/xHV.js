@@ -99,6 +99,8 @@
 
                 if(controlSidebars){
                     for(i=0; i<controlSidebars.length; i++){
+                        document.getElementById(controlSidebars.id + 'HVparameterCommit').setAttribute('class', '');
+
                         evt = new CustomEvent('postHVchan', {'detail': {   
                             'channel' : cellName, 
                             'ODBblob': window.ODBEquipment['HV-'+this.id.slice(6)], 
