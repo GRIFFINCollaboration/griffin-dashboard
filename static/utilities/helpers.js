@@ -51,22 +51,6 @@ function longestWord(phrase){
 
 }
 
-//XHR JSON request
-function getJSON(URL, callback){
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function(){
-        if(this.readyState != 4) return;
-        callback(this.responseText);
-    }
-
-    xmlhttp.withCredentials = true;
-    //fire async
-    xmlhttp.overrideMimeType('application/json');
-    xmlhttp.open('GET', URL);
-    xmlhttp.send();
-}
-
 function XHR(URL, callback, mime, noCredentials){
     var xmlhttp = new XMLHttpRequest();
 
