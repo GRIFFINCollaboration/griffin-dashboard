@@ -468,22 +468,22 @@
 
             //fetch rate information
             'acquireRates' : function(){
-                getJSON(this.rateServer, function(res){
+                XHR(this.rateServer, function(res){
                     var data;
                     data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) );
                     parseRate(data);
                     this.populate();
-                }.bind(this));
+                }.bind(this), 'application/json');
             },
 
             //fetch rate information
             'acquireThresholds' : function(){
-                getJSON(this.thresholdServer, function(res){
+                XHR(this.thresholdServer, function(res){
                     var data;
                     data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) );
                     parseThreshold(data);
                     this.populate();
-                }.bind(this));
+                }.bind(this), 'application/json');
             },
 
             //fetch HV
@@ -496,12 +496,12 @@
                 for(i=0; i<this.HVcrates; i++)
                     query += '&odb' + i + '=/Equipment/HV-' + i;
 
-                getJSON('http://' + this.MIDAS + query, function(res){
+                XHR('http://' + this.MIDAS + query, function(res){
                     var data;
                     data = JSON.parse(res);
                     parseHV(data);
                     this.populate()
-                }.bind(this));
+                }.bind(this), 'application/json');
             }
 
         }

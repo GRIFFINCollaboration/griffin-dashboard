@@ -31,7 +31,7 @@
                 var equipmentURL = 'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys';
 
                 //get ODB equipment directory, parse number of crates & crate maps, and configure HV tool accordingly
-                getJSON(equipmentURL, function(responseText){
+                XHR(equipmentURL, function(responseText){
                     
                     var nCrates = 0,
                         i, j;
@@ -56,7 +56,7 @@
                     this.instantiateMonitors();
                     this.update();
                     
-                }.bind(this));
+                }.bind(this), 'application/json');
 
                 //let repopulate know that the HV grid would like to be updated every loop:
                 if(!window.refreshTargets)
@@ -371,7 +371,7 @@
                 var i;
 
                 for(i=0; i<this.HVgrid.length; i++){
-                    getJSON('http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/HV-'+i+'/&encoding=json-nokeys', this.mapData.bind(this, i) );
+                    XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/HV-'+i+'/&encoding=json-nokeys', this.mapData.bind(this, i), 'application/json' );
                 }
                 
             }
