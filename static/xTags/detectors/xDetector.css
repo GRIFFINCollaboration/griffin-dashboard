@@ -10,7 +10,7 @@ detector-DANTE,
 detector-SCEPTAR, 
 detector-PACES,
 detector-BAMBINO{
-	float:left;
+	float:right;
 	width:calc(80% - 2em);
 }
 
@@ -122,11 +122,11 @@ form.plotControlWidget select{
 }
 
 div.deckWrap{
-	width: calc(75% - 2em);
+	width: 75%;
 	float:left;
 }
 
 div.sidebarWrap{
-	width: calc(25% - 2em);
+	width: 25%;
 	float: right;
 }
