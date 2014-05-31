@@ -99,7 +99,6 @@
 
                 if(controlSidebars){
                     for(i=0; i<controlSidebars.length; i++){
-                        document.getElementById(controlSidebars[i].id + 'HVparameterCommit').setAttribute('class', '');
 
                         evt = new CustomEvent('postHVchan', {'detail': {   
                             'channel' : cellName, 
@@ -589,21 +588,6 @@
         }, 
         methods: {
 
-            'submitParameters' : function(){
-                var crateIndex = document.getElementById(this.id + 'crateIndex').value,
-                    chanIndex = document.getElementById(this.id +'chIndex').value,
-                    powerOff = document.getElementById(this.id+'offRadio').checked && true,
-                    demandV = document.getElementById(this.id + 'demandVoltage'),
-                    vUp = document.getElementById(this.id + 'voltageUp'),
-                    vDown = document.getElementById(this.id + 'voltageDown'),
-                    cmdString;
-
-                cmdString = '?cmd=jset&odb=/Equipment/HV-'+crateIndex+'/Variables/Demand['+chanIndex+']'
-                cmdString += '&value='+demandV
-
-
-            },
-
             'updateForm' : function(channelName, ODBfe, crateIndex){
                 var chanIndex = ODBfe.Settings.Names.indexOf(channelName),
                     chStatus = parseChStatus(ODBfe.Variables.ChStatus[chanIndex]),
@@ -618,6 +602,8 @@
                     i, listCell;
 
                 if(chanIndex==-1) return;
+
+                document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', '');
 
                 document.getElementById(this.id + 'Title').innerHTML = channelName;
                 document.getElementById(this.id + 'chIndex').value = chanIndex;
