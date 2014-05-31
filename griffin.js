@@ -13,6 +13,7 @@ app.use(minify({
 }));
 */
 app.use('/static', express.static(__dirname + '/static'));
+app.use(express.cookieParser());
 app.use(express.bodyParser());										//need this to parse submitted forms
 
 // Load our routes

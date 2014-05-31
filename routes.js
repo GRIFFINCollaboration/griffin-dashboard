@@ -11,7 +11,10 @@ app.get('/GRIFFIN', function(req, res){
 });
 
 app.post('/submitLogin', function(req, res){
-    res.redirect('http://grsmid00.triumf.ca:8082?pwd='+req.body.pwd);
+    //res.redirect('http://grsmid00.triumf.ca:8082?pwd='+req.body.pwd);
+    app.get('http://grsmid00.triumf.ca:8082?pwd='+req.body.pwd, function(req, res){
+    	console.log(res.cookie)
+    });
 });
 
 app.post('/postHV', function(req, res){
