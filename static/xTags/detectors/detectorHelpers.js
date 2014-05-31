@@ -87,14 +87,13 @@ function initializeDetector(name, headline){
     //sidebar deck
     sidebarWrap.setAttribute('id', this.id+'sidebarWrap');
     sidebarWrap.setAttribute('class', 'sidebarWrap');
-    sidebarWrap.setAttribute('style', 'height:'+ (height + parseInt(headWrapper.offsetHeight,10)) );
+    //sidebarWrap.setAttribute('style', 'height:'+ (height + parseInt(headWrapper.offsetHeight,10)) );
     this.appendChild(sidebarWrap);
     xString = '<x-deck id='+this.id+'SidebarDeck selected-index=1>'
     xString += '<x-card id='+this.id+'HVSideCard class="sidebarCard"><widget-HVcontrol id="HVcontrol" MIDAS='+this.MIDAS+' style="max-width:100%"></widget-HVcontrol></x-card>'
     xString += '<x-card id='+this.id+'RateSideCard class="sidebarCard"><widget-rateBar id="ratesAndThresholds" MIDAS='+this.MIDAS+'></widget-RateBar></x-card>'
     xString += '</x-deck>'
     sidebarWrap.innerHTML = xString;
-    //sidebarWrap.setAttribute('style', 'height:'+ document.getElementById('HVcontrol').offsetHeight );
 
     //plot deck wrapper:
     deckWrap.setAttribute('id', this.id+'DeckWrap');
