@@ -379,7 +379,7 @@ function detectHVcrates(MIDAS, obj){
             obj.HVcrates = nCrates;
             obj.acquireHV()
         });
-    */)
+    )*/
 
 
     var xmlhttp = new XMLHttpRequest();
