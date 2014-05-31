@@ -11,7 +11,15 @@ app.get('/GRIFFIN', function(req, res){
 });
 
 app.post('/submitLogin', function(req, res){
-	console.log(req.body.pwd)
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function(){
+        if(this.readyState != 4) return;
+        console.log(this.responseText);
+    }
+
+    xmlhttp.open('GET', 'http://grsmid00.triumf.ca:8082?pwd='+req.body.pwd);
+    xmlhttp.send();
 });
 
 app.post('/postHV', function(req, res){
