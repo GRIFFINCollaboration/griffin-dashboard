@@ -366,22 +366,22 @@ function generateTickLabel(min, max, nTicks, n){
 
 //determine how many HV frontends are in the ODB.  Frontends must be named HV-0, HV-1, HV-2....
 function detectHVcrates(MIDAS, obj){
-    /*
+    
     XHR('http://' + MIDAS + '/?cmd=jcopy&odb=/Equipment&encoding=json-nokeys',
-        function(){
+        function(target, response){
             var data, nCrates = 0;
 
-            data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) )
+            data = JSON.parse(response.slice(response.indexOf('{'), response.lastIndexOf('}')+1 ) )
             
             while(data['HV-'+nCrates])
                 nCrates++
 
-            obj.HVcrates = nCrates;
-            obj.acquireHV()
-        });
-    )*/
+            target.HVcrates = nCrates;
+            target.acquireHV()
+        }.bind(null, obj) );
+    )
 
-
+/*
     var xmlhttp = new XMLHttpRequest();
 
     //once this is all dealt with, refresh the display immediately
@@ -403,5 +403,5 @@ function detectHVcrates(MIDAS, obj){
     //fire async
     xmlhttp.open('GET', 'http://' + MIDAS + '/?cmd=jcopy&odb=/Equipment&encoding=json-nokeys');
     xmlhttp.send();
-
+*/
 }
