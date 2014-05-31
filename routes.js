@@ -1,18 +1,11 @@
-app.get('/login', function(req, res){
-	//res.render('site/login.jade')
-	res.redirect('http://grsmid00.triumf.ca:8082');
-});
-
 app.get('/HV', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect('http://grsmid00.triumf.ca:8082')
+
 	res.render('widgets/HV.jade');
 });
 
 app.get('/GRIFFIN', function(req, res){
 	res.render('detectors/GRIFFIN.jade');
-});
-
-app.post('/submitLogin', function(req, res){
-    res.redirect('http://grsmid00.triumf.ca:8082?pwd='+req.body.pwd);
 });
 
 app.post('/postHV', function(req, res){
