@@ -1,5 +1,6 @@
 app.get('/login', function(req, res){
-	res.render('site/login.jade')
+	//res.render('site/login.jade')
+	res.redirect('http://grsmid00.triumf.ca:8082');
 });
 
 app.get('/HV', function(req, res){
