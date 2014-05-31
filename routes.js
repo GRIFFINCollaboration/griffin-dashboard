@@ -1,3 +1,7 @@
+app.get('/login', function(req, res){
+	res.render('site/login.jade')
+});
+
 app.get('/HV', function(req, res){
 	res.render('widgets/HV.jade');
 });
@@ -6,7 +10,9 @@ app.get('/GRIFFIN', function(req, res){
 	res.render('detectors/GRIFFIN.jade');
 });
 
-
+app.post('/submitLogin', function(req, res){
+	console.log(req.body.pwd)
+});
 
 app.post('/postHV', function(req, res){
 
