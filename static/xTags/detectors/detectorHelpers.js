@@ -94,7 +94,7 @@ function initializeDetector(name, headline){
     xString += '<x-card id='+this.id+'RateSideCard class="sidebarCard"><widget-rateBar id="ratesAndThresholds" MIDAS='+this.MIDAS+'></widget-RateBar></x-card>'
     xString += '</x-deck>'
     sidebarWrap.innerHTML = xString;
-    sidebarWrap.setAttribute('style', 'height:'+ document.getElementById('HVcontrol').offsetHeight );
+    //sidebarWrap.setAttribute('style', 'height:'+ document.getElementById('HVcontrol').offsetHeight );
 
     //plot deck wrapper:
     deckWrap.setAttribute('id', this.id+'DeckWrap');
