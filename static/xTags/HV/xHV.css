@@ -1,5 +1,5 @@
 widget-HV{
-	width:calc(60% - 2em);  
+	width: 60%;  
 	float:left;
 }
 
@@ -51,7 +51,7 @@ widget-HVcontrol{
 	float: right;
 	padding: 1em;
 	margin: 1em;
-	max-width: calc(20% - 1em);
+	width: calc(20% - 2em);
 }
 
 widget-HVcontrol form{
