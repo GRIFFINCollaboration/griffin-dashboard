@@ -1,10 +1,12 @@
 app.get('/HV', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://grsmid00.triumf.ca:8082')
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 
 	res.render('widgets/HV.jade');
 });
 
 app.get('/GRIFFIN', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	
 	res.render('detectors/GRIFFIN.jade');
 });
 
