@@ -3,20 +3,7 @@ html
   head
 
   body
-    input(name='pwd' id='pwd' type='password')
-    input(type='button', value='Login' id='login')
-
-    script.
-      document.getElementById('login').onclick = function(){
-        var pwd = document.getElementById('pwd').value;
-
-        var xmlhttp = new XMLHttpRequest();
-
-        xmlhttp.onreadystatechange = function(){
-          if(this.readyState != 4) return;
-          console.log(this.response);
-        }
-
-        xmlhttp.open('GET', 'http://grsmid00.triumf.ca:8082?pwd='+pwd);
-        xmlhttp.send();
-      }
+    form(method='post', action='/submitLogin')
+      input(name='pwd' type='password')
+      input(type='submit', value='Login')
+      
