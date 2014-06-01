@@ -127,7 +127,7 @@ function initializeDetector(name, headline){
     //x-deck navigation
     if(this.viewNames.length > 1){
         deckNavigator = document.createElement('select');
-        deckNavigator.setAttribute('class', 'stdin')
+        deckNavigator.setAttribute('class', 'stdin');
         deckNavigator.id = this.id + 'viewSelect';
         for(i=0; i<this.viewNames.length; i++){
             deckOption = document.createElement('option');
@@ -151,6 +151,7 @@ function initializeDetector(name, headline){
     plotControlMin.setAttribute('id', this.id + 'PlotControlMin');
     plotControlMin.setAttribute('type', 'number');
     plotControlMin.setAttribute('step', 'any');
+    plotControlMin.setAttribute('class', 'stdin');
     plotControlWrap.appendChild(plotControlMin);
 
     plotControlMaxLabel.setAttribute('id', this.id+'PlotControlMaxLabel');
@@ -159,9 +160,11 @@ function initializeDetector(name, headline){
     plotControlMax.setAttribute('id', this.id + 'PlotControlMax');
     plotControlMax.setAttribute('type', 'number');
     plotControlMax.setAttribute('step', 'any');
+    plotControlMax.setAttribute('class', 'stdin');
     plotControlWrap.appendChild(plotControlMax);
 
     plotScale.setAttribute('id', this.id+'PlotControlScale');
+    plotScale.setAttribute('class', 'stdin');
     plotControlWrap.appendChild(plotScale);
 
     plotScaleLin.setAttribute('id', this.id+'PlotScaleLin');
