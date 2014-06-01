@@ -77,6 +77,27 @@ div#mainContent{
 	width:100%
 }
 
+/*Standard element styles*/
+.stdin,
+.stdin + label{
+	font-size: 100%;
+	line-height: 1.2em;
+	padding:0.5em;
+	border-radius: 5px;
+	display:inline-block;
+	background-color: #111111;
+	color: #EEEEEE;
+	border: none;
+	cursor: pointer;
+	transition:background-color 0.3s; 
+	-moz-transition:background-color 0.3s; 
+	-webkit-transition:background-color 0.3s;
+}
+
+.stdin:checked + label{
+	background-color: #555555;
+}
+
 /*Footer and footer-related styles////////////////////////////////////////////////////*/
 div#footer{
     background-color: #111111;

@@ -69,7 +69,7 @@ function initializeDetector(name, headline){
     for(i=0; i<this.views.length; i++){
         subdetectorNav = document.createElement('input')
         subdetectorNav.setAttribute('id', this.id+'goto'+this.views[i]);
-        subdetectorNav.setAttribute('class', 'subdetectorNavRadio');
+        subdetectorNav.setAttribute('class', 'stdin');
         subdetectorNav.setAttribute('type', 'radio');
         subdetectorNav.setAttribute('name', this.id+'Nav');
         subdetectorNav.setAttribute('value', this.views[i]);
@@ -78,7 +78,7 @@ function initializeDetector(name, headline){
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
         subdetectorNavLabel = document.createElement('label');
         subdetectorNavLabel.setAttribute('id', this.id+'goto'+this.views[i]+'Label');
-        subdetectorNavLabel.setAttribute('class', 'subdetectorNavLabel');
+        //subdetectorNavLabel.setAttribute('class', 'subdetectorNavLabel');
         subdetectorNavLabel.setAttribute('for', this.id+'goto'+this.views[i]);
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
         document.getElementById(this.id+'goto'+this.views[i]+'Label').innerHTML = this.views[i];
