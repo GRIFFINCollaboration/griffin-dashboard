@@ -435,7 +435,7 @@
                 HVcontrol.setAttribute('method', 'POST');
                 HVcontrol.setAttribute('action', 'postHV');
                 HVcontrol.onchange = function(){
-                    document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', 'needCommit')
+                    document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', 'stdin needCommit')
                 }.bind(this);
                 this.appendChild(HVcontrol);
 
