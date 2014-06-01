@@ -609,7 +609,7 @@
 
                 if(chanIndex==-1) return;
 
-                document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', '');
+                document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', 'stdin');
 
                 document.getElementById(this.id + 'Title').innerHTML = channelName;
                 document.getElementById(this.id + 'chIndex').value = chanIndex;
