@@ -171,7 +171,7 @@
                 for(i=0; i<this.crateNames.length; i++){
                     crateRadio = document.createElement('input')
                     crateRadio.setAttribute('id', this.id+'goto'+this.crateNames[i]);
-                    crateRadio.setAttribute('class', 'crateRadio');
+                    crateRadio.setAttribute('class', 'stdin');
                     crateRadio.setAttribute('type', 'radio');
                     crateRadio.setAttribute('name', this.id+'Nav');
                     crateRadio.setAttribute('value', this.crateNames[i]);
@@ -459,6 +459,7 @@
 
                 commit.setAttribute('id', this.id + 'HVparameterCommit');
                 commit.setAttribute('type', 'submit');
+                commit.setAttribute('class', 'stdin');
                 commit.setAttribute('value', 'Commit');
                 //commit.setAttribute.onclick = this.submitParameters;
                 HVcontrol.appendChild(commit);
@@ -467,6 +468,7 @@
                 offRadio.setAttribute('name', 'powerSwitch');
                 offRadio.setAttribute('value', 'off');
                 offRadio.setAttribute('type', 'radio');
+                offRadio.setAttribute('class', 'stdin');
                 HVcontrol.appendChild(offRadio);
                 offRadioLabel.setAttribute('for', this.id + 'offRadio');
                 offRadioLabel.innerHTML = 'Off';
@@ -475,6 +477,7 @@
                 onRadio.setAttribute('name', 'powerSwitch');
                 onRadio.setAttribute('value', 'on');
                 onRadio.setAttribute('type', 'radio');
+                onRadio.setAttribute('class', 'stdin');
                 HVcontrol.appendChild(onRadio);
                 onRadioLabel.setAttribute('for', this.id + 'onRadio');
                 onRadioLabel.innerHTML = 'On';
@@ -492,6 +495,7 @@
                 demandCell.setAttribute('name', 'demandVoltage');
                 demandCell.setAttribute('class', 'voltageField');
                 demandCell.setAttribute('type', 'number');
+                demandCell.setAttribute('class', 'stdin');
                 demandCell.setAttribute('step', 'any');
                 demandCell.setAttribute('min', 0);
                 HVcontrol.appendChild(demandCell);
@@ -513,6 +517,7 @@
                 voltageUpCell.setAttribute('name', 'voltageUp');
                 voltageUpCell.setAttribute('class', 'rampField');
                 voltageUpCell.setAttribute('type', 'number');
+                voltageUpCell.setAttribute('class', 'stdin');
                 voltageUpCell.setAttribute('step', 'any');
                 voltageUpCell.setAttribute('min', 0);
                 voltageUpCell.setAttribute('max', 500);
@@ -537,6 +542,7 @@
                 voltageDownCell.setAttribute('name', 'voltageDown');
                 voltageDownCell.setAttribute('class', 'rampField');
                 voltageDownCell.setAttribute('type', 'number');
+                voltageDownCell.setAttribute('class', 'stdin');
                 voltageDownCell.setAttribute('step', 'any');
                 voltageDownCell.setAttribute('min', 0);
                 voltageDownCell.setAttribute('max', 500);
