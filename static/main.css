@@ -55,6 +55,10 @@ select{
 	appearance:none;
 }
 
+input[type=radio]{
+	display: none;
+}
+
 /*Enforce more intuitive box-sizing, suppress selection*/
 * { 
 	-moz-box-sizing: border-box; 
