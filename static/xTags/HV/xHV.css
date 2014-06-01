@@ -8,7 +8,7 @@ x-card x-waffle{
 	height: 100%;
 	float: left;
 }
-
+/*
 input.crateRadio, 
 widget-HVcontrol input[type='radio']{
 	display:none;
@@ -39,7 +39,7 @@ input[type='radio']:checked + label
 {
 	background-color: #555555;
 }
-
+*/
 div.HVcrateNav{
 	margin-top: 1em;
 }
