@@ -78,7 +78,6 @@ function initializeDetector(name, headline){
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
         subdetectorNavLabel = document.createElement('label');
         subdetectorNavLabel.setAttribute('id', this.id+'goto'+this.views[i]+'Label');
-        //subdetectorNavLabel.setAttribute('class', 'subdetectorNavLabel');
         subdetectorNavLabel.setAttribute('for', this.id+'goto'+this.views[i]);
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
         document.getElementById(this.id+'goto'+this.views[i]+'Label').innerHTML = this.views[i];
@@ -87,7 +86,6 @@ function initializeDetector(name, headline){
     //sidebar deck
     sidebarWrap.setAttribute('id', this.id+'sidebarWrap');
     sidebarWrap.setAttribute('class', 'sidebarWrap');
-    //sidebarWrap.setAttribute('style', 'height:'+ (height + parseInt(headWrapper.offsetHeight,10)) );
     this.appendChild(sidebarWrap);
     xString = '<x-deck id='+this.id+'SidebarDeck selected-index=1>'
     xString += '<x-card id='+this.id+'HVSideCard class="sidebarCard"><widget-HVcontrol id="HVcontrol" MIDAS='+this.MIDAS+' style="width:calc(100% - 2em)"></widget-HVcontrol></x-card>'
@@ -129,6 +127,7 @@ function initializeDetector(name, headline){
     //x-deck navigation
     if(this.viewNames.length > 1){
         deckNavigator = document.createElement('select');
+        deckNavigator.setAttribute('class', 'stdin')
         deckNavigator.id = this.id + 'viewSelect';
         for(i=0; i<this.viewNames.length; i++){
             deckOption = document.createElement('option');
