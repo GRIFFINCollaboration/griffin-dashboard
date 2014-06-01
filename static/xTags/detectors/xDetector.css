@@ -32,26 +32,11 @@ form.plotControlWidget{
 	width: max-content;
 	clear: both;
 }
-/*
-form.plotControlWidget input,
-form.plotControlWidget label,
-form.plotControlWidget select{
-	font-size: 120%;
-	line-height: normal;
-	border-radius: 5px;
-	border: 0px;
+
+form.plotControlWidget input{
 	width: 6em;
-	padding:0.5em 0 0.5em 0.5em;
 }
 
-form.plotControlWidget input,
-form.plotControlWidget select{
-	color:#EEEEEE;
-	background-color: #111111;
-	margin-right: 2px;
-	cursor:pointer;
-}
-*/
 div.deckWrap{
 	width: 75%;
 	float:left;
