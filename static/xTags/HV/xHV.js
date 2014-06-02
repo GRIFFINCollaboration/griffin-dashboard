@@ -635,9 +635,9 @@
                 document.getElementById(this.id + 'voltageDown').value = vDown;
                 document.getElementById(this.id + 'voltageDownSlide').value = vDown;
 
-                this.updateFillMeter('Voltage', measuredVoltage, voltageLimit);
-                this.updateFillMeter('Current', current, currentLimit);
-                this.updateFillMeter('Temperature', temperature, this.temperatureMax);
+                this.updateFillMeter('Voltage', measuredVoltage, voltageLimit, 'V');
+                this.updateFillMeter('Current', current, currentLimit, '\u03BCA');
+                this.updateFillMeter('Temperature', temperature, this.temperatureMax, 'C');
                 this.mainLayer.draw();
 
             },
@@ -716,7 +716,7 @@
                 this.mainLayer.add(this.meterNow[title]);
             },
 
-            'updateFillMeter' : function(title, val, max){
+            'updateFillMeter' : function(title, val, max, unit){
                 var width = this.shell[title].getAttr('width'),
                     unit = this.meterMax[title].getAttr('text').split(' '),
                     barLength = val/max,
@@ -735,8 +735,6 @@
                     color = '#c0392b'
 
                 barLength = Math.max(barLength*width, this.shell[title].getAttr('height'));
-
-                unit = unit[unit.length-1];
 
                 if(val==-9999){
                     this.meterNow[title].setAttr('text', 'Now: See Primary');
