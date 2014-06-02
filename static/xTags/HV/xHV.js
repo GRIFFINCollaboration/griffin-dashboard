@@ -718,7 +718,6 @@
 
             'updateFillMeter' : function(title, val, max, unit){
                 var width = this.shell[title].getAttr('width'),
-                    unit = this.meterMax[title].getAttr('text').split(' '),
                     barLength = val/max,
                     color;
 
