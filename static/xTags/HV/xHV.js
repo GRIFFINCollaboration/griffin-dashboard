@@ -739,13 +739,13 @@
                 unit = unit[unit.length-1];
 
                 if(val==-9999){
-                    this.meterNow[title].setAttr('text', 'See Primary');
-                    barLength = 0;
+                    this.meterNow[title].setAttr('text', 'Now: See Primary');
+                    barLength = Math.max(0, this.shell[title].getAttr('height'));;
                     color = '#34495e';
                 } else
                     this.meterNow[title].setAttr('text', 'Now: ' + val.toFixed() + ' ' +unit);
                 if(max==-9999)
-                    this.meterMax[title].setAttr('text', 'See Primary');
+                    this.meterMax[title].setAttr('text', 'Max: See Primary');
                 else
                     this.meterMax[title].setAttr('text', 'Max: ' + max.toFixed() + ' ' +unit);
                 this.meter[title].setAttr('width', barLength);
