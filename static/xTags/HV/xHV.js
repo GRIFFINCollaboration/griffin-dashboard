@@ -605,9 +605,18 @@
                     temperature = ODBfe.Variables.Temperature[chanIndex],
                     vUp = ODBfe.Settings['Ramp Up Speed'][chanIndex],
                     vDown = ODBfe.Settings['Ramp Down Speed'][chanIndex],
-                    i, listCell;
+                    i, listCell, countBack;
 
                 if(chanIndex==-1) return;
+
+                //48 channel cards only report max v, current on the primary;
+                //seek backwards until a voltage limit is found
+                //TODO: breaks if primary fails to report voltage limit :/
+                countBack = chanIndex;
+                while(voltageLimit == -9999 && chanIndex - countBack < 49 && countBack>=0){
+                    countBack--;
+                    voltageLimit = ODBfe.Settings['Voltage Limit'][countBack];
+                }
 
                 document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', 'stdin');
 
