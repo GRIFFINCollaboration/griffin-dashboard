@@ -336,7 +336,7 @@
                         'Status' : statString,
                         'Demand' : demand + ' V',
                         'Measured' : measured + ' V',
-                        'Current': ((current==-9999)? 'Not Reporting' : current+' mA' ),
+                        'Current': ((current==-9999)? 'Not Reporting' : current+' \u03BCA' ),
                         'Temp' : data.Variables.Temperature[i] + ' C'
                     }                    
                 }
@@ -572,7 +572,7 @@
                 this.mainLayer = new Kinetic.Layer();       //main rendering layer
                 this.stage.add(this.mainLayer);
                 this.establishFillMeter('Voltage', 'V', this.mainLayer, 0, 0.05*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
-                this.establishFillMeter('Current', 'mA', this.mainLayer, 0, 0.37*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
+                this.establishFillMeter('Current', '\u03BCA', this.mainLayer, 0, 0.37*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
                 this.establishFillMeter('Temperature', 'C', this.mainLayer, 0, 0.69*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
 
                 this.addEventListener('postHVchan', function(evt){
@@ -738,8 +738,16 @@
 
                 unit = unit[unit.length-1];
 
-                this.meterNow[title].setAttr('text', 'Now: ' + val.toFixed() + ' ' +unit)
-                this.meterMax[title].setAttr('text', 'Max: ' + max.toFixed() + ' ' +unit);
+                if(val==-9999){
+                    this.meterNow[title].setAttr('text', 'See Primary');
+                    barLength = 0;
+                    color = '#34495e';
+                } else
+                    this.meterNow[title].setAttr('text', 'Now: ' + val.toFixed() + ' ' +unit);
+                if(max==-9999)
+                    this.meterMax[title].setAttr('text', 'See Primary');
+                else
+                    this.meterMax[title].setAttr('text', 'Max: ' + max.toFixed() + ' ' +unit);
                 this.meter[title].setAttr('width', barLength);
                 this.meter[title].setAttr('fill', color);
                 this.meter[title].moveToTop();
