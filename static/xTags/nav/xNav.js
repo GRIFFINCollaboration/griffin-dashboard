@@ -6,17 +6,19 @@
         lifecycle: {
             created: function() {
                 var baseURL = 'http://'+window.location.host,
-                    link = document.createElement('a'),
+                    link,
                     routes = ['HV', 'GRIFFIN'],
                     present = (window.location+'').slice( (window.location+'').lastIndexOf('/')),
                     i;
 
                     for(i=0; i<routes.length; i++){
+                        link = document.createElement('a')
                         link.setAttribute('href', '/'+routes[i]);
                         if(routes[i] == present)
                             link.setAttribute('class', 'stdin present');
                         else
                             link.setAttribute('class', 'stdin');
+                        link.innerHTML = routes[i];
                         this.appendChild(link);
                     }
 
