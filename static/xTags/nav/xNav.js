@@ -8,7 +8,7 @@
                 var baseURL = 'http://'+window.location.host,
                     link = document.createElement('a'),
                     routes = ['HV', 'GRIFFIN'],
-                    present = window.location.slice( (window.location+'').lastIndexOf('/')),
+                    present = (window.location+'').slice( (window.location+'').lastIndexOf('/')),
                     i;
 
                     for(i=0; i<routes.length; i++){
