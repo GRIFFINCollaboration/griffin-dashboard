@@ -5,21 +5,22 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var script = document.createElement('script'),
-                    baseURL = 'http://'+window.location.host;
+                var baseURL = 'http://'+window.location.host,
+                    link = document.createElement('a'),
+                    routes = ['HV', 'GRIFFIN'],
+                    present = window.location.slice(window.location.lastIndexOf('/')),
+                    i;
 
-                script.setAttribute('src', baseURL+'/?cmd=jcopy&odb=Custom/&encoding=json-p-nokeys&callback=parseCustomPages');
+                    for(i=0; i<routes.length; i++){
+                        link.setAttribute('href', '/'+routes[i]);
+                        if(routes[i] == present)
+                            link.setAttribute('class', 'stdin present');
+                        else
+                            link.setAttribute('class', 'stdin');
+                        this.appendChild(link);
+                    }
 
-                script.setAttribute('id', 'customScrapeScript');
 
-                //dump the script after it's done
-                script.onload = function(){
-                    var element = document.getElementById('customScrapeScript');
-                    if(element)
-                        element.parentNode.removeChild(element);
-                }
-                
-                document.head.appendChild(script);
             },
             inserted: function() {},
             removed: function() {},
@@ -60,21 +61,3 @@
     });
 
 })();
-
-//callback to trigger nav population once data is returned
-function parseCustomPages(data){
-    var i, key
-        navBars = document.getElementsByTagName('widget-nav'),
-        links = [];
-
-    //scrape out custom pages, they end in '&'
-    for(key in data){
-        if(key[key.length-1] == '&')
-            links[links.length] = key.slice(0,key.length-1);
-    }
-
-    for(i=0; i<navBars.length; i++){
-        navBars[i].setup(links)
-    }
-
-}
