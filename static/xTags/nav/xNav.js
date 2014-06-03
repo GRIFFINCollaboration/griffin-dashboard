@@ -8,9 +8,9 @@
                 var baseURL = 'http://'+window.location.host,
                     link,
                     routes = ['HV', 'GRIFFIN'],
-                    present = (window.location+'').slice( (window.location+'').lastIndexOf('/')),
+                    present = (window.location+'').slice( (window.location+'').lastIndexOf('/') + 1),
                     i;
-console.log(present)
+
                     for(i=0; i<routes.length; i++){
                         link = document.createElement('a')
                         link.setAttribute('href', '/'+routes[i]);
