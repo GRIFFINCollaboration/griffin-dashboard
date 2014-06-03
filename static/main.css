@@ -103,6 +103,10 @@ input[type='radio'].stdin:checked + label{
 	background-color: #555555;
 }
 
+a{
+	text-decoration: none;
+}
+
 /*Footer and footer-related styles////////////////////////////////////////////////////*/
 div#footer{
     background-color: #111111;
