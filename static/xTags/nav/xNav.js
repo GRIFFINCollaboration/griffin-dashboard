@@ -10,7 +10,7 @@
                     routes = ['HV', 'GRIFFIN'],
                     present = (window.location+'').slice( (window.location+'').lastIndexOf('/')),
                     i;
-
+console.log(present)
                     for(i=0; i<routes.length; i++){
                         link = document.createElement('a')
                         link.setAttribute('href', '/'+routes[i]);

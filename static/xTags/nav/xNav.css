@@ -1,7 +1,8 @@
 
 widget-nav{
 	width:100%;
-	margin: 1em;
+	margin: 1em 1em 0 1em;
+	display: inline-block;
 }
 
 a.present{
