@@ -481,7 +481,7 @@
                 var i, URL, MSCaddr;
 
                 for(i=0; i<this.channelNames.length; i++){
-                    if( !isRate(this.channelNames[i]) ) continue;
+                    if( !this.isRate(this.channelNames[i]) ) continue;
                     if( !window.currentData.MSC.hasOwnProperty(this.channelNames[i]) ) continue;
 
                     MSCaddr = window.currentData.MSC[this.channelNames[i]]
