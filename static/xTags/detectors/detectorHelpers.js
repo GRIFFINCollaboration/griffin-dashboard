@@ -302,9 +302,11 @@ function fetchODBEquipment(returnObj){
 function parseRate(data){
     var key, subkey;
 
-    if(!window.currentData.Rate)
-        window.currentData.Rate = {};
-
+    if(!window.currentData.reqRate)
+        window.currentData.reqRate = {};
+    if(!window.currentData.acptRate)
+        window.currentData.acptRate = {};
+/*
     for(key in data){
         if (data.hasOwnProperty(key)) {
             for(subkey in data[key]){
@@ -314,6 +316,7 @@ function parseRate(data){
             }
         }
     }
+*/
 }
 
 //similar function for the threshold service:

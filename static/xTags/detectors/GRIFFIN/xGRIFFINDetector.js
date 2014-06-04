@@ -506,12 +506,20 @@
                             value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'B'];
                             text += scrubNumber(value);
 
-                            text += '\nRate-A: '
-                            value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'A'];
+                            text += '\nReq. Rate-A: '
+                            value = window.currentData['reqRate'][this.channelNames[i].slice(0,9)+'A'];
                             text += scrubNumber(value);
 
-                            text += '\nRate-B: '
-                            value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'B'];
+                            text += '\nReq. Rate-B: '
+                            value = window.currentData['reqRate'][this.channelNames[i].slice(0,9)+'B'];
+                            text += scrubNumber(value);
+
+                            text += '\nAcpt. Rate-A: '
+                            value = window.currentData['acptRate'][this.channelNames[i].slice(0,9)+'A'];
+                            text += scrubNumber(value);
+
+                            text += '\nAcpt. Rate-B: '
+                            value = window.currentData['acptRate'][this.channelNames[i].slice(0,9)+'B'];
                             text += scrubNumber(value);
                         //BGO
                         } else {
@@ -523,8 +531,12 @@
                             value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'X'];
                             text += scrubNumber(value);
 
-                            text += '\nRate: '
-                            value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'X'];
+                            text += '\nReq. Rate: '
+                            value = window.currentData['reqRate'][this.channelNames[i].slice(0,9)+'X'];
+                            text += scrubNumber(value);
+
+                            text += '\nAcpt. Rate: '
+                            value = window.currentData['acptRate'][this.channelNames[i].slice(0,9)+'X'];
                             text += scrubNumber(value);                           
                         }
                     //Rate and Threshold detail cells
@@ -539,8 +551,12 @@
                             value = window.currentData['Threshold'][this.channelNames[i]];
                             text += scrubNumber(value);
 
-                            text += '\nRate: '
-                            value = window.currentData['Rate'][this.channelNames[i]];
+                            text += '\nReq. Rate: '
+                            value = window.currentData['reqRate'][this.channelNames[i]];
+                            text += scrubNumber(value);
+
+                            text += '\nAcpt. Rate: '
+                            value = window.currentData['acptRate'][this.channelNames[i]];
                             text += scrubNumber(value);
                         //BGO
                         } else{
@@ -556,14 +572,18 @@
                             value = window.currentData['Threshold'][this.channelNames[i]];
                             text += scrubNumber(value);
 
-                            text += '\nRate: '
-                            value = window.currentData['Rate'][this.channelNames[i]];
+                            text += '\nReq. Rate: '
+                            value = window.currentData['reqRate'][this.channelNames[i]];
+                            text += scrubNumber(value);
+
+                            text += '\nAcpt. Rate: '
+                            value = window.currentData['acptRate'][this.channelNames[i]];
                             text += scrubNumber(value);
                         }
                     //summary
                     } else {
                         for(j=0; j<this.views.length; j++){
-                            text += '\n'+this.views[j]+': ';
+                            text += '\n'+this.viewLabels[j]+': ';
                             value = window.currentData[this.views[j]][this.channelNames[i]];
                             text += scrubNumber(value);                       
                         }                        
