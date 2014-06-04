@@ -180,7 +180,7 @@ function initializeDetector(name, headline){
     ///////////////////////
     //State variables
     ///////////////////////
-    this.currentView = 'Rate';
+    this.currentView = 'acptRate';
     this.currentUnit = 'Hz';
     this.displayIndex = 0;  //always start on the first card, guarnateed to exist.
     this.HVcrates = 0;
