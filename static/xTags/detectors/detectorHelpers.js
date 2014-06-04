@@ -24,8 +24,10 @@ function initializeDetector(name, headline){
 
     this.name = name;
     //declare default views and units if none pre-defined
-    if(!this.views)
+    if(!this.views){
         this.views = ['HV', 'Threshold', 'reqRate', 'acptRate'];
+        this.viewLabels = ['HV', 'Threshold', 'Trigger Request Rate', 'Trigger Accept Rate'];
+    }
     if(!this.units)
         this.units = ['V', 'ADC Units', 'Hz', 'Hz'];
 
@@ -74,13 +76,13 @@ function initializeDetector(name, headline){
         subdetectorNav.setAttribute('name', this.id+'Nav');
         subdetectorNav.setAttribute('value', this.views[i]);
         subdetectorNav.onchange = this.trackView.bind(this);
-        if(i==2) subdetectorNav.setAttribute('checked', true); //default to rate view
+        if(i==3) subdetectorNav.setAttribute('checked', true); //default to rate view
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNav);
         subdetectorNavLabel = document.createElement('label');
         subdetectorNavLabel.setAttribute('id', this.id+'goto'+this.views[i]+'Label');
         subdetectorNavLabel.setAttribute('for', this.id+'goto'+this.views[i]);
         document.getElementById(this.id+'titleWrapper').appendChild(subdetectorNavLabel);
-        document.getElementById(this.id+'goto'+this.views[i]+'Label').innerHTML = this.views[i];
+        document.getElementById(this.id+'goto'+this.views[i]+'Label').innerHTML = this.viewLabels[i];
     }
 
     //sidebar deck
