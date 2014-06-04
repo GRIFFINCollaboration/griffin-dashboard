@@ -167,7 +167,7 @@
                     }
 
                     //update title
-                    this.scaleTitle[j].setText(logTitle + this.currentView + ' [' + this.currentUnit + ']');
+                    this.scaleTitle[j].setText(logTitle + this.viewLables[this.views.indexOf(this.currentView)] + ' [' + this.currentUnit + ']');
                     this.scaleTitle[j].setAttr('x', this.width/2 - this.scaleTitle[j].getTextWidth()/2);
 
                     this.scaleLayer[this.displayIndex].draw();
@@ -371,7 +371,7 @@
                     text = this.channelNames[i];
 
                     for(j=0; j<this.views.length; j++){
-                        text += '\n'+this.views[j]+': ';
+                        text += '\n'+this.viewLables[j]+': ';
                         value = window.currentData[this.views[j]][this.channelNames[i]];
                         text += scrubNumber(value);                       
                     }
