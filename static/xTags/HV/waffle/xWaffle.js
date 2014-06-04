@@ -1,4 +1,3 @@
-//status bar
 (function(){  
 
     xtag.register('x-waffle', {
