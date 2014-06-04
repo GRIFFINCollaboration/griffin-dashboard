@@ -225,7 +225,8 @@ function initializeDetector(name, headline){
     ////////////////////////////
     //MSC table construction
     ////////////////////////////
-    window.currentData.MSC = {/*channel name : [grif16, channel]*/}
+    //window.currentData.MSC = {/*channel name : [grif16, channel]*/}
+    window.currentData.MSC = {'GRG01GN00A' : ['mscb500.triumf.ca',0]}
 
     ////////////////////////////
     //Kinetic.js setup
@@ -331,7 +332,7 @@ function parseThreshold(channelName, res){
         window.currentData.Threshold = {};
 
     data = JSON.parse(res);
-    window.currentData.Threshold[channelName] = data[window.currentData.MSC[channelName][1]]['t_thres']['d'];
+    window.currentData.Threshold[channelName] = data['t_thres']['d'];
 
 /*
     if(data['parameters']['thresholds']){
