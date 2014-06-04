@@ -25,7 +25,7 @@ function initializeDetector(name, headline){
     this.name = name;
     //declare default views and units if none pre-defined
     if(!this.views)
-        this.views = ['HV', 'Threshold', 'Trigger Request Rate', 'Trigger Accept Rate'];
+        this.views = ['HV', 'Threshold', 'reqRate', 'acptRate'];
     if(!this.units)
         this.units = ['V', 'ADC Units', 'Hz'];
 
