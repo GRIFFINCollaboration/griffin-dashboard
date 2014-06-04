@@ -223,6 +223,11 @@ function initializeDetector(name, headline){
     this.lastTTindex = -1;
 
     ////////////////////////////
+    //MSC table construction
+    ////////////////////////////
+    window.currentData.MSC = {/*channel name : [grif16, channel]*/}
+
+    ////////////////////////////
     //Kinetic.js setup
     ////////////////////////////
 
@@ -320,16 +325,21 @@ function parseRate(data){
 }
 
 //similar function for the threshold service:
-function parseThreshold(data){
-    var key;
+function parseThreshold(channelName, res){
+    var data;
     if(!window.currentData.Threshold)
         window.currentData.Threshold = {};
 
+    data = JSON.parse(res);
+    window.currentData.Threshold[channelName] = data[window.currentData.MSC[channelName][1]]['t_thres']['d'];
+
+/*
     if(data['parameters']['thresholds']){
         for(key in data['parameters']['thresholds']){
             window.currentData.Threshold[key.toUpperCase().slice(0,10)] = data['parameters']['thresholds'][key];
         }        
     }    
+*/
 }
 
 //and again for HV:

@@ -476,14 +476,30 @@
                 }.bind(this), 'application/json');
             },
 
-            //fetch rate information
+            //fetch threshold information
             'acquireThresholds' : function(){
+                var i, URL, MSCaddr;
+
+                for(i=0; i<this.channelNames.length; i++){
+                    if( !isRate(this.channelNames[i]) ) continue;
+                    if( !window.currentData.MSC.hasOwnProperty(this.channelNames[i]) ) continue;
+
+                    MSCaddr = window.currentData.MSC[this.channelNames[i]]
+
+                    URL = MSCaddr[0] + '/mscb?node=' + (2 + MSCaddr[1]);
+                    XHR(URL, parseThreshold.bind(null, this.channelNames[i]), 'application/json');
+                }
+
+
+
+                /*
                 XHR(this.thresholdServer, function(res){
                     var data;
                     data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) );
                     parseThreshold(data);
                     this.populate();
                 }.bind(this), 'application/json');
+                */
             },
 
             //fetch HV
