@@ -27,7 +27,7 @@ function initializeDetector(name, headline){
     if(!this.views)
         this.views = ['HV', 'Threshold', 'reqRate', 'acptRate'];
     if(!this.units)
-        this.units = ['V', 'ADC Units', 'Hz'];
+        this.units = ['V', 'ADC Units', 'Hz', 'Hz'];
 
     //set up data store for detectors
     if(!window.currentData)
@@ -180,8 +180,8 @@ function initializeDetector(name, headline){
     ///////////////////////
     //State variables
     ///////////////////////
-    this.currentView = 'acptRate';
-    this.currentUnit = 'Hz';
+    this.currentView = this.views[this.views.length-1];
+    this.currentUnit = this.units[this.units.length-1];
     this.displayIndex = 0;  //always start on the first card, guarnateed to exist.
     this.HVcrates = 0;
     detectHVcrates(this.MIDAS, this);
