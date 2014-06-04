@@ -27,7 +27,7 @@ All custom web components execute a callback upon creation, found in `lifecycle.
  - `<title>` (string) - the title to be displayed in the header at the top of the detector visualization
 
 This function then goes through the following steps, described in greater detail below as required:
- - Ensure the necessary objects are available on the `window.currentData` object, ready to receive data as it comes in.  These are the `currentData.HV`, `.threshold`, and `.rate` objects.
+ - Ensure the necessary objects are available on the `window.currentData` object, ready to receive data as it comes in.  These are the `currentData.HV`, `.threshold`, `.reqRate` and `.acptRate` objects.
  - Establish the custom element's internal DOM structure.
  - Establish some initial state parameters & other member variables.
  - Establish the Kinetic.js environment.
@@ -77,6 +77,8 @@ ________________________________________________________________________________
  - `this.width` & `.height` - dimensions in pixels of Kinetic's rendering area.
  - `this.summaryDepth` default: 0 - number of characters in the summary cell keys for this detector (ie roughly corresponds to granularity of summary, since summary cell key names prefix the detector keys they summarize).  Note values > 9 will be ignored (since a 10 character prefix will only ever include at most one detector element, and so isn't really a summary).
  - `this.HVcrates` default: 0 - number of HV crates plugged into this experiment.  The helper function `detectHVcrates` is run immediately to autodetect an appropriate value from the ODB.
+ - `this.views`: view keys for the different visualization options, normally HV, Threhsold, reqRate and acptRate (ie trigger request and accept rates).
+ - `this.viewLabels` - array of human-friendly labels corresponding to the options in `this.views`.
 
 ####Kinetic.js Setup
 All detectors are drawn in a simple Kinetic.js environment, built and pointed at as follows; array indices correspond to the current view, to which each sensitive element should belong to exactly one.
@@ -269,14 +271,15 @@ Detector components make use of `localStorage` to persist some per-user informat
 localStorage = {
     <this.name>HVmin : <minimum for HV scale for this detector>,
     <this.name>Thresholdmin : <minimum for threshold scale for this detector>,
-    <this.name>Ratemin : <minimum for rate scale for this detector>,
+    <this.name>reqRatemin : <minimum for request rate scale for this detector>,
+    <this.name>acptRatemin : <minimum for accept rate scale for this detector>,
     
     <this.name>HVmax : <maximum for HV scale for this detector>,
     <this.name>Thresholdmax : <maximum for threshold scale for this detector>,
-    <this.name>Ratemax : <maximum for rate scale for this detector>,
+    <this.name>acptRatemax : <maximum for accept rate scale for this detector>,
 
     <this.name>HVscaleType : <lin/log for HV scale for this detector>,
     <this.name>ThresholdscaleType : <lin/log for threshold scale for this detector>,
-    <this.name>RatescaleType : <lin/log for rate scale for this detector> 
+    <this.name>acptRatescaleType : <lin/log for accept rate scale for this detector> 
 }
 ```
