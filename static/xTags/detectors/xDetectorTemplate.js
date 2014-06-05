@@ -527,9 +527,13 @@
             //construct hostmap as { channelName : [host, ADC number], ...} for each channel.
             'buildHostmap' : function(){
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&encoding=json-nokeys&odb=/DAQ', function(res){
-                    var data = JSON.parse(res);
+                    var data = JSON.parse(res),
+                        key;
 
-                    console.log(data);
+                    for(key in data.MSC)
+                        console.log(data.MSC[key])
+
+                    
                 }, 'application/json');
             }
 
