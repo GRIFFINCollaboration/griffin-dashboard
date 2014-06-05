@@ -332,7 +332,7 @@ function parseThreshold(channelName, res){
     if(!window.currentData.Threshold)
         window.currentData.Threshold = {};
 
-    if(!res) continue;
+    if(!res) return;
 
     data = JSON.parse(res);
     window.currentData.Threshold[channelName] = data['t_thres']['d'];
