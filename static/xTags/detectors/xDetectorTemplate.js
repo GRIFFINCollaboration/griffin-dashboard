@@ -533,7 +533,7 @@
                     window.currentData.MSC = {};
 
                     for(i=0; i<this.channelNames.length; i++){
-                        if( !data.MSC[this.channelNames[i]] || data.MSC[this.channelNames[i]==0] ) continue;
+                        if( !data.MSC.hasOwnProperty(this.channelNames[i]) ) continue;
 
                         MSC = parseInt(data.MSC[this.channelNames[i]], 10);
                         window.currentData.MSC[this.channelNames[i]] = ['', MSC & 0xFF];
