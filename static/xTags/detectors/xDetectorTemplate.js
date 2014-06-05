@@ -267,6 +267,7 @@
 
             'update': function(){
                 //trigger a new round of data fetching
+console.log(window.currentData.MSC)
                 this.acquireRates();
                 this.acquireThresholds();
                 this.acquireHV();                
