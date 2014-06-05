@@ -538,16 +538,16 @@
                         MSC = parseInt(data.MSC[this.channelNames[i]], 10);
                         window.currentData.MSC[this.channelNames[i]] = ['', MSC & 0xFF];
 
-                        collector = (MSC & 0xF000) > 12;
+                        collector = (MSC & 0xF000) >> 12;
                         collector = collector.toString(16);
                         collector = 'GRIFC0x' + collector;
 
-                        digitizer = (MSC & 0xF00) > 8;
-console.log(collector)
+                        digitizer = (MSC & 0xF00) >> 8;
+
                         window.currentData.MSC[this.channelNames][0] = data.hosts[collector].digitizers[digitizer];
 
                     }
-
+console.log(window.currentData.MSC)
                     
                 }.bind(this), 'application/json');
             }
