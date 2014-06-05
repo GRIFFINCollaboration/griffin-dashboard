@@ -531,7 +531,7 @@
                         MSC, collector, digitizer;
                     
                     window.currentData.MSC = {};
-
+console.log(this)
                     for(i=0; i<this.channelNames.length; i++){
                         if( !data.MSC[this.channelNames[i]] ) continue;
 
