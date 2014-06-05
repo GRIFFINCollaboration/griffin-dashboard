@@ -226,7 +226,7 @@ function initializeDetector(name, headline){
     //MSC table construction
     ////////////////////////////
     //window.currentData.MSC = {/*channel name : [grif16, channel]*/}
-    window.currentData.MSC = {'GRG01GN00A' : ['mscb500.triumf.ca',0]}
+    window.currentData.MSC = {};
     this.buildHostmap();
 
     ////////////////////////////
