@@ -522,6 +522,15 @@
                     parseHV(data);
                     this.populate()
                 }.bind(this), 'application/json');
+            },
+
+            //construct hostmap as { channelName : [host, ADC number], ...} for each channel.
+            'buildHostmap' : function(){
+                XHR('http://' + this.MIDAS + '/?cmd=jcopy&encoding=json-nokeys&odb=/DAQ', function({
+                    var data = JSON.parse(res);
+
+                    console.log(data);
+                }), 'application/json');
             }
 
         }
