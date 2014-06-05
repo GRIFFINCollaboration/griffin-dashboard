@@ -543,11 +543,11 @@
                         collector = 'GRIFC0x' + collector;
 
                         digitizer = (MSC & 0xF00) > 8;
-
+console.log(collector)
                         window.currentData.MSC[this.channelNames][0] = data.hosts[collector].digitizers[digitizer];
 
                     }
-console.log(window.currentData.MSC)
+
                     
                 }.bind(this), 'application/json');
             }
