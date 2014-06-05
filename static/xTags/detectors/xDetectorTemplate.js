@@ -530,8 +530,10 @@
                     var data = JSON.parse(res),
                         key;
 
-                    for(key in data.MSC)
-                        console.log(data.MSC[key])
+                    for(key in data.MSC){
+                        if(data.MSC.hasOwnProperty(key))
+                            console.log(data.MSC[key])
+                    }
 
                     
                 }, 'application/json');
