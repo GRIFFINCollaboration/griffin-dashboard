@@ -491,6 +491,7 @@
                     MSCaddr = window.currentData.MSC[this.channelNames[i]]
 
                     URL = 'http://' + MSCaddr[0] + '/mscb?node=' + (2 + MSCaddr[1]);
+console.log([this.channelNames[i], URL])
                     XHR(URL, parseThreshold.bind(null, this.channelNames[i]), 'application/json', true);
                 }
 
