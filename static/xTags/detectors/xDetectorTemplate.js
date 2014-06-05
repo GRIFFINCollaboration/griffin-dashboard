@@ -533,7 +533,7 @@
                     window.currentData.MSC = {};
 
                     for(i=0; i<this.channelNames.length; i++){
-                        if( !data.MSC[this.channelNames[i]] ) continue;
+                        if( !data.MSC[this.channelNames[i]] && data.MSC[this.channelNames[i]!=0] ) continue;
 
                         MSC = parseInt(data.MSC[this.channelNames[i]], 10);
                         window.currentData.MSC[this.channelNames[i]] = ['', MSC & 0xFF];
@@ -547,7 +547,6 @@
                         window.currentData.MSC[this.channelNames[i]][0] = data.hosts[collector].digitizers[digitizer];
 
                     }
-console.log(window.currentData.MSC)
                     
                 }.bind(this), 'application/json');
             }
