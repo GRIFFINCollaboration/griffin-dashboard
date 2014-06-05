@@ -528,10 +528,10 @@
             'buildHostmap' : function(){
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&encoding=json-nokeys&odb=/DAQ', function(res){
                     var data = JSON.parse(res),
-                        MSC, collector, digitizer;
+                        MSC, collector, digitizer, i;
                     
                     window.currentData.MSC = {};
-console.log(this)
+
                     for(i=0; i<this.channelNames.length; i++){
                         if( !data.MSC[this.channelNames[i]] ) continue;
 
@@ -549,7 +549,7 @@ console.log(this)
                     }
 console.log(window.currentData.MSC)
                     
-                }, 'application/json');
+                }.bind(this), 'application/json');
             }
 
         }
