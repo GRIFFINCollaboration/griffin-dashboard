@@ -544,7 +544,7 @@
 
                         digitizer = (MSC & 0xF00) >> 8;
 
-                        window.currentData.MSC[this.channelNames][0] = data.hosts[collector].digitizers[digitizer];
+                        window.currentData.MSC[this.channelNames[i]][0] = data.hosts[collector].digitizers[digitizer];
 
                     }
 console.log(window.currentData.MSC)
