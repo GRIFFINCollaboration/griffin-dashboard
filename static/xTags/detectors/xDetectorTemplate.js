@@ -528,13 +528,26 @@
             'buildHostmap' : function(){
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&encoding=json-nokeys&odb=/DAQ', function(res){
                     var data = JSON.parse(res),
-                        key;
+                        MSC, collector, digitizer;
+                    
+                    window.currentData.MSC = {};
 
-                    for(key in data.MSC){
-                        if(data.MSC.hasOwnProperty(key))
-                            console.log(data.MSC[key])
+                    for(i=0; i<this.channelNames.length; i++){
+                        if( !data.MSC[this.channelNames[i]] ) continue;
+
+                        MSC = parseInt(data.MSC[this.channelNames[i]], 10);
+                        window.currentData.MSC[this.channelNames[i]] = ['', MSC & 0xFF];
+
+                        collector = (MSC & 0xF000) > 12;
+                        collector = collector.toString(16);
+                        collector = 'GRIFC0x' + collector;
+
+                        digitizer = (MSC & 0xF00) > 8;
+
+                        window.currentData.MSC[this.channelNames][0] = data.hosts[collector].digitizers[digitizer];
+
                     }
-
+console.log(window.currentData.MSC)
                     
                 }, 'application/json');
             }
