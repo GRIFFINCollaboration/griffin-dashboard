@@ -100,7 +100,8 @@ function buildMSC(DAQresponse){
         i;
 
     for(i=0; i<digiSequence.length; i++){
-        digiSequence[i] = JSON.parse(digiSequence[i]);
+        console.log(digiSequence[i].slice(0,digiSequence[i].length-1).slice(1))
+        digiSequence[i] = JSON.parse(digiSequence[i].slice(0,digiSequence[i].length-1).slice(1) );
         //console.log(digiSequence[i])
     }
 
