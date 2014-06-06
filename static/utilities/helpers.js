@@ -99,6 +99,10 @@ function buildMSC(DAQresponse){
         digiSequence = JSON.parse(JSON.stringify(DAQ.nodes.digitizers)),
         i;
 
+    for(i=0; i<digiSequence.length; i++){
+        digiSequence[i] = JSON.parse(digiSequence[i]);
+    }
+
     digiSequence.sort(function(a, b){
         return b.MSC > a.MSC
     })
