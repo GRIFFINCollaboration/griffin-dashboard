@@ -91,3 +91,22 @@ function getParameterByName(name) {
         results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+
+//build the MSC table from the encoding in the ODB at /DAQ
+function buildMSC(DAQresponse){
+    var digiSequence = JSON.parse(JSON.stringify(DAQ.nodes.digitizers)),
+        i;
+
+    digiSequence.sort(function(a, b){
+        return a.MSC > b.MSC
+    })
+
+    console.log(digiSequence);
+}
+
+
+
+
+
+
