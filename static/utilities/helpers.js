@@ -95,7 +95,8 @@ function getParameterByName(name) {
 
 //build the MSC table from the encoding in the ODB at /DAQ
 function buildMSC(DAQresponse){
-    var digiSequence = JSON.parse(JSON.stringify(DAQ.nodes.digitizers)),
+    var DAQ = JSON.parse(DAQresponse),
+        digiSequence = JSON.parse(JSON.stringify(DAQ.nodes.digitizers)),
         i;
 
     digiSequence.sort(function(a, b){
