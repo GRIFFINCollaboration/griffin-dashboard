@@ -123,7 +123,7 @@ function buildMSC(DAQresponse){
 //generate an array of the channel names of <detector>, in the cannonical order
 function canonicalNames(detector){
     var names = [],
-        i,j,k
+        i,j,k,
         index,
         colors = ['B', 'G', 'R', 'W'];
 
