@@ -100,7 +100,7 @@ function buildMSC(DAQresponse){
         i;
 
     digiSequence.sort(function(a, b){
-        return a.MSC > b.MSC
+        return b.MSC > a.MSC
     })
 
     console.log(digiSequence);
