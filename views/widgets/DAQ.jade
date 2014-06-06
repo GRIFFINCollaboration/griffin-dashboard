@@ -1,0 +1,30 @@
+include ../partials/head.jade
+
+doctype html5
+html
+  head
+    +head()
+    script(type='text/javascript' src='static/xTags/DAQ/xDAQ.js')
+    script(type='text/javascript' src='static/xTags/runControl/xStatus.js')
+    link(rel="stylesheet" type="text/css" href='static/xTags/DAQ/xDAQ.css')
+    link(rel="stylesheet" type="text/css" href='static/xTags/runControl/xStatus.css')
+
+
+  body   
+    div(id='wrapper')
+      branding-head(experiment='GRIFFIN')
+
+      div(id='mainContent')
+        widget-nav(id='navBar')
+        widget-status(id='statusBar', MIDAS='grsmid00.triumf.ca:8082')
+        widget-DAQ(id='HVtool' MIDAS='grsmid00.triumf.ca:8082')
+
+      div(id='push')
+
+    branding-foot
+
+    script.
+      document.addEventListener('DOMComponentsLoaded', function(){
+        //begin data fetch loop:
+        rebootFetch();
+      });
