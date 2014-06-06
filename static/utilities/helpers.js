@@ -97,9 +97,10 @@ function getParameterByName(name) {
 function buildMSC(DAQresponse){
     var DAQ = JSON.parse(DAQresponse),
         digiSequence = JSON.parse(JSON.stringify(DAQ.nodes.digitizers)),
-        MSCnodes = [],
+        MSCaddr = [], channelList = [],
         i,j;
 
+    //construct the ordered list of MSC addresses
     for(i=0; i<digiSequence.length; i++){
         digiSequence[i] = JSON.parse(digiSequence[i]);
         digiSequence[i].MSC = parseInt(digiSequence[i].MSC, 16);
@@ -111,12 +112,37 @@ function buildMSC(DAQresponse){
 
     for(i=0; i<digiSequence.length; i++){
         for(j=0; j<digiSequence[i].channels; j++){
-            MSCnodes.push(digiSequence[i].MSC + j);
-            console.log(MSCnodes[MSCnodes.length-1]);
+            MSCaddr.push(digiSequence[i].MSC + j);
         }
     }
+
+    //construct list of channels
+    console.log(canonicalNames('GRIFFIN'))
 }
 
+//generate an array of the channel names of <detector>, in the cannonical order
+function canonicalNames(detector){
+    var names = [],
+        i,j,k
+        index,
+        colors = ['B', 'G', 'R', 'W'];
+
+    if(detector === 'GRIFFIN'){
+        for(i=1; i<17; i++){
+            index = (i<10) ? '0'+i : i;
+            for(j=0; j<4; j++){
+                names.push('GRG' + index + colors[j] + 'N00A');
+                names.push('GRG' + index + colors[j] + 'N00B');
+            }
+            for(j=0; j<4; j++){
+                for(k=1; k<6; k++)
+                    names.push('GRS' + index + colors[j] + 'N0' + k + 'X');
+            }
+        }
+    }
+
+    return names;
+}
 
 
 
