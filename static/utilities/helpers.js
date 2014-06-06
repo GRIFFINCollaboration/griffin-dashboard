@@ -101,11 +101,11 @@ function buildMSC(DAQresponse){
 
     for(i=0; i<digiSequence.length; i++){
         digiSequence[i] = JSON.parse(digiSequence[i]);
-        //console.log(digiSequence[i])
+        digiSequence[i].MSC = parseInt(digiSequence[i].MSC, 16);
     }
 
     digiSequence.sort(function(a, b){
-        return b.MSC > a.MSC
+        return a.MSC > b.MSC
     })
 
     console.log(digiSequence);
