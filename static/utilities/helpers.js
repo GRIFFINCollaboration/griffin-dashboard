@@ -97,7 +97,8 @@ function getParameterByName(name) {
 function buildMSC(DAQresponse){
     var DAQ = JSON.parse(DAQresponse),
         digiSequence = JSON.parse(JSON.stringify(DAQ.nodes.digitizers)),
-        i;
+        MSCnodes = [],
+        i,j;
 
     for(i=0; i<digiSequence.length; i++){
         digiSequence[i] = JSON.parse(digiSequence[i]);
@@ -108,7 +109,12 @@ function buildMSC(DAQresponse){
         return a.MSC > b.MSC
     })
 
-    console.log(digiSequence);
+    for(i=0; i<digiSequence.length; i++){
+        for(j=0; j<digiSequence[i].channels; j++){
+            MSCnodes.push(digiSequence[i].MSC + j);
+            console.log(MSCnodes[MSCnodes.length-1]);
+        }
+    }
 }
 
 
