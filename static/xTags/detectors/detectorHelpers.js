@@ -225,7 +225,7 @@ function initializeDetector(name, headline){
     ////////////////////////////
     //MSC table construction
     ////////////////////////////
-    //window.currentData.MSC = {/*channel name : [grif16, channel]*/}
+    //window.currentData.MSC = {/*channel name : [digitizer host, channel]*/}
     window.currentData.MSC = {};
     this.buildHostmap();
 

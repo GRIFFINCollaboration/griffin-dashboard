@@ -92,7 +92,7 @@ function getParameterByName(name) {
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-
+/*
 //build the MSC table from the encoding in the ODB at /DAQ
 function buildMSC(DAQresponse){
     var DAQ = JSON.parse(DAQresponse),
@@ -143,7 +143,7 @@ function canonicalNames(detector){
 
     return names;
 }
-
+*/
 
 
 

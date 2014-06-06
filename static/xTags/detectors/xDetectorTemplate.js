@@ -529,19 +529,20 @@
             'buildHostmap' : function(){
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&encoding=json-nokeys&odb=/DAQ', function(res){
                     var data = JSON.parse(res),
-                        MSC, collector, digitizer, i;
+                        MSC, collector, digitizer, i, index;
                     
                     window.currentData.MSC = {};
 
                     for(i=0; i<this.channelNames.length; i++){
-                        if( !data.MSC.hasOwnProperty(this.channelNames[i]) ) continue;
+                        index = data.MSC.chan.indexOf(this.channelNames[i])
+                        if( index === -1 ) continue;
 
-                        MSC = parseInt(data.MSC[this.channelNames[i]], 10);
+                        MSC = parseInt(data.MSC.chan[index], 10);
                         window.currentData.MSC[this.channelNames[i]] = ['', MSC & 0xFF];
 
                         collector = (MSC & 0xF000) >> 12;
                         collector = collector.toString(16);
-                        collector = 'GRIFC0x' + collector;
+                        collector = 'collector0x' + collector;
 
                         digitizer = (MSC & 0xF00) >> 8;
 

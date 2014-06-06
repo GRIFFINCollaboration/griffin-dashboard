@@ -10,11 +10,13 @@ app.get('/GRIFFIN', function(req, res){
 	res.render('detectors/GRIFFIN.jade');
 });
 
+/*
 app.get('/rawMSC', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
 	res.render('scratchTools/dumpMSC.jade');
 });
+*/
 
 app.post('/postHV', function(req, res){
 
