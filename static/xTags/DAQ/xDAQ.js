@@ -80,11 +80,11 @@
                 this.collectors = [];
                 this.digitizers = [];
                 this.collectorCells = [];
-/*
+
                 //determine what collectors are present and instantiate x-cards for each one
                 for(i=0; i<16; i++){
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
-
+/*
                     //if(this.collectors[i]){
                         document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"></x-card>';
                         option = document.createElement('option');
@@ -92,10 +92,10 @@
                         option.innerHTML = 'Collector 0x' + i.toString(16);
                         this.cardNav.appendChild(option);
                         this.nCards++;
-                    
+*/                    
                     //}
                 }
-*/
+
                 //now that the xdeck is built, paint master canvas:
                 for(i=0; i<16; i++){
                     //if(this.collectors[i]){
