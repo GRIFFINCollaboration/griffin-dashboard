@@ -36,7 +36,11 @@
                 this.appendChild(this.navBlock);
 
                 this.cardNav = document.createElement('select');
+                this.cardNav.setAttribute('id', 'DAQnav')
                 this.cardNav.setAttribute('class', 'stdin');
+                this.cardNav.onchange = function(){
+                    document.getElementById('DAQdeck').shuffleTo(selected('DAQnav'));
+                }.bind(this)
                 this.navBlock.appendChild(this.cardNav);
 
                 option = document.createElement('option');
