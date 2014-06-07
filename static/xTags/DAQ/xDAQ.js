@@ -79,7 +79,7 @@
                             fill:'#555555',
                             stroke: '#000000',
                         });
-                        //this.mainLayer[0].add(this.collectors[i]);                        
+                        this.mainLayer[0].add(this.collectors[i]);                        
                     }
 
                 }
