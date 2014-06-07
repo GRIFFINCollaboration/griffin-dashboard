@@ -6,8 +6,8 @@
             created: function() {
                 var xString;
 
-                this.width = this.innerWidth;
-                this.height = this.innerHeight;
+                this.width = this.offsetWidth;
+                this.height = this.offsetHeight;
 
                 //get the DAQ structure
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
