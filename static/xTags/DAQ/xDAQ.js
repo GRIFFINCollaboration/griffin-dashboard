@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var xString, option;
+                var xString, option, title, deckWrap;
 
                 this.width = this.offsetWidth;
                 this.height = window.innerHeight*0.6;
@@ -17,23 +17,13 @@
                     'application/json');
 
                 //build DOM
-                xString = '<x-deck id="DAQdeck" selected-index=0>';
-                xString += '<x-card id="DAQmasterCard"></x-card></x-deck>';
-                xtag.innerHTML(this, xString);
-                this.nCards = 1
-
-                this.masterBlock = document.createElement('div');
-                this.masterBlock.setAttribute('class', 'masterDAQ');
-                document.getElementById('DAQmasterCard').appendChild(this.masterBlock);
-
-                this.collectorBlock = document.createElement('div');
-                this.collectorBlock.setAttribute('id', 'collectorBlock');
-                this.collectorBlock.setAttribute('class', 'collectorDAQ');
-                document.getElementById('DAQmasterCard').appendChild(this.collectorBlock);
-
                 this.navBlock = document.createElement('div');
                 this.navBlock.setAttribute('class', 'DAQnav');
                 this.appendChild(this.navBlock);
+
+                title = document.createElement('h1');
+                title.innerHTML = 'DAQ';
+                this.navBlock.appendChild(title);
 
                 this.cardNav = document.createElement('select');
                 this.cardNav.setAttribute('id', 'DAQnav')
@@ -46,7 +36,24 @@
                 option = document.createElement('option');
                 option.value = 0;
                 option.innerHTML = 'Master'
-                this.cardNav.appendChild(option);
+                this.cardNav.appendChild(option);                
+
+                deckWrap = document.createElement('div');
+                this.appendChild(deckWrap);
+
+                xString = '<x-deck id="DAQdeck" selected-index=0>';
+                xString += '<x-card id="DAQmasterCard"></x-card></x-deck>';
+                xtag.innerHTML(deckWrap, xString);
+                this.nCards = 1
+
+                this.masterBlock = document.createElement('div');
+                this.masterBlock.setAttribute('class', 'masterDAQ');
+                document.getElementById('DAQmasterCard').appendChild(this.masterBlock);
+
+                this.collectorBlock = document.createElement('div');
+                this.collectorBlock.setAttribute('id', 'collectorBlock');
+                this.collectorBlock.setAttribute('class', 'collectorDAQ');
+                document.getElementById('DAQmasterCard').appendChild(this.collectorBlock);
 
                 ////////////////////////////
                 //Kinetic.js setup
