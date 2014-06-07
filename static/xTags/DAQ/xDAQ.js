@@ -21,7 +21,7 @@
                 this.navBlock.setAttribute('class', 'DAQnav');
                 this.appendChild(this.navBlock);
 
-                title = document.createElement('h1');
+                title = document.createElement('label');
                 title.innerHTML = 'DAQ';
                 this.navBlock.appendChild(title);
 
