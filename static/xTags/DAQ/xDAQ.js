@@ -47,12 +47,11 @@
                 this.nCards = 1
 
                 this.masterBlock = document.createElement('div');
-                this.masterBlock.setAttribute('class', 'masterDAQ');
+                this.masterBlock.setAttribute('class', 'DAQheadNode');
                 document.getElementById('DAQmasterCard').appendChild(this.masterBlock);
 
                 this.collectorBlock = document.createElement('div');
                 this.collectorBlock.setAttribute('id', 'collectorBlock');
-                this.collectorBlock.setAttribute('class', 'collectorDAQ');
                 document.getElementById('DAQmasterCard').appendChild(this.collectorBlock);
 
                 ////////////////////////////
@@ -97,7 +96,7 @@
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
 
                     if(this.collectors[i]){
-                        document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"></x-card>';
+                        document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"><div class="DAQheadNode" id="collectorDiv'+i+'""></div><div id="digitizerBlock'+i+'"></div></x-card>';
                         option = document.createElement('option');
                         option.value = this.nCards;
                         option.innerHTML = 'Collector 0x' + i.toString(16).toUpperCase();
