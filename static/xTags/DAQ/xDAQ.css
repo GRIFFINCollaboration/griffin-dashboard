@@ -1,6 +1,7 @@
 widget-DAQ{
 	float:right;
 	width:calc(80% - 2em);
+	margin-right: 1em;
 }
 
 div.masterDAQ{

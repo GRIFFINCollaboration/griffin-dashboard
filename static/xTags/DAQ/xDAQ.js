@@ -9,8 +9,8 @@
                 //get the DAQ structure
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
                     function(res){
-                        console.log(res) 
-                    }, 
+                        this.buildDAQ(res);
+                    }.bind(this), 
                     'application/json');
 
                 xString = '<x-deck id="' + this.id + 'Deck" selected-index=0>';
@@ -38,7 +38,19 @@
             }
         }, 
         methods: {
-  
+            'buildDAQ' : function(response){
+                var data = JSON.parse(response),
+                    collectors = [],
+                    digitizers = [],
+                    i;
+
+                //determine what collectors are present
+                for(i=0; i<16; i++){
+                    collectors[i] = data.hosts['collector0x' + i.toString(16)]
+                }
+
+                console.log(collectors)
+            }
         }
     });
 
