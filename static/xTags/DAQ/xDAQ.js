@@ -7,7 +7,7 @@
                 var xString;
 
                 this.width = this.offsetWidth;
-                this.height = this.offsetHeight;
+                this.height = window.innerHeight*0.6;
 
                 //get the DAQ structure
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
