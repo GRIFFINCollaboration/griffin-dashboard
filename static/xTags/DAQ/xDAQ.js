@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                XHR(this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', function(res){console.log(res) }, 'application/json')
+                XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', function(res){console.log(res) }, 'application/json')
             },
             inserted: function() {},
             removed: function() {},
