@@ -86,10 +86,10 @@
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
 
                     //if(this.collectors[i]){
-                        //document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"></x-card>';
+                        document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"></x-card>';
                         option = document.createElement('option');
                         option.value = this.nCards;
-                        option.innerHTML = 'Collector 0x' + i.toString(16);
+                        option.innerHTML = 'Collector 0x' + i.toString(16).toUpperCase();
                         this.cardNav.appendChild(option);
                         this.nCards++;
                     
