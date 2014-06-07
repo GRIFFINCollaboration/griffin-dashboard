@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var xString;
+                var xString, option;
 
                 this.width = this.offsetWidth;
                 this.height = window.innerHeight*0.6;
@@ -16,9 +16,11 @@
                     }.bind(this), 
                     'application/json');
 
-                xString = '<x-deck id="' + this.id + 'Deck" selected-index=0>';
+                //build DOM
+                xString = '<x-deck id="DAQdeck" selected-index=0>';
                 xString += '<x-card id="DAQmasterCard"></x-card></x-deck>';
                 xtag.innerHTML(this, xString);
+                this.nCards = 1
 
                 this.masterBlock = document.createElement('div');
                 this.masterBlock.setAttribute('class', 'masterDAQ');
@@ -28,6 +30,19 @@
                 this.collectorBlock.setAttribute('id', 'collectorBlock');
                 this.collectorBlock.setAttribute('class', 'collectorDAQ');
                 document.getElementById('DAQmasterCard').appendChild(this.collectorBlock);
+
+                this.navBlock = document.createElement('div');
+                this.navBlock.setAttribute('class', 'DAQnav');
+                this.appendChild(this.navBlock);
+
+                this.cardNav = document.createElement('select');
+                this.cardNav.setAttribute('class', 'stdin');
+                this.navBlock.appendChild(this.cardNav);
+
+                option = document.createElement('option');
+                option.value = 0;
+                option.innerHTML = 'Master'
+                this.cardNav.appendChild(option);
 
                 ////////////////////////////
                 //Kinetic.js setup
@@ -59,7 +74,7 @@
         methods: {
             'buildDAQ' : function(response){
                 var data = JSON.parse(response),
-                    i,
+                    i, option,
                     collectorGutter = 10;
 
                 this.collectors = [];
@@ -73,13 +88,19 @@
                     //if(this.collectors[i]){
                         this.collectorCells[i] = new Kinetic.Rect({
                             x:collectorGutter/2 + i*this.width/16,
-                            y:300,
+                            y:height*0.6,
                             width: (this.width - collectorGutter*16) / 16,
-                            height:100,
+                            height:height*0.2,
                             fill:'#555555',
                             stroke: '#000000',
                         });
-                        this.mainLayer[0].add(this.collectorCells[i]);                        
+                        this.mainLayer[0].add(this.collectorCells[i]);
+
+                        document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"></x-card>';
+                        option = document.createElement('option');
+                        option.value = this.nCards;
+                        this.cardNav.appendChild(option);
+                        this.nCards++;       
                     //}
 
                 }
