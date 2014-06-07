@@ -123,18 +123,17 @@
                         });
                         this.mainLayer[0].add(this.collectorCells[i]);
                     } else{
+                        console.log([(collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) - xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) + xLength, 0.6*this.height + xLength])
                         //terminate loose cord with red x
                         xLeft = new Kinetic.Line({
                             points: [(collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) - xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) + xLength, 0.6*this.height + xLength],
                             stroke: '#FF0000',
-                            strokeWidth: 4
-                            
+                            strokeWidth: 4   
                         });
                         xRight = new Kinetic.Line({
                             points: [(collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) + xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) - xLength, 0.6*this.height + xLength],
                             stroke: '#FF0000',
                             strokeWidth: 4
-                            
                         });
                         this.mainLayer[0].add(xLeft);
                         this.mainLayer[0].add(xRight);
