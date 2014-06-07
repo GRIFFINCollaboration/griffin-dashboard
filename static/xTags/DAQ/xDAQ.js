@@ -88,9 +88,9 @@
                     //if(this.collectors[i]){
                         this.collectorCells[i] = new Kinetic.Rect({
                             x:collectorGutter/2 + i*this.width/16,
-                            y:this.height*0.6,
+                            y:300,//this.height*0.6,
                             width: (this.width - collectorGutter*16) / 16,
-                            height:this.height*0.2,
+                            height:100,//this.height*0.2,
                             fill:'#555555',
                             stroke: '#000000',
                         });
