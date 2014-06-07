@@ -82,7 +82,7 @@
         methods: {
             'buildDAQ' : function(response){
                 var data = JSON.parse(response),
-                    i, option,
+                    i, j, option,
                     collectorGutter = 10;
 
                 this.collectors = [];
@@ -105,6 +105,7 @@
                 }
 
                 //now that the xdeck is built, paint master canvas:
+                //collectors:
                 this.setupKinetic('collectorBlock');
                 for(i=0; i<16; i++){
                     //if(this.collectors[i]){
@@ -119,6 +120,26 @@
                         this.mainLayer[0].add(this.collectorCells[i]);
                     //}
                 }
+
+                //cabling:
+                this.masterCables = [[],[],[],[]];
+                for(i=0; i<4; i++){
+                    this.masterCables[i][0] = new Kinetic.Line({
+                        points: [(i+1)*0.2*this.width,0, (i+1)*0.2*this.width, 0.3*this.height],
+                        fill: '#000000',
+                        strokeWidth: 4
+                    });
+                    this.mainLayer[0].add(this.masterCables[i][0]);
+                    for(j=1; j<5; j++){
+                        this.masterCables[i][j] = new Kinetic.Line({
+                            points: [(i+1)*0.2*this.width, 0.3*this.height, collectorGutter/2 + (4*i+j-0.5)*this.width/16, 0.6*this.height],
+                            fill: '#000000',
+                            strokeWidth: 4
+                        });
+                        this.mainLayer[0].add(this.masterCables[i][j]);
+                    }
+                }
+
                 this.mainLayer[0].draw();
                 
                 
