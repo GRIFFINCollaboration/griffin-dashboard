@@ -6,7 +6,7 @@
             created: function() {
                 var xString;
 
-                this.width = this.offsetHeight;
+                this.width = 1000;
                 this.height = 500;
 
                 //get the DAQ structure
