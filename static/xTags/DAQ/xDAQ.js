@@ -55,9 +55,6 @@
                 this.tooltipLayer = [];
                 this.TTbkg = [];
                 this.text = [];
-                this.setupKinetic('collectorBlock');
-
-                
             },
             inserted: function() {},
             removed: function() {},
@@ -97,6 +94,7 @@
                 }
 
                 //now that the xdeck is built, paint master canvas:
+                this.setupKinetic('collectorBlock');
                 for(i=0; i<16; i++){
                     //if(this.collectors[i]){
                         this.collectorCells[i] = new Kinetic.Rect({
