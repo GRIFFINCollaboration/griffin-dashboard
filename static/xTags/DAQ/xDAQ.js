@@ -69,7 +69,7 @@
                 //determine what collectors are present and instantiate collector cells
                 for(i=0; i<16; i++){
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
-
+/*
                     if(this.collectors[i]){
                         this.collectorCells[i] = new Kinetic.Rect({
                             x:collectorGutter/2 + i*this.width/16,
@@ -81,8 +81,9 @@
                         });
                         this.mainLayer[0].add(this.collectors[i]);                        
                     }
+*/
                 }
-                this.mainLayer[0].draw();
+//                this.mainLayer[0].draw();
                 
                 
 
