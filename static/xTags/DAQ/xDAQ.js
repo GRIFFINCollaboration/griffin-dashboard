@@ -84,7 +84,8 @@
                 var data = JSON.parse(response),
                     i, j, option,
                     collectorGutter = this.width*0.02,
-                    collectorWidth = (this.width - collectorGutter*16) / 16;
+                    collectorWidth = (this.width - collectorGutter*16) / 16,
+                    xLength = collectorGutter;
 
                 this.collectors = [];
                 this.digitizers = [];
@@ -94,7 +95,7 @@
                 for(i=0; i<16; i++){
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
 
-                    //if(this.collectors[i]){
+                    if(this.collectors[i]){
                         document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"></x-card>';
                         option = document.createElement('option');
                         option.value = this.nCards;
@@ -102,14 +103,14 @@
                         this.cardNav.appendChild(option);
                         this.nCards++;
                     
-                    //}
+                    }
                 }
 
                 //now that the xdeck is built, paint master canvas:
                 //collectors:
                 this.setupKinetic('collectorBlock');
                 for(i=0; i<16; i++){
-                    //if(this.collectors[i]){
+                    if(this.collectors[i]){
                         this.collectorCells[i] = new Kinetic.Rect({
                             x:collectorGutter/2 + i*this.width/16,
                             y:this.height*0.6,
@@ -117,9 +118,22 @@
                             height:this.height*0.2,
                             fill:'#555555',
                             stroke: '#000000',
+                            strokeWidth: 4
                         });
                         this.mainLayer[0].add(this.collectorCells[i]);
-                    //}
+                    } else{
+                        //terminate loose cord with red x
+                        this.mainLayer[0].add(new Kinetic.Line({
+                            points: [(collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) - xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) + xLength, 0.6*this.height + xLength],
+                            strokeWidth: 8,
+                            stoke: '#FF0000'
+                        }))
+                        this.mainLayer[0].add(new Kinetic.Line({
+                            points: [(collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) + xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) - xLength, 0.6*this.height + xLength],
+                            strokeWidth: 8,
+                            stoke: '#FF0000'
+                        }))
+                    }
                 }
 
                 //cabling:
@@ -143,10 +157,6 @@
 
                 this.mainLayer[0].draw();
                 
-                
-
-
-                console.log(this.collectors)
             },
 
             'setupKinetic' : function(targetID){
