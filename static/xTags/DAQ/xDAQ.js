@@ -85,7 +85,7 @@
                     i, j, option,
                     collectorGutter = this.width*0.02,
                     collectorWidth = (this.width - collectorGutter*16) / 16,
-                    xLength = collectorGutter,
+                    xLength = collectorGutter/2,
                     xLeft, xRight;
 
                 this.collectors = [];
@@ -127,12 +127,12 @@
                         xLeft = new Kinetic.Line({
                             points: [(collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) - xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) + xLength, 0.6*this.height + xLength],
                             stroke: '#FF0000',
-                            strokeWidth: 4   
+                            strokeWidth: 8   
                         });
                         xRight = new Kinetic.Line({
                             points: [(collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) + xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) - xLength, 0.6*this.height + xLength],
                             stroke: '#FF0000',
-                            strokeWidth: 4
+                            strokeWidth: 8
                         });
                         this.mainLayer[0].add(xLeft);
                         this.mainLayer[0].add(xRight);
@@ -148,6 +148,7 @@
                         strokeWidth: 4
                     });
                     this.mainLayer[0].add(this.masterCables[i][0]);
+                    this.masterCables[i][0].moveToBack();
                     for(j=1; j<5; j++){
                         this.masterCables[i][j] = new Kinetic.Line({
                             points: [collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4, 0.3*this.height, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth), 0.6*this.height],
@@ -155,6 +156,7 @@
                             strokeWidth: 4
                         });
                         this.mainLayer[0].add(this.masterCables[i][j]);
+                        this.masterCables[i][j].moveToBack();
                     }
                 }
 
