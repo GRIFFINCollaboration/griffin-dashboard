@@ -85,7 +85,8 @@
                     i, j, option,
                     collectorGutter = this.width*0.02,
                     collectorWidth = (this.width - collectorGutter*16) / 16,
-                    xLength = collectorGutter;
+                    xLength = collectorGutter,
+                    xLeft, xRight;
 
                 this.collectors = [];
                 this.digitizers = [];
@@ -123,16 +124,18 @@
                         this.mainLayer[0].add(this.collectorCells[i]);
                     } else{
                         //terminate loose cord with red x
-                        this.mainLayer[0].add(new Kinetic.Line({
+                        xLeft = new Kinetic.Line({
                             points: [(collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) - xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) + xLength, 0.6*this.height + xLength],
                             strokeWidth: 8,
                             stoke: '#FF0000'
-                        }))
-                        this.mainLayer[0].add(new Kinetic.Line({
+                        });
+                        xRight = new Kinetic.Line({
                             points: [(collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) + xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth) - xLength, 0.6*this.height + xLength],
                             strokeWidth: 8,
                             stoke: '#FF0000'
-                        }))
+                        });
+                        this.mainLayer[0].add(xLeft);
+                        this.mainLayer[0].add(xRight);
                     }
                 }
 
