@@ -70,7 +70,7 @@
                 for(i=0; i<16; i++){
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
 
-                    if(this.collectors[i]){
+                    //if(this.collectors[i]){
                         this.collectorCells[i] = new Kinetic.Rect({
                             x:collectorGutter/2 + i*this.width/16,
                             y:300,
@@ -80,7 +80,7 @@
                             stroke: '#000000',
                         });
                         this.mainLayer[0].add(this.collectorCells[i]);                        
-                    }
+                    //}
 
                 }
                 this.mainLayer[0].draw();
