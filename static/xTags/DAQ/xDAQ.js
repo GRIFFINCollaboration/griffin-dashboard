@@ -79,11 +79,11 @@
                             fill:'#555555',
                             stroke: '#000000',
                         });
-                        this.mainLayer[0].add(this.collectors[i]);                        
+                        this.mainLayer[0].add(this.collectorCells[i]);                        
                     }
 
                 }
-//                this.mainLayer[0].draw();
+                this.mainLayer[0].draw();
                 
                 
 
@@ -127,6 +127,10 @@
                     listening: false
                 });
                 this.tooltipLayer[i].add(this.text[i]);
+
+                this.stage[i].add(this.mainLayer[i]);
+                this.stage[i].add(this.scaleLayer[i]);
+                this.stage[i].add(this.tooltipLayer[i]);
             }
         }
     });
