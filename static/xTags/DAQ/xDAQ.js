@@ -83,7 +83,8 @@
             'buildDAQ' : function(response){
                 var data = JSON.parse(response),
                     i, j, option,
-                    collectorGutter = 10;
+                    collectorGutter = this.width*0.02,
+                    collectorWidth = (this.width - collectorGutter*16) / 16;
 
                 this.collectors = [];
                 this.digitizers = [];
@@ -112,7 +113,7 @@
                         this.collectorCells[i] = new Kinetic.Rect({
                             x:collectorGutter/2 + i*this.width/16,
                             y:this.height*0.6,
-                            width: (this.width - collectorGutter*16) / 16,
+                            width: collectorWidth,
                             height:this.height*0.2,
                             fill:'#555555',
                             stroke: '#000000',
@@ -125,14 +126,14 @@
                 this.masterCables = [[],[],[],[]];
                 for(i=0; i<4; i++){
                     this.masterCables[i][0] = new Kinetic.Line({
-                        points: [(i+1)*0.2*this.width,0, (i+1)*0.2*this.width, 0.3*this.height],
+                        points: [collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4,0, collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4, 0.3*this.height],
                         stroke: '#000000',
                         strokeWidth: 4
                     });
                     this.mainLayer[0].add(this.masterCables[i][0]);
                     for(j=1; j<5; j++){
                         this.masterCables[i][j] = new Kinetic.Line({
-                            points: [(i+1)*0.2*this.width, 0.3*this.height, collectorGutter/2 + (4*i+j-0.5)*this.width/16, 0.6*this.height],
+                            points: [collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4, 0.3*this.height, collectorGutter/2 + (4*i+j-0.5)*this.width/16, 0.6*this.height],
                             stroke: '#000000',
                             strokeWidth: 4
                         });
