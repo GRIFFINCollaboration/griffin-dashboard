@@ -80,7 +80,7 @@
                 this.collectors = [];
                 this.digitizers = [];
                 this.collectorCells = [];
-
+/*
                 //determine what collectors are present and instantiate x-cards for each one
                 for(i=0; i<16; i++){
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
@@ -95,6 +95,7 @@
                     
                     //}
                 }
+*/
                 //now that the xdeck is built, paint master canvas:
                 for(i=0; i<16; i++){
                     //if(this.collectors[i]){
