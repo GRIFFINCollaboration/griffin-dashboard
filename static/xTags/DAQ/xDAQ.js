@@ -88,19 +88,21 @@
                     //if(this.collectors[i]){
                         this.collectorCells[i] = new Kinetic.Rect({
                             x:collectorGutter/2 + i*this.width/16,
-                            y:300,//this.height*0.6,
+                            y:this.height*0.6,
                             width: (this.width - collectorGutter*16) / 16,
-                            height:100,//this.height*0.2,
+                            height:this.height*0.2,
                             fill:'#555555',
                             stroke: '#000000',
                         });
                         this.mainLayer[0].add(this.collectorCells[i]);
-
+/*
                         document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"></x-card>';
                         option = document.createElement('option');
                         option.value = this.nCards;
+                        option.innerHTML = 'Collector 0x' + i.toString(16);
                         this.cardNav.appendChild(option);
-                        this.nCards++;       
+                        this.nCards++;
+                        */
                     //}
 
                 }
