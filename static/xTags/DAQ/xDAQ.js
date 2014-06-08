@@ -179,7 +179,7 @@
                                 stroke: '#000000',
                                 strokeWidth: 4
                             });
-                            this.mainLayer[i].add(this.digitizerCells[i+1][j]);
+                            this.mainLayer[i].add(this.digitizerCells[i][j]);
                         } else{
                             //terminate loose cord with red x
                             xLeft = new Kinetic.Line({
