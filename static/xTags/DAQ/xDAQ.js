@@ -168,7 +168,7 @@
 
                     if(!this.collectors[i]) continue;
 
-                    this.setupKinetic('digitizerBlock'+(i+1));
+                    this.setupKinetic('digitizerBlock'+i);
                     for(j=0; j<16; j++){
                         if(data.hosts['collector0x' + i.toString(16)].digitizers[j]){
                             this.digitizerCells[i][j] = new Kinetic.Rect({
