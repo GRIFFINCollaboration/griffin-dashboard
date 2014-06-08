@@ -168,7 +168,7 @@
 
                     if(!this.collectors[i]) continue;
 
-                    this.setupKinetic('digitizerBlock'+i);
+                    this.setupKinetic('digitizerBlock'+(i+1));
                     for(j=0; j<16; j++){
                         if(data.hosts['collector0x' + i.toString(16)].digitizers[j]){
                             this.digitizerCells[i][j] = new Kinetic.Rect({
@@ -180,7 +180,7 @@
                                 stroke: '#000000',
                                 strokeWidth: 4
                             });
-                            this.mainLayer[i].add(this.digitizerCells[i][j]);
+                            this.mainLayer[i+1].add(this.digitizerCells[i][j]);
                         } else{
                             //terminate loose cord with red x
                             xLeft = new Kinetic.Line({
