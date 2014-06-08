@@ -179,7 +179,7 @@
                                 stroke: '#000000',
                                 strokeWidth: 4
                             });
-                            this.mainLayer[i].add(this.digitizerCells[i][j]);
+                            this.mainLayer[i].add(this.digitizerCells[i+1][j]);
                         } else{
                             //terminate loose cord with red x
                             xLeft = new Kinetic.Line({
@@ -192,8 +192,8 @@
                                 stroke: '#FF0000',
                                 strokeWidth: 8
                             });
-                            this.mainLayer[i].add(xLeft);
-                            this.mainLayer[i].add(xRight);
+                            this.mainLayer[i+1].add(xLeft);
+                            this.mainLayer[i+1].add(xRight);
                         }
 
                         this.mainLayer[i].draw();
