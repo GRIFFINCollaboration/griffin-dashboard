@@ -201,7 +201,7 @@
 
                     //cabling:
                     this.collectorCables[i] = [];
-                    for(j=0; j<4; i++){
+                    for(j=0; j<4; j++){
                         this.collectorCables[i][j] = [];
                         this.collectorCables[i][j][0] = new Kinetic.Line({
                             points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4,0, collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.3*this.height],
