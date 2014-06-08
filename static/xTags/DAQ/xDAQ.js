@@ -120,6 +120,7 @@
                             stroke: '#000000',
                             strokeWidth: 4
                         });
+                        this.collectorCells[i].on('click', this.clickCollector.bind(i+1)); 
                         this.mainLayer[0].add(this.collectorCells[i]);
                     } else{
                         //terminate loose cord with red x
@@ -265,6 +266,10 @@
                 this.stage[i].add(this.mainLayer[i]);
                 this.stage[i].add(this.scaleLayer[i]);
                 this.stage[i].add(this.tooltipLayer[i]);
+            },
+
+            'clickCollector' : function(index){
+                document.getElementById('DAQdeck').shuffleTo(index+1);
             }
         }
     });
