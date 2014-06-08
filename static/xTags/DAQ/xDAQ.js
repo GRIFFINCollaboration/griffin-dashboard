@@ -172,7 +172,7 @@
                     for(j=0; j<16; j++){
                         if(data.hosts['collector0x' + i.toString(16)].digitizers[j]){
                             this.digitizerCells[i][j] = new Kinetic.Rect({
-                                x:collectorGutter/2 + i*this.width/16,
+                                x:collectorGutter/2 + j*this.width/16,
                                 y:this.height*0.6,
                                 width: collectorWidth,
                                 height:this.height*0.2,
@@ -184,12 +184,12 @@
                         } else{
                             //terminate loose cord with red x
                             xLeft = new Kinetic.Line({
-                                points: [(collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) - xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) + xLength, 0.6*this.height + xLength],
+                                points: [(collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) - xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) + xLength, 0.6*this.height + xLength],
                                 stroke: '#FF0000',
                                 strokeWidth: 8   
                             });
                             xRight = new Kinetic.Line({
-                                points: [(collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) + xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) - xLength, 0.6*this.height + xLength],
+                                points: [(collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) + xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) - xLength, 0.6*this.height + xLength],
                                 stroke: '#FF0000',
                                 strokeWidth: 8
                             });
