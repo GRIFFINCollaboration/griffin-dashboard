@@ -81,7 +81,7 @@
         methods: {
             'buildDAQ' : function(response){
                 var data = JSON.parse(response),
-                    i, j, option,
+                    i, j, k, option,
                     collectorGutter = this.width*0.02,
                     collectorWidth = (this.width - collectorGutter*16) / 16,
                     xLength = collectorGutter/2,
@@ -196,8 +196,29 @@
                             this.mainLayer[i+1].add(xRight);
                         }
 
-                        this.mainLayer[i].draw();
                     }
+
+                    //cabling:
+                    this.masterCables = [[],[],[],[]]; //1-to-4 cables: outer index counts master port, inner index counts collector
+                    for(j=0; j<4; i++){
+                        this.masterCables[j][0] = new Kinetic.Line({
+                            points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4,0, collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.3*this.height],
+                            stroke: '#000000',
+                            strokeWidth: 4
+                        });
+                        this.mainLayer[i+1].add(this.masterCables[j][0]);
+                        this.masterCables[j][0].moveToBottom();
+                        for(k=1; k<5; k++){
+                            this.masterCables[j][k] = new Kinetic.Line({
+                                points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.3*this.height, (collectorGutter + collectorWidth)/2 + (4*j+k-1)*(collectorGutter+collectorWidth), 0.6*this.height],
+                                stroke: '#000000',
+                                strokeWidth: 4
+                            });
+                            this.mainLayer[i+1].add(this.masterCables[j][k]);
+                            this.masterCables[j][k].moveToBottom();
+                        }
+                    }
+                    this.mainLayer[i+1].draw();
                 }
 
             },
