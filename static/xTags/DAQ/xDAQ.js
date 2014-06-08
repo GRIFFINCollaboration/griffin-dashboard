@@ -208,7 +208,7 @@
                             stroke: '#000000',
                             strokeWidth: 4
                         });
-                        this.mainLayer[i+1].add(this.masterCables[j][0]);
+                        this.mainLayer[i+1].add(this.collectorCables[i][j][0]);
                         this.collectorCables[i][j][0].moveToBottom();
                         for(k=1; k<5; k++){
                             this.collectorCables[i][j][k] = new Kinetic.Line({
@@ -216,7 +216,7 @@
                                 stroke: '#000000',
                                 strokeWidth: 4
                             });
-                            this.mainLayer[i+1].add(this.masterCables[j][k]);
+                            this.mainLayer[i+1].add(this.collectorCables[i][j][k]);
                             this.collectorCables[i][j][k].moveToBottom();
                         }
                     }
