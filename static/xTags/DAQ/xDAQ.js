@@ -162,6 +162,7 @@
                 
                 //and again for each collector card
                 this.digitizerCells = [];
+                this.collectorCables = [];
                 for(i=0; i<16; i++){
                     this.digitizerCells[i] = [];
 
@@ -199,23 +200,24 @@
                     }
 
                     //cabling:
-                    this.masterCables = [[],[],[],[]]; //1-to-4 cables: outer index counts master port, inner index counts collector
+                    this.collectorCables[i] = [];
                     for(j=0; j<4; i++){
-                        this.masterCables[j][0] = new Kinetic.Line({
+                        this.collectorCables[i][j] = [];
+                        this.collectorCables[i][j][0] = new Kinetic.Line({
                             points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4,0, collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.3*this.height],
                             stroke: '#000000',
                             strokeWidth: 4
                         });
                         this.mainLayer[i+1].add(this.masterCables[j][0]);
-                        this.masterCables[j][0].moveToBottom();
+                        this.collectorCables[i][j][0].moveToBottom();
                         for(k=1; k<5; k++){
-                            this.masterCables[j][k] = new Kinetic.Line({
+                            this.collectorCables[i][j][k] = new Kinetic.Line({
                                 points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.3*this.height, (collectorGutter + collectorWidth)/2 + (4*j+k-1)*(collectorGutter+collectorWidth), 0.6*this.height],
                                 stroke: '#000000',
                                 strokeWidth: 4
                             });
                             this.mainLayer[i+1].add(this.masterCables[j][k]);
-                            this.masterCables[j][k].moveToBottom();
+                            this.collectorCables[i][j][k].moveToBottom();
                         }
                     }
                     this.mainLayer[i+1].draw();
