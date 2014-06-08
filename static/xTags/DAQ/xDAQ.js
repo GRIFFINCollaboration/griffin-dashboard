@@ -139,7 +139,7 @@
                 }
 
                 //cabling:
-                this.masterCables = [[],[],[],[]];
+                this.masterCables = [[],[],[],[]]; //1-to-4 cables: outer index counts master port, inner index counts collector
                 for(i=0; i<4; i++){
                     this.masterCables[i][0] = new Kinetic.Line({
                         points: [collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4,0, collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4, 0.3*this.height],
@@ -158,9 +158,48 @@
                         this.masterCables[i][j].moveToBottom();
                     }
                 }
-
                 this.mainLayer[0].draw();
                 
+                //and again for each collector card
+                this.digitizerCells = [];
+                for(i=0; i<16; i++){
+                    this.digitizerCells[i] = [];
+
+                    if(!this.collectors[i]) continue;
+
+                    this.setupKinetic('digitizerBlock'+i);
+                    for(j=0; j<16; j++){
+                        if(data.hosts['collector0x' + i.toString(16)].digitizers[j]){
+                            this.digitizerCells[i][j] = new Kinetic.Rect({
+                                x:collectorGutter/2 + i*this.width/16,
+                                y:this.height*0.6,
+                                width: collectorWidth,
+                                height:this.height*0.2,
+                                fill:'#555555',
+                                stroke: '#000000',
+                                strokeWidth: 4
+                            });
+                            this.mainLayer[i].add(this.digitizerCells[i][j]);
+                        } else{
+                            //terminate loose cord with red x
+                            xLeft = new Kinetic.Line({
+                                points: [(collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) - xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) + xLength, 0.6*this.height + xLength],
+                                stroke: '#FF0000',
+                                strokeWidth: 8   
+                            });
+                            xRight = new Kinetic.Line({
+                                points: [(collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) + xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) - xLength, 0.6*this.height + xLength],
+                                stroke: '#FF0000',
+                                strokeWidth: 8
+                            });
+                            this.mainLayer[i].add(xLeft);
+                            this.mainLayer[i].add(xRight);
+                        }
+
+                        this.mainLayer[i].draw();
+                    }
+                }
+
             },
 
             'setupKinetic' : function(targetID){
