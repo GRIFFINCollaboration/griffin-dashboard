@@ -269,7 +269,9 @@
             },
 
             'clickCollector' : function(index){
-                document.getElementById('DAQdeck').shuffleTo(index+1);
+                //document.getElementById('DAQdeck').shuffleTo(index+1);
+                document.getElementById('DAQnav').value = index+1;
+                document.getElementById('DAQnav').onchange();
             }
         }
     });
