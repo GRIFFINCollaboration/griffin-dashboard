@@ -120,7 +120,7 @@
                             stroke: '#000000',
                             strokeWidth: 4
                         });
-                        this.collectorCells[i].on('click', this.clickCollector.bind(i)); 
+                        this.collectorCells[i].on('click', this.clickCollector.bind(this, i)); 
                         this.mainLayer[0].add(this.collectorCells[i]);
                     } else{
                         //terminate loose cord with red x
