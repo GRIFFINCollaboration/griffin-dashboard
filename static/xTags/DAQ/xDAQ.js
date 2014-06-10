@@ -342,7 +342,7 @@
                     C;
 
                 if(i!=-1){
-                    text = 'Digitizer 0x' + i.toString(16);
+                    text = 'Digitizer 0x' + S;
                     for(key in this.localMSC[this.showing-1][i]){
                         C = this.localMSC[this.showing-1][i][key].toString(16).toUpperCase();
                         if(C.length == 1)
