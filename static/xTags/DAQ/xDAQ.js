@@ -242,13 +242,11 @@
 
                 //build the MSC table in per-digitizer chunks
                 //this.localMSC[collector index][digitizer index][ADC index] = channel name
-console.log(this.localMSC)
                 for(i=0; i<data.MSC.MSC.length; i++){
                     M = (parseInt(data.MSC.MSC[i],10) & 0xF000) >> 12;
                     S = (parseInt(data.MSC.MSC[i],10) & 0x0F00) >> 8;
                     C = parseInt(data.MSC.MSC[i],10) & 0x00FF;
-console.log([M, S])
-                    this.localMSC[M][S].push({});
+
                     this.localMSC[M][S][data.MSC.chan[i]] = data.MSC.MSC[i];
                 }
 
@@ -343,7 +341,7 @@ console.log([M, S])
                 if(i!=-1){
                     text = 'Digitizer 0x' + i.toString(16);
                     for(key in this.localMSC[this.showing-1][i]){
-                        text += '\n' + key + ' ' + this.localMSC[this.showing-1][i][key];
+                        text += '\n' + key + ' 0x' + this.localMSC[this.showing-1][i][key].toString(16);
                     }
                 } else {
                     text = '';
