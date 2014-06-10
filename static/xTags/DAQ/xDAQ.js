@@ -246,7 +246,7 @@
                     M = parseInt(data.MSC.MSC[i],10) & 0xF000;
                     S = parseInt(data.MSC.MSC[i],10) & 0x0F00;
                     C = parseInt(data.MSC.MSC[i],10) & 0x00FF;
-
+console.log([M,S])
                     this.localMSC[M][S].push({});
                     this.localMSC[M][S][data.MSC.chan[i]] = data.MSC.MSC[i];
                 }
