@@ -243,10 +243,10 @@
                 //build the MSC table in per-digitizer chunks
                 //this.localMSC[collector index][digitizer index][ADC index] = channel name
                 for(i=0; i<data.MSC.MSC.length; i++){
-                    M = parseInt(data.MSC.MSC[i],10) & 0xF000;
-                    S = parseInt(data.MSC.MSC[i],10) & 0x0F00;
+                    M = (parseInt(data.MSC.MSC[i],10) & 0xF000) >> 12;
+                    S = (parseInt(data.MSC.MSC[i],10) & 0x0F00) >> 8;
                     C = parseInt(data.MSC.MSC[i],10) & 0x00FF;
-console.log([M,S])
+
                     this.localMSC[M][S].push({});
                     this.localMSC[M][S][data.MSC.chan[i]] = data.MSC.MSC[i];
                 }
