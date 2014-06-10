@@ -58,6 +58,9 @@
                 this.collectorBlock.setAttribute('id', 'collectorBlock');
                 document.getElementById('DAQmasterCard').appendChild(this.collectorBlock);
 
+                this.tooltip = document.createElement('div');
+                this.tooltip.setAttribute('class', 'tooltip hidden'); 
+
                 ////////////////////////////
                 //Kinetic.js setup
                 ////////////////////////////
@@ -319,6 +322,9 @@
                 this.text[this.showing].setAttr( 'y', Math.min(mousePos.y + 20, this.height - TTheight + 10) ); 
 
                 this.tooltipLayer[this.showing].draw();
+
+                this.tooltip.setAttribute('style', 'left: ' + (Math.min(mousePos.x + 20, this.width - TTwidth + 10)) + 'px; top: ' + Math.min(mousePos.y + 20, this.height - TTheight + 10) + 'px;' );
+                this.tooltip.setAttribute('class', 'tooltip')
             },
 
             'writeCollectorTooltip' : function(i){

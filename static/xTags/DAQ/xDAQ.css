@@ -18,3 +18,15 @@ div.DAQnav{
 #DAQdeck{
 	height: 80%;
 }
+
+div.tooltip{
+	background-color: #000000;
+	opacity: 0.8;
+	min-height: 200px;
+	min-width: 200px;
+	position: absolute;
+}
+
+.hidden{
+	display: none;
+}
