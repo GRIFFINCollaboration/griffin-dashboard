@@ -94,7 +94,7 @@
                 this.collectors = [];
                 this.digitizers = [];
                 this.collectorCells = [];
-                this.localMSC = [];
+                //this.localMSC = [];
 
                 //determine what collectors are present and instantiate x-cards for each one
                 for(i=0; i<16; i++){
@@ -131,7 +131,7 @@
                         this.collectorCells[i].on('mouseout', this.writeCollectorTooltip.bind(this, -1));
                         this.mainLayer[0].add(this.collectorCells[i]);
 
-                        this.localMSC[i] = []
+                        //this.localMSC[i] = []
                     } else{
                         //terminate loose cord with red x
                         xLeft = new Kinetic.Line({
@@ -196,7 +196,7 @@
                             this.digitizerCells[i].on('mouseout', this.writeDigitizerTooltip.bind(this, -1));
                             this.mainLayer[i+1].add(this.digitizerCells[i][j]);
 
-                            this.localMSC[i][j] = [];
+                            //this.localMSC[i][j] = [];
                         } else{
                             //terminate loose cord with red x
                             xLeft = new Kinetic.Line({
