@@ -347,7 +347,7 @@
                         C = this.localMSC[this.showing-1][i][key].toString(16).toUpperCase();
                         if(C.length == 1)
                             C == '0' + C
-                        text += '\n' + key + ' 0x' + M + S + C;
+                        text += '\n' + key + ' 0x' + M + ',' + S + ',' + C;
                     }
                 } else {
                     text = '';
