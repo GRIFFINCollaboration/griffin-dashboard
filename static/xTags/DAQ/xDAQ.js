@@ -124,6 +124,7 @@
                             strokeWidth: 4
                         });
                         this.collectorCells[i].on('click', this.clickCollector.bind(this, i)); 
+                        this.collectorCells[i].on('mousemove', this.moveTooltip.bind(this) );
                         this.mainLayer[0].add(this.collectorCells[i]);
                     } else{
                         //terminate loose cord with red x
