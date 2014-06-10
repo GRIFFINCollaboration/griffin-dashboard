@@ -14,3 +14,7 @@ div.DAQheadNode{
 div.DAQnav{
 	margin: 1em 0 1em 0;
 }
+
+#DAQdeck{
+	height: 80%;
+}
