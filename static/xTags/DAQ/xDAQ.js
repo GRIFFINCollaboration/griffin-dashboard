@@ -304,6 +304,7 @@
                     text = '';
                 }
                 this.lastTTindex = i;
+                console.log(this.showing)
                 this.text[this.showing].setText(text);
                 if(text != ''){
                     //adjust the background size
