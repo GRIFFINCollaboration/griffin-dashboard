@@ -239,7 +239,7 @@
                     this.mainLayer[i+1].draw();
 
                 }
-
+/*
                 //build the MSC table in per-digitizer chunks
                 //this.localMSC[collector index][digitizer index][ADC index] = channel name
                 for(i=0; i<data.MSC.MSC.length; i++){
@@ -250,7 +250,7 @@
                     this.localMSC[M][S].push({});
                     this.localMSC[M][S][data.MSC.chan[i]] = data.MSC.MSC[i];
                 }
-
+*/
             },
 
             'setupKinetic' : function(targetID){
