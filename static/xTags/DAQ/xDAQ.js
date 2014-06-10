@@ -348,7 +348,7 @@
                             MSC = '00' + MSC;
                         else if(MSC.length == 3)
                             MSC = '0' + MSC
-                        text += '\n' + key + ' 0x' + MSC;
+                        text += '\n' + key + ' \t0x' + MSC;
                     }
                 } else {
                     text = '';
