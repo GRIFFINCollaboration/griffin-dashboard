@@ -32,7 +32,7 @@
                 this.cardNav.onchange = function(){
                     var targetIndex = selected('DAQnav')
                     document.getElementById('DAQdeck').shuffleTo(targetIndex);
-                    this.showing = targetIndex - 1;
+                    this.showing = targetIndex;
                 }.bind(this)
                 this.navBlock.appendChild(this.cardNav);
 
@@ -296,14 +296,13 @@
             },
 
             'writeCollectorTooltip' : function(i){
-                var text, value, j;
+                var text;
 
                 if(i!=-1){
                     text = 'Collector 0x' + i.toString(16);
                 } else {
                     text = '';
                 }
-                this.lastTTindex = i;
                 console.log(this.showing)
                 this.text[this.showing].setText(text);
                 if(text != ''){
