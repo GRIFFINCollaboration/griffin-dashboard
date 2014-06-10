@@ -125,6 +125,8 @@
                         });
                         this.collectorCells[i].on('click', this.clickCollector.bind(this, i)); 
                         this.collectorCells[i].on('mousemove', this.moveTooltip.bind(this) );
+                        this.collectorCells[i].on('mouseover', this.writeCollectorTooltip.bind(this, i) );
+                        this.collectorCells[i].on('mouseout', this.writeCollectorTooltip.bind(this, -1));
                         this.mainLayer[0].add(this.collectorCells[i]);
                     } else{
                         //terminate loose cord with red x
@@ -290,6 +292,27 @@
                 this.text[this.showing].setAttr( 'x', Math.min(mousePos.x + 20, this.width - TTwidth + 10) );
                 this.text[this.showing].setAttr( 'y', Math.min(mousePos.y + 20, this.height - TTheight) ); 
 
+                this.tooltipLayer[this.showing].draw();
+            },
+
+            'writeCollectorTooltip' : function(i){
+                var text, value, j;
+
+                if(i!=-1){
+                    text = 'Collector 0x' + i.toString(16);
+                } else {
+                    text = '';
+                }
+                this.lastTTindex = i;
+                this.text[this.showing].setText(text);
+                if(text != ''){
+                    //adjust the background size
+                    this.TTbkg[this.showing].setAttr( 'width', this.text[this.showing].getAttr('width') + 20 );
+                    this.TTbkg[this.showing].setAttr( 'height', this.text[this.showing].getAttr('height') + 20 ); 
+                } else {
+                    this.TTbkg[this.showing].setAttr('width', 0);
+                    this.TTbkg[this.showing].setAttr('height', 0);                    
+                }
                 this.tooltipLayer[this.showing].draw();
             }
         }
