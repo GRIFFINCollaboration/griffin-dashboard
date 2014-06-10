@@ -341,7 +341,7 @@
                 if(i!=-1){
                     text = 'Digitizer 0x' + i.toString(16);
                     for(key in this.localMSC[this.showing-1][i]){
-                        text += '\n' + key + ' 0x' + this.localMSC[this.showing-1][i][key].toString(16);
+                        text += '\n' + key + ' 0x' + (this.showing-1).toString(16).toUpperCase() + i.toString(16).toUpperCase() + this.localMSC[this.showing-1][i][key].toString(16).toUpperCase();
                     }
                 } else {
                     text = '';
