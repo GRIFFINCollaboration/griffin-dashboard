@@ -1,7 +1,10 @@
-//return the value of a selected option from a <select> element
-function selected(selectID){
+//return the value of a selected option from a <select> element, or the innerHTML instead if fetchText is set.
+function selected(selectID, fetchText){
     var select = document.getElementById(selectID),
         value = select.options[select.selectedIndex].value;
+
+        if(fetchText)
+            value = select.options[select.selectedIndex].innerHTML;
 
     return value;
 }
