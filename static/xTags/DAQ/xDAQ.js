@@ -317,7 +317,7 @@
             },
 
             'writeCollectorTooltip' : function(i){
-                var text, i;
+                var text;
 
                 if(i!=-1){
                     text = 'Collector 0x' + i.toString(16);
