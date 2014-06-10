@@ -30,8 +30,9 @@
                 this.cardNav.setAttribute('id', 'DAQnav')
                 this.cardNav.setAttribute('class', 'stdin');
                 this.cardNav.onchange = function(){
-                    var targetIndex = selected('DAQnav')
+                    var targetIndex = parseInt(selected('DAQnav'), 10);
                     document.getElementById('DAQdeck').shuffleTo(targetIndex);
+                    this.writeCollectorTooltip(-1);
                     this.showing = targetIndex;
                 }.bind(this)
                 this.navBlock.appendChild(this.cardNav);
