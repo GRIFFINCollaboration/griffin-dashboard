@@ -89,11 +89,12 @@
                     collectorGutter = this.width*0.02,
                     collectorWidth = (this.width - collectorGutter*16) / 16,
                     xLength = collectorGutter/2,
-                    xLeft, xRight;
+                    xLeft, xRight, M, S, C;
 
                 this.collectors = [];
                 this.digitizers = [];
                 this.collectorCells = [];
+                this.localMSC = [];
 
                 //determine what collectors are present and instantiate x-cards for each one
                 for(i=0; i<16; i++){
@@ -129,6 +130,8 @@
                         this.collectorCells[i].on('mouseover', this.writeCollectorTooltip.bind(this, i) );
                         this.collectorCells[i].on('mouseout', this.writeCollectorTooltip.bind(this, -1));
                         this.mainLayer[0].add(this.collectorCells[i]);
+
+                        this.localMSC[i] = []
                     } else{
                         //terminate loose cord with red x
                         xLeft = new Kinetic.Line({
@@ -188,7 +191,12 @@
                                 stroke: '#000000',
                                 strokeWidth: 4
                             });
+                            this.digitizerCells[i].on('mousemove', this.moveTooltip.bind(this) );
+                            this.digitizerCells[i].on('mouseover', this.writeDigitizerTooltip.bind(this, j) );
+                            this.digitizerCells[i].on('mouseout', this.writeDigitizerTooltip.bind(this, -1));
                             this.mainLayer[i+1].add(this.digitizerCells[i][j]);
+
+                            this.localMSC[i][j] = [];
                         } else{
                             //terminate loose cord with red x
                             xLeft = new Kinetic.Line({
@@ -229,6 +237,18 @@
                         }
                     }
                     this.mainLayer[i+1].draw();
+
+                }
+
+                //build the MSC table in per-digitizer chunks
+                //this.localMSC[collector index][digitizer index][ADC index] = channel name
+                for(i=0; i<data.MSC.MSC.length; i++){
+                    M = parseInt(data.MSC.MSC[i],10) & 0xF000;
+                    S = parseInt(data.MSC.MSC[i],10) & 0x0F00;
+                    C = parseInt(data.MSC.MSC[i],10) & 0x00FF;
+
+                    this.localMSC[M][S].push({});
+                    this.localMSC[M][S][data.MSC.chan[i]] = data.MSC.MSC[i];
                 }
 
             },
@@ -297,14 +317,36 @@
             },
 
             'writeCollectorTooltip' : function(i){
-                var text;
+                var text, i;
 
                 if(i!=-1){
                     text = 'Collector 0x' + i.toString(16);
                 } else {
                     text = '';
                 }
-                console.log(this.showing)
+                this.text[this.showing].setText(text);
+                if(text != ''){
+                    //adjust the background size
+                    this.TTbkg[this.showing].setAttr( 'width', this.text[this.showing].getAttr('width') + 20 );
+                    this.TTbkg[this.showing].setAttr( 'height', this.text[this.showing].getAttr('height') + 20 ); 
+                } else {
+                    this.TTbkg[this.showing].setAttr('width', 0);
+                    this.TTbkg[this.showing].setAttr('height', 0);                    
+                }
+                this.tooltipLayer[this.showing].draw();
+            },
+
+            'writeDigitizerTooltip' : function(i){
+                var text, key;
+
+                if(i!=-1){
+                    text = 'Digitizer 0x' + i.toString(16);
+                    for(key in this.localMSC[this.showing-1][i]){
+                        text += '\n' + key + ' ' + this.localMSC[this.showing-1][i][key];
+                    }
+                } else {
+                    text = '';
+                }
                 this.text[this.showing].setText(text);
                 if(text != ''){
                     //adjust the background size
