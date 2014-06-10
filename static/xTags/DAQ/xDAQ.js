@@ -94,7 +94,7 @@
                 this.collectors = [];
                 this.digitizers = [];
                 this.collectorCells = [];
-                //this.localMSC = [];
+                this.localMSC = [];
 
                 //determine what collectors are present and instantiate x-cards for each one
                 for(i=0; i<16; i++){
@@ -131,7 +131,7 @@
                         this.collectorCells[i].on('mouseout', this.writeCollectorTooltip.bind(this, -1));
                         this.mainLayer[0].add(this.collectorCells[i]);
 
-                        //this.localMSC[i] = []
+                        this.localMSC[i] = []
                     } else{
                         //terminate loose cord with red x
                         xLeft = new Kinetic.Line({
@@ -191,12 +191,12 @@
                                 stroke: '#000000',
                                 strokeWidth: 4
                             });
-                            this.digitizerCells[i].on('mousemove', this.moveTooltip.bind(this) );
-                            this.digitizerCells[i].on('mouseover', this.writeDigitizerTooltip.bind(this, j) );
-                            this.digitizerCells[i].on('mouseout', this.writeDigitizerTooltip.bind(this, -1));
+                            this.digitizerCells[i][j].on('mousemove', this.moveTooltip.bind(this) );
+                            this.digitizerCells[i][j].on('mouseover', this.writeDigitizerTooltip.bind(this, j) );
+                            this.digitizerCells[i][j].on('mouseout', this.writeDigitizerTooltip.bind(this, -1));
                             this.mainLayer[i+1].add(this.digitizerCells[i][j]);
 
-                            //this.localMSC[i][j] = [];
+                            this.localMSC[i][j] = [];
                         } else{
                             //terminate loose cord with red x
                             xLeft = new Kinetic.Line({
@@ -239,7 +239,7 @@
                     this.mainLayer[i+1].draw();
 
                 }
-/*
+
                 //build the MSC table in per-digitizer chunks
                 //this.localMSC[collector index][digitizer index][ADC index] = channel name
                 for(i=0; i<data.MSC.MSC.length; i++){
@@ -250,7 +250,7 @@
                     this.localMSC[M][S].push({});
                     this.localMSC[M][S][data.MSC.chan[i]] = data.MSC.MSC[i];
                 }
-*/
+
             },
 
             'setupKinetic' : function(targetID){
