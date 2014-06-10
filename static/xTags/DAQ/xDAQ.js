@@ -8,6 +8,7 @@
 
                 this.width = this.offsetWidth;
                 this.height = window.innerHeight*0.6;
+                this.showing = 0;
 
                 //get the DAQ structure
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
@@ -29,7 +30,9 @@
                 this.cardNav.setAttribute('id', 'DAQnav')
                 this.cardNav.setAttribute('class', 'stdin');
                 this.cardNav.onchange = function(){
-                    document.getElementById('DAQdeck').shuffleTo(selected('DAQnav'));
+                    var targetIndex = selected('DAQnav')
+                    document.getElementById('DAQdeck').shuffleTo(targetIndex);
+                    this.showing = targetIndex - 1;
                 }.bind(this)
                 this.navBlock.appendChild(this.cardNav);
 
@@ -272,6 +275,21 @@
                 //document.getElementById('DAQdeck').shuffleTo(index+1);
                 document.getElementById('DAQnav').value = index+1;
                 document.getElementById('DAQnav').onchange();
+            },
+
+            'moveTooltip': function(){
+                var mousePos = this.stage[this.showing].getPointerPosition(),
+                    TTwidth = this.TTbkg[this.showing].getAttr('width'),
+                    TTheight = this.TTbkg[this.showing].getAttr('height');
+
+                //adjust the background size & position
+                this.TTbkg[this.showing].setAttr( 'x', Math.min(mousePos.x + 10, this.width - TTwidth) );
+                this.TTbkg[this.showing].setAttr( 'y', Math.min(mousePos.y + 10, this.height - TTheight) );
+                //make text follow the mouse too
+                this.text[this.showing].setAttr( 'x', Math.min(mousePos.x + 20, this.width - TTwidth + 10) );
+                this.text[this.showing].setAttr( 'y', Math.min(mousePos.y + 20, this.height - TTheight) ); 
+
+                this.tooltipLayer[this.showing].draw();
             }
         }
     });
