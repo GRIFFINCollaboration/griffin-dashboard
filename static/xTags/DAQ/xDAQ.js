@@ -309,7 +309,7 @@
                 this.TTbkg[this.showing].setAttr( 'x', Math.min(mousePos.x + 10, this.width - TTwidth) );
                 this.TTbkg[this.showing].setAttr( 'y', Math.min(mousePos.y + 10, this.height - TTheight) );
                 //make text follow the mouse too
-                this.text[this.showing].setAttr( 'x', Math.min(mousePos.x + 20, this.width - TTwidth + 10) );
+                this.text[this.showing].setAttr( 'x', Math.min(mousePos.x + 20, this.width - TTwidth) );
                 this.text[this.showing].setAttr( 'y', Math.min(mousePos.y + 20, this.height - TTheight) ); 
 
                 this.tooltipLayer[this.showing].draw();
@@ -348,7 +348,7 @@
                             MSC = '00' + MSC;
                         else if(MSC.length == 3)
                             MSC = '0' + MSC
-                        text += '\n' + key + ' \t0x' + MSC;
+                        text += '\n' + key + ' 0x' + MSC;
                     }
                 } else {
                     text = '';
