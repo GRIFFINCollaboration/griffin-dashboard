@@ -89,7 +89,7 @@
                     collectorGutter = this.width*0.02,
                     collectorWidth = (this.width - collectorGutter*16) / 16,
                     xLength = collectorGutter/2,
-                    xLeft, xRight, M, S, C;
+                    xLeft, xRight, M, S, C, MSCstring;
 
                 this.collectors = [];
                 this.digitizers = [];
@@ -196,7 +196,7 @@
                             this.digitizerCells[i][j].on('mouseout', this.writeDigitizerTooltip.bind(this, -1));
                             this.mainLayer[i+1].add(this.digitizerCells[i][j]);
 
-                            this.localMSC[i][j] = [];
+                            this.localMSC[i][j] = {};
                         } else{
                             //terminate loose cord with red x
                             xLeft = new Kinetic.Line({
@@ -246,8 +246,14 @@
                     M = (parseInt(data.MSC.MSC[i],10) & 0xF000) >> 12;
                     S = (parseInt(data.MSC.MSC[i],10) & 0x0F00) >> 8;
                     C = parseInt(data.MSC.MSC[i],10) & 0x00FF;
-
-                    this.localMSC[M][S][data.MSC.chan[i]] = data.MSC.MSC[i];
+                    MSCstring = data.MSC.MSC[i].toString(16).toUpperCase();
+                        if(MSCstring.length == 1)
+                            MSCstring = '000' + MSCstring;
+                        else if(MSCstring.length == 2)
+                            MSCstring = '00' + MSCstring;
+                        else if(MSCstring.length == 3)
+                            MSCstring = '0' + MSCstring
+                    this.localMSC[M][S][data.MSC.chan[i]] = '0x'+MSCstring;
                 }
 
             },
@@ -336,19 +342,12 @@
             },
 
             'writeDigitizerTooltip' : function(i){
-                var text, key, MSC;
+                var text, key;
 
                 if(i!=-1){
                     text = 'Digitizer 0x' + i.toString(16).toUpperCase();
                     for(key in this.localMSC[this.showing-1][i]){
-                        MSC = this.localMSC[this.showing-1][i][key].toString(16).toUpperCase();
-                        if(MSC.length == 1)
-                            MSC = '000' + MSC;
-                        else if(MSC.length == 2)
-                            MSC = '00' + MSC;
-                        else if(MSC.length == 3)
-                            MSC = '0' + MSC
-                        text += '\n' + key + ' 0x' + MSC;
+                        text += '\n' + key + ' ' + this.localMSC[this.showing-1][i][key];
                     }
                 } else {
                     text = '';
