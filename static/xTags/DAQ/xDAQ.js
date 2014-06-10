@@ -339,16 +339,16 @@
                 var text, key, MSC;
 
                 if(i!=-1){
-                    text = 'Digitizer 0x' + S;
+                    text = 'Digitizer 0x' + i.toString(16).toUpperCase();
                     for(key in this.localMSC[this.showing-1][i]){
-                        MSCC = this.localMSC[this.showing-1][i][key].toString(16).toUpperCase();
-                        if(C.length == 1)
-                            C = '000' + C;
-                        else if(C.length == 2)
-                            C = '00' + C;
-                        else if(C.length == 3)
-                            C = '0' + C
-                        text += '\n' + key + ' 0x' + C;
+                        MSC = this.localMSC[this.showing-1][i][key].toString(16).toUpperCase();
+                        if(MSC.length == 1)
+                            MSC = '000' + MSC;
+                        else if(MSC.length == 2)
+                            MSC = '00' + MSC;
+                        else if(MSC.length == 3)
+                            MSC = '0' + MSC
+                        text += '\n' + key + ' 0x' + MSC;
                     }
                 } else {
                     text = '';
