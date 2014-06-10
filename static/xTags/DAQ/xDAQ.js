@@ -336,7 +336,7 @@
             },
 
             'writeDigitizerTooltip' : function(i){
-                var text, key, MSC,
+                var text, key, MSC;
 
                 if(i!=-1){
                     text = 'Digitizer 0x' + S;
