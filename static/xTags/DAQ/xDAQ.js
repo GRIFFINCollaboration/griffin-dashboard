@@ -336,12 +336,18 @@
             },
 
             'writeDigitizerTooltip' : function(i){
-                var text, key;
+                var text, key,
+                    M = (this.showing-1).toString(16).toUpperCase(),
+                    S = i.toString(16).toUpperCase(),
+                    C;
 
                 if(i!=-1){
                     text = 'Digitizer 0x' + i.toString(16);
                     for(key in this.localMSC[this.showing-1][i]){
-                        text += '\n' + key + ' 0x' + (this.showing-1).toString(16).toUpperCase() + i.toString(16).toUpperCase() + this.localMSC[this.showing-1][i][key].toString(16).toUpperCase();
+                        C = this.localMSC[this.showing-1][i][key].toString(16).toUpperCase();
+                        if(C.length == 1)
+                            C == '0' + C
+                        text += '\n' + key + ' 0x' + M + S + C;
                     }
                 } else {
                     text = '';
