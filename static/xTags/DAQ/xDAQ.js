@@ -309,8 +309,8 @@
                 this.TTbkg[this.showing].setAttr( 'x', Math.min(mousePos.x + 10, this.width - TTwidth) );
                 this.TTbkg[this.showing].setAttr( 'y', Math.min(mousePos.y + 10, this.height - TTheight) );
                 //make text follow the mouse too
-                this.text[this.showing].setAttr( 'x', Math.min(mousePos.x + 20, this.width - TTwidth) );
-                this.text[this.showing].setAttr( 'y', Math.min(mousePos.y + 20, this.height - TTheight) ); 
+                this.text[this.showing].setAttr( 'x', Math.min(mousePos.x + 20, this.width - TTwidth + 10) );
+                this.text[this.showing].setAttr( 'y', Math.min(mousePos.y + 20, this.height - TTheight + 10) ); 
 
                 this.tooltipLayer[this.showing].draw();
             },
