@@ -21,3 +21,7 @@ div.ribbon{
 	display: inline-block;
 	vertical-align: top;
 }
+
+div.ribbon:hover{
+	border: 1px solid #FF0000;
+}
