@@ -82,7 +82,7 @@
                 var remove = document.createElement('button'),
                     moveLater = document.createElement('button'),
                     moveEarlier = document.createElement('button'),
-                    sortWrap = document.createElement('sortWrap'),
+                    sortWrap = document.createElement('div'),
                     timeLabel = document.createElement('label'),
                     duration = document.createElement('input'),
                     durationUnits = document.createElement('select'),
