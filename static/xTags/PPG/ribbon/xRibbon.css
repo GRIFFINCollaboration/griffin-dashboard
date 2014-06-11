@@ -1,12 +1,10 @@
 x-ribbon{
 	width: 100%;
-	height: 300px;
 	display: inline-block;
 }
 
 div.ribbonWrapper{
 	width: 100%;
-	height: 100%;
 	padding: 0;
 	margin: 0;
 	overflow: scroll;
