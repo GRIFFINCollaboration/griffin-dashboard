@@ -108,7 +108,7 @@
                 moveLater.onclick = this.shuffleCardLater.bind(this, targetElement);
                 sortWrap.appendChild(moveLater);
 
-                timeLabel.innerHTML = 'Duration';
+                timeLabel.innerHTML = 'Duration:';
                 targetElement.appendChild(timeLabel);
                 duration.setAttribute('class', 'stdin');
                 targetElement.appendChild(duration);

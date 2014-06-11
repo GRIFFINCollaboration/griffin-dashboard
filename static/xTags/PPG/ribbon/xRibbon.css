@@ -21,12 +21,3 @@ div.ribbon{
 	display: inline-block;
 	vertical-align: top;
 }
-
-div.ribbonCard{
-	height: 100%;
-	width: 200px;
-	border-radius: 1em;
-	border: 0.5em solid #f1c40f;
-	display: inline-block;
-	vertical-align: top;
-}

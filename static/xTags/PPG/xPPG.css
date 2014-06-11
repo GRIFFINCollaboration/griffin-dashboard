@@ -9,3 +9,17 @@ div.PPGcardSorting{
 	text-align: center;
 	width: 100%;
 }
+
+div.ribbonCard{
+	height: 100%;
+	border-radius: 1em;
+	border: 0.5em solid #f1c40f;
+	display: inline-block;
+	vertical-align: top;
+	padding: 1em;
+}
+
+widget-PPG input.stdin{
+	width: 4em;
+	margin-left: 0.5em;
+}
