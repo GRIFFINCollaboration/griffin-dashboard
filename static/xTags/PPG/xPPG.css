@@ -35,3 +35,10 @@ div.ribbonCard ul{
 div.ribbonCard input[type='checkbox']:checked + label{
 	color: #f0291b;
 }
+
+div.PPGcontrol{
+	background-color: #333333;
+	border-radius: 1em;
+	padding: 1em;
+	margin-top: 1em;
+}
