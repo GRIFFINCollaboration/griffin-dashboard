@@ -12,7 +12,7 @@
                     cycleNameLabel = document.createElement('label'),
                     cycleName = document.createElement('input')
 
-                XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB);
+                XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB.bind(this));
 
                 xString = '<h1>Cycle Configuration</h1><x-ribbon id="PPGribbon"></x-ribbon>';
                 xtag.innerHTML(this,xString);
