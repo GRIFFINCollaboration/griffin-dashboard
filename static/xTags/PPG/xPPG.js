@@ -60,6 +60,7 @@
                     this.registerNewCycle();
                     document.getElementById('applyCycle').checked = true;
                 }
+                controlWrap.appendChild(saveLoadPPG);
 
                 //this.loadPPG([1,2,5], this.ribbon);
             },
