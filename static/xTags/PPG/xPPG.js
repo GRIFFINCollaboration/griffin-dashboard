@@ -32,6 +32,7 @@
                 encodedCycle.setAttribute('id', 'encodedCycle');
                 encodedCycle.setAttribute('style', 'display:none');
                 encodedCycle.setAttribute('name', 'cycleString');
+                controlWrap.appendChild(encodedCycle);
 
                 cycleNameLabel.innerHTML = 'Cycle Name:';
                 cycleName.setAttribute('class', 'stdin');
