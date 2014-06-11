@@ -125,8 +125,8 @@
                     currentPPG = data.Cycles[currentName].PPGcodes,
                     currentDuration = data.Cycles[currentName].durations
 
-                document.getElementById('cycleName').value = currentName;
                 this.loadPPG(currentPPG, currentDuration);
+                document.getElementById('cycleName').value = currentName;
             }
         }
     });
