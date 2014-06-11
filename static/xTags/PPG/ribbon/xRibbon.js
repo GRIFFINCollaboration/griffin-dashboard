@@ -57,6 +57,8 @@
         }, 
         methods: {
             'spawnCard' : function(nextNode){
+                console.log(this.cardConfig)
+                /*
                 var card = document.createElement('div');
 
                 card.setAttribute('class', 'ribbonCard');
@@ -65,6 +67,7 @@
 
                 this.nCards++;
                 this.uniqueIndex++;
+                */
             },
 
             'newNode' : function(nextNode){
