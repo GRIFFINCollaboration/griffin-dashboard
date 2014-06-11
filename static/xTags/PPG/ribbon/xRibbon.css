@@ -1,5 +1,5 @@
 x-ribbon{
-	width: 100%;
+	width: calc(80% - 2em);
 	height: 300px;
 	display: inline-block;
 }

@@ -41,8 +41,6 @@
                         this.newNode(this.endRibbon.previousSibling);
                     }
                 }.bind(this);
-
-                loadPPG([1,2,5], this);
             },
 
             inserted: function() {},
