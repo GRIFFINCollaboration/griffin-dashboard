@@ -7,7 +7,7 @@
             created: function() {
                 var baseURL = 'http://'+window.location.host,
                     link,
-                    routes = ['HV', 'GRIFFIN'],
+                    routes = ['HV', 'GRIFFIN', 'DAQ'],
                     present = (window.location+'').slice( (window.location+'').lastIndexOf('/') + 1),
                     i;
 

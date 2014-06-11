@@ -16,6 +16,12 @@ app.get('/DAQ', function(req, res){
 	res.render('widgets/DAQ.jade');
 });
 
+app.get('/PPG', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	
+	res.render('widgets/PPG.jade');
+});
+
 /*
 app.get('/rawMSC', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)

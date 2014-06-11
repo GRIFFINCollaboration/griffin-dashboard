@@ -1,0 +1,32 @@
+x-ribbon{
+	width: 100%;
+	height: 300px;
+	display: inline-block;
+}
+
+div.ribbonWrapper{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: scroll;
+	white-space: nowrap;
+}
+
+div.ribbon{
+	min-width: 4em;
+	margin: 4em 0 0 0;
+	background-color: #f1c40f;
+	min-height: 1em;
+	display: inline-block;
+	vertical-align: top;
+}
+
+div.ribbonCard{
+	height: 100%;
+	width: 200px;
+	border-radius: 1em;
+	border: 0.5em solid #f1c40f;
+	display: inline-block;
+	vertical-align: top;
+}
