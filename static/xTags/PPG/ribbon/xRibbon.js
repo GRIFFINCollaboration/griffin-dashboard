@@ -117,6 +117,7 @@
                 duration.setAttribute('type', 'number')
                 targetElement.appendChild(duration);
                 durationUnits.setAttribute('class', 'stdin');
+                durationUnits.setAttribute('id', 'units' + this.uniqueIndex)
                 targetElement.appendChild(durationUnits);
                 for(i=0; i<units.length; i++){
                     unitOption = document.createElement('option');
