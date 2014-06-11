@@ -64,7 +64,7 @@ app.post('/registerCycle', function(req, res){
 	}
 
 	if(req.body.applyCycle){
-		spawn('odbedit', ['-c', "set /PPG/Cycles/Current " + req.body.cycleName);
+		spawn('odbedit', ['-c', "set /PPG/Cycles/Current " + req.body.cycleName]);
 	}
 
 	return res.redirect('/PPG');
