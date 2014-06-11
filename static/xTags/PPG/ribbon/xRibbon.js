@@ -97,14 +97,17 @@
                 targetElement.appendChild(sortWrap);
 
                 moveEarlier.innerHTML = 'Earlier';
+                moveEarlier.setAttribute('class', 'stdin');
                 moveEarlier.onclick = this.shuffleCardEarlier.bind(this, targetElement);
                 sortWrap.appendChild(moveEarlier);
 
                 remove.innerHTML = 'Remove';
+                remove.setAttribute('class', 'stdin');
                 remove.onclick = this.deleteCard.bind(this, targetElement);
                 sortWrap.appendChild(remove);
 
                 moveLater.innerHTML = 'Later';
+                moveLater.setAttribute('class', 'stdin');
                 moveLater.onclick = this.shuffleCardLater.bind(this, targetElement);
                 sortWrap.appendChild(moveLater);
 
