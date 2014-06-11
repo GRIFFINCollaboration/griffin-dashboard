@@ -12,7 +12,7 @@
                     cycleNameLabel = document.createElement('label'),
                     cycleName = document.createElement('input')
 
-                this.ribbon;
+                XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB);
 
                 xString = '<h1>Cycle Configuration</h1><x-ribbon id="PPGribbon"></x-ribbon>';
                 xtag.innerHTML(this,xString);
@@ -46,7 +46,7 @@
                 savePPG.onclick = this.registerNewCycle.bind(this);
                 controlWrap.appendChild(savePPG);
 
-                this.loadPPG([1,2,5], this.ribbon);
+                //this.loadPPG([1,2,5], this.ribbon);
             },
             inserted: function() {},
             removed: function() {},
@@ -61,15 +61,19 @@
             }
         }, 
         methods: {
-            'loadPPG' : function(ppgTable, ribbon){
-                var i, j, lastStep, options;
+            'loadPPG' : function(ppgTable, durations){
+                var i, j, lastStep, options, lastDuration;
 
                 for(i=0; i<ppgTable.length; i++){
-                    ribbon.endRibbon.onclick();
+                    this.ribbon.endRibbon.onclick();
 
-                    lastStep = ribbon.getElementsByTagName('ul');
+                    lastStep = this.ribbon.getElementsByTagName('ul');
                     lastStep = lastStep[lastStep.length-1];
                     options = lastStep.querySelectorAll('input[type="checkbox"]');
+
+                    lastDuration = this.ribbon.querySelectorAll('input[type="number"]');
+                    lastDuration = lastDuration[lastDuration.length-1];
+                    lastDuration.value = durations[i];
 
                     for(j=0; j<16; j++){
                         if( (1 << j) & ppgTable[i]){
@@ -104,10 +108,16 @@
             },
 
             'registerNewCycle' : function(){
-                //var PPGcode = this.traversePPGribbon(),
-                //    cycleName = document.getElementById('cycleName').value;
-
                 document.getElementById('encodedCycle').value = JSON.stringify(this.traversePPGribbon());
+            },
+
+            'registerPPGODB' : function(responseText){
+                var data = JSON.parse(responseText),
+                    currentName = data.Current,
+                    currentPPG = data.Cycles[currentName].PPGcodes,
+                    currentDuration = data.Cycles[currentName].durations
+
+                this.loadPPG(currentPPG, currentDuration);
             }
         }
     });
