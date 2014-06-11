@@ -73,7 +73,15 @@
 
                     lastDuration = this.ribbon.querySelectorAll('input[type="number"]');
                     lastDuration = lastDuration[lastDuration.length-1];
-                    lastDuration.value = durations[i];
+                    if(durations[i] < 1000)
+                        lastDuration.value = durations[i];
+                    else if(durations[i] < 60000){
+                        lastDuration.value = durations[i] / 1000;
+                        lastDuration.nextSibling.value = 1000;
+                    } else{
+                        lastDuration.value = durations[i] / 60000;
+                        lastDuration.nextSibling.value = 60000;
+                    }
 
                     for(j=0; j<16; j++){
                         if( (1 << j) & ppgTable[i]){
@@ -117,6 +125,7 @@
                     currentPPG = data.Cycles[currentName].PPGcodes,
                     currentDuration = data.Cycles[currentName].durations
 
+                document.getElementById('cycleName').value = currentName;
                 this.loadPPG(currentPPG, currentDuration);
             }
         }
