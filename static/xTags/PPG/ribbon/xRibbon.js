@@ -84,7 +84,7 @@
                 demo.innerHTML = 'Remove'
                 demo.onclick = this.deleteCard.bind(this, targetElement);
 
-                targetElement.appendChild(test);
+                targetElement.appendChild(demo);
             },
 
             'deleteCard' : function(target){
