@@ -114,7 +114,8 @@
                 timeLabel.innerHTML = 'Duration:';
                 targetElement.appendChild(timeLabel);
                 duration.setAttribute('class', 'stdin');
-                duration.setAttribute('type', 'number')
+                duration.setAttribute('type', 'number');
+                duration.setAttribute('value', 0);
                 targetElement.appendChild(duration);
                 durationUnits.setAttribute('class', 'stdin');
                 durationUnits.setAttribute('id', 'units' + this.uniqueIndex)

@@ -64,13 +64,13 @@
                     options,
                     ppgConfig = [],
                     i, j;
-console.log(durations)
+
                     for(i=0; i<steps.length; i++){
                         duration = parseInt(durations[i].value) //* selected(units[i].id); 
                         console.log(duration)
                         options = steps[i].querySelectorAll('input[type="checkbox"]:checked');
                         if(options.length > 0){
-                            ppgConfig.push({'PPGcode' : 0, 'duration' : 0});
+                            ppgConfig.push({'PPGcode' : 0, 'duration' : duration});
                             for(j=0; j<options.length; j++){
                                 ppgConfig[ppgConfig.length-1].PPGcode = ppgConfig[ppgConfig.length-1].PPGcode | parseInt(options[j].value,10);
                             }
