@@ -25,6 +25,6 @@ widget-PPG input.stdin{
 	margin-left: 0.5em;
 }
 
-widget-PPG input[type="button"]:hover{
+div.PPGcardSorting button:hover{
 	background-color: #555555;
 }
