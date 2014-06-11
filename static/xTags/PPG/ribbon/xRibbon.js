@@ -82,6 +82,7 @@
                 var remove = document.createElement('button'),
                     moveLater = document.createElement('button'),
                     moveEarlier = document.createElement('button'),
+                    sortWrap = document.createElement('sortWrap'),
                     timeLabel = document.createElement('label'),
                     duration = document.createElement('input'),
                     durationUnits = document.createElement('select'),
@@ -92,17 +93,20 @@
                     ppgCode = [0x1, 0x2, 0x4],
                     i;
 
+                sortWrap.setAttribute('class', 'PPGcardSorting');
+                targetElement.appendChild(sortWrap);
+
                 moveEarlier.innerHTML = 'Earlier';
                 moveEarlier.onclick = this.shuffleCardEarlier.bind(this, targetElement);
-                targetElement.appendChild(moveEarlier);
+                sortWrap.appendChild(moveEarlier);
 
                 remove.innerHTML = 'Remove';
                 remove.onclick = this.deleteCard.bind(this, targetElement);
-                targetElement.appendChild(remove);
+                sortWrap.appendChild(remove);
 
                 moveLater.innerHTML = 'Later';
                 moveLater.onclick = this.shuffleCardLater.bind(this, targetElement);
-                targetElement.appendChild(moveLater);
+                sortWrap.appendChild(moveLater);
 
                 timeLabel.innerHTML = 'Duration';
                 targetElement.appendChild(timeLabel);

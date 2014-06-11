@@ -18,3 +18,9 @@ div.DAQnav{
 #DAQdeck{
 	height: 80%;
 }
+
+div.PPGcardSorting{
+	display: block;
+	text-align: center;
+	width: 100%;
+}
