@@ -17,12 +17,12 @@
                 this.startRibbon.setAttribute('id', this.id+'StartRibbon');
                 this.startRibbon.setAttribute('class', 'ribbon');
                 this.startRibbon.setAttribute('style', 'border-radius: 1em 0em 0em 1em')
-                this.wrapperDiv.appendChild(this.startRibbon);
+                this.wrapperForm.appendChild(this.startRibbon);
 
                 this.endRibbon.setAttribute('id', this.id+'EndRibbon');
                 this.endRibbon.setAttribute('class', 'ribbon');
                 this.endRibbon.setAttribute('style', 'border-radius: 0em 1em 1em 0em')
-                this.wrapperDiv.appendChild(this.endRibbon);
+                this.wrapperForm.appendChild(this.endRibbon);
 
                 this.startRibbon.onclick = function(){
                     if(this.nCards == 0)
@@ -59,7 +59,7 @@
 
                 card.setAttribute('class', 'ribbonCard');
                 this.cardConfig(card);
-                this.wrapperDiv.insertBefore(card, nextNode)
+                this.wrapperForm.insertBefore(card, nextNode)
 
                 this.nCards++;
                 this.uniqueIndex++;
@@ -70,7 +70,7 @@
                 var ribbon = document.createElement('div');
 
                 ribbon.setAttribute('class', 'ribbon');
-                this.wrapperDiv.insertBefore(ribbon, nextNode);
+                this.wrapperForm.insertBefore(ribbon, nextNode);
                 ribbon.onclick = function(xRibbon){
                     xRibbon.newNode(this);
                     xRibbon.spawnCard(this);
@@ -161,16 +161,16 @@
                 if(target.nextSibling.id == this.id+'EndRibbon') 
                     return //can't go any later
 
-                this.wrapperDiv.insertBefore(target.nextSibling, target.nextSibling.nextSibling.nextSibling);
-                this.wrapperDiv.insertBefore(target, target.nextSibling.nextSibling.nextSibling);
+                this.wrapperForm.insertBefore(target.nextSibling, target.nextSibling.nextSibling.nextSibling);
+                this.wrapperForm.insertBefore(target, target.nextSibling.nextSibling.nextSibling);
             },
 
             'shuffleCardEarlier' : function(target){
                 if(target.previousSibling.id == this.id+'StartRibbon') 
                     return //can't go any later
 
-                this.wrapperDiv.insertBefore(target.previousSibling, target.previousSibling.previousSibling);
-                this.wrapperDiv.insertBefore(target, target.previousSibling.previousSibling);
+                this.wrapperForm.insertBefore(target.previousSibling, target.previousSibling.previousSibling);
+                this.wrapperForm.insertBefore(target, target.previousSibling.previousSibling);
             }
         },
 
