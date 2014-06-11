@@ -36,7 +36,7 @@
                 controlWrap.appendChild(encodedCycle);
 
                 applyCycle.setAttribute('type', 'checkbox');
-                applyCycle.setAttribute('id' 'applyCycle');
+                applyCycle.setAttribute('id', 'applyCycle');
                 applyCycle.setAttribute('style', 'display:none');
                 applyCycle.setAttribute('name', 'applyCycle');
                 controlWrap.appendChild(applyCycle);
