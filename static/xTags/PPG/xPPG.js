@@ -7,7 +7,9 @@
                 var xString, 
                     title = document.createElement('h1'),
                     controlWrap = document.createElement('div'),
-                    savePPG = document.createElement('button')
+                    savePPG = document.createElement('button'),
+                    cycleNameLabel = document.createElement('label'),
+                    cycleName = document.createElement('input')
 
                 this.ribbon;
 
@@ -17,6 +19,13 @@
 
                 controlWrap.setAttribute('class', 'PPGcontrol');
                 this.appendChild(controlWrap);
+
+                cycleNameLabel.innerHTML = 'Cycle Name:';
+                cycleName.setAttribute('class', 'stdin');
+                cycleName.setAttribute('type', 'text');
+                cycleName.setAttribute('id', 'cycleName');
+                controlWrap.appendChild(cycleNameLabel);
+                controlWrap.appendChild(cycleName);
 
                 savePPG.setAttribute('class', 'stdin');
                 savePPG.innerHTML = 'Save New Cycle Definition';
@@ -65,19 +74,27 @@
                     ppgConfig = [],
                     i, j;
 
-                    for(i=0; i<steps.length; i++){
-                        duration = parseInt(durations[i].value) * selected(units[i].id); 
-                        console.log(duration)
-                        options = steps[i].querySelectorAll('input[type="checkbox"]:checked');
-                        if(options.length > 0){
-                            ppgConfig.push({'PPGcode' : 0, 'duration' : duration});
-                            for(j=0; j<options.length; j++){
-                                ppgConfig[ppgConfig.length-1].PPGcode = ppgConfig[ppgConfig.length-1].PPGcode | parseInt(options[j].value,10);
-                            }
+                for(i=0; i<steps.length; i++){
+                    duration = parseInt(durations[i].value) * selected(units[i].id); 
+    
+                    options = steps[i].querySelectorAll('input[type="checkbox"]:checked');
+                    if(options.length > 0){
+                        ppgConfig.push({'PPGcode' : 0, 'duration' : duration});
+                        for(j=0; j<options.length; j++){
+                            ppgConfig[ppgConfig.length-1].PPGcode = ppgConfig[ppgConfig.length-1].PPGcode | parseInt(options[j].value,10);
                         }
                     }
+                }
 
-                    console.log(ppgConfig)
+                return ppgConfig;    
+            },
+
+            'registerNewCycle' : function(){
+                var PPGcode = this.traversePPGribbon(),
+                    cycleName = document.getElementById('cycleName').value;
+
+                console.log(cycleName)
+                console.log(PPGcode)
             }
         }
     });
