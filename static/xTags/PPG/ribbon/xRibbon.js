@@ -92,9 +92,17 @@
                     ppgCode = [0x1, 0x2, 0x4],
                     i;
 
+                moveEarlier.innerHTML = 'Earlier';
+                moveEarlier.onclick = this.shuffleCardEarlier.bind(this, targetElement);
+                targetElement.appendChild(moveEarlier);
+
                 remove.innerHTML = 'Remove';
                 remove.onclick = this.deleteCard.bind(this, targetElement);
                 targetElement.appendChild(remove);
+
+                moveLater.innerHTML = 'Later';
+                moveLater.onclick = this.shuffleCardLater.bind(this, targetElement);
+                targetElement.appendChild(moveLater);
 
                 timeLabel.innerHTML = 'Duration';
                 targetElement.appendChild(timeLabel);
@@ -127,13 +135,6 @@
                     listItem.appendChild(ppgLabel);
                 }
 
-                moveLater.innerHTML = 'Later';
-                moveLater.onclick = this.shuffleCardLater.bind(this, targetElement);
-                targetElement.appendChild(moveLater);
-
-                moveEarlier.innerHTML = 'Earlier';
-                moveEarlier.onclick = this.shuffleCardEarlier.bind(this, targetElement);
-                targetElement.appendChild(moveEarlier);
             },
         
             'deleteCard' : function(target){
