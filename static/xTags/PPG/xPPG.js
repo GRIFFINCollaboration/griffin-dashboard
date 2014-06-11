@@ -8,7 +8,9 @@
                     title = document.createElement('h1'),
                     controlWrap = document.createElement('form'),
                     savePPG = document.createElement('button'),
+                    saveLoadPPG = document.createElement('button'),
                     encodedCycle = document.createElement('input'),
+                    applyCycle = document.createElement('input'),
                     cycleNameLabel = document.createElement('label'),
                     cycleName = document.createElement('input')
 
@@ -33,6 +35,12 @@
                 encodedCycle.setAttribute('name', 'cycleString');
                 controlWrap.appendChild(encodedCycle);
 
+                applyCycle.setAttribute('type', 'checkbox');
+                applyCycle.setAttribute('id' 'applyCycle');
+                applyCycle.setAttribute('style', 'display:none');
+                applyCycle.setAttribute('name', 'applyCycle');
+                controlWrap.appendChild(applyCycle);
+
                 cycleNameLabel.innerHTML = 'Cycle Name:';
                 cycleName.setAttribute('class', 'stdin');
                 cycleName.setAttribute('type', 'text');
@@ -45,6 +53,13 @@
                 savePPG.innerHTML = 'Save New Cycle Definition';
                 savePPG.onclick = this.registerNewCycle.bind(this);
                 controlWrap.appendChild(savePPG);
+
+                saveLoadPPG.setAttribute('class', 'stdin');
+                saveLoadPPG.innerHTML = 'Save & Apply New Cycle Definition';
+                saveLoadPPG.onclick = function(){
+                    this.registerNewCycle();
+                    document.getElementById('applyCycle').checked = true;
+                }
 
                 //this.loadPPG([1,2,5], this.ribbon);
             },
