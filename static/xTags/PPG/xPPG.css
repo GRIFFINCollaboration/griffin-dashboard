@@ -40,7 +40,7 @@ div.ribbonCard input[type='checkbox']:checked + label{
 	color: #f0291b;
 }
 
-div.PPGcontrol{
+form.PPGcontrol{
 	background-color: #333333;
 	border-radius: 1em;
 	padding: 1em;

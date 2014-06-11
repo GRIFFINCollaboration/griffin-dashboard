@@ -45,8 +45,10 @@ app.post('/postHV', function(req, res){
 });
 
 app.post('/registerCycle', function(req, res){
-	console.log(req.body.cycleName);
-	console.log(req.body.cycleString)
+	//console.log(req.body.cycleName);
+	//console.log(req.body.cycleString)
+
+	spawn('odbedit', ['-c', "mkdir /PPG/Cycles/" + req.body.cycleName]);
 
 	return res.redirect('/PPG');
 });
