@@ -17,8 +17,8 @@
                 xtag.innerHTML(this,xString);
                 this.ribbon = document.getElementById('PPGribbon')
 
-                this.ribbon.onclick = function(){
-                    document.getElementById('cycleName').value = '';
+                this.ribbon.wrapperForm.onchange = function(){
+                    document.getElementById('cycleName').value = '';  //a little jagged; would be nicer if this was only on clicks that actually do something to modify the cycle
                 }
 
                 controlWrap.setAttribute('class', 'PPGcontrol');

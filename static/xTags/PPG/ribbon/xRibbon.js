@@ -8,11 +8,11 @@
                 this.endRibbon = document.createElement('div')
                 this.nCards = 0;
                 this.uniqueIndex = 0;
-                this.wrapperDiv = document.createElement('div') 
+                this.wrapperForm = document.createElement('form') 
 
-                this.wrapperDiv.setAttribute('id', this.id+'Wrapper');
-                this.wrapperDiv.setAttribute('class', 'ribbonWrapper');
-                this.appendChild(this.wrapperDiv);
+                this.wrapperForm.setAttribute('id', this.id+'Wrapper');
+                this.wrapperForm.setAttribute('class', 'ribbonWrapper');
+                this.appendChild(this.wrapperForm);
 
                 this.startRibbon.setAttribute('id', this.id+'StartRibbon');
                 this.startRibbon.setAttribute('class', 'ribbon');
