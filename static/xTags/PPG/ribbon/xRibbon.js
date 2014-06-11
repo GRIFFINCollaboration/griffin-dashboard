@@ -80,9 +80,9 @@
             },
 
             'cardConfig' : function(targetElement){
-                var remove = document.createElement('button'),
-                    moveLater = document.createElement('button'),
-                    moveEarlier = document.createElement('button'),
+                var remove = document.createElement('input'),
+                    moveLater = document.createElement('input'),
+                    moveEarlier = document.createElement('input'),
                     sortWrap = document.createElement('div'),
                     timeLabel = document.createElement('label'),
                     duration = document.createElement('input'),
@@ -99,16 +99,19 @@
 
                 moveEarlier.innerHTML = 'Earlier';
                 moveEarlier.setAttribute('class', 'stdin');
+                moveEarlier.setAttribute('type', 'button');
                 moveEarlier.onclick = this.shuffleCardEarlier.bind(this, targetElement);
                 sortWrap.appendChild(moveEarlier);
 
                 remove.innerHTML = 'Remove';
                 remove.setAttribute('class', 'stdin');
+                remove.setAttribute('type', 'button');
                 remove.onclick = this.deleteCard.bind(this, targetElement);
                 sortWrap.appendChild(remove);
 
                 moveLater.innerHTML = 'Later';
                 moveLater.setAttribute('class', 'stdin');
+                moveLater.setAttribute('type', 'button');
                 moveLater.onclick = this.shuffleCardLater.bind(this, targetElement);
                 sortWrap.appendChild(moveLater);
 
