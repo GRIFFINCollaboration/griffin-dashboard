@@ -11,17 +11,16 @@
 
                 this.ribbon;
 
-                xString = '<x-ribbon id="PPGribbon"></x-ribbon>';
+                xString = '<h1>Cycle Configuration</h1><x-ribbon id="PPGribbon"></x-ribbon>';
                 xtag.innerHTML(this,xString);
                 this.ribbon = document.getElementById('PPGribbon')
-                this.ribbon.cardConfig = this.cardConfig;
 
                 controlWrap.setAttribute('class', 'PPGcontrol');
                 this.appendChild(controlWrap);
 
                 savePPG.setAttribute('class', 'stdin');
                 savePPG.innerHTML = 'Save New Cycle Definition';
-                savePPG.onclick = this.traversePPGribbon;
+                savePPG.onclick = this.traversePPGribbon.bind(this);
                 controlWrap.appendChild(savePPG);
 
                 this.loadPPG([1,2,5], this.ribbon);
