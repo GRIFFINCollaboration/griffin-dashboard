@@ -63,6 +63,7 @@
 
                 this.nCards++;
                 this.uniqueIndex++;
+                this.wrapperForm.onchange();
                 
             },
 
@@ -155,6 +156,7 @@
                     target.previousSibling.remove();
                 target.remove();
                 this.nCards--;
+                this.wrapperForm.onchange();
             },
 
             'shuffleCardLater' : function(target){
@@ -163,6 +165,7 @@
 
                 this.wrapperForm.insertBefore(target.nextSibling, target.nextSibling.nextSibling.nextSibling);
                 this.wrapperForm.insertBefore(target, target.nextSibling.nextSibling.nextSibling);
+                this.wrapperForm.onchange();
             },
 
             'shuffleCardEarlier' : function(target){
@@ -171,6 +174,7 @@
 
                 this.wrapperForm.insertBefore(target.previousSibling, target.previousSibling.previousSibling);
                 this.wrapperForm.insertBefore(target, target.previousSibling.previousSibling);
+                this.wrapperForm.onchange();
             }
         },
 
