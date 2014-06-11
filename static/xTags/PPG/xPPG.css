@@ -8,6 +8,7 @@ div.PPGcardSorting{
 	display: block;
 	text-align: center;
 	width: 100%;
+	margin-bottom: 0.5em;
 }
 
 div.ribbonCard{
@@ -22,4 +23,8 @@ div.ribbonCard{
 widget-PPG input.stdin{
 	width: 4em;
 	margin-left: 0.5em;
+}
+
+widget-PPG input[type="button"].stdin:hover{
+	background-color: #555555;
 }
