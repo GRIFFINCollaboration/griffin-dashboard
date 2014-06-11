@@ -97,19 +97,19 @@
                 sortWrap.setAttribute('class', 'PPGcardSorting');
                 targetElement.appendChild(sortWrap);
 
-                moveEarlier.innerHTML = 'Earlier';
+                moveEarlier.value = 'Earlier';
                 moveEarlier.setAttribute('class', 'stdin');
                 moveEarlier.setAttribute('type', 'button');
                 moveEarlier.onclick = this.shuffleCardEarlier.bind(this, targetElement);
                 sortWrap.appendChild(moveEarlier);
 
-                remove.innerHTML = 'Remove';
+                remove.value = 'Remove';
                 remove.setAttribute('class', 'stdin');
                 remove.setAttribute('type', 'button');
                 remove.onclick = this.deleteCard.bind(this, targetElement);
                 sortWrap.appendChild(remove);
 
-                moveLater.innerHTML = 'Later';
+                moveLater.value = 'Later';
                 moveLater.setAttribute('class', 'stdin');
                 moveLater.setAttribute('type', 'button');
                 moveLater.onclick = this.shuffleCardLater.bind(this, targetElement);
