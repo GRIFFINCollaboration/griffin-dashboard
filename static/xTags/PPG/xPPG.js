@@ -25,8 +25,6 @@
                 controlWrap.appendChild(savePPG);
 
                 this.loadPPG([1,2,5], this.ribbon);
-
-                this.traversePPGribbon()
             },
             inserted: function() {},
             removed: function() {},
@@ -62,7 +60,7 @@
             'traversePPGribbon' : function(){
                 var steps = this.ribbon.getElementsByTagName('ul'),
                     durations = this.ribbon.querySelectorAll('input[type="number"]'),
-                    units = this.ribbon.querySelectorAll('select')
+                    units = this.ribbon.querySelectorAll('select'),
                     duration = 0,
                     options,
                     ppgConfig = [],
