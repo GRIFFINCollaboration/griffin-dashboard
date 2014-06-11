@@ -66,7 +66,8 @@
                     i, j;
 
                     for(i=0; i<steps.length; i++){
-                        duration = parseInt(durations[i].value) * selected(units[i].id); 
+                        duration = parseInt(durations[i].value) //* selected(units[i].id); 
+                        console.log(duration)
                         options = steps[i].querySelectorAll('input[type="checkbox"]:checked');
                         if(options.length > 0){
                             ppgConfig.push({'PPGcode' : 0, 'duration' : 0});

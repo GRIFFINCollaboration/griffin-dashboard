@@ -20,7 +20,7 @@ div.ribbonCard{
 }
 
 widget-PPG input.stdin{
-	width: 4em;
+	width: 5em;
 	margin-left: 0.5em;
 }
 
@@ -30,6 +30,10 @@ div.PPGcardSorting button:hover{
 
 div.ribbonCard ul{
 	line-height: 1.5;
+}
+
+div.ribbonCard ul label{
+	cursor: pointer;
 }
 
 div.ribbonCard input[type='checkbox']:checked + label{
