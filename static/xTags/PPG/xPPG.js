@@ -59,7 +59,7 @@
                 saveLoadPPG.onclick = function(){
                     this.registerNewCycle();
                     document.getElementById('applyCycle').checked = true;
-                }
+                }.bind(this);
                 controlWrap.appendChild(saveLoadPPG);
 
                 //this.loadPPG([1,2,5], this.ribbon);
