@@ -64,7 +64,7 @@
                     options,
                     ppgConfig = [],
                     i, j;
-
+console.log(durations)
                     for(i=0; i<steps.length; i++){
                         duration = parseInt(durations[i].value) //* selected(units[i].id); 
                         console.log(duration)
