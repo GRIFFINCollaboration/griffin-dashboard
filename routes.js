@@ -47,8 +47,19 @@ app.post('/postHV', function(req, res){
 app.post('/registerCycle', function(req, res){
 	//console.log(req.body.cycleName);
 	//console.log(req.body.cycleString)
+	var cycle = JSON.parse(req.body.cycleString),
+		i,
+		steps = [],
+		durations = [];
+
+	for(i=0; i<cycle.length; i++){
+		steps[i] = parseInt(cycle[i].PPGcode, 10);
+		durations[i] = parseInt(cycle[i].duration, 10);
+	}
 
 	spawn('odbedit', ['-c', "mkdir /PPG/Cycles/" + req.body.cycleName]);
+	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
+	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations[" + steps.length + "]"]);
 
 	return res.redirect('/PPG');
 });
