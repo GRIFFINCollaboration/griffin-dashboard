@@ -32,6 +32,6 @@ div.ribbonCard ul{
 	line-height: 1.5;
 }
 
-div.ribbonCard input[type='checkbox']:checked label{
+div.ribbonCard input[type='checkbox']:checked + label{
 	color: #c0392b;
 }
