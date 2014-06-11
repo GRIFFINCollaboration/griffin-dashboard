@@ -11,7 +11,7 @@
 
                 this.ribbon;
 
-                xString = '<h1>Cycle Configuration</h1><x-ribbon id="PPGribbon"></x-ribbon>';
+                xString = '<x-ribbon id="PPGribbon"></x-ribbon>';
                 xtag.innerHTML(this,xString);
                 this.ribbon = document.getElementById('PPGribbon')
                 this.ribbon.cardConfig = this.cardConfig;
