@@ -6,8 +6,9 @@
             created: function() {
                 var xString, 
                     title = document.createElement('h1'),
-                    controlWrap = document.createElement('div'),
+                    controlWrap = document.createElement('form'),
                     savePPG = document.createElement('button'),
+                    encodedCycle = document.createElement('input'),
                     cycleNameLabel = document.createElement('label'),
                     cycleName = document.createElement('input')
 
@@ -18,16 +19,26 @@
                 this.ribbon = document.getElementById('PPGribbon')
 
                 this.ribbon.wrapperForm.onchange = function(){
-                    document.getElementById('cycleName').value = '';  //a little jagged; would be nicer if this was only on clicks that actually do something to modify the cycle
+                    document.getElementById('cycleName').value = '';
+                    document.getElementById('encodedCycle').value = JSON.stringify(this.traversePPGribbon());
+
                 }
 
                 controlWrap.setAttribute('class', 'PPGcontrol');
+                controlWrap.setAttribute('method', 'POST');
+                controlWrap.setAttribute('action', 'registerCycle');
                 this.appendChild(controlWrap);
+
+                encodedCycle.setAttribute('type', 'text');
+                encodedCycle.setAttribute('id', 'encodedCycle');
+                encodedCycle.setAttribute('style', 'display:none');
+                encodedCycle.setAttribute('name', 'cycleString');
 
                 cycleNameLabel.innerHTML = 'Cycle Name:';
                 cycleName.setAttribute('class', 'stdin');
                 cycleName.setAttribute('type', 'text');
                 cycleName.setAttribute('id', 'cycleName');
+                cycleName.setAttribute('name', 'cycleName');
                 controlWrap.appendChild(cycleNameLabel);
                 controlWrap.appendChild(cycleName);
 

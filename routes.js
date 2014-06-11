@@ -43,3 +43,10 @@ app.post('/postHV', function(req, res){
 
 	return res.redirect('/HV?crate=0&channel='+req.body.chName);
 });
+
+app.post('/registerCycle', function(req, res){
+	console.log(req.body.cycleName);
+	console.log(req.body.cycleString)
+
+	return res.redirect('/PPG');
+});
