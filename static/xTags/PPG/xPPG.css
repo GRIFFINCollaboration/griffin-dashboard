@@ -33,5 +33,5 @@ div.ribbonCard ul{
 }
 
 div.ribbonCard input[type='checkbox']:checked + label{
-	color: #c0392b;
+	color: #f0291b;
 }
