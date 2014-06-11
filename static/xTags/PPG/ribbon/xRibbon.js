@@ -51,7 +51,9 @@
 
         },
         accessors: {
-
+            'cardConfig':{
+                attribute: {} //this just needs to be declared
+            }
         }, 
         methods: {
             'spawnCard' : function(nextNode){
@@ -63,8 +65,6 @@
 
                 this.nCards++;
                 this.uniqueIndex++;
-
-                traversePPGribbon(this)
             },
 
             'newNode' : function(nextNode){
@@ -78,7 +78,7 @@
                 }.bind(ribbon, this);
 
             },
-
+/*
             'cardConfig' : function(targetElement){
                 var demo = document.createElement('button');
                 demo.innerHTML = 'Remove'
@@ -86,7 +86,7 @@
 
                 targetElement.appendChild(demo);
             },
-
+*/
             'deleteCard' : function(target){
                 if(target.nextSibling.id !== this.id + 'EndRibbon')
                     target.nextSibling.remove();
