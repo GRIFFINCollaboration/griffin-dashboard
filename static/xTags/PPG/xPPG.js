@@ -21,8 +21,7 @@
                 this.ribbon.wrapperForm.onchange = function(){
                     document.getElementById('cycleName').value = '';
                     document.getElementById('encodedCycle').value = JSON.stringify(this.traversePPGribbon());
-
-                }
+                }.bind(this);
 
                 controlWrap.setAttribute('class', 'PPGcontrol');
                 controlWrap.setAttribute('method', 'POST');
