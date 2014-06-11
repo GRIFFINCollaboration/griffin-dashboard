@@ -20,8 +20,7 @@
 
                 this.ribbon.wrapperForm.onchange = function(){
                     document.getElementById('cycleName').value = '';
-                    document.getElementById('encodedCycle').value = JSON.stringify(this.traversePPGribbon());
-                }.bind(this);
+                };
 
                 controlWrap.setAttribute('class', 'PPGcontrol');
                 controlWrap.setAttribute('method', 'POST');
@@ -105,11 +104,10 @@
             },
 
             'registerNewCycle' : function(){
-                var PPGcode = this.traversePPGribbon(),
-                    cycleName = document.getElementById('cycleName').value;
+                //var PPGcode = this.traversePPGribbon(),
+                //    cycleName = document.getElementById('cycleName').value;
 
-                console.log(cycleName)
-                console.log(PPGcode)
+                document.getElementById('encodedCycle').value = JSON.stringify(this.traversePPGribbon());
             }
         }
     });
