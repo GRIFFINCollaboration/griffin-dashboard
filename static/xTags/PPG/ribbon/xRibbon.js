@@ -51,14 +51,10 @@
 
         },
         accessors: {
-            'cardConfig':{
-                attribute: {} //this just needs to be declared
-            }
+
         }, 
         methods: {
             'spawnCard' : function(nextNode){
-                console.log(this.cardConfig)
-                /*
                 var card = document.createElement('div');
 
                 card.setAttribute('class', 'ribbonCard');
@@ -67,7 +63,7 @@
 
                 this.nCards++;
                 this.uniqueIndex++;
-                */
+                
             },
 
             'newNode' : function(nextNode){
@@ -81,15 +77,65 @@
                 }.bind(ribbon, this);
 
             },
-/*
-            'cardConfig' : function(targetElement){
-                var demo = document.createElement('button');
-                demo.innerHTML = 'Remove'
-                demo.onclick = this.deleteCard.bind(this, targetElement);
 
-                targetElement.appendChild(demo);
+            'cardConfig' : function(targetElement){
+                var remove = document.createElement('button'),
+                    moveLater = document.createElement('button'),
+                    moveEarlier = document.createElement('button'),
+                    timeLabel = document.createElement('label'),
+                    duration = document.createElement('input'),
+                    durationUnits = document.createElement('select'),
+                    unitOption, units = ['ms', 's', 'min'], unitScale = [1, 1000, 60000],
+                    list = document.createElement('ul'),
+                    listItem, ppgOption, ppgLabel,
+                    ppgName = ['strawberry', 'banana', 'neopolitain'], 
+                    ppgCode = [0x1, 0x2, 0x4],
+                    i;
+
+                remove.innerHTML = 'Remove';
+                remove.onclick = this.deleteCard.bind(this, targetElement);
+                targetElement.appendChild(remove);
+
+                timeLabel.innerHTML = 'Duration';
+                targetElement.appendChild(timeLabel);
+                duration.setAttribute('class', 'stdin');
+                targetElement.appendChild(duration);
+                durationUnits.setAttribute('class', 'stdin');
+                targetElement.appendChild(durationUnits);
+                for(i=0; i<units.length; i++){
+                    unitOption = document.createElement('option');
+                    unitOption.innerHTML = units[i];
+                    unitOption.value = unitScale[i];
+                    durationUnits.appendChild(unitOption);
+                }
+
+                targetElement.appendChild(list);
+
+                for(i=0; i<ppgName.length; i++){
+                    listItem = document.createElement('li');
+                    list.appendChild(listItem);
+
+                    ppgOption = document.createElement('input');
+                    ppgOption.setAttribute('type', 'checkbox');
+                    ppgOption.setAttribute('id', 'uID' + this.uniqueIndex + 'ppg' + ppgCode[i].toString(16));
+                    ppgOption.value = ppgCode[i];
+                    listItem.appendChild(ppgOption);
+
+                    ppgLabel = document.createElement('label');
+                    ppgLabel.innerHTML = ppgName[i];
+                    ppgLabel.setAttribute('for', 'uID' + this.uniqueIndex + 'ppg' + ppgCode[i].toString(16));
+                    listItem.appendChild(ppgLabel);
+                }
+
+                moveLater.innerHTML = 'Later';
+                moveLater.onclick = this.shuffleCardLater.bind(this, targetElement);
+                targetElement.appendChild(moveLater);
+
+                moveEarlier.innerHTML = 'Earlier';
+                moveEarlier.onclick = this.shuffleCardEarlier.bind(this, targetElement);
+                targetElement.appendChild(moveEarlier);
             },
-*/
+        
             'deleteCard' : function(target){
                 if(target.nextSibling.id !== this.id + 'EndRibbon')
                     target.nextSibling.remove();
