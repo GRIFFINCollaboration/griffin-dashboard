@@ -17,6 +17,10 @@
                 xtag.innerHTML(this,xString);
                 this.ribbon = document.getElementById('PPGribbon')
 
+                this.ribbon.onclick = function(){
+                    document.getElementById('cycleName').value = '';
+                }
+
                 controlWrap.setAttribute('class', 'PPGcontrol');
                 this.appendChild(controlWrap);
 
@@ -29,7 +33,7 @@
 
                 savePPG.setAttribute('class', 'stdin');
                 savePPG.innerHTML = 'Save New Cycle Definition';
-                savePPG.onclick = this.traversePPGribbon.bind(this);
+                savePPG.onclick = this.registerNewCycle.bind(this);
                 controlWrap.appendChild(savePPG);
 
                 this.loadPPG([1,2,5], this.ribbon);
