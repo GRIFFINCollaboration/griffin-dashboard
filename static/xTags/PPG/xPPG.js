@@ -153,13 +153,16 @@
                 document.getElementById('cycleName').value = currentName;
 
                 for(i=0; i<data.Cycles.length; i++){
+                    console.log(data.Cycles[i]);
+                    /*
                     cycleOptions = document.createElement('option');
                     cycleOptions.innerHTML = data.Cycles[i];
                     cycleOptions.value = data.Cycles[i];
                     cycleSelect.appendChild(cycleOptions);
+                    */
                 }
 
-                cycleSelect.value = currentName;
+                //cycleSelect.value = currentName;
             }
         }
     });
