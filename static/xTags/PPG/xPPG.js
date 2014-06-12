@@ -87,10 +87,11 @@
                 loadTarget.setAttribute('style', 'display:none');
                 controlRows[1].appendChild(loadTarget);
                 loadPPG.setAttribute('class', 'stdin');
-                loadPPG.innerHTML('Load')
+                loadPPG.innerHTML = 'Load'
                 loadPPG.onclick = function(){
                     document.getElementById('loadTarget').value = selected('cycleList')
                 }
+                controlRows[1].appendChild(loadPPG);
                 
             },
             inserted: function() {},
