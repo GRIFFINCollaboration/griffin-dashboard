@@ -15,7 +15,10 @@
                     cycleName = document.createElement('input'),
                     chooseCycleLabel = document.createElement('label'),
                     chooseCycle = document.createElement('select'),
-                    controlRows = [];
+                    controlRows = [],
+                    loadPPG = document.createElement('button');
+                    loadTarget = document.createElement('input');
+
 
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB.bind(this));
 
@@ -56,12 +59,12 @@
                 controlRows[0].appendChild(cycleName);
 
                 savePPG.setAttribute('class', 'stdin');
-                savePPG.innerHTML = 'Save New Cycle Definition';
+                savePPG.innerHTML = 'Save Cycle Definition';
                 savePPG.onclick = this.registerNewCycle.bind(this);
                 controlRows[0].appendChild(savePPG);
 
                 saveLoadPPG.setAttribute('class', 'stdin');
-                saveLoadPPG.innerHTML = 'Save & Apply New Cycle Definition';
+                saveLoadPPG.innerHTML = 'Save & Apply Cycle Definition';
                 saveLoadPPG.onclick = function(){
                     this.registerNewCycle();
                     document.getElementById('applyCycle').checked = true;
@@ -76,6 +79,18 @@
                 chooseCycle.setAttribute('class', 'stdin');
                 chooseCycle.setAttribute('id', 'cycleList');
                 controlRows[1].appendChild(chooseCycle);
+
+                loadTarget.setAttribute('type', 'text');
+                loadTarget.setAttribute('name', 'loadTarget');
+                loadTarget.setAttribute('id', 'loadTarget');
+                loadTarget.setAttribute('value', 'null');
+                loadTarget.setAttribute('style', 'display:none');
+                controlRows[1].appendChild(loadTarget);
+                loadPPG.setAttribute('class', 'stdin');
+                loadPPG.innerHTML('Load')
+                loadPPG.onclick = function(){
+                    document.getElementById('loadTarget').value = selected('cycleList')
+                }
                 
             },
             inserted: function() {},
@@ -156,6 +171,8 @@
                     currentDuration = data.Cycles[currentName].durations,
                     cycleSelect = document.getElementById('cycleList'),
                     cycleOptions, key;
+
+                this.PPGrecord = data;
 
                 this.loadPPG(currentPPG, currentDuration);
                 document.getElementById('cycleName').value = currentName;
