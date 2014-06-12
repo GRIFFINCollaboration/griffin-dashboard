@@ -14,7 +14,8 @@
                     cycleNameLabel = document.createElement('label'),
                     cycleName = document.createElement('input'),
                     chooseCycleLabel = document.createElement('label'),
-                    chooseCycle = document.createElement('select');
+                    chooseCycle = document.createElement('select'),
+                    controlRows = [];
 
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB.bind(this));
 
@@ -31,30 +32,33 @@
                 controlWrap.setAttribute('action', 'registerCycle');
                 this.appendChild(controlWrap);
 
+                controlRows[0] = document.createElement('span')
+                controlWrap.appendChild(controlRows[0]);
+
                 encodedCycle.setAttribute('type', 'text');
                 encodedCycle.setAttribute('id', 'encodedCycle');
                 encodedCycle.setAttribute('style', 'display:none');
                 encodedCycle.setAttribute('name', 'cycleString');
-                controlWrap.appendChild(encodedCycle);
+                controlRows[0].appendChild(encodedCycle);
 
                 applyCycle.setAttribute('type', 'checkbox');
                 applyCycle.setAttribute('id', 'applyCycle');
                 applyCycle.setAttribute('style', 'display:none');
                 applyCycle.setAttribute('name', 'applyCycle');
-                controlWrap.appendChild(applyCycle);
+                controlRows[0].appendChild(applyCycle);
 
                 cycleNameLabel.innerHTML = 'Cycle Name:';
                 cycleName.setAttribute('class', 'stdin');
                 cycleName.setAttribute('type', 'text');
                 cycleName.setAttribute('id', 'cycleName');
                 cycleName.setAttribute('name', 'cycleName');
-                controlWrap.appendChild(cycleNameLabel);
-                controlWrap.appendChild(cycleName);
+                controlRows[0].appendChild(cycleNameLabel);
+                controlRows[0].appendChild(cycleName);
 
                 savePPG.setAttribute('class', 'stdin');
                 savePPG.innerHTML = 'Save New Cycle Definition';
                 savePPG.onclick = this.registerNewCycle.bind(this);
-                controlWrap.appendChild(savePPG);
+                controlRows[0].appendChild(savePPG);
 
                 saveLoadPPG.setAttribute('class', 'stdin');
                 saveLoadPPG.innerHTML = 'Save & Apply New Cycle Definition';
@@ -62,13 +66,16 @@
                     this.registerNewCycle();
                     document.getElementById('applyCycle').checked = true;
                 }.bind(this);
-                controlWrap.appendChild(saveLoadPPG);
+                controlRows[0].appendChild(saveLoadPPG);
+
+                controlRows[1] = document.createElement('span');
+                controlWrap.appendChild(controlRows[1]);
 
                 chooseCycleLabel.innerHTML = 'Load Cycle:'
-                controlWrap.appendChild(chooseCycleLabel);
+                controlRows[1].appendChild(chooseCycleLabel);
                 chooseCycle.setAttribute('class', 'stdin');
                 chooseCycle.setAttribute('id', 'cycleList');
-                controlWrap.appendChild(chooseCycle);
+                controlRows[1].appendChild(chooseCycle);
                 
             },
             inserted: function() {},
