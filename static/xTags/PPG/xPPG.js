@@ -12,9 +12,9 @@
                     encodedCycle = document.createElement('input'),
                     applyCycle = document.createElement('input'),
                     cycleNameLabel = document.createElement('label'),
-                    cycleName = document.createElement('input');
-                    //chooseCycleLabel = document.createElement('label'),
-                    //chooseCycle = document.createElement('select');
+                    cycleName = document.createElement('input'),
+                    chooseCycleLabel = document.createElement('label'),
+                    chooseCycle = document.createElement('select');
 
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB.bind(this));
 
@@ -63,13 +63,13 @@
                     document.getElementById('applyCycle').checked = true;
                 }.bind(this);
                 controlWrap.appendChild(saveLoadPPG);
-/*
+
                 chooseCycleLabel.innerHTML = 'Load Cycle:'
                 controlWrap.appendChild(chooseCycleLabel);
                 chooseCycle.setAttribute('class', 'stdin');
                 chooseCycle.setAttribute('id', 'cycleList');
                 controlWrap.appendChild(chooseCycle);
-                */
+                
             },
             inserted: function() {},
             removed: function() {},
