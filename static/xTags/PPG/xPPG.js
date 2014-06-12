@@ -147,7 +147,7 @@
                     currentName = data.Current,
                     currentPPG = data.Cycles[currentName].PPGcodes,
                     currentDuration = data.Cycles[currentName].durations,
-                    //cycleSelect = document.getElementById('cycleList'),
+                    cycleSelect = document.getElementById('cycleList'),
                     cycleOptions, key;
 
                 this.loadPPG(currentPPG, currentDuration);
