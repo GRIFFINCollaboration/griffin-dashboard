@@ -12,9 +12,9 @@
                     encodedCycle = document.createElement('input'),
                     applyCycle = document.createElement('input'),
                     cycleNameLabel = document.createElement('label'),
-                    cycleName = document.createElement('input'),
-                    chooseCycleLabel = document.createElement('label'),
-                    chooseCycle = document.createElement('select');
+                    cycleName = document.createElement('input');
+                    //chooseCycleLabel = document.createElement('label'),
+                    //chooseCycle = document.createElement('select');
 
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB.bind(this));
 
