@@ -63,12 +63,13 @@
                     document.getElementById('applyCycle').checked = true;
                 }.bind(this);
                 controlWrap.appendChild(saveLoadPPG);
-
+/*
                 chooseCycleLabel.innerHTML = 'Load Cycle:'
                 controlWrap.appendChild(chooseCycleLabel);
                 chooseCycle.setAttribute('class', 'stdin');
                 chooseCycle.setAttribute('id', 'cycleList');
                 controlWrap.appendChild(chooseCycle);
+                */
             },
             inserted: function() {},
             removed: function() {},
