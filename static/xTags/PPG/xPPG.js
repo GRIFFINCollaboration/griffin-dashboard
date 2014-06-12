@@ -148,22 +148,20 @@
                     currentPPG = data.Cycles[currentName].PPGcodes,
                     currentDuration = data.Cycles[currentName].durations,
                     //cycleSelect = document.getElementById('cycleList'),
-                    cycleOptions;
+                    cycleOptions, key;
 
                 this.loadPPG(currentPPG, currentDuration);
                 document.getElementById('cycleName').value = currentName;
 
-                for(i=0; i<data.Cycles.length; i++){
-                    console.log(data.Cycles[i]);
-                    /*
+                for(key in data.Cycles){
                     cycleOptions = document.createElement('option');
-                    cycleOptions.innerHTML = data.Cycles[i];
-                    cycleOptions.value = data.Cycles[i];
+                    cycleOptions.innerHTML = key;
+                    cycleOptions.value = key;
                     cycleSelect.appendChild(cycleOptions);
-                    */
+                    
                 }
 
-                //cycleSelect.value = currentName;
+                cycleSelect.value = currentName;
             }
         }
     });
