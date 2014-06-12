@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var xString, 
+                var xString,
                     title = document.createElement('h1'),
                     controlWrap = document.createElement('form'),
                     savePPG = document.createElement('button'),
@@ -12,7 +12,9 @@
                     encodedCycle = document.createElement('input'),
                     applyCycle = document.createElement('input'),
                     cycleNameLabel = document.createElement('label'),
-                    cycleName = document.createElement('input')
+                    cycleName = document.createElement('input'),
+                    chooseCycleLabel = document.createElement('label'),
+                    chooseCycle = document.createElement('select');
 
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB.bind(this));
 
@@ -62,7 +64,11 @@
                 }.bind(this);
                 controlWrap.appendChild(saveLoadPPG);
 
-                //this.loadPPG([1,2,5], this.ribbon);
+                chooseCycleLabel.innerHTML = 'Load Cycle:'
+                controlWrap.appendChild(chooseCycleLabel);
+                chooseCycle.setAttribute('class', 'stdin');
+                chooseCycle.setAttribute('id', 'cycleList');
+                controlWrap.appendChild(chooseCycle);
             },
             inserted: function() {},
             removed: function() {},
@@ -139,10 +145,21 @@
                 var data = JSON.parse(responseText),
                     currentName = data.Current,
                     currentPPG = data.Cycles[currentName].PPGcodes,
-                    currentDuration = data.Cycles[currentName].durations
+                    currentDuration = data.Cycles[currentName].durations,
+                    cycleSelect = document.getElementById('cycleList'),
+                    cycleOptions;
 
                 this.loadPPG(currentPPG, currentDuration);
                 document.getElementById('cycleName').value = currentName;
+
+                for(i=0; i<data.Cycles.length; i++){
+                    cycleOptions = document.createElement('option');
+                    cycleOptions.innerHTML = data.Cycles[i];
+                    cycleOptions.value = data.Cycles[i];
+                    cycleSelect.appendChild(cycleOptions);
+                }
+
+                cycleSelect.value = currentName;
             }
         }
     });
