@@ -63,8 +63,7 @@ app.post('/registerCycle', function(req, res){
 		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"] " + durations[i]]);
 	}
 
-console.log(req.body.applyCycle)
-	if(req.body.applyCycle){
+	if(req.body.applyCycle == 'on'){
 		spawn('odbedit', ['-c', "set /PPG/Cycles/Current " + req.body.cycleName]);
 	}
 
