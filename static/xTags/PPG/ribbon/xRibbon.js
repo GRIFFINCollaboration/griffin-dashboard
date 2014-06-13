@@ -163,7 +163,7 @@
                         for(i=0; i<checkboxes.length; i++){
                             checkboxes[i].setAttribute('class', 'edit');
                         }
-                        self.value = 'Summarize';
+                        self.value = 'Summary';
                     } else {
                         for(i=0; i<checkboxes.length; i++){
                             checkboxes[i].setAttribute('class', 'summary');
