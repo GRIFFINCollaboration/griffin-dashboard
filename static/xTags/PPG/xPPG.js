@@ -39,7 +39,7 @@
                     document.getElementById('cycleName').value = '';
                 };
 
-                controlWrap.setAttribute('class', 'PPGcontrol');
+                controlWrap.setAttribute('class', 'PPGcontrol summary');
                 controlWrap.setAttribute('id', 'cycleDefinitionForm');
                 controlWrap.setAttribute('method', 'POST');
                 controlWrap.setAttribute('action', 'registerCycle');
@@ -147,15 +147,15 @@
                     if(durations[i]%60000 == 0){
                         lastDuration.value = durations[i] / 60000;
                         lastDuration.nextSibling.value = 60000;
-                        durationString.innerHTML = 'Duration: ' + durations[i] / 60000 + ' min';
+                        durationString.innerHTML = durations[i] / 60000 + ' min';
                     }
                     else if(durations[i]%1000 == 0){
                         lastDuration.value = durations[i] / 1000;
                         lastDuration.nextSibling.value = 1000;
-                        durationString.innerHTML = 'Duration: ' + durations[i] / 1000 + ' s';
+                        durationString.innerHTML = durations[i] / 1000 + ' s';
                     } else{
                         lastDuration.value = durations[i];
-                        durationString.innerHTML = 'Duration: ' + durations[i] + ' ms';
+                        durationString.innerHTML = durations[i] + ' ms';
                     }
 
                     for(j=0; j<16; j++){

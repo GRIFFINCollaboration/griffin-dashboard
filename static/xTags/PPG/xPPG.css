@@ -34,7 +34,6 @@ div.PPGcardSorting button:hover{
 
 div.ribbonCard ul{
 	line-height: 1.5;
-	margin-bottom: 1em;
 }
 
 div.ribbonCard ul label{
@@ -67,6 +66,10 @@ div.ribbonCard input[type='checkbox'].summary:checked + label{
 	pointer-events: none;
 }
 
+div.ribbonCard span{
+	font-size: 150%;
+}
+
 div.ribbonCard div.edit,
 div.ribbonCard span.summary{
 	display: block;
@@ -96,7 +99,6 @@ input#cycleName{
 	width:10em;
 }
 
-form span{
-	display: block;
+form span:last-child{
 	margin-bottom: 1em;
 }
