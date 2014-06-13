@@ -32,7 +32,8 @@
                 xString += '<x-ribbon id="PPGribbon"></x-ribbon>';
                 xtag.innerHTML(this,xString);
                 this.ribbon = document.getElementById('PPGribbon')
-                document.getElementById('ppgSummary').onchange = this.toggleSummary
+                document.getElementById('ppgSummary').onchange = this.toggleSummary.bind(this);
+                document.getElementById('ppgSummary').onchange = this.toggleSummary.bind(this);
 
                 this.ribbon.wrapperForm.onchange = function(){
                     document.getElementById('cycleName').value = '';
@@ -219,7 +220,7 @@
             'toggleSummary' : function(){
                 var ribbonCards = this.querySelectorAll('div.ribbonCard'),
                     checkboxes, timingUI, durationSummary, duration, durationScale,
-                    currentState = this.querySelector('input[type="radio"]:checked').value;
+                    currentState = this.querySelectorAll('input[type="radio"]:checked').value;
                     i, j;
 
 
