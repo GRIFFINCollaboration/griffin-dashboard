@@ -141,6 +141,7 @@
 
                     ppgOption = document.createElement('input');
                     ppgOption.setAttribute('type', 'checkbox');
+                    ppgOption.setAttribute('class', 'summary');
                     ppgOption.setAttribute('id', 'uID' + this.uniqueIndex + 'ppg' + ppgCode[i].toString(16));
                     ppgOption.value = ppgCode[i];
                     listItem.appendChild(ppgOption);
