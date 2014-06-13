@@ -29,7 +29,7 @@
                 xString += '<label for="ppgSummary">Summary</label>'
                 xString += '<input id="ppgEdit" type="radio" name="ppgSummary" class="stdin" value="Edit"></button>';
                 xString += '<label for="ppgEdit">Edit</label>'
-                xString += '<x-ribbon id="PPGribbon"></x-ribbon>';
+                xString += '<x-ribbon class="summary" id="PPGribbon"></x-ribbon>';
                 xtag.innerHTML(this,xString);
                 this.ribbon = document.getElementById('PPGribbon')
                 document.getElementById('ppgSummary').onchange = this.toggleSummary.bind(this);
