@@ -120,7 +120,7 @@
                 duration.setAttribute('class', 'stdin');
                 duration.setAttribute('type', 'number');
                 duration.setAttribute('value', 0);
-                durationUnits.setAttribute('step', 'any');
+                duration.setAttribute('step', 'any');
                 targetElement.appendChild(duration);
                 durationUnits.setAttribute('class', 'stdin');
                 durationUnits.setAttribute('id', 'units' + this.uniqueIndex)

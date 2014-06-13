@@ -134,15 +134,15 @@
 
                     lastDuration = this.ribbon.querySelectorAll('input[type="number"]');
                     lastDuration = lastDuration[lastDuration.length-1];
-                    if(durations[i] < 1000)
-                        lastDuration.value = durations[i];
-                    else if(durations[i] < 60000){
-                        lastDuration.value = durations[i] / 1000;
-                        lastDuration.nextSibling.value = 1000;
-                    } else{
+                    if(durations[i]%60000 == 0){
                         lastDuration.value = durations[i] / 60000;
                         lastDuration.nextSibling.value = 60000;
                     }
+                    else if(durations[i]%1000 == 0){
+                        lastDuration.value = durations[i] / 1000;
+                        lastDuration.nextSibling.value = 1000;
+                    } else
+                        lastDuration.value = durations[i];
 
                     for(j=0; j<16; j++){
                         if( (1 << j) & ppgTable[i]){
