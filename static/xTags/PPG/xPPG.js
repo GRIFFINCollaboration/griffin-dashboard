@@ -32,6 +32,7 @@
                 xString += '<x-ribbon id="PPGribbon"></x-ribbon>';
                 xtag.innerHTML(this,xString);
                 this.ribbon = document.getElementById('PPGribbon')
+                document.getElementById('ppgSummary').onchange = this.toggleSummary
 
                 this.ribbon.wrapperForm.onchange = function(){
                     document.getElementById('cycleName').value = '';
