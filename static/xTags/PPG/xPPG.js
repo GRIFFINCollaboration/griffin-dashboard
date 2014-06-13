@@ -24,7 +24,12 @@
 
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB.bind(this));
 
-                xString = '<h1>Cycle Configuration</h1><x-ribbon id="PPGribbon"></x-ribbon>';
+                xString = '<h1>Cycle Configuration</h1>';
+                xString += '<input id="ppgSummary" type="radio" name="ppgSummary" class="stdin">Summary</button>';
+                xString += '<label for="ppgSummary">Summary</label>'
+                xString += '<input id="ppgEdit" type="radio" name="ppgSummary" class="stdin">Edit</button>';
+                xString += '<label for="ppgEdit">Edit</label>'
+                '<x-ribbon id="PPGribbon"></x-ribbon>';
                 xtag.innerHTML(this,xString);
                 this.ribbon = document.getElementById('PPGribbon')
 
