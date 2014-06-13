@@ -40,6 +40,7 @@
                 };
 
                 controlWrap.setAttribute('class', 'PPGcontrol');
+                controlWrap.setAttribute('id', 'cycleDefinitionForm');
                 controlWrap.setAttribute('method', 'POST');
                 controlWrap.setAttribute('action', 'registerCycle');
                 this.appendChild(controlWrap);
@@ -223,8 +224,6 @@
                     currentState = this.querySelectorAll('input[type="radio"]:checked')[0].value,
                     i, j;
 
-console.log(ribbonCards)
-console.log(currentState)
                 for(j=0; j<ribbonCards.length; j++){
                     checkboxes = ribbonCards[j].querySelectorAll('input[type="checkbox"]');
                     timingUI = ribbonCards[j].querySelectorAll('div#timingWrap');
@@ -238,6 +237,7 @@ console.log(currentState)
                         }
                         timingUI[0].setAttribute('class', 'edit');
                         durationSummary[0].setAttribute('class', 'edit');
+                        document.getElementById('cycleDefinitionForm').setAttribute('style', 'display:none;');
                     } else {
                         for(i=0; i<checkboxes.length; i++){
                             checkboxes[i].setAttribute('class', 'summary');
@@ -253,6 +253,7 @@ console.log(currentState)
                         } else{
                             durationSummary[0].innerHTML = 'Duration: ' + duration + ' ms';
                         }
+                        document.getElementById('cycleDefinitionForm').setAttribute('style', 'display:block;');
                     }
                 }
             }
