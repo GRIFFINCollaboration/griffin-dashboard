@@ -58,7 +58,7 @@ app.post('/registerCycle', function(req, res){
 
 	//delete an existing cycle
 	if(req.body.deleteTarget != null){
-		spawn('odbedit', ['-c', "delete /PPG/Cycles/" + req.body.deleteTarget]);
+		spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.deleteTarget]);
 		return res.redirect('/PPG');
 	}
 
