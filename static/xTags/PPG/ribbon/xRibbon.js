@@ -170,7 +170,7 @@
                         timingUI = target.querySelectorAll('div#timingWrap'),
                         durationSummary = target.querySelectorAll('span#durationSummary'),
                         duration = parseFloat(target.querySelectorAll('input[type="number"]')[0].value),
-                        durationScale = parseFloat(selected(target.querySelectorAll('select')[0].id)),
+                        durationScale = parseInt(selected(target.querySelectorAll('select')[0].id),10),
                         i;
 
                     if(self.value == 'Edit'){
@@ -187,11 +187,11 @@
                         timingUI[0].setAttribute('class', 'summary');
                         durationSummary[0].setAttribute('class', 'summary');
 
-                        if(duration%60000 == 0){
-                            durationSummary[0].innerHTML = 'Duration: ' + duration / 60000 + ' min';
+                        if(durationScale == 60000){
+                            durationSummary[0].innerHTML = 'Duration: ' + duration + ' min';
                         }
-                        else if(duration%1000 == 0){
-                            durationSummary[0].innerHTML = 'Duration: ' + duration / 1000 + ' s';
+                        else if(durationScale == 1000){
+                            durationSummary[0].innerHTML = 'Duration: ' + duration + ' s';
                         } else{
                             durationSummary[0].innerHTML = 'Duration: ' + duration + ' ms';
                         }
