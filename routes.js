@@ -51,13 +51,13 @@ app.post('/registerCycle', function(req, res){
 		durations = [];
 
 	//just load an existing cycle
-	if(req.body.loadTarget != null){
+	if(req.body.loadTarget != 'null'){
 		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.loadTarget]);
 		return res.redirect('/PPG');
 	}
 
 	//delete an existing cycle
-	if(req.body.deleteTarget != null){
+	if(req.body.deleteTarget != 'null'){
 		console.log("/PPG/Cycles/" + req.body.deleteTarget)
 		spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.deleteTarget]);
 		return res.redirect('/PPG');
