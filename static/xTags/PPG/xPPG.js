@@ -206,7 +206,7 @@
 
                 this.loadPPG(currentPPG, currentDuration);
                 document.getElementById('cycleName').value = currentName;
-                document.getElementById('currentCycle').innerHTML = currentName;
+                document.getElementById('currentCycle').innerHTML = 'Current Active Cycle: ' + currentName;
 
                 for(key in data.Cycles){
                     cycleOptions = document.createElement('option');
