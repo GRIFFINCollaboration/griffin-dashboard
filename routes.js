@@ -45,7 +45,7 @@ app.post('/postHV', function(req, res){
 });
 
 app.post('/registerCycle', function(req, res){
-	var cycle = JSON.parse(req.body.cycleString),
+	var cycle = (req.body.cycleString) ? JSON.parse(req.body.cycleString) : null,
 		i,
 		steps = [],
 		durations = [];
