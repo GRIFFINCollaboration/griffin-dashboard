@@ -220,7 +220,7 @@
             'toggleSummary' : function(){
                 var ribbonCards = this.querySelectorAll('div.ribbonCard'),
                     checkboxes, timingUI, durationSummary, duration, durationScale,
-                    currentState = this.querySelectorAll('input[type="radio"]:checked').value,
+                    currentState = this.querySelectorAll('input[type="radio"]:checked')[0].value,
                     i, j;
 
 console.log(ribbonCards)
