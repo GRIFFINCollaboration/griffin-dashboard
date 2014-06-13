@@ -90,13 +90,10 @@ form.PPGcontrol{
 	border-radius: 1em;
 	padding: 1em;
 	margin: 1em 0 1em 0;
-}
-
-widget-PPG form.edit{
 	display: inline-block;
 }
 
-widget-PPG form.summary{
+widget-PPG form.summary span::first-child{
 	display: none;
 }
 
