@@ -5,7 +5,6 @@
         lifecycle: {
             created: function() {
                 var xString,
-                    title = document.createElement('h1'),
                     controlWrap = document.createElement('form'),
                     savePPG = document.createElement('button'),
                     saveLoadPPG = document.createElement('button'),
@@ -25,6 +24,7 @@
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB.bind(this));
 
                 xString = '<h1>Cycle Configuration</h1>';
+                xString += '<h3 id="currentCycle"><h3>';
                 xString += '<input id="ppgSummary" type="radio" name="ppgSummary" class="stdin" value="Summary" checked></button>';
                 xString += '<label for="ppgSummary">Summary</label>'
                 xString += '<input id="ppgEdit" type="radio" name="ppgSummary" class="stdin" value="Edit"></button>';
@@ -206,6 +206,7 @@
 
                 this.loadPPG(currentPPG, currentDuration);
                 document.getElementById('cycleName').value = currentName;
+                document.getElementById('currentCycle').innerHTML = currentName;
 
                 for(key in data.Cycles){
                     cycleOptions = document.createElement('option');
