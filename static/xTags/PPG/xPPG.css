@@ -62,6 +62,14 @@ div.ribbonCard input[type='checkbox'].summary:checked + label{
 	pointer-events: none;
 }
 
+div.ribbonCard div.edit{
+	display: block;
+}
+
+div.ribbonCard div.summary{
+	display: none;
+}
+
 form.PPGcontrol{
 	background-color: #333333;
 	border-radius: 1em;

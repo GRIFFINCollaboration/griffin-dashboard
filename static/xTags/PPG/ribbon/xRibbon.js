@@ -83,6 +83,7 @@
                 var remove = document.createElement('input'),
                     moveLater = document.createElement('input'),
                     moveEarlier = document.createElement('input'),
+                    timingWrap = document.createElement('div'),
                     sortWrap = document.createElement('div'),
                     timeLabel = document.createElement('label'),
                     duration = document.createElement('input'),
@@ -95,8 +96,12 @@
                     ppgCode = [0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80, 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000],
                     i;
 
+                timingWrap.setAttribute('class', 'summary');
+                timingWrap.setAttribute('id', 'timingWrap');
+                targetElement.appendChild(timingWrap);
+
                 sortWrap.setAttribute('class', 'PPGcardSorting');
-                targetElement.appendChild(sortWrap);
+                timingWrap.appendChild(sortWrap);
 
                 moveEarlier.value = 'Earlier';
                 moveEarlier.setAttribute('class', 'stdin');
@@ -117,15 +122,15 @@
                 sortWrap.appendChild(moveLater);
 
                 timeLabel.innerHTML = 'Duration:';
-                targetElement.appendChild(timeLabel);
+                timingWrap.appendChild(timeLabel);
                 duration.setAttribute('class', 'stdin');
                 duration.setAttribute('type', 'number');
                 duration.setAttribute('value', 0);
                 duration.setAttribute('step', 'any');
-                targetElement.appendChild(duration);
+                timingWrap.appendChild(duration);
                 durationUnits.setAttribute('class', 'stdin');
                 durationUnits.setAttribute('id', 'units' + this.uniqueIndex)
-                targetElement.appendChild(durationUnits);
+                timingWrap.appendChild(durationUnits);
                 for(i=0; i<units.length; i++){
                     unitOption = document.createElement('option');
                     unitOption.innerHTML = units[i];
@@ -157,17 +162,20 @@
                 detail.setAttribute('type', 'button');
                 detail.onclick = function(target, self){
                     var checkboxes = target.querySelectorAll('input[type="checkbox"]'),
+                        timingUI = target.querySelectorAll('div#timingWrap')
                         i;
 
                     if(self.value == 'Edit'){
                         for(i=0; i<checkboxes.length; i++){
                             checkboxes[i].setAttribute('class', 'edit');
                         }
+                        timingUI.setAttribute('class', 'edit');
                         self.value = 'Summary';
                     } else {
                         for(i=0; i<checkboxes.length; i++){
                             checkboxes[i].setAttribute('class', 'summary');
                         }
+                        timingUI.setAttribute('class', 'summary');
                         self.value = 'Edit';
                     }
                 }.bind(null, targetElement, detail);
