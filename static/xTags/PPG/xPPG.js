@@ -25,9 +25,9 @@
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB.bind(this));
 
                 xString = '<h1>Cycle Configuration</h1>';
-                xString += '<input id="ppgSummary" type="radio" name="ppgSummary" class="stdin"></button>';
+                xString += '<input id="ppgSummary" type="radio" name="ppgSummary" class="stdin" value="Summary" checked></button>';
                 xString += '<label for="ppgSummary">Summary</label>'
-                xString += '<input id="ppgEdit" type="radio" name="ppgSummary" class="stdin"></button>';
+                xString += '<input id="ppgEdit" type="radio" name="ppgSummary" class="stdin" value="Edit"></button>';
                 xString += '<label for="ppgEdit">Edit</label>'
                 xString += '<x-ribbon id="PPGribbon"></x-ribbon>';
                 xtag.innerHTML(this,xString);
@@ -213,6 +213,46 @@
                 }
 
                 cycleSelect.value = currentName;
+            },
+
+            'toggleSummary' : function(){
+                var ribbonCards = this.querySelectorAll('div.ribbonCard'),
+                    checkboxes, timingUI, durationSummary, duration, durationScale,
+                    currentState = this.querySelector('input[type="radio"]:checked').value;
+                    i, j;
+
+
+                for(j=0; j<ribbonCards.length; j++){
+                    checkboxes = ribbonCards[j].querySelectorAll('input[type="checkbox"]'),
+                    timingUI = ribbonCards[j].querySelectorAll('div#timingWrap'),
+                    durationSummary = ribbonCards[j].querySelectorAll('span#durationSummary'),
+                    duration = parseFloat(ribbonCards[j].querySelectorAll('input[type="number"]')[0].value),
+                    durationScale = parseInt(selected(ribbonCards[j].querySelectorAll('select')[0].id),10),
+                    
+
+                    if(currentState == 'Edit'){
+                        for(i=0; i<checkboxes.length; i++){
+                            checkboxes[i].setAttribute('class', 'edit');
+                        }
+                        timingUI[0].setAttribute('class', 'edit');
+                        durationSummary[0].setAttribute('class', 'edit');
+                    } else {
+                        for(i=0; i<checkboxes.length; i++){
+                            checkboxes[i].setAttribute('class', 'summary');
+                        }
+                        timingUI[0].setAttribute('class', 'summary');
+                        durationSummary[0].setAttribute('class', 'summary');
+
+                        if(durationScale == 60000){
+                            durationSummary[0].innerHTML = 'Duration: ' + duration + ' min';
+                        }
+                        else if(durationScale == 1000){
+                            durationSummary[0].innerHTML = 'Duration: ' + duration + ' s';
+                        } else{
+                            durationSummary[0].innerHTML = 'Duration: ' + duration + ' ms';
+                        }
+                    }
+                }
             }
         }
     });

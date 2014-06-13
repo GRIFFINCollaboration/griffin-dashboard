@@ -4,6 +4,10 @@ widget-PPG{
 	margin: 0 1em 0 0;
 }
 
+widget-PPG x-ribbon{
+	margin-top: 1em;
+}
+
 div.PPGcardSorting{
 	display: block;
 	text-align: center;
