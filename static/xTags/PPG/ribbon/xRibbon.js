@@ -170,7 +170,7 @@
                         timingUI = target.querySelectorAll('div#timingWrap'),
                         durationSummary = target.querySelectorAll('span#durationSummary'),
                         duration = parseFloat(target.querySelectorAll('input[type="number"]')[0].value),
-                        durationScale = parseFloat(selected(target.querySelectorAll('input[type="select"]')[0].id)),
+                        durationScale = parseFloat(selected(target.querySelectorAll('select')[0].id)),
                         i;
 
                     if(self.value == 'Edit'){
