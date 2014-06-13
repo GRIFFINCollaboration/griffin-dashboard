@@ -183,8 +183,8 @@
             'registerPPGODB' : function(responseText){
                 var data = JSON.parse(responseText),
                     currentName = data.Current,
-                    currentPPG = data.Cycles[currentName].PPGcodes,
-                    currentDuration = data.Cycles[currentName].durations,
+                    currentPPG = canHas(data.Cycles[currentName].PPGcodes, []),
+                    currentDuration = canHas(data.Cycles[currentName].durations, []),
                     cycleSelect = document.getElementById('cycleList'),
                     cycleOptions, key;
 
