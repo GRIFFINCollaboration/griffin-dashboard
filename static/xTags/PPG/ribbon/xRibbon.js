@@ -142,6 +142,7 @@
                 durationSummary.setAttribute('class', 'summary');
                 targetElement.appendChild(durationSummary);
 
+                list.setAttribute('class', 'summary');
                 targetElement.appendChild(list);
 
                 for(i=0; i<ppgName.length; i++){

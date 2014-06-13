@@ -66,6 +66,14 @@ div.ribbonCard input[type='checkbox'].summary:checked + label{
 	pointer-events: none;
 }
 
+ul.summary{
+	list-style-type: disc; 
+}
+
+ul.edit{
+	list-style-type: none;
+}
+
 div.ribbonCard span{
 	font-size: 150%;
 }
@@ -103,6 +111,6 @@ form span{
 	display: block;
 }
 
-form span:last-child{
+form span:first-child{
 	margin-bottom: 1em;
 }
