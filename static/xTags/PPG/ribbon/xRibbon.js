@@ -169,13 +169,13 @@
                         for(i=0; i<checkboxes.length; i++){
                             checkboxes[i].setAttribute('class', 'edit');
                         }
-                        timingUI.setAttribute('class', 'edit');
+                        timingUI[0].setAttribute('class', 'edit');
                         self.value = 'Summary';
                     } else {
                         for(i=0; i<checkboxes.length; i++){
                             checkboxes[i].setAttribute('class', 'summary');
                         }
-                        timingUI.setAttribute('class', 'summary');
+                        timingUI[0].setAttribute('class', 'summary');
                         self.value = 'Edit';
                     }
                 }.bind(null, targetElement, detail);
