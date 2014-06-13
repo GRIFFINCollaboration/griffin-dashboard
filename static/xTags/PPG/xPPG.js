@@ -123,7 +123,7 @@
         }, 
         methods: {
             'loadPPG' : function(ppgTable, durations){
-                var i, j, lastStep, options, lastDuration;
+                var i, j, lastStep, options, lastDuration, durationString;
 
                 for(i=0; i<ppgTable.length; i++){
                     this.ribbon.endRibbon.onclick();
@@ -134,15 +134,21 @@
 
                     lastDuration = this.ribbon.querySelectorAll('input[type="number"]');
                     lastDuration = lastDuration[lastDuration.length-1];
+                    durationString = this.ribbon.querySelectorAll('span');
+                    durationString = durationString[durationString.length -1];
                     if(durations[i]%60000 == 0){
                         lastDuration.value = durations[i] / 60000;
                         lastDuration.nextSibling.value = 60000;
+                        durationString.innerHTML = 'Duration: ' + durations[i] / 60000 + ' min';
                     }
                     else if(durations[i]%1000 == 0){
                         lastDuration.value = durations[i] / 1000;
                         lastDuration.nextSibling.value = 1000;
-                    } else
+                        durationString.innerHTML = 'Duration: ' + durations[i] / 1000 + ' s';
+                    } else{
                         lastDuration.value = durations[i];
+                        durationString.innerHTML = 'Duration: ' + durations[i] + ' ms';
+                    }
 
                     for(j=0; j<16; j++){
                         if( (1 << j) & ppgTable[i]){

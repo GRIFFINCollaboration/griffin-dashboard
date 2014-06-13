@@ -89,6 +89,7 @@
                     duration = document.createElement('input'),
                     durationUnits = document.createElement('select'),
                     unitOption, units = ['ms', 's', 'min'], unitScale = [1, 1000, 60000],
+                    durationSummary = document.createElement('span'),
                     list = document.createElement('ul'),
                     detail = document.createElement('input'),
                     listItem, ppgOption, ppgLabel,
@@ -138,6 +139,10 @@
                     durationUnits.appendChild(unitOption);
                 }
 
+                durationSummary.setAttribute('id', 'durationSummary');
+                durationSummary.setAttribute('class', 'summary');
+                targetElement.appendChild(durationSummary);
+
                 targetElement.appendChild(list);
 
                 for(i=0; i<ppgName.length; i++){
@@ -162,7 +167,8 @@
                 detail.setAttribute('type', 'button');
                 detail.onclick = function(target, self){
                     var checkboxes = target.querySelectorAll('input[type="checkbox"]'),
-                        timingUI = target.querySelectorAll('div#timingWrap')
+                        timingUI = target.querySelectorAll('div#timingWrap'),
+                        durationSummary = target.querySelectorAll('div#durationSummary'),
                         i;
 
                     if(self.value == 'Edit'){
@@ -170,12 +176,14 @@
                             checkboxes[i].setAttribute('class', 'edit');
                         }
                         timingUI[0].setAttribute('class', 'edit');
+                        durationSummary[0].setAttribute('class', 'edit');
                         self.value = 'Summary';
                     } else {
                         for(i=0; i<checkboxes.length; i++){
                             checkboxes[i].setAttribute('class', 'summary');
                         }
                         timingUI[0].setAttribute('class', 'summary');
+                        durationSummary[0].setAttribute('class', 'summary');
                         self.value = 'Edit';
                     }
                 }.bind(null, targetElement, detail);
