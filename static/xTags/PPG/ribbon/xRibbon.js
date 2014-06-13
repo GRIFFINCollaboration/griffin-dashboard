@@ -151,16 +151,23 @@
                     listItem.appendChild(ppgLabel);
                 }
 
-                detail.innerHTML = 'Edit';
+                detail.value = 'Edit';
                 detail.setAttribute('class', 'stdin');
                 detail.setAttribute('type', 'button');
                 detail.onclick = function(target, self){
-                    if(self.innerHTML == 'Edit'){
+                    var checkboxes = target.querySelectorAll('input[type="checkbox"]'),
+                        i;
 
-                        self.innerHTML = 'Summarize';
+                    if(self.value == 'Edit'){
+                        for(i=0; i<checkboxes.length; i++){
+                            checkboxes[i].setAttribute('class', 'edit');
+                        }
+                        self.value = 'Summarize';
                     } else {
-
-                        self.innerHTML = 'Edit';
+                        for(i=0; i<checkboxes.length; i++){
+                            checkboxes[i].setAttribute('class', 'summary');
+                        }
+                        self.value = 'Edit';
                     }
                 }.bind(null, targetElement, detail);
                 targetElement.appendChild(detail);

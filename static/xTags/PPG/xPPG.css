@@ -36,8 +36,29 @@ div.ribbonCard ul label{
 	cursor: pointer;
 }
 
-div.ribbonCard input[type='checkbox']:checked + label{
+div.ribbonCard input[type='checkbox'].edit{
+	display: auto;
+}
+
+div.ribbonCard input[type='checkbox'].edit + label{
+	display: auto;
+}
+
+div.ribbonCard input[type='checkbox'].edit:checked + label{
 	color: #f0291b;
+}
+
+div.ribbonCard input[type='checkbox'].summary{
+	display: none;
+}
+
+div.ribbonCard input[type='checkbox'].summary + label{
+	display: none;
+}
+
+div.ribbonCard input[type='checkbox'].summary:checked + label{
+	display:auto;
+	font-size: 200%;
 }
 
 form.PPGcontrol{
