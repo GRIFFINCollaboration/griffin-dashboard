@@ -67,7 +67,7 @@ div.ribbonCard input[type='checkbox'].summary:checked + label{
 }
 
 div.ribbonCard input[type='checkbox'].summary:checked + label::before{
-	content: "x";
+	content: "\2022";
 }
 
 div.ribbonCard span{
