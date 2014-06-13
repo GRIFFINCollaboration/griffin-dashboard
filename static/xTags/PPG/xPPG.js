@@ -223,12 +223,11 @@
 
 
                 for(j=0; j<ribbonCards.length; j++){
-                    checkboxes = ribbonCards[j].querySelectorAll('input[type="checkbox"]'),
-                    timingUI = ribbonCards[j].querySelectorAll('div#timingWrap'),
-                    durationSummary = ribbonCards[j].querySelectorAll('span#durationSummary'),
-                    duration = parseFloat(ribbonCards[j].querySelectorAll('input[type="number"]')[0].value),
-                    durationScale = parseInt(selected(ribbonCards[j].querySelectorAll('select')[0].id),10),
-                    
+                    checkboxes = ribbonCards[j].querySelectorAll('input[type="checkbox"]');
+                    timingUI = ribbonCards[j].querySelectorAll('div#timingWrap');
+                    durationSummary = ribbonCards[j].querySelectorAll('span#durationSummary');
+                    duration = parseFloat(ribbonCards[j].querySelectorAll('input[type="number"]')[0].value);
+                    durationScale = parseInt(selected(ribbonCards[j].querySelectorAll('select')[0].id),10);                    
 
                     if(currentState == 'Edit'){
                         for(i=0; i<checkboxes.length; i++){
