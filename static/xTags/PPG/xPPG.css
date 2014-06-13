@@ -99,6 +99,10 @@ input#cycleName{
 	width:10em;
 }
 
+form span{
+	display: block;
+}
+
 form span:last-child{
 	margin-bottom: 1em;
 }

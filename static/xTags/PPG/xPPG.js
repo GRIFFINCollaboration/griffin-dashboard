@@ -246,12 +246,12 @@
                         durationSummary[0].setAttribute('class', 'summary');
 
                         if(durationScale == 60000){
-                            durationSummary[0].innerHTML = 'Duration: ' + duration + ' min';
+                            durationSummary[0].innerHTML = duration + ' min';
                         }
                         else if(durationScale == 1000){
-                            durationSummary[0].innerHTML = 'Duration: ' + duration + ' s';
+                            durationSummary[0].innerHTML = duration + ' s';
                         } else{
-                            durationSummary[0].innerHTML = 'Duration: ' + duration + ' ms';
+                            durationSummary[0].innerHTML = duration + ' ms';
                         }
                         document.getElementById('cycleDefinitionForm').setAttribute('class', 'PPGcontrol summary');
                     }
