@@ -45,6 +45,11 @@ form.PPGcontrol{
 	border-radius: 1em;
 	padding: 1em;
 	margin: 1em 0 1em 0;
+	display: inline-block;
+}
+
+input#cycleName{
+	width:10em;
 }
 
 form span{
