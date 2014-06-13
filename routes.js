@@ -61,7 +61,7 @@ app.post('/registerCycle', function(req, res){
 		spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.deleteTarget]);
 		return res.redirect('/PPG');
 	}
-console.log(req.body.cycleString);
+
 	//register a new cycle
 	for(i=0; i<cycle.length; i++){
 		steps[i] = parseInt(cycle[i].PPGcode, 10);
