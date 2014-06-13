@@ -63,11 +63,13 @@ div.ribbonCard input[type='checkbox'].summary:checked + label{
 	pointer-events: none;
 }
 
-div.ribbonCard div.edit{
+div.ribbonCard div.edit,
+div.ribbonCard span.summary{
 	display: block;
 }
 
-div.ribbonCard div.summary{
+div.ribbonCard div.summary,
+div.ribbonCard span.edit{
 	display: none;
 }
 
