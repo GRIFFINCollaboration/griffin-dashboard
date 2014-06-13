@@ -168,7 +168,7 @@
                 detail.onclick = function(target, self){
                     var checkboxes = target.querySelectorAll('input[type="checkbox"]'),
                         timingUI = target.querySelectorAll('div#timingWrap'),
-                        durationSummary = target.querySelectorAll('div#durationSummary'),
+                        durationSummary = target.querySelectorAll('span#durationSummary'),
                         i;
 
                     if(self.value == 'Edit'){
