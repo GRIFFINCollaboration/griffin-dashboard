@@ -93,7 +93,7 @@ form.PPGcontrol{
 	display: inline-block;
 }
 
-widget-PPG form.summary span::first-child{
+form.summary span:first-child{
 	display: none;
 }
 
