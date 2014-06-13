@@ -222,7 +222,7 @@
                 var ribbonCards = this.querySelectorAll('div.ribbonCard'),
                     checkboxes, timingUI, durationSummary, duration, durationScale, list,
                     currentState = this.querySelectorAll('input[type="radio"]:checked')[0].value,
-                    i, j;
+                    i, j, k;
 
                 for(j=0; j<ribbonCards.length; j++){
                     checkboxes = ribbonCards[j].querySelectorAll('input[type="checkbox"]');
@@ -230,7 +230,8 @@
                     durationSummary = ribbonCards[j].querySelectorAll('span#durationSummary');
                     duration = parseFloat(ribbonCards[j].querySelectorAll('input[type="number"]')[0].value);
                     durationScale = parseInt(selected(ribbonCards[j].querySelectorAll('select')[0].id),10);   
-                    list = ribbonCards[j].querySelectorAll('ul');                 
+                    list = ribbonCards[j].querySelectorAll('ul'),
+                    listItems = list[0].querySelectorAll('li input[type="checkbox"]:checked');            
 
                     if(currentState == 'Edit'){
                         for(i=0; i<checkboxes.length; i++){
@@ -238,7 +239,9 @@
                         }
                         timingUI[0].setAttribute('class', 'edit');
                         durationSummary[0].setAttribute('class', 'edit');
-                        list[0].setAttribute('class', 'edit');
+                        for(k=0; k<listItems.length; k++){
+                            listItems[k].setAttribute('class', '');
+                        }
                         document.getElementById('cycleDefinitionForm').setAttribute('class', 'PPGcontrol edit');
                     } else {
                         for(i=0; i<checkboxes.length; i++){
@@ -246,7 +249,9 @@
                         }
                         timingUI[0].setAttribute('class', 'summary');
                         durationSummary[0].setAttribute('class', 'summary');
-                        list[0].setAttribute('class', 'summary');
+                        for(k=0; k<listItems.length; k++){
+                            listItems[k].setAttribute('class', 'summary');
+                        }
 
                         if(durationScale == 60000){
                             durationSummary[0].innerHTML = duration + ' min';
