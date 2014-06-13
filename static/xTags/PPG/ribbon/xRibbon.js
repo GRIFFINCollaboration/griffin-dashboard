@@ -169,6 +169,8 @@
                     var checkboxes = target.querySelectorAll('input[type="checkbox"]'),
                         timingUI = target.querySelectorAll('div#timingWrap'),
                         durationSummary = target.querySelectorAll('span#durationSummary'),
+                        duration = parseFloat(target.querySelectorAll('input[type="number"]')[0].value),
+                        durationScale = parseFloat(selected(target.querySelectorAll('input[type="number"]')[0].id)),
                         i;
 
                     if(self.value == 'Edit'){
@@ -184,6 +186,16 @@
                         }
                         timingUI[0].setAttribute('class', 'summary');
                         durationSummary[0].setAttribute('class', 'summary');
+
+                        if(duration%60000 == 0){
+                            durationSummary[0].innerHTML = 'Duration: ' + duration / 60000 + ' min';
+                        }
+                        else if(duration%1000 == 0){
+                            durationSummary[0].innerHTML = 'Duration: ' + duration / 1000 + ' s';
+                        } else{
+                            durationSummary[0].innerHTML = 'Duration: ' + duration + ' ms';
+                        }
+
                         self.value = 'Edit';
                     }
                 }.bind(null, targetElement, detail);
