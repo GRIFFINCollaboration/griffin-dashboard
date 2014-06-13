@@ -238,7 +238,7 @@
                         }
                         timingUI[0].setAttribute('class', 'edit');
                         durationSummary[0].setAttribute('class', 'edit');
-
+                        this.ribbon.setAttribute('class', 'edit');
                         document.getElementById('cycleDefinitionForm').setAttribute('class', 'PPGcontrol edit');
                     } else {
                         for(i=0; i<checkboxes.length; i++){
@@ -246,7 +246,7 @@
                         }
                         timingUI[0].setAttribute('class', 'summary');
                         durationSummary[0].setAttribute('class', 'summary');
-
+                        this.ribbon.setAttribute('class', 'summary');
                         if(durationScale == 60000){
                             durationSummary[0].innerHTML = duration + ' min';
                         }

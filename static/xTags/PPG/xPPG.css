@@ -63,7 +63,6 @@ div.ribbonCard input[type='checkbox'].summary + label{
 div.ribbonCard input[type='checkbox'].summary:checked + label{
 	display:block;
 	font-size: 150%;
-	pointer-events: none;
 }
 
 div.ribbonCard input[type='checkbox'].summary:checked + label::before{
@@ -83,6 +82,10 @@ div.ribbonCard span.summary{
 div.ribbonCard div.summary,
 div.ribbonCard span.edit{
 	display: none;
+}
+
+x-ribbon.summary{
+	pointer-events: none;
 }
 
 form.PPGcontrol{
