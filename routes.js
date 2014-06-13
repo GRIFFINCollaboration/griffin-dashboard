@@ -50,6 +50,13 @@ app.post('/registerCycle', function(req, res){
 		steps = [],
 		durations = [];
 
+	//just load an existing cycle
+	if(req.body.loadTarget != null){
+		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.loadTarget]);
+		return res.redirect('/PPG');
+	}
+
+	//register a new cycle
 	for(i=0; i<cycle.length; i++){
 		steps[i] = parseInt(cycle[i].PPGcode, 10);
 		durations[i] = parseInt(cycle[i].duration, 10);
