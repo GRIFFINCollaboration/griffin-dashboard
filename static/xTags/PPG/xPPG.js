@@ -237,7 +237,7 @@
                         }
                         timingUI[0].setAttribute('class', 'edit');
                         durationSummary[0].setAttribute('class', 'edit');
-                        document.getElementById('cycleDefinitionForm').setAttribute('style', 'display:none;');
+                        document.getElementById('cycleDefinitionForm').setAttribute('class', 'PPGcontrol edit');
                     } else {
                         for(i=0; i<checkboxes.length; i++){
                             checkboxes[i].setAttribute('class', 'summary');
@@ -253,7 +253,7 @@
                         } else{
                             durationSummary[0].innerHTML = 'Duration: ' + duration + ' ms';
                         }
-                        document.getElementById('cycleDefinitionForm').setAttribute('style', 'display:block;');
+                        document.getElementById('cycleDefinitionForm').setAttribute('class', 'PPGcontrol summary');
                     }
                 }
             }
