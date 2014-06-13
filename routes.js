@@ -56,6 +56,12 @@ app.post('/registerCycle', function(req, res){
 		return res.redirect('/PPG');
 	}
 
+	//delete an existing cycle
+	if(req.body.deleteTarget != null){
+		spawn('odbedit', ['-c', "delete /PPG/Cycles/" + req.body.deleteTarget]);
+		return res.redirect('/PPG');
+	}
+
 	//register a new cycle
 	for(i=0; i<cycle.length; i++){
 		steps[i] = parseInt(cycle[i].PPGcode, 10);

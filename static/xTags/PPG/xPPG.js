@@ -17,7 +17,9 @@
                     chooseCycle = document.createElement('select'),
                     controlRows = [],
                     loadPPG = document.createElement('button');
+                    deletePPG = document.createElement('button');
                     loadTarget = document.createElement('input');
+                    deleteTarget = document.createElement('input');
 
 
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/PPG&encoding=json-nokeys', this.registerPPGODB.bind(this));
@@ -74,7 +76,7 @@
                 controlRows[1] = document.createElement('span');
                 controlWrap.appendChild(controlRows[1]);
 
-                chooseCycleLabel.innerHTML = 'Load Cycle:'
+                chooseCycleLabel.innerHTML = 'Load / Delete Cycle:'
                 controlRows[1].appendChild(chooseCycleLabel);
                 chooseCycle.setAttribute('class', 'stdin');
                 chooseCycle.setAttribute('id', 'cycleList');
@@ -92,6 +94,19 @@
                     document.getElementById('loadTarget').value = selected('cycleList')
                 }
                 controlRows[1].appendChild(loadPPG);
+
+                deleteTarget.setAttribute('type', 'text');
+                deleteTarget.setAttribute('name', 'deleteTarget');
+                deleteTarget.setAttribute('id', 'deleteTarget');
+                deleteTarget.setAttribute('value', 'null');
+                deleteTarget.setAttribute('style', 'display:none');
+                controlRows[1].appendChild(deleteTarget);
+                deletePPG.setAttribute('class', 'stdin');
+                deletePPG.innerHTML = 'Delete'
+                deletePPG.onclick = function(){
+                    document.getElementById('deleteTarget').value = selected('cycleList')
+                }
+                controlRows[1].appendChild(deletePPG);
                 
             },
             inserted: function() {},
