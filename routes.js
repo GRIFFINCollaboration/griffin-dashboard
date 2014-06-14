@@ -20,8 +20,10 @@ app.get('/PPG', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
 	for(var i=0; i<3; i++){
-		spawn('odbedit', ['-c', "set /PPG/Cycles/dummy2/PPGcodes["+ i +"] " + Math.random() ]);
-		spawn('odbedit', ['-c', "set /PPG/Cycles/dummy2/durations["+ i +"] " + Math.random() ]);
+		spawn('odbedit', ['-c', "set /PPG/Cycles/dummy2/PPGcodes["+ i +"] " + i ]);
+		spawn('odbedit', ['-c', "set /PPG/Cycles/dummy2/durations["+ i +"] " + i ]);
+		console.log("set /PPG/Cycles/dummy2/PPGcodes["+ i +"] " + i)
+		console.log("set /PPG/Cycles/dummy2/durations["+ i +"] " + i)
 	}
 
 	res.render('widgets/PPG.jade');
