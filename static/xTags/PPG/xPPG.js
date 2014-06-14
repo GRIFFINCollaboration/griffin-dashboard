@@ -224,7 +224,7 @@
                     checkboxes, timingUI, durationSummary, duration, durationScale, list,
                     currentState = this.querySelectorAll('input[type="radio"]:checked')[0].value,
                     i, j, k;
-
+console.log(currentState)
                 for(j=0; j<ribbonCards.length; j++){
                     checkboxes = ribbonCards[j].querySelectorAll('input[type="checkbox"]');
                     timingUI = ribbonCards[j].querySelectorAll('div#timingWrap');
