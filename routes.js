@@ -76,8 +76,8 @@ console.log(cycle)
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations[" + steps.length + "]"]);
 	for(i=0; i<cycle.length; i++){
-		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"] " + steps[i]]);
-		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"] " + durations[i]]);
+		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"]  " + steps[i]]);
+		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"]  " + durations[i]]);
 		console.log("set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"] " + steps[i])
 		console.log("set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"] " + durations[i])
 	}
