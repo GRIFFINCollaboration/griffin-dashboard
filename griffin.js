@@ -2,7 +2,7 @@ MIDAS 	= 'http://grsmid00.triumf.ca:8082'			//wherever mhttpd is serving
 express = require("express");		
 app 	= express();				
 //minify = require('express-minify');				//minification tool
-exec 	= require('child_process').exec;			//for spawning system calls
+spawn 	= require('child_process').spawn;			//for spawning system calls
 
 // set up the app
 app.set('views', __dirname + '/views');

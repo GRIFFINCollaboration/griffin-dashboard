@@ -32,14 +32,14 @@ app.get('/rawMSC', function(req, res){
 
 app.post('/postHV', function(req, res){
 
-	exec('odbedit -c set /Equipment/HV-'+req.body.crateIndex+'/Variables/Demand['+req.body.chIndex+'] ' + req.body.demandVoltage);
-	exec('odbedit', ['-c', "set '/Equipment/HV-"+req.body.crateIndex+"/Settings/Ramp Up Speed["+req.body.chIndex+"]' " + req.body.voltageUp]);
-	exec('odbedit', ['-c', "set '/Equipment/HV-"+req.body.crateIndex+"/Settings/Ramp Down Speed["+req.body.chIndex+"]' " + req.body.voltageDown]);
+	spawn('odbedit', ['-c', "set /Equipment/HV-"+req.body.crateIndex+"/Variables/Demand["+req.body.chIndex+"] " + req.body.demandVoltage]);
+	spawn('odbedit', ['-c', "set '/Equipment/HV-"+req.body.crateIndex+"/Settings/Ramp Up Speed["+req.body.chIndex+"]' " + req.body.voltageUp]);
+	spawn('odbedit', ['-c', "set '/Equipment/HV-"+req.body.crateIndex+"/Settings/Ramp Down Speed["+req.body.chIndex+"]' " + req.body.voltageDown]);
 
 	if(req.body.powerSwitch == 'off')
-		exec('odbedit', ['-c', "set /Equipment/HV-"+req.body.crateIndex+"/Settings/ChState["+req.body.chIndex+"] 0"]);
+		spawn('odbedit', ['-c', "set /Equipment/HV-"+req.body.crateIndex+"/Settings/ChState["+req.body.chIndex+"] 0"]);
 	else
-		exec('odbedit', ['-c', "set /Equipment/HV-"+req.body.crateIndex+"/Settings/ChState["+req.body.chIndex+"] 1"]);
+		spawn('odbedit', ['-c', "set /Equipment/HV-"+req.body.crateIndex+"/Settings/ChState["+req.body.chIndex+"] 1"]);
 
 	return res.redirect('/HV?crate=0&channel='+req.body.chName);
 });
@@ -52,13 +52,13 @@ app.post('/registerCycle', function(req, res){
 
 	//just load an existing cycle
 	if(req.body.loadTarget != 'null'){
-		exec('odbedit', ['-c', "set /PPG/Current " + req.body.loadTarget]);
+		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.loadTarget]);
 		return res.redirect('/PPG');
 	}
 
 	//delete an existing cycle
 	if(req.body.deleteTarget != 'null'){
-		exec('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.deleteTarget]);
+		spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.deleteTarget]);
 		return res.redirect('/PPG');
 	}
 
@@ -69,19 +69,21 @@ app.post('/registerCycle', function(req, res){
 	}
 console.log(cycle)
 
-	exec('odbedit -c rm /PPG/Cycles/' + req.body.cycleName);
+	spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.cycleName]);
 
-	exec('odbedit -c mkdir /PPG/Cycles/' + req.body.cycleName);
+	spawn('odbedit', ['-c', "mkdir /PPG/Cycles/" + req.body.cycleName]);
 	
-	exec('odbedit -c create int /PPG/Cycles/' + req.body.cycleName + '/PPGcodes[' + steps.length + ']');
-	exec('odbedit -c create int /PPG/Cycles/' + req.body.cycleName + '/durations[' + steps.length + "]");
+	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
+	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations[" + steps.length + "]"]);
 	for(i=0; i<cycle.length; i++){
-		exec('odbedit -c set /PPG/Cycles/' + req.body.cycleName + '/PPGcodes['+ i +']  ' + steps[i]);
-		exec('odbedit -c set /PPG/Cycles/' + req.body.cycleName + '/durations['+ i +']  ' + durations[i]);
+		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"]  " + steps[i]]);
+		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"]  " + durations[i]]);
+		console.log("set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"] " + steps[i])
+		console.log("set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"] " + durations[i])
 	}
 
 	if(req.body.applyCycle == 'on'){
-		exec('odbedit -c set /PPG/Current ' + req.body.cycleName);
+		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.cycleName]);
 	}
 
 	return res.redirect('/PPG');
