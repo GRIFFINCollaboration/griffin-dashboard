@@ -19,13 +19,6 @@ app.get('/DAQ', function(req, res){
 app.get('/PPG', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
-	for(var i=0; i<3; i++){
-		spawn('odbedit', ['-c', "set /PPG/Cycles/dummy2/PPGcodes["+ i +"] " + 0.3 ]);
-		spawn('odbedit', ['-c', "set /PPG/Cycles/dummy2/durations["+ i +"] " + 0.3 ]);
-		console.log("set /PPG/Cycles/dummy2/PPGcodes["+ i +"] " + 0.3)
-		console.log("set /PPG/Cycles/dummy2/durations["+ i +"] " + 0.3)
-	}
-
 	res.render('widgets/PPG.jade');
 });
 
@@ -74,7 +67,6 @@ app.post('/registerCycle', function(req, res){
 		steps[i] = parseInt(cycle[i].PPGcode, 10);
 		durations[i] = parseInt(cycle[i].duration, 10);
 	}
-console.log(cycle)
 
 	spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.cycleName]);
 
@@ -83,10 +75,8 @@ console.log(cycle)
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations[" + steps.length + "]"]);
 	for(i=0; i<cycle.length; i++){
-		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"]  " + steps[i]]);
-		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"]  " + durations[i]]);
-		console.log("set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"] " + steps[i])
-		console.log("set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"] " + durations[i])
+		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"]  " + Math.round(steps[i]) ]);
+		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"]  " + Math.round(durations[i]) ]);
 	}
 
 	if(req.body.applyCycle == 'on'){
