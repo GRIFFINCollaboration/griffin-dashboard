@@ -71,12 +71,19 @@ console.log(cycle)
 	spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.cycleName]);
 
 	spawn('odbedit', ['-c', "mkdir /PPG/Cycles/" + req.body.cycleName]);
+	/*
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations[" + steps.length + "]"]);
 	for(i=0; i<cycle.length; i++){
 		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"] " + steps[i]]);
 		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"] " + durations[i]]);
 	}
+	*/
+
+	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes"]);
+	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations"]);
+	spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes " + JSON.stringify(steps)]);
+	spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations" + JSON.stringify(durations)]);
 
 	if(req.body.applyCycle == 'on'){
 		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.cycleName]);
