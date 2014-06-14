@@ -92,11 +92,12 @@
                     durationSummary = document.createElement('span'),
                     list = document.createElement('ul'),
                     listItem, ppgOption, ppgLabel,
+                    summaryState = document.getElementById('PPGtool').querySelectorAll('input[type="radio"]:checked')[0].value
                     ppgName = ['Beam On', 'Wildcard 1', 'Wildcard 2', 'Wildcard 3', 'Sync Clocks', 'Clear Scalars', 'Move Tape', 'HPGe Trigger', 'SCEPTAR Trigger', 'Si(Li) Trigger', 'LaBr3 Trigger', 'DESCANT Trigger', 'ZDS Trigger', 'Wildcard 4', 'Wildcard 5', 'Wildcard 6'], 
                     ppgCode = [0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80, 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000],
                     i;
 
-                timingWrap.setAttribute('class', 'summary');
+                timingWrap.setAttribute('class', summaryState);
                 timingWrap.setAttribute('id', 'timingWrap');
                 targetElement.appendChild(timingWrap);
 
@@ -139,10 +140,10 @@
                 }
 
                 durationSummary.setAttribute('id', 'durationSummary');
-                durationSummary.setAttribute('class', 'summary');
+                durationSummary.setAttribute('class', summaryState);
                 targetElement.appendChild(durationSummary);
 
-                list.setAttribute('class', 'summary');
+                list.setAttribute('class', summaryState);
                 targetElement.appendChild(list);
 
                 for(i=0; i<ppgName.length; i++){
@@ -151,7 +152,7 @@
 
                     ppgOption = document.createElement('input');
                     ppgOption.setAttribute('type', 'checkbox');
-                    ppgOption.setAttribute('class', 'summary');
+                    ppgOption.setAttribute('class', summaryState);
                     ppgOption.setAttribute('id', 'uID' + this.uniqueIndex + 'ppg' + ppgCode[i].toString(16));
                     ppgOption.value = ppgCode[i];
                     listItem.appendChild(ppgOption);
@@ -161,8 +162,6 @@
                     ppgLabel.setAttribute('for', 'uID' + this.uniqueIndex + 'ppg' + ppgCode[i].toString(16));
                     listItem.appendChild(ppgLabel);
                 }
-
-                document.querySelectorAll('widget-PPG')[0].toggleSummary();
 
             },
         
