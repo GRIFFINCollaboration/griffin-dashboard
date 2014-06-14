@@ -63,7 +63,8 @@
 
                 this.nCards++;
                 this.uniqueIndex++;
-                this.wrapperForm.onchange();
+                if(this.wrapperForm.onchange)
+                    this.wrapperForm.onchange();
                 
             },
 
