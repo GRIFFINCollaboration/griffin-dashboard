@@ -162,6 +162,8 @@
                     listItem.appendChild(ppgLabel);
                 }
 
+                targetElement.parentElement.parentElement.parentElement.toggleSummary();
+
             },
         
             'deleteCard' : function(target){
