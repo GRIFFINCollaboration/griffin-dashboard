@@ -19,6 +19,11 @@ app.get('/DAQ', function(req, res){
 app.get('/PPG', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
+	for(var i=0; i<3; i++){
+		spawn('odbedit', ['-c', "set /PPG/Cycles/dummy2/PPGcodes["+ i +"] " + Math.random() ]);
+		spawn('odbedit', ['-c', "set /PPG/Cycles/dummy2/durations["+ i +"] " + Math.random() ]);
+	}
+
 	res.render('widgets/PPG.jade');
 });
 
