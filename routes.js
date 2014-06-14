@@ -68,8 +68,7 @@ app.post('/registerCycle', function(req, res){
 		durations[i] = parseInt(cycle[i].duration, 10);
 	}
 console.log(cycle)
-console.log(steps)
-console.log(durations)
+
 	spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.cycleName]);
 
 	spawn('odbedit', ['-c', "mkdir /PPG/Cycles/" + req.body.cycleName]);
@@ -79,6 +78,8 @@ console.log(durations)
 	for(i=0; i<cycle.length; i++){
 		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"] " + steps[i]]);
 		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"] " + durations[i]]);
+		console.log("set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"] " + steps[i])
+		console.log("set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"] " + durations[i])
 	}
 
 	if(req.body.applyCycle == 'on'){
