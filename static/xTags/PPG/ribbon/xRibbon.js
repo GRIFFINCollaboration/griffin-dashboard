@@ -162,7 +162,8 @@
                     listItem.appendChild(ppgLabel);
                 }
 
-                targetElement.parentElement.parentElement.parentElement.toggleSummary();
+                console.log(targetElement.parentElement)
+                //targetElement.parentElement.parentElement.parentElement.toggleSummary();
 
             },
         
