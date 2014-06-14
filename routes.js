@@ -67,7 +67,7 @@ app.post('/registerCycle', function(req, res){
 		steps[i] = parseInt(cycle[i].PPGcode, 10);
 		durations[i] = parseInt(cycle[i].duration, 10);
 	}
-
+console.log(cycle)
 	spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.cycleName]);
 
 	spawn('odbedit', ['-c', "mkdir /PPG/Cycles/" + req.body.cycleName]);
