@@ -68,6 +68,8 @@ app.post('/registerCycle', function(req, res){
 		durations[i] = parseInt(cycle[i].duration, 10);
 	}
 console.log(cycle)
+console.log(steps)
+console.log(durations)
 	spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.cycleName]);
 
 	spawn('odbedit', ['-c', "mkdir /PPG/Cycles/" + req.body.cycleName]);
