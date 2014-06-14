@@ -162,8 +162,7 @@
                     listItem.appendChild(ppgLabel);
                 }
 
-                console.log(targetElement.parentElement)
-                //targetElement.parentElement.parentElement.parentElement.toggleSummary();
+                document.querySelectorAll('widget-PPG')[0].toggleSummary();
 
             },
         
