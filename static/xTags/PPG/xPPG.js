@@ -35,6 +35,10 @@
                 document.getElementById('ppgSummary').onchange = this.toggleSummary.bind(this);
                 document.getElementById('ppgEdit').onchange = this.toggleSummary.bind(this);
 
+                this.ribbon.wrapperForm.onchange = function(){
+                    document.getElementById('cycleName').value = '';
+                };
+
                 controlWrap.setAttribute('class', 'PPGcontrol summary');
                 controlWrap.setAttribute('id', 'cycleDefinitionForm');
                 controlWrap.setAttribute('method', 'POST');
