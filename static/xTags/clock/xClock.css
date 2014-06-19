@@ -1,6 +1,7 @@
 widget-clock{
 	float:right;
 	width: calc(60% - 2em);
+	margin: 0.5em 0 1em 0;
 }
 
 div.clockSummary{
