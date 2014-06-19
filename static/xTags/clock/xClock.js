@@ -15,7 +15,7 @@
                     clockDiv.onclick = this.clickClock.bind(this, i);
                     this.appendChild(clockDiv);
 
-                    clockTitle = document.createElement('h3');
+                    clockTitle = document.createElement('h2');
                     clockTitle.setAttribute('class', 'clockTitle');
                     clockTitle.innerHTML = 'GRIF-Clk '+i;
                     clockDiv.appendChild(clockTitle);
