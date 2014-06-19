@@ -1,4 +1,4 @@
-x-clock{
+widget-clock{
 	float:right;
 	width: calc(60% - 2em);
 }
