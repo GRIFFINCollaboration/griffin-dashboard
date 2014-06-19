@@ -4,9 +4,13 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var i,
+                var i, pageTitle
                     clockDiv,
                     clockTitle;
+
+                pageTitle = document.createElement('h1');
+                pageTitle.innerHTML = 'GRIFFIN Clock Control'
+                this.appendChild(pageTitle);
 
                 for(i=0; i<25; i++){
                     clockDiv = document.createElement('div');
