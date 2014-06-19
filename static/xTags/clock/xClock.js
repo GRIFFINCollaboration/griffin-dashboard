@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var i, pageTitle
+                var i, pageTitle,
                     clockDiv,
                     clockTitle;
 
