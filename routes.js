@@ -22,6 +22,12 @@ app.get('/PPG', function(req, res){
 	res.render('widgets/PPG.jade');
 });
 
+app.get('/Clocks', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	
+	res.render('widgets/Clock.jade');
+});
+
 /*
 app.get('/rawMSC', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)

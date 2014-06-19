@@ -1,88 +1,17 @@
-/*//////////////////////////////////////
-CSS Reset///////////////////////////////
-//////////////////////////////////////*/
-
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-html, body, div, span, applet, object, iframe,
-p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font-family: sans-serif;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-
-select{
-    -webkit-appearance:none;
-    -moz-appearance:none;
-	appearance:none;
-}
-
-input[type=radio]{
-	display: none;
-}
-
-/*Enforce more intuitive box-sizing, suppress selection*/
-* { 
-	-moz-box-sizing: border-box; 
-	-webkit-box-sizing: border-box; 
-	box-sizing: border-box; 
-	-webkit-user-select:none;
-	-moz-user-select:none;
-}
-
-body {
-	min-width: 1120px;
-	background-color: #222222;
-	color: #DDDDDD;
-	height:100%;
+x-clock{
+	float:right;
+	width: calc(60% - 2em);
 }
 
 div.clockSummary{
-	background-color: #FF0000;
+	background-color: #333333;
 	border-radius: 1em;
 	border: 2px solid #FFFFFF;
 	float: left;
 	margin: 0.5em;
-	width: calc( (100% - 5em) / 5);
-	height: calc( (100% - 5em) / 5);
+	padding: 1em;
+	min-width: calc( (100% - 5em) / 5);
+	text-align: center;
 }
 
 div.absentClock{
@@ -90,8 +19,64 @@ div.absentClock{
 	opacity: 0.3;
 }
 
+h3.clockTitle{
+	margin-top: 0em;
+}
 
+widget-clockControl{
+	background-color: #333333;
+	border-radius: 1em;
+	float: right;
+	padding: 1em;
+	margin: 1em;
+	width: 20%;
+}
 
+table.clockTable{
+	font-size: 120%;
+	line-height: 1.5em;
+}
 
+table.clockTable td {
+	padding: 0.25em;
+}
+
+table.clockTable td:nth-child(2n+1){
+	text-align: right;
+}
+
+table.clockTable tr:nth-child(2n+1){
+	background-color: #222222;
+}
+
+div.clockOutCell{
+	border-radius: 1em;
+	padding: 1em;
+	border: 1px solid #EEEEEE;
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+div.clockOutCell span{
+	display: block;
+}
+
+div.eSATAcell {
+	width: calc(50% - 0.5em);
+	display: inline-block;
+}
+
+div.eSATAcell label{
+	margin: 0.5em 0 0.5em 0;
+}
+
+div#clockChannels div:nth-child(2n+1){
+	margin-right: 1em;
+}
+
+div#clockCardWrap{
+	margin-top: 1em;
+	height: 36em;
+}
 
 

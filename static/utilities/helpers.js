@@ -95,6 +95,38 @@ function getParameterByName(name) {
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+//build an array of radio buttons
+function radioArray(parentElt, labelText, values, groupName){
+    var i,
+        radio, label;
+
+    for(i=0; i<labelText.length; i++){
+        radio = document.createElement('input');
+        radio.setAttribute('class', 'stdin');
+        radio.setAttribute('type', 'radio');
+        radio.setAttribute('id', groupName + i);
+        radio.setAttribute('name', groupName);
+        radio.setAttribute('value', values[i]);
+        parentElt.appendChild(radio);
+
+        label = document.createElement('label');
+        label.setAttribute('for', groupName + i);
+        label.innerHTML = labelText[i];
+        parentElt.appendChild(label);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 //build the MSC table from the encoding in the ODB at /DAQ
 function buildMSC(DAQresponse){
