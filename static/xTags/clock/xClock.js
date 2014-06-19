@@ -15,7 +15,7 @@
                     clockDiv.onclick = this.clickClock.bind(this, i);
                     this.appendChild(clockDiv);
 
-                    clockTitle = document.createElement('h2');
+                    clockTitle = document.createElement('h3');
                     clockTitle.setAttribute('class', 'clockTitle');
                     clockTitle.innerHTML = 'GRIF-Clk '+i;
                     clockDiv.appendChild(clockTitle);
@@ -74,9 +74,9 @@
                     outputFreqWrap, outputFreqTitle, outputFreqSlide, outputFreqLabel,
                     channelCells, eSATAwrap, eSATAtitle;
 
-                this.introTitle = document.createElement('h3');
+                this.introTitle = document.createElement('h2');
                 this.wrap = document.createElement('div');
-                this.clockTitle = document.createElement('h3');
+                this.clockTitle = document.createElement('h2');
 
                 this.introTitle.innerHTML = 'Click on a clock to get started.'
                 this.appendChild(this.introTitle)
