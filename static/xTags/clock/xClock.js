@@ -156,6 +156,7 @@
                     row = document.createElement('tr');
                     this.summaryTable.appendChild(row);
                     cell = document.createElement('td');
+                    cell.setAttribute('id', this.summaryIDs[i]+'Label')
                     cell.innerHTML = summaryItems[i];
                     row.appendChild(cell);
                     cell = document.createElement('td');
@@ -249,7 +250,8 @@
         }, 
         methods: {
             'updateForm' : function(payload){
-                var i, value;
+                var i, value,
+                    isMaster = payload.data.Variables.Output[i] == 1;
 
                 this.clockTitle.innerHTML = 'GRIF-Clk ' + payload.index;
 
@@ -257,6 +259,28 @@
                 for(i=1; i<9; i++){
                     value = this.humanReadableClock(i, parseInt(payload.data.Variables.Output[i],10) );
                     document.getElementById(this.summaryIDs[i - 1]).innerHTML = value;
+                }
+
+                if(isMaster){
+                    //master needs switch for LEMO or AC Ref. Clock:
+                    document.getElementById('ClockSourceLabel').innerHTML = 'Ref. Clock';
+                    radioArray(document.getElementById('ClockSource'), ['LEMO', 'AC'], ['LEMO', 'AC'], 'masterRef');
+
+                    //also, don't report FanSel for the master, replace with frequency info:
+                    document.getElementById('RefClockLabel').innerHTML = 'Input Freq.:';
+                    document.getElementById('RefClock').innerHTML = '10 MHz';
+
+                    //master reports NIM clock, slave reports ESATA clock
+                    document.getElementById('SyncTmeSLabel').innerHTML = 'Last NIM Sync';
+                    document.getElementById('SyncTmeS').innerHTML = this.humanReadableClock(10,parseInt(payload.data.Variables.Output[10],10));
+                } else{
+                    document.getElementById('ClockSourceLabel').innerHTML = 'Clock Source';
+
+                    document.getElementById('RefClockLabel').innerHTML = 'Ref. Clock';
+                    document.getElementById('RefClock').innerHTML = 'N/A';
+
+                    document.getElementById('SyncTmeSLabel').innerHTML = 'Last eSATA Sync';
+                    document.getElementById('SyncTmeS').innerHTML = this.humanReadableClock(9,parseInt(payload.data.Variables.Output[9],10));
                 }
 
                 this.introTitle.setAttribute('style','display:none');
