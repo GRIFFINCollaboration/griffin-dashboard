@@ -251,7 +251,7 @@
         methods: {
             'updateForm' : function(payload){
                 var i, value,
-                    isMaster = payload.data.Variables.Output[i] == 1;
+                    isMaster = payload.data.Variables.Output[1] == 1;
 
                 this.clockTitle.innerHTML = 'GRIF-Clk ' + payload.index;
 
@@ -260,7 +260,7 @@
                     value = this.humanReadableClock(i, parseInt(payload.data.Variables.Output[i],10) );
                     document.getElementById(this.summaryIDs[i - 1]).innerHTML = value;
                 }
-console.log(isMaster)
+
                 if(isMaster){
                     //master needs switch for LEMO or AC Ref. Clock:
                     document.getElementById('ClockSourceLabel').innerHTML = 'Ref. Clock';
