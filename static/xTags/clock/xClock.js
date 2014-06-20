@@ -112,6 +112,8 @@
                     outputFreqWrap, outputFreqTitle, outputFreqSlide, outputFreqLabel,
                     channelCells, eSATAwrap, eSATAtitle;
 
+                this.summaryIDs = ['Configuration', 'SyncSource', 'ClockSource', 'RefClock', 'LEMOClock', 'LEMOSync', 'eSATAClock', 'eSATASync', 'SyncTmeS'];
+
                 this.introTitle = document.createElement('h2');
                 this.wrap = document.createElement('div');
                 this.clockTitle = document.createElement('h2');
@@ -157,6 +159,7 @@
                     cell.innerHTML = summaryItems[i];
                     row.appendChild(cell);
                     cell = document.createElement('td');
+                    cell.setAttribute('id', this.summaryIDs[i]);
                     row.appendChild(cell);
                 }
 
@@ -246,10 +249,15 @@
         }, 
         methods: {
             'updateForm' : function(payload){
+                var i, value;
 
                 this.clockTitle.innerHTML = 'GRIF-Clk ' + payload.index;
 
-
+                //clock summary parameters
+                for(i=1; i<9; i++){
+                    value = this.humanReadableClock(i, parseInt(payload.Variables.Output[i],10) );
+                    document.getElementById(this.summaryIDs[i]).innerHTML = value;
+                }
 
                 this.introTitle.setAttribute('style','display:none');
                 this.wrap.setAttribute('style', 'display:block');
@@ -259,6 +267,28 @@
                 var targetView = parseInt(this.wrap.querySelector('input[name="clockSidebarView"]:checked').value,10);
 
                 this.deck.shuffleTo(targetView);
+            },
+
+            //translate clock parameter i of value v into something a human can comprehend:
+            'humanReadableClock' : function(i, v){
+                if(i == 1)
+                    return (parseInt(v,10)) ? 'Master' : 'Slave';
+                else if(i == 2)
+                    return (parseInt(v,10)) ? 'LEMO' : 'eSATA';
+                else if(i == 3)
+                    return (parseInt(v,10)) ? 'LEMO' : 'eSATA';
+                else if(i == 4)
+                    return (parseInt(v,10)) ? 'LEMO' : 'Atomic Clock'
+                else if(i>4 && i<9)
+                    return (parseInt(v,10)) ? 'Present' : 'Absent';
+                else if(i==9 || i==10)
+                    return Math.floor(v/3600) + ' h: ' + Math.floor((v%3600)/60) + ' m';
+                else if(i==13 || i==17 || i==21 || i==25 || i==29 || i==33 || i==37 || i==41)
+                    return (parseInt(v,10)) ? 'Yes' : 'No';
+                else if(i==43)
+                    return (parseInt(v,10)) ? 'Up' : 'Down';
+                else
+                    return v;
             }
         }
     });
