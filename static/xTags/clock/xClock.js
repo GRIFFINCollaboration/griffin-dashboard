@@ -33,7 +33,7 @@
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys', function(responseText){
                     var i;
 
-                    console.log(responseText)
+                    console.log('http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys')
 /*
                     window.ODBEquipment = JSON.parse(responseText)[0];  //comes packed in a one-element array...
 
