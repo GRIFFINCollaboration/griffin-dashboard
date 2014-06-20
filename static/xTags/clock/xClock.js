@@ -33,8 +33,6 @@
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys', function(responseText){
                     var i;
 
-                    console.log('http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys')
-/*
                     window.ODBEquipment = JSON.parse(responseText)[0];  //comes packed in a one-element array...
 
                     this.clocksPresent = [];
@@ -45,7 +43,7 @@
                         else 
                             this.clockDiv[i].setAttribute('class', 'clockSummary absentClock');
                     }
-*/
+
                 }.bind(this));
             },
 
@@ -57,7 +55,9 @@
 
         },
         accessors: {
-
+            'MIDAS':{
+                attribute: {} //this just needs to be declared
+            }
         }, 
         methods: {
             'clickClock' : function(index){
