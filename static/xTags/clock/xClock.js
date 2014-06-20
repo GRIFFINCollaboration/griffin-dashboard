@@ -264,6 +264,7 @@
                 if(isMaster){
                     //master needs switch for LEMO or AC Ref. Clock:
                     document.getElementById('ClockSourceLabel').innerHTML = 'Ref. Clock';
+                    document.getElementById('ClockSource').innerHTML = '';
                     radioArray(document.getElementById('ClockSource'), ['LEMO', 'AC'], ['LEMO', 'AC'], 'masterRef');
 
                     //also, don't report FanSel for the master, replace with frequency info:
