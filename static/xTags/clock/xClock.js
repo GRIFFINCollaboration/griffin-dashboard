@@ -5,30 +5,46 @@
         lifecycle: {
             created: function() {
                 var i, pageTitle,
-                    clockDiv,
                     clockTitle;
+
+                this.clockDiv = [];
 
                 pageTitle = document.createElement('h1');
                 pageTitle.innerHTML = 'GRIFFIN Clock Control'
                 this.appendChild(pageTitle);
 
                 for(i=0; i<25; i++){
-                    clockDiv = document.createElement('div');
-                    clockDiv.setAttribute('id', 'clock'+i);
-                    clockDiv.setAttribute('class', 'clockSummary');
-                    clockDiv.onclick = this.clickClock.bind(this, i);
-                    this.appendChild(clockDiv);
+                    this.clockDiv[i] = document.createElement('div');
+                    this.clockDiv[i].setAttribute('id', 'clock'+i);
+                    this.clockDiv[i].setAttribute('class', 'clockSummary');
+                    this.clockDiv[i].onclick = this.clickClock.bind(this, i);
+                    this.appendChild(this.clockDiv[i]);
 
                     clockTitle = document.createElement('h3');
                     clockTitle.setAttribute('class', 'clockTitle');
                     clockTitle.innerHTML = 'GRIF-Clk '+i;
-                    clockDiv.appendChild(clockTitle);
+                    this.clockDiv[i].appendChild(clockTitle);
 
-                    radioArray(clockDiv, ['Slave', 'Master'], [0,1], 'radio'+i);
+                    radioArray(this.clockDiv[i], ['Slave', 'Master'], [0,1], 'radio'+i);
 
-                    if(i%5 == 0)
-                        clockDiv.setAttribute('class', 'clockSummary absentClock')
                 }
+
+                //grab the whole equipment list, and figure out which clocks are reporting
+                XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys', function(responseText){
+                    var i;
+
+                    window.ODBEquipment = JSON.parse(responseText)[0];  //comes packed in a one-element array...
+
+                    this.clocksPresent = [];
+
+                    for(i=0; i<25; i++){
+                        if(window.ODBEquipment.hasOwnProperty('GRIF-Clk'+i))
+                            this.clocksPresent.push(i);
+                        else 
+                            this.clockDiv[i].setAttribute('class', 'clockSummary absentClock');
+                    }
+
+                }.bind(this));
             },
 
             inserted: function() {},
