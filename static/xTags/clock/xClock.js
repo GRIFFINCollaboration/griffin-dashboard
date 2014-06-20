@@ -255,7 +255,7 @@
 
                 //clock summary parameters
                 for(i=1; i<9; i++){
-                    value = this.humanReadableClock(i, parseInt(payload.Variables.Output[i],10) );
+                    value = this.humanReadableClock(i, parseInt(payload.data.Variables.Output[i],10) );
                     document.getElementById(this.summaryIDs[i]).innerHTML = value;
                 }
 
