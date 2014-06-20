@@ -8,6 +8,8 @@
                     clockTitle;
 
                 this.clockDiv = [];
+                this.slaveSwitch = [];
+                this.masterSwitch = [];
 
                 pageTitle = document.createElement('h1');
                 pageTitle.innerHTML = 'GRIFFIN Clock Control'
@@ -26,10 +28,12 @@
                     this.clockDiv[i].appendChild(clockTitle);
 
                     radioArray(this.clockDiv[i], ['Slave', 'Master'], [0,1], 'radio'+i);
+                    this.slaveSwitch[i] = document.getElementById('radio'+i+0);
+                    this.masterSwitch[i] = document.getElementById('radio'+i+1);
 
                 }
 
-                //grab the whole equipment list, and figure out which clocks are reporting
+                //grab the whole equipment list, figure out which clocks are reporting, and set their status radio
                 XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys', function(responseText){
                     var i;
 
@@ -38,8 +42,13 @@
                     this.clocksPresent = [];
 
                     for(i=0; i<25; i++){
-                        if(window.ODBEquipment.hasOwnProperty('GRIF-Clk'+i))
+                        if(window.ODBEquipment.hasOwnProperty('GRIF-Clk'+i)){
                             this.clocksPresent.push(i);
+                            if(window.ODBEquipment['GRIF-Clk'+i].Variables.Output[1] == 1)
+                                this.masterSwitch[i].setAttribute('checked', true);
+                            else
+                                this.slaveSwitch[i].setAttribute('checked', true);
+                        }
                         else 
                             this.clockDiv[i].setAttribute('class', 'clockSummary absentClock');
                     }
@@ -61,14 +70,21 @@
         }, 
         methods: {
             'clickClock' : function(index){
-                var evt, i,
+                var evt, i, ODBblob,
                     controlSidebars = document.getElementsByTagName('widget-clockControl')
+
+                //TODO: highlight this div
+
+                ODBblob = {};
+                if(window.ODBEquipment && window.ODBEquipment.hasOwnProperty('GRIF-Clk'+index))
+                    ODBblob = window.ODBEquipment['GRIF-Clk'+index];
 
                 if(controlSidebars){
                     for(i=0; i<controlSidebars.length; i++){
 
                         evt = new CustomEvent('postClockChan', {'detail': {   
-                            'index' : index
+                            'index' : index,
+                            'data' : ODBblob
                         } });
                         controlSidebars[i].dispatchEvent(evt);
                     }
@@ -108,7 +124,7 @@
 
                 this.wrap.appendChild(this.clockTitle);
 
-                radioArray(this.wrap, ['Summary', 'Outputs', 'CSAC Param.'], [0,1,2], 'clockSidebarView');
+                radioArray(this.wrap, ['Summary', 'Outputs', 'CSAC'], [0,1,2], 'clockSidebarView');
                 radios = this.wrap.querySelectorAll('input[type=radio]');
                 for(i=0; i<radios.length; i++){
                     radios[i].onchange = this.changeView.bind(this);
@@ -213,7 +229,7 @@
 
 
                 this.addEventListener('postClockChan', function(evt){
-                    this.updateForm(evt.detail.index);
+                    this.updateForm(evt.detail);
                 }, false);
             },
             inserted: function() {},
@@ -229,9 +245,11 @@
             }
         }, 
         methods: {
-            'updateForm' : function(index){
+            'updateForm' : function(payload){
 
-                this.clockTitle.innerHTML = 'GRIF-Clk ' + index;
+                this.clockTitle.innerHTML = 'GRIF-Clk ' + payload.index;
+
+
 
                 this.introTitle.setAttribute('style','display:none');
                 this.wrap.setAttribute('style', 'display:block');
