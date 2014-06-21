@@ -31,6 +31,7 @@ widget-clockControl{
 	padding: 1em;
 	margin: 1em;
 	width: 22%;
+	overflow: scroll;
 }
 
 table.clockTable{
@@ -40,6 +41,7 @@ table.clockTable{
 
 table.clockTable td {
 	padding: 0.25em;
+	padding-left: 1em;
 }
 
 table.clockTable td:nth-child(2n+1){
