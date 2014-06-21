@@ -78,6 +78,8 @@ div#clockChannels div:nth-child(2n+1){
 
 div#clockCardWrap{
 	margin-top: 1em;
+	height: 36em;
+	overflow: scroll;
 }
 
 
