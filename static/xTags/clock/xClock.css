@@ -82,6 +82,8 @@ div#clockCardWrap{
 }
 
 @media screen and (max-width: 1200px){
-	div#height: 38em;
+	div#clockCardWrap{ 
+		height:38em;
+	}
 }
 
