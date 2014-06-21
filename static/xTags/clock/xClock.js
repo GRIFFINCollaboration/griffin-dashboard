@@ -250,7 +250,7 @@
         }, 
         methods: {
             'updateForm' : function(payload){
-                var i, value,
+                var i, value, isOn,
                     isMaster = payload.data.Variables.Output[1] == 1;
 
                 this.clockTitle.innerHTML = 'GRIF-Clk ' + payload.index;
@@ -282,6 +282,16 @@
 
                     document.getElementById('SyncTmeSLabel').innerHTML = 'Last eSATA Sync';
                     document.getElementById('SyncTmeS').innerHTML = this.humanReadableClock(9,parseInt(payload.data.Variables.Output[9],10));
+                }
+
+                //decode which channels are on / off:
+                for(i=0; i<6; i++){
+                    isOn = (0xF << 4*i) & parseInt(payload.data.Variables.Output[0];
+                    if(isOn){
+                        document.getElementById('eSATAtoggle'+i+1).setAttribute('checked', true);
+                    } else{
+                        document.getElementById('eSATAtoggle'+i+0).setAttribute('checked', true);
+                    }
                 }
 
                 this.introTitle.setAttribute('style','display:none');
