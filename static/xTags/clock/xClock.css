@@ -1,6 +1,6 @@
 widget-clock{
 	float:right;
-	width: calc(60% - 2em);
+	width: calc(58% - 2em);
 	margin: 0 0 1em 0;
 }
 
@@ -30,7 +30,7 @@ widget-clockControl{
 	float: right;
 	padding: 1em;
 	margin: 1em;
-	width: 20%;
+	width: 22%;
 }
 
 table.clockTable{
