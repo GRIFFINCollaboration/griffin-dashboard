@@ -286,7 +286,7 @@
 
                 //decode which channels are on / off:
                 for(i=0; i<6; i++){
-                    isOn = (0xF << 4*i) & parseInt(payload.data.Variables.Output[0];
+                    isOn = (0xF << 4*i) & parseInt(payload.data.Variables.Output[0], 10);
                     if(isOn){
                         document.getElementById('eSATAtoggle'+i+1).setAttribute('checked', true);
                     } else{
