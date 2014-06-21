@@ -1,6 +1,6 @@
 widget-clock{
 	float:right;
-	width: calc(58% - 2em);
+	width: calc(55% - 2em);
 	margin: 0 0 1em 0;
 }
 
@@ -30,7 +30,7 @@ widget-clockControl{
 	float: right;
 	padding: 1em;
 	margin: 1em;
-	width: 22%;
+	width: 25%;
 }
 
 table.clockTable{
@@ -79,7 +79,9 @@ div#clockChannels div:nth-child(2n+1){
 div#clockCardWrap{
 	margin-top: 1em;
 	height: 36em;
-	overflow: scroll;
 }
 
+@media screen and (max-width: 1200px){
+	div#height: 38em;
+}
 
