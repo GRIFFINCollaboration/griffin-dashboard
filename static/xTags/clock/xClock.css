@@ -65,6 +65,11 @@ div.clockOutCell{
 
 div.masterOutCell{
 	border: none;
+	margin-bottom: 0em;
+}
+
+input.submitChannelConfig{
+	margin-top: 0.5em;
 }
 
 div.clockOutCell span{

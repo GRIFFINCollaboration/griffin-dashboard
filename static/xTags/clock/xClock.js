@@ -187,6 +187,7 @@
                 outputFreqLabel.setAttribute('id', 'masterOutputFrequencyLabel');
                 outputFreqWrap.appendChild(outputFreqLabel);
                 channelSubmit = document.createElement('input');
+                channelSubmit.setAttribute('id', 'submitChannelConfig')
                 channelSubmit.setAttribute('class', 'stdin');
                 channelSubmit.setAttribute('type', 'submit');
                 channelSubmit.setAttribute('value', 'Submit All');
