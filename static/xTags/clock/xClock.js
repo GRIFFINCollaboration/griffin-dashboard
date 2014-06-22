@@ -114,6 +114,7 @@
 
                 this.summaryIDs = ['Configuration', 'SyncSource', 'ClockSource', 'RefClock', 'LEMOClock', 'LEMOSync', 'eSATAClock', 'eSATASync', 'SyncTmeS'];
                 this.CSACIDs = ['Power', 'Status', 'Mode', 'Alarm', 'UnitPower', 'TuningVoltage', 'LaserCurrent', 'ClockHeaterPower', 'Temperature', 'SerialNo', 'FirmwareVersion'];
+                this.CSACunit = ['','','','','',' VDC',' mA',' mW',' C','',''];
 
                 this.introTitle = document.createElement('h2');
                 this.wrap = document.createElement('div');
@@ -315,8 +316,8 @@
 
                 //CSAC parameters
                 for(i=43; i<54; i++){
-                    value = this.humanReadableClock(i, parseFloat(payload.data.Variables.Output[i]) );
-                    document.getElementById(this.CSACIDs[i-43]).innerHTML = value;
+                    value = this.humanReadableClock(i, parseFloat(payload.data.Variables.Output[i]).toFixed(2) );
+                    document.getElementById(this.CSACIDs[i-43]).innerHTML = value + this.CSACunit[i-43];
                 }
             },
 
