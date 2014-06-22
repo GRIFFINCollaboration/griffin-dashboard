@@ -81,8 +81,6 @@ div#clockCardWrap{
 	/*height: 36em;*/
 }
 
-div#clockCardWrap:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
-
 /*
 @media screen and (max-width: 1200px){
 	div#clockCardWrap{ 
