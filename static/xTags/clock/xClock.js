@@ -316,7 +316,7 @@
 
                 //CSAC parameters
                 for(i=43; i<54; i++){
-                    value = this.humanReadableClock(i, parseFloat(payload.data.Variables.Output[i]).toFixed(2) );
+                    value = this.humanReadableClock(i, parseFloat(payload.data.Variables.Output[i]).toFixed( (this.CSACunit[i-43] == '')? 0 :2 ) );
                     document.getElementById(this.CSACIDs[i-43]).innerHTML = value + this.CSACunit[i-43];
                 }
             },
