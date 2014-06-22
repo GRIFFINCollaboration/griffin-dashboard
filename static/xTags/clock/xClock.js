@@ -113,6 +113,7 @@
                     channelCells, eSATAwrap, eSATAtitle;
 
                 this.summaryIDs = ['Configuration', 'SyncSource', 'ClockSource', 'RefClock', 'LEMOClock', 'LEMOSync', 'eSATAClock', 'eSATASync', 'SyncTmeS'];
+                this.CSACIDs = ['Power', 'Status', 'Mode', 'Alarm', 'UnitPower', 'TuningVoltage', 'LaserCurrent', 'ClockHeaterPower', 'Temperature', 'SerialNo', 'FirmwareVersion'];
 
                 this.introTitle = document.createElement('h2');
                 this.wrap = document.createElement('div');
@@ -234,6 +235,7 @@
                     cell.innerHTML = CSACItems[i];
                     row.appendChild(cell);
                     cell = document.createElement('td');
+                    cell.setAttribute('id', this.CSACIDs[i]);
                     row.appendChild(cell);
                 }
 
@@ -310,6 +312,12 @@
 
                 this.introTitle.setAttribute('style','display:none');
                 this.wrap.setAttribute('style', 'display:block');
+
+                //CSAC parameters
+                for(i=43; i<54; i++){
+                    value = this.humanReadableClock(i, parseInt(payload.data.Variables.Output[i],10) );
+                    document.getElementById(this.CSACIDs[i-43]).innerHTML = value;
+                }
             },
 
             'changeView' : function(){
