@@ -179,6 +179,7 @@
                 outputFreqSlide = document.createElement('input');
                 outputFreqSlide.setAttribute('type', 'range');
                 outputFreqSlide.setAttribute('id', 'frequencySlider');
+                outputFreqSlide.setAttribute('name', 'frequencySlider');
                 outputFreqSlide.setAttribute('min',1);
                 outputFreqSlide.setAttribute('max',10);
                 outputFreqSlide.oninput = this.determineFrequency.bind(this);
