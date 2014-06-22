@@ -94,6 +94,8 @@ app.post('/registerCycle', function(req, res){
 
 app.post('/updateClock', function(req, res){
 	console.log(res.body)
+
+	return res.redirect('/Clocks');
 });
 
 
