@@ -268,6 +268,8 @@
                 var i, value, isOn,
                     isMaster = payload.data.Variables.Output[1] == 1;
 
+                this.currentClock = parseInt(payload.index,10);
+
                 this.clockTitle.innerHTML = 'GRIF-Clk ' + payload.index;
 
                 //clock summary parameters
@@ -359,13 +361,17 @@
                 var slider = document.getElementById('frequencySlider'),
                     stepdown = -(slider.valueAsNumber - parseInt(slider.max,10)-1),
                     freqOut = this.masterFreq / (1+stepdown), 
-                    i, masterConfig=[];
-                    //window.clockPointer.masterFreqOut = freqOut;
+                    i;
 
                 document.getElementById('masterOutputFrequencyLabel').innerHTML = freqOut.toFixed(1) + ' MHz';
                 for(i=0; i<8; i++){
-                    this.eSATAlabel[i].innerHTML = freqOut.toFixed(1) + ' MHz out'
+                    this.eSATAlabel[i].innerHTML = freqOut.toFixed(1) + ' MHz out';
+
+                    window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[11+4*i] = stepdown;
+                    window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[12+4*i] = stepdown;
                 }
+
+                XHR('http://'+this.MIDAS+'/?cmd=jset&odb0=Equipment/GRIF-Clk'+this.currentClock+'/Variables/Output[*]&value='+JSON.stringify(window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output), function(){})
 
                 //commit new stepdown to ODB:
                 //for(i=0; i<window.localODB['clock0'].length; i++){
