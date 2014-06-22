@@ -58,7 +58,6 @@ table.clockTable tr:nth-child(2n+1){
 div.clockOutCell{
 	border-radius: 1em;
 	padding: 1em;
-	border: 1px solid #EEEEEE;
 	text-align: center;
 	margin: 0.25em;
 	background-color: #222222;
@@ -97,6 +96,7 @@ form#clockCardWrap{
 
 x-card#outputCard{
 	background-color: #444444;
+	border-radius: 1em;
 }
 
 
