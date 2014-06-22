@@ -91,3 +91,11 @@ app.post('/registerCycle', function(req, res){
 
 	return res.redirect('/PPG');
 });
+
+app.post('/updateClock', function(req, res){
+	console.log(res.body)
+});
+
+
+
+

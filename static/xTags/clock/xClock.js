@@ -109,7 +109,7 @@
                     summaryItems = ['Configuration:', 'Sync Source:', 'Clock Source:', 'Ref. Clock:', 'LEMO Clock:', 'LEMO Sync:', 'eSATA Clock:', 'eSATA Sync:', 'SyncTmeS:'],
                     CSACItems = ['Power:', 'Status:', 'Mode:', 'Alarm:', 'Unit Power:', 'Tuning Voltage:', 'Laser Current:', 'Clock Heater Power:', 'Temperature:', 'Serial No.:', 'Firmware Version:'],
                     i, row, cell, radios,
-                    outputFreqWrap, outputFreqTitle, outputFreqSlide, outputFreqLabel,
+                    outputFreqWrap, outputFreqTitle, outputFreqSlide, outputFreqLabel, channelSubmit,
                     channelCells, eSATAwrap, eSATAtitle;
 
                 this.masterFreq = 100;  //master steps down from 200MHz in the spec, but seems to be 100 in practice?  TBD.
@@ -137,7 +137,9 @@
                         radios[i].checked = true;
                 }
 
-                this.cardWrap = document.createElement('div');
+                this.cardWrap = document.createElement('form');
+                this.cardWrap.setAttribute('method', 'POST');
+                this.cardWrap.setAttribute('action', 'updateClock');
                 this.cardWrap.setAttribute('id', 'clockCardWrap')
                 this.wrap.appendChild(this.cardWrap);
                 xString = '<x-deck id="clockControlDeck" selected-index=0>'
@@ -169,7 +171,7 @@
 
                 //output card contents
                 outputFreqWrap = document.createElement('div');
-                outputFreqWrap.setAttribute('class', 'clockOutCell');
+                outputFreqWrap.setAttribute('class', 'clockOutCell masterOutCell');
                 this.outputCard.appendChild(outputFreqWrap);
                 outputFreqTitle = document.createElement('span');
                 outputFreqTitle.innerHTML = 'Master Output Freq.';
@@ -183,8 +185,10 @@
                 outputFreqWrap.appendChild(outputFreqSlide);
                 outputFreqLabel = document.createElement('label');
                 outputFreqLabel.setAttribute('id', 'masterOutputFrequencyLabel');
-                outputFreqLabel.innerHTML = 'MHz'
                 outputFreqWrap.appendChild(outputFreqLabel);
+                channelSubmit = document.createElement('input');
+                channelSubmit.setAttribute('class', 'stdin');
+                channelSubmit.innerHTML('Submit All');
 
                 channelCells = document.createElement('div');
                 channelCells.setAttribute('id', 'clockChannels');
@@ -374,7 +378,7 @@
                         window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[12+4*i] = stepdown;
                     }
 
-                    XHR('http://'+this.MIDAS+'/?cmd=jset&odb0=Equipment/GRIF-Clk'+this.currentClock+'/Variables/Output[*]&value='+JSON.stringify(window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output), function(){});
+                    //XHR('http://'+this.MIDAS+'/?cmd=jset&odb0=Equipment/GRIF-Clk'+this.currentClock+'/Variables/Output[*]&value='+JSON.stringify(window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output), function(){});
                 }
             }
         }
