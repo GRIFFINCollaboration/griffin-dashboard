@@ -366,9 +366,6 @@
                 document.getElementById('masterOutputFrequencyLabel').innerHTML = freqOut.toFixed(1) + ' MHz';
                 for(i=0; i<8; i++){
                     this.eSATAlabel[i].innerHTML = freqOut.toFixed(1) + ' MHz out';
-
-                    window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[11+4*i] = stepdown;
-                    window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[12+4*i] = stepdown;
                 }
 
                 if(window.ODBEquipment){
