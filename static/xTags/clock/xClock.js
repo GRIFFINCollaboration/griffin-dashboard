@@ -371,18 +371,14 @@
                     window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[12+4*i] = stepdown;
                 }
 
-                XHR('http://'+this.MIDAS+'/?cmd=jset&odb0=Equipment/GRIF-Clk'+this.currentClock+'/Variables/Output[*]&value='+JSON.stringify(window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output), function(){})
+                if(window.ODBEquipment){
+                    for(i=0; i<8; i++){
+                        window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[11+4*i] = stepdown;
+                        window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[12+4*i] = stepdown;
+                    }
 
-                //commit new stepdown to ODB:
-                //for(i=0; i<window.localODB['clock0'].length; i++){
-                //    masterConfig[i] = window.localODB[window.clockPointer.activeElt][i];
-                //}
-                //for(i=0; i<8; i++){
-                //    masterConfig[11+4*i] = stepdown;
-                //    masterConfig[12+4*i] = stepdown;
-                //}
-                //ODBSet('/Equipment/GRIF-Clk'+window.clockPointer.activeElt.slice(5, window.clockPointer.activeElt.length)+'/Variables/Output[*]', masterConfig);
-                //window.localODB[window.clockPointer.activeElt] = masterConfig;
+                    XHR('http://'+this.MIDAS+'/?cmd=jset&odb0=Equipment/GRIF-Clk'+this.currentClock+'/Variables/Output[*]&value='+JSON.stringify(window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output), function(){});
+                }
             }
         }
     });
