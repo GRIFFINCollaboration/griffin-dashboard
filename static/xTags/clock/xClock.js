@@ -184,6 +184,7 @@
                 this.outputCard.appendChild(channelCells);
 
                 this.eSATAlabel = [];
+                this.bypassState = [];
                 for(i=0; i<6; i++){
                     eSATAwrap = document.createElement('div');
                     eSATAwrap.setAttribute('class', 'clockOutCell eSATAcell');
@@ -196,6 +197,8 @@
                     this.eSATAlabel[i] = document.createElement('span');
                     this.eSATAlabel[i].innerHTML = '-1 MHz out';
                     eSATAwrap.appendChild(this.eSATAlabel[i]);
+                    this.bypassState[i] = document.createElement('span');
+                    eSATAwrap.appendChild(this.bypassState[i])
                 }
                 eSATAwrap = document.createElement('div');
                 eSATAwrap.setAttribute('class', 'clockOutCell eSATAcell');
@@ -206,6 +209,8 @@
                 this.eSATAlabel[6] = document.createElement('span');
                 this.eSATAlabel[6].innerHTML = '-1 MHz out';
                 eSATAwrap.appendChild(this.eSATAlabel[6]);
+                this.bypassState[6] = document.createElement('span');
+                eSATAwrap.appendChild(this.bypassState[6])
                 eSATAwrap = document.createElement('div');
                 eSATAwrap.setAttribute('class', 'clockOutCell eSATAcell');
                 channelCells.appendChild(eSATAwrap);
@@ -215,7 +220,8 @@
                 this.eSATAlabel[7] = document.createElement('span');
                 this.eSATAlabel[7].innerHTML = '-1 MHz out';
                 eSATAwrap.appendChild(this.eSATAlabel[7]);
-
+                this.bypassState[7] = document.createElement('span');
+                eSATAwrap.appendChild(this.bypassState[7])
 
                 //CSAC card contents
                 this.CSACTable = document.createElement('table');
@@ -293,6 +299,14 @@
                         document.getElementById('eSATAtoggle'+i+0).setAttribute('checked', true);
                     }
                 }
+
+                //report bipass state of each channel (yes, LEMOs got stuck in between the 5th and 6th eSATA channels...)
+                for(i=0; i<5; i++){
+                    this.bypassState[i].innerHTML = 'Bypass: ' + this.humanReadableClock(13 + 4*i, parseInt(payload.data.Variables.Output[13+4*i],10) );
+                }
+                this.bypassState[5].innerHTML = 'Bypass: ' + this.humanReadableClock(41, parseInt(payload.data.Variables.Output[41],10) );
+                this.bypassState[6].innerHTML = 'Bypass: ' + this.humanReadableClock(33, parseInt(payload.data.Variables.Output[33],10) );
+                this.bypassState[7].innerHTML = 'Bypass: ' + this.humanReadableClock(37, parseInt(payload.data.Variables.Output[37],10) );
 
                 this.introTitle.setAttribute('style','display:none');
                 this.wrap.setAttribute('style', 'display:block');
