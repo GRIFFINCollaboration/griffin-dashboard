@@ -189,6 +189,7 @@
                 channelSubmit = document.createElement('input');
                 channelSubmit.setAttribute('class', 'stdin');
                 channelSubmit.innerHTML = 'Submit All';
+                outputFreqWrap.appendChild(channelSubmit);
 
                 channelCells = document.createElement('div');
                 channelCells.setAttribute('id', 'clockChannels');
