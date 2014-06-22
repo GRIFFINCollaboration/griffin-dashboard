@@ -78,7 +78,7 @@ div.clockOutCell span{
 }
 
 div.eSATAcell {
-	width: calc(50% - 0.5em);
+	width: calc(50% - 0.75em);
 	display: inline-block;
 }
 
