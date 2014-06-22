@@ -188,7 +188,8 @@
                 outputFreqWrap.appendChild(outputFreqLabel);
                 channelSubmit = document.createElement('input');
                 channelSubmit.setAttribute('class', 'stdin');
-                channelSubmit.innerHTML = 'Submit All';
+                channelSubmit.setAttribute('type', 'submit');
+                channelSubmit.setAttribute('value', 'Submit All');
                 outputFreqWrap.appendChild(channelSubmit);
 
                 channelCells = document.createElement('div');
