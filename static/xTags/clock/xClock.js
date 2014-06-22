@@ -106,12 +106,13 @@
         lifecycle: {
             created: function() {
                 var xString,
-                    summaryItems = ['Configuration', 'Sync Source', 'Clock Source', 'Ref. Clock', 'LEMO Clock', 'LEMO Sync', 'eSATA Clock', 'eSATA Sync', 'SyncTmeS'],
-                    CSACItems = ['Power', 'Status', 'Mode', 'Alarm', 'Unit Power', 'Tuning Voltage', 'Laser Current', 'Clock Heater Power', 'Temperature', 'Serial No.', 'Firmware Version'],
+                    summaryItems = ['Configuration:', 'Sync Source:', 'Clock Source:', 'Ref. Clock:', 'LEMO Clock:', 'LEMO Sync:', 'eSATA Clock:', 'eSATA Sync:', 'SyncTmeS:'],
+                    CSACItems = ['Power:', 'Status:', 'Mode:', 'Alarm:', 'Unit Power:', 'Tuning Voltage:', 'Laser Current:', 'Clock Heater Power:', 'Temperature:', 'Serial No.:', 'Firmware Version:'],
                     i, row, cell, radios,
                     outputFreqWrap, outputFreqTitle, outputFreqSlide, outputFreqLabel,
                     channelCells, eSATAwrap, eSATAtitle;
 
+                this.masterFreq = 100;  //master steps down from 200MHz in the spec, but seems to be 100 in practice?  TBD.
                 this.summaryIDs = ['Configuration', 'SyncSource', 'ClockSource', 'RefClock', 'LEMOClock', 'LEMOSync', 'eSATAClock', 'eSATASync', 'SyncTmeS'];
                 this.CSACIDs = ['Power', 'Status', 'Mode', 'Alarm', 'UnitPower', 'TuningVoltage', 'LaserCurrent', 'ClockHeaterPower', 'Temperature', 'SerialNo', 'FirmwareVersion'];
                 this.CSACunit = ['','','','','',' VDC',' mA',' mW',' C','',''];
@@ -175,6 +176,10 @@
                 outputFreqWrap.appendChild(outputFreqTitle);
                 outputFreqSlide = document.createElement('input');
                 outputFreqSlide.setAttribute('type', 'range');
+                outputFreqSlide.setAttribute('id', 'frequencySlider');
+                outputFreqSlide.setAttribute('min',1);
+                outputFreqSlide.setAttribute('max',10);
+                outputFreqSlide.oninput = this.determineFrequency.bind(this);
                 outputFreqWrap.appendChild(outputFreqSlide);
                 outputFreqLabel = document.createElement('label');
                 outputFreqLabel.setAttribute('id', 'masterOutputFrequencyLabel');
@@ -240,6 +245,7 @@
                     row.appendChild(cell);
                 }
 
+                outputFreqSlide.oninput();
 
                 this.addEventListener('postClockChan', function(evt){
                     this.updateForm(evt.detail);
@@ -347,6 +353,30 @@
                     return (parseInt(v,10)) ? 'Up' : 'Down';
                 else
                     return v;
+            },
+
+            'determineFrequency' : function(){
+                var slider = document.getElementById('frequencySlider'),
+                    stepdown = -(slider.valueAsNumber - parseInt(slider.max,10)-1),
+                    freqOut = this.masterFreq / (1+stepdown), 
+                    i, masterConfig=[];
+                    //window.clockPointer.masterFreqOut = freqOut;
+
+                document.getElementById('masterOutputFrequencyLabel').innerHTML = freqOut.toFixed(1) + ' MHz';
+                for(i=0; i<8; i++){
+                    this.eSATAlabel[i].innerHTML = freqOut.toFixed(1) + ' MHz out'
+                }
+
+                //commit new stepdown to ODB:
+                //for(i=0; i<window.localODB['clock0'].length; i++){
+                //    masterConfig[i] = window.localODB[window.clockPointer.activeElt][i];
+                //}
+                //for(i=0; i<8; i++){
+                //    masterConfig[11+4*i] = stepdown;
+                //    masterConfig[12+4*i] = stepdown;
+                //}
+                //ODBSet('/Equipment/GRIF-Clk'+window.clockPointer.activeElt.slice(5, window.clockPointer.activeElt.length)+'/Variables/Output[*]', masterConfig);
+                //window.localODB[window.clockPointer.activeElt] = masterConfig;
             }
         }
     });
