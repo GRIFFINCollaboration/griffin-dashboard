@@ -188,7 +188,7 @@
                 outputFreqWrap.appendChild(outputFreqLabel);
                 channelSubmit = document.createElement('input');
                 channelSubmit.setAttribute('class', 'stdin');
-                channelSubmit.innerHTML('Submit All');
+                channelSubmit.innerHTML = 'Submit All';
 
                 channelCells = document.createElement('div');
                 channelCells.setAttribute('id', 'clockChannels');
