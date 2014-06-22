@@ -60,12 +60,14 @@ div.clockOutCell{
 	padding: 1em;
 	border: 1px solid #EEEEEE;
 	text-align: center;
-	margin-bottom: 1em;
+	margin: 0.25em;
+	background-color: #222222;
 }
 
 div.masterOutCell{
 	border: none;
 	margin-bottom: 0em;
+	background-color: rgba(0,0,0,0);
 }
 
 input.submitChannelConfig{
@@ -84,13 +86,17 @@ div.eSATAcell {
 div.eSATAcell label{
 	margin: 0.5em 0 0.5em 0;
 }
-
+/*
 div#clockChannels div:nth-child(2n+1){
 	margin-right: 1em;
 }
-
+*/
 form#clockCardWrap{
 	margin-top: 1em;
+}
+
+x-card#outputCard{
+	background-color: #444444;
 }
 
 
