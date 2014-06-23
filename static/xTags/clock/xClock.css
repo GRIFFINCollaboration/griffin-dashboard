@@ -15,7 +15,7 @@ form.clockSummary{
 	text-align: center;
 }
 
-div.absentClock{
+form.absentClock{
 	pointer-events: none;
 	opacity: 0.3;
 }
