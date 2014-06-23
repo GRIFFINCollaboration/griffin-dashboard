@@ -93,14 +93,16 @@ app.post('/registerCycle', function(req, res){
 });
 
 app.post('/updateClock', function(req, res){
-	var hiChan = [11,15,19,23,27,39],
-		loChan = [12,16,20,24,28,40],
-		i;
+	var ClockEnB = 0,
+		powerOn;
 
 	for(i=0; i<6; i++){
 		//spawn('odbedit', ['-c', "set /Equipment/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
-		console.log('set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[' + (loChan[i]+1) + '] ' + req.body['eSATAtoggle' + i]);
+		//console.log('set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[' + (loChan[i]+1) + '] ' + req.body['eSATAtoggle' + i]);
+		powerOn = req.body['eSATAtoggle' + i] == 1
+		ClockEnB = ClockEnB | ((powerOn) ? 0xF : 0);
 	}
+	console.log(ClockEnB)
 
 	return res.redirect('/Clocks');
 });
