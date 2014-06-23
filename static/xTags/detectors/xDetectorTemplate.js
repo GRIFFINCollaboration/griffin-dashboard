@@ -426,7 +426,7 @@
 
                     window.lastHVcell = cellName;       //HACKS
                     window.lastHVcrate = crateIndex;
-
+console.log(window.lastHVcrate)
                     if(this.lastHVClick){
                         this.cells[this.lastHVClick].setAttr('stroke', this.frameColor);
                         this.cells[this.lastHVClick].setAttr('strokeWidth', this.frameLineWidth);
@@ -439,7 +439,7 @@
                     this.mainLayer[this.displayIndex].draw()
                 }
 
-                console.log(window.lastHVcrate)
+                
             },
 
             //decide if the named cell is an HV cell
