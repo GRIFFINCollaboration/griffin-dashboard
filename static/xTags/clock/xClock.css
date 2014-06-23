@@ -69,7 +69,7 @@ div.masterOutCell{
 	background-color: rgba(0,0,0,0);
 }
 
-input.submitChannelConfig{
+input#submitChannelConfig{
 	margin-top: 0.5em;
 	display:block;
 	margin-left: auto;
