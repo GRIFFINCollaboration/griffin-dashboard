@@ -538,7 +538,7 @@
                     'crateIndex': window.lastHVcrate
                 } });
                 HVsidebar[0].dispatchEvent(evt);
-            }
+            },
 
             //construct hostmap as { channelName : [host, ADC number], ...} for each channel.
             'buildHostmap' : function(){
