@@ -292,8 +292,8 @@
                     document.getElementById('ClockSource').innerHTML = '';
                     radioArray(document.getElementById('ClockSource'), ['AC','LEMO'], [0, 1], 'masterRef');
                     document.getElementById('masterRef' + payload.data.Variables.Output[4]).checked = true;
-                    document.getElementById('masterRef0').onchange = function(){
-                        XHR('http://'+this.MIDAS+'/?cmd=jset&odb0=Equipment/GRIF-Clk' + this.currentClock + '/Variables/Output[4]&value='+this.querySelector('input[name="masterRef"]:checked').value);
+                    document.getElementById('masterRef1').onchange = function(){
+                        XHR('http://'+this.MIDAS+'/?cmd=jset&odb0=Equipment/GRIF-Clk' + this.currentClock + '/Variables/Output[4]&value='+this.querySelector('input[name="masterRef"]:checked').value, function(){});
                     }.bind(this);
 
                     //also, don't report FanSel for the master, replace with frequency info:
