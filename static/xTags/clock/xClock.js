@@ -183,7 +183,7 @@
                 outputFreqSlide.setAttribute('name', 'frequencySlider');
                 outputFreqSlide.setAttribute('min',1);
                 outputFreqSlide.setAttribute('max',10);
-                //outputFreqSlide.oninput = this.determineFrequency.bind(this);
+                outputFreqSlide.oninput = this.determineFrequency.bind(this);
                 outputFreqWrap.appendChild(outputFreqSlide);
                 outputFreqLabel = document.createElement('label');
                 outputFreqLabel.setAttribute('id', 'masterOutputFrequencyLabel');
@@ -216,7 +216,6 @@
 
                     if(i<6) radioArray(eSATAwrap, ['Off', 'On'], [0,1], 'eSATAtoggle'+i);
                     this.eSATAlabel[i] = document.createElement('span');
-                    this.eSATAlabel[i].innerHTML = '-1 MHz out';
                     eSATAwrap.appendChild(this.eSATAlabel[i]);
                     this.bypassState[i] = document.createElement('span');
                     eSATAwrap.appendChild(this.bypassState[i])
@@ -334,7 +333,7 @@
                 //report the frequency after stepdown of each channel; set slider to stepdown corresponding to first channel:
                 for(i=0; i<8; i++){
                     stepdown = (parseInt(payload.data.Variables.Output[hiChan[i]],10) + parseInt(payload.data.Variables.Output[loChan[i]],10)) / 2
-                    this.eSATAlabel[i].value = (this.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out'
+                    this.eSATAlabel[i].innerHTML = (this.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out'
                 }
                 document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
 
@@ -391,8 +390,6 @@
                         window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[11+4*i] = stepdown;
                         window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[12+4*i] = stepdown;
                     }
-
-                    //XHR('http://'+this.MIDAS+'/?cmd=jset&odb0=Equipment/GRIF-Clk'+this.currentClock+'/Variables/Output[*]&value='+JSON.stringify(window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output), function(){});
                 }
             }
         }
