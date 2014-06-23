@@ -292,10 +292,7 @@
                     document.getElementById('ClockSource').innerHTML = '';
                     radioArray(document.getElementById('ClockSource'), ['AC','LEMO'], [0, 1], 'masterRef');
                     document.getElementById('masterRef' + payload.data.Variables.Output[4]).checked = true;
-                    document.getElementById('masterRef1').onchange = function(){
-                        console.log('http://'+this.MIDAS+'/?cmd=jset&odb=Equipment/GRIF-Clk' + this.currentClock + '/Variables/Output[4]&value='+this.querySelector('input[name="masterRef"]:checked').value)
-                        XHR('http://'+this.MIDAS+'/?cmd=jset&odb=Equipment/GRIF-Clk' + this.currentClock + '/Variables/Output[4]&value='+this.querySelector('input[name="masterRef"]:checked').value, function(){});
-                    }.bind(this);
+                    document.getElementById('masterRef1').onchange = this.changeMasterRef.bind(this);
 
                     //also, don't report FanSel for the master, replace with frequency info:
                     document.getElementById('RefClockLabel').innerHTML = 'Input Freq.:';
@@ -347,6 +344,18 @@
                 for(i=43; i<54; i++){
                     value = this.humanReadableClock(i, parseFloat(payload.data.Variables.Output[i]).toFixed( (this.CSACunit[i-43] == '')? 0 :2 ) );
                     document.getElementById(this.CSACIDs[i-43]).innerHTML = value + this.CSACunit[i-43];
+                }
+            },
+
+            'changeMasterRef' : function(){
+                var newRefSetting = parseInt(this.querySelector('input[name="masterRef"]:checked').value);
+
+                //post to ODB
+                XHR('http://'+this.MIDAS+'/?cmd=jset&odb=Equipment/GRIF-Clk' + this.currentClock + '/Variables/Output[4]&value='+newRefSetting, function(){});
+
+                //update local ODB copy
+                if(window.ODBEquipment){
+                    window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[4] = newRefSetting;
                 }
             },
 
