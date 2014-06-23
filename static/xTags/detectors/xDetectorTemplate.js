@@ -424,6 +424,9 @@
                     } });
                     HVsidebar.dispatchEvent(evt);
 
+                    window.lastHVcell = cellName;       //HACKS
+                    window.lastHVcrate = crateIndex;
+
                     if(this.lastHVClick){
                         this.cells[this.lastHVClick].setAttr('stroke', this.frameColor);
                         this.cells[this.lastHVClick].setAttr('strokeWidth', this.frameLineWidth);
@@ -521,9 +524,21 @@
                     var data;
                     data = JSON.parse(res);
                     parseHV(data);
-                    this.populate()
+                    this.populate();
+                    this.updateHVsidebar();
                 }.bind(this), 'application/json');
             },
+
+            'updateHVsidebar' : function(){
+                var HVsidebar = document.getElementsByTagName('widget-HVcontrol');
+
+                evt = new CustomEvent('postHVchan', {'detail': {
+                    'channel' : window.lastHVcell, 
+                    'ODBblob': window.ODBEquipment['HV-' + window.lastHVcrate], 
+                    'crateIndex': window.lastHVcrate
+                } });
+                HVsidebar[0].dispatchEvent(evt);
+            }
 
             //construct hostmap as { channelName : [host, ADC number], ...} for each channel.
             'buildHostmap' : function(){
