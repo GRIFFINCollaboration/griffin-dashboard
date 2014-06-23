@@ -189,6 +189,7 @@
                 //output card contents
                 outputFreqWrap = document.createElement('div');
                 outputFreqWrap.setAttribute('class', 'clockOutCell masterOutCell');
+                outputFreqWrap.setAttribute('id', 'outputFreqWrap');
                 this.outputCard.appendChild(outputFreqWrap);
                 outputFreqSlideWrap = document.createElement('div');
                 outputFreqSlideWrap.setAttribute('id', 'outputFreqSlider');
@@ -276,7 +277,8 @@
                     row.appendChild(cell);
                 }
 
-                //outputFreqSlide.oninput();
+                //x-deck needs its height babysat:
+                document.getElementById('clockControlDeck').setAttribute('style', 'min-height: calc('+ (document.getElementById('outputFreqWrap').offsetHeight + document.getElementById('clockChannels').offsetHeight) + 'px + 2em'    );
 
                 this.addEventListener('postClockChan', function(evt){
                     this.updateForm(evt.detail);
