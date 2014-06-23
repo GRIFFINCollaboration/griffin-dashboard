@@ -36,7 +36,7 @@
                         document.forms['clock'+i].submit();
                     }
                     document.getElementById('radio'+i+'1').onchange = function(){
-                        document.forms['clock'+i].submit();
+                        document.getElementById('clock'+i).submit();
                     }
 
                 }
