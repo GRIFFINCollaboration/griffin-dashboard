@@ -283,7 +283,8 @@
             'mapData': function(crate, responseText){
                 var data, i, j, demand, measured, color, channelStat, statMessage, current, currentLimit, temperature, statString,
                     isVoltageDrift, isRamping, isTripped, isOverheat, isAlarmed,
-                    controlSidebars = document.getElementsByTagName('widget-HVcontrol');
+                    controlSidebars = document.getElementsByTagName('widget-HVcontrol'),
+                    HVmap = document.getElementsByTagName('widget-hv');
 
                 data = JSON.parse(responseText)[0];
 
@@ -341,7 +342,7 @@
                         'Temp' : data.Variables.Temperature[i] + ' C'
                     }                   
                 }
-
+console.log(HVmap[0].oldHighlight)
                 if(controlSidebars && this.oldHighlight){
                     for(i=0; i<controlSidebars.length; i++){
 
