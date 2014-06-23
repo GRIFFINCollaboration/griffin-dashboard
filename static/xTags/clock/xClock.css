@@ -4,7 +4,7 @@ widget-clock{
 	margin: 0 0 1em 0;
 }
 
-div.clockSummary{
+form.clockSummary{
 	background-color: #333333;
 	border-radius: 1em;
 	border: 2px solid #FFFFFF;
