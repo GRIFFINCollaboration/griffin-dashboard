@@ -103,7 +103,7 @@ app.post('/updateClock', function(req, res){
 		ClockEnB = ClockEnB | ((powerOn) ? (0xF << 4*i) : 0);
 	}
 	spawn('odbedit', ['-c', "set /Equipment/GRIF-Clk" + req.body.clockIndex + "/Variables/Output[0] " + ClockEnB]);
-console.log(req.body.isMaster)
+console.log(req.body)
 	//freq. stepdown
 	if(stepdown && req.body.isMaster=='true'){
 		for(i=0; i<8; i++){

@@ -126,7 +126,7 @@
                     CSACItems = ['Power:', 'Status:', 'Mode:', 'Alarm:', 'Unit Power:', 'Tuning Voltage:', 'Laser Current:', 'Clock Heater Power:', 'Temperature:', 'Serial No.:', 'Firmware Version:'],
                     i, row, cell, radios,
                     outputFreqWrap, outputFreqSlide, outputFreqTitle, outputFreqSlide, outputFreqLabel, channelSubmit,
-                    clockIndex, freqStepdown,
+                    clockIndex, freqStepdown, isMaster,
                     channelCells, eSATAwrap, eSATAtitle;
 
                 this.masterFreq = 100;  //master steps down from 200MHz in the spec, but seems to be 100 in practice?  TBD.
@@ -253,12 +253,12 @@
                 freqStepdown.setAttribute('type', 'number');
                 channelCells.appendChild(freqStepdown);
 
-                freqStepdown = document.createElement('input');
-                freqStepdown.setAttribute('name', 'isMaster');
-                freqStepdown.setAttribute('id', 'isMaster');
-                freqStepdown.setAttribute('style', 'display:none');
-                freqStepdown.setAttribute('type', 'number');
-                channelCells.appendChild(freqStepdown);
+                isMaster = document.createElement('input');
+                isMaster.setAttribute('name', 'isMaster');
+                isMaster.setAttribute('id', 'isMaster');
+                isMaster.setAttribute('style', 'display:none');
+                isMaster.setAttribute('type', 'number');
+                channelCells.appendChild(isMaster);
 
                 //CSAC card contents
                 this.CSACTable = document.createElement('table');
