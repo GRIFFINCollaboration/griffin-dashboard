@@ -125,7 +125,7 @@
                     summaryItems = ['Configuration:', 'Sync Source:', 'Clock Source:', 'Ref. Clock:', 'LEMO Clock:', 'LEMO Sync:', 'eSATA Clock:', 'eSATA Sync:', 'SyncTmeS:'],
                     CSACItems = ['Power:', 'Status:', 'Mode:', 'Alarm:', 'Unit Power:', 'Tuning Voltage:', 'Laser Current:', 'Clock Heater Power:', 'Temperature:', 'Serial No.:', 'Firmware Version:'],
                     i, row, cell, radios,
-                    outputFreqWrap, outputFreqTitle, outputFreqSlide, outputFreqLabel, channelSubmit,
+                    outputFreqWrap, outputFreqSlide, outputFreqTitle, outputFreqSlide, outputFreqLabel, channelSubmit,
                     clockIndex, freqStepdown,
                     channelCells, eSATAwrap, eSATAtitle;
 
@@ -190,6 +190,8 @@
                 outputFreqWrap = document.createElement('div');
                 outputFreqWrap.setAttribute('class', 'clockOutCell masterOutCell');
                 this.outputCard.appendChild(outputFreqWrap);
+                outputFreqSlide = document.createElement('div');
+
                 outputFreqTitle = document.createElement('span');
                 outputFreqTitle.innerHTML = 'Master Output Freq.';
                 outputFreqWrap.appendChild(outputFreqTitle);
@@ -247,6 +249,13 @@
                 freqStepdown = document.createElement('input');
                 freqStepdown.setAttribute('name', 'freqStepdown');
                 freqStepdown.setAttribute('id', 'freqStepdown');
+                freqStepdown.setAttribute('style', 'display:none');
+                freqStepdown.setAttribute('type', 'number');
+                channelCells.appendChild(freqStepdown);
+
+                freqStepdown = document.createElement('input');
+                freqStepdown.setAttribute('name', 'isMaster');
+                freqStepdown.setAttribute('id', 'isMaster');
                 freqStepdown.setAttribute('style', 'display:none');
                 freqStepdown.setAttribute('type', 'number');
                 channelCells.appendChild(freqStepdown);
@@ -356,6 +365,9 @@
                 }
                 document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
                 document.getElementById('masterOutputFrequencyLabel').innerHTML = (this.masterFreq/(parseInt(payload.data.Variables.Output[11],10)+1)).toFixed(1) + ' MHz';
+
+                //keep track of whether this is a master or slave channel internally in the form
+                document.getElementById('isMaster').value = isMaster;
 
                 //CSAC parameters
                 for(i=43; i<54; i++){

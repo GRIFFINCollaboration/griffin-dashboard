@@ -105,7 +105,7 @@ app.post('/updateClock', function(req, res){
 	spawn('odbedit', ['-c', "set /Equipment/GRIF-Clk" + req.body.clockIndex + "/Variables/Output[0] " + ClockEnB]);
 
 	//freq. stepdown
-	if(stepdown){
+	if(stepdown && req.body.isMaster=='true'){
 		for(i=0; i<8; i++){
 			spawn('odbedit', ['-c', "set /Equipment/GRIF-Clk" + req.body.clockIndex + "/Variables/Output[" + (11+4*i) + "] " + stepdown]);
 			spawn('odbedit', ['-c', "set /Equipment/GRIF-Clk" + req.body.clockIndex + "/Variables/Output[" + (12+4*i) + "] " + stepdown]);		
