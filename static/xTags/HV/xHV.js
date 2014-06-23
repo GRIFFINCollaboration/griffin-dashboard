@@ -342,7 +342,7 @@
                         'Temp' : data.Variables.Temperature[i] + ' C'
                     }                   
                 }
-
+console.log(window.currentCell)
                 if(controlSidebars && window.currentCell){
                     for(i=0; i<controlSidebars.length; i++){
 
