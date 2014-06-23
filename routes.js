@@ -97,12 +97,11 @@ app.post('/updateClock', function(req, res){
 		powerOn;
 
 	for(i=0; i<6; i++){
-		//spawn('odbedit', ['-c', "set /Equipment/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
-		//console.log('set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[' + (loChan[i]+1) + '] ' + req.body['eSATAtoggle' + i]);
 		powerOn = req.body['eSATAtoggle' + i] == 1
 		ClockEnB = ClockEnB | ((powerOn) ? (0xF << 4*i) : 0);
 	}
-	console.log(ClockEnB)
+	
+	spawn('odbedit', ['-c', "set /Equipment/GRIFClk-/" + req.body.clockIndex + "/Variables/Output[0]" + ClockEnB]);
 
 	return res.redirect('/Clocks');
 });
