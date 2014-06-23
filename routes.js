@@ -116,7 +116,9 @@ app.post('/updateClock', function(req, res){
 });
 
 app.post('/toggleClock', function(req, res){
-	console.log(req.body)
+	spawn('odbedit', ['-c', "set /Equipment/GRIF-Clk" + req.body.clockIndex + "/Variables/Output[1] " + req.body['radio'+req.body.clockIndex] ]);
+
+	return res.redirect('/Clocks');
 })
 
 

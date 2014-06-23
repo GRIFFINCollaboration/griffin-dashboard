@@ -5,7 +5,7 @@
         lifecycle: {
             created: function() {
                 var i, pageTitle,
-                    clockTitle;
+                    clockTitle, clockIndex;
 
                 this.clockForm = [];
                 this.slaveSwitch = [];
@@ -32,6 +32,14 @@
                     radioArray(this.clockForm[i], ['Slave', 'Master'], [0,1], 'radio'+i);
                     this.slaveSwitch[i] = document.getElementById('radio'+i+0);
                     this.masterSwitch[i] = document.getElementById('radio'+i+1);
+
+                    clockIndex = document.createElement('input');
+                    clockIndex.setAttribute('name', 'clockIndex');
+                    clockIndex.setAttribute('type', 'number');
+                    clockIndex.setAttribute('style', 'display:none');
+                    clockIndex.setAttribute('value', i);
+                    this.clockForm[i].appendChild(clockIndex);
+
                     document.getElementById('radio'+i+'0').onchange = function(i){
                         this.clockForm[i].submit();
                     }.bind(this, i);
