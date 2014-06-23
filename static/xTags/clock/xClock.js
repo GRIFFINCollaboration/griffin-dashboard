@@ -336,7 +336,7 @@
                     this.eSATAlabel[i].innerHTML = (this.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out'
                 }
                 document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
-                document.getElementById('masterOutputFrequencyLabel').innerHTML = this.masterFreq/(parseInt(payload.data.Variables.Output[11],10)+1) + ' MHz';
+                document.getElementById('masterOutputFrequencyLabel').innerHTML = (this.masterFreq/(parseInt(payload.data.Variables.Output[11],10)+1)).toFixed(1) + ' MHz';
 
                 //CSAC parameters
                 for(i=43; i<54; i++){
