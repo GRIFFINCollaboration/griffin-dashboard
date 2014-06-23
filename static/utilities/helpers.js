@@ -111,6 +111,7 @@ function radioArray(parentElt, labelText, values, groupName){
 
         label = document.createElement('label');
         label.setAttribute('for', groupName + i);
+        label.setAttribute('id', groupName+i+'Label');
         label.innerHTML = labelText[i];
         parentElt.appendChild(label);
     }

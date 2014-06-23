@@ -331,7 +331,7 @@
 
                     //only master reveals output frequency slider and has CSAC tab:
                     document.getElementById('outputFreqSlider').setAttribute('style', 'display:block');
-                    document.querySelector('input#clockSidebarView2 label').setAttribute('style', 'display:inline-block');
+                    //document.querySelector('input#clockSidebarView2 label').setAttribute('style', 'display:inline-block');
                 } else{
                     document.getElementById('ClockSourceLabel').innerHTML = 'Clock Source';
 
@@ -342,7 +342,7 @@
                     document.getElementById('SyncTmeS').innerHTML = this.humanReadableClock(9,parseInt(payload.data.Variables.Output[9],10));
 
                     document.getElementById('outputFreqSlider').setAttribute('style', 'display:none');
-                    document.querySelector('input#clockSidebarView2 label').setAttribute('style', 'display:none');
+                    //document.querySelector('input#clockSidebarView2 label').setAttribute('style', 'display:none');
                 }
 
                 //decode which channels are on / off:
