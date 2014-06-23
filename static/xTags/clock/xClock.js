@@ -125,7 +125,7 @@
                     summaryItems = ['Configuration:', 'Sync Source:', 'Clock Source:', 'Ref. Clock:', 'LEMO Clock:', 'LEMO Sync:', 'eSATA Clock:', 'eSATA Sync:', 'SyncTmeS:'],
                     CSACItems = ['Power:', 'Status:', 'Mode:', 'Alarm:', 'Unit Power:', 'Tuning Voltage:', 'Laser Current:', 'Clock Heater Power:', 'Temperature:', 'Serial No.:', 'Firmware Version:'],
                     i, row, cell, radios,
-                    outputFreqWrap, outputFreqSlide, outputFreqTitle, outputFreqSlide, outputFreqLabel, channelSubmit,
+                    outputFreqWrap, outputFreqSlideWrap, outputFreqTitle, outputFreqSlide, outputFreqLabel, channelSubmit,
                     clockIndex, freqStepdown, isMaster,
                     channelCells, eSATAwrap, eSATAtitle;
 
@@ -190,11 +190,12 @@
                 outputFreqWrap = document.createElement('div');
                 outputFreqWrap.setAttribute('class', 'clockOutCell masterOutCell');
                 this.outputCard.appendChild(outputFreqWrap);
-                outputFreqSlide = document.createElement('div');
-
+                outputFreqSlideWrap = document.createElement('div');
+                outputFreqSlideWrap.setAttribute('id', 'outputFreqSlider');
+                outputFreqWrap.appendChild(outputFreqSlideWrap);
                 outputFreqTitle = document.createElement('span');
                 outputFreqTitle.innerHTML = 'Master Output Freq.';
-                outputFreqWrap.appendChild(outputFreqTitle);
+                outputFreqSlideWrap.appendChild(outputFreqTitle);
                 outputFreqSlide = document.createElement('input');
                 outputFreqSlide.setAttribute('type', 'range');
                 outputFreqSlide.setAttribute('id', 'frequencySlider');
@@ -202,10 +203,10 @@
                 outputFreqSlide.setAttribute('min',1);
                 outputFreqSlide.setAttribute('max',10);
                 outputFreqSlide.oninput = this.determineFrequency.bind(this);
-                outputFreqWrap.appendChild(outputFreqSlide);
+                outputFreqSlideWrap.appendChild(outputFreqSlide);
                 outputFreqLabel = document.createElement('label');
                 outputFreqLabel.setAttribute('id', 'masterOutputFrequencyLabel');
-                outputFreqWrap.appendChild(outputFreqLabel);
+                outputFreqSlideWrap.appendChild(outputFreqLabel);
                 channelSubmit = document.createElement('input');
                 channelSubmit.setAttribute('id', 'submitChannelConfig')
                 channelSubmit.setAttribute('class', 'stdin');
@@ -327,6 +328,9 @@
                     //master reports NIM clock, slave reports ESATA clock
                     document.getElementById('SyncTmeSLabel').innerHTML = 'Last NIM Sync';
                     document.getElementById('SyncTmeS').innerHTML = this.humanReadableClock(10,parseInt(payload.data.Variables.Output[10],10));
+
+                    //only master reveals output frequency slider:
+                    document.getElementById('outputFreqSlider').setAttribute('style', 'display:block');
                 } else{
                     document.getElementById('ClockSourceLabel').innerHTML = 'Clock Source';
 
@@ -335,6 +339,8 @@
 
                     document.getElementById('SyncTmeSLabel').innerHTML = 'Last eSATA Sync';
                     document.getElementById('SyncTmeS').innerHTML = this.humanReadableClock(9,parseInt(payload.data.Variables.Output[9],10));
+
+                    document.getElementById('outputFreqSlider').setAttribute('style', 'display:none');
                 }
 
                 //decode which channels are on / off:
@@ -367,7 +373,6 @@
                 document.getElementById('masterOutputFrequencyLabel').innerHTML = (this.masterFreq/(parseInt(payload.data.Variables.Output[11],10)+1)).toFixed(1) + ' MHz';
 
                 //keep track of whether this is a master or slave channel internally in the form
-                console.log(isMaster)
                 document.getElementById('isMaster').value = payload.data.Variables.Output[1];
 
                 //CSAC parameters
