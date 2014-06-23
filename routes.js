@@ -101,7 +101,7 @@ app.post('/updateClock', function(req, res){
 		ClockEnB = ClockEnB | ((powerOn) ? (0xF << 4*i) : 0);
 	}
 	
-	spawn('odbedit', ['-c', "set /Equipment/GRIFClk-/" + req.body.clockIndex + "/Variables/Output[0]" + ClockEnB]);
+	spawn('odbedit', ['-c', "set /Equipment/GRIFClk-" + req.body.clockIndex + "/Variables/Output[0]" + ClockEnB]);
 
 	return res.redirect('/Clocks');
 });
