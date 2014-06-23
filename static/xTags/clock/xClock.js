@@ -7,7 +7,7 @@
                 var i, pageTitle,
                     clockTitle;
 
-                this.clockDiv = [];
+                this.clockForm = [];
                 this.slaveSwitch = [];
                 this.masterSwitch = [];
 
@@ -16,28 +16,28 @@
                 this.appendChild(pageTitle);
 
                 for(i=0; i<25; i++){
-                    this.clockDiv[i] = document.createElement('form');
-                    this.clockDiv[i].setAttribute('method', 'POST')
-                    this.clockDiv[i].setAttribute('action', 'toggleClock')
-                    this.clockDiv[i].setAttribute('id', 'clock'+i);
-                    this.clockDiv[i].setAttribute('class', 'clockSummary');
-                    this.clockDiv[i].onclick = this.clickClock.bind(this, i);
-                    this.appendChild(this.clockDiv[i]);
+                    this.clockForm[i] = document.createElement('form');
+                    this.clockForm[i].setAttribute('method', 'POST')
+                    this.clockForm[i].setAttribute('action', 'toggleClock')
+                    this.clockForm[i].setAttribute('id', 'clock'+i);
+                    this.clockForm[i].setAttribute('class', 'clockSummary');
+                    this.clockForm[i].onclick = this.clickClock.bind(this, i);
+                    this.appendChild(this.clockForm[i]);
 
                     clockTitle = document.createElement('h3');
                     clockTitle.setAttribute('class', 'clockTitle');
                     clockTitle.innerHTML = 'GRIF-Clk '+i;
-                    this.clockDiv[i].appendChild(clockTitle);
+                    this.clockForm[i].appendChild(clockTitle);
 
-                    radioArray(this.clockDiv[i], ['Slave', 'Master'], [0,1], 'radio'+i);
+                    radioArray(this.clockForm[i], ['Slave', 'Master'], [0,1], 'radio'+i);
                     this.slaveSwitch[i] = document.getElementById('radio'+i+0);
                     this.masterSwitch[i] = document.getElementById('radio'+i+1);
-                    document.getElementById('radio'+i+'0').onchange = function(){
-                        document.getElementById('clock'+i).submit();
-                    }
-                    document.getElementById('radio'+i+'1').onchange = function(){
-                        document.getElementById('clock'+i).submit();
-                    }
+                    document.getElementById('radio'+i+'0').onchange = function(i){
+                        this.clockForm[i].submit();
+                    }.bind(this, i);
+                    document.getElementById('radio'+i+'1').onchange = function(i){
+                        this.clockForm[i].submit();
+                    }.bind(this, i);
 
                 }
 
@@ -58,7 +58,7 @@
                                 this.slaveSwitch[i].setAttribute('checked', true);
                         }
                         else 
-                            this.clockDiv[i].setAttribute('class', 'clockSummary absentClock');
+                            this.clockForm[i].setAttribute('class', 'clockSummary absentClock');
                     }
 
                 }.bind(this));
