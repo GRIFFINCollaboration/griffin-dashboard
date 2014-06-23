@@ -183,7 +183,7 @@
                 outputFreqSlide.setAttribute('name', 'frequencySlider');
                 outputFreqSlide.setAttribute('min',1);
                 outputFreqSlide.setAttribute('max',10);
-                outputFreqSlide.oninput = this.determineFrequency.bind(this);
+                //outputFreqSlide.oninput = this.determineFrequency.bind(this);
                 outputFreqWrap.appendChild(outputFreqSlide);
                 outputFreqLabel = document.createElement('label');
                 outputFreqLabel.setAttribute('id', 'masterOutputFrequencyLabel');
@@ -334,8 +334,7 @@
                 //report the frequency after stepdown of each channel; set slider to stepdown corresponding to first channel:
                 for(i=0; i<8; i++){
                     stepdown = (parseInt(payload.data.Variables.Output[hiChan[i]],10) + parseInt(payload.data.Variables.Output[loChan[i]],10)) / 2
-                    console.log(this.masterFreq / (1 + stepdown) + ' MHz out')
-                    this.eSATAlabel[i].value = this.masterFreq / (1 + stepdown) + ' MHz out'
+                    this.eSATAlabel[i].value = (this.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out'
                 }
                 document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
 
