@@ -417,6 +417,10 @@
                 }
 
                 if(HVsidebar && HVcell){
+                    window.lastHVcell = cellName;       //HACKS
+                    window.lastHVcrate = crateIndex;
+console.log(window.lastHVcrate)
+                    
                     evt = new CustomEvent('postHVchan', {'detail': {
                         'channel' : cellName, 
                         'ODBblob': window.ODBEquipment['HV-' + crateIndex], 
@@ -424,9 +428,6 @@
                     } });
                     HVsidebar.dispatchEvent(evt);
 
-                    window.lastHVcell = cellName;       //HACKS
-                    window.lastHVcrate = crateIndex;
-console.log(window.lastHVcrate)
                     if(this.lastHVClick){
                         this.cells[this.lastHVClick].setAttr('stroke', this.frameColor);
                         this.cells[this.lastHVClick].setAttr('strokeWidth', this.frameLineWidth);
@@ -439,7 +440,7 @@ console.log(window.lastHVcrate)
                     this.mainLayer[this.displayIndex].draw()
                 }
 
-                
+
             },
 
             //decide if the named cell is an HV cell
