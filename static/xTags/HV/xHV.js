@@ -342,10 +342,10 @@
                         'Temp' : data.Variables.Temperature[i] + ' C'
                     }                   
                 }
-console.log(window.currentCell)
+
                 if(controlSidebars && window.currentCell){
                     for(i=0; i<controlSidebars.length; i++){
-
+console.log(window.currentCell)
                         evt = new CustomEvent('postHVchan', {'detail': {   
                             'channel' : window.currentCell, 
                             'ODBblob': window.ODBEquipment['HV-'+this.currentCrate], 
@@ -620,7 +620,7 @@ console.log(window.currentCell)
                     vUp = ODBfe.Settings['Ramp Up Speed'][chanIndex],
                     vDown = ODBfe.Settings['Ramp Down Speed'][chanIndex],
                     i, listCell, countBack;
-//console.log(channelName)
+console.log(channelName)
                 if(chanIndex==-1) return;
 
                 //48 channel cards only report max v, current on the primary;
