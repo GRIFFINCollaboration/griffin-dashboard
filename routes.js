@@ -94,14 +94,23 @@ app.post('/registerCycle', function(req, res){
 
 app.post('/updateClock', function(req, res){
 	var ClockEnB = 0,
-		powerOn;
+		powerOn,
+		stepdown = parseInt(req.body.freqStepdown,10);
 
+	//channel on / off
 	for(i=0; i<6; i++){
 		powerOn = req.body['eSATAtoggle' + i] == 1
 		ClockEnB = ClockEnB | ((powerOn) ? (0xF << 4*i) : 0);
 	}
-	console.log("set /Equipment/GRIFClk-" + req.body.clockIndex + "/Variables/Output[0] " + ClockEnB)
 	spawn('odbedit', ['-c', "set /Equipment/GRIF-Clk" + req.body.clockIndex + "/Variables/Output[0] " + ClockEnB]);
+
+	//freq. stepdown
+	if(stepdown){
+		for(i=0; i<8; i++){
+			spawn('odbedit', ['-c', "set /Equipment/GRIF-Clk" + req.body.clockIndex + "/Variables/Output[" + (11+4*i) + "] " + stepdown]);
+			spawn('odbedit', ['-c', "set /Equipment/GRIF-Clk" + req.body.clockIndex + "/Variables/Output[" + (12+4*i) + "] " + stepdown]);		
+		}
+	}
 
 	return res.redirect('/Clocks');
 });
