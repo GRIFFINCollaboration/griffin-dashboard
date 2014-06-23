@@ -430,7 +430,7 @@
 
                     }
                     this.lastHVClick = cellName;
-                    this.lastHVVrate = crateIndex;
+                    this.lastHVCrate = crateIndex;
                     this.cells[cellName].setAttr('stroke', '#FF0000');
                     this.cells[cellName].setAttr('strokeWidth', 6);
                     this.cells[cellName].moveToTop();
