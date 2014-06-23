@@ -618,7 +618,7 @@
                     vUp = ODBfe.Settings['Ramp Up Speed'][chanIndex],
                     vDown = ODBfe.Settings['Ramp Down Speed'][chanIndex],
                     i, listCell, countBack;
-console.log(ODBfe)
+console.log(channelName)
                 if(chanIndex==-1) return;
 
                 //48 channel cards only report max v, current on the primary;
