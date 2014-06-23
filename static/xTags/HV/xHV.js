@@ -342,9 +342,9 @@
                     }                   
                 }
 
-                if(controlSidebars){
+                if(controlSidebars && this.oldHighlight){
                     for(i=0; i<controlSidebars.length; i++){
-                        console.log(this)
+
                         evt = new CustomEvent('postHVchan', {'detail': {   
                             'channel' : this.oldHighlight, 
                             'ODBblob': window.ODBEquipment['HV-'+this.currentCrate], 
