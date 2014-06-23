@@ -430,7 +430,6 @@
 
                     }
                     this.lastHVClick = cellName;
-                    this.lastHVCrate = crateIndex;
                     this.cells[cellName].setAttr('stroke', '#FF0000');
                     this.cells[cellName].setAttr('strokeWidth', 6);
                     this.cells[cellName].moveToTop();
@@ -531,11 +530,11 @@
 
             'updateHVsidebar' : function(){
                 var HVsidebar = document.getElementsByTagName('widget-HVcontrol');
-console.log([this.lastHVClick, this.lastHVCrate])
+console.log([this.lastHVClick, this.findHVcrate(this.lastHVClick) ])
                 evt = new CustomEvent('postHVchan', {'detail': {
                     'channel' : this.lastHVClick, 
-                    'ODBblob': window.ODBEquipment['HV-' + this.lastHVCrate], 
-                    'crateIndex': this.lastHVCrate
+                    'ODBblob': window.ODBEquipment['HV-' + this.findHVcrate(this.lastHVClick)], 
+                    'crateIndex': this.findHVcrate(this.lastHVClick)
                 } });
                 HVsidebar[0].dispatchEvent(evt);
             },
