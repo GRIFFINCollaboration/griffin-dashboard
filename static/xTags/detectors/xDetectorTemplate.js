@@ -438,6 +438,8 @@
                     this.cells[cellName].moveToTop();
                     this.mainLayer[this.displayIndex].draw()
                 }
+
+                console.log(window.lastHVcrate)
             },
 
             //decide if the named cell is an HV cell
