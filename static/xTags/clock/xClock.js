@@ -110,6 +110,7 @@
                     CSACItems = ['Power:', 'Status:', 'Mode:', 'Alarm:', 'Unit Power:', 'Tuning Voltage:', 'Laser Current:', 'Clock Heater Power:', 'Temperature:', 'Serial No.:', 'Firmware Version:'],
                     i, row, cell, radios,
                     outputFreqWrap, outputFreqTitle, outputFreqSlide, outputFreqLabel, channelSubmit,
+                    clockIndex,
                     channelCells, eSATAwrap, eSATAtitle;
 
                 this.masterFreq = 100;  //master steps down from 200MHz in the spec, but seems to be 100 in practice?  TBD.
@@ -200,43 +201,33 @@
 
                 this.eSATAlabel = [];
                 this.bypassState = [];
-                for(i=0; i<6; i++){
+                for(i=0; i<8; i++){
                     eSATAwrap = document.createElement('div');
                     eSATAwrap.setAttribute('class', 'clockOutCell eSATAcell');
                     channelCells.appendChild(eSATAwrap);
                     eSATAtitle = document.createElement('span');
-                    eSATAtitle.innerHTML = 'eSATA ' + i;
+                    if(i<6)
+                        eSATAtitle.innerHTML = 'eSATA ' + i;
+                    else if (i==7)
+                        eSATAtitle.innerHTML = 'Left LEMO';
+                    else
+                        eSATAtitle.innerHTML = 'Right LEMO';
                     eSATAwrap.appendChild(eSATAtitle);
 
-                    radioArray(eSATAwrap, ['Off', 'On'], [0,1], 'eSATAtoggle'+i);
+                    if(i<6) radioArray(eSATAwrap, ['Off', 'On'], [0,1], 'eSATAtoggle'+i);
                     this.eSATAlabel[i] = document.createElement('span');
                     this.eSATAlabel[i].innerHTML = '-1 MHz out';
                     eSATAwrap.appendChild(this.eSATAlabel[i]);
                     this.bypassState[i] = document.createElement('span');
                     eSATAwrap.appendChild(this.bypassState[i])
                 }
-                eSATAwrap = document.createElement('div');
-                eSATAwrap.setAttribute('class', 'clockOutCell eSATAcell');
-                channelCells.appendChild(eSATAwrap);
-                eSATAtitle = document.createElement('span');
-                eSATAtitle.innerHTML = 'Left LEMO';
-                eSATAwrap.appendChild(eSATAtitle);
-                this.eSATAlabel[6] = document.createElement('span');
-                this.eSATAlabel[6].innerHTML = '-1 MHz out';
-                eSATAwrap.appendChild(this.eSATAlabel[6]);
-                this.bypassState[6] = document.createElement('span');
-                eSATAwrap.appendChild(this.bypassState[6])
-                eSATAwrap = document.createElement('div');
-                eSATAwrap.setAttribute('class', 'clockOutCell eSATAcell');
-                channelCells.appendChild(eSATAwrap);
-                eSATAtitle = document.createElement('span');
-                eSATAtitle.innerHTML = 'Right LEMO';
-                eSATAwrap.appendChild(eSATAtitle);
-                this.eSATAlabel[7] = document.createElement('span');
-                this.eSATAlabel[7].innerHTML = '-1 MHz out';
-                eSATAwrap.appendChild(this.eSATAlabel[7]);
-                this.bypassState[7] = document.createElement('span');
-                eSATAwrap.appendChild(this.bypassState[7])
+
+                clockIndex = document.createElement('input');
+                clockIndex.setAttribute('name', 'clockIndex');
+                clockIndex.setAttribute('id', 'clockIndex');
+                clockIndex.setAttribute('style', 'display:none');
+                clockIndex.setAttribute('type', 'number');
+                channelCells.appendChild(clockIndex);
 
                 //CSAC card contents
                 this.CSACTable = document.createElement('table');
@@ -277,7 +268,7 @@
                     isMaster = payload.data.Variables.Output[1] == 1;
 
                 this.currentClock = parseInt(payload.index,10);
-
+                document.getElementById('clockIndex').value = this.currentClock;
                 this.clockTitle.innerHTML = 'GRIF-Clk ' + payload.index;
 
                 //clock summary parameters

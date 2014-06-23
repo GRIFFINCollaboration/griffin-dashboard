@@ -93,7 +93,14 @@ app.post('/registerCycle', function(req, res){
 });
 
 app.post('/updateClock', function(req, res){
-	console.log(req.body);
+	var hiChan = [11,15,19,23,27,39],
+		loChan = [12,16,20,24,28,40],
+		i;
+
+	for(i=0; i<6; i++){
+		//spawn('odbedit', ['-c', "set /Equipment/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
+		console.log('set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[' + (loChan[i]+1) + '] ' + req.body['eSATAtoggle' + i]);
+	}
 
 	return res.redirect('/Clocks');
 });
