@@ -430,6 +430,7 @@
 
                     }
                     this.lastHVClick = cellName;
+                    this.lastHVVrate = crateIndex;
                     this.cells[cellName].setAttr('stroke', '#FF0000');
                     this.cells[cellName].setAttr('strokeWidth', 6);
                     this.cells[cellName].moveToTop();
@@ -530,11 +531,11 @@
 
             'updateHVsidebar' : function(){
                 var HVsidebar = document.getElementsByTagName('widget-HVcontrol');
-console.log(this.lastHVClick)
+
                 evt = new CustomEvent('postHVchan', {'detail': {
-                    'channel' : window.lastHVcell, 
-                    'ODBblob': window.ODBEquipment['HV-' + window.lastHVcrate], 
-                    'crateIndex': window.lastHVcrate
+                    'channel' : this.lastHVClick, 
+                    'ODBblob': window.ODBEquipment['HV-' + this.lastHVCrate], 
+                    'crateIndex': this.lastHVCrate
                 } });
                 HVsidebar[0].dispatchEvent(evt);
             },
