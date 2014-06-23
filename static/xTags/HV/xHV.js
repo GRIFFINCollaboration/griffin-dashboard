@@ -588,7 +588,6 @@
                 this.establishFillMeter('Temperature', 'C', this.mainLayer, 0, 0.69*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
 
                 this.addEventListener('postHVchan', function(evt){
-                    console.log(evt.detail.ODBblob)
                     this.updateForm(evt.detail.channel, evt.detail.ODBblob, evt.detail.crateIndex);
                 }, false);
 
@@ -619,7 +618,7 @@
                     vUp = ODBfe.Settings['Ramp Up Speed'][chanIndex],
                     vDown = ODBfe.Settings['Ramp Down Speed'][chanIndex],
                     i, listCell, countBack;
-console.log(measuredVoltage)
+console.log(ODBfe)
                 if(chanIndex==-1) return;
 
                 //48 channel cards only report max v, current on the primary;
