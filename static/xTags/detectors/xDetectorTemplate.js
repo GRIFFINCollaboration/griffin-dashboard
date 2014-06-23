@@ -417,10 +417,6 @@
                 }
 
                 if(HVsidebar && HVcell){
-                    window.lastHVcell = cellName;       //HACKS
-                    window.lastHVcrate = crateIndex;
-console.log(window.lastHVcrate)
-                    
                     evt = new CustomEvent('postHVchan', {'detail': {
                         'channel' : cellName, 
                         'ODBblob': window.ODBEquipment['HV-' + crateIndex], 
@@ -534,7 +530,7 @@ console.log(window.lastHVcrate)
 
             'updateHVsidebar' : function(){
                 var HVsidebar = document.getElementsByTagName('widget-HVcontrol');
-console.log(window.lastHVcrate)
+console.log(this.lastHVClick)
                 evt = new CustomEvent('postHVchan', {'detail': {
                     'channel' : window.lastHVcell, 
                     'ODBblob': window.ODBEquipment['HV-' + window.lastHVcrate], 
