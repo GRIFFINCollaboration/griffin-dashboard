@@ -272,7 +272,10 @@
         methods: {
             'updateForm' : function(payload){
                 var i, value, isOn,
-                    isMaster = payload.data.Variables.Output[1] == 1;
+                    isMaster = payload.data.Variables.Output[1] == 1,
+                    stepdown,
+                    hiChan = [11,15,19,23,27,39,31,35],
+                    loChan = [12,16,20,24,28,40,32,36];
 
                 this.currentClock = parseInt(payload.index,10);
                 document.getElementById('clockIndex').value = this.currentClock;
@@ -327,6 +330,13 @@
 
                 this.introTitle.setAttribute('style','display:none');
                 this.wrap.setAttribute('style', 'display:block');
+
+                //report the frequency after stepdown of each channel; set slider to stepdown corresponding to first channel:
+                for(i=0; i<8; i++){
+                    stepdown = (parseInt(payload.data.Variables.Output[hiChan[i]],10) + parseInt(payload.data.Variables.Output[loChan[i]],10)) / 2
+                    this.eSATAlabel[i] = this.masterFreq / (1 + stepdown) + ' MHz out'
+                }
+                document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
 
                 //CSAC parameters
                 for(i=43; i<54; i++){
