@@ -368,7 +368,7 @@
 
                 //keep track of whether this is a master or slave channel internally in the form
                 console.log(isMaster)
-                document.getElementById('isMaster').value = isMaster;
+                document.getElementById('isMaster').value = payload.data.Variables.Output[1];
 
                 //CSAC parameters
                 for(i=43; i<54; i++){
