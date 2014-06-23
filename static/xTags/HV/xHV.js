@@ -282,7 +282,8 @@
 
             'mapData': function(crate, responseText){
                 var data, i, j, demand, measured, color, channelStat, statMessage, current, currentLimit, temperature, statString,
-                    isVoltageDrift, isRamping, isTripped, isOverheat, isAlarmed;
+                    isVoltageDrift, isRamping, isTripped, isOverheat, isAlarmed,
+                    controlSidebars = document.getElementsByTagName('widget-HVcontrol');
 
                 data = JSON.parse(responseText)[0];
 
@@ -338,8 +339,20 @@
                         'Measured' : measured + ' V',
                         'Current': ((current==-9999)? 'Not Reporting' : current+' \u03BCA' ),
                         'Temp' : data.Variables.Temperature[i] + ' C'
-                    }                    
+                    }                   
                 }
+
+                if(controlSidebars){
+                    for(i=0; i<controlSidebars.length; i++){
+
+                        evt = new CustomEvent('postHVchan', {'detail': {   
+                            'channel' : this.oldHighlight, 
+                            'ODBblob': window.ODBEquipment['HV-'+this.currentCrate], 
+                            'crateIndex': this.currentCrate
+                        } });
+                        controlSidebars[i].dispatchEvent(evt);
+                    }
+                } 
 
                 //repaint the grid
                 this.HVgrid[crate].update();
