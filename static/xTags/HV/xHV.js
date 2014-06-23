@@ -95,6 +95,7 @@
                 this.cells[cellName].setAttr('strokeWidth', '6');
                 this.cells[cellName].moveToTop();
                 this.oldHighlight = cellName;
+                window.currentCell = cellName; //HACK
                 this.update();
 
                 if(controlSidebars){
@@ -283,8 +284,7 @@
             'mapData': function(crate, responseText){
                 var data, i, j, demand, measured, color, channelStat, statMessage, current, currentLimit, temperature, statString,
                     isVoltageDrift, isRamping, isTripped, isOverheat, isAlarmed,
-                    controlSidebars = document.getElementsByTagName('widget-HVcontrol'),
-                    HVmap = document.getElementsByTagName('widget-hv');
+                    controlSidebars = document.getElementsByTagName('widget-HVcontrol');
 
                 data = JSON.parse(responseText)[0];
 
@@ -342,12 +342,12 @@
                         'Temp' : data.Variables.Temperature[i] + ' C'
                     }                   
                 }
-console.log(HVmap[0].oldHighlight)
-                if(controlSidebars && this.oldHighlight){
+
+                if(controlSidebars && window.currentCell){
                     for(i=0; i<controlSidebars.length; i++){
 
                         evt = new CustomEvent('postHVchan', {'detail': {   
-                            'channel' : this.oldHighlight, 
+                            'channel' : window.currentCell, 
                             'ODBblob': window.ODBEquipment['HV-'+this.currentCrate], 
                             'crateIndex': this.currentCrate
                         } });
