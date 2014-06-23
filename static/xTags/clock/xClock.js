@@ -277,9 +277,6 @@
                     row.appendChild(cell);
                 }
 
-                //x-deck needs its height babysat:
-                document.getElementById('clockControlDeck').setAttribute('style', 'min-height: calc('+ (document.getElementById('outputFreqWrap').offsetHeight + document.getElementById('clockChannels').offsetHeight) + 'px + 2em'    );
-
                 this.addEventListener('postClockChan', function(evt){
                     this.updateForm(evt.detail);
                 }, false);
@@ -384,6 +381,9 @@
                     value = this.humanReadableClock(i, parseFloat(payload.data.Variables.Output[i]).toFixed( (this.CSACunit[i-43] == '')? 0 :2 ) );
                     document.getElementById(this.CSACIDs[i-43]).innerHTML = value + this.CSACunit[i-43];
                 }
+
+                //x-deck needs its height babysat:
+                document.getElementById('clockControlDeck').setAttribute('style', 'min-height: calc('+ (document.getElementById('outputFreqWrap').offsetHeight + document.getElementById('clockChannels').offsetHeight) + 'px + 2em'    );
             },
 
             'changeMasterRef' : function(){
