@@ -290,7 +290,9 @@
                     //master needs switch for LEMO or AC Ref. Clock:
                     document.getElementById('ClockSourceLabel').innerHTML = 'Ref. Clock';
                     document.getElementById('ClockSource').innerHTML = '';
-                    radioArray(document.getElementById('ClockSource'), ['LEMO', 'AC'], ['LEMO', 'AC'], 'masterRef');
+                    radioArray(document.getElementById('ClockSource'), ['AC','LEMO'], ['AC', 'LEMO'], 'masterRef');
+                    document.getElementById('masterRef' + payload.data.Variables.Output[4]).checked = true;
+
 
                     //also, don't report FanSel for the master, replace with frequency info:
                     document.getElementById('RefClockLabel').innerHTML = 'Input Freq.:';
