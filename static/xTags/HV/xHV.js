@@ -96,7 +96,7 @@
                 this.cells[cellName].moveToTop();
                 this.oldHighlight = cellName;
                 this.update();
-
+console.log(this.oldHighlight)
                 if(controlSidebars){
                     for(i=0; i<controlSidebars.length; i++){
 
@@ -341,7 +341,7 @@
                         'Temp' : data.Variables.Temperature[i] + ' C'
                     }                   
                 }
-console.log(this.oldHighlight)
+
                 if(controlSidebars){
                     for(i=0; i<controlSidebars.length; i++){
                         evt = new CustomEvent('postHVchan', {'detail': {   
