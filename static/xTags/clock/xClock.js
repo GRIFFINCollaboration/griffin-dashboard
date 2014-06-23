@@ -33,7 +33,7 @@
                     this.slaveSwitch[i] = document.getElementById('radio'+i+0);
                     this.masterSwitch[i] = document.getElementById('radio'+i+1);
                     document.getElementById('radio'+i+'0').onchange = function(){
-                        document.forms['clock'+i].submit();
+                        document.getElementById('clock'+i).submit();
                     }
                     document.getElementById('radio'+i+'1').onchange = function(){
                         document.getElementById('clock'+i).submit();
