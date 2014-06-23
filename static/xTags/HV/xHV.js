@@ -348,7 +348,7 @@
 
                         evt = new CustomEvent('postHVchan', {'detail': {   
                             'channel' : window.currentCell, 
-                            'ODBblob': window.ODBEquipment['HV-'+this.currentCrate], 
+                            'ODBblob': data, 
                             'crateIndex': this.currentCrate
                         } });
                         controlSidebars[i].dispatchEvent(evt);
