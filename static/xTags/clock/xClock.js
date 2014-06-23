@@ -292,6 +292,7 @@
                     document.getElementById('ClockSource').innerHTML = '';
                     radioArray(document.getElementById('ClockSource'), ['AC','LEMO'], [0, 1], 'masterRef');
                     document.getElementById('masterRef' + payload.data.Variables.Output[4]).checked = true;
+                    document.getElementById('masterRef0').onchange = this.changeMasterRef.bind(this);
                     document.getElementById('masterRef1').onchange = this.changeMasterRef.bind(this);
 
                     //also, don't report FanSel for the master, replace with frequency info:
