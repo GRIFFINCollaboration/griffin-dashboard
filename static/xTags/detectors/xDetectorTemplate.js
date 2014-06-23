@@ -531,7 +531,7 @@
 
             'updateHVsidebar' : function(){
                 var HVsidebar = document.getElementsByTagName('widget-HVcontrol');
-
+console.log([this.lastHVClick, this.lastHVCrate])
                 evt = new CustomEvent('postHVchan', {'detail': {
                     'channel' : this.lastHVClick, 
                     'ODBblob': window.ODBEquipment['HV-' + this.lastHVCrate], 
