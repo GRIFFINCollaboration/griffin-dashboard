@@ -344,7 +344,6 @@
 
                 if(controlSidebars){
                     for(i=0; i<controlSidebars.length; i++){
-console.log(window.ODBEquipment['HV-'+this.currentCrate])
                         evt = new CustomEvent('postHVchan', {'detail': {   
                             'channel' : this.oldHighlight, 
                             'ODBblob': window.ODBEquipment['HV-'+this.currentCrate], 
@@ -589,6 +588,7 @@ console.log(window.ODBEquipment['HV-'+this.currentCrate])
                 this.establishFillMeter('Temperature', 'C', this.mainLayer, 0, 0.69*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
 
                 this.addEventListener('postHVchan', function(evt){
+                    console.log(evt.detail.ODBblob)
                     this.updateForm(evt.detail.channel, evt.detail.ODBblob, evt.detail.crateIndex);
                 }, false);
 
