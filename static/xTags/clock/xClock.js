@@ -251,7 +251,7 @@
                     row.appendChild(cell);
                 }
 
-                outputFreqSlide.oninput();
+                //outputFreqSlide.oninput();
 
                 this.addEventListener('postClockChan', function(evt){
                     this.updateForm(evt.detail);
