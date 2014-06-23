@@ -115,6 +115,9 @@ app.post('/updateClock', function(req, res){
 	return res.redirect('/Clocks');
 });
 
+app.post('/toggleClock', function(req, res){
+	console.log(req.body)
+})
 
 
 

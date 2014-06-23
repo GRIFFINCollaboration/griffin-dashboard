@@ -71,6 +71,9 @@ div.masterOutCell{
 
 input.submitChannelConfig{
 	margin-top: 0.5em;
+	display:block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 div.clockOutCell span{

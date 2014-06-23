@@ -16,7 +16,9 @@
                 this.appendChild(pageTitle);
 
                 for(i=0; i<25; i++){
-                    this.clockDiv[i] = document.createElement('div');
+                    this.clockDiv[i] = document.createElement('form');
+                    this.clockDiv[i].setAttribute('method', 'POST')
+                    this.clockDiv[i].setAttribute('action', 'toggleClock')
                     this.clockDiv[i].setAttribute('id', 'clock'+i);
                     this.clockDiv[i].setAttribute('class', 'clockSummary');
                     this.clockDiv[i].onclick = this.clickClock.bind(this, i);
@@ -30,6 +32,12 @@
                     radioArray(this.clockDiv[i], ['Slave', 'Master'], [0,1], 'radio'+i);
                     this.slaveSwitch[i] = document.getElementById('radio'+i+0);
                     this.masterSwitch[i] = document.getElementById('radio'+i+1);
+                    document.getElementById('radio'+i+'0').onchange = function(){
+                        document.forms['clock'+i].submit();
+                    }
+                    document.getElementById('radio'+i+'1').onchange = function(){
+                        document.forms['clock'+i].submit();
+                    }
 
                 }
 
