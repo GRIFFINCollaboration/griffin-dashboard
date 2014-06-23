@@ -334,7 +334,7 @@
                 //report the frequency after stepdown of each channel; set slider to stepdown corresponding to first channel:
                 for(i=0; i<8; i++){
                     stepdown = (parseInt(payload.data.Variables.Output[hiChan[i]],10) + parseInt(payload.data.Variables.Output[loChan[i]],10)) / 2
-                    console.log(stepdown)
+                    console.log(this.masterFreq / (1 + stepdown) + ' MHz out')
                     this.eSATAlabel[i].value = this.masterFreq / (1 + stepdown) + ' MHz out'
                 }
                 document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
