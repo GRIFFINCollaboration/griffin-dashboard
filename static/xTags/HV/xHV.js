@@ -344,7 +344,7 @@
 
                 if(controlSidebars){
                     for(i=0; i<controlSidebars.length; i++){
-console.log('postHV')
+console.log(window.ODBEquipment['HV-'+this.currentCrate])
                         evt = new CustomEvent('postHVchan', {'detail': {   
                             'channel' : this.oldHighlight, 
                             'ODBblob': window.ODBEquipment['HV-'+this.currentCrate], 
