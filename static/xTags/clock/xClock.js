@@ -294,7 +294,7 @@
                     document.getElementById('masterRef' + payload.data.Variables.Output[4]).checked = true;
                     document.getElementById('masterRef0').onchange = function(){
                         XHR('http://'+this.MIDAS+'/?cmd=jset&odb0=Equipment/GRIF-Clk' + this.currentClock + '/Variables/Output[4]&value='+this.querySelector('input[name="masterRef"]:checked').value);
-                    }
+                    }.bind(this);
 
                     //also, don't report FanSel for the master, replace with frequency info:
                     document.getElementById('RefClockLabel').innerHTML = 'Input Freq.:';
