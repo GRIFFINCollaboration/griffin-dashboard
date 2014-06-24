@@ -1,0 +1,60 @@
+widget-Filter{
+	float:right;
+	width:calc(80% - 2em);
+	margin: 0 1em 0 0;
+}
+
+div#conditionWrap{
+	width:100%;
+}
+
+div.filterCondition{
+	background-color: #111111;
+	width: 100%;
+	border-radius: 1em;
+	margin-bottom: 1em;
+	padding:1em;
+	clear:both;
+	display:inline-block;
+}
+
+div.leftTab{
+	display: inline-block;
+	font-size: 200%;
+	padding:1em;
+	border-radius: 1em;
+	background-color: #333333;
+	float:left;
+}
+
+div.filterContent{
+	display:inline-block;
+	margin-left: 1em;
+	float:left;
+}
+
+div#conditionWrap div:nth-child(1) div.leftTab{
+	opacity: 0;
+}
+
+table.filterTable{
+	line-height: 150%;
+	margin-bottom: 1em;
+	border-left: 3px solid #EEEEEE;
+}
+
+table.filterTable tr td{
+	padding: 0.5em;
+}
+
+table.filterTable tr:nth-child(2n+1){
+	background-color: #444444;
+}
+
+table.filterTable tr:nth-child(1) td:nth-child(1){
+	opacity: 0;
+}
+
+button.addFilterCondition{
+	background-color: #444444;
+}
