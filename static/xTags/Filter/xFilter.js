@@ -58,7 +58,7 @@
                 encodedFilter.setAttribute('type', 'text');
                 encodedFilter.setAttribute('id', 'encodedFilter');
                 encodedFilter.setAttribute('style', 'display:none');
-                encodedFilter.setAttribute('name', 'cycleString');
+                encodedFilter.setAttribute('name', 'filterString');
                 controlRows[0].appendChild(encodedFilter);
 
                 applyFilter.setAttribute('type', 'checkbox');

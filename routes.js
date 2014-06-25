@@ -138,9 +138,9 @@ app.post('/registerFilter', function(req, res){
 	if(req.body.applyCycle == 'on'){
 		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.cycleName]);
 	}
-
-	return res.redirect('/PPG');
 */
+	return res.redirect('/Filter');
+
 });
 
 app.post('/updateClock', function(req, res){
