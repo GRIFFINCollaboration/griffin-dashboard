@@ -128,7 +128,7 @@ app.post('/registerFilter', function(req, res){
 
 	spawn('odbedit', ['-c', "mkdir /Filter/Filters/" + req.body.filterName]);
 	for(i=0; i<filter.length; i++){
-		spawn('odbedit', ['-c', "create string /Filter/Filters/" + req.body.filterName + "/orCondition "+i+"[" + filter[i].length + "]"]);	
+		spawn('odbedit', ['-c', "create string /Filter/Filters/" + req.body.filterName + "/orCondition"+i ]);	
 	}
 
 	/*
