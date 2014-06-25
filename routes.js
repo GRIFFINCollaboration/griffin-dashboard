@@ -98,6 +98,51 @@ app.post('/registerCycle', function(req, res){
 	return res.redirect('/PPG');
 });
 
+app.post('/registerFilter', function(req, res){
+	var filter = (req.body.filterString) ? JSON.parse(req.body.filterString) : null,
+		i,
+		steps = [],
+		durations = [];
+
+	console.log(filter)
+/*
+	//just load an existing cycle
+	if(req.body.loadTarget != 'null'){
+		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.loadTarget]);
+		return res.redirect('/PPG');
+	}
+
+	//delete an existing cycle
+	if(req.body.deleteTarget != 'null'){
+		spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.deleteTarget]);
+		return res.redirect('/PPG');
+	}
+
+	//register a new cycle
+	for(i=0; i<cycle.length; i++){
+		steps[i] = parseInt(cycle[i].PPGcode, 10);
+		durations[i] = parseInt(cycle[i].duration, 10);
+	}
+
+	spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.cycleName]);
+
+	spawn('odbedit', ['-c', "mkdir /PPG/Cycles/" + req.body.cycleName]);
+	
+	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
+	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations[" + steps.length + "]"]);
+	for(i=0; i<cycle.length; i++){
+		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"]  " + Math.round(steps[i]) ]);
+		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"]  " + Math.round(durations[i]) ]);
+	}
+
+	if(req.body.applyCycle == 'on'){
+		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.cycleName]);
+	}
+
+	return res.redirect('/PPG');
+*/
+});
+
 app.post('/updateClock', function(req, res){
 	var ClockEnB = 0,
 		powerOn,
