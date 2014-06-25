@@ -10,7 +10,6 @@ div#conditionWrap{
 
 div.filterCondition{
 	background-color: #111111;
-	width: 100%;
 	border-radius: 1em;
 	margin-bottom: 1em;
 	padding:1em;
@@ -51,10 +50,59 @@ table.filterTable tr:nth-child(2n+1){
 	background-color: #444444;
 }
 
+table.filterTable tr:nth-child(2n){
+	background-color: #333333;
+}
+
 table.filterTable tr:nth-child(1) td:nth-child(1){
 	opacity: 0;
 }
 
-button.addFilterCondition{
+button.lightButton{
 	background-color: #444444;
+}
+
+div.optionConfigWrap{
+	text-align: right;
+	width:15em;
+}
+
+div.hiddenConfig{
+	opacity:0;
+	pointer-events: none;
+}
+
+
+
+
+
+form.filterControl{
+	background-color: #333333;
+	border-radius: 1em;
+	padding: 1em;
+	margin: 1em 0 1em 0;
+	display: block;
+	width: -moz-max-content;
+	width: -webkit-max-content;
+}
+/*
+form.summary span:first-child{
+	display: none;
+}
+*/
+input#cycleName{
+	width:10em;
+}
+
+form span{
+	display: block;
+}
+
+form span label,
+form span select{
+	margin-right: 1em !important;
+}
+
+form span:first-child{
+	margin-bottom: 1em;
 }

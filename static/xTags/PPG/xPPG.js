@@ -15,9 +15,9 @@
                     chooseCycleLabel = document.createElement('label'),
                     chooseCycle = document.createElement('select'),
                     controlRows = [],
-                    loadPPG = document.createElement('button');
-                    deletePPG = document.createElement('button');
-                    loadTarget = document.createElement('input');
+                    loadPPG = document.createElement('button'),
+                    deletePPG = document.createElement('button'),
+                    loadTarget = document.createElement('input'),
                     deleteTarget = document.createElement('input');
 
 

@@ -1,3 +1,7 @@
+///////////////////////////////////////
+//get requests
+///////////////////////////////////////
+
 app.get('/HV', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 
@@ -28,13 +32,15 @@ app.get('/Clocks', function(req, res){
 	res.render('widgets/Clock.jade');
 });
 
-/*
-app.get('/rawMSC', function(req, res){
+app.get('/Filter', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
-	res.render('scratchTools/dumpMSC.jade');
+	res.render('widgets/Filter.jade');
 });
-*/
+
+///////////////////////////////////////
+//post routes
+///////////////////////////////////////
 
 app.post('/postHV', function(req, res){
 

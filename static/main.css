@@ -103,6 +103,11 @@ input[type='radio'].stdin:checked + label{
 	background-color: #555555;
 }
 
+button.stdin:hover,
+input[type='button']:hover{
+	background-color: #555555;
+}
+
 a{
 	text-decoration: none;
 }
