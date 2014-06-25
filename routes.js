@@ -127,6 +127,10 @@ app.post('/registerFilter', function(req, res){
 	spawn('odbedit', ['-c', "rm /Filter/Filters/" + req.body.filterName]);
 
 	spawn('odbedit', ['-c', "mkdir /Filter/Filters/" + req.body.filterName]);
+	for(i=0; i<filter.length; i++){
+		spawn('odbedit', ['-c', "create string /Filter/Filters/" + req.body.filterName + "/orCondition "+i+"[" + filter[i].length + "]"]);	
+	}
+
 	/*
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations[" + steps.length + "]"]);
