@@ -100,7 +100,7 @@ app.post('/registerCycle', function(req, res){
 
 app.post('/registerFilter', function(req, res){
 	var filter = (req.body.filterString) ? JSON.parse(req.body.filterString) : null,
-		i,
+		i, j,
 		steps = [],
 		durations = [];
 	
@@ -131,7 +131,11 @@ console.log(filter)
 
 	for(i=0; i<filter.length; i++){
 		spawn('odbedit', ['-c', "create string /Filter/Filters/" + req.body.filterName + "/orCondition"+i+"[" + filter[i].length + "]" ]);
-		spawn('odbedit', ['-c', "set /Filter/Filters/" + req.body.filterName + "/orCondition"+i + '[*] ' + filter[i] ]);	
+		for(j=0; j<filter[i].length; j++){
+			console.log(filter[i][j]);
+
+			spawn('odbedit', ['-c', "set /Filter/Filters/" + req.body.filterName + "/orCondition"+i + '['+j+'] ' + filter[i][j] ]);	
+		}
 	}
 
 	/*
