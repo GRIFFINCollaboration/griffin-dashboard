@@ -99,12 +99,13 @@ app.post('/registerCycle', function(req, res){
 });
 
 app.post('/registerFilter', function(req, res){
+	/*
 	var filter = (req.body.filterString) ? JSON.parse(req.body.filterString) : null,
 		i,
 		steps = [],
 		durations = [];
-
-	console.log(filter)
+	*/
+	console.log(req.body)
 /*
 	//just load an existing cycle
 	if(req.body.loadTarget != 'null'){
