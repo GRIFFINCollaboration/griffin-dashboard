@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var spawnCondition,
+                var spawnCondition, filterTitle,
                     controlWrap = document.createElement('form'),
                     controlRows = [],
                     encodedFilter = document.createElement('input'),
@@ -26,6 +26,10 @@
                 this.detectorCodes = ['DA', 'DS', 'GR', 'PA', 'SE', 'ZD'],
                 this.filterOptions = ['Singles', 'Coincidences', 'Prescale'];
                 this.filterCodes = ['S', 'C', 'P'];
+
+                filterTitle = document.createElement('h1');
+                filterTitle.innerHTML = 'Filter Control';
+                this.appendChild(filterTitle);
 
                 this.conditionWrap = document.createElement('div');
                 this.conditionWrap.setAttribute('id', 'conditionWrap');
