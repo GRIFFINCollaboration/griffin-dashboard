@@ -99,13 +99,11 @@ app.post('/registerCycle', function(req, res){
 });
 
 app.post('/registerFilter', function(req, res){
-	/*
 	var filter = (req.body.filterString) ? JSON.parse(req.body.filterString) : null,
 		i,
 		steps = [],
 		durations = [];
-	*/
-	console.log(req.body)
+	
 /*
 	//just load an existing cycle
 	if(req.body.loadTarget != 'null'){
@@ -118,17 +116,18 @@ app.post('/registerFilter', function(req, res){
 		spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.deleteTarget]);
 		return res.redirect('/PPG');
 	}
-
-	//register a new cycle
+*/
+	//register a new filter
+	/*
 	for(i=0; i<cycle.length; i++){
 		steps[i] = parseInt(cycle[i].PPGcode, 10);
 		durations[i] = parseInt(cycle[i].duration, 10);
 	}
+	*/
+	spawn('odbedit', ['-c', "rm /Filter/Filters/" + req.body.filterName]);
 
-	spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.cycleName]);
-
-	spawn('odbedit', ['-c', "mkdir /PPG/Cycles/" + req.body.cycleName]);
-	
+	spawn('odbedit', ['-c', "mkdir /Filter/Filters/" + req.body.filterName]);
+	/*
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations[" + steps.length + "]"]);
 	for(i=0; i<cycle.length; i++){
