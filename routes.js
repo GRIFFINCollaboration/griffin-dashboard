@@ -100,7 +100,6 @@ app.post('/registerCycle', function(req, res){
 
 app.post('/registerFilter', function(req, res){
 	var filter = (req.body.filterString) ? JSON.parse(req.body.filterString) : null,
-		process,
 		i, j,
 		steps = [],
 		durations = [];
@@ -126,18 +125,18 @@ app.post('/registerFilter', function(req, res){
 	}
 	*/
 	spawn('odbedit', ['-c', "rm /Filter/Filters/" + req.body.filterName]);
-	process = spawn('odbedit', ['-c', "mkdir /Filter/Filters/" + req.body.filterName]);
+	spawn('odbedit', ['-c', "mkdir /Filter/Filters/" + req.body.filterName]);
 
-	process.on('close', function(data){
-		for(i=0; i<filter.length; i++){
-			spawn('odbedit', ['-c', "create string /Filter/Filters/" + req.body.filterName + "/orCondition"+i+"[" + filter[i].length + "]" ]);
-			for(j=0; j<filter[i].length; j++){
-				console.log(filter[i][j]);
+console.log(filter)
 
-				spawn('odbedit', ['-c', "set /Filter/Filters/" + req.body.filterName + "/orCondition"+i + '['+j+'] ' + filter[i][j] ]);	
-			}
+	for(i=0; i<filter.length; i++){
+		spawn('odbedit', ['-c', "create string /Filter/Filters/" + req.body.filterName + "/orCondition"+i+"[" + filter[i].length + "]" ]);
+		for(j=0; j<filter[i].length; j++){
+			console.log(filter[i][j]);
+
+			spawn('odbedit', ['-c', "set /Filter/Filters/" + req.body.filterName + "/orCondition"+i + '['+j+'] ' + filter[i][j] ]);	
 		}
-	});
+	}
 
 	/*
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
