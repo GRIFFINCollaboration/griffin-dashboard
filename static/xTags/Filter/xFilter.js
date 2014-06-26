@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var spawnCondition, filterTitle,
+                var spawnCondition, filterTitle, currentFilter,
                     controlWrap = document.createElement('form'),
                     controlRows = [],
                     encodedFilter = document.createElement('input'),
@@ -30,6 +30,9 @@
                 filterTitle = document.createElement('h1');
                 filterTitle.innerHTML = 'Filter Control';
                 this.appendChild(filterTitle);
+                currentFilter = document.createElement('h3');
+                currentFilter.setAttribute('id', 'currentFilter');
+                this.appendChild(currentFilter);
 
                 this.conditionWrap = document.createElement('div');
                 this.conditionWrap.setAttribute('id', 'conditionWrap');
@@ -42,9 +45,6 @@
                 spawnCondition.setAttribute('class', 'stdin');
                 spawnCondition.onclick = this.spawnFilterCondition.bind(this);
                 this.appendChild(spawnCondition);
-
-
-
 
                 controlWrap.setAttribute('class', 'filterControl summary');
                 controlWrap.setAttribute('id', 'filterDefinitionForm');
@@ -123,6 +123,8 @@
                     document.getElementById('deleteTarget').value = selected('filterList')
                 }
                 controlRows[1].appendChild(deleteFilter);
+
+                XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/Filter&encoding=json-nokeys', registerFilterODB.bind(this));
             },
             inserted: function() {},
             removed: function() {},
@@ -315,8 +317,35 @@
                 }
 
                 document.getElementById('encodedFilter').value = JSON.stringify(encoded);
-            }
+            },
 
+            'registerFilterODB' : function(responseText){
+                var data = JSON.parse(responseText),
+                    currentName = data.Current,
+                    currentFilter = data.Filters[currentName]
+                    filterSelect = document.getElementById('filterList'),
+                    filterOptions, key;
+
+                this.filterRecord = data;
+
+                this.loadFilter(currentFilter);
+                document.getElementById('filterName').value = currentName;
+                document.getElementById('currentFilter').innerHTML = 'Current Active Filter: ' + currentName;
+
+                for(key in data.Filters){
+                    filterOptions = document.createElement('option');
+                    filterOptions.innerHTML = key;
+                    filterOptions.value = key;
+                    filterSelect.appendChild(filterOptions);
+                    
+                }
+
+                filterSelect.value = currentName;
+            },
+
+            'loadFilter' : function(currentFilter){
+
+            }
 
 
         }
