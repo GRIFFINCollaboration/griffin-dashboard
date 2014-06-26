@@ -352,8 +352,8 @@
                     i, key;
 
                 for(i=0; i<orCells.length; i++){
-                    //cellDelete = orCells[i].lastChild.onclick();
-                    console.log(orCells[i].lastChild)
+                    cellDelete = orCells[i].querySelectorAll('button.lightButton')[1]
+                    cellDelete.onclick();
                 }
 
                 for(key in currentFilter){
