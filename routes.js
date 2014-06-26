@@ -134,7 +134,7 @@ console.log(filter)
 		for(j=0; j<filter[i].length; j++){
 			console.log(filter[i][j]);
 
-			spawn('odbedit', ['-c', "set /Filter/Filters/" + req.body.filterName + "/orCondition"+i + '['+j+'] ' + filter[i][j] ]);	
+			spawn('odbedit', ['-c', "set /Filter/Filters/" + req.body.filterName + "/orCondition"+i + '['+j+'] ' + JSON.stringify(filter[i][j]) ]);	
 		}
 	}
 
