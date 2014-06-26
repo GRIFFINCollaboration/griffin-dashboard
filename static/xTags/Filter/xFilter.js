@@ -179,7 +179,7 @@
 
                 deleteCondition.setAttribute('id', 'deleteCondition' + index);
                 deleteCondition.setAttribute('class', 'stdin lightButton');
-                deleteCondition.setAttribute('return', false);
+                //deleteCondition.setAttribute('return', false);
                 deleteCondition.innerHTML = 'Delete This Block';
                 deleteCondition.onclick = this.deleteOrBlock.bind(this, index);
                 filterContent.appendChild(deleteCondition);
