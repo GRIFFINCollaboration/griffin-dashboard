@@ -110,13 +110,13 @@ app.post('/registerFilter', function(req, res){
 		spawn('odbedit', ['-c', "set /Filter/Current " + req.body.loadTarget]);
 		return res.redirect('/Filter');
 	}
-/*
+
 	//delete an existing cycle
 	if(req.body.deleteTarget != 'null'){
-		spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.deleteTarget]);
-		return res.redirect('/PPG');
+		spawn('odbedit', ['-c', "rm /Filter/Filters/" + req.body.deleteTarget]);
+		return res.redirect('/Filter');
 	}
-*/
+
 	//register a new filter - build file and run with execFile for most robust execution (spawn seems to create a race condition, consider removing).
 	odbManipulationFile += 'odbedit -c "rm /Filter/Filters/' + req.body.filterName + '"\n';
 	odbManipulationFile += 'odbedit -c "mkdir /Filter/Filters/' + req.body.filterName + '"\n';
