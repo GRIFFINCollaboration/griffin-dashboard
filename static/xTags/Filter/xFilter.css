@@ -108,9 +108,10 @@ div#contentWrap{
 	width: 55em;
 }
 
-@media screen and (min-width: 1500px){
+@media screen and (min-width: 94em){
 	form#filterDefinitionForm{
-		float:left;
+		float: left;
+		display: inline-block;
 		width: -moz-min-content;
 		width: -webkit-min-content;
 	}
