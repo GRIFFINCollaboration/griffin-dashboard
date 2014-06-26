@@ -104,7 +104,7 @@ app.post('/registerFilter', function(req, res){
 		i, j,
 		steps = [],
 		durations = [];
-console.log(req.body)
+
 /*
 	//just load an existing cycle
 	if(req.body.loadTarget != 'null'){
@@ -133,14 +133,13 @@ console.log(req.body)
 			execFile('./odbManipulation.sh', function(error, stdout, stderr){
 				console.log('Writing ' + req.body.filterName + ' filter to ODB, process [error, stdout, stderr]:'); 
 				console.log([error, stdout, stderr]);
+
+				if(req.body.applyFilter == 'on'){
+					spawn('odbedit', ['-c', "set /Filter/Current " + req.body.cycleName]);
+				}
 			});			
 		});
 	});
-
-	
-	if(req.body.applyFilter == 'on'){
-		spawn('odbedit', ['-c', "set /Filter/Current " + req.body.cycleName]);
-	}
 	
 	return res.redirect('/Filter');
 
