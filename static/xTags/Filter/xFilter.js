@@ -34,10 +34,10 @@
 
                 filterTitle = document.createElement('h1');
                 filterTitle.innerHTML = 'Filter Control';
-                contentWrap.appendChild(filterTitle);
+                this.appendChild(filterTitle);
                 currentFilter = document.createElement('h3');
                 currentFilter.setAttribute('id', 'currentFilter');
-                contentWrap.appendChild(currentFilter);
+                this.appendChild(currentFilter);
 
                 this.conditionWrap = document.createElement('form');
                 this.conditionWrap.setAttribute('id', 'conditionWrap');
