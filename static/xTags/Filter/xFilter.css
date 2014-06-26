@@ -72,10 +72,6 @@ div.hiddenConfig{
 	pointer-events: none;
 }
 
-
-
-
-
 form.filterControl{
 	background-color: #333333;
 	border-radius: 1em;
@@ -105,4 +101,8 @@ form span select{
 
 form span:first-child{
 	margin-bottom: 1em;
+}
+
+@media screen and (max-width: 1500px){
+
 }
