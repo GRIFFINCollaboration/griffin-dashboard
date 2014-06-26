@@ -124,7 +124,7 @@
                 }
                 controlRows[1].appendChild(deleteFilter);
 
-                XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/Filter&encoding=json-nokeys', registerFilterODB.bind(this));
+                XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb=/Filter&encoding=json-nokeys', this.registerFilterODB.bind(this));
             },
             inserted: function() {},
             removed: function() {},
