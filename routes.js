@@ -150,12 +150,12 @@ app.post('/registerFilter', function(req, res){
 	}
 	*/
 
-	odbManipulationFile += 'odbedit -c rm /Filter/Filters/' + req.body.filterName + '\n';
-	odbManipulationFile += 'odbedit -c mkdir /Filter/Filters/' + req.body.filterName + '\n';
+	odbManipulationFile += 'odbedit -c "rm /Filter/Filters/' + req.body.filterName + '"\n';
+	odbManipulationFile += 'odbedit -c "mkdir /Filter/Filters/' + req.body.filterName + '"\n';
 	for(i=0; i<filter.length; i++){
-		odbManipulationFile += 'odbedit -c create string /Filter/Filters/' + req.body.filterName + '/orCondition'+i+'[' + filter[i].length + ']' + '\n'; 
+		odbManipulationFile += 'odbedit -c "create string /Filter/Filters/' + req.body.filterName + '/orCondition'+i+'[' + filter[i].length + ']"\n'; 
 		for(j=0; j<filter[i].length; j++){
-			odbManipulationFile += 'odbedit -c set /Filter/Filters/' + req.body.filterName + '/orCondition'+i + '['+j+'] ' + filter[i][j] + '\n';
+			odbManipulationFile += 'odbedit -c "set /Filter/Filters/' + req.body.filterName + '/orCondition'+i + '['+j+'] ' + filter[i][j] + '"\n';
 		}
 	}
 console.log(odbManipulationFile)
