@@ -100,6 +100,7 @@ app.post('/registerCycle', function(req, res){
 
 app.post('/registerFilter', function(req, res){
 	var filter = (req.body.filterString) ? JSON.parse(req.body.filterString) : null,
+		odbManipulationFile = '',
 		i, j,
 		steps = [],
 		durations = [];
@@ -139,9 +140,7 @@ app.post('/registerFilter', function(req, res){
 
 	//exec('odbedit -c rm /Filter/Filters/' + req.body.filterName, function(){});
 	//exec('odbedit -c mkdir /Filter/Filters/' + req.body.filterName, function(){});
-	execFile('./test.sh', function(error, stdout, stderr){
-		console.log([error, stdout, stderr]);
-	})
+
 	/*
 	for(i=0; i<filter.length; i++){
 		exec('odbedit -c create string /Filter/Filters/' + req.body.filterName + '/orCondition'+i+'[' + filter[i].length + "]", function(){});
@@ -150,18 +149,26 @@ app.post('/registerFilter', function(req, res){
 		}
 	}
 	*/
-	/*
-	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
-	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations[" + steps.length + "]"]);
-	for(i=0; i<cycle.length; i++){
-		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/PPGcodes["+ i +"]  " + Math.round(steps[i]) ]);
-		spawn('odbedit', ['-c', "set /PPG/Cycles/" + req.body.cycleName + "/durations["+ i +"]  " + Math.round(durations[i]) ]);
-	}
 
+	odbManipulationFile += 'odbedit -c rm /Filter/Filters/' + req.body.filterName + '\n';
+	odbManipulationFile += 'odbedit -c mkdir /Filter/Filters/' + req.body.filterName + '\n';
+	for(i=0; i<filter.length; i++){
+		odbManipulationFile += 'odbedit -c create string /Filter/Filters/' + req.body.filterName + '/orCondition'+i+'[' + filter[i].length + ']' + '\n'; 
+		for(j=0; j<filter[i].length; j++){
+			odbManipulationFile += 'odbedit -c set /Filter/Filters/' + req.body.filterName + '/orCondition'+i + '['+j+'] ' + filter[i][j] + '\n';
+		}
+	}
+console.log(odbManipulationFile)
+/*
+	execFile('./test.sh', function(error, stdout, stderr){
+		console.log([error, stdout, stderr]);
+	})
+*/
+	/*
 	if(req.body.applyCycle == 'on'){
 		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.cycleName]);
 	}
-*/
+	*/
 	return res.redirect('/Filter');
 
 });
