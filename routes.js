@@ -158,7 +158,9 @@ app.post('/registerFilter', function(req, res){
 			odbManipulationFile += 'odbedit -c "set /Filter/Filters/' + req.body.filterName + '/orCondition'+i + '['+j+'] ' + filter[i][j] + '"\n';
 		}
 	}
-console.log(odbManipulationFile)
+
+	fs.writeFile('odbManipulation.sh', odbManipulationFile, function(){});
+
 /*
 	execFile('./test.sh', function(error, stdout, stderr){
 		console.log([error, stdout, stderr]);

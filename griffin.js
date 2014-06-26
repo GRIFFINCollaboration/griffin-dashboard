@@ -4,6 +4,7 @@ app 		= express();
 //minify 	= require('express-minify');				//minification tool
 spawn 		= require('child_process').spawn;			//for spawning system calls
 execFile	= require('child_process').execFile;
+fs 			= require('fs');							//file system manipulator
 
 // set up the app
 app.set('views', __dirname + '/views');
