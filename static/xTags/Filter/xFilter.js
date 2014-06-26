@@ -367,7 +367,7 @@
                         for(i=0; i<currentFilter[key].length; i++){
 
                             if(i<currentFilter[key].length-1)
-                                currentOr..querySelectorAll('button.lightButton')[0].onclick();
+                                currentOr.querySelectorAll('button.lightButton')[0].onclick();
                         }
                     } else {
 
