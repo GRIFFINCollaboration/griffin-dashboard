@@ -6,6 +6,7 @@
             created: function() {
                 var spawnCondition, filterTitle, currentFilter,
                     contentWrap = document.createElement('div'),
+                    floatWrap = document.createElement('div'),
                     controlWrap = document.createElement('form'),
                     controlRows = [],
                     encodedFilter = document.createElement('input'),
@@ -29,15 +30,18 @@
                 this.filterOptions = ['Singles', 'Coincidences', 'Prescale'];
                 this.filterCodes = ['S', 'C', 'P'];
 
-                contentWrap.setAttribute('id', 'contentWrap');
-                this.appendChild(contentWrap);
-
                 filterTitle = document.createElement('h1');
                 filterTitle.innerHTML = 'Filter Control';
                 this.appendChild(filterTitle);
                 currentFilter = document.createElement('h3');
                 currentFilter.setAttribute('id', 'currentFilter');
                 this.appendChild(currentFilter);
+
+                floatWrap.setAttribute('id', 'floatWrap');
+                this.appendChild(floatWrap);
+
+                contentWrap.setAttribute('id', 'contentWrap');
+                floatWrap.appendChild(contentWrap);
 
                 this.conditionWrap = document.createElement('form');
                 this.conditionWrap.setAttribute('id', 'conditionWrap');
@@ -59,7 +63,7 @@
                 controlWrap.setAttribute('id', 'filterDefinitionForm');
                 controlWrap.setAttribute('method', 'POST');
                 controlWrap.setAttribute('action', 'registerFilter');
-                this.appendChild(controlWrap);
+                floatWrap.appendChild(controlWrap);
 
                 controlRows[0] = document.createElement('span')
                 controlWrap.appendChild(controlRows[0]);
