@@ -103,6 +103,8 @@ form span:first-child{
 	margin-bottom: 1em;
 }
 
-@media screen and (max-width: 1500px){
-
+@media screen and (min-width: 1500px){
+	form#filterDefinitionForm{
+		float:right;
+	}
 }
