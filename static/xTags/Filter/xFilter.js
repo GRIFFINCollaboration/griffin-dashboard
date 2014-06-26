@@ -375,7 +375,10 @@
                                 currentOr.querySelectorAll('button.lightButton')[0].onclick();
                         }
                     } else {
-
+                        currentOr.querySelectorAll('select')[0].value = currentFilter[key][i].slice(0,2);
+                        currentOr.querySelectorAll('select')[1].value = currentFilter[key][i].slice(3,4);
+                        currentOr.querySelectorAll('select')[1].onchange();
+                        currentOr.querySelectorAll('input')[0].value = parseInt(currentFilter[key][i].slice(5),10);                        
                     }
 
                 }
