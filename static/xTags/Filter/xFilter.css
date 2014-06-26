@@ -105,16 +105,17 @@ form span:first-child{
 
 div#contentWrap{
 	float:left;
+	width: 55em;
 }
 
 @media screen and (min-width: 1500px){
 	form#filterDefinitionForm{
-		float:right;
+		float:left;
 		width: -moz-min-content;
 		width: -webkit-min-content;
 	}
 
 	form#filterDefinitionForm *{
-		margin-bottom: 1em;
+		margin-bottom: 0.5em;
 	}
 }
