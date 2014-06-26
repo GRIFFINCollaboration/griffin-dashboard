@@ -366,7 +366,7 @@
                     currentOr = currentOr[currentOr.length - 1];
                     if(currentFilter[key] instanceof Array){
                         for(i=0; i<currentFilter[key].length; i++){
-                            currentOr.querySelectorAll('select')[0].value = currentFilter[key][i].slice(0,2);
+                            currentOr.querySelectorAll('select')[i*2].value = currentFilter[key][i].slice(0,2);
 
                             if(i<currentFilter[key].length-1)
                                 currentOr.querySelectorAll('button.lightButton')[0].onclick();
