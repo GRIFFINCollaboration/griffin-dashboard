@@ -186,6 +186,8 @@
                 addNewRow.onclick();
 
                 this.filterConditions.push(newCondition);
+
+                this.dumpFilterName();
             },
 
             'addNewRow' : function(index){
@@ -264,6 +266,8 @@
 
                 this.nRows[index]++;
 
+                this.dumpFilterName();
+
                 return false;
 
             },
@@ -286,6 +290,7 @@
             'deleteOrBlock' : function(index){
                 var block = document.getElementById('filterCondition' + index);
                 this.conditionWrap.removeChild(block);
+                this.dumpFilterName();
 
                 return false;
             },
