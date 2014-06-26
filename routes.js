@@ -135,7 +135,7 @@ app.post('/registerFilter', function(req, res){
 				console.log([error, stdout, stderr]);
 
 				if(req.body.applyFilter == 'on'){
-					spawn('odbedit', ['-c', "set /Filter/Current " + req.body.cycleName]);
+					spawn('odbedit', ['-c', "set /Filter/Current " + req.body.filterName]);
 				}
 			});			
 		});
