@@ -352,7 +352,8 @@
                     i, key;
 
                 for(i=0; i<orCells.length; i++){
-                    cellDelete = orCells[i].lastChild.onclick();
+                    //cellDelete = orCells[i].lastChild.onclick();
+                    console.log(orCells[i].lastChild)
                 }
 
                 for(key in currentFilter){
