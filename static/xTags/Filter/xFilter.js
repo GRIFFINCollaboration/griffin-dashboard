@@ -172,14 +172,12 @@
 
                 addNewRow.setAttribute('id', 'addNewRow' + index);
                 addNewRow.setAttribute('class', 'stdin lightButton');
-                addNewRow.setAttribute('return', false);
                 addNewRow.innerHTML = 'AND new condition';
                 addNewRow.onclick = this.addNewRow.bind(this, index);
                 filterContent.appendChild(addNewRow);
 
                 deleteCondition.setAttribute('id', 'deleteCondition' + index);
                 deleteCondition.setAttribute('class', 'stdin lightButton');
-                //deleteCondition.setAttribute('return', false);
                 deleteCondition.innerHTML = 'Delete This Block';
                 deleteCondition.onclick = this.deleteOrBlock.bind(this, index);
                 filterContent.appendChild(deleteCondition);
@@ -259,14 +257,14 @@
                 cell = document.createElement('td');
                 row.appendChild(cell);
                 deleteRow = document.createElement('button');
-                deleteRow.setAttribute('return', false);
                 deleteRow.innerHTML = 'Remove';
                 deleteRow.setAttribute('class', 'stdin');
                 deleteRow.onclick = this.deleteRow.bind(this, index, ''+index+rowIndex);
                 cell.appendChild(deleteRow);
 
-
                 this.nRows[index]++;
+
+                return false;
 
             },
 
@@ -288,12 +286,15 @@
             'deleteOrBlock' : function(index){
                 var block = document.getElementById('filterCondition' + index);
                 this.conditionWrap.removeChild(block);
+
+                return false;
             },
 
             'deleteRow' : function(index, idCode){
                 var row = document.getElementById('filterRow'+idCode);
                 document.getElementById('filterTable'+index).removeChild(row);
 
+                return false;
             },
 
             'registerNewFilter' : function(){
