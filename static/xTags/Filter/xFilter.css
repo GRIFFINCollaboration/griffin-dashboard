@@ -76,7 +76,6 @@ form.filterControl{
 	background-color: #333333;
 	border-radius: 1em;
 	padding: 1em;
-	margin: 1em 0 1em 0;
 	display: block;
 	width: -moz-max-content;
 	width: -webkit-max-content;
@@ -121,5 +120,9 @@ form#filterDefinitionForm{
 
 	form#filterDefinitionForm *{
 		margin-bottom: 0.5em;
+	}
+
+	form.filterControl{
+		margin: 1em 0 1em 0;
 	}
 }
