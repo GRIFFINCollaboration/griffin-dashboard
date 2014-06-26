@@ -159,7 +159,9 @@ app.post('/registerFilter', function(req, res){
 		}
 	}
 
-	fs.writeFile('odbManipulation.sh', odbManipulationFile, function(){});
+	fs.writeFile('odbManipulation.sh', odbManipulationFile, function(){
+		fs.chmod('./odbManipulation.sh', '777', function(){});
+	});
 
 /*
 	execFile('./test.sh', function(error, stdout, stderr){
