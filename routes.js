@@ -126,30 +126,6 @@ app.post('/registerFilter', function(req, res){
 	}
 	*/
 
-	/*
-	spawn('odbedit', ['-c', "rm /Filter/Filters/" + req.body.filterName]);
-	spawn('odbedit', ['-c', "mkdir /Filter/Filters/" + req.body.filterName]);
-
-	for(i=0; i<filter.length; i++){
-		spawn('odbedit', ['-c', "create string /Filter/Filters/" + req.body.filterName + "/orCondition"+i+"[" + filter[i].length + "]" ]);
-		for(j=0; j<filter[i].length; j++){
-			spawn('odbedit', ['-c', "set /Filter/Filters/" + req.body.filterName + "/orCondition"+i + '['+j+'] ' + filter[i][j] ]);	
-		}
-	}
-	*/
-
-	//exec('odbedit -c rm /Filter/Filters/' + req.body.filterName, function(){});
-	//exec('odbedit -c mkdir /Filter/Filters/' + req.body.filterName, function(){});
-
-	/*
-	for(i=0; i<filter.length; i++){
-		exec('odbedit -c create string /Filter/Filters/' + req.body.filterName + '/orCondition'+i+'[' + filter[i].length + "]", function(){});
-		for(j=0; j<filter[i].length; j++){
-			exec('odbedit -c set /Filter/Filters/' + req.body.filterName + '/orCondition'+i + '['+j+'] ' + filter[i][j], function(){} );	
-		}
-	}
-	*/
-
 	odbManipulationFile += 'odbedit -c "rm /Filter/Filters/' + req.body.filterName + '"\n';
 	odbManipulationFile += 'odbedit -c "mkdir /Filter/Filters/' + req.body.filterName + '"\n';
 	for(i=0; i<filter.length; i++){
@@ -160,14 +136,13 @@ app.post('/registerFilter', function(req, res){
 	}
 
 	fs.writeFile('odbManipulation.sh', odbManipulationFile, function(){
-		fs.chmod('./odbManipulation.sh', '777', function(){});
+		fs.chmod('./odbManipulation.sh', '777', function(){
+			execFile('./odbManipulation.sh', function(error, stdout, stderr){
+				console.log([error, stdout, stderr]);
+			});			
+		});
 	});
 
-/*
-	execFile('./test.sh', function(error, stdout, stderr){
-		console.log([error, stdout, stderr]);
-	})
-*/
 	/*
 	if(req.body.applyCycle == 'on'){
 		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.cycleName]);
