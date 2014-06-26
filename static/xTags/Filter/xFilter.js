@@ -398,8 +398,11 @@
             },
 
             'dumpFilterName' : function(){
-                if(this.presets.indexOf(document.getElementById('filterName').value) != -1)
-                    document.getElementById('filterName').value = '';
+                var filterName = document.getElementById('filterName');
+
+
+                if(filterName && this.presets.indexOf(filterName.value) != -1)
+                    filterName.value = '';
             }
         }
     });
