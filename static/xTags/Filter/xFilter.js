@@ -297,9 +297,15 @@
             },
 
             'deleteRow' : function(index, idCode){
-                var row = document.getElementById('filterRow'+idCode);
-                document.getElementById('filterTable'+index).removeChild(row);
+                var row = document.getElementById('filterRow'+idCode),
+                    table = document.getElementById('filterTable'+index);
+
+                table.removeChild(row);
                 this.dumpFilterName();
+
+                if(table.querySelectorAll('tr').length==0)
+                    document.getElementById('deleteCondition' + index).onclick();
+
                 return false;
             },
 
