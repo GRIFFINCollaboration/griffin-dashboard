@@ -349,6 +349,7 @@
                 var orCells = this.querySelectorAll('div.filterCondition'),
                     cellDelete,
                     createOr = document.getElementById('spawnCondition'),
+                    currentOr,
                     i, key;
 
                 for(i=0; i<orCells.length; i++){
@@ -360,6 +361,18 @@
                     if(key.indexOf('last_written') != -1 ) continue;
 
                     createOr.onclick();
+
+                    currentOr = this.querySelectorAll('div.filterCondition').pop();
+                    if(currentFilter[key] instanceof Array){
+                        for(i=0; i<currentFilter[key].length; i++){
+
+                            if(i<currentFilter[key].length-1)
+                                currentOr..querySelectorAll('button.lightButton')[0].onclick();
+                        }
+                    } else {
+
+                    }
+
                 }
             }
 
