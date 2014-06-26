@@ -84,7 +84,7 @@
                 saveLoadFilter.setAttribute('class', 'stdin');
                 saveLoadFilter.innerHTML = 'Save & Apply Filter Definition';
                 saveLoadFilter.onclick = function(){
-                    this.registerNewFilter();
+                    this.registerNewFilter.bind(this);
                     document.getElementById('applyFilter').checked = true;
                 }.bind(this);
                 controlRows[0].appendChild(saveLoadFilter);
