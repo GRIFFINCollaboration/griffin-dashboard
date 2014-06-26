@@ -350,13 +350,15 @@
                     cellDelete,
                     createOr = document.getElementById('spawnCondition'),
                     i, key;
-console.log(currentFilter)
+
                 for(i=0; i<orCells.length; i++){
                     cellDelete = orCells[i].querySelectorAll('button.lightButton')[1]; //TODO fragile - don't ever change that class or loading breaks!
                     cellDelete.onclick();
                 }
 
                 for(key in currentFilter){
+                    if(key.indexOf('last_written') != -1 ) continue;
+
                     createOr.onclick();
                 }
             }
