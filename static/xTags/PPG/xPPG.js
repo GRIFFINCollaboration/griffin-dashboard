@@ -65,6 +65,7 @@
                 cycleName.setAttribute('type', 'text');
                 cycleName.setAttribute('id', 'cycleName');
                 cycleName.setAttribute('name', 'cycleName');
+                cycleName.setAttribute('pattern', '^[\\S]*$');
                 controlRows[0].appendChild(cycleNameLabel);
                 controlRows[0].appendChild(cycleName);
 
