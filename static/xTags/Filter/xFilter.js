@@ -20,6 +20,7 @@
                     deleteTarget = document.createElement('input'),
                     saveLoadFilter = document.createElement('button');
 
+                this.presets = [];
                 this.filterConditions = [];
                 this.nRows = [];
                 this.detectors = ['DANTE', 'DESCANT', 'GRIFFIN', 'PACES', 'SCEPTAR', 'ZDS'];
@@ -341,7 +342,6 @@
                     filterOptions, key;
 
                 this.filterRecord = data;
-                this.presets = [];
 
                 this.loadFilter(currentFilter);
                 document.getElementById('filterName').value = currentName;
