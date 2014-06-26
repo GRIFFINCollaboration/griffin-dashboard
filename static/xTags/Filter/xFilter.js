@@ -72,7 +72,7 @@
                 filterName.setAttribute('type', 'text');
                 filterName.setAttribute('id', 'filterName');
                 filterName.setAttribute('name', 'filterName');
-                filterName.setAttribute('pattern',"[^\s]");
+                filterName.setAttribute('pattern',"(?=.*[a-zA-Z])(?=.*[\d\W])[\S]*$");
                 filterName.setAttribute('required', true);
                 controlRows[0].appendChild(filterNameLabel);
                 controlRows[0].appendChild(filterName);
