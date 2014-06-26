@@ -137,18 +137,19 @@ app.post('/registerFilter', function(req, res){
 	}
 	*/
 
-	exec('odbedit -c rm /Filter/Filters/' + req.body.filterName, function(){});
-	exec('odbedit -c mkdir /Filter/Filters/' + req.body.filterName, function(){});
-	exec('ls', function(error, stdout, stderr){
+	//exec('odbedit -c rm /Filter/Filters/' + req.body.filterName, function(){});
+	//exec('odbedit -c mkdir /Filter/Filters/' + req.body.filterName, function(){});
+	execFile('test.sh', function(error, stdout, stderr){
 		console.log([error, stdout, stderr]);
 	})
+	/*
 	for(i=0; i<filter.length; i++){
 		exec('odbedit -c create string /Filter/Filters/' + req.body.filterName + '/orCondition'+i+'[' + filter[i].length + "]", function(){});
 		for(j=0; j<filter[i].length; j++){
 			exec('odbedit -c set /Filter/Filters/' + req.body.filterName + '/orCondition'+i + '['+j+'] ' + filter[i][j], function(){} );	
 		}
 	}
-
+	*/
 	/*
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/PPGcodes[" + steps.length + "]"]);
 	spawn('odbedit', ['-c', "create int /PPG/Cycles/" + req.body.cycleName + "/durations[" + steps.length + "]"]);
