@@ -4,7 +4,7 @@ widget-Filter{
 	margin: 0 1em 0 0;
 }
 
-div#conditionWrap{
+form#conditionWrap{
 	width:100%;
 }
 
@@ -32,7 +32,7 @@ div.filterContent{
 	float:left;
 }
 
-div#conditionWrap div:nth-child(1) div.leftTab{
+form#conditionWrap div:nth-child(1) div.leftTab{
 	opacity: 0;
 }
 

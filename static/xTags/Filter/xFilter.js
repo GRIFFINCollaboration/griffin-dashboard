@@ -34,8 +34,11 @@
                 currentFilter.setAttribute('id', 'currentFilter');
                 this.appendChild(currentFilter);
 
-                this.conditionWrap = document.createElement('div');
+                this.conditionWrap = document.createElement('form');
                 this.conditionWrap.setAttribute('id', 'conditionWrap');
+                this.conditionWrap.onchange = function(){
+                    document.getElementById('filterName').value = '';   
+                }
                 this.appendChild(this.conditionWrap);
 
                 this.spawnFilterCondition();
@@ -169,12 +172,14 @@
 
                 addNewRow.setAttribute('id', 'addNewRow' + index);
                 addNewRow.setAttribute('class', 'stdin lightButton');
+                addNewRow.setAttribute('return', false);
                 addNewRow.innerHTML = 'AND new condition';
                 addNewRow.onclick = this.addNewRow.bind(this, index);
                 filterContent.appendChild(addNewRow);
 
                 deleteCondition.setAttribute('id', 'deleteCondition' + index);
                 deleteCondition.setAttribute('class', 'stdin lightButton');
+                deleteCondition.setAttribute('return', false);
                 deleteCondition.innerHTML = 'Delete This Block';
                 deleteCondition.onclick = this.deleteOrBlock.bind(this, index);
                 filterContent.appendChild(deleteCondition);
@@ -254,6 +259,7 @@
                 cell = document.createElement('td');
                 row.appendChild(cell);
                 deleteRow = document.createElement('button');
+                deleteRow.setAttribute('return', false);
                 deleteRow.innerHTML = 'Remove';
                 deleteRow.setAttribute('class', 'stdin');
                 deleteRow.onclick = this.deleteRow.bind(this, index, ''+index+rowIndex);
