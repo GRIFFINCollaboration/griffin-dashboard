@@ -37,8 +37,8 @@
                 this.conditionWrap = document.createElement('form');
                 this.conditionWrap.setAttribute('id', 'conditionWrap');
                 this.conditionWrap.onchange = function(){
-                    document.getElementById('filterName').value = '';   
-                }
+                    this.dumpFilterName();  
+                }.bind(this);
                 this.appendChild(this.conditionWrap);
 
                 this.spawnFilterCondition();
@@ -293,7 +293,7 @@
             'deleteRow' : function(index, idCode){
                 var row = document.getElementById('filterRow'+idCode);
                 document.getElementById('filterTable'+index).removeChild(row);
-
+                this.dumpFilterName();
                 return false;
             },
 
@@ -389,9 +389,11 @@
                     }
 
                 }
+            },
+
+            'dumpFilterName' : function(){
+                document.getElementById('filterName').value = '';
             }
-
-
         }
     });
 
