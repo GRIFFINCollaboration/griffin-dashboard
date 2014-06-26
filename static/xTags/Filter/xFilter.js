@@ -43,6 +43,7 @@
                 spawnCondition = document.createElement('button');
                 spawnCondition.innerHTML = 'OR new condition';
                 spawnCondition.setAttribute('class', 'stdin');
+                spawnCondition.setAttribute('id', 'spawnCondition')
                 spawnCondition.onclick = this.spawnFilterCondition.bind(this);
                 this.appendChild(spawnCondition);
 
@@ -345,7 +346,18 @@
             },
 
             'loadFilter' : function(currentFilter){
+                var orCells = this.querySelectorAll('div.filterCondition'),
+                    cellDelete,
+                    createOr = document.getElementById('spawnCondition'),
+                    i, key;
 
+                for(i=0; i<orCells.length; i++){
+                    cellDelete = orCells[i].lastChild.onclick();
+                }
+
+                for(key in currentFilter){
+                    createOr.onclick();
+                }
             }
 
 
