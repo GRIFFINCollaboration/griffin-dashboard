@@ -118,14 +118,7 @@ app.post('/registerFilter', function(req, res){
 		return res.redirect('/PPG');
 	}
 */
-	//register a new filter
-	/*
-	for(i=0; i<cycle.length; i++){
-		steps[i] = parseInt(cycle[i].PPGcode, 10);
-		durations[i] = parseInt(cycle[i].duration, 10);
-	}
-	*/
-
+	//register a new filter - build file and run with execFile for most robust execution (spawn seems to create a race condition, consider removing).
 	odbManipulationFile += 'odbedit -c "rm /Filter/Filters/' + req.body.filterName + '"\n';
 	odbManipulationFile += 'odbedit -c "mkdir /Filter/Filters/' + req.body.filterName + '"\n';
 	for(i=0; i<filter.length; i++){
@@ -138,16 +131,17 @@ app.post('/registerFilter', function(req, res){
 	fs.writeFile('odbManipulation.sh', odbManipulationFile, function(){
 		fs.chmod('./odbManipulation.sh', '777', function(){
 			execFile('./odbManipulation.sh', function(error, stdout, stderr){
+				console.log('Writing ' + req.body.filterName + ' filter to ODB, process [error, stdout, stderr]:'); 
 				console.log([error, stdout, stderr]);
 			});			
 		});
 	});
 
-	/*
-	if(req.body.applyCycle == 'on'){
-		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.cycleName]);
+	
+	if(req.body.applyFilter == 'on'){
+		spawn('odbedit', ['-c', "set /Filter/Current " + req.body.cycleName]);
 	}
-	*/
+	
 	return res.redirect('/Filter');
 
 });
