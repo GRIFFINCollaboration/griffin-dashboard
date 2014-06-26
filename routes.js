@@ -104,7 +104,7 @@ app.post('/registerFilter', function(req, res){
 		i, j,
 		steps = [],
 		durations = [];
-console.log(filter)
+console.log(req.body.filterString)
 /*
 	//just load an existing cycle
 	if(req.body.loadTarget != 'null'){
