@@ -121,7 +121,8 @@
                 loadFilter.setAttribute('class', 'stdin');
                 loadFilter.innerHTML = 'Load'
                 loadFilter.onclick = function(){
-                    document.getElementById('loadTarget').value = selected('filterList')
+                    document.getElementById('filterName').value = selected('filterList');
+                    document.getElementById('loadTarget').value = selected('filterList');
                 }
                 controlRows[1].appendChild(loadFilter);
 
@@ -134,6 +135,7 @@
                 deleteFilter.setAttribute('class', 'stdin');
                 deleteFilter.innerHTML = 'Delete'
                 deleteFilter.onclick = function(){
+                    document.getElementById('filterName').value = selected('filterList');
                     document.getElementById('deleteTarget').value = selected('filterList')
                 }
                 controlRows[1].appendChild(deleteFilter);
