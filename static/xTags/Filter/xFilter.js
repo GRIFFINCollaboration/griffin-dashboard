@@ -336,6 +336,7 @@
                     filterOptions, key;
 
                 this.filterRecord = data;
+                this.presets = [];
 
                 this.loadFilter(currentFilter);
                 document.getElementById('filterName').value = currentName;
@@ -346,7 +347,7 @@
                     filterOptions.innerHTML = key;
                     filterOptions.value = key;
                     filterSelect.appendChild(filterOptions);
-                    
+                    this.presets.push(key);
                 }
 
                 filterSelect.value = currentName;
@@ -392,7 +393,8 @@
             },
 
             'dumpFilterName' : function(){
-                document.getElementById('filterName').value = '';
+                if(this.presets.indexOf(document.getElementById('filterName').value) != -1)
+                    document.getElementById('filterName').value = '';
             }
         }
     });
