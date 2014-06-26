@@ -104,13 +104,13 @@ app.post('/registerFilter', function(req, res){
 		steps = [],
 		durations = [];
 
-/*
+
 	//just load an existing cycle
 	if(req.body.loadTarget != 'null'){
-		spawn('odbedit', ['-c', "set /PPG/Current " + req.body.loadTarget]);
-		return res.redirect('/PPG');
+		spawn('odbedit', ['-c', "set /Filter/Current " + req.body.loadTarget]);
+		return res.redirect('/Filter');
 	}
-
+/*
 	//delete an existing cycle
 	if(req.body.deleteTarget != 'null'){
 		spawn('odbedit', ['-c', "rm /PPG/Cycles/" + req.body.deleteTarget]);
