@@ -322,7 +322,7 @@
             'registerFilterODB' : function(responseText){
                 var data = JSON.parse(responseText),
                     currentName = data.Current,
-                    currentFilter = data.Filters[currentName]
+                    currentFilter = data.Filters[currentName],
                     filterSelect = document.getElementById('filterList'),
                     filterOptions, key;
 
