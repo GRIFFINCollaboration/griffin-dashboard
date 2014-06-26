@@ -103,10 +103,18 @@ form span:first-child{
 	margin-bottom: 1em;
 }
 
+div#contentWrap{
+	float:left;
+}
+
 @media screen and (min-width: 1500px){
 	form#filterDefinitionForm{
 		float:right;
 		width: -moz-min-content;
 		width: -webkit-min-content;
+	}
+
+	form#filterDefinitionForm *{
+		margin-bottom: 1em;
 	}
 }

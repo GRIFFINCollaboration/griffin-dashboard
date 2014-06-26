@@ -5,6 +5,7 @@
         lifecycle: {
             created: function() {
                 var spawnCondition, filterTitle, currentFilter,
+                    contentWrap = document.createElement('div'),
                     controlWrap = document.createElement('form'),
                     controlRows = [],
                     encodedFilter = document.createElement('input'),
@@ -28,19 +29,22 @@
                 this.filterOptions = ['Singles', 'Coincidences', 'Prescale'];
                 this.filterCodes = ['S', 'C', 'P'];
 
+                contentWrap.setAttribute('id', 'contentWrap');
+                this.appendChild(contentWrap);
+
                 filterTitle = document.createElement('h1');
                 filterTitle.innerHTML = 'Filter Control';
-                this.appendChild(filterTitle);
+                contentWrap.appendChild(filterTitle);
                 currentFilter = document.createElement('h3');
                 currentFilter.setAttribute('id', 'currentFilter');
-                this.appendChild(currentFilter);
+                contentWrap.appendChild(currentFilter);
 
                 this.conditionWrap = document.createElement('form');
                 this.conditionWrap.setAttribute('id', 'conditionWrap');
                 this.conditionWrap.onchange = function(){
                     this.dumpFilterName();  
                 }.bind(this);
-                this.appendChild(this.conditionWrap);
+                contentWrap.appendChild(this.conditionWrap);
 
                 this.spawnFilterCondition();
 
@@ -49,7 +53,7 @@
                 spawnCondition.setAttribute('class', 'stdin');
                 spawnCondition.setAttribute('id', 'spawnCondition')
                 spawnCondition.onclick = this.spawnFilterCondition.bind(this);
-                this.appendChild(spawnCondition);
+                contentWrap.appendChild(spawnCondition);
 
                 controlWrap.setAttribute('class', 'filterControl summary');
                 controlWrap.setAttribute('id', 'filterDefinitionForm');
