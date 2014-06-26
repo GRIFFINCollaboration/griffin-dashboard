@@ -139,7 +139,7 @@ app.post('/registerFilter', function(req, res){
 
 	//exec('odbedit -c rm /Filter/Filters/' + req.body.filterName, function(){});
 	//exec('odbedit -c mkdir /Filter/Filters/' + req.body.filterName, function(){});
-	execFile('test.sh', function(error, stdout, stderr){
+	execFile('./test.sh', function(error, stdout, stderr){
 		console.log([error, stdout, stderr]);
 	})
 	/*
