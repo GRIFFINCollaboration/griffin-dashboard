@@ -139,7 +139,9 @@ app.post('/registerFilter', function(req, res){
 
 	exec('odbedit -c rm /Filter/Filters/' + req.body.filterName, function(){});
 	exec('odbedit -c mkdir /Filter/Filters/' + req.body.filterName, function(){});
-
+	exec('ls', function(error, stdout, stderr){
+		console.log([error, stdout, stderr]);
+	})
 	for(i=0; i<filter.length; i++){
 		exec('odbedit -c create string /Filter/Filters/' + req.body.filterName + '/orCondition'+i+'[' + filter[i].length + "]", function(){});
 		for(j=0; j<filter[i].length; j++){
