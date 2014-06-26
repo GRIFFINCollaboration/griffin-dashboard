@@ -362,7 +362,8 @@
 
                     createOr.onclick();
 
-                    currentOr = this.querySelectorAll('div.filterCondition').pop();
+                    currentOr = this.querySelectorAll('div.filterCondition');
+                    currentOr = currentOr[currentOr.length - 1];
                     if(currentFilter[key] instanceof Array){
                         for(i=0; i<currentFilter[key].length; i++){
 
