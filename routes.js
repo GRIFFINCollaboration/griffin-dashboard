@@ -221,7 +221,11 @@ app.post('/buildMSC', function(req, res){
 		return [names, MSC];
 	}
 
-	console.log(configGRIFFINclover(1, true));
+	var test = configGRIFFINclover(1, true);
+
+	for(int i=0; i<test[0].length; i++){
+		console.log(test[0][i] + ': ' + test[1][i].toString(16));
+	}
 
 	return res.redirect('/DAQ');
 
