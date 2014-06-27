@@ -221,9 +221,10 @@ app.post('/buildMSC', function(req, res){
 		return [names, MSC];
 	}
 
-	var test = configGRIFFINclover(1, true);
+	var test = configGRIFFINclover(1, true),
+		i;
 
-	for(int i=0; i<test[0].length; i++){
+	for(i=0; i<test[0].length; i++){
 		console.log(test[0][i] + ': ' + test[1][i].toString(16));
 	}
 
