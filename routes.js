@@ -181,7 +181,47 @@ app.post('/toggleClock', function(req, res){
 
 app.post('/buildMSC', function(req, res){
 
-	console.log(req.body);
+	function configGRIFFINclover(index, suppressors){
+		var names = [],
+			MSC = [],
+			masterChan = (index<9) ? 0 : 1,
+			firstCollectorChan = ((index-1)%8)*2, //ie, collector channel of first (of 2) GRIF16s used for this clover.
+			collectorChan,  
+			ADC,
+			name, address,
+			crystalPrefix = 'GRG' + ((index<10) ? '0'+index : index),
+			color = ['B', 'G', 'R', 'W'],
+			crystalSuffix = ['N00A', 'N00B'],
+			vetoPrefix = 'GRS' + ((index<10) ? '0'+index : index),
+			i,j;
+
+		if(suppressors){
+			//HPGe
+			for(i=0; i<crystalSuffix.length; i++){
+				for(j=0; j<color.length; j++){
+					name = crystalPrefix + color[j] + crystalSuffix[i];
+
+					collectorChan = firstCollectorChan + i;
+					ADC = j;
+					address = (masterChan << 12) | (collectorChan << 8) | ADC;
+
+					names.push(name);
+					MSC.push(address);
+				}
+			}
+
+			//BGO
+		} else{
+			//HPGE
+
+			//BGO
+
+		}
+
+		return [names, MSC];
+	}
+
+	console.log(configGRIFFINclover(1, true));
 
 	return res.redirect('/DAQ');
 
