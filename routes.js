@@ -38,6 +38,12 @@ app.get('/Filter', function(req, res){
 	res.render('widgets/Filter.jade');
 });
 
+app.get('/MSCbuilder', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	
+	res.render('widgets/MSCbuilder.jade');
+});
+
 ///////////////////////////////////////
 //post routes
 ///////////////////////////////////////
@@ -171,7 +177,13 @@ app.post('/toggleClock', function(req, res){
 	spawn('odbedit', ['-c', "set /Equipment/GRIF-Clk" + req.body.clockIndex + "/Variables/Output[1] " + req.body['radio'+req.body.clockIndex] ]);
 
 	return res.redirect('/Clocks');
-})
+});
 
+app.post('/buildMSC', function(req, res){
 
+	console.log(req.body);
+
+	return res.redirect('/DAQ');
+
+});
 
