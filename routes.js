@@ -217,7 +217,7 @@ app.post('/buildMSC', function(req, res){
 					name = vetoPrefix + color[j] + 'N0' + i + 'X';
 
 					collectorChan = firstCollectorChan + ((j<2) ? 0 : 1);
-					ADC = (j%2)*5+i;
+					ADC = 5 + (j%2)*5+i;
 					address = (masterChan << 12) | (collectorChan << 8) | ADC;
 
 					names.push(name);
