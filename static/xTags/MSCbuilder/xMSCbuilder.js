@@ -81,7 +81,7 @@
                 submit = document.createElement('button');
                 submit.setAttribute('class', 'stdin');
                 submit.innerHTML = 'Build DAQ Address Table';
-                this.appendChild(submit);
+                this.detectorForm.appendChild(submit);
 
                 //state management
                 //turn appropriate GRIFFIN tables on as needed, and manage SPICE / GRIFFIN constraint in USL:

@@ -4,7 +4,7 @@ body{
 
 widget-MSCbuilder{
 	width:60%;
-	margin: 0 auto 0 auto;
+	margin: 0 auto 1em auto;
 	text-align: left;
 	display: inline-block;
 }
