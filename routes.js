@@ -255,6 +255,8 @@ app.post('/buildMSC', function(req, res){
 		} else if(ZDS){
 			names.push('ZDS01XN00X');
 			MSC.push(0x2601);
+			names.push('ZDS01XT00X');
+			MSC.push(0x2208);
 		}
 
 		if(US){
@@ -265,6 +267,25 @@ app.post('/buildMSC', function(req, res){
 		}
 
 		return [names, MSC];
+	}
+
+	function configDANTE(){
+		var names = [],
+			MSC = [],
+			i;
+
+		for(i=0; i<8; i++){
+			names.push('DAL0'+i+'XN00X');
+			MSC.push((2 << 12) | ( 1 << 8) | i);
+		}
+
+		for(i=0; i<8; i++){
+			names.push('DAL0'+i+'XT00X');
+			MSC.push((2 << 12) | ( 2 << 8) | i);
+		}
+
+		return [names, MSC];
+
 	}
 
 	var test = configSCEPTAR(true, true, false),
