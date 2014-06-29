@@ -275,12 +275,12 @@ app.post('/buildMSC', function(req, res){
 			i;
 
 		for(i=0; i<8; i++){
-			names.push('DAL0'+i+'XN00X');
+			names.push('DAL0'+(1+i)+'XN00X');
 			MSC.push((2 << 12) | ( 1 << 8) | i);
 		}
 
 		for(i=0; i<8; i++){
-			names.push('DAL0'+i+'XT00X');
+			names.push('DAL0'+(1+i)+'XT00X');
 			MSC.push((2 << 12) | ( 2 << 8) | i);
 		}
 
@@ -288,7 +288,14 @@ app.post('/buildMSC', function(req, res){
 
 	}
 
-	var test = configSCEPTAR(true, true, false),
+	function configPACES(){
+		var names = ['PAC01XN00X', 'PAC02XN00X', 'PAC03XN00X', 'PAC04XN00X', 'PAC05XN00X'],
+			MSC = [0x2000, 0x2001, 0x2002, 0x2003, 0x2004];
+
+			return [names, MSC];
+	}
+
+	var test = configDANTE(),
 		i;
 
 	for(i=0; i<test[0].length; i++){
