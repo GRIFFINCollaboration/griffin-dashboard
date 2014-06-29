@@ -242,7 +242,32 @@ app.post('/buildMSC', function(req, res){
 		return [names, MSC];
 	}
 
-	var test = configGRIFFINclover(1, true),
+	function configSCEPTAR(US, DS, ZDS){
+		var names = [],
+			MSC = [],
+			i;
+
+		if(DS){
+			for(i=1; i<11; i++){
+				names.push('SEP' + ((i<10) ? '0'+i : i) + 'XN00X');
+				MSC.push((2 << 12) | ( (4+Math.floor(i/4)) << 8) | i%4);
+			}
+		} else if(ZDS){
+			names.push('ZDS01XN00X');
+			MSC.push(0x2601);
+		}
+
+		if(US){
+			for(i=11; i<21; i++){
+				names.push('SEP' + i + 'XN00X');
+				MSC.push((2 << 12) | ( ( 6 + Math.floor((i - 11 + 2)/4) ) << 8) | (i+3)%4);
+			}
+		}
+
+		return [names, MSC];
+	}
+
+	var test = configSCEPTAR(true, true, false),
 		i;
 
 	for(i=0; i<test[0].length; i++){
