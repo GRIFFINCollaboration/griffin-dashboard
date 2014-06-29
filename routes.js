@@ -250,7 +250,7 @@ app.post('/buildMSC', function(req, res){
 		if(DS){
 			for(i=1; i<11; i++){
 				names.push('SEP' + ((i<10) ? '0'+i : i) + 'XN00X');
-				MSC.push((2 << 12) | ( (4+Math.floor(i/4)) << 8) | (i-1)%4);
+				MSC.push((2 << 12) | ( (4+Math.floor((i-1)/4)) << 8) | (i-1)%4);
 			}
 		} else if(ZDS){
 			names.push('ZDS01XN00X');
