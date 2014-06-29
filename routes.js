@@ -197,7 +197,6 @@ app.post('/buildMSC', function(req, res){
 
 		if(suppressors){
 			//HPGe
-			/*
 			for(i=0; i<crystalSuffix.length; i++){
 				for(j=0; j<color.length; j++){
 					name = crystalPrefix + color[j] + crystalSuffix[i];
@@ -210,7 +209,7 @@ app.post('/buildMSC', function(req, res){
 					MSC.push(address);
 				}
 			}
-			*/
+
 			//BGO
 			for(j=0; j<color.length; j++){
 				for(i=0; i<5; i++){
@@ -226,10 +225,18 @@ app.post('/buildMSC', function(req, res){
 			}
 
 		} else{
-			//HPGE
+			for(i=0; i<crystalSuffix.length; i++){
+				for(j=0; j<color.length; j++){
+					name = crystalPrefix + color[j] + crystalSuffix[i];
 
-			//BGO
+					collectorChan = firstCollectorChan;
+					ADC = j + 4*i;
+					address = (masterChan << 12) | (collectorChan << 8) | ADC;
 
+					names.push(name);
+					MSC.push(address);
+				}
+			}			
 		}
 
 		return [names, MSC];
