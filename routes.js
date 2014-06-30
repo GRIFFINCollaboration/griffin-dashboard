@@ -216,11 +216,11 @@ app.post('/buildMSC', function(req, res){
 	//generate a script to re-create MSC table in DAQ:
 	rebuildScript += 'odbedit -c "rm /DAQ/MSC"\n';
 	rebuildScript += 'odbedit -c "mkdir /DAQ/MSC"\n';
-	rebuildScript += 'odbedit -c "create SHORT /DAQ/MSC/MSC[' + MSC.length + ']"';
-	rebuildScript += 'odbedit -c "create STRING /DAQ/MSC/chan[' + MSC.length + ']"';
-	rebuildScript += 'odbedit -c "create BYTE /DAQ/MSC/datatype[' + MSC.length + ']"';
-	rebuildScript += 'odbedit -c "create INT /DAQ/MSC/gain[' + MSC.length + ']"';
-	rebuildScript += 'odbedit -c "create INT /DAQ/MSC/offset[' + MSC.length + ']"';
+	rebuildScript += 'odbedit -c "create SHORT /DAQ/MSC/MSC[' + MSC.length + ']"\n';
+	rebuildScript += 'odbedit -c "create STRING /DAQ/MSC/chan[' + MSC.length + ']"\n';
+	rebuildScript += 'odbedit -c "create BYTE /DAQ/MSC/datatype[' + MSC.length + ']"\n';
+	rebuildScript += 'odbedit -c "create INT /DAQ/MSC/gain[' + MSC.length + ']"\n';
+	rebuildScript += 'odbedit -c "create INT /DAQ/MSC/offset[' + MSC.length + ']"\n';
 
 	for(i=0; i<MSC.length; i++){
 		rebuildScript += 'odbedit -c "set /DAQ/MSC/MSC[' + i + '] ' + MSC[i] + '"\n';
