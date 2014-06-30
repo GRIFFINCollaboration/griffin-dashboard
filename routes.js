@@ -190,8 +190,9 @@ app.post('/buildMSC', function(req, res){
 	for(i=1; i<17; i++){
 		if(req.body['crystal' + i] == 'on'){
 			table = configGRIFFINclover(i, req.body['suppressor'+i] == 'on');
-			names.concat(table[0]);
-			MSC.concat(table[1]);
+			console.log(table)
+			names = names.concat(table[0]);
+			MSC = MSC.concat(table[1]);
 		}
 	}
 console.log(names)
