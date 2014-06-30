@@ -195,8 +195,7 @@ app.post('/buildMSC', function(req, res){
 			MSC = MSC.concat(table[1]);
 		}
 	}
-console.log(names)
-console.log(MSC)
+
 	function configGRIFFINclover(index, suppressors){
 		var names = [],
 			MSC = [],
