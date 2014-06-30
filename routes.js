@@ -229,16 +229,12 @@ app.post('/buildMSC', function(req, res){
 
 	fs.writeFile('rebuildMSC.sh', rebuildScript, function(){
 		fs.chmod('./rebuildMSC.sh', '777', function(){
-			/*
-			execFile('./odbManipulation.sh', function(error, stdout, stderr){
-				console.log('Writing ' + req.body.filterName + ' filter to ODB, process [error, stdout, stderr]:'); 
+			
+			execFile('./rebuildMSC.sh', function(error, stdout, stderr){
+				console.log('Writing MSC table to ODB, process [error, stdout, stderr]:'); 
 				console.log([error, stdout, stderr]);
-
-				if(req.body.applyFilter == 'on'){
-					spawn('odbedit', ['-c', "set /Filter/Current " + req.body.filterName]);
-				}
 			});
-			*/			
+						
 		});
 	});
 
