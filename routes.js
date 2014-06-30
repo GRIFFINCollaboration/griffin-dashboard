@@ -180,21 +180,74 @@ app.post('/toggleClock', function(req, res){
 });
 
 app.post('/buildMSC', function(req, res){
-
-	console.log(req.body)
-
 	var names = [],
 		MSC = [],
-		table, i;
+		table, i,
+		rebuildScript = '';
 
+	//GRIFFIN
 	for(i=1; i<17; i++){
 		if(req.body['crystal' + i] == 'on'){
 			table = configGRIFFINclover(i, req.body['suppressor'+i] == 'on');
-			console.log(table)
 			names = names.concat(table[0]);
 			MSC = MSC.concat(table[1]);
 		}
 	}
+
+	//SCEPTAR + ZDS
+	table = configSCEPTAR(	req.body.USC == 'USCSE',
+							req.body.DSC == 'DSCSE',
+							req.body.DSC == 'DSCZD');
+	names = names.concat(table[0]);
+	MSC = MSC.concat(table[1]);
+
+	//DANTE
+	table = configDANTE();
+	names = names.concat(table[0]);
+	MSC = MSC.concat(table[1]);
+
+	//PACES
+	if(req.body.USC == 'USCPA'){
+		table = configPACES();
+		names = names.concat(table[0]);
+		MSC = MSC.concat(table[1]);		
+	}
+
+	//generate a script to re-create MSC table in DAQ:
+	rebuildScript += 'odbedit -c "rm /DAQ/MSC"\n';
+	rebuildScript += 'odbedit -c "mkdir /DAQ/MSC"\n';
+	rebuildScript += 'odbedit -c "create SHORT /DAQ/MSC/MSC[' + MSC.length + ']"';
+	rebuildScript += 'odbedit -c "create STRING /DAQ/MSC/chan[' + MSC.length + ']"';
+	rebuildScript += 'odbedit -c "create BYTE /DAQ/MSC/datatype[' + MSC.length + ']"';
+	rebuildScript += 'odbedit -c "create INT /DAQ/MSC/gain[' + MSC.length + ']"';
+	rebuildScript += 'odbedit -c "create INT /DAQ/MSC/offset[' + MSC.length + ']"';
+
+	for(i=0; i<MSC.length; i++){
+		rebuildScript += 'odbedit -c "set /DAQ/MSC/MSC[' + i + '] ' + MSC[i] + '"\n';
+		rebuildScript += 'odbedit -c "set /DAQ/MSC/chan[' + i + '] ' + names[i] + '"\n';
+	}
+
+	fs.writeFile('rebuildMSC.sh', rebuildScript, function(){
+		fs.chmod('./rebuildMSC.sh', '777', function(){
+			/*
+			execFile('./odbManipulation.sh', function(error, stdout, stderr){
+				console.log('Writing ' + req.body.filterName + ' filter to ODB, process [error, stdout, stderr]:'); 
+				console.log([error, stdout, stderr]);
+
+				if(req.body.applyFilter == 'on'){
+					spawn('odbedit', ['-c', "set /Filter/Current " + req.body.filterName]);
+				}
+			});
+			*/			
+		});
+	});
+
+
+
+
+
+
+
 
 	function configGRIFFINclover(index, suppressors){
 		var names = [],
