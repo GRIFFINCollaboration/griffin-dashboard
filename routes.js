@@ -181,6 +181,21 @@ app.post('/toggleClock', function(req, res){
 
 app.post('/buildMSC', function(req, res){
 
+	console.log(req.body)
+
+	var names = [],
+		MSC = [],
+		table, i;
+
+	for(i=1; i<17, i++){
+		if(req.body['crystal' + i] == 'on'){
+			table = configGRIFFINclover(i, req.body['suppressor'+i] == 'on');
+			names.concat(table[0]);
+			MSC.concat(table[1]);
+		}
+	}
+console.log(names)
+console.log(MSC)
 	function configGRIFFINclover(index, suppressors){
 		var names = [],
 			MSC = [],
@@ -293,13 +308,6 @@ app.post('/buildMSC', function(req, res){
 			MSC = [0x2000, 0x2001, 0x2002, 0x2003, 0x2004];
 
 			return [names, MSC];
-	}
-
-	var test = configDANTE(),
-		i;
-
-	for(i=0; i<test[0].length; i++){
-		console.log(test[0][i] + ': ' + test[1][i].toString(16));
 	}
 
 	return res.redirect('/DAQ');

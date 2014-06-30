@@ -48,7 +48,7 @@
                 optionWrap.setAttribute('class', 'optionWrap');
                 this.corona.appendChild(optionWrap);
                 radioArray(optionWrap, ['Absent', 'GRIFFIN'], ['coronaAbsent', 'CoronaGR'], 'corona');
-                this.corona.appendChild(this.generateGRIFFINtable('corona', [5,6,7,8,8,10,11,12]));
+                this.corona.appendChild(this.generateGRIFFINtable('corona', [5,6,7,8,9,10,11,12]));
 
                 this.upstreamLampshade = document.createElement('div');
                 this.upstreamLampshade.setAttribute('class', 'detectorSection');
