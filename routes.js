@@ -222,7 +222,7 @@ console.log(isMaster)
 		fs.chmod('./configureClockMode.sh', '777', function(){
 			
 			execFile('./configureClockMode.sh', function(error, stdout, stderr){
-				console.log('Setting GRIF-Clk' + req.body.clockIndex + ' to ' ((isMaster) ? 'Master' : 'Slave') ); 
+				console.log('Setting GRIF-Clk' + req.body.clockIndex + ' to ' + ((isMaster) ? 'Master' : 'Slave') ); 
 				console.log([error, stdout, stderr]);
 
 				return res.redirect('/Clocks');
