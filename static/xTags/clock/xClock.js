@@ -103,7 +103,7 @@
                     document.getElementById('clock'+index).setAttribute('class', 'clockSummary');
                 } 
                 this.setAttribute('class', 'clockSummary clockHighlight')
-                this.currentClockIndex = parseInt(index,10);
+                this.clockForm[index].currentClockIndex = parseInt(index,10);
 
                 //find relevant data
                 ODBblob = {};
