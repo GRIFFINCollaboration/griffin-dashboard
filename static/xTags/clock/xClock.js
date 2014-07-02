@@ -8,6 +8,7 @@
                     clockTitle, clockIndex;
 
                 this.clockForm = [];
+                this.clockAddress = [];
                 this.slaveSwitch = [];
                 this.masterSwitch = [];
 
@@ -28,6 +29,10 @@
                     clockTitle.setAttribute('class', 'clockTitle');
                     clockTitle.innerHTML = 'GRIF-Clk '+i;
                     this.clockForm[i].appendChild(clockTitle);
+
+                    clockAddress[i] = document.createElement('h3');
+                    clockAddress[i].setAttribute('id', 'clockAddress'+i);
+                    this.clockForm[i].appendChild(clockAddress[i]);
 
                     radioArray(this.clockForm[i], ['Slave', 'Master'], [0,1], 'radio'+i);
                     this.slaveSwitch[i] = document.getElementById('radio'+i+0);
@@ -64,6 +69,8 @@
                                 this.masterSwitch[i].setAttribute('checked', true);
                             else
                                 this.slaveSwitch[i].setAttribute('checked', true);
+
+                            this.clockAddress[i].innerHTML = window.ODBEquipment['GRIF-Clk'+i].Settings.Devices.SCS2001.Device.split('.')[0];
                         }
                         else 
                             this.clockForm[i].setAttribute('class', 'clockSummary absentClock');

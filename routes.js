@@ -233,17 +233,12 @@ app.post('/buildMSC', function(req, res){
 			execFile('./rebuildMSC.sh', function(error, stdout, stderr){
 				console.log('Writing MSC table to ODB, process [error, stdout, stderr]:'); 
 				console.log([error, stdout, stderr]);
+
+				return res.redirect('/DAQ');
 			});
 						
 		});
 	});
-
-
-
-
-
-
-
 
 	function configGRIFFINclover(index, suppressors){
 		var names = [],
@@ -358,8 +353,5 @@ app.post('/buildMSC', function(req, res){
 
 			return [names, MSC];
 	}
-
-	return res.redirect('/DAQ');
-
 });
 
