@@ -188,34 +188,34 @@ app.post('/toggleClock', function(req, res){
 console.log(isMaster)
 
 
-	configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[1] ' + req.body['radio'+req.body.clockIndex] + '\n';
+	configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[1] ' + req.body['radio'+req.body.clockIndex] + '\n';
 
 	if(isMaster){
 		//Master has NIM in
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[2] 1 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[3] 1 \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[2] 1" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[3] 1" \n';
 		//Master does not bypass any channel
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[13] 0 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[17] 0 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[21] 0 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[25] 0 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[29] 0 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[33] 0 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[37] 0 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[41] 0 \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[13] 0" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[17] 0" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[21] 0" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[25] 0" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[29] 0" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[33] 0" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[37] 0" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[41] 0" \n';
 	}else{
 		//Slave has eSATS in
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[2] 0 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[3] 0 \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[2] 0" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[3] 0" \n';
 		//Slave bypasses all channels
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[13] 1 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[17] 1 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[21] 1 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[25] 1 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[29] 1 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[33] 1 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[37] 1 \n';
-		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[41] 1 \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[13] 1" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[17] 1" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[21] 1" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[25] 1" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[29] 1" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[33] 1" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[37] 1" \n';
+		configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[41] 1" \n';
 	}
 
 	fs.writeFile('configureClockMode.sh', configScript, function(){
