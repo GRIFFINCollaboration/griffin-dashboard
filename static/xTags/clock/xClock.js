@@ -100,6 +100,7 @@
 
                 //highlight / unhighlight selected clock
                 if(this.currentClockIndex || this.currentClockIndex===0){
+                    console.log(index)
                     document.getElementById('clock'+index).setAttribute('class', 'clockSummary');
                 } 
                 this.clockForm[index].setAttribute('class', 'clockSummary clockHighlight')
