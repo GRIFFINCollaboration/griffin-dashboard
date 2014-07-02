@@ -179,6 +179,11 @@ function initializeDetector(name, headline){
     plotScale.appendChild(plotScaleLog);
     document.getElementById(this.id+'PlotScaleLog').innerHTML = 'Log';
 
+    //tooltip
+    this.tooltip = document.createElement('div');
+    this.tooltip.setAttribute('id', 'tooltip');
+    this.appendChild(this.tooltip);
+
     ///////////////////////
     //State variables
     ///////////////////////

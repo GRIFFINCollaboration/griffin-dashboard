@@ -120,6 +120,7 @@
             },
 
             //move the tooltip around
+            /*
             'moveTooltip': function(){
                 var mousePos = this.stage[this.displayIndex].getPointerPosition(),
                     TTwidth = this.TTbkg[this.displayIndex].getAttr('width'),
@@ -133,6 +134,26 @@
                 this.text[this.displayIndex].setAttr( 'y', Math.min(mousePos.y + 20, this.height - TTheight + 10) ); 
 
                 this.tooltipLayer[this.displayIndex].draw();
+            },
+            */
+            'moveTooltip' : function(){
+                var tt = document.getElementById('tooltip'),
+                    mousePos = this.stage[this.displayIndex].getPointerPosition(),
+                    offsetTop = 0, offsetLeft = 0,
+                    left = mousePos.x,
+                    top = mousePos.y,
+                    element = this;
+
+                do{
+                    offsetTop += element.offsetTop || 0;
+                    offsetLeft += element.offsetLeft || 0;
+                    element = element.offsetParent;
+                } while(element)
+
+                left += offsetLeft;
+                top += offsetTop;
+
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
             },
 
             //refresh the color scale labeling / coloring:

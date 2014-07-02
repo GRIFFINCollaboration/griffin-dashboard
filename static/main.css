@@ -116,6 +116,17 @@ a{
 	text-decoration: none;
 }
 
+/*tooltip///////////////////////////////*/
+div#tooltip{
+	opacity: 0.9;
+	background-color: #000000;
+	border-radius: 1em;
+	border: 0.25em solid #FFFFFF;
+	display: none;
+	pointer-events: none;
+	padding: 1em;
+}
+
 /*Footer and footer-related styles////////////////////////////////////////////////////*/
 div#footer{
     background-color: #111111;

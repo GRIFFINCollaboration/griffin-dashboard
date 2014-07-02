@@ -592,7 +592,9 @@
                     text = '';
                 }
 
+                document.getElementById('tooltip').innerHTML = text;
 
+/*
                 this.lastTTindex = i;
                 this.text[this.displayIndex].setText(text);     
                 if(text != ''){
@@ -604,6 +606,7 @@
                     this.TTbkg[this.displayIndex].setAttr('height', 0);                    
                 }
                 this.tooltipLayer[this.displayIndex].draw();
+*/
             }
         }
     });
