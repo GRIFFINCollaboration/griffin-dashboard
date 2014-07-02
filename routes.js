@@ -182,7 +182,7 @@ app.post('/toggleClock', function(req, res){
 */
 
 app.post('/toggleClock', function(req, res){
-	var isMaster = req.body['radio'+req.body.clockIndex == 1],
+	var isMaster = req.body['radio'+req.body.clockIndex] == 1,
 		configScript = '';
 
 console.log(isMaster)
