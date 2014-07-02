@@ -100,7 +100,7 @@
 
                 //highlight / unhighlight selected clock
                 if(this.currentClockIndex || this.currentClockIndex===0){
-                    document.getElementById('clock'+i).setAttribute('class', 'clockSummary');
+                    document.getElementById('clock'+index).setAttribute('class', 'clockSummary');
                 } 
                 this.setAttribute('class', 'clockSummary clockHighlight')
                 this.currentClockIndex = parseInt(index,10);
