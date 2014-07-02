@@ -376,24 +376,19 @@
                     text = this.channelNames[i];
 
                     for(j=0; j<this.views.length; j++){
-                        text += '\n'+this.viewLabels[j]+': ';
+                        text += '<br>'+this.viewLabels[j]+': ';
                         value = window.currentData[this.views[j]][this.channelNames[i]];
                         text += scrubNumber(value);                       
                     }
                 } else {
                     text = '';
                 }
+            
                 this.lastTTindex = i;
-                this.text[this.displayIndex].setText(text);
-                if(text != ''){
-                    //adjust the background size
-                    this.TTbkg[this.displayIndex].setAttr( 'width', this.text[this.displayIndex].getAttr('width') + 20 );
-                    this.TTbkg[this.displayIndex].setAttr( 'height', this.text[this.displayIndex].getAttr('height') + 20 ); 
-                } else {
-                    this.TTbkg[this.displayIndex].setAttr('width', 0);
-                    this.TTbkg[this.displayIndex].setAttr('height', 0);                    
-                }
-                this.tooltipLayer[this.displayIndex].draw();
+                if(text != '')
+                    document.getElementById('tooltip').innerHTML = text;
+                else
+                    document.getElementById('tooltip').setAttribute('style', '');
             },
 
             //fire an event at interested parties, if they exist:

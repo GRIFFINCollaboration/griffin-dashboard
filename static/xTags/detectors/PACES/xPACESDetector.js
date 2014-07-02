@@ -130,36 +130,36 @@
                     text = this.channelNames[i];
 
                     if(this.currentView == 'HV'){
-                        text += '\nHV: ';
+                        text += '<br>HV: ';
                         value = window.currentData['HV'][this.channelNames[i]]
                         text += scrubNumber(value);
 
-                        text += '\nThreshold-A: '
+                        text += '<br>Threshold-A: '
                         value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'A'];
                         text += scrubNumber(value);
 
-                        text += '\nThreshold-B: '
+                        text += '<br>Threshold-B: '
                         value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'B'];
                         text += scrubNumber(value);
 
-                        text += '\nRate-A: '
+                        text += '<br>Rate-A: '
                         value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'A'];
                         text += scrubNumber(value);
 
-                        text += '\nRate-B: '
+                        text += '<br>Rate-B: '
                         value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'B'];
                         text += scrubNumber(value);
 
                     } else {
-                        text += '\nHV: ';
+                        text += '<br>HV: ';
                         value = window.currentData['HV'][this.channelNames[i].slice(0,9) + 'X']
                         text += scrubNumber(value);
 
-                        text += '\nThreshold: '
+                        text += '<br>Threshold: '
                         value = window.currentData['Threshold'][this.channelNames[i]]
                         text += scrubNumber(value);
 
-                        text += '\nRate: '
+                        text += '<br>Rate: '
                         value = window.currentData['Rate'][this.channelNames[i]]
                         text += scrubNumber(value);                        
 
@@ -169,17 +169,13 @@
                 } else {
                     text = '';
                 }
+
                 this.lastTTindex = i;
-                this.text[this.displayIndex].setText(text);
-                if(text != ''){
-                    //adjust the background size
-                    this.TTbkg[this.displayIndex].setAttr( 'width', this.text[this.displayIndex].getAttr('width') + 20 );
-                    this.TTbkg[this.displayIndex].setAttr( 'height', this.text[this.displayIndex].getAttr('height') + 20 ); 
-                } else {
-                    this.TTbkg[this.displayIndex].setAttr('width', 0);
-                    this.TTbkg[this.displayIndex].setAttr('height', 0);                    
-                }
-                this.tooltipLayer[this.displayIndex].draw();
+                if(text != '')
+                    document.getElementById('tooltip').innerHTML = text;
+                else
+                    document.getElementById('tooltip').setAttribute('style', '');
+
             }
         }
     });

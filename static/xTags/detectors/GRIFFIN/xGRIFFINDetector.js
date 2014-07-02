@@ -598,20 +598,6 @@
                 else
                     document.getElementById('tooltip').setAttribute('style', '');
 
-
-/*
-                this.lastTTindex = i;
-                this.text[this.displayIndex].setText(text);     
-                if(text != ''){
-                    //adjust the background size
-                    this.TTbkg[this.displayIndex].setAttr( 'width', this.text[this.displayIndex].getAttr('width') + 20 );
-                    this.TTbkg[this.displayIndex].setAttr( 'height', this.text[this.displayIndex].getAttr('height') + 20 ); 
-                } else {
-                    this.TTbkg[this.displayIndex].setAttr('width', 0);
-                    this.TTbkg[this.displayIndex].setAttr('height', 0);                    
-                }
-                this.tooltipLayer[this.displayIndex].draw();
-*/
             }
         }
     });
