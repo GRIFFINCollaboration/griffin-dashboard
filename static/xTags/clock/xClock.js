@@ -101,7 +101,7 @@
                 //highlight / unhighlight selected clock
                 if(this.currentClockIndex || this.currentClockIndex===0){
                     console.log(index)
-                    document.getElementById('clock'+index).setAttribute('class', 'clockSummary');
+                    document.getElementById('clock'+index).setAttribute('class', 'x');
                 } 
                 this.clockForm[index].setAttribute('class', 'clockSummary clockHighlight')
                 this.currentClockIndex = parseInt(index,10);
