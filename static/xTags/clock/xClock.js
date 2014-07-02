@@ -30,9 +30,9 @@
                     clockTitle.innerHTML = 'GRIF-Clk '+i;
                     this.clockForm[i].appendChild(clockTitle);
 
-                    clockAddress[i] = document.createElement('h3');
-                    clockAddress[i].setAttribute('id', 'clockAddress'+i);
-                    this.clockForm[i].appendChild(clockAddress[i]);
+                    this.clockAddress[i] = document.createElement('h3');
+                    this.clockAddress[i].setAttribute('id', 'clockAddress'+i);
+                    this.clockForm[i].appendChild(this.clockAddress[i]);
 
                     radioArray(this.clockForm[i], ['Slave', 'Master'], [0,1], 'radio'+i);
                     this.slaveSwitch[i] = document.getElementById('radio'+i+0);
