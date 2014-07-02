@@ -592,6 +592,7 @@
                     text = '';
                 }
 
+                this.lastTTindex = i;
                 document.getElementById('tooltip').innerHTML = text;
 
 /*
