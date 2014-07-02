@@ -173,10 +173,63 @@ app.post('/updateClock', function(req, res){
 	return res.redirect('/Clocks');
 });
 
+/*
 app.post('/toggleClock', function(req, res){
 	spawn('odbedit', ['-c', "set /Equipment/GRIF-Clk" + req.body.clockIndex + "/Variables/Output[1] " + req.body['radio'+req.body.clockIndex] ]);
 
 	return res.redirect('/Clocks');
+});
+*/
+
+app.post('/toggleClock', function(req, res){
+	var isMaster = req.body['radio'+req.body.clockIndex == 1],
+		configScript = '';
+
+console.log(isMaster)
+
+
+	configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[1] ' + req.body['radio'+req.body.clockIndex] + '\n';
+
+	if(isMaster){
+		//Master has NIM in
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[2] 1 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[3] 1 \n';
+		//Master does not bypass any channel
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[13] 0 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[17] 0 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[21] 0 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[25] 0 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[29] 0 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[33] 0 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[37] 0 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[41] 0 \n';
+	}else{
+		//Slave has eSATS in
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[2] 0 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[3] 0 \n';
+		//Slave bypasses all channels
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[13] 1 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[17] 1 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[21] 1 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[25] 1 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[29] 1 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[33] 1 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[37] 1 \n';
+		configScript += 'odbedit -c set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[41] 1 \n';
+	}
+
+	fs.writeFile('configureClockMode.sh', configScript, function(){
+		fs.chmod('./configureClockMode.sh', '777', function(){
+			
+			execFile('./configureClockMode.sh', function(error, stdout, stderr){
+				console.log('Setting GRIF-Clk' + req.body.clockIndex + ' to ' ((isMaster) ? 'Master' : 'Slave') ); 
+				console.log([error, stdout, stderr]);
+
+				return res.redirect('/Clocks');
+			});
+						
+		});
+	});
 });
 
 app.post('/buildMSC', function(req, res){
