@@ -593,7 +593,11 @@
                 }
 
                 this.lastTTindex = i;
-                document.getElementById('tooltip').innerHTML = text;
+                if(text != '')
+                    document.getElementById('tooltip').innerHTML = text;
+                else
+                    document.getElementById('tooltip').setAttribute('style', '');
+
 
 /*
                 this.lastTTindex = i;
