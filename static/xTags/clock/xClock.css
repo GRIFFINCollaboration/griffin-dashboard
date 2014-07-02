@@ -15,6 +15,10 @@ form.clockSummary{
 	text-align: center;
 }
 
+form.clockHighlight{
+	border: 2px solid #2ecc71;
+}
+
 form.absentClock{
 	pointer-events: none;
 	opacity: 0.3;

@@ -7,6 +7,7 @@
                 var i, pageTitle,
                     clockTitle, clockIndex;
 
+                this.currentClockIndex = null;
                 this.clockForm = [];
                 this.clockAddress = [];
                 this.slaveSwitch = [];
@@ -97,12 +98,19 @@
                 var evt, i, ODBblob,
                     controlSidebars = document.getElementsByTagName('widget-clockControl')
 
-                //TODO: highlight this div
+                //highlight / unhighlight selected clock
+                if(this.currentClockIndex || this.currentClockIndex==0){
+                    document.getElementById('clock'+i).setAttribute('class', 'clockSummary');
+                } 
+                this.setAttribute('class', 'clockSummary clockHighlight')
+                this.currentClockIndex = index;
 
+                //find relevant data
                 ODBblob = {};
                 if(window.ODBEquipment && window.ODBEquipment.hasOwnProperty('GRIF-Clk'+index))
                     ODBblob = window.ODBEquipment['GRIF-Clk'+index];
 
+                //populate sidebar
                 if(controlSidebars){
                     for(i=0; i<controlSidebars.length; i++){
 
