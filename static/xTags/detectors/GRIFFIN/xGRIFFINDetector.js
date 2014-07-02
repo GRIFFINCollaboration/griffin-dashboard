@@ -494,48 +494,48 @@
                     if(this.channelNames[i].length==10 && this.currentView == 'HV'){
                         //HPGE
                         if(this.channelNames[i].slice(0,3) == 'GRG'){
-                            text += '\nHV: ';
+                            text += '<br>HV: ';
                             value = window.currentData['HV'][this.channelNames[i]]
                             text += scrubNumber(value);
 
-                            text += '\nThreshold-A: '
+                            text += '<br>Threshold-A: '
                             value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'A'];
                             text += scrubNumber(value);
 
-                            text += '\nThreshold-B: '
+                            text += '<br>Threshold-B: '
                             value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'B'];
                             text += scrubNumber(value);
 
-                            text += '\nReq. Rate-A: '
+                            text += '<br>Req. Rate-A: '
                             value = window.currentData['reqRate'][this.channelNames[i].slice(0,9)+'A'];
                             text += scrubNumber(value);
 
-                            text += '\nReq. Rate-B: '
+                            text += '<br>Req. Rate-B: '
                             value = window.currentData['reqRate'][this.channelNames[i].slice(0,9)+'B'];
                             text += scrubNumber(value);
 
-                            text += '\nAcpt. Rate-A: '
+                            text += '<br>Acpt. Rate-A: '
                             value = window.currentData['acptRate'][this.channelNames[i].slice(0,9)+'A'];
                             text += scrubNumber(value);
 
-                            text += '\nAcpt. Rate-B: '
+                            text += '<br>Acpt. Rate-B: '
                             value = window.currentData['acptRate'][this.channelNames[i].slice(0,9)+'B'];
                             text += scrubNumber(value);
                         //BGO
                         } else {
-                            text += '\nHV: ';
+                            text += '<br>HV: ';
                             value = window.currentData['HV'][this.channelNames[i]]
                             text += scrubNumber(value);
 
-                            text += '\nThreshold: '
+                            text += '<br>Threshold: '
                             value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'X'];
                             text += scrubNumber(value);
 
-                            text += '\nReq. Rate: '
+                            text += '<br>Req. Rate: '
                             value = window.currentData['reqRate'][this.channelNames[i].slice(0,9)+'X'];
                             text += scrubNumber(value);
 
-                            text += '\nAcpt. Rate: '
+                            text += '<br>Acpt. Rate: '
                             value = window.currentData['acptRate'][this.channelNames[i].slice(0,9)+'X'];
                             text += scrubNumber(value);                           
                         }
@@ -543,47 +543,47 @@
                     } else if(this.channelNames[i].length==10){
                         //HPGE
                         if(this.channelNames[i].slice(0,3) == 'GRG'){
-                            text += '\nHV: '
+                            text += '<br>HV: '
                             value = window.currentData['HV'][this.channelNames[i].slice(0,9)+'X'];
                             text += scrubNumber(value);
 
-                            text += '\nThreshold: '
+                            text += '<br>Threshold: '
                             value = window.currentData['Threshold'][this.channelNames[i]];
                             text += scrubNumber(value);
 
-                            text += '\nReq. Rate: '
+                            text += '<br>Req. Rate: '
                             value = window.currentData['reqRate'][this.channelNames[i]];
                             text += scrubNumber(value);
 
-                            text += '\nAcpt. Rate: '
+                            text += '<br>Acpt. Rate: '
                             value = window.currentData['acptRate'][this.channelNames[i]];
                             text += scrubNumber(value);
                         //BGO
                         } else{
-                            text += '\nHV-A: '
+                            text += '<br>HV-A: '
                             value = window.currentData['HV'][this.channelNames[i].slice(0,9)+'A'];
                             text += scrubNumber(value);
 
-                            text += '\nHV-B: '
+                            text += '<br>HV-B: '
                             value = window.currentData['HV'][this.channelNames[i].slice(0,9)+'B'];
                             text += scrubNumber(value);
 
-                            text += '\nThreshold: '
+                            text += '<br>Threshold: '
                             value = window.currentData['Threshold'][this.channelNames[i]];
                             text += scrubNumber(value);
 
-                            text += '\nReq. Rate: '
+                            text += '<br>Req. Rate: '
                             value = window.currentData['reqRate'][this.channelNames[i]];
                             text += scrubNumber(value);
 
-                            text += '\nAcpt. Rate: '
+                            text += '<br>Acpt. Rate: '
                             value = window.currentData['acptRate'][this.channelNames[i]];
                             text += scrubNumber(value);
                         }
                     //summary
                     } else {
                         for(j=0; j<this.views.length; j++){
-                            text += '\n'+this.viewLabels[j]+': ';
+                            text += '<br>'+this.viewLabels[j]+': ';
                             value = window.currentData[this.views[j]][this.channelNames[i]];
                             text += scrubNumber(value);                       
                         }                        
