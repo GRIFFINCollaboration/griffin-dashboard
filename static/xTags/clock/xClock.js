@@ -99,11 +99,11 @@
                     controlSidebars = document.getElementsByTagName('widget-clockControl')
 
                 //highlight / unhighlight selected clock
-                if(this.currentClockIndex || this.currentClockIndex==0){
+                if(this.currentClockIndex || this.currentClockIndex===0){
                     document.getElementById('clock'+i).setAttribute('class', 'clockSummary');
                 } 
                 this.setAttribute('class', 'clockSummary clockHighlight')
-                this.currentClockIndex = index;
+                this.currentClockIndex = parseInt(index,10);
 
                 //find relevant data
                 ODBblob = {};
