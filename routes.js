@@ -188,7 +188,7 @@ app.post('/toggleClock', function(req, res){
 console.log(isMaster)
 
 
-	configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[1] ' + req.body['radio'+req.body.clockIndex] + '\n';
+	configScript += 'odbedit -c "set /Equipment/GRIF-Clk' + req.body.clockIndex + '/Variables/Output[1] ' + req.body['radio'+req.body.clockIndex] + '"\n';
 
 	if(isMaster){
 		//Master has NIM in
