@@ -224,7 +224,7 @@
             //move the tooltip around
             'moveTooltip' : function(){
                 var tt = document.getElementById('tooltip'),
-                    mousePos = this.stage[this.displayIndex].getPointerPosition(),
+                    mousePos = this.stage.getPointerPosition(),
                     offsetTop = 0, offsetLeft = 0,
                     left = mousePos.x,
                     top = mousePos.y,
