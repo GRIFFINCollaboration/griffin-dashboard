@@ -396,7 +396,6 @@
                 //add the layers to the stage
                 for(i=0; i<this.viewNames.length; i++){
                     this.stage[i].add(this.mainLayer[i]);
-                    this.stage[i].add(this.tooltipLayer[i]);
                 }
 
             },

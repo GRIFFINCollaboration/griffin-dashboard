@@ -269,7 +269,6 @@
                 for(i=0; i<17; i++){
                     this.stage[i].add(this.mainLayer[i]);
                     this.stage[i].add(this.HVlayer[i]);
-                    this.stage[i].add(this.tooltipLayer[i]);
                 }       
             },
 

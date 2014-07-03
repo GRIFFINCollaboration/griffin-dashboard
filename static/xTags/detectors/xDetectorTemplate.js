@@ -116,7 +116,6 @@
 
                 //add the layers to the stage
                 this.stage.add(this.mainLayer);
-                this.stage.add(this.tooltipLayer);
             },
 
             //move the tooltip around

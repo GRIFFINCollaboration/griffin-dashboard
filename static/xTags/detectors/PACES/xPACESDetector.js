@@ -118,7 +118,6 @@
                 this.stage[0].add(this.mainLayer[0]);
                 this.stage[0].add(this.HVlayer[0]);
                 this.HVlayer[0].hide();
-                this.stage[0].add(this.tooltipLayer[0]);
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.

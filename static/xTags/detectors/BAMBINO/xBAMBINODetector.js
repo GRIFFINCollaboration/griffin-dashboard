@@ -164,7 +164,6 @@
                     centerDot.moveToTop();
 
                     this.stage[i].add(this.mainLayer[i]);
-                    this.stage[i].add(this.tooltipLayer[i]);
                 }
             }
         }
