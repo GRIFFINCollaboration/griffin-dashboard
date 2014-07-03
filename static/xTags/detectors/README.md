@@ -79,22 +79,19 @@ ________________________________________________________________________________
  - `this.HVcrates` default: 0 - number of HV crates plugged into this experiment.  The helper function `detectHVcrates` is run immediately to autodetect an appropriate value from the ODB.
  - `this.views`: view keys for the different visualization options, normally HV, Threhsold, reqRate and acptRate (ie trigger request and accept rates).
  - `this.viewLabels` - array of human-friendly labels corresponding to the options in `this.views`.
+ - `this.tooltip` - a `<div>` for use as a tooltip over this object.
 
 ####Kinetic.js Setup
 All detectors are drawn in a simple Kinetic.js environment, built and pointed at as follows; array indices correspond to the current view, to which each sensitive element should belong to exactly one.
  - `this.stage[view]` (Kinetic.Stage) - the top level wrappers for the Kinetic environments.
  - `this.mainLayer[view]` (Kinetic.Layer) - the Kinetic layers on which the detectors are drawn.
  - `this.scaleLayer[view]` (Kinetic.Layer) - the Kinetic layers on which scales and legends are drawn.
- - `this.tooltipLayer[view]` (Kinetic.Layer) - the Kinetic layers on which the tooltips are drawn.
- - `this.TTbkg[view]` (Kinetic.Rect) - backgrounds for tooltips
- - `this.text[view]` (Kinetic.Text) - tooltip texts
-
 
 and possibly
 
  - `this.HVlayer[view]` (Kinetic.Layer) - Kinetic layers for special HV segmentation.
 
-All the detector cells in `this.cells[name]` are painted on the appropriate `this.mainLayer[view]`, while the elements that compose the plot legend (described below) are painted on `this.scaleLayer[view]`, and the tooltip text (`this.text[view]`) and background (`this.TTbkg[view]`) are painted on `this.tooltipLayer[view]`.  If a detector segments its HV connections differently than its rate & threshold connections, then the cell names corresponding the HV channels will have their corresponding cells drawn on `this.HVlayer[view]` instead of `this.mainLayer[view]`.
+All the detector cells in `this.cells[name]` are painted on the appropriate `this.mainLayer[view]`, while the elements that compose the plot legend (described below) are painted on `this.scaleLayer[view]`.  If a detector segments its HV connections differently than its rate & threshold connections, then the cell names corresponding the HV channels will have their corresponding cells drawn on `this.HVlayer[view]` instead of `this.mainLayer[view]`.
 
 ####Data Fetching & Routing
 The last step of `initializeDetector()` is to appended `this` detector to `window.refreshTargets`, so that `repopulate()` will know to update this object every period.  More details are in the docs describing `assembleData()`, `repopulate()` and the main event loop. 
@@ -144,7 +141,7 @@ This is one of two function reimplemented as a rule for each specific detector. 
 These functions return a bool to indicate whether the named cell is a valid HV or rate/threshold cell respectively.  For a detector with symmetric segmentation, these just always return `true` for any cell; detectors with asymmetric segmentation reimplement these.
 
 ###moveTooltip()
-Moves `this.TTbkg` and `this.text` around to follow the mouse; intended as the callback to the `mousemove` event listener of the Kinetic objects in `this.cells`.
+Moves `this.tooltip` around to follow the mouse; intended as the callback to the `mousemove` event listener of the Kinetic objects in `this.cells`.
 
 ###populate()
 Intended as the callback to receiving data, `populate()` takes care of refreshing the displays, controls and tooltips with the latest information.
