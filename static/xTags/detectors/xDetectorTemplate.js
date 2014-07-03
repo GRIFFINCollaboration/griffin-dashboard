@@ -529,7 +529,9 @@
 
             'updateHVsidebar' : function(){
                 var HVsidebar = document.getElementsByTagName('widget-HVcontrol');
-                console.log(this.lastHVClick)
+
+                if(!this.lastHVClick) return;  //no click = nothing to update
+
                 evt = new CustomEvent('postHVchan', {'detail': {
                     'channel' : this.lastHVClick, 
                     'ODBblob': window.ODBEquipment['HV-' + this.findHVcrate(this.lastHVClick)], 
