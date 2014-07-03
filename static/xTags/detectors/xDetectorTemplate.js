@@ -416,8 +416,6 @@
                 }
 
                 if(HVsidebar && HVcell){
-                    console.log(crateIndex)
-                    console.log(window.ODBEquipment['HV-' + crateIndex])
                     evt = new CustomEvent('postHVchan', {'detail': {
                         'channel' : cellName, 
                         'ODBblob': window.ODBEquipment['HV-' + crateIndex], 
@@ -531,6 +529,7 @@
 
             'updateHVsidebar' : function(){
                 var HVsidebar = document.getElementsByTagName('widget-HVcontrol');
+                console.log(window.ODBEquipment['HV-' + this.findHVcrate(this.lastHVClick)])
                 evt = new CustomEvent('postHVchan', {'detail': {
                     'channel' : this.lastHVClick, 
                     'ODBblob': window.ODBEquipment['HV-' + this.findHVcrate(this.lastHVClick)], 
