@@ -231,7 +231,7 @@ function initializeDetector(name, headline){
     //MSC table construction
     ////////////////////////////
     //window.currentData.MSC = {/*channel name : [digitizer host, channel]*/}
-    window.currentData.MSC = {};
+    //window.currentData.MSC = {};
     this.buildHostmap();
 
     ////////////////////////////
@@ -242,9 +242,6 @@ function initializeDetector(name, headline){
     this.stage = [];
     this.mainLayer = [];
     this.scaleLayer = [];
-    this.tooltipLayer = [];
-    this.TTbkg = [];
-    this.text = [];
 
     for(i=0; i<this.viewNames.length; i++){
 
@@ -256,32 +253,6 @@ function initializeDetector(name, headline){
         });
         this.mainLayer[i] = new Kinetic.Layer();       //main rendering layer
         this.scaleLayer[i] = new Kinetic.Layer();      //layer for scales / legends
-        this.tooltipLayer[i] = new Kinetic.Layer();    //layer for tooltip info
-
-        //tooltip background:
-        this.TTbkg[i] = new Kinetic.Rect({
-            x:-1000,
-            y:-1000,
-            width:100,
-            height:100,
-            fill:'rgba(0,0,0,0.8)',
-            stroke: 'rgba(0,0,0,0)',
-            listening: false
-        });
-        this.tooltipLayer[i].add(this.TTbkg[i]);
-
-        //tooltip text:
-        this.text[i] = new Kinetic.Text({
-            x: -1000,
-            y: -1000,
-            fontFamily: 'Arial',
-            fontSize: 16,
-            text: '',
-            lineHeight: 1.2,
-            fill: '#EEEEEE',
-            listening: false
-        });
-        this.tooltipLayer[i].add(this.text[i]);
     }
 
     this.errorPattern = new Image();
