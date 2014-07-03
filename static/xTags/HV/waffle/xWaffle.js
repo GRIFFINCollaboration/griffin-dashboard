@@ -20,6 +20,11 @@
                 this.wrap.setAttribute('id', this.id+'Wrap');
                 this.appendChild(this.wrap);
 
+                //tooltip
+                this.tooltip = document.createElement('div');
+                this.tooltip.setAttribute('id', 'tooltip');
+                this.appendChild(this.tooltip);
+
                 ////////////////////////////
                 //Kinetic.js setup
                 ////////////////////////////
@@ -30,35 +35,8 @@
                     height: this.offsetHeight
                 });
                 this.mainLayer = new Kinetic.Layer();       //main rendering layer
-                this.tooltipLayer = new Kinetic.Layer();    //layer for tooltip info
-
-                //tooltip background:
-                this.TTbkg = new Kinetic.Rect({
-                    x:-1000,
-                    y:-1000,
-                    width:100,
-                    height:100,
-                    fill:'rgba(0,0,0,0.8)',
-                    stroke: 'rgba(0,0,0,0)',
-                    listening: false
-                });
-                this.tooltipLayer.add(this.TTbkg);
-
-                //tooltip text:
-                this.text = new Kinetic.Text({
-                    x: -1000,
-                    y: -1000,
-                    fontFamily: 'Arial',
-                    fontSize: 16,
-                    text: '',
-                    lineHeight: 1.2,
-                    fill: '#EEEEEE',
-                    listening: false
-                });
-                this.tooltipLayer.add(this.text);
                 
                 this.stage.add(this.mainLayer);
-                this.stage.add(this.tooltipLayer);
 
                 this.errorPattern = new Image();
                 this.errorPattern.src = 'static/img/static.gif'
@@ -244,19 +222,24 @@
             },
 
             //move the tooltip around
-            'moveTooltip': function(){
-                var mousePos = this.stage.getPointerPosition(),
-                    TTwidth = this.TTbkg.getAttr('width'),
-                    TTheight = this.TTbkg.getAttr('height');
+            'moveTooltip' : function(){
+                var tt = document.getElementById('tooltip'),
+                    mousePos = this.stage[this.displayIndex].getPointerPosition(),
+                    offsetTop = 0, offsetLeft = 0,
+                    left = mousePos.x,
+                    top = mousePos.y,
+                    element = this;
 
-                //adjust the background size & position
-                this.TTbkg.setAttr( 'x', Math.min(mousePos.x + 10, this.offsetWidth - TTwidth) );
-                this.TTbkg.setAttr( 'y', Math.min(mousePos.y + 10, this.offsetHeight - TTheight) );
-                //make text follow the mouse too
-                this.text.setAttr( 'x', Math.min(mousePos.x + 20, this.offsetWidth - TTwidth + 10) );
-                this.text.setAttr( 'y', Math.min(mousePos.y + 20, this.offsetHeight - TTheight) ); 
+                do{
+                    offsetTop += element.offsetTop || 0;
+                    offsetLeft += element.offsetLeft || 0;
+                    element = element.offsetParent;
+                } while(element)
 
-                this.tooltipLayer.draw();
+                left += offsetLeft;
+                top += offsetTop;
+
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
             },
 
             //formulate the tooltip text for cell <name> and write it on the tooltip layer.
@@ -264,28 +247,23 @@
                 var text, j, key;
 
                 if(name!=-1){
-                    text = name + '\n';
+                    text = name + '<br>';
                     if(this.TTdata && this.TTdata[name]){
                         for(key in this.TTdata[name]){
-                            text += '\n' + key + ': ' + this.TTdata[name][key]
+                            text += '<br>' + key + ': ' + this.TTdata[name][key]
                         }
                     }
-                    if(text == name + '\n') text = name;
+                    if(text == name + '<br>') text = name;
                 } else {
                     text = '';
                 }
+
                 this.lastTTindex = name;
-                this.text.setText(text);
-                if(text != ''){
-                    //adjust the background size
-                    this.TTbkg.setAttr( 'width', this.text.getAttr('width') + 20 );
-                    this.TTbkg.setAttr( 'height', this.text.getAttr('height') + 20 ); 
-                } else {
-                    this.TTbkg.setAttr('width', 0);
-                    this.TTbkg.setAttr('height', 0);                    
-                }
-                this.tooltipLayer.draw();
-            }            
+                if(text != '')
+                    document.getElementById('tooltip').innerHTML = text;
+                else
+                    document.getElementById('tooltip').setAttribute('style', '');
+            }        
         }
     });
 
