@@ -222,30 +222,7 @@
 
                 this.mainLayer.draw();
             },
-/*
-            //move the tooltip around
-            'moveTooltip' : function(){
-                var tt = document.getElementById('tooltip'),
-                    mousePos = this.stage.getPointerPosition(),
-                    offsetTop = 0, offsetLeft = 0,
-                    left = mousePos.x,
-                    top = mousePos.y,
-                    element = this,
-                    position = '';
 
-                do{
-                    position = window.getComputedStyle(element).getPropertyValue('position')
-                    offsetTop += element.offsetTop || 0;
-                    offsetLeft += element.offsetLeft || 0;
-                    element = element.offsetParent;
-                } while(element && position != 'absolute' && position != 'relative')
-
-                left += offsetLeft;
-                top += offsetTop;
-
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
-            },
-*/
             //move the tooltip around
             'moveTooltip' : function(evt){
                 var tt = document.getElementById('tooltip');
