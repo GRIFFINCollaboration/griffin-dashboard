@@ -117,7 +117,7 @@
                 //add the layers to the stage
                 this.stage.add(this.mainLayer);
             },
-
+/*
             //move the tooltip around
             'moveTooltip' : function(){
                 var tt = document.getElementById('tooltip'),
@@ -139,6 +139,13 @@
                 top += offsetTop;
 
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
+            },
+*/
+            //move the tooltip around
+            'moveTooltip' : function(evt){
+                var tt = document.getElementById('tooltip');
+
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + evt.pageY  + ';');
             },
 
             //refresh the color scale labeling / coloring:

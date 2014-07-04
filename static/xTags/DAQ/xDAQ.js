@@ -290,7 +290,7 @@
             //move the tooltip around
             'moveTooltip' : function(evt){
                 var tt = document.getElementById('tooltip');
-//console.log([evt, evt.pageX, evt.pageY])
+
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + evt.pageY  + ';');
             },
 
