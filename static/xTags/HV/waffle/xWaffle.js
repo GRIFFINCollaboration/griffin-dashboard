@@ -230,17 +230,11 @@
                     top = mousePos.y,
                     element = document.getElementById('HVtool');
 
-                //doing something weird, hack out for a minute
-                console.log('mouse coords')
-                console.log([left, top])
-                console.log('offset pairs:')
                 do{
-                    //offsetTop += element.offsetTop || 0;
-                    //offsetLeft += element.offsetLeft || 0;
-                    console.log(element.id)
-                    console.log([element.offsetTop || 0, element.offsetLeft || 0])
+                    offsetTop += element.offsetTop || 0;
+                    offsetLeft += element.offsetLeft || 0;
                     element = element.offsetParent;
-                } while(element)
+                } while(element.id != this.id)
                 
 
                 left += offsetLeft;
