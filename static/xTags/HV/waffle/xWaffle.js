@@ -222,7 +222,7 @@
 
                 this.mainLayer.draw();
             },
-
+/*
             //move the tooltip around
             'moveTooltip' : function(){
                 var tt = document.getElementById('tooltip'),
@@ -244,6 +244,13 @@
                 top += offsetTop;
 
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
+            },
+*/
+            //move the tooltip around
+            'moveTooltip' : function(evt){
+                var tt = document.getElementById('tooltip');
+
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + evt.pageY  + ';');
             },
 
             //formulate the tooltip text for cell <name> and write it on the tooltip layer.
