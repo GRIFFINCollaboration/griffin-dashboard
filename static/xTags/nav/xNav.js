@@ -13,8 +13,7 @@
                 //get the DAQ structure, use it to decide which detectors need to be linked
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
                     function(res){
-                        console.log(res)
-                        /*
+
                         var MSC = JSON.parse(res),
                             i, link;
 
@@ -30,7 +29,7 @@
                             link.innerHTML = this.routes[i];
                             this.appendChild(link);
                         }
-                        */
+                        
                     }.bind(this), 
                     'application/json');
             },
