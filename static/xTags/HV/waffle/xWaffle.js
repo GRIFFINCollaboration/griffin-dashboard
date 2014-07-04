@@ -229,13 +229,16 @@
                     left = mousePos.x,
                     top = mousePos.y,
                     element = this;
-/*
+
+                console.log('offset coords')
                 do{
+                    console.log(element.id)
+                    console.log([element.offsetLeft || 0, element.offsetTop || 0])
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
                     element = element.offsetParent;
                 } while(element)
-*/
+
                 left += offsetLeft;
                 top += offsetTop;
 
