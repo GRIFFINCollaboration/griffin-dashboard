@@ -232,17 +232,15 @@
 
                 console.log('offset coords')
                 do{
-                    console.log(element.id)
-                    console.log([element.offsetLeft || 0, element.offsetTop || 0])
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
                     element = element.offsetParent;
-                } while(element)
+                } while(element && element.style.position != 'absolute' && element.style.position != 'relative')
 
                 left += offsetLeft;
                 top += offsetTop;
 
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + 0 + '; top:' + 0 + ';');
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
             },
 
             //formulate the tooltip text for cell <name> and write it on the tooltip layer.
