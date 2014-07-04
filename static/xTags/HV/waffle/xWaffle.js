@@ -21,9 +21,11 @@
                 this.appendChild(this.wrap);
 
                 //tooltip
-                this.tooltip = document.createElement('div');
-                this.tooltip.setAttribute('id', 'tooltip');
-                this.appendChild(this.tooltip);
+                if(!document.getElementById('tooltip')){
+                    this.tooltip = document.createElement('div');
+                    this.tooltip.setAttribute('id', 'tooltip');
+                    this.appendChild(this.tooltip);
+                }
 
                 ////////////////////////////
                 //Kinetic.js setup

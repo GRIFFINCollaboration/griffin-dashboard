@@ -25,6 +25,11 @@
                 this.cardNames = [];
                 this.crateNames = [];
                 this.HVgrid = [];
+
+                this.tooltip = document.createElement('div');
+                this.tooltip.setAttribute('id', 'tooltip');
+                this.appendChild(this.tooltip);
+                
             },
             inserted: function() {
 
