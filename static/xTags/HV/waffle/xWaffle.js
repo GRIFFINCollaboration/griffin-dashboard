@@ -231,10 +231,8 @@
                     element = this,
                     position = '';
 
-                console.log('offset coords')
                 do{
                     position = window.getComputedStyle(element).getPropertyValue('position')
-                    console.log([element.id, position])
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
                     element = element.offsetParent;

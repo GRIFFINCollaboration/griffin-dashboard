@@ -121,24 +121,24 @@
             //move the tooltip around
             'moveTooltip' : function(){
                 var tt = document.getElementById('tooltip'),
-                    mousePos = this.stage[this.displayIndex].getPointerPosition(),
+                    mousePos = this.stage.getPointerPosition(),
                     offsetTop = 0, offsetLeft = 0,
                     left = mousePos.x,
                     top = mousePos.y,
-                    element = this;
-                console.log('offset coords')
+                    element = this,
+                    position = '';
+
                 do{
-                    console.log(element.id)
-                    console.log([element.offsetLeft || 0, element.offsetTop || 0])
+                    position = window.getComputedStyle(element).getPropertyValue('position')
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
                     element = element.offsetParent;
-                } while(element)
+                } while(element && position != 'absolute' && position != 'relative')
 
                 left += offsetLeft;
                 top += offsetTop;
 
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + 0 + '; top:' + 0 + ';');
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
             },
 
             //refresh the color scale labeling / coloring:
