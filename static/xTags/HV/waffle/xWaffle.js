@@ -230,6 +230,7 @@
                     top = mousePos.y,
                     element = this;
 
+                console.log('offset pairs:')
                 do{
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
