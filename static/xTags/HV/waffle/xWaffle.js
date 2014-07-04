@@ -228,14 +228,14 @@
                     offsetTop = 0, offsetLeft = 0,
                     left = mousePos.x,
                     top = mousePos.y,
-                    element = this;
+                    element = document.getElementById(this.id + 'DeckWrap');
 
                 //doing something weird, hack out for a minute
                 
                 console.log('offset pairs:')
                 do{
-                    //offsetTop += element.offsetTop || 0;
-                    //offsetLeft += element.offsetLeft || 0;
+                    offsetTop += element.offsetTop || 0;
+                    offsetLeft += element.offsetLeft || 0;
                     console.log(element.id)
                     console.log([element.offsetTop || 0, element.offsetLeft || 0])
                     element = element.offsetParent;
