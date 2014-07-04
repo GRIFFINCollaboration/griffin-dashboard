@@ -237,8 +237,8 @@
                     offsetLeft += element.offsetLeft || 0;
                     console.log(element.id)
                     console.log([offsetTop, offsetLeft])
-                    element = element.offsetParent;
                     }
+                    element = element.offsetParent;
                 } while(element)
 
                 left += offsetLeft;
