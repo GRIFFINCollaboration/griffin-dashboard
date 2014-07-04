@@ -53,7 +53,7 @@ Intended as callback to fetching `/Filter` from the ODB.  Depicts the currently 
 Populates filter representation with the definition of the filter found in the ODB at `Filter/Filters/filterName`.
 
 ####`this.dumpFilterName()`
-Whenever a predefined loaded in the filter visualization and then edited, its name is removed from the filter name input field via a call to this function, to discourage uninentional overwriting of predefined filters.
+Whenever a predefined filter is loaded in the filter visualization and then edited, its name is removed from the filter name input field via a call to this function, to discourage uninentional overwriting of predefined filters.
 
 
 ##ODB Filter Encoding
@@ -63,13 +63,13 @@ Filters are encoded and stored in the ODB according to the following specificati
 
 ```
 /Filter
-    Current <string>
+    Current: <string>
     /Filters
         /someFilter
-            orCondition0 [<strings>]
-            orCondition1 [<strings>]
+            orCondition0: [<strings>]
+            orCondition1: [<strings>]
             ...
-            orConditionN[<strings>]
+            orConditionN: [<strings>]
         /anotherFilter
             ...
 ```
@@ -85,6 +85,8 @@ Directory names under `/Filter/Filters` are strings with no whitespace naming th
 `XX-Y-Z`
 
 `XX` == 2-character detector code from the standard nomenclature
+
 `Y` == condition type: (S)ingles, (C)oincidence or (P)rescale
+
 `Z` == 1 for singles, multiplicity for coincidences, or prescale factor for prescale.
 
