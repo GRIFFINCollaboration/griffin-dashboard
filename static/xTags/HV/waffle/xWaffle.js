@@ -228,7 +228,7 @@
                     offsetTop = 0, offsetLeft = 0,
                     left = mousePos.x,
                     top = mousePos.y,
-                    element = document.getElementById('HVtool');
+                    element = this;
 
                 do{
                     offsetTop += element.offsetTop || 0;
