@@ -344,7 +344,7 @@
                     document.getElementById('tooltip').innerHTML = text;
                 else
                     document.getElementById('tooltip').setAttribute('style', '');
-            }
+            },
 
             'update' : function(){
                 //keep the tooltip updated:
