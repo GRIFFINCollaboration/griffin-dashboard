@@ -9,6 +9,8 @@
                 this.width = this.offsetWidth;
                 this.height = window.innerHeight*0.6;
                 this.showing = 0;
+                this.lastCollectorTTindex = null;
+                this.lastDigitizerTTindex = null;
 
                 //get the DAQ structure
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
@@ -59,7 +61,8 @@
                 document.getElementById('DAQmasterCard').appendChild(this.collectorBlock);
 
                 this.tooltip = document.createElement('div');
-                this.tooltip.setAttribute('class', 'tooltip hidden'); 
+                this.tooltip.setAttribute('id', 'tooltip');
+                this.appendChild(this.tooltip);
 
                 ////////////////////////////
                 //Kinetic.js setup
@@ -69,9 +72,11 @@
                 this.stage = [];
                 this.mainLayer = [];
                 this.scaleLayer = [];
-                this.tooltipLayer = [];
-                this.TTbkg = [];
-                this.text = [];
+
+                //let repopulate know that the detector would like to be updated every loop:
+                if(!window.refreshTargets)
+                    window.refreshTargets = [];
+                window.refreshTargets[window.refreshTargets.length] = this;
             },
             inserted: function() {},
             removed: function() {},
@@ -271,36 +276,9 @@
                 });
                 this.mainLayer[i] = new Kinetic.Layer();       //main rendering layer
                 this.scaleLayer[i] = new Kinetic.Layer();      //layer for scales / legends
-                this.tooltipLayer[i] = new Kinetic.Layer();    //layer for tooltip info
-
-                //tooltip background:
-                this.TTbkg[i] = new Kinetic.Rect({
-                    x:-1000,
-                    y:-1000,
-                    width:100,
-                    height:100,
-                    fill:'rgba(0,0,0,0.8)',
-                    stroke: 'rgba(0,0,0,0)',
-                    listening: false
-                });
-                this.tooltipLayer[i].add(this.TTbkg[i]);
-
-                //tooltip text:
-                this.text[i] = new Kinetic.Text({
-                    x: -1000,
-                    y: -1000,
-                    fontFamily: 'Arial',
-                    fontSize: 16,
-                    text: '',
-                    lineHeight: 1.2,
-                    fill: '#EEEEEE',
-                    listening: false
-                });
-                this.tooltipLayer[i].add(this.text[i]);
 
                 this.stage[i].add(this.mainLayer[i]);
                 this.stage[i].add(this.scaleLayer[i]);
-                this.stage[i].add(this.tooltipLayer[i]);
             },
 
             'clickCollector' : function(index){
@@ -309,25 +287,31 @@
                 document.getElementById('DAQnav').onchange();
             },
 
-            'moveTooltip': function(){
-                var mousePos = this.stage[this.showing].getPointerPosition(),
-                    TTwidth = this.TTbkg[this.showing].getAttr('width'),
-                    TTheight = this.TTbkg[this.showing].getAttr('height');
+            //move the tooltip around
+            'moveTooltip' : function(){
+                var tt = document.getElementById('tooltip'),
+                    mousePos = this.stage[this.showing].getPointerPosition(),
+                    offsetTop = 0, offsetLeft = 0,
+                    left = mousePos.x,
+                    top = mousePos.y,
+                    element = this,
+                    position = '';
 
-                //adjust the background size & position
-                this.TTbkg[this.showing].setAttr( 'x', Math.min(mousePos.x + 10, this.width - TTwidth) );
-                this.TTbkg[this.showing].setAttr( 'y', Math.min(mousePos.y + 10, this.height - TTheight) );
-                //make text follow the mouse too
-                this.text[this.showing].setAttr( 'x', Math.min(mousePos.x + 20, this.width - TTwidth + 10) );
-                this.text[this.showing].setAttr( 'y', Math.min(mousePos.y + 20, this.height - TTheight + 10) ); 
+                do{
+                    position = window.getComputedStyle(element).getPropertyValue('position')
+                    offsetTop += element.offsetTop || 0;
+                    offsetLeft += element.offsetLeft || 0;
+                    element = element.offsetParent;
+                } while(element && position != 'absolute' && position != 'relative')
 
-                this.tooltipLayer[this.showing].draw();
+                left += offsetLeft;
+                top += offsetTop;
 
-                this.tooltip.setAttribute('style', 'left: ' + (Math.min(mousePos.x + 20, this.width - TTwidth + 10)) + 'px; top: ' + Math.min(mousePos.y + 20, this.height - TTheight + 10) + 'px;' );
-                this.tooltip.setAttribute('class', 'tooltip')
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
             },
 
-            'writeCollectorTooltip' : function(i){
+            //formulate the tooltip text for cell i and write it on the tooltip layer.
+            'writeCollectorTooltip': function(i){
                 var text;
 
                 if(i!=-1){
@@ -335,19 +319,15 @@
                 } else {
                     text = '';
                 }
-                this.text[this.showing].setText(text);
-                if(text != ''){
-                    //adjust the background size
-                    this.TTbkg[this.showing].setAttr( 'width', this.text[this.showing].getAttr('width') + 20 );
-                    this.TTbkg[this.showing].setAttr( 'height', this.text[this.showing].getAttr('height') + 20 ); 
-                } else {
-                    this.TTbkg[this.showing].setAttr('width', 0);
-                    this.TTbkg[this.showing].setAttr('height', 0);                    
-                }
-                this.tooltipLayer[this.showing].draw();
+            
+                this.lastCollectorTTindex = i;
+                if(text != '')
+                    document.getElementById('tooltip').innerHTML = text;
+                else
+                    document.getElementById('tooltip').setAttribute('style', '');
             },
 
-            'writeDigitizerTooltip' : function(i){
+            'writeDigitizerTooltip': function(i){
                 var text, key;
 
                 if(i!=-1){
@@ -358,16 +338,22 @@
                 } else {
                     text = '';
                 }
-                this.text[this.showing].setText(text);
-                if(text != ''){
-                    //adjust the background size
-                    this.TTbkg[this.showing].setAttr( 'width', this.text[this.showing].getAttr('width') + 20 );
-                    this.TTbkg[this.showing].setAttr( 'height', this.text[this.showing].getAttr('height') + 20 ); 
-                } else {
-                    this.TTbkg[this.showing].setAttr('width', 0);
-                    this.TTbkg[this.showing].setAttr('height', 0);                    
+            
+                this.lastDigitizerTTindex = i;
+                if(text != '')
+                    document.getElementById('tooltip').innerHTML = text;
+                else
+                    document.getElementById('tooltip').setAttribute('style', '');
+            }
+
+            'update' : function(){
+                //keep the tooltip updated:
+                if(this.showing == 0 && (this.lastCollectorTTindex || this.lastCollectorTTindex==0)){
+                    this.writeCollectorTooltip(this.lastCollectorTTindex);
+                } else if(this.lastDigitizerTTindex || this.lastDigitizerTTindex==0){
+                    this.writeDigitizerTooltip(this.lastDigitizerTTindex);
                 }
-                this.tooltipLayer[this.showing].draw();
+
             }
         }
     });
