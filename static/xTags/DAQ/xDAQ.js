@@ -289,6 +289,7 @@
 
             //move the tooltip around
             'moveTooltip' : function(){
+                /*
                 var tt = document.getElementById('tooltip'),
                     mousePos = this.stage[this.showing].getPointerPosition(),
                     offsetTop = 0, offsetLeft = 0,
@@ -306,11 +307,12 @@
 
                 left += offsetLeft;
                 top += offsetTop;
+                */
 console.log([this, this.pageX, this.pageY])
                 //canvas doesn't sit at top left of x-deck; have to do same positioning excersise
 
 
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top  + ';');
+                //tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top  + ';');
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
