@@ -288,7 +288,7 @@
             },
 
             //move the tooltip around
-            'moveTooltip' : function(){
+            'moveTooltip' : function(evt){
                 /*
                 var tt = document.getElementById('tooltip'),
                     mousePos = this.stage[this.showing].getPointerPosition(),
@@ -308,7 +308,7 @@
                 left += offsetLeft;
                 top += offsetTop;
                 */
-console.log([this, this.pageX, this.pageY])
+console.log([evt, evt.pageX, evt.pageY])
                 //canvas doesn't sit at top left of x-deck; have to do same positioning excersise
 
 
