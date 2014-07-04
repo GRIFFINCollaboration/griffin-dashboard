@@ -232,7 +232,7 @@
 
                 console.log('offset coords')
                 do{
-                    console.log(element.style.position)
+                    console.log([element.id, element.style.position])
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
                     element = element.offsetParent;
