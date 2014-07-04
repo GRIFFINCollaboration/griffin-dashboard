@@ -308,7 +308,7 @@
 
                 //canvas doesn't sit at top left of x-deck; have to do same positioning excersize
 
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top  + ';');
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + 0 + '; top:' + 0 + ';');
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
