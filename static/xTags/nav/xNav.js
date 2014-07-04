@@ -14,11 +14,11 @@
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
                     function(res){
                         console.log(res)
-                        /*
-                        var MSC = JSON.parse(res),
+                        
+                        var data = JSON.parse(res),
                             i, link;
 
-                        this.traverseMSC(MSC);
+                        this.traverseMSC(data.MSC);
 
                         for(i=0; i<this.routes.length; i++){
                             link = document.createElement('a')
@@ -30,7 +30,7 @@
                             link.innerHTML = this.routes[i];
                             this.appendChild(link);
                         }
-                        */
+                        
                     }.bind(this), 
                     'application/json');
             },
