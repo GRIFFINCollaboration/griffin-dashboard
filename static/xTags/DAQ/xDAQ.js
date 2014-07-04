@@ -32,6 +32,7 @@
                 builderLink.setAttribute('href', '/MSCbuilder');
                 builderLink.innerHTML = 'MSC Builder';
                 builderLink.setAttribute('class', 'stdin');
+                builderLink.setAttribute('id', 'MSCbuilderLink');
                 this.navBlock.appendChild(builderLink);
 
                 this.cardNav = document.createElement('select');

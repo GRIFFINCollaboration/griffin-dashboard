@@ -22,3 +22,7 @@ div.DAQnav{
 .hidden{
 	display: none;
 }
+
+a#MSCbuilderLink{
+	float: right;
+}
