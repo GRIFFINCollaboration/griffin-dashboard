@@ -308,7 +308,7 @@ console.log('position offsets')
 
                 left += offsetLeft;
                 top += offsetTop;
-
+console.log(top)
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
             },
 
