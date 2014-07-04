@@ -289,30 +289,9 @@
 
             //move the tooltip around
             'moveTooltip' : function(evt){
-                /*
-                var tt = document.getElementById('tooltip'),
-                    mousePos = this.stage[this.showing].getPointerPosition(),
-                    offsetTop = 0, offsetLeft = 0,
-                    left = mousePos.x,
-                    top = mousePos.y,
-                    element = document.getElementById('DAQdeck'), //track offsets upwards from x-deck
-                    position = '';
 
-                do{
-                    position = window.getComputedStyle(element).getPropertyValue('position')
-                    offsetTop += element.offsetTop || 0;
-                    offsetLeft += element.offsetLeft || 0;
-                    element = element.offsetParent;
-                } while(element && position != 'absolute' && position != 'relative')
-
-                left += offsetLeft;
-                top += offsetTop;
-                */
-console.log([evt, evt.pageX, evt.pageY])
-                //canvas doesn't sit at top left of x-deck; have to do same positioning excersise
-
-
-                //tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top  + ';');
+//console.log([evt, evt.pageX, evt.pageY])
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + evt.pageY  + ';');
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
