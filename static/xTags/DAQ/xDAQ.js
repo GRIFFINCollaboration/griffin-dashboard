@@ -333,7 +333,7 @@
                 if(i!=-1){
                     text = 'Digitizer 0x' + i.toString(16).toUpperCase();
                     for(key in this.localMSC[this.showing-1][i]){
-                        text += '\n' + key + ' ' + this.localMSC[this.showing-1][i][key];
+                        text += '<br>' + key + ' ' + this.localMSC[this.showing-1][i][key];
                     }
                 } else {
                     text = '';
