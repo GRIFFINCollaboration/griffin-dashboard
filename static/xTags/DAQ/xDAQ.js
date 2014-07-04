@@ -294,7 +294,7 @@
                     offsetTop = 0, offsetLeft = 0,
                     left = mousePos.x,
                     top = mousePos.y,
-                    element = this,
+                    element = document.getElementById('DAQdeck'),
                     position = '';
 
                 do{
@@ -307,7 +307,7 @@
                 left += offsetLeft;
                 top += offsetTop;
 
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + (left-mousePos.x) + '; top:' + (top-mousePos.y)  + ';');
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top  + ';');
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
