@@ -228,15 +228,17 @@
                     offsetTop = 0, offsetLeft = 0,
                     left = mousePos.x,
                     top = mousePos.y,
-                    element = this;
+                    element = this,
+                    position = '';
 
                 console.log('offset coords')
                 do{
-                    console.log([element.id, element.style.position])
+                    position = window.getComputedStyle(element).getPropertyValue('position')
+                    console.log([element.id, position])
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
                     element = element.offsetParent;
-                } while(element && element.style.position != 'absolute' && element.style.position != 'relative')
+                } while(element && position != 'absolute' && position != 'relative')
 
                 left += offsetLeft;
                 top += offsetTop;
