@@ -309,7 +309,7 @@ console.log('position offsets')
                 left += offsetLeft;
                 top += offsetTop;
 
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + 0 + '; top:' + 0 + ';');
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
