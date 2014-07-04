@@ -126,11 +126,13 @@
                     left = mousePos.x,
                     top = mousePos.y,
                     element = this;
-
+                console.log('offset coords')
                 do{
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
                     element = element.offsetParent;
+                    console.log(element.id)
+                    console.log([element.offsetLeft || 0, element.offsetTop || 0])
                 } while(element)
 
                 left += offsetLeft;
