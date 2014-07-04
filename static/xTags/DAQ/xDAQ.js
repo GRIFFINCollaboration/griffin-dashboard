@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var xString, option, title, deckWrap;
+                var xString, option, title, deckWrap, builderLink;
 
                 this.width = this.offsetWidth;
                 this.height = window.innerHeight*0.6;
@@ -27,6 +27,11 @@
                 title = document.createElement('h1');
                 title.innerHTML = 'DAQ';
                 this.navBlock.appendChild(title);
+
+                builderLink = document.createElement('a');
+                builderLink.setAttribute('href', '/MSCbuilder');
+                builderLink.innerHTML = 'MSC Builder';
+                builderLink.setAttribute('class', 'stdin');
 
                 this.cardNav = document.createElement('select');
                 this.cardNav.setAttribute('id', 'DAQnav')
