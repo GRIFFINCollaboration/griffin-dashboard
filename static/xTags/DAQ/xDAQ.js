@@ -296,8 +296,10 @@
                     top = mousePos.y,
                     element = this,
                     position = '';
-
+console.log('position offsets')
                 do{
+                    console.log(element.id)
+                    console.log([element.offsetLeft || 0, element.offsetTop || 0])
                     position = window.getComputedStyle(element).getPropertyValue('position')
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
