@@ -42,7 +42,7 @@
 
         },
         accessors: {
-            'experiment':{
+            'MIDAS':{
                 attribute: {} //this just needs to be declared
             }
         }, 
