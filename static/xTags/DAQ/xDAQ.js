@@ -49,7 +49,6 @@
 
                 xString = '<x-deck id="DAQdeck" selected-index=0>';
                 xString += '<x-card id="DAQmasterCard"></x-card></x-deck>';
-                xString += '<div id="tooltip"></div>';
                 xtag.innerHTML(deckWrap, xString);
                 this.nCards = 1
 
@@ -61,7 +60,9 @@
                 this.collectorBlock.setAttribute('id', 'collectorBlock');
                 document.getElementById('DAQmasterCard').appendChild(this.collectorBlock);
 
-
+                this.tooltip = document.createElement('div');
+                this.tooltip.setAttribute('id', 'tooltip');
+                this.appendChild(this.tooltip);
 
                 ////////////////////////////
                 //Kinetic.js setup
@@ -293,7 +294,7 @@
                     offsetTop = 0, offsetLeft = 0,
                     left = mousePos.x,
                     top = mousePos.y,
-                    element = this, //document.getElementById('DAQdeck'), //track offsets upwards from x-deck
+                    element = document.getElementById('DAQdeck'), //track offsets upwards from x-deck
                     position = '';
 
                 do{
@@ -306,9 +307,10 @@
                 left += offsetLeft;
                 top += offsetTop;
 
-                //canvas doesn't sit at top left of x-deck; have to do same positioning excersize
+                //canvas doesn't sit at top left of x-deck; have to do same positioning excersise
+                
 
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + 0 + '; top:' + 0 + ';');
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top  + ';');
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
