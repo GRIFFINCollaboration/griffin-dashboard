@@ -228,10 +228,11 @@
                     offsetTop = 0, offsetLeft = 0,
                     left = mousePos.x,
                     top = mousePos.y,
-                    element = document.getElementById('HVtoolDeckWrap');
+                    element = document.getElementById('HVtool');
 
                 //doing something weird, hack out for a minute
-                
+                console.log('mouse coords')
+                console.log([left, top])
                 console.log('offset pairs:')
                 do{
                     //offsetTop += element.offsetTop || 0;
