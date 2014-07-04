@@ -134,7 +134,7 @@
                             strokeWidth: 4
                         });
                         this.collectorCells[i].on('click', this.clickCollector.bind(this, i)); 
-                        this.collectorCells[i].on('mousemove', this.moveTooltip.bind(this) );
+                        this.collectorCells[i].on('mousemove', this.moveTooltip );
                         this.collectorCells[i].on('mouseover', this.writeCollectorTooltip.bind(this, i) );
                         this.collectorCells[i].on('mouseout', this.writeCollectorTooltip.bind(this, -1));
                         this.mainLayer[0].add(this.collectorCells[i]);
@@ -199,7 +199,7 @@
                                 stroke: '#000000',
                                 strokeWidth: 4
                             });
-                            this.digitizerCells[i][j].on('mousemove', this.moveTooltip.bind(this) );
+                            this.digitizerCells[i][j].on('mousemove', this.moveTooltip );
                             this.digitizerCells[i][j].on('mouseover', this.writeDigitizerTooltip.bind(this, j) );
                             this.digitizerCells[i][j].on('mouseout', this.writeDigitizerTooltip.bind(this, -1));
                             this.mainLayer[i+1].add(this.digitizerCells[i][j]);
@@ -306,9 +306,9 @@
 
                 left += offsetLeft;
                 top += offsetTop;
-
+console.log([this, this.pageX, this.pageY])
                 //canvas doesn't sit at top left of x-deck; have to do same positioning excersise
-                
+
 
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top  + ';');
             },
