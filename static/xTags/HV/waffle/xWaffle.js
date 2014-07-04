@@ -242,7 +242,7 @@
                 left += offsetLeft;
                 top += offsetTop;
 
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + 0 + '; top:' + 0 + ';');
             },
 
             //formulate the tooltip text for cell <name> and write it on the tooltip layer.
