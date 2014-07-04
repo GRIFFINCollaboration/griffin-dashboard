@@ -101,6 +101,7 @@ input[type='radio'].stdin + label{
 
 input[type='radio'].stdin:checked + label{
 	background-color: #555555;
+	border: 1px solid #EEEEEE;
 }
 
 button.stdin:hover,

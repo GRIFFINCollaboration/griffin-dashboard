@@ -228,7 +228,7 @@
                     offsetTop = 0, offsetLeft = 0,
                     left = mousePos.x,
                     top = mousePos.y,
-                    element = document.getElementById(this.id + 'DeckWrap');
+                    element = document.getElementById('HVtoolDeckWrap');
 
                 //doing something weird, hack out for a minute
                 
