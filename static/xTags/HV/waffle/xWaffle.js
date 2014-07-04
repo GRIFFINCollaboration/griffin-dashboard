@@ -234,8 +234,7 @@
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
                     element = element.offsetParent;
-                } while(element.id != this.id)
-                
+                } while(element != this)
 
                 left += offsetLeft;
                 top += offsetTop;
