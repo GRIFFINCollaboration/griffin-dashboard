@@ -296,10 +296,8 @@
                     top = mousePos.y,
                     element = this,
                     position = '';
-console.log('position offsets')
+
                 do{
-                    console.log(element.id)
-                    console.log([element.offsetLeft || 0, element.offsetTop || 0])
                     position = window.getComputedStyle(element).getPropertyValue('position')
                     offsetTop += element.offsetTop || 0;
                     offsetLeft += element.offsetLeft || 0;
@@ -308,8 +306,8 @@ console.log('position offsets')
 
                 left += offsetLeft;
                 top += offsetTop;
-console.log([left, top])
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + 0 + '; top:' + 0 + ';');
+
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + (left-mousePos.x) + '; top:' + (top-mousePos.y)  + ';');
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
