@@ -234,8 +234,8 @@
                 
                 console.log('offset pairs:')
                 do{
-                    offsetTop += element.offsetTop || 0;
-                    offsetLeft += element.offsetLeft || 0;
+                    //offsetTop += element.offsetTop || 0;
+                    //offsetLeft += element.offsetLeft || 0;
                     console.log(element.id)
                     console.log([element.offsetTop || 0, element.offsetLeft || 0])
                     element = element.offsetParent;
