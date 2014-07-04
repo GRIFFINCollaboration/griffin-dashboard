@@ -13,7 +13,6 @@
                 //get the DAQ structure, use it to decide which detectors need to be linked
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
                     function(res){
-                        console.log(res)
                         
                         var data = JSON.parse(res),
                             i, link;
