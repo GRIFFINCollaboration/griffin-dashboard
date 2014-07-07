@@ -4,7 +4,7 @@ GRIFFIN utilizes up to 25 Chip Scale Atomic Clocks (CSACs) to maintain precise t
 
 Descriptions of the readable and writable parameters exposed by each clock can be found on [this wiki page](https://www.triumf.info/wiki/tigwiki/index.php/GRIF-Clk)
 
-The clock custom elements rely on the ODB information and control functionality provided by the GRIFClk custom MIDAS frontend found in [this package](https://github.com/GRIFFINCollaboration/MIDASfrontends).  One of these frontends needs be deployed for each CSAC.
+The clock custom elements rely on the ODB information and control functionality provided by the GRIFClk custom MIDAS frontend found in [this package](https://github.com/GRIFFINCollaboration/MIDASfrontends).  One of these frontends needs be deployed for each CSAC, and should be named `GRIF-Clk0` through `GRIF-Clk24`.
 
 ##Default Behavior
 Rather than independently, GRIFFIN's CSACs operate in a hierarchical manner, with one master clock (nominally GRIFClk-0 at mscb570) providing a central heartbeat to the other 24 clocks.  As a result, there are a few points of usage and default behavior that reflect this structure:
@@ -29,4 +29,22 @@ This custom element provides a simple illustration of which clocks have frontend
  - `this.slaveSwitch`, `this.masterSwitch` : arrays of radio buttons for toggling configuration of each clock. 
 
 ###Data Acquisition
-Currently `<widget-clock>` only pulls data from the ODB on page load; in future a regular poll will be implemented.
+Currently `<widget-clock>` only pulls data from the ODB on page load; in future a regular poll will be implemented (see [issue #7](https://github.com/BillMills/griffinMarkII/issues/7)).
+
+
+##`<widget-clockControl>`
+This custom element provides fine monitoring and control for GRIFFIN's CSACs.  It is populated with the appropriate information via a custom `postClockChan` event listner, and relies on form submission to the node backend to do most of its ODB parameter writing.
+
+###Attributes
+ - `MIDAS`: host:port of the MIDAS experiment the HV frontends for this detector are living at.
+
+###Event Listeners
+ - `postClockChan`, exepcts `detail` object with keys:
+    - `index` int 0-24 indexing which clock is being posted
+    - `data` JSON object corresponding exactly to the ODB directory `/Equipment/GRIF-Clk<index>`
+
+When this custom event is received, `<widget-clockControl>` updates itself, including reconfiguring its display to suit the configuration of the new clock, via its member function `this.updateForm`.
+
+
+
+
