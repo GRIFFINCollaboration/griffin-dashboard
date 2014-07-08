@@ -277,6 +277,7 @@
                 isMaster.setAttribute('style', 'display:none');
                 isMaster.setAttribute('type', 'number');
                 channelCells.appendChild(isMaster);
+                this.determineFrequency();
 
                 //CSAC card contents
                 this.CSACTable = document.createElement('table');
