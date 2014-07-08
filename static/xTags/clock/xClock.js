@@ -277,7 +277,6 @@
                 isMaster.setAttribute('style', 'display:none');
                 isMaster.setAttribute('type', 'number');
                 channelCells.appendChild(isMaster);
-                this.determineFrequency();
 
                 //CSAC card contents
                 this.CSACTable = document.createElement('table');
@@ -384,8 +383,8 @@
 
                 //report the frequency after stepdown of each channel; set slider to stepdown corresponding to first channel:
                 for(i=0; i<8; i++){
-                    stepdown = (parseInt(payload.data.Variables.Output[hiChan[i]],10) + parseInt(payload.data.Variables.Output[loChan[i]],10)) / 2
-                    this.eSATAlabel[i].innerHTML = (this.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out'
+                    stepdown = Math.min(1, parseInt(payload.data.Variables.Output[hiChan[i]],10)) + Math.min(1, parseInt(payload.data.Variables.Output[loChan[i]],10))
+                    this.eSATAlabel[i].innerHTML = (this.masterFreq / stepdown).toFixed(1) + ' MHz out'
                 }
                 document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
                 document.getElementById('masterOutputFrequencyLabel').innerHTML = (this.masterFreq/(parseInt(payload.data.Variables.Output[11],10)+1)).toFixed(1) + ' MHz';
