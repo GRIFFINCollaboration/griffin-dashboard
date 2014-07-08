@@ -257,8 +257,9 @@
 
             'update': function(){
                 //trigger a new round of data fetching
-                this.acquireRates();
-                this.acquireThresholds();
+                //this.acquireRates();
+                //this.acquireThresholds();
+                this.acquireDAQ();
                 this.acquireHV();                
             },
 
@@ -482,8 +483,6 @@
                     XHR(URL, parseThreshold.bind(null, this.channelNames[i]), 'application/json', true);
                 }
 
-
-
                 /*
                 XHR(this.thresholdServer, function(res){
                     var data;
@@ -492,6 +491,68 @@
                     this.populate();
                 }.bind(this), 'application/json');
                 */
+            },
+
+            //get dataviews from some list of DAQ nodes
+            'acquireDAQ' : function(){
+                var key, i;
+
+                //dump stale data
+                window.currentData.reqRate = {};
+                window.currentData.acptRate = {};
+                window.currentData.Threshold = {};
+
+                //make a list of who to ask for data
+                if(!window.currentData.hostList){
+                    window.currentData.hostList = [];
+
+                    //master
+                    window.currentData.hostList.push(window.currentData.DAQ.hosts.master);
+                    for(key in window.currentData.DAQ.hosts){
+                        if(window.currentData.DAQ.hosts[key].host){
+                            //collectors
+                            window.currentData.hostList.push(window.currentData.DAQ.hosts[key].host);
+                            //digitizers
+                            for(i=0; i<window.currentData.DAQ.hosts[key].digitizers.length; i++){
+                                if(window.currentData.DAQ.hosts[key].digitizers[i])
+                                    window.currentData.hostList.push(window.currentData.DAQ.hosts[key].digitizers[i])
+                            }
+                        }
+                    }
+                }
+
+                console.log(window.currentData.hostList)
+                //send arraybuffer XHR requests to each of some list of URLS;
+                //callback unpacks bytes into window.currentData rates and thresholds.
+
+
+
+
+
+
+            },
+
+            //parse DAQ dataviews into window.currentData variables
+            //information for an individual channel is packed in a 14 byte word:
+            //[MSC 2 bytes][trig request 4 bytes][trig accept 4 bytes][threshold 4 bytes] <--lowest bit
+            'unpackDAQdv' : function(dv){
+                var MSC, trigReq, trigAcpt, threshold,
+                    channelIndex, channelName,
+                    i;
+
+                for(i=0; i<dv.byteLength/14; i++){
+                    threshold = dv.getInt32(i*14, true);
+                    trigAcpt = dv.getInt32(i*14+4, true);
+                    trigReq = dv.getInt32(i*14+8, true);
+                    MSC = dv.getInt16(i*14+12, true);
+
+                    channelIndex = window.currentData.DAQ.MSC.MSC.indexOf(MSC);
+                    channelName = window.currentData.DAQ.MSC.chan[channelIndex];
+
+                    window.currentData.reqRate[channelName] = trigReq;
+                    window.currentData.acptRate[channelName] = trigAcpt;
+                    window.currentData.Threshold[channelName] = threshold;
+                }
             },
 
             //fetch HV
@@ -526,6 +587,7 @@
                 HVsidebar[0].dispatchEvent(evt);
             },
 
+/*
             //construct hostmap as { channelName : [host, ADC number], ...} for each channel.
             'buildHostmap' : function(){
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&encoding=json-nokeys&odb=/DAQ', function(res){
@@ -553,6 +615,15 @@
                     
                 }.bind(this), 'application/json');
             }
+*/
+
+            //grab the whole DAQ table in memory
+            'buildHostmap' : function(){
+                XHR('http://' + this.MIDAS + '/?cmd=jcopy&encoding=json-nokeys&odb=/DAQ', function(res){
+                    window.currentData.DAQ = JSON.parse(res); 
+                }, 'application/json');
+            }
+
 
         }
     });
