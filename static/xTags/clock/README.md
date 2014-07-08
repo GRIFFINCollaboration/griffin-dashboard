@@ -36,7 +36,7 @@ Currently `<widget-clock>` only pulls data from the ODB on page load; in future 
 This custom element provides fine monitoring and control for GRIFFIN's CSACs.  It is populated with the appropriate information via a custom `postClockChan` event listner, and relies on form submission to the node backend to do most of its ODB parameter writing.
 
 ###Attributes
- - `MIDAS`: host:port of the MIDAS experiment the HV frontends for this detector are living at.
+ - `MIDAS`: host:port of the MIDAS experiment the GRIF-Clk frontends are living at.
 
 ###Event Listeners
  - `postClockChan`, exepcts `detail` object with keys:
@@ -44,6 +44,31 @@ This custom element provides fine monitoring and control for GRIFFIN's CSACs.  I
     - `data` JSON object corresponding exactly to the ODB directory `/Equipment/GRIF-Clk<index>`
 
 When this custom event is received, `<widget-clockControl>` updates itself, including reconfiguring its display to suit the configuration of the new clock, via its member function `this.updateForm`.
+
+###Encoding
+A couple of parameters available from the clocks have less-than-obvious encoding:
+ - 'ClockEnB' controls the power state of the 6 eSATA outputs.  
+   - 0xF == on, 0x0 == off.
+   - packing is channel 0 in the first 4 bits, channel i in bits 4i .. 4i+3
+ - `ch<i>_high` and `ch<i>_low` TBD 
+
+
+###Member Functions
+
+####`this.updateForm(payload)`
+Responsible for updating the widget with information from a clock described by `payload`, which is the object described as the event detail of the `postClockChan` custom event.  This process includes populating the fields with infomration, but also manipulating which fields are present when switching between master and slave displays.  See 'Encoding' above for explanation of some of the more obscure logic.
+
+####`this.changeMasterRef()`
+Handles toggling the master reference clock with a direct XHR to the ODB.
+
+####`this.changeView()`
+Handles navigating through the different sidebar views, called as onchange callback to sidebar's navigation radio.
+
+####`this.humanReadableClock(i, v)`
+Parses encoded value `v` pulled from the ODB on clock `i` into a human readable string when possible, and returns that string.
+
+####`this.determineFrequency()`
+Parses value of master output frequeny slider into a value for `ch<i>_high` and `ch<i>_low` (see Encoding above) into values for frequencies output by the 8 output channels, and updates local labels and ODB.
 
 
 
