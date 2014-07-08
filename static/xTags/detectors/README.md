@@ -113,6 +113,12 @@ As with all updatable objects, detector components participate in the main event
 ##Member Functions
 Most of the plumbing for detector components is generic, and inherited as the collection of functions registered on the `methods` member of `<detector-template>`.  These member functions are described qualitatively as follows.
 
+###acquireHV()
+Called as part of the update loop, `acquireHV()` sends XHR requests to the ODB, one for each crate counted in `this.HVcrates`, to return the contents of `/Equipment/HV-i`.  Once data is recieved, `parseHV` sends the recieved data to the right place, and `this.populate()` and `this.updateHVsidebar()` propagate all information to the visualization and HV sidebar.
+
+###buildHostmap()
+Populates `window.currentData.MSC` with an object with the structure `channelName : [host, ADC number]` for each named channel in this detector.
+
 ###clickCell(channelName)
 When a cell is clicked, fires an appropriate custom event at `widget-HVcontrol` or `widget-rateBar` to populate them with the channel of interest.  Also manages highlighting the clicked cell with a red border, and removing it when focus changes.
 
@@ -168,6 +174,9 @@ For each cell:
  - If data is found and log view is requested, take the log of the raw value.
  - Map the raw value onto [0,1] via the scale limits idetified above.
  - Use this mapped value to choose a color to fill the cell with from the color scale, or fill the cell with a default pattern if no data was found.
+
+###updateHVsidebar()
+Fires a custom event `postHVchan` at the first `<widget-HVcontrol>` element found on the page, carrying the necessary payload data to populate that sidebar with information about the last HV cell clicked on.
 
 ###updatePlotParameters()
 Update this object and `localStorage` with values entered into the plot control form.  Intended as `onchange` callback to updating this form.
