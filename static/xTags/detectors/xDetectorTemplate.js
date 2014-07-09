@@ -259,8 +259,10 @@
                 //trigger a new round of data fetching
                 //this.acquireRates();
                 //this.acquireThresholds();
-                this.acquireDAQ();
-                this.acquireHV();                
+                if(window.currentData.DAQ){
+                    this.acquireDAQ();
+                    this.acquireHV();                
+                }
             },
 
             'populate' : function(){
@@ -620,8 +622,9 @@
             //grab the whole DAQ table in memory
             'buildHostmap' : function(){
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&encoding=json-nokeys&odb=/DAQ', function(res){
-                    window.currentData.DAQ = JSON.parse(res); 
-                }, 'application/json');
+                    window.currentData.DAQ = JSON.parse(res);
+                    this.update();
+                }.bind(this), 'application/json');
             }
 
 

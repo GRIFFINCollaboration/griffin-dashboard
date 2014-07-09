@@ -230,8 +230,6 @@ function initializeDetector(name, headline){
     ////////////////////////////
     //MSC table construction
     ////////////////////////////
-    //window.currentData.MSC = {/*channel name : [digitizer host, channel]*/}
-    window.currentData.DAQ = {};
     this.buildHostmap();
 
     ////////////////////////////
