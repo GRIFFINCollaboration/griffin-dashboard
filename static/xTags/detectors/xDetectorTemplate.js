@@ -455,19 +455,19 @@
 
                 return i;
             },
-
+/*
             //fetch rate information
             'acquireRates' : function(){
                 window.currentData.reqRate = {}
                 window.currentData.acptRate = {}
-                /*
+                
                 XHR(this.rateServer, function(res){
                     var data;
                     data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) );
                     parseRate(data);
                     this.populate();
                 }.bind(this), 'application/json');
-                */
+                
             },
 
             //fetch threshold information
@@ -485,16 +485,16 @@
                     XHR(URL, parseThreshold.bind(null, this.channelNames[i]), 'application/json', true);
                 }
 
-                /*
+                
                 XHR(this.thresholdServer, function(res){
                     var data;
                     data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) );
                     parseThreshold(data);
                     this.populate();
                 }.bind(this), 'application/json');
-                */
+                
             },
-
+*/
             //get dataviews from some list of DAQ nodes
             'acquireDAQ' : function(){
                 var key, i;
@@ -523,14 +523,11 @@
                     }
                 }
 
-                console.log(window.currentData.hostList)
                 //send arraybuffer XHR requests to each of some list of URLS;
                 //callback unpacks bytes into window.currentData rates and thresholds.
-
-
-
-
-
+                for(i=0; i<window.currentData.hostList.length; i++){
+                    //XHR('http://'+window.currentData.hostList, this.unpackDAQdv, false, false, true);
+                }
 
             },
 

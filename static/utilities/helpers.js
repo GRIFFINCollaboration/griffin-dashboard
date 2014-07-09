@@ -54,19 +54,31 @@ function longestWord(phrase){
 
 }
 
-function XHR(URL, callback, mime, noCredentials){
+function XHR(URL, callback, mime, noCredentials, isDataview){
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function(){
+        var dv;
+
         if(this.readyState != 4) return;
-        callback(this.responseText);
+        if(isDataview){
+            dv = new DataView(this.response);
+            callback(dv);
+        } else {
+            callback(this.responseText);
+        }
     }
 
     if(!noCredentials)
         xmlhttp.withCredentials = true;
     if(mime)
         xmlhttp.overrideMimeType(mime);
+
     xmlhttp.open('GET', URL);
+
+    if(isDataview)
+        xmlhttp.responseType = "arraybuffer";
+    
     xmlhttp.send();   
 }
 

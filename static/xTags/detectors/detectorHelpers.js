@@ -279,6 +279,7 @@ function fetchODBEquipment(returnObj){
     window.currentData.ODB.Equipment = returnObj;
 }
 
+/*
 //callback for fetching from the scalar service:
 function parseRate(data){
     var key, subkey;
@@ -287,7 +288,7 @@ function parseRate(data){
         window.currentData.reqRate = {};
     if(!window.currentData.acptRate)
         window.currentData.acptRate = {};
-/*
+
     for(key in data){
         if (data.hasOwnProperty(key)) {
             for(subkey in data[key]){
@@ -297,7 +298,7 @@ function parseRate(data){
             }
         }
     }
-*/
+
 }
 
 //similar function for the threshold service:
@@ -311,14 +312,15 @@ function parseThreshold(channelName, res){
     data = JSON.parse(res);
     window.currentData.Threshold[channelName] = data['t_thres']['d'];
 
-/*
+
     if(data['parameters']['thresholds']){
         for(key in data['parameters']['thresholds']){
             window.currentData.Threshold[key.toUpperCase().slice(0,10)] = data['parameters']['thresholds'][key];
         }        
     }    
-*/
+
 }
+*/
 
 //and again for HV:
 function parseHV(data){

@@ -6,6 +6,8 @@
             created: function() {
                 var xString, option, title, deckWrap, builderLink;
 
+                window.currentData = {};
+
                 this.width = this.offsetWidth;
                 this.height = window.innerHeight*0.6;
                 this.showing = 0;
@@ -106,6 +108,7 @@
                     xLength = collectorGutter/2,
                     xLeft, xRight, M, S, C, MSCstring;
 
+                window.currentData.DAQ = data;
                 this.collectors = [];
                 this.digitizers = [];
                 this.collectorCells = [];
@@ -338,14 +341,150 @@
             },
 
             'update' : function(){
+                //acquire new data
+                if(window.currentData.DAQ)
+                    this.acquireDAQ();
+
                 //keep the tooltip updated:
                 if(this.showing == 0 && (this.lastCollectorTTindex || this.lastCollectorTTindex==0)){
                     this.writeCollectorTooltip(this.lastCollectorTTindex);
                 } else if(this.lastDigitizerTTindex || this.lastDigitizerTTindex==0){
                     this.writeDigitizerTooltip(this.lastDigitizerTTindex);
                 }
+            },
 
+            //get dataviews from some list of DAQ nodes
+            'acquireDAQ' : function(){
+                var key, i;
+
+                //dump stale data
+                window.currentData.collectorTotal = [];
+                window.currentData.digitizerTotal = [];
+
+                //make a list of who to ask for data
+                if(!window.currentData.hostList){
+                    window.currentData.hostList = [];
+
+                    //master
+                    //window.currentData.hostList.push(window.currentData.DAQ.hosts.master);
+                    for(key in window.currentData.DAQ.hosts){
+                        if(window.currentData.DAQ.hosts[key].host){
+                            //collectors
+                            //window.currentData.hostList.push(window.currentData.DAQ.hosts[key].host);
+                            //digitizers
+                            for(i=0; i<window.currentData.DAQ.hosts[key].digitizers.length; i++){
+                                if(window.currentData.DAQ.hosts[key].digitizers[i])
+                                    window.currentData.hostList.push(window.currentData.DAQ.hosts[key].digitizers[i])
+                            }
+                        }
+                    }
+                }
+
+                //send arraybuffer XHR requests to each of some list of URLS;
+                //callback unpacks bytes into window.currentData rates and thresholds.
+                for(i=0; i<window.currentData.hostList.length; i++){
+                    //XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, false, true);
+                }
+
+            },
+
+            //parse DAQ dataviews into window.currentData variables
+            //information for an individual channel is packed in a 14 byte word:
+            //[MSC 2 bytes][trig request 4 bytes][trig accept 4 bytes][threshold 4 bytes] <--lowest bit
+            'unpackDAQdv' : function(dv){
+                var MSC, trigReq, trigAcpt,
+                    channelIndex, channelName,
+                    collectorIndex, digitizerIndex,
+                    i;
+
+                for(i=0; i<dv.byteLength/14; i++){
+                    trigAcpt = dv.getInt32(i*14+4, true);
+                    trigReq = dv.getInt32(i*14+8, true);
+                    MSC = dv.getInt16(i*14+12, true);
+
+                    channelIndex = window.currentData.DAQ.MSC.MSC.indexOf(MSC);
+                    channelName = window.currentData.DAQ.MSC.chan[channelIndex];
+
+                    //sum the data by digitizer and by collector
+                    collectorIndex = (0xF << 12) & MSC;
+                    digitizerIndex = (0xF << 8) & MSC;
+
+                    //collector sum
+                    if(window.currentData.collectorTotal[collectorIndex]){
+                        window.currentData.collectorTotal[collectorIndex].trigReq += trigReq;
+                        window.currentData.collectorTotal[collectorIndex].trigAcpt += trigAcpt;
+                    } else {
+                        window.currentData.collectorTotal[collectorIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
+                    }
+
+                    //digitizer sum
+                    if(window.currentData.digitizerTotal[collectorIndex] && window.currentData.digitizerTotal[collectorIndex][digitizerIndex]){
+                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex].trigReq += trigReq;
+                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex].trigAcpt += trigAcpt;
+                    } else if(window.currentData.digitizerTotal[colletorIndex]){
+                        window.currentData.digitizerTotal[colletorIndex][digitizerIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
+                    } else {
+                        window.currentData.digitizerTotal[colletorIndex] = [];
+                        window.currentData.digitizerTotal[colletorIndex][digitizerIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
+                    }
+
+                    //trigger repaint
+                    this.updateCells(); 
+                }
+            },
+
+            //set new colors for all cells, and repaint.
+            'updateCells': function(){
+                /*
+                var i, color, rawValue, colorIndex, 
+                    currentMin = this.min[this.currentView], 
+                    currentMax = this.max[this.currentView],
+                    isLog = this.scaleType[this.currentView] == 'log';
+
+                //get the scale limits right
+                if(isLog){
+                    currentMin = Math.log10(currentMin);
+                    currentMax = Math.log10(currentMax);
+                }
+
+                //change the color of each cell to whatever it should be now:
+                for(i=0; i<this.channelNames.length; i++){
+                    //bail out if this cell isn't in the current view
+                    if(!this.inCurrentView(this.channelNames[i]))
+                        continue;
+
+                    //fetch the most recent raw value from the currentData store:
+                    rawValue = window.currentData[this.currentView][this.channelNames[i]];
+
+                    //if no data was found, raise exception code:
+                    if(!rawValue && rawValue!=0)
+                        rawValue = 0xDEADBEEF;
+
+                    //value found and parsable, recolor cell:
+                    if(rawValue != 0xDEADBEEF){
+                        if(isLog)
+                            rawValue = Math.log10(rawValue);
+
+                        colorIndex = (rawValue - currentMin) / (currentMax - currentMin);
+                        if(colorIndex < 0) colorIndex = 0;
+                        if(colorIndex > 1) colorIndex = 1;
+                        color = scalepickr(colorIndex, this.scale);
+
+                        this.cells[this.channelNames[i]].fill(color);
+                        this.cells[this.channelNames[i]].setFillPriority('color');
+
+                    //no value reporting, show error pattern
+                    } else{
+                        this.cells[this.channelNames[i]].setFillPriority('pattern')
+                    }
+                }
+                */
             }
+
+
+
+
+
         }
     });
 
