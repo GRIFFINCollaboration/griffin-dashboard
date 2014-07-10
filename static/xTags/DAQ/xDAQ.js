@@ -137,7 +137,7 @@
                     if(this.collectors[i]){
                         this.collectorCells[i] = new Kinetic.Rect({
                             x:collectorGutter/2 + i*this.width/16,
-                            y:this.height*0.6,
+                            y:this.height*0.5,
                             width: collectorWidth,
                             height:this.height*0.2,
                             fill:'#555555',
@@ -154,12 +154,12 @@
                     } else{
                         //terminate loose cord with red x
                         xLeft = new Kinetic.Line({
-                            points: [(collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) - xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) + xLength, 0.6*this.height + xLength],
+                            points: [(collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) - xLength, 0.5*this.height - xLength, (collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) + xLength, 0.5*this.height + xLength],
                             stroke: '#FF0000',
                             strokeWidth: 8   
                         });
                         xRight = new Kinetic.Line({
-                            points: [(collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) + xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) - xLength, 0.6*this.height + xLength],
+                            points: [(collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) + xLength, 0.5*this.height - xLength, (collectorGutter + collectorWidth)/2 + i*(collectorGutter+collectorWidth) - xLength, 0.5*this.height + xLength],
                             stroke: '#FF0000',
                             strokeWidth: 8
                         });
@@ -180,7 +180,7 @@
                     this.masterCables[i][0].moveToBottom();
                     for(j=1; j<5; j++){
                         this.masterCables[i][j] = new Kinetic.Line({
-                            points: [collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4, 0.2*this.height, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth), 0.6*this.height],
+                            points: [collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4, 0.2*this.height, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth), 0.5*this.height],
                             stroke: '#000000',
                             strokeWidth: 4
                         });
@@ -203,7 +203,7 @@
                         if(data.hosts['collector0x' + i.toString(16)].digitizers[j]){
                             this.digitizerCells[i][j] = new Kinetic.Rect({
                                 x:collectorGutter/2 + j*this.width/16,
-                                y:this.height*0.6,
+                                y:this.height*0.5,
                                 width: collectorWidth,
                                 height:this.height*0.2,
                                 fill:'#555555',
@@ -219,12 +219,12 @@
                         } else{
                             //terminate loose cord with red x
                             xLeft = new Kinetic.Line({
-                                points: [(collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) - xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) + xLength, 0.6*this.height + xLength],
+                                points: [(collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) - xLength, 0.5*this.height - xLength, (collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) + xLength, 0.5*this.height + xLength],
                                 stroke: '#FF0000',
                                 strokeWidth: 8   
                             });
                             xRight = new Kinetic.Line({
-                                points: [(collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) + xLength, 0.6*this.height - xLength, (collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) - xLength, 0.6*this.height + xLength],
+                                points: [(collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) + xLength, 0.5*this.height - xLength, (collectorGutter + collectorWidth)/2 + j*(collectorGutter+collectorWidth) - xLength, 0.5*this.height + xLength],
                                 stroke: '#FF0000',
                                 strokeWidth: 8
                             });
@@ -247,7 +247,7 @@
                         this.collectorCables[i][j][0].moveToBottom();
                         for(k=1; k<5; k++){
                             this.collectorCables[i][j][k] = new Kinetic.Line({
-                                points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.2*this.height, (collectorGutter + collectorWidth)/2 + (4*j+k-1)*(collectorGutter+collectorWidth), 0.6*this.height],
+                                points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.2*this.height, (collectorGutter + collectorWidth)/2 + (4*j+k-1)*(collectorGutter+collectorWidth), 0.5*this.height],
                                 stroke: '#000000',
                                 strokeWidth: 4
                             });
