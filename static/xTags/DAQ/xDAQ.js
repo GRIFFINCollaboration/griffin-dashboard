@@ -6,6 +6,7 @@
             created: function() {
                 var xString, option, title, deckWrap, builderLink
                 ,   plotControlWrap = document.createElement('form')
+                ,   plotControlTitle = document.createElement('h3')
                 ,   plotControlMinLabel = document.createElement('label')
                 ,   plotControlMaxLabel = document.createElement('label')
                 ,   plotControlMin = document.createElement('input')
