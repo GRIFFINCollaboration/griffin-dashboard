@@ -158,9 +158,9 @@
                 }
 
                 //if anything was in local storage, communicate this to the UI:
-                plotControlMin.value = this.min[this.currentView];
-                plotControlMax.value = this.max[this.currentView];
-                plotScale.value = this.scaleType[this.currentView];
+                plotControlMin.value = this.collectorMin[this.currentView];
+                plotControlMax.value = this.collectorMax[this.currentView];
+                plotScale.value = this.collectorScaleType[this.currentView];
 
                 ////////////////////////////
                 //Kinetic.js setup
