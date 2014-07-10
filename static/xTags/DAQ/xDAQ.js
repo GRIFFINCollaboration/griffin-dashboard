@@ -4,8 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var xString, option, title, deckWrap, builderLink, dataViews,
-                    i,
+                var xString, option, title, deckWrap, builderLink, dataViews, i
                 ,   plotControlWrap = document.createElement('form')
                 ,   plotControlTitle = document.createElement('h3')
                 ,   plotControlMinLabel = document.createElement('label')
