@@ -26,6 +26,7 @@
                 //data views
                 this.views = ['reqRate', 'acptRate'];
                 this.viewLabels = ['Trigger Request Rate', 'Trigger Accept Rate'];
+                this.currentView = this.views[this.views.length-1];
 
                 //get the DAQ structure
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
@@ -139,21 +140,28 @@
                 //Scale Parameters
                 ///////////////////////////
                 this.scale = 'ROOT Rainbow';
-/*
-                this.min = {};
-                this.max = {};
-                this.scaleType = {};
+
+                this.collectorMin = {};
+                this.collectorMax = {};
+                this.collectorScaleType = {};
+                this.digitizerMin = {};
+                this.digitizerMax = {};
+                this.digitizerScaleType = {};
                 for(i=0; i<this.views.length; i++){
-                    this.min[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'min'), 0);
-                    this.max[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'max'), 3000);
-                    this.scaleType[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'scaleType'), 'lin');
+                    this.collectorMin[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'collectorMin'), 0);
+                    this.collectorMax[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'collectoMax'), 30000);
+                    this.collectorScaleType[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'collectorScaleType'), 'lin');
+
+                    this.digitizerMin[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'digitizerMin'), 0);
+                    this.digitizerMax[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'collectoMax'), 3000);
+                    this.digitizerScaleType[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'digitizerScaleType'), 'lin');
                 }
 
                 //if anything was in local storage, communicate this to the UI:
                 plotControlMin.value = this.min[this.currentView];
                 plotControlMax.value = this.max[this.currentView];
                 plotScale.value = this.scaleType[this.currentView];
-*/
+
                 ////////////////////////////
                 //Kinetic.js setup
                 ////////////////////////////
@@ -584,7 +592,7 @@
                     this.scaleLayer[j].add(this.scaleTitle[j]);
 
                     //populate labels
-                    //this.refreshColorScale();
+                    this.refreshColorScale();
                     this.stage[j].add(this.scaleLayer[j]);
                     this.scaleLayer[j].draw();
                 }
@@ -593,14 +601,25 @@
             //refresh the color scale labeling / coloring:
             'refreshColorScale': function(){
 
-                var i, j, isLog, currentMin, currentMax, logTitle;
+                var i, j, isLog, currentMin, currentMax, logTitle,
+                    min, max. scaleType;
+
+                if(this.showing == 0){
+                    min = this.collectorMin;
+                    max = this.collectorMax;
+                    scaleType = this.collectorScaleType;
+                } else{
+                    min = this.digitizerMin;
+                    max = this.digitizerMax;
+                    scaleType = this.digitizerScaleType;
+                }
 
                 //are we in log mode?
-                isLog = this.scaleType[this.currentView] == 'log';
+                isLog = scaleType[this.currentView] == 'log';
 
                 //what minima and maxima are we using?
-                currentMin = this.min[this.currentView];
-                currentMax = this.max[this.currentView];
+                currentMin = min[this.currentView];
+                currentMax = max[this.currentView];
                 if(isLog){
                     currentMin = Math.log10(currentMin);
                     currentMax = Math.log10(currentMax);
@@ -609,25 +628,63 @@
                     logTitle = '';
 
                 //refresh tick labels
-                for(j=0; j<this.viewNames.length; j++){
-                    //bail out if this scale isn't on display:
-                    if(j != this.displayIndex)
-                        continue
-
-                    for(i=0; i<11; i++){
-                        //update text
-                        this.tickLabels[j][i].setText(generateTickLabel(currentMin, currentMax, 11, i));
-                        //update position
-                        this.tickLabels[j][i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[j][i].getTextWidth()/2);
-                    }
-
-                    //update title
-                    this.scaleTitle[j].setText(logTitle + this.viewLabels[this.views.indexOf(this.currentView)] + ' [' + this.currentUnit + ']');
-                    this.scaleTitle[j].setAttr('x', this.width/2 - this.scaleTitle[j].getTextWidth()/2);
-
-                    this.scaleLayer[this.displayIndex].draw();
+                for(i=0; i<11; i++){
+                    //update text
+                    this.tickLabels[this.showing][i].setText(generateTickLabel(currentMin, currentMax, 11, i));
+                    //update position
+                    this.tickLabels[this.showing][i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[this.showing][i].getTextWidth()/2);
                 }
+
+                //update title
+                this.scaleTitle[this.showing].setText(logTitle + this.viewLabels[this.views.indexOf(this.currentView)] + ' [' + this.currentUnit + ']');
+                this.scaleTitle[this.showing].setAttr('x', this.width/2 - this.scaleTitle[this.showing].getTextWidth()/2);
+
+                this.scaleLayer[this.showing].draw();
                 
+                
+            },
+
+            'trackView': function(){
+                /*
+                var i;
+
+                //keep track of what state the view state radio is in
+                //intended for binding to the onchange of the radio.
+                this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
+                this.currentUnit = this.units[this.views.indexOf(this.currentView)];
+
+                //manage which layer is showing, if there are different layers for different views
+                //(ie different rate / HV segmentation)
+                //summary views never segment differently.
+                if(this.HVlayer){
+                    for(i=0; i<this.viewNames.length; i++){
+                        if(this.currentView == 'HV' && this.viewNames[i] != 'Summary'){
+                            this.mainLayer[i].hide();
+                            this.HVlayer[i].show();
+                        } else {
+                            this.mainLayer[i].show();
+                            this.HVlayer[i].hide();
+                        }
+                    }
+                }
+
+                //make sure the scale control widget is up to date
+                document.getElementById(this.id + 'PlotControlMin').value = this.min[this.currentView];
+                document.getElementById(this.id + 'PlotControlMax').value = this.max[this.currentView];
+                document.getElementById(this.id + 'PlotControlScale').value = this.scaleType[this.currentView];
+
+                //make sure the sidebar is following along
+                if(this.currentView == 'HV')
+                    document.getElementById(this.id + 'SidebarDeck').shuffleTo(0);
+                else
+                    document.getElementById(this.id + 'SidebarDeck').shuffleTo(1);
+
+                this.updateCells();
+                this.refreshColorScale();
+                this.mainLayer[this.displayIndex].draw();
+                if(this.HVlayer)
+                    this.HVlayer[this.displayIndex].draw();
+                */
             },
 
             //update scale minima and maxima and other plotting parameters both locally and in localStorage.

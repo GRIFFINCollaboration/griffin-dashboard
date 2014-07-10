@@ -26,3 +26,7 @@ div.DAQnav{
 a#MSCbuilderLink{
 	float: right;
 }
+
+form.plotControlWidget{
+	margin-bottom: 1em;
+}
