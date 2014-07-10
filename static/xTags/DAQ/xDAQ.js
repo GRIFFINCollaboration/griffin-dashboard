@@ -154,12 +154,12 @@
                 this.digitizerMax = {};
                 this.digitizerScaleType = {};
                 for(i=0; i<this.views.length; i++){
-                    this.collectorMin[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'collectorMin'), 0);
-                    this.collectorMax[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'collectoMax'), 30000);
+                    this.collectorMin[this.views[i]] = parseInt(canHas(localStorage.getItem('DAQ'+this.views[i]+'collectorMin'), 0),10);
+                    this.collectorMax[this.views[i]] = parseInt(canHas(localStorage.getItem('DAQ'+this.views[i]+'collectoMax'), 30000),10);
                     this.collectorScaleType[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'collectorScaleType'), 'lin');
 
-                    this.digitizerMin[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'digitizerMin'), 0);
-                    this.digitizerMax[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'collectoMax'), 3000);
+                    this.digitizerMin[this.views[i]] = parseInt(canHas(localStorage.getItem('DAQ'+this.views[i]+'digitizerMin'), 0),10);
+                    this.digitizerMax[this.views[i]] = parseInt(canHas(localStorage.getItem('DAQ'+this.views[i]+'collectoMax'), 3000),10);
                     this.digitizerScaleType[this.views[i]] = canHas(localStorage.getItem('DAQ'+this.views[i]+'digitizerScaleType'), 'lin');
                 }
 
