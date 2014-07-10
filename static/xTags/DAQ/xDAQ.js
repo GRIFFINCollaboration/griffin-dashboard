@@ -655,7 +655,7 @@
 
                 //keep track of what state the view state radio is in
                 //intended for binding to the onchange of the radio.
-                this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
+                this.currentView = document.querySelector('input[name="DAQview"]:checked').value;
                 
 
                 console.log(this.currentView)
