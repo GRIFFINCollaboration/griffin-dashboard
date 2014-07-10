@@ -4,7 +4,8 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var xString, option, title, deckWrap, builderLink
+                var xString, option, title, deckWrap, builderLink, dataViews,
+                    i,
                 ,   plotControlWrap = document.createElement('form')
                 ,   plotControlTitle = document.createElement('h3')
                 ,   plotControlMinLabel = document.createElement('label')
@@ -71,6 +72,11 @@
 
                 //data source selector
                 radioArray(this.navBlock, this.viewLabels, this.views, 'DAQview');
+                document.getElementById('DAQview1').setAttribute('checked', true);
+                dataViews = this.navBlock.querySelectorAll('input[type="radio", name="DAQview"]');
+                for(i=0; i<dataViews.length; i++){
+                    dataViews[i].onchange = this.trackView.bind(this);
+                }
 
                 deckWrap = document.createElement('div');
                 this.appendChild(deckWrap);
@@ -636,7 +642,7 @@
                 }
 
                 //update title
-                this.scaleTitle[this.showing].setText(logTitle + this.viewLabels[this.views.indexOf(this.currentView)] + ' [' + this.currentUnit + ']');
+                this.scaleTitle[this.showing].setText(logTitle + this.viewLabels[this.views.indexOf(this.currentView)] + ' [Hz]');
                 this.scaleTitle[this.showing].setAttr('x', this.width/2 - this.scaleTitle[this.showing].getTextWidth()/2);
 
                 this.scaleLayer[this.showing].draw();
@@ -645,39 +651,21 @@
             },
 
             'trackView': function(){
-                /*
+                
                 var i;
 
                 //keep track of what state the view state radio is in
                 //intended for binding to the onchange of the radio.
                 this.currentView = document.querySelector('input[name="'+this.id+'Nav"]:checked').value;
-                this.currentUnit = this.units[this.views.indexOf(this.currentView)];
+                
 
-                //manage which layer is showing, if there are different layers for different views
-                //(ie different rate / HV segmentation)
-                //summary views never segment differently.
-                if(this.HVlayer){
-                    for(i=0; i<this.viewNames.length; i++){
-                        if(this.currentView == 'HV' && this.viewNames[i] != 'Summary'){
-                            this.mainLayer[i].hide();
-                            this.HVlayer[i].show();
-                        } else {
-                            this.mainLayer[i].show();
-                            this.HVlayer[i].hide();
-                        }
-                    }
-                }
+                console.log(this.currentView)
+                /*
 
                 //make sure the scale control widget is up to date
                 document.getElementById(this.id + 'PlotControlMin').value = this.min[this.currentView];
                 document.getElementById(this.id + 'PlotControlMax').value = this.max[this.currentView];
                 document.getElementById(this.id + 'PlotControlScale').value = this.scaleType[this.currentView];
-
-                //make sure the sidebar is following along
-                if(this.currentView == 'HV')
-                    document.getElementById(this.id + 'SidebarDeck').shuffleTo(0);
-                else
-                    document.getElementById(this.id + 'SidebarDeck').shuffleTo(1);
 
                 this.updateCells();
                 this.refreshColorScale();
