@@ -126,11 +126,12 @@
                 plotScale.appendChild(plotScaleLog);
                 document.getElementById(this.id+'PlotScaleLog').innerHTML = 'Log';
 
-/*
+
                 ///////////////////////////
                 //Scale Parameters
                 ///////////////////////////
                 this.scale = 'ROOT Rainbow';
+/*
                 this.min = {};
                 this.max = {};
                 this.scaleType = {};
