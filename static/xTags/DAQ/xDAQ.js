@@ -13,6 +13,7 @@
                 this.showing = 0;
                 this.lastCollectorTTindex = null;
                 this.lastDigitizerTTindex = null;
+                this.scale = 'Red Scale';
 
                 //get the DAQ structure
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
@@ -430,6 +431,78 @@
 
                     //trigger repaint
                     this.updateCells(); 
+                }
+            },
+
+            //generate the color scale
+            'generateColorScale': function(){
+                var colorStops = [],
+                    i, j,
+                    tick, colorScale;
+
+                //generate a bunch of color stop points for the gradient
+                for(i=0; i<101; i++){
+                    colorStops.push(i/100);
+                    colorStops.push(scalepickr(i/100, this.scale));
+                }
+
+                this.tickLabels = [];
+                this.scaleTitle = [];
+                for(j=0; j<this.scaleLayer.length; j++){
+
+                    //draw the gradient itself
+                    colorScale = new Kinetic.Rect({
+                        x: 0.1*this.width,
+                        y: 0.9*this.height,
+                        width: 0.8*this.width,
+                        height: 0.05*this.height,
+                        fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
+                        fillLinearGradientEndPoint: {x: 0.8*this.width, y: 0},
+                        fillLinearGradientColorStops: colorStops,
+                        stroke: '#999999',
+                        strokeWidth: 2                    
+                    });
+
+                    this.scaleLayer[j].add(colorScale);
+
+                    //place ticks on scale
+                    this.tickLabels[j] = [];
+                    for(i=0; i<11; i++){
+                        //tick line
+                        tick = new Kinetic.Line({
+                            points: [(0.1+i*0.08)*this.width, 0.95*this.height, (0.1+i*0.08)*this.width, 0.96*this.height],
+                            stroke: '#999999',
+                            strokeWidth: 2
+                        });
+                        this.scaleLayer[j].add(tick);
+
+                        //tick label
+                        this.tickLabels[j][i] = new Kinetic.Text({
+                            x: (0.1+i*0.08)*this.width,
+                            y: 0.96*this.height + 2,
+                            text: '',
+                            fontSize: 14,
+                            fontFamily: 'Arial',
+                            fill: '#999999'
+                        });
+                        this.scaleLayer[j].add(this.tickLabels[j][i]);
+                    }
+
+                    //place title on scale
+                    this.scaleTitle[j] = new Kinetic.Text({
+                        x: this.width/2,
+                        y: 0.9*this.height - 22,
+                        text: '',
+                        fontSize : 20,
+                        fontFamily: 'Arial',
+                        fill: '#999999'
+                    })
+                    this.scaleLayer[j].add(this.scaleTitle[j]);
+
+                    //populate labels
+                    //this.refreshColorScale();
+                    this.stage[j].add(this.scaleLayer[j]);
+                    this.scaleLayer[j].draw();
                 }
             },
 
