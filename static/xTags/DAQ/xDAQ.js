@@ -5,7 +5,7 @@
         lifecycle: {
             created: function() {
                 var xString, option, title, deckWrap, builderLink
-                ,   plotControlWrap = document.createElement('form');
+                ,   plotControlWrap = document.createElement('form')
                 ,   plotControlMinLabel = document.createElement('label')
                 ,   plotControlMaxLabel = document.createElement('label')
                 ,   plotControlMin = document.createElement('input')
@@ -13,7 +13,7 @@
                 ,   plotScale = document.createElement('select')
                 ,   plotScaleLin = document.createElement('option')
                 ,   plotScaleLog = document.createElement('option')
-                
+
                 window.currentData = {};
 
                 this.width = this.offsetWidth;
