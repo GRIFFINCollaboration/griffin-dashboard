@@ -83,9 +83,6 @@
                 this.mainLayer = [];
                 this.scaleLayer = [];
 
-                //build scales
-                this.generateColorScale();
-
                 //let repopulate know that the detector would like to be updated every loop:
                 if(!window.refreshTargets)
                     window.refreshTargets = [];
@@ -261,6 +258,9 @@
                     this.mainLayer[i+1].draw();
 
                 }
+
+                //build scales
+                this.generateColorScale();
 
                 //build the MSC table in per-digitizer chunks
                 //this.localMSC[collector index][digitizer index][ADC index] = channel name
@@ -451,7 +451,8 @@
 
                 this.tickLabels = [];
                 this.scaleTitle = [];
-                for(j=0; j<this.scaleLayer.length; j++){
+                for(j=0; j<17; j++){
+                    if(!this.mainLayer[j]) continue;
 
                     //draw the gradient itself
                     colorScale = new Kinetic.Rect({
