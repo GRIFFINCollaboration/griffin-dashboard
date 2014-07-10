@@ -4,8 +4,16 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var xString, option, title, deckWrap, builderLink;
-
+                var xString, option, title, deckWrap, builderLink
+                ,   plotControlWrap = document.createElement('form');
+                ,   plotControlMinLabel = document.createElement('label')
+                ,   plotControlMaxLabel = document.createElement('label')
+                ,   plotControlMin = document.createElement('input')
+                ,   plotControlMax = document.createElement('input')
+                ,   plotScale = document.createElement('select')
+                ,   plotScaleLin = document.createElement('option')
+                ,   plotScaleLog = document.createElement('option')
+                
                 window.currentData = {};
 
                 this.width = this.offsetWidth;
@@ -13,7 +21,6 @@
                 this.showing = 0;
                 this.lastCollectorTTindex = null;
                 this.lastDigitizerTTindex = null;
-                this.scale = 'ROOT Rainbow';
 
                 //get the DAQ structure
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
@@ -23,6 +30,7 @@
                     'application/json');
 
                 //build DOM
+                //DAQ elements
                 this.navBlock = document.createElement('div');
                 this.navBlock.setAttribute('class', 'DAQnav');
                 this.appendChild(this.navBlock);
@@ -70,10 +78,72 @@
                 this.collectorBlock.setAttribute('id', 'collectorBlock');
                 document.getElementById('DAQmasterCard').appendChild(this.collectorBlock);
 
+                //tooltip
                 this.tooltip = document.createElement('div');
                 this.tooltip.setAttribute('id', 'tooltip');
                 this.appendChild(this.tooltip);
 
+                //plot control
+                plotControlWrap.setAttribute('id', this.id+'PlotControl');
+                plotControlWrap.setAttribute('class', 'plotControlWidget');
+                this.appendChild(plotControlWrap);
+                document.getElementById(this.id+'PlotControl').onchange = this.updatePlotParameters.bind(this);
+
+                plotControlTitle.setAttribute('id', this.id+'PlotControlTitle');
+                plotControlWrap.appendChild(plotControlTitle);
+                document.getElementById(this.id + 'PlotControlTitle').innerHTML = 'Plot Control'
+
+                plotControlMinLabel.setAttribute('id', this.id+'PlotControlMinLabel');
+                plotControlWrap.appendChild(plotControlMinLabel)
+                document.getElementById(this.id+'PlotControlMinLabel').innerHTML = 'Min: ';
+                plotControlMin.setAttribute('id', this.id + 'PlotControlMin');
+                plotControlMin.setAttribute('type', 'number');
+                plotControlMin.setAttribute('step', 'any');
+                plotControlMin.setAttribute('class', 'stdin');
+                plotControlWrap.appendChild(plotControlMin);
+
+                plotControlMaxLabel.setAttribute('id', this.id+'PlotControlMaxLabel');
+                plotControlWrap.appendChild(plotControlMaxLabel)    
+                document.getElementById(this.id+'PlotControlMaxLabel').innerHTML = 'Max: ';
+                plotControlMax.setAttribute('id', this.id + 'PlotControlMax');
+                plotControlMax.setAttribute('type', 'number');
+                plotControlMax.setAttribute('step', 'any');
+                plotControlMax.setAttribute('class', 'stdin');
+                plotControlWrap.appendChild(plotControlMax);
+
+                plotScale.setAttribute('id', this.id+'PlotControlScale');
+                plotScale.setAttribute('class', 'stdin');
+                plotControlWrap.appendChild(plotScale);
+
+                plotScaleLin.setAttribute('id', this.id+'PlotScaleLin');
+                plotScaleLin.setAttribute('value', 'lin');
+                plotScale.appendChild(plotScaleLin);
+                document.getElementById(this.id+'PlotScaleLin').innerHTML = 'Linear';
+
+                plotScaleLog.setAttribute('id', this.id+'PlotScaleLog');
+                plotScaleLog.setAttribute('value', 'log');
+                plotScale.appendChild(plotScaleLog);
+                document.getElementById(this.id+'PlotScaleLog').innerHTML = 'Log';
+
+/*
+                ///////////////////////////
+                //Scale Parameters
+                ///////////////////////////
+                this.scale = 'ROOT Rainbow';
+                this.min = {};
+                this.max = {};
+                this.scaleType = {};
+                for(i=0; i<this.views.length; i++){
+                    this.min[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'min'), 0);
+                    this.max[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'max'), 3000);
+                    this.scaleType[this.views[i]] = canHas(localStorage.getItem(name+this.views[i]+'scaleType'), 'lin');
+                }
+
+                //if anything was in local storage, communicate this to the UI:
+                plotControlMin.value = this.min[this.currentView];
+                plotControlMax.value = this.max[this.currentView];
+                plotScale.value = this.scaleType[this.currentView];
+*/
                 ////////////////////////////
                 //Kinetic.js setup
                 ////////////////////////////
@@ -508,6 +578,46 @@
                     this.stage[j].add(this.scaleLayer[j]);
                     this.scaleLayer[j].draw();
                 }
+            },
+
+            //refresh the color scale labeling / coloring:
+            'refreshColorScale': function(){
+
+                var i, j, isLog, currentMin, currentMax, logTitle;
+
+                //are we in log mode?
+                isLog = this.scaleType[this.currentView] == 'log';
+
+                //what minima and maxima are we using?
+                currentMin = this.min[this.currentView];
+                currentMax = this.max[this.currentView];
+                if(isLog){
+                    currentMin = Math.log10(currentMin);
+                    currentMax = Math.log10(currentMax);
+                    logTitle = 'log ';
+                } else
+                    logTitle = '';
+
+                //refresh tick labels
+                for(j=0; j<this.viewNames.length; j++){
+                    //bail out if this scale isn't on display:
+                    if(j != this.displayIndex)
+                        continue
+
+                    for(i=0; i<11; i++){
+                        //update text
+                        this.tickLabels[j][i].setText(generateTickLabel(currentMin, currentMax, 11, i));
+                        //update position
+                        this.tickLabels[j][i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[j][i].getTextWidth()/2);
+                    }
+
+                    //update title
+                    this.scaleTitle[j].setText(logTitle + this.viewLabels[this.views.indexOf(this.currentView)] + ' [' + this.currentUnit + ']');
+                    this.scaleTitle[j].setAttr('x', this.width/2 - this.scaleTitle[j].getTextWidth()/2);
+
+                    this.scaleLayer[this.displayIndex].draw();
+                }
+                
             },
 
             //set new colors for all cells, and repaint.
