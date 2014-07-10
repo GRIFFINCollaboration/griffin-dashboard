@@ -17,7 +17,6 @@ function initializeDetector(name, headline){
     ,   plotCard
     ,   xString
     ,   deckNavigator, deckOption
-    //image has aspect ratio 3:2 and tries to be 80% of the window width, but not more than 80% of the window height
     ,   width = 0.70*this.offsetWidth
     ,   height = 2*width/3
     ,   i, subdetectorNav, subdetectorNavLabel

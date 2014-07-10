@@ -23,6 +23,10 @@
                 this.lastCollectorTTindex = null;
                 this.lastDigitizerTTindex = null;
 
+                //data views
+                this.views = ['reqRate', 'acptRate'];
+                this.viewLabels = ['Trigger Request Rate', 'Trigger Accept Rate'];
+
                 //get the DAQ structure
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
                     function(res){
@@ -47,6 +51,7 @@
                 builderLink.setAttribute('id', 'MSCbuilderLink');
                 this.navBlock.appendChild(builderLink);
 
+                //master / collector nav
                 this.cardNav = document.createElement('select');
                 this.cardNav.setAttribute('id', 'DAQnav')
                 this.cardNav.setAttribute('class', 'stdin');
@@ -62,6 +67,9 @@
                 option.value = 0;
                 option.innerHTML = 'Master'
                 this.cardNav.appendChild(option);                
+
+                //data source selector
+                radioArray(this.navBlock, this.viewLabels, this.views, 'DAQview');
 
                 deckWrap = document.createElement('div');
                 this.appendChild(deckWrap);
