@@ -72,7 +72,7 @@
                 //data source selector
                 radioArray(this.navBlock, this.viewLabels, this.views, 'DAQview');
                 document.getElementById('DAQview1').setAttribute('checked', true);
-                dataViews = this.navBlock.querySelectorAll('input[type="radio", name="DAQview"]');
+                dataViews = this.navBlock.querySelectorAll('input[name="DAQview"]');
                 for(i=0; i<dataViews.length; i++){
                     dataViews[i].onchange = this.trackView.bind(this);
                 }
