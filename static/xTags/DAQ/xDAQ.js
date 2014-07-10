@@ -9,11 +9,11 @@
                 window.currentData = {};
 
                 this.width = this.offsetWidth;
-                this.height = window.innerHeight*0.6;
+                this.height = window.innerHeight*0.7;
                 this.showing = 0;
                 this.lastCollectorTTindex = null;
                 this.lastDigitizerTTindex = null;
-                this.scale = 'Red Scale';
+                this.scale = 'ROOT Rainbow';
 
                 //get the DAQ structure
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
