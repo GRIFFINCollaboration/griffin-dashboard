@@ -651,27 +651,24 @@
 
             'trackView': function(){
                 
-                var i;
+                var i, min, max, scaleType;
+
+                min = (this.showing == 0) ? this.collectorMin : this.digitizerMin;
+                max = (this.showing == 0) ? this.collectorMax : this.digitizerMax;
+                scaleType = (this.showing == 0) ? this.collectorScaleType : this.digitizerScaleType;
 
                 //keep track of what state the view state radio is in
                 //intended for binding to the onchange of the radio.
                 this.currentView = document.querySelector('input[name="DAQview"]:checked').value;
-                
-
-                console.log(this.currentView)
-                /*
 
                 //make sure the scale control widget is up to date
-                document.getElementById(this.id + 'PlotControlMin').value = this.min[this.currentView];
-                document.getElementById(this.id + 'PlotControlMax').value = this.max[this.currentView];
-                document.getElementById(this.id + 'PlotControlScale').value = this.scaleType[this.currentView];
+                document.getElementById(this.id + 'PlotControlMin').value = min[this.currentView];
+                document.getElementById(this.id + 'PlotControlMax').value = max[this.currentView];
+                document.getElementById(this.id + 'PlotControlScale').value = scaleType[this.currentView];
 
                 this.updateCells();
                 this.refreshColorScale();
-                this.mainLayer[this.displayIndex].draw();
-                if(this.HVlayer)
-                    this.HVlayer[this.displayIndex].draw();
-                */
+                this.mainLayer[this.showing].draw();
             },
 
             //update scale minima and maxima and other plotting parameters both locally and in localStorage.
