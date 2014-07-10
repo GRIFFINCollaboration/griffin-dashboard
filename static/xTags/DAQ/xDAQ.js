@@ -602,7 +602,7 @@
             'refreshColorScale': function(){
 
                 var i, j, isLog, currentMin, currentMax, logTitle,
-                    min, max. scaleType;
+                    min, max, scaleType;
 
                 if(this.showing == 0){
                     min = this.collectorMin;
