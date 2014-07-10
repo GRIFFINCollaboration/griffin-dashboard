@@ -9,7 +9,7 @@
                 window.currentData = {};
 
                 this.width = this.offsetWidth;
-                this.height = window.innerHeight*0.7;
+                this.height = window.innerHeight*0.6;
                 this.showing = 0;
                 this.lastCollectorTTindex = null;
                 this.lastDigitizerTTindex = null;
@@ -172,7 +172,7 @@
                 this.masterCables = [[],[],[],[]]; //1-to-4 cables: outer index counts master port, inner index counts collector
                 for(i=0; i<4; i++){
                     this.masterCables[i][0] = new Kinetic.Line({
-                        points: [collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4,0, collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4, 0.3*this.height],
+                        points: [collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4,0, collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4, 0.2*this.height],
                         stroke: '#000000',
                         strokeWidth: 4
                     });
@@ -180,7 +180,7 @@
                     this.masterCables[i][0].moveToBottom();
                     for(j=1; j<5; j++){
                         this.masterCables[i][j] = new Kinetic.Line({
-                            points: [collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4, 0.3*this.height, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth), 0.6*this.height],
+                            points: [collectorWidth*2 + collectorGutter*1.75 + i*(collectorWidth + collectorGutter)*4, 0.2*this.height, (collectorGutter + collectorWidth)/2 + (4*i+j-1)*(collectorGutter+collectorWidth), 0.6*this.height],
                             stroke: '#000000',
                             strokeWidth: 4
                         });
@@ -239,7 +239,7 @@
                     for(j=0; j<4; j++){
                         this.collectorCables[i][j] = [];
                         this.collectorCables[i][j][0] = new Kinetic.Line({
-                            points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4,0, collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.3*this.height],
+                            points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4,0, collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.2*this.height],
                             stroke: '#000000',
                             strokeWidth: 4
                         });
@@ -247,7 +247,7 @@
                         this.collectorCables[i][j][0].moveToBottom();
                         for(k=1; k<5; k++){
                             this.collectorCables[i][j][k] = new Kinetic.Line({
-                                points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.3*this.height, (collectorGutter + collectorWidth)/2 + (4*j+k-1)*(collectorGutter+collectorWidth), 0.6*this.height],
+                                points: [collectorWidth*2 + collectorGutter*1.75 + j*(collectorWidth + collectorGutter)*4, 0.2*this.height, (collectorGutter + collectorWidth)/2 + (4*j+k-1)*(collectorGutter+collectorWidth), 0.6*this.height],
                                 stroke: '#000000',
                                 strokeWidth: 4
                             });
