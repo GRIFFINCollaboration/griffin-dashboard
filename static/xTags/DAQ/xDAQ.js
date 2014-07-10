@@ -83,6 +83,9 @@
                 this.mainLayer = [];
                 this.scaleLayer = [];
 
+                //build scales
+                this.generateColorScale();
+
                 //let repopulate know that the detector would like to be updated every loop:
                 if(!window.refreshTargets)
                     window.refreshTargets = [];
