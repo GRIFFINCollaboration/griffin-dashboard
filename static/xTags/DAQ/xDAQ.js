@@ -474,7 +474,7 @@
                     for(i=0; i<11; i++){
                         //tick line
                         tick = new Kinetic.Line({
-                            points: [(0.1+i*0.08)*this.width, 0.95*this.height, (0.1+i*0.08)*this.width, 0.96*this.height],
+                            points: [(0.1+i*0.08)*this.width, 0.85*this.height, (0.1+i*0.08)*this.width, 0.86*this.height],
                             stroke: '#999999',
                             strokeWidth: 2
                         });
@@ -484,7 +484,7 @@
                         this.tickLabels[j][i] = new Kinetic.Text({
                             x: (0.1+i*0.08)*this.width,
                             y: 0.86*this.height + 2,
-                            text: '0',
+                            text: '',
                             fontSize: 14,
                             fontFamily: 'Arial',
                             fill: '#999999'
