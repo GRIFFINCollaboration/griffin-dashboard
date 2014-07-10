@@ -61,6 +61,7 @@
                     document.getElementById('DAQdeck').shuffleTo(targetIndex);
                     this.writeCollectorTooltip(-1);
                     this.showing = targetIndex;
+                    this.refreshColorScale();
                 }.bind(this)
                 this.navBlock.appendChild(this.cardNav);
 
