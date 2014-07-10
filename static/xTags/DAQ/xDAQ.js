@@ -674,25 +674,34 @@
 
             //update scale minima and maxima and other plotting parameters both locally and in localStorage.
             'updatePlotParameters': function(){
-                /*
-                //update local minima and maxima
-                this.min[this.currentView] = parseFloat(document.getElementById(this.id + 'PlotControlMin').value);
-                this.max[this.currentView] = parseFloat(document.getElementById(this.id + 'PlotControlMax').value);
-                //update lin / log option
-                this.scaleType[this.currentView] = selected(this.id+'PlotControlScale');
+                var min = parseFloat(document.getElementById(this.id + 'PlotControlMin').value)
+                ,   max = parseFloat(document.getElementById(this.id + 'PlotControlMax').value)
+                ,   scaleType = selected(this.id+'PlotControlScale');
 
-                //save the change for later in localStorage
-                localStorage.setItem(this.name + this.currentView + 'min', this.min[this.currentView]);
-                localStorage.setItem(this.name + this.currentView + 'max', this.max[this.currentView]);
-                localStorage.setItem(this.name + this.currentView + 'scaleType', this.scaleType[this.currentView]);
+                //update scale parameters locally & in localstore
+                if(this.showing == 0){
+                    this.collectorMin[this.currentView] = min;
+                    this.collectorMax[this.currentView] = max;
+                    this.collectorScaleType[this.currentView] = scaleType;
+
+                    localStorage.setItem('DAQ' + this.currentView + 'collectorMin', min);
+                    localStorage.setItem('DAQ' + this.currentView + 'collectorMax', max);
+                    localStorage.setItem('DAQ' + this.currentView + 'collectorScaleType', scaleType);
+                } else{
+                    this.digitizerMin[this.currentView] = min;
+                    this.digitizerMax[this.currentView] = max;
+                    this.digitizerScaleType[this.currentView] = scaleType;
+
+                    localStorage.setItem('DAQ' + this.currentView + 'digitizerMin', min);
+                    localStorage.setItem('DAQ' + this.currentView + 'digitizerMax', max);
+                    localStorage.setItem('DAQ' + this.currentView + 'digitizerScaleType', scaleType);
+                }
 
                 //redraw
                 this.updateCells();
                 this.refreshColorScale();
-                this.mainLayer[document.getElementById(this.id+'Deck').selectedIndex].draw();
-                if(this.HVlayer)
-                    this.HVlayer[document.getElementById(this.id+'Deck').selectedIndex].draw();
-                */
+                this.mainLayer[this.showing].draw();
+                
             },
 
             //set new colors for all cells, and repaint.
