@@ -706,11 +706,13 @@
 
             //set new colors for all cells, and repaint.
             'updateCells': function(){
-                /*
-                var i, color, rawValue, colorIndex, 
-                    currentMin = this.min[this.currentView], 
-                    currentMax = this.max[this.currentView],
-                    isLog = this.scaleType[this.currentView] == 'log';
+                
+                var i, color, rawValue, colorIndex,
+                    currentMin = (this.showing == 0) ? this.collectorMin[this.currentView] : this.digitizerMin[this.currentView], 
+                    currentMax = (this.showing == 0) ? this.collectorMax[this.currentView] : this.digitizerMax[this.currentView],
+                    isLog = (this.showing == 0) ? this.collectorScaleType[this.currentView] : this.digitizerScaleType[this.currentView];
+
+                isLog = isLog == 'log';
 
                 //get the scale limits right
                 if(isLog){
@@ -718,14 +720,11 @@
                     currentMax = Math.log10(currentMax);
                 }
 
-                //change the color of each cell to whatever it should be now:
-                for(i=0; i<this.channelNames.length; i++){
-                    //bail out if this cell isn't in the current view
-                    if(!this.inCurrentView(this.channelNames[i]))
-                        continue;
+                //update collector colors
+                for(i=0; i<16; i++){
+                    if(!this.collectorCells[i]) continue;
 
-                    //fetch the most recent raw value from the currentData store:
-                    rawValue = window.currentData[this.currentView][this.channelNames[i]];
+                    rawValue = Math.random()*30000;//window.currentData.collectorTotal[i];
 
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
@@ -741,15 +740,14 @@
                         if(colorIndex > 1) colorIndex = 1;
                         color = scalepickr(colorIndex, this.scale);
 
-                        this.cells[this.channelNames[i]].fill(color);
-                        this.cells[this.channelNames[i]].setFillPriority('color');
+                        this.collectorCells[i].stroke(color);
 
                     //no value reporting, show error pattern
                     } else{
-                        this.cells[this.channelNames[i]].setFillPriority('pattern')
+                        this.collectorCells[i].stroke('#FFFFFF');                        
                     }
                 }
-                */
+                
             }
 
 
