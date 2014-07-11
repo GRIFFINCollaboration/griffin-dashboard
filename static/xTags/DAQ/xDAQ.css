@@ -30,3 +30,7 @@ a#MSCbuilderLink{
 form.plotControlWidget{
 	margin-bottom: 1em;
 }
+
+table.digitizerTooltipTable td{
+	padding: 0.25em;
+}

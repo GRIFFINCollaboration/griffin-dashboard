@@ -426,7 +426,7 @@
                 var text, key;
 
                 if(i!=-1){
-                    text = '<table><tr><td>Channel</td><td>MSC</td>';
+                    text = '<table class="digitizerTooltipTable"><tr><td>Channel</td><td>MSC</td>';
                     for(key in this.localMSC[this.showing-1][i]){
                         text += '<tr><td>'+ key +'</td><td>'+ this.localMSC[this.showing-1][i][key] +'</td></tr>'
                     }
