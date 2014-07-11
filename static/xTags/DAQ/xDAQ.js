@@ -405,7 +405,7 @@
             //move the tooltip around
             'moveTooltip' : function(evt){
                 var tt = document.getElementById('tooltip');
-console.log('move')
+
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
             },
 
@@ -427,7 +427,8 @@ console.log('move')
             },
 
             'writeDigitizerTooltip': function(i){
-                var text, key;
+                var text, key,
+                    tt = document.getElementById('tooltip');
 
                 if(i!=-1){
                     text = '<h2>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h2>'
@@ -446,10 +447,11 @@ console.log('move')
                 }
             
                 this.lastDigitizerTTindex = i;
-                if(text != '')
-                    document.getElementById('tooltip').innerHTML = text;
-                else
-                    document.getElementById('tooltip').setAttribute('style', '');
+                if(text != ''){
+                    tt.innerHTML = text;
+                    tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
+                } else
+                    tt.setAttribute('style', '');
             },
 
             'update' : function(){
