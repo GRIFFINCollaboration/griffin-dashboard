@@ -34,3 +34,7 @@ form.plotControlWidget{
 table.digitizerTooltipTable td{
 	padding: 0.25em;
 }
+
+table.digitizerTooltipTable tr:nth-child(2n+1){
+	background-color: #333333;
+}
