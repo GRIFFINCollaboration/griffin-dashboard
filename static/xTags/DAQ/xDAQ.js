@@ -772,7 +772,7 @@
                 for(i=0; i<16; i++){
                     if(!this.collectorCells[i]) continue;
 
-                    rawValue = window.currentData.collectorTotal[i];
+                    rawValue = window.currentData.collectorTotal[i][this.currentView];
 console.log([rawValue, currentMin, currentMax])
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
