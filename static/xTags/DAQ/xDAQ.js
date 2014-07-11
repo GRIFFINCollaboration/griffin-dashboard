@@ -372,6 +372,9 @@
                     this.localMSC[M][S][data.MSC.chan[i]] = {'MSC': '0x'+MSCstring, 'req': null, 'acpt': null}
                 }
 
+                //babysit x-deck height
+                document.getElementById('DAQdeck').setAttribute('style', 'height:' + document.getElementById('collectorBlock').offsetHeight + 'px;')
+
                 //initial update
                 this.update();
 
