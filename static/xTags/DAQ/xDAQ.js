@@ -804,11 +804,11 @@
                     for(j=0; j<16; j++){
                         if(!this.digitizerCells[i][j]) continue;
 
-                        if(window.currentData.digitizerTotal[i])
+                        if(window.currentData.digitizerTotal[i] && window.currentData.digitizerTotal[i][j])
                             rawValue = window.currentData.digitizerTotal[i][j][this.currentView];
                         else
                             rawValue = null;
-console.log([rawValue, window.currentData.digitizerTotal[i][j][this.currentView]])
+
                         //if no data was found, raise exception code:
                         if(!rawValue && rawValue!=0)
                             rawValue = 0xDEADBEEF;
