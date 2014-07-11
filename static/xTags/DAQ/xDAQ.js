@@ -88,6 +88,7 @@
 
                 this.masterBlock = document.createElement('div');
                 this.masterBlock.setAttribute('class', 'DAQheadNode');
+                this.masterBlock.setAttribute('id', 'masterHeadNode');
                 document.getElementById('DAQmasterCard').appendChild(this.masterBlock);
 
                 this.collectorBlock = document.createElement('div');
@@ -373,7 +374,7 @@
                 }
 
                 //babysit x-deck height
-                document.getElementById('DAQdeck').setAttribute('style', 'height:' + document.getElementById('collectorBlock').offsetHeight + 'px;')
+                document.getElementById('DAQdeck').setAttribute('style', 'height:' + (document.getElementById('collectorBlock').offsetHeight + document.getElementById('masterHeadNode').offsetHeight) + 'px;')
 
                 //initial update
                 this.update();
