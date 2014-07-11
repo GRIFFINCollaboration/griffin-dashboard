@@ -426,7 +426,7 @@
                     document.getElementById('tooltip').setAttribute('style', '');
             },
 
-            'writeDigitizerTooltip': function(i){
+            'writeDigitizerTooltip': function(i, evt){
                 var text, key,
                     tt = document.getElementById('tooltip');
 
