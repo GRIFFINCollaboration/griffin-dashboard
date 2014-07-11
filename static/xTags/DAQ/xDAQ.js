@@ -550,8 +550,6 @@
                     digitizerIndex = ((0xF << 8) & MSC) >> 8;
 
                     //keep track of individual rates for digitizer tooltip:
-                    console.log([collectorIndex, digitizerIndex])
-                    console.log(this.localMSC)
                     this.localMSC[collectorIndex][digitizerIndex][channelName].req = trigReq;
                     this.localMSC[collectorIndex][digitizerIndex][channelName].acpt = trigAcpt;
 
