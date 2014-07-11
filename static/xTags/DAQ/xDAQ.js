@@ -715,7 +715,7 @@
                     isLog = (this.showing == 0) ? this.collectorScaleType[this.currentView] : this.digitizerScaleType[this.currentView];
 
                 isLog = isLog == 'log';
-
+console.log('updating cells...')
                 //get the scale limits right
                 if(isLog){
                     currentMin = Math.log10(currentMin);
