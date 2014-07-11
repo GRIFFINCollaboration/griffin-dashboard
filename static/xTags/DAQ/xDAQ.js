@@ -560,17 +560,16 @@
                     } else {
                         window.currentData.collectorTotal[collectorIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
                     }
-console.log(collectorIndex)
+
                     //digitizer sum
                     if(window.currentData.digitizerTotal[collectorIndex] && window.currentData.digitizerTotal[collectorIndex][digitizerIndex]){
-console.log(collectorIndex)
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex].trigReq += trigReq;
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex].trigAcpt += trigAcpt;
-                    } else if(window.currentData.digitizerTotal[colletorIndex]){
-                        window.currentData.digitizerTotal[colletorIndex][digitizerIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
+                    } else if(window.currentData.digitizerTotal[collectorIndex]){
+                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
                     } else {
-                        window.currentData.digitizerTotal[colletorIndex] = [];
-                        window.currentData.digitizerTotal[colletorIndex][digitizerIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
+                        window.currentData.digitizerTotal[collectorIndex] = [];
+                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
                     }
 
                     //trigger repaint
