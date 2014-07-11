@@ -18,7 +18,7 @@
                 window.currentData = {};
 
                 this.width = this.offsetWidth;
-                this.height = window.innerHeight*0.6;
+                this.height = window.innerHeight*0.5;
                 this.showing = 0;
                 this.lastCollectorTTindex = null;
                 this.lastDigitizerTTindex = null;
@@ -599,7 +599,7 @@
                     //draw the gradient itself
                     colorScale = new Kinetic.Rect({
                         x: 0.1*this.width,
-                        y: 0.8*this.height,
+                        y: 0.85*this.height,
                         width: 0.8*this.width,
                         height: 0.05*this.height,
                         fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
@@ -616,7 +616,7 @@
                     for(i=0; i<11; i++){
                         //tick line
                         tick = new Kinetic.Line({
-                            points: [(0.1+i*0.08)*this.width, 0.85*this.height, (0.1+i*0.08)*this.width, 0.86*this.height],
+                            points: [(0.1+i*0.08)*this.width, 0.90*this.height, (0.1+i*0.08)*this.width, 0.91*this.height],
                             stroke: '#999999',
                             strokeWidth: 2
                         });
@@ -625,7 +625,7 @@
                         //tick label
                         this.tickLabels[j][i] = new Kinetic.Text({
                             x: (0.1+i*0.08)*this.width,
-                            y: 0.86*this.height + 2,
+                            y: 0.91*this.height + 2,
                             text: '',
                             fontSize: 14,
                             fontFamily: 'Arial',
@@ -637,7 +637,7 @@
                     //place title on scale
                     this.scaleTitle[j] = new Kinetic.Text({
                         x: this.width/2,
-                        y: 0.8*this.height - 22,
+                        y: 0.85*this.height - 22,
                         text: 'Test',
                         fontSize : 20,
                         fontFamily: 'Arial',
