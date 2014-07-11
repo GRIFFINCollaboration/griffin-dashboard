@@ -555,10 +555,10 @@
 
                     //collector sum
                     if(window.currentData.collectorTotal[collectorIndex]){
-                        window.currentData.collectorTotal[collectorIndex].trigReq += trigReq;
-                        window.currentData.collectorTotal[collectorIndex].trigAcpt += trigAcpt;
+                        window.currentData.collectorTotal[collectorIndex].reqRate += trigReq;
+                        window.currentData.collectorTotal[collectorIndex].acptRate += trigAcpt;
                     } else {
-                        window.currentData.collectorTotal[collectorIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
+                        window.currentData.collectorTotal[collectorIndex] = {'reqRate' : trigReq, 'acptRate' : trigAcpt};
                     }
 
                     //digitizer sum
@@ -566,10 +566,10 @@
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex].trigReq += trigReq;
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex].trigAcpt += trigAcpt;
                     } else if(window.currentData.digitizerTotal[collectorIndex]){
-                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
+                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'reqRate' : trigReq, 'acptRate' : trigAcpt};
                     } else {
                         window.currentData.digitizerTotal[collectorIndex] = [];
-                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
+                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'reqRate' : trigReq, 'acptRate' : trigAcpt};
                     }
 
                     //trigger repaint
