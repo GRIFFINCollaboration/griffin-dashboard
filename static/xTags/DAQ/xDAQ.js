@@ -484,6 +484,8 @@
                     //XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, false, true);
                 }
 
+                this.updateCells(); // dummy test
+
             },
 
             //parse DAQ dataviews into window.currentData variables
