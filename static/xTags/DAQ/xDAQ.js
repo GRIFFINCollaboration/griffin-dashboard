@@ -409,7 +409,7 @@
 
                 //don't let tt fall off right edge of page
                 tt.setAttribute('style', 'display:block; opacity:0'); //hack so that tt.offsetHeight is nonzero in next step
-                if(left > window.innerWidth / 2)
+                if(left < window.innerWidth / 2)
                     left -= tt.offsetWidth;
 
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
