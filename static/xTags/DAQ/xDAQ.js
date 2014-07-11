@@ -563,8 +563,8 @@
 
                     //digitizer sum
                     if(window.currentData.digitizerTotal[collectorIndex] && window.currentData.digitizerTotal[collectorIndex][digitizerIndex]){
-                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex].trigReq += trigReq;
-                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex].trigAcpt += trigAcpt;
+                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex].reqRate += trigReq;
+                        window.currentData.digitizerTotal[collectorIndex][digitizerIndex].acptRate += trigAcpt;
                     } else if(window.currentData.digitizerTotal[collectorIndex]){
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'reqRate' : trigReq, 'acptRate' : trigAcpt};
                     } else {
