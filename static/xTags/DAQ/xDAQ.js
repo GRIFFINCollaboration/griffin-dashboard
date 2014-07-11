@@ -431,7 +431,7 @@
 
                 if(i!=-1){
                     text = '<h2>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h2>'
-                    text += '<h3>'+ window.currentData.DAQ.hosts['collecto0x'+(this.showing-1)].digitizers[i] +'</h3>'
+                    text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+(this.showing-1)].digitizers[i] +'</h3>'
                     text += '<table class="digitizerTooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
                     for(key in this.localMSC[this.showing-1][i]){
                         text += '<tr><td>'+ key +'</td>'
