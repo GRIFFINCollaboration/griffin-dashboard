@@ -548,7 +548,7 @@
                     //sum the data by digitizer and by collector
                     collectorIndex = (0xF << 12) & MSC;
                     digitizerIndex = (0xF << 8) & MSC;
-
+console.log([MSC.toString(16), collectorIndex, digitizerIndex])
                     //keep track of individual rates for digitizer tooltip:
                     this.localMSC[collectorIndex][digitizerIndex][channelName].req = trigReq;
                     this.localMSC[collectorIndex][digitizerIndex][channelName].acpt = trigAcpt;
