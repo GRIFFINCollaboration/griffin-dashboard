@@ -753,10 +753,10 @@ console.log('updating cells...')
 
                 //update digitizers
                 for(i=0; i<16; i++){
-                    if(!window.digitizerCells[i]) continue;
+                    if(!this.digitizerCells[i]) continue;
 
                     for(j=0; j<16; j++){
-                        if(!window.digitizerCells[i][j] && window.currentData.digitizerTotal[i][j]!=0) continue;
+                        if(!this.digitizerCells[i][j] && this.digitizerCells[i][j]!=0) continue;
 
                         rawValue = Math.random()*3000;//window.currentData.digitizerTotal[i][j];
 
