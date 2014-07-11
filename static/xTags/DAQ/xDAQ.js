@@ -430,7 +430,8 @@
                 var text, key;
 
                 if(i!=-1){
-                    text = '<table class="digitizerTooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
+                    text = '<h1>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h1>'
+                    text += '<table class="digitizerTooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
                     for(key in this.localMSC[this.showing-1][i]){
                         text += '<tr><td>'+ key +'</td>'
                         text += '<td>'+ this.localMSC[this.showing-1][i][key].MSC +'</td>'
