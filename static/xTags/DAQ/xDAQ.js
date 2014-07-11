@@ -405,7 +405,7 @@
             //move the tooltip around
             'moveTooltip' : function(evt){
                 var tt = document.getElementById('tooltip');
-
+console.log('move')
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
             },
 
@@ -440,12 +440,7 @@
                         text += '<td>'+ this.localMSC[this.showing-1][i][key].acpt +'</td></tr>'
                     }
                     text += '</table>'
-                    /*
-                    text = 'Digitizer 0x' + i.toString(16).toUpperCase();
-                    for(key in this.localMSC[this.showing-1][i]){
-                        text += '<br>' + key + ' ' + this.localMSC[this.showing-1][i][key];
-                    }
-                    */
+
                 } else {
                     text = '';
                 }
