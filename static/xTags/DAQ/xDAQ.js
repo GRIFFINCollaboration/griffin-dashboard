@@ -773,11 +773,11 @@
                     if(!this.collectorCells[i]) continue;
 
                     rawValue = window.currentData.collectorTotal[i][this.currentView];
-console.log([rawValue, currentMin, currentMax])
+
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
                         rawValue = 0xDEADBEEF;
-
+console.log([rawValue, currentMin, currentMax])
                     //value found and parsable, recolor cell:
                     if(rawValue != 0xDEADBEEF){
                         if(isLog)
