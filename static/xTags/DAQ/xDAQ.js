@@ -757,7 +757,7 @@
 
                     for(j=0; j<16; j++){
                         if(!this.digitizerCells[i][j] && this.digitizerCells[i][j]!=0) continue;
-
+console.log([i,j])
                         rawValue = window.currentData.digitizerTotal[i][j];
 
                         //if no data was found, raise exception code:
