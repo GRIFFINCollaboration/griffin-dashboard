@@ -405,7 +405,7 @@
             //move the tooltip around
             'moveTooltip' : function(evt){
                 var tt = document.getElementById('tooltip');
-
+console.log(evt)
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
             },
 
@@ -426,7 +426,7 @@
                     document.getElementById('tooltip').setAttribute('style', '');
             },
 
-            'writeDigitizerTooltip': function(i, evt){
+            'writeDigitizerTooltip': function(i){
                 var text, key,
                     tt = document.getElementById('tooltip');
 
@@ -449,7 +449,6 @@
                 this.lastDigitizerTTindex = i;
                 if(text != ''){
                     tt.innerHTML = text;
-                    tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
                 } else
                     tt.setAttribute('style', '');
             },
