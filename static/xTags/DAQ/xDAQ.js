@@ -409,9 +409,9 @@
 
                 //don't let tt fall off right edge of page
                 tt.setAttribute('style', 'display:inline-block; opacity:0'); //hack so that tt.offsetHeight is nonzero in next step
-                if(left < window.innerWidth / 2)
+                if(left > window.innerWidth / 2)
                     left -= tt.offsetWidth;
-console.log([evt.pageX, tt.offsetWidth])
+
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
             },
 
@@ -420,7 +420,9 @@ console.log([evt.pageX, tt.offsetWidth])
                 var text;
 
                 if(i!=-1){
-                    text = 'Collector 0x' + i.toString(16);
+                    text = '<h2>Collector ' + i.toString(16) + '</h2>';
+                    text += text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+i.toString(16)].host +'</h3>'
+
                 } else {
                     text = '';
                 }
@@ -438,7 +440,7 @@ console.log([evt.pageX, tt.offsetWidth])
 
                 if(i!=-1){
                     text = '<h2>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h2>'
-                    text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+(this.showing-1)].digitizers[i] +'</h3>'
+                    text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+(this.showing-1).toString(16)].digitizers[i] +'</h3>'
                     text += '<table class="digitizerTooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
                     for(key in this.localMSC[this.showing-1][i]){
                         text += '<tr><td>'+ key +'</td>'
