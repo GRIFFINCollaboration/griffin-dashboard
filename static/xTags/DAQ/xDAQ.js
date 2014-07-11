@@ -753,7 +753,7 @@
 
                 //update digitizers
                 for(i=0; i<16; i++){
-                    if(!this.digitizerTotal[i]) continue;
+                    if(!this.digitizerTotal || !this.digitizerTotal[i]) continue;
 
                     for(j=0; j<16; j++){
                         if(!this.digitizerTotal[i][j] && this.digitizerTotal[i][j]!=0) continue;
