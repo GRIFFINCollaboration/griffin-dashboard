@@ -424,9 +424,9 @@
                     text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+i.toString(16)].host +'</h3>'
                     text += '<table class="tooltipTable"><tr><td>Collector</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
                     for(j=0; j<16; j++){
-                        if(this.currentData.digitizerTotal[i] && this.currentData.digitizerTotal[i][j]){
-                            reqRate = this.currentData.digitizerTotal[i][j].reqRate;
-                            acptRate = this.currentData.digitizerTotal[i][j].acptRate;
+                        if(window.currentData.digitizerTotal[i] && window.currentData.digitizerTotal[i][j]){
+                            reqRate = window.currentData.digitizerTotal[i][j].reqRate;
+                            acptRate = window.currentData.digitizerTotal[i][j].acptRate;
                         } else {
                             reqRate = null;
                             acptRate = null;
