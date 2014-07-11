@@ -421,7 +421,7 @@
 
                 if(i!=-1){
                     text = '<h2>Collector ' + i.toString(16) + '</h2>';
-                    text += text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+i.toString(16)].host +'</h3>'
+                    text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+i.toString(16)].host +'</h3>'
 
                 } else {
                     text = '';
