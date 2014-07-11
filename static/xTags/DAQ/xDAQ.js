@@ -782,7 +782,7 @@ console.log(this.digitizerCells)
                         }
 
                     }
-                    console.log(i)
+                    console.log(this.digitizerCells[i])
                     this.mainLayer[i+1].draw();
                 }
                 
