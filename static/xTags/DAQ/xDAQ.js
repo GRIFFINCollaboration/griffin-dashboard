@@ -522,6 +522,10 @@
                     collectorIndex = (0xF << 12) & MSC;
                     digitizerIndex = (0xF << 8) & MSC;
 
+                    //keep track of individual rates for digitizer tooltip:
+                    this.localMSC[collectorIndex][digitizerIndex][channelName].req = trigReq;
+                    this.localMSC[collectorIndex][digitizerIndex][channelName].acpt = trigAcpt;
+
                     //collector sum
                     if(window.currentData.collectorTotal[collectorIndex]){
                         window.currentData.collectorTotal[collectorIndex].trigReq += trigReq;
