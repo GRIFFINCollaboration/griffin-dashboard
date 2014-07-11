@@ -749,6 +749,7 @@ console.log('updating cells...')
                         this.collectorCells[i].stroke('#FFFFFF');                        
                     }
                 }
+                this.mainLayer[0].draw();
                 
             }
 
