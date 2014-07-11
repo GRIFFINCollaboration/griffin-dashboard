@@ -782,6 +782,7 @@ console.log('updating cells...')
                         }
 
                     }
+                    console.log(i)
                     this.mainLayer[i+1].draw();
                 }
                 
