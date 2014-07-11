@@ -406,7 +406,7 @@
             'moveTooltip' : function(evt){
                 var tt = document.getElementById('tooltip');
 
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + evt.pageY  + ';');
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
@@ -430,7 +430,8 @@
                 var text, key;
 
                 if(i!=-1){
-                    text = '<h1>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h1>'
+                    text = '<h2>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h2>'
+                    text += '<h3>'+ window.currentData.DAQ.hosts['collecto0x'+(this.showing-1)].digitizers[i] +'</h3>'
                     text += '<table class="digitizerTooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
                     for(key in this.localMSC[this.showing-1][i]){
                         text += '<tr><td>'+ key +'</td>'
