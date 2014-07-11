@@ -546,8 +546,8 @@
                     channelName = window.currentData.DAQ.MSC.chan[channelIndex];
 
                     //sum the data by digitizer and by collector
-                    collectorIndex = (0xF << 12) & MSC;
-                    digitizerIndex = (0xF << 8) & MSC;
+                    collectorIndex = ((0xF << 12) & MSC) >> 12;
+                    digitizerIndex = ((0xF << 8) & MSC) >> 8;
 
                     //keep track of individual rates for digitizer tooltip:
                     console.log([collectorIndex, digitizerIndex])
