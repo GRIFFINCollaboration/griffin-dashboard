@@ -372,6 +372,9 @@
                     this.localMSC[M][S][data.MSC.chan[i]] = '0x'+MSCstring;
                 }
 
+                //initial update
+                this.update();
+
             },
 
             'setupKinetic' : function(targetID){
