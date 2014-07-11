@@ -500,16 +500,16 @@
                     var testBuffer = new ArrayBuffer(448);
                     var dv = new DataView(testBuffer);
                     for(var j = 0; j<16; j++){
-                        dv.setInt16(14*i, i);
-                        dv.setInt32(2+14*i, 2154);
-                        dv.setInt32(6+14*i, 42);
-                        dv.setInt32(10+14*i, 1337);
+                        dv.setInt16(14*j, j);
+                        dv.setInt32(2+14*j, 2154);
+                        dv.setInt32(6+14*j, 42);
+                        dv.setInt32(10+14*j, 1337);
                     }
                     for(var j = 16; j<32; j++){
-                        dv.setInt16(14*i, 256+i);
-                        dv.setInt32(2+14*i, 2154);
-                        dv.setInt32(6+14*i, 42);
-                        dv.setInt32(10+14*i, 1337);
+                        dv.setInt16(14*j, 256+j);
+                        dv.setInt32(2+14*j, 2154);
+                        dv.setInt32(6+14*j, 42);
+                        dv.setInt32(10+14*j, 1337);
                     }                    
                     this.unpackDAQdv(dv);
                 }
