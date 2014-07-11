@@ -508,7 +508,16 @@
                 var MSC, trigReq, trigAcpt,
                     channelIndex, channelName,
                     collectorIndex, digitizerIndex,
-                    i;
+                    i, j, key;
+
+                //dump old local MSC rates:
+                for(i=0; i<this.localMSC.length; i++){
+                    for(j=0; j<this.localMSC[i].length; j++){
+                        for(key in this.localMSC[i][j]){
+                            this.localMSC[i][j][key] = {'MSC' : this.localMSC[i][j][key].MSC, 'req' : 'Not Reporting', 'acpt' : 'Not Reporting'}
+                        }
+                    }
+                }
 
                 for(i=0; i<dv.byteLength/14; i++){
                     trigAcpt = dv.getInt32(i*14+4, true);
