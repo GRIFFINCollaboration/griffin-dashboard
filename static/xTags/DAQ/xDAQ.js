@@ -753,11 +753,11 @@
 
                 //update digitizers
                 for(i=0; i<16; i++){
-                    if(!this.digitizerTotal || !this.digitizerTotal[i]) continue;
+                    if(this.digitizerCells[i].length == 0) continue;
 
                     for(j=0; j<16; j++){
-                        if(!this.digitizerTotal[i][j] && this.digitizerTotal[i][j]!=0) continue;
-
+                        if(!this.digitizerCells[i][j] && this.digitizerCells[i][j]!=0) continue;
+console.log([i,j])
                         rawValue = window.currentData.digitizerTotal[i][j];
 
                         //if no data was found, raise exception code:
