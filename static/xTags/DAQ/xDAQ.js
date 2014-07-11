@@ -548,7 +548,7 @@
                     //sum the data by digitizer and by collector
                     collectorIndex = (0xF << 12) & MSC;
                     digitizerIndex = (0xF << 8) & MSC;
-console.log([MSC.toString(16), collectorIndex, digitizerIndex])
+
                     //keep track of individual rates for digitizer tooltip:
                     this.localMSC[collectorIndex][digitizerIndex][channelName].req = trigReq;
                     this.localMSC[collectorIndex][digitizerIndex][channelName].acpt = trigAcpt;
@@ -560,9 +560,10 @@ console.log([MSC.toString(16), collectorIndex, digitizerIndex])
                     } else {
                         window.currentData.collectorTotal[collectorIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
                     }
-
+console.log(collectorIndex)
                     //digitizer sum
                     if(window.currentData.digitizerTotal[collectorIndex] && window.currentData.digitizerTotal[collectorIndex][digitizerIndex]){
+console.log(collectorIndex)
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex].trigReq += trigReq;
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex].trigAcpt += trigAcpt;
                     } else if(window.currentData.digitizerTotal[colletorIndex]){
