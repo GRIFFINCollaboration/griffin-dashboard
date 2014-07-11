@@ -417,12 +417,26 @@
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeCollectorTooltip': function(i){
-                var text;
+                var text, j, reqRate, acptRate;
 
                 if(i!=-1){
                     text = '<h2>Collector ' + i.toString(16) + '</h2>';
                     text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+i.toString(16)].host +'</h3>'
+                    text += '<table class="tooltipTable"><tr><td>Collector</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
+                    for(j=0; j<16; j++){
+                        if(this.currentData.digitizerTotal[i] && this.currentData.digitizerTotal[i][j]){
+                            reqRate = this.currentData.digitizerTotal[i][j].reqRate;
+                            acptRate = this.currentData.digitizerTotal[i][j].acptRate;
+                        } else {
+                            reqRate = null;
+                            acptRate = null;
+                        }
 
+                        text += '<tr><td>'+ j +'</td>'
+                        text += '<td>'+ reqRate +'</td>'
+                        text += '<td>'+ acptRate +'</td></tr>'
+                    }
+                    text += '</table>'
                 } else {
                     text = '';
                 }
@@ -441,7 +455,7 @@
                 if(i!=-1){
                     text = '<h2>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h2>'
                     text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+(this.showing-1).toString(16)].digitizers[i] +'</h3>'
-                    text += '<table class="digitizerTooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
+                    text += '<table class="tooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
                     for(key in this.localMSC[this.showing-1][i]){
                         text += '<tr><td>'+ key +'</td>'
                         text += '<td>'+ this.localMSC[this.showing-1][i][key].MSC +'</td>'
