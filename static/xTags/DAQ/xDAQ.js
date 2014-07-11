@@ -404,10 +404,15 @@
 
             //move the tooltip around
             'moveTooltip' : function(evt){
-                var tt = document.getElementById('tooltip');
+                var tt = document.getElementById('tooltip'),
+                    left = evt.pageX;
 
-                tt.setAttribute('style', 'display:block; opacity:0')
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
+                //don't let tt fall off right edge of page
+                tt.setAttribute('style', 'display:block; opacity:0'); //hack so that tt.offsetHeight is nonzero in next step
+                if(left > window.innerWidth / 2)
+                    left -= tt.offsetWidth;
+
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
             },
 
             //formulate the tooltip text for cell i and write it on the tooltip layer.
