@@ -576,7 +576,7 @@
                     this.updateCells(); 
 
                 }
-console.log(window.currentData.collectorTotal)
+
             },
 
             //generate the color scale
@@ -773,7 +773,7 @@ console.log(window.currentData.collectorTotal)
                     if(!this.collectorCells[i]) continue;
 
                     rawValue = window.currentData.collectorTotal[i];
-
+console.log([rawValue, currentMin, currentMax])
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
                         rawValue = 0xDEADBEEF;
