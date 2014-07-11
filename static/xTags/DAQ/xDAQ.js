@@ -541,6 +541,8 @@
                     trigReq = dv.getInt32(i*14+8, true);
                     MSC = dv.getInt16(i*14+12, true);
 
+                    console.log([MSC, trigReq, trigAcpt])
+/*
                     channelIndex = window.currentData.DAQ.MSC.MSC.indexOf(MSC);
                     channelName = window.currentData.DAQ.MSC.chan[channelIndex];
 
@@ -573,6 +575,7 @@
 
                     //trigger repaint
                     this.updateCells(); 
+*/
                 }
             },
 
