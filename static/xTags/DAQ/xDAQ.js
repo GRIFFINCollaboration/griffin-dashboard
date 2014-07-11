@@ -773,7 +773,7 @@
                     if(!this.collectorCells[i]) continue;
 
                     rawValue = (window.currentData.collectorTotal[i]) ? window.currentData.collectorTotal[i][this.currentView] : 0xDEADBEEF;
-console.log([window.currentData.collectorTotal[i], rawValue])
+console.log([window.currentData.collectorTotal[i], rawValue, this.currentView])
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
                         rawValue = 0xDEADBEEF;
