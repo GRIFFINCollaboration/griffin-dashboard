@@ -709,7 +709,7 @@
             //set new colors for all cells, and repaint.
             'updateCells': function(){
                 
-                var i, color, rawValue, colorIndex,
+                var i, j, color, rawValue, colorIndex,
                     currentMin = (this.showing == 0) ? this.collectorMin[this.currentView] : this.digitizerMin[this.currentView], 
                     currentMax = (this.showing == 0) ? this.collectorMax[this.currentView] : this.digitizerMax[this.currentView],
                     isLog = (this.showing == 0) ? this.collectorScaleType[this.currentView] : this.digitizerScaleType[this.currentView];
@@ -750,6 +750,40 @@ console.log('updating cells...')
                     }
                 }
                 this.mainLayer[0].draw();
+
+                //update digitizers
+                for(i=0; i<16; i++){
+                    if(!window.currentData.digitizerTotal[i]) continue;
+
+                    for(j=0; j<16; j++){
+                        if(!window.currentData.digitizerTotal[i][j] && window.currentData.digitizerTotal[i][j]!=0) continue;
+
+                        rawValue = Math.random()*3000;//window.currentData.digitizerTotal[i][j];
+
+                        //if no data was found, raise exception code:
+                        if(!rawValue && rawValue!=0)
+                            rawValue = 0xDEADBEEF;
+
+                        //value found and parsable, recolor cell:
+                        if(rawValue != 0xDEADBEEF){
+                            if(isLog)
+                                rawValue = Math.log10(rawValue);
+
+                            colorIndex = (rawValue - currentMin) / (currentMax - currentMin);
+                            if(colorIndex < 0) colorIndex = 0;
+                            if(colorIndex > 1) colorIndex = 1;
+                            color = scalepickr(colorIndex, this.scale);
+
+                            this.digitizerCells[i][j].stroke(color);
+
+                        //no value reporting, show error pattern
+                        } else{
+                            this.digitizerCells[i][j].stroke('#FFFFFF');                        
+                        }
+
+                    }
+                    this.mainLayer[i+1].draw();
+                }
                 
             }
 
