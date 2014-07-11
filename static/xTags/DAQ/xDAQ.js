@@ -357,7 +357,7 @@
                 this.generateColorScale();
 
                 //build the MSC table in per-digitizer chunks
-                //this.localMSC[collector index][digitizer index][ADC index] = channel name
+                //this.localMSC[collector index][digitizer index][channel name] = {MSC, req, acpt}
                 for(i=0; i<data.MSC.MSC.length; i++){
                     M = (parseInt(data.MSC.MSC[i],10) & 0xF000) >> 12;
                     S = (parseInt(data.MSC.MSC[i],10) & 0x0F00) >> 8;
@@ -369,7 +369,7 @@
                             MSCstring = '00' + MSCstring;
                         else if(MSCstring.length == 3)
                             MSCstring = '0' + MSCstring
-                    this.localMSC[M][S][data.MSC.chan[i]] = '0x'+MSCstring;
+                    this.localMSC[M][S][data.MSC.chan[i]] = {'MSC': '0x'+MSCstring, 'req': null, 'acpt': null;}
                 }
 
                 //initial update
@@ -429,8 +429,9 @@
                     text = '<table class="digitizerTooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
                     for(key in this.localMSC[this.showing-1][i]){
                         text += '<tr><td>'+ key +'</td>'
-                        text += '<td>'+ this.localMSC[this.showing-1][i][key] +'</td>'
-                        text += '<td></td></tr>'
+                        text += '<td>'+ this.localMSC[this.showing-1][i][key].MSC +'</td>'
+                        text += '<td>'+ this.localMSC[this.showing-1][i][key].req +'</td>'
+                        text += '<td>'+ this.localMSC[this.showing-1][i][key].acpt +'</td></tr>'
                     }
                     text += '</table>'
                     /*
