@@ -773,7 +773,7 @@
                     if(!this.collectorCells[i]) continue;
 
                     rawValue = (window.currentData.collectorTotal[i]) ? window.currentData.collectorTotal[i][this.currentView] : 0xDEADBEEF;
-console.log([window.currentData.collectorTotal[i], rawValue, this.currentView])
+
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
                         rawValue = 0xDEADBEEF;
@@ -802,13 +802,13 @@ console.log([window.currentData.collectorTotal[i], rawValue, this.currentView])
                     if(this.digitizerCells[i].length == 0) continue;
 
                     for(j=0; j<16; j++){
-                        if(!this.digitizerCells[i][j] && this.digitizerCells[i][j]!=0) continue;
+                        if(!this.digitizerCells[i][j]) continue;
 
                         if(window.currentData.digitizerTotal[i])
                             rawValue = window.currentData.digitizerTotal[i][j];
                         else
                             rawValue = null;
-
+console.log([rawValue, window.currentData.digitizerTotal[i][j]])
                         //if no data was found, raise exception code:
                         if(!rawValue && rawValue!=0)
                             rawValue = 0xDEADBEEF;
