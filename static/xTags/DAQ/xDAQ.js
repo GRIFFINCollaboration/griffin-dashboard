@@ -715,7 +715,7 @@
                     isLog = (this.showing == 0) ? this.collectorScaleType[this.currentView] : this.digitizerScaleType[this.currentView];
 
                 isLog = isLog == 'log';
-console.log(this.digitizerCells)
+
                 //get the scale limits right
                 if(isLog){
                     currentMin = Math.log10(currentMin);
@@ -726,7 +726,7 @@ console.log(this.digitizerCells)
                 for(i=0; i<16; i++){
                     if(!this.collectorCells[i]) continue;
 
-                    rawValue = Math.random()*30000;//window.currentData.collectorTotal[i];
+                    rawValue = window.currentData.collectorTotal[i];
 
                     //if no data was found, raise exception code:
                     if(!rawValue && rawValue!=0)
@@ -758,7 +758,7 @@ console.log(this.digitizerCells)
                     for(j=0; j<16; j++){
                         if(!this.digitizerCells[i][j] && this.digitizerCells[i][j]!=0) continue;
 
-                        rawValue = Math.random()*3000;//window.currentData.digitizerTotal[i][j];
+                        rawValue = window.currentData.digitizerTotal[i][j];
 
                         //if no data was found, raise exception code:
                         if(!rawValue && rawValue!=0)
@@ -782,7 +782,6 @@ console.log(this.digitizerCells)
                         }
 
                     }
-                    console.log(this.digitizerCells[i])
                     this.mainLayer[i+1].draw();
                 }
                 
