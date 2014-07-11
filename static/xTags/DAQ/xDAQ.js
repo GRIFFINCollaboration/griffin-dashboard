@@ -805,10 +805,10 @@
                         if(!this.digitizerCells[i][j]) continue;
 
                         if(window.currentData.digitizerTotal[i])
-                            rawValue = window.currentData.digitizerTotal[i][j];
+                            rawValue = window.currentData.digitizerTotal[i][j][this.currentView];
                         else
                             rawValue = null;
-console.log([rawValue, window.currentData.digitizerTotal[i][j]])
+console.log([rawValue, window.currentData.digitizerTotal[i][j][this.currentView]])
                         //if no data was found, raise exception code:
                         if(!rawValue && rawValue!=0)
                             rawValue = 0xDEADBEEF;
