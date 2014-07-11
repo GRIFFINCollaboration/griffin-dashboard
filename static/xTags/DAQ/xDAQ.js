@@ -408,7 +408,7 @@
                     left = evt.pageX;
 
                 //don't let tt fall off right edge of page
-                tt.setAttribute('style', 'display:block; opacity:0'); //hack so that tt.offsetHeight is nonzero in next step
+                tt.setAttribute('style', 'display:inline-block; opacity:0'); //hack so that tt.offsetHeight is nonzero in next step
                 if(left < window.innerWidth / 2)
                     left -= tt.offsetWidth;
 console.log([evt.pageX, tt.offsetWidth])
