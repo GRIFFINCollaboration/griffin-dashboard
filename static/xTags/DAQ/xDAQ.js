@@ -571,11 +571,12 @@
                         window.currentData.digitizerTotal[collectorIndex] = [];
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'trigReq' : trigReq, 'trigAcpt' : trigAcpt};
                     }
-console.log(window.currentData.collectorTotal)
+
                     //trigger repaint
                     this.updateCells(); 
 
                 }
+console.log(window.currentData.collectorTotal)
             },
 
             //generate the color scale
