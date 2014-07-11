@@ -369,7 +369,7 @@
                             MSCstring = '00' + MSCstring;
                         else if(MSCstring.length == 3)
                             MSCstring = '0' + MSCstring
-                    this.localMSC[M][S][data.MSC.chan[i]] = {'MSC': '0x'+MSCstring, 'req': null, 'acpt': null;}
+                    this.localMSC[M][S][data.MSC.chan[i]] = {'MSC': '0x'+MSCstring, 'req': null, 'acpt': null}
                 }
 
                 //initial update
