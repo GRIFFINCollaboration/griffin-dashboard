@@ -430,7 +430,7 @@
                     fontColor: '#EEEEEE',
 
                     grid: {
-                        outline: 0;
+                        outline: 0
                     }
                 });
             }
