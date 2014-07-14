@@ -224,7 +224,7 @@
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
 
                     if(this.collectors[i]){
-                        document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"><div class="DAQheadNode" id="collectorDiv'+i+'""></div><div id="digitizerBlock'+i+'"></div></x-card>';
+                        document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"><div class="DAQheadNode" id="collectorDiv'+i+'""><div id="flotrWrap'+i+'"></div></div><div id="digitizerBlock'+i+'"></div></x-card>';
                         option = document.createElement('option');
                         option.value = this.nCards;
                         option.innerHTML = 'Collector 0x' + i.toString(16).toUpperCase();
@@ -406,7 +406,8 @@
                     container = document.getElementById('masterFlotrWrap');
                     data = window.currentData.masterDetectorTotal
                 } else {
-                    //...
+                    container = document.getElementById('flotrWrap'+(index - 1));
+                    data = window.currentData.detectorTotal[index-1];
                 }
 
                 i=0
@@ -961,7 +962,7 @@
                 }
 
                 //also update bar graphs
-                //this.buildBarChart(0);
+                this.buildBarChart(this.showing);
                 
             }
 
