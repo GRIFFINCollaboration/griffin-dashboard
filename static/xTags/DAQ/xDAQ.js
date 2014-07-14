@@ -670,7 +670,7 @@
                         }
                     } else {
                         window.currentData.detectorTotal[collectorIndex] = {}
-                        window.currentData.detectorTotal[collectorIndex][detectorTotal] = {}
+                        window.currentData.detectorTotal[collectorIndex][detectorCode] = {}
                         window.currentData.detectorTotal[collectorIndex][detectorCode].trigReq = trigReq;
                         window.currentData.detectorTotal[collectorIndex][detectorCode].trigAcpt = trigAcpt;
                     }
