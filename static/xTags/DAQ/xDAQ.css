@@ -9,6 +9,7 @@ div.DAQheadNode{
 	height: 10em;
 	border-radius: 1em;
 	background-color: #555555;
+	padding: 1em;
 }
 
 div.DAQnav{
@@ -37,4 +38,9 @@ table.tooltipTable td{
 
 table.tooltipTable tr:nth-child(2n+1){
 	background-color: #333333;
+}
+
+div.flotrWrap {
+	width: 100%;
+	height: 100%;
 }

@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var xString, option, title, deckWrap, builderLink, dataViews, i
+                var xString, option, title, deckWrap, builderLink, dataViews, i, masterFlotrWrap,
                 ,   plotControlWrap = document.createElement('form')
                 ,   plotControlTitle = document.createElement('h3')
                 ,   plotControlMinLabel = document.createElement('label')
@@ -90,6 +90,11 @@
                 this.masterBlock.setAttribute('class', 'DAQheadNode');
                 this.masterBlock.setAttribute('id', 'masterHeadNode');
                 document.getElementById('DAQmasterCard').appendChild(this.masterBlock);
+
+                masterFlotrWrap = document.createElement('div');
+                masterFlotrWrap.setAttribute('id', 'masterFlotrWrap');
+                masterFlotrWrap.setAttribute('class', 'flotrWrap');
+                document.getElementById('masterHeadNode').appendChild(masterFlotrWrap);
 
                 this.collectorBlock = document.createElement('div');
                 this.collectorBlock.setAttribute('id', 'collectorBlock');
@@ -427,12 +432,12 @@
                         ticks: [[0,'GR'], [1,'SP'], [2,'DS'], [3,'DC']]
                     },
                     grid: {
-                        color: '#EEEEEE'
+                        color: '#EEEEEE',
                     }
                 });
             }
 
-            basic_bars(document.getElementById("masterHeadNode"),true);
+            basic_bars(document.getElementById("masterFlotrWrap"),true);
 
 
                 //initial update
