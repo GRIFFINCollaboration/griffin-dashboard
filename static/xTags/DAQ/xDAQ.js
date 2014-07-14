@@ -437,6 +437,9 @@
                     yaxis: yAxis,
                     grid: {
                         color: '#EEEEEE',
+                    },
+                    legend: {
+                        position: 'ne'
                     }
                 });
             },
