@@ -439,7 +439,8 @@
                         color: '#EEEEEE',
                     },
                     legend: {
-                        position: 'ne'
+                        position: 'ne',
+                        backgroundColor: 'rgba(0,0,0,0)';
                     }
                 });
             },
