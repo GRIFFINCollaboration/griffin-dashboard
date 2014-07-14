@@ -661,7 +661,7 @@
                         window.currentData.digitizerTotal[collectorIndex] = [];
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'reqRate' : trigReq, 'acptRate' : trigAcpt};
                     }
-
+/*
                     //detector sums
                     if(window.currentData.detectorTotal[collectorIndex]){
                         if(window.currentData.detectorTotal[collectorIndex][detectorCode]){
@@ -678,7 +678,7 @@
                         window.currentData.detectorTotal[collectorIndex][detectorCode].trigReq = trigReq;
                         window.currentData.detectorTotal[collectorIndex][detectorCode].trigAcpt = trigAcpt;
                     }
-
+*/
                     //trigger repaint
                     this.updateCells(); 
 
