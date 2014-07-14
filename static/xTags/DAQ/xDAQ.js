@@ -224,7 +224,7 @@
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
 
                     if(this.collectors[i]){
-                        document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"><div class="DAQheadNode" id="collectorDiv'+i+'""><div id="flotrWrap'+i+'" class="flotrWrap"></div></div><div id="digitizerBlock'+i+'"></div></x-card>';
+                        document.getElementById('DAQdeck').innerHTML += '<x-card id="collector'+i+'"><div class="DAQheadNode" id="collectorDiv'+i+'""><h2 id="headTitle'+(i+1)+'">Collector '+i+' '+window.currentData.DAQ.hosts.['collector0x'+i].host+'</h2><div id="flotrWrap'+i+'" class="flotrWrap"></div></div><div id="digitizerBlock'+i+'"></div></x-card>';
                         option = document.createElement('option');
                         option.value = this.nCards;
                         option.innerHTML = 'Collector 0x' + i.toString(16).toUpperCase();
