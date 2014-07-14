@@ -388,7 +388,7 @@
                 //babysit x-deck height
                 document.getElementById('DAQdeck').setAttribute('style', 'height:' + (document.getElementById('collectorBlock').offsetHeight + document.getElementById('masterHeadNode').offsetHeight) + 'px;')
 
-                this.buildBarChart(0);
+                //this.buildBarChart(0);
 
 
                 //initial update
