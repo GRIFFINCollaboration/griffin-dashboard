@@ -423,7 +423,7 @@
 
                 // Draw the graph
                 Flotr.draw(
-                container, [d1, d2], {
+                container, [{data: d1, label: 'Trigger Requests' }, {data: d2, label: 'Trigger Accepts'}], {
                     bars: {
                         show: true,
                         horizontal: true,
