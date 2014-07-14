@@ -388,7 +388,7 @@
                     point, // Data point variable declaration
                     i;
 
-                //Flotr.defaultOptions.fontColor = '#EEEEEE';
+                Flotr.defaultOptions.fontColor = '#EEEEEE';
                 //Flotr.defaultOptions.grid.outline = 1;
 
                 for (i = 0; i < 4; i++) {
