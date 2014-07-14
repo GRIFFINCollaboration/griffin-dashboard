@@ -91,6 +91,9 @@
                 this.masterBlock.setAttribute('id', 'masterHeadNode');
                 document.getElementById('DAQmasterCard').appendChild(this.masterBlock);
 
+                this.masterTitle = document.createElement('h2');
+                document.getElementById('masterHeadNode').appendChild(this.masterTitle);
+
                 masterFlotrWrap = document.createElement('div');
                 masterFlotrWrap.setAttribute('id', 'masterFlotrWrap');
                 masterFlotrWrap.setAttribute('class', 'flotrWrap');
@@ -289,6 +292,9 @@
                     }
                 }
                 this.mainLayer[0].draw();
+
+                //title:
+                this.masterTitle.innerHTML = 'Master Node ' + window.currentData.DAQ.hosts.master
                 
                 //and again for each collector card
                 this.digitizerCells = [];
@@ -381,10 +387,16 @@
                 //babysit x-deck height
                 document.getElementById('DAQdeck').setAttribute('style', 'height:' + (document.getElementById('collectorBlock').offsetHeight + document.getElementById('masterHeadNode').offsetHeight) + 'px;')
 
-            function basic_bars(container, horizontal) {
+                this.buildBarChart('masterFlotrWrap')
 
+
+                //initial update
+                this.update();
+
+            },
+
+            'buildBarChart' : function(container){
                 var
-                horizontal = (horizontal ? true : false),
                     // Show horizontal bars
                     d1 = [],
                     // First data series
@@ -396,19 +408,15 @@
 
                 for (i = 0; i < 4; i++) {
 
-                    if (horizontal) {
+    
                         point = [Math.ceil(Math.random() * 10), i];
-                    } else {
-                        point = [i, Math.ceil(Math.random() * 10)];
-                    }
+                    
 
                     d1.push(point);
 
-                    if (horizontal) {
+                
                         point = [Math.ceil(Math.random() * 10), i + 0.5];
-                    } else {
-                        point = [i + 0.5, Math.ceil(Math.random() * 10)];
-                    }
+                    
 
                     d2.push(point);
                 };
@@ -418,7 +426,7 @@
                 container, [d1, d2], {
                     bars: {
                         show: true,
-                        horizontal: horizontal,
+                        horizontal: true,
                         shadowSize: 0,
                         barWidth: 0.5
                     },
@@ -436,14 +444,6 @@
                     }
                 });
             }
-
-            basic_bars(document.getElementById("masterFlotrWrap"),true);
-
-
-                //initial update
-                this.update();
-
-            },
 
             'setupKinetic' : function(targetID){
                 var i = this.stage.length;
