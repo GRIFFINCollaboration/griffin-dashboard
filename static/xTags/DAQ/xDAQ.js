@@ -426,9 +426,6 @@
                         min: 0,
                         autoscaleMargin: 1,
                         ticks: [[0,'GR'], [1,'SP'], [2,'DS'], [3,'DC']]
-                    },
-                    grid: {
-                        outline: 0
                     }
                 });
             }
