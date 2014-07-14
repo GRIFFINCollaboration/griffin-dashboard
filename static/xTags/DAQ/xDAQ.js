@@ -460,7 +460,6 @@
             },
 
             'clickCollector' : function(index){
-                //document.getElementById('DAQdeck').shuffleTo(index+1);
                 document.getElementById('DAQnav').value = index+1;
                 document.getElementById('DAQnav').onchange();
             },
@@ -640,6 +639,7 @@
                     detectorCode = channelName.slice(0,3);
 
                     //keep track of individual rates for digitizer tooltip:
+                    console.log([collectorIndex, digitizerIndex])
                     this.localMSC[collectorIndex][digitizerIndex][channelName].req = trigReq;
                     this.localMSC[collectorIndex][digitizerIndex][channelName].acpt = trigAcpt;
 
