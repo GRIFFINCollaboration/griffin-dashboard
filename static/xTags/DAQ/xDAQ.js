@@ -415,7 +415,8 @@
                         show: true,
                         horizontal: horizontal,
                         shadowSize: 0,
-                        barWidth: 0.5
+                        barWidth: 0.5,
+                        fontColor: '#EEEEEE',
                     },
                     mouse: {
                         track: true,
@@ -426,9 +427,6 @@
                         autoscaleMargin: 1,
                         ticks: [[0,'GR'], [1,'SP'], [2,'DS'], [3,'DC']]
                     },
-
-                    fontColor: '#EEEEEE',
-
                     grid: {
                         outline: 0
                     }
