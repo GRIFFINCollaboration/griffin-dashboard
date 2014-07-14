@@ -683,7 +683,7 @@
                     this.updateCells(); 
 
                 }
-
+/*
                 //make master level detector sum:
                 window.currentData.masterDetectorTotal = {};
                 for(i=0; i<16; i++){
@@ -701,7 +701,7 @@
 
                     }
                 }
-
+*/
             },
 
             //generate the color scale
