@@ -440,7 +440,8 @@
                     },
                     legend: {
                         position: 'ne',
-                        backgroundColor: 'rgba(0,0,0,0)'
+                        backgroundColor: '#333333',
+                        labelBoxBorderColor: 'rgba(0,0,0,0)'
                     }
                 });
             },
