@@ -45,6 +45,6 @@ div.flotrWrap {
 	height: calc(100% - 4em);
 }
 
-div.flotr-legend {
-	background-color: rgba(0,0,0,0) !important;
+div.flotr-legend-bg {
+	background-color: rgba(0,0,0,0);
 }
