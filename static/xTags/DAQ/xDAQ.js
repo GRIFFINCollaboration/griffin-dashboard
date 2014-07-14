@@ -375,6 +375,7 @@
                     M = (parseInt(data.MSC.MSC[i],10) & 0xF000) >> 12;
                     S = (parseInt(data.MSC.MSC[i],10) & 0x0F00) >> 8;
                     C = parseInt(data.MSC.MSC[i],10) & 0x00FF;
+        console.log([M,S])
                     MSCstring = data.MSC.MSC[i].toString(16).toUpperCase();
                         if(MSCstring.length == 1)
                             MSCstring = '000' + MSCstring;
