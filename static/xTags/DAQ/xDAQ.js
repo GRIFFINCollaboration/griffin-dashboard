@@ -414,7 +414,7 @@
                     point = [data[key].trigReq,i];
                     d1.push(point);
 
-                    point = [data[key].trigAcpt,i];
+                    point = [data[key].trigAcpt,i + 0.5];
                     d2.push(point);
 
                     yAxis.ticks.push([i, key]);
