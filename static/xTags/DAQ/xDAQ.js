@@ -415,8 +415,7 @@
                         show: true,
                         horizontal: horizontal,
                         shadowSize: 0,
-                        barWidth: 0.5,
-                        fontColor: '#EEEEEE',
+                        barWidth: 0.5
                     },
                     mouse: {
                         track: true,
@@ -425,7 +424,8 @@
                     yaxis: {
                         min: 0,
                         autoscaleMargin: 1,
-                        ticks: [[0,'GR'], [1,'SP'], [2,'DS'], [3,'DC']]
+                        ticks: [[0,'GR'], [1,'SP'], [2,'DS'], [3,'DC']],
+                        fontColor: '#EEEEEE'
                     }
                 });
             }
