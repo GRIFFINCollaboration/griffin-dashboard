@@ -6,7 +6,7 @@ widget-DAQ{
 
 div.DAQheadNode{
 	width: 100%;
-	height: 10em;
+	height: 20em;
 	border-radius: 1em;
 	background-color: #555555;
 	padding: 1em;
@@ -42,5 +42,5 @@ table.tooltipTable tr:nth-child(2n+1){
 
 div.flotrWrap {
 	width: 100%;
-	height: 100%;
+	height: calc(100% - 4em);
 }
