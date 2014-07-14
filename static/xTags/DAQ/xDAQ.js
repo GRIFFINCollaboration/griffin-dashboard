@@ -417,7 +417,7 @@
                     point = [data[key].trigAcpt,i + 0.5];
                     d2.push(point);
 
-                    yAxis.ticks.push([i + 0.5, key]);
+                    yAxis.ticks.push([i + 0.25, key]);
                     i++;
                 }
 
