@@ -92,6 +92,7 @@
                 document.getElementById('DAQmasterCard').appendChild(this.masterBlock);
 
                 this.masterTitle = document.createElement('h2');
+                this.masterTitle.setAttribute('id', 'headTitle0');
                 document.getElementById('masterHeadNode').appendChild(this.masterTitle);
 
                 masterFlotrWrap = document.createElement('div');
@@ -294,7 +295,7 @@
                 this.mainLayer[0].draw();
 
                 //title:
-                this.masterTitle.innerHTML = 'Master Node ' + window.currentData.DAQ.hosts.master
+                document.getElementById('headTitle0').innerHTML = 'Master Node ' + window.currentData.DAQ.hosts.master
                 
                 //and again for each collector card
                 this.digitizerCells = [];
