@@ -388,9 +388,6 @@
                 //babysit x-deck height
                 document.getElementById('DAQdeck').setAttribute('style', 'height:' + (document.getElementById('collectorBlock').offsetHeight + document.getElementById('masterHeadNode').offsetHeight) + 'px;')
 
-                //this.buildBarChart(0);
-
-
                 //initial update
                 this.update();
 
@@ -635,11 +632,10 @@
 
                     //sum the data by digitizer and by collector, and by detector per collector
                     collectorIndex = ((0xF << 12) & MSC) >> 12;
-                    ddigitizerIndex = ((0xF << 8) & MSC) >> 8;
+                    digitizerIndex = ((0xF << 8) & MSC) >> 8;
                     detectorCode = channelName.slice(0,3);
 
                     //keep track of individual rates for digitizer tooltip:
-                    console.log([collectorIndex, digitizerIndex])
                     this.localMSC[collectorIndex][digitizerIndex][channelName].req = trigReq;
                     this.localMSC[collectorIndex][digitizerIndex][channelName].acpt = trigAcpt;
 
@@ -661,7 +657,7 @@
                         window.currentData.digitizerTotal[collectorIndex] = [];
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'reqRate' : trigReq, 'acptRate' : trigAcpt};
                     }
-/*
+
                     //detector sums
                     if(window.currentData.detectorTotal[collectorIndex]){
                         if(window.currentData.detectorTotal[collectorIndex][detectorCode]){
@@ -678,12 +674,12 @@
                         window.currentData.detectorTotal[collectorIndex][detectorCode].trigReq = trigReq;
                         window.currentData.detectorTotal[collectorIndex][detectorCode].trigAcpt = trigAcpt;
                     }
-*/
+
                     //trigger repaint
                     this.updateCells(); 
 
                 }
-/*
+
                 //make master level detector sum:
                 window.currentData.masterDetectorTotal = {};
                 for(i=0; i<16; i++){
@@ -701,7 +697,7 @@
 
                     }
                 }
-*/
+
             },
 
             //generate the color scale
@@ -958,6 +954,9 @@
                     }
                     this.mainLayer[i+1].draw();
                 }
+
+                //also update bar graphs
+                this.buildBarChart(0);
                 
             }
 
