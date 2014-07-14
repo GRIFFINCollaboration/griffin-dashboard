@@ -443,7 +443,7 @@
                         color: '#EEEEEE',
                     }
                 });
-            }
+            },
 
             'setupKinetic' : function(targetID){
                 var i = this.stage.length;
