@@ -961,7 +961,7 @@
                 }
 
                 //also update bar graphs
-                this.buildBarChart(0);
+                //this.buildBarChart(0);
                 
             }
 
