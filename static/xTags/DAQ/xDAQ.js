@@ -388,7 +388,7 @@
                 //babysit x-deck height
                 document.getElementById('DAQdeck').setAttribute('style', 'height:' + (document.getElementById('collectorBlock').offsetHeight + document.getElementById('masterHeadNode').offsetHeight) + 'px;')
 
-                this.buildBarChart(document.getElementById('masterFlotrWrap'))
+                this.buildBarChart(0);
 
 
                 //initial update
@@ -396,31 +396,33 @@
 
             },
 
-            'buildBarChart' : function(container){
-                var
-                    // Show horizontal bars
-                    d1 = [],
-                    // First data series
+            'buildBarChart' : function(index){
+                var d1 = [],
                     d2 = [],
-                    // Second data series
-                    point, // Data point variable declaration
-                    i;
+                    point, key, i, data, container,
+                    yAxis = {   min: 0,
+                                autoscaleMargin: 1,
+                                ticks: []
+                            };
        
+                if(index == 0){
+                    container = document.getElementById('masterFlotrWrap');
+                    data = window.currentData.masterDetectorTotal
+                } else {
+                    //...
+                }
 
-                for (i = 0; i < 4; i++) {
-
-    
-                        point = [Math.ceil(Math.random() * 10), i];
-                    
-
+                i=0
+                for(key in data){
+                    point = [data[key].trigReq,i];
                     d1.push(point);
 
-                
-                        point = [Math.ceil(Math.random() * 10), i + 0.5];
-                    
-
+                    point = [data[key].trigAcpt,i];
                     d2.push(point);
-                };
+
+                    yAxis.ticks.push([i, key]);
+                    i++;
+                }
 
                 // Draw the graph
                 Flotr.draw(
@@ -435,11 +437,7 @@
                         track: true,
                         relative: true
                     },
-                    yaxis: {
-                        min: 0,
-                        autoscaleMargin: 1,
-                        ticks: [[0,'GR'], [1,'SP'], [2,'DS'], [3,'DC']]
-                    },
+                    yaxis: yAxis,
                     grid: {
                         color: '#EEEEEE',
                     }
@@ -560,6 +558,7 @@
                 //dump stale data
                 window.currentData.collectorTotal = [];
                 window.currentData.digitizerTotal = [];
+                window.currentData.detectorTotal = []; //indexed same as collectors, each element an object keyed as detcode : {req, acpt}
 
                 //make a list of who to ask for data
                 if(!window.currentData.hostList){
@@ -615,6 +614,7 @@
                 var MSC, trigReq, trigAcpt,
                     channelIndex, channelName,
                     collectorIndex, digitizerIndex,
+                    detectorCode,
                     i, j, key;
 
                 //dump old local MSC rates:
@@ -634,9 +634,10 @@
                     channelIndex = window.currentData.DAQ.MSC.MSC.indexOf(MSC);
                     channelName = window.currentData.DAQ.MSC.chan[channelIndex];
 
-                    //sum the data by digitizer and by collector
+                    //sum the data by digitizer and by collector, and by detector per collector
                     collectorIndex = ((0xF << 12) & MSC) >> 12;
-                    digitizerIndex = ((0xF << 8) & MSC) >> 8;
+                    ddigitizerIndex = ((0xF << 8) & MSC) >> 8;
+                    detectorCode = channelName.slice(0,3);
 
                     //keep track of individual rates for digitizer tooltip:
                     this.localMSC[collectorIndex][digitizerIndex][channelName].req = trigReq;
@@ -661,9 +662,44 @@
                         window.currentData.digitizerTotal[collectorIndex][digitizerIndex] = {'reqRate' : trigReq, 'acptRate' : trigAcpt};
                     }
 
+                    //detector sums
+                    if(window.currentData.detectorTotal[collectorIndex]){
+                        if(window.currentData.detectorTotal[collectorIndex][detectorCode]){
+                            window.currentData.detectorTotal[collectorIndex][detectorCode].trigReq += trigReq;
+                            window.currentData.detectorTotal[collectorIndex][detectorCode].trigAcpt += trigAcpt;
+                        } else{
+                            window.currentData.detectorTotal[collectorIndex][detectorCode] = {};
+                            window.currentData.detectorTotal[collectorIndex][detectorCode].trigReq = trigReq;
+                            window.currentData.detectorTotal[collectorIndex][detectorCode].trigAcpt = trigAcpt;
+                        }
+                    } else {
+                        window.currentData.detectorTotal[collectorIndex] = {}
+                        window.currentData.detectorTotal[collectorIndex][detectorTotal] = {}
+                        window.currentData.detectorTotal[collectorIndex][detectorCode].trigReq = trigReq;
+                        window.currentData.detectorTotal[collectorIndex][detectorCode].trigAcpt = trigAcpt;
+                    }
+
                     //trigger repaint
                     this.updateCells(); 
 
+                }
+
+                //make master level detector sum:
+                window.currentData.masterDetectorTotal = {};
+                for(i=0; i<16; i++){
+                    if(!window.currentData.detectorTotal[i]) continue;
+
+                    for(key in window.currentData.detectorTotal[i]){
+                        if(window.currentData.masterDetectorTotal[key]){
+                            window.currentData.masterDetectorTotal[key].trigReq += window.currentData.detectorTotal[i][key].trigReq;
+                            window.currentData.masterDetectorTotal[key].trigAcpt += window.currentData.detectorTotal[i][key].trigAcpt;
+                        } else{
+                            window.currentData.masterDetectorTotal[key] = {}
+                            window.currentData.masterDetectorTotal[key].trigReq = window.currentData.detectorTotal[i][key].trigReq;
+                            window.currentData.masterDetectorTotal[key].trigAcpt = window.currentData.detectorTotal[i][key].trigAcpt;
+                        }
+
+                    }
                 }
 
             },
