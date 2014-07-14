@@ -388,6 +388,9 @@
                     point, // Data point variable declaration
                     i;
 
+                Flotr.fontColor = #EEEEEE;
+                Flotr.grid.outline = 0;
+
                 for (i = 0; i < 4; i++) {
 
                     if (horizontal) {
