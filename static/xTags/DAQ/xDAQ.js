@@ -387,9 +387,7 @@
                     // Second data series
                     point, // Data point variable declaration
                     i;
-
-                Flotr.defaultOptions.fontColor = '#EEEEEE';
-                //Flotr.defaultOptions.grid.outline = 1;
+       
 
                 for (i = 0; i < 4; i++) {
 
@@ -427,6 +425,12 @@
                         min: 0,
                         autoscaleMargin: 1,
                         ticks: [[0,'GR'], [1,'SP'], [2,'DS'], [3,'DC']]
+                    },
+
+                    fontColor: '#EEEEEE',
+
+                    grid: {
+                        outline: 0;
                     }
                 });
             }
