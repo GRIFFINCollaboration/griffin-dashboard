@@ -389,7 +389,7 @@
                     i;
 
                 //Flotr.defaultOptions.fontColor = '#EEEEEE';
-                Flotr.defaultOptions.grid.outline = 1;
+                //Flotr.defaultOptions.grid.outline = 1;
 
                 for (i = 0; i < 4; i++) {
 
