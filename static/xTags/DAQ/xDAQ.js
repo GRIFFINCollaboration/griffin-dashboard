@@ -376,7 +376,7 @@
                 //babysit x-deck height
                 document.getElementById('DAQdeck').setAttribute('style', 'height:' + (document.getElementById('collectorBlock').offsetHeight + document.getElementById('masterHeadNode').offsetHeight) + 'px;')
 
-            (function basic_bars(container, horizontal) {
+            function basic_bars(container, horizontal) {
 
                 var
                 horizontal = (horizontal ? true : false),
@@ -426,7 +426,9 @@
                         ticks: [[0,'GR'], [1,'SP'], [2,'DS'], [3,'DC']]
                     }
                 });
-            })(document.getElementById("masterHeadNode"),true);
+            }
+
+            basic_bars(document.getElementById("masterHeadNode"),true);
 
 
                 //initial update
