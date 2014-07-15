@@ -43,8 +43,10 @@
         methods: {
             'updateRates' : function(customEventData){
                 document.getElementById(this.id + 'Title').innerHTML = customEventData.channel
-                if(!this.UIdeployed)
+                if(!this.UIdeployed){
                     this.setUpUI();
+                    this.UIdeployed = true;
+                }
             },
 
             'setUpUI' : function(){
@@ -54,6 +56,8 @@
                     mainSectionTitles = ['MSCB Node Info', 'ADC Control', 'Triggering', 'Pulse Height Evaluation', 'Time Evaluation', 'Waveform Readout', 'Simulation Pulse', 'Miscellaneous'],
                     mainSectionH3 = [],
                     mainLists = [],
+                    statusIDs = ['ctrl', 'rev', 'serial', 'cpu_temp', 'cc_lock', 'cc_freq', 'hw_sw_m', 'hw_id', 'hw_time', 'sw_id', 'sw_time', 'uptime', 'dac_ch', 'ref_clk', 'ch_en', 'ch_aa'],
+                    listItem, input, label, p,
                     i;
 
                 //wrapper for ADC UI
@@ -77,6 +81,32 @@
 
                     control.appendChild(mainSectionDivs[i]);
                 }
+
+                //ADC status pane elements
+                for(i=0; i<statusIDs.length; i++){
+                    listItem = document.createElement('li');
+                    listItem.setAttribute('id', statusIDs[i]);
+                    mainLists[0].appendChild(listItem);
+                }
+
+                //ADC pane elements
+                listItem = document.createElement('li');
+                mainLists[1].appendChild(listItem);
+                p = document.createElement('p');
+                p.innerHTML = 'DC Offset:';
+                listItem.appendChild(p);
+                input = document.createElement('input');
+                input = setAttributes(input, {
+                    "id" : "a_dcofst",
+                    "type" : "range",
+                    "step" : 1,
+                    "min" : 0,
+                    "max" : 4095,
+                });
+                input.oninput = this.updateADC.bind(input, 'a_dcofst')
+                label = document.createElement('label');
+                label.setAttribute('id', 'dcofstLabel');
+                label.innerHTML = 'mV';
 
             }
         }
