@@ -45,7 +45,7 @@
                 var control = document.createElement('div'),
                     mainSections = ['ADCstatusPane', 'ADC', 'trig', 'pulseHeight', 'time', 'waveform', 'simulation', 'misc'],
                     mainSectionDivs = [],
-                    mainSectionTitles = ['MSCB Node Info', 'ADC Control', 'Triggering', 'Pulse Height Evaluation', 'Time Evaluation', 'Waveform Readout', 'Simulation Pulse', 'Miscellaneous'],
+                    mainSectionTitles = ['MSCB Node Info', 'ADC Control', 'Triggering', 'Pulse Height Eval.', 'Time Eval.', 'Waveform Readout', 'Simulation Pulse', 'Miscellaneous'],
                     mainSectionH3 = [],
                     mainLists = [],
                     statusIDs = ['ctrl', 'rev', 'serial', 'cpu_temp', 'cc_lock', 'cc_freq', 'hw_sw_m', 'hw_id', 'hw_time', 'sw_id', 'sw_time', 'uptime', 'dac_ch', 'ref_clk', 'ch_en', 'ch_aa'],
