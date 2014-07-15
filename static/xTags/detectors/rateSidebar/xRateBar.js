@@ -50,7 +50,9 @@
                     mainLists = [],
                     statusIDs = ['ctrl', 'rev', 'serial', 'cpu_temp', 'cc_lock', 'cc_freq', 'hw_sw_m', 'hw_id', 'hw_time', 'sw_id', 'sw_time', 'uptime', 'dac_ch', 'ref_clk', 'ch_en', 'ch_aa'],
                     ADCitemTitles = ['DC Offset:', 'ADC Chan:', 'Trim:', 'Polarity:'],
+                    triggeringItemTitles = ['Channel:', 'Hit Thresh:', 'Trig Thresh', 'Differentiation:', 'Integration:', 'Delay:', 'Pole Cxn:', 'BLR Control:'],
                     listItem, items, input, label, p,
+                    id, step,
                     i;
 
                 //wrapper for ADC UI
@@ -75,14 +77,18 @@
                     control.appendChild(mainSectionDivs[i]);
                 }
 
+                ////////////////////////////
                 //ADC status pane elements
+                ////////////////////////////
                 for(i=0; i<statusIDs.length; i++){
                     listItem = document.createElement('li');
                     listItem.setAttribute('id', statusIDs[i]);
                     mainLists[0].appendChild(listItem);
                 }
 
+                //////////////////////////
                 //ADC pane elements
+                //////////////////////////
                 items = [];
                 for(i=0; i<ADCitemTitles.length; i++){
                     listItem = document.createElement('li');
@@ -126,8 +132,37 @@
                 document.getElementById('a_pol0').onchange = this.updateADC.bind(document.getElementById('a_pol0'), 'a_pol');
                 document.getElementById('a_pol1').onchange = this.updateADC.bind(document.getElementById('a_pol1'), 'a_pol');                
 
+                ////////////////////////////////
+                //Triggering pane elements
+                ////////////////////////////////
+                items = [];
+                for(i=0; i<triggeringItemTitles.length; i++){
+                    listItem = document.createElement('li');
+                    mainLists[2].appendChild(listItem);
+                    label = document.createElement('label');
+                    label.innerHTML = triggeringItemTitles[i];
+                    listItem.appendChild(label);
+                    items.push(listItem);
+                }
 
+                radioArray(items[0], ['Enabled', 'Disabled'], [true, false], 't_off');
+                document.getElementById('t_off0').onchange = this.updateADC.bind(document.getElementById('t_off0'), 't_off');
+                document.getElementById('t_off1').onchange = this.updateADC.bind(document.getElementById('t_off1'), 't_off');
 
+                id = ['t_hthresh', 't_thresh', 't_diff', 't_int', 't_delay', 't_polcor', 't_blrctl'];
+                step = ["any", "any", 1, 1, 1, "any", "any"];
+
+                for(i=0; i<id.length; i++){
+                    input = document.createElement('input');
+                    setAttributes(input, {
+                        "id" : id[i],
+                        "type" : "number",
+                        "step" : step[i],
+                        "class" : "stdin"
+                    });
+                    input.onchange = this.updateADC.bind(input, id[i]);
+                    items[i+1].appendChild(input);                    
+                }
 
             },
 
