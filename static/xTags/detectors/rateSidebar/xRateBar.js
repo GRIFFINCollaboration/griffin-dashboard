@@ -108,6 +108,10 @@
                 label.setAttribute('id', 'dcofstLabel');
                 label.innerHTML = 'mV';
 
+            },
+
+            'updateADC' : function(var_name){
+                return true;
             }
         }
     });
