@@ -103,10 +103,12 @@
                     "min" : 0,
                     "max" : 4095,
                 });
-                input.oninput = this.updateADC.bind(input, 'a_dcofst')
+                input.oninput = this.updateADC.bind(input, 'a_dcofst');
+                listItem.appendChild(input);
                 label = document.createElement('label');
                 label.setAttribute('id', 'dcofstLabel');
                 label.innerHTML = 'mV';
+                listItem.appendChild(label);
 
             },
 
