@@ -51,6 +51,7 @@
                     statusIDs = ['ctrl', 'rev', 'serial', 'cpu_temp', 'cc_lock', 'cc_freq', 'hw_sw_m', 'hw_id', 'hw_time', 'sw_id', 'sw_time', 'uptime', 'dac_ch', 'ref_clk', 'ch_en', 'ch_aa'],
                     ADCitemTitles = ['DC Offset:', 'ADC Chan:', 'Trim:', 'Polarity:'],
                     triggeringItemTitles = ['Channel:', 'Hit Thresh:', 'Trig Thresh', 'Differentiation:', 'Integration:', 'Delay:', 'Pole Cxn:', 'BLR Control:'],
+                    pulseheightItemTitles = ['Integration:', 'Differentiation:', 'Delay:', 'Pole Cxn 1:', 'Pole Cxn 2:', 'Baseline Rest:', 'Gain:', 'Pileup Algo:', ],
                     listItem, items, input, label, p,
                     id, step,
                     i;
@@ -164,6 +165,33 @@
                     items[i+1].appendChild(input);                    
                 }
 
+                /////////////////////////////////
+                //pulse height pane elements
+                /////////////////////////////////
+                items = [];
+                for(i=0; i<pulseheightItemTitles.length; i++){
+                    listItem = document.createElement('li');
+                    mainLists[3].appendChild(listItem);
+                    label = document.createElement('label');
+                    label.innerHTML = pulseheightItemTitles[i];
+                    listItem.appendChild(label);
+                    items.push(listItem);
+                }                
+
+                id = ['p_int', 'p_diff', 'p_delay', 'p_polec1', 'p_polec2', 'p_bsr', 'p_gain', 'p_pactrl'];
+                step = [1,1,1,"any","any","any","any", 1];
+
+                for(i=0; i<id.length; i++){
+                    input = document.createElement('input');
+                    setAttributes(input, {
+                        "id" : id[i],
+                        "type" : "number",
+                        "step" : step[i],
+                        "class" : "stdin"
+                    });
+                    input.onchange = this.updateADC.bind(input, id[i]);
+                    items[i].appendChild(input);                    
+                }
             },
 
             'updateADC' : function(var_name){
