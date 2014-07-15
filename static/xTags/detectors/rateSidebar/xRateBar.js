@@ -68,7 +68,7 @@
 
                     mainSectionH3[i] = document.createElement('h3');
                     mainSectionH3[i].setAttribute('class', 'sectionHead');
-                    mainSectionH3[i].onclick = toggleSelection.bind(this, mainSections[i]);
+                    mainSectionH3[i].onclick = toggleSection.bind(this, mainSections[i]);
                     mainSectionH3[i].innerHTML = String.fromCharCode(0x25B6) + ' ' +mainSectionTitles[i];
                     mainSectionDivs[i].appendChild(mainSectionH3[i]);
 
