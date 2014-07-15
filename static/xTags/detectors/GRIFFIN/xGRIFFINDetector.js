@@ -418,7 +418,7 @@
                 }
 
                 if(rateSidebar && RateCell){
-                    evt = new CustomEvent('postRateChan', {'detail': {'channel' : cellName} });
+                    evt = new CustomEvent('postADC', {'detail': {'channel' : cellName} });
                     rateSidebar.dispatchEvent(evt);
 
                     if(this.lastRateClick){
