@@ -15,14 +15,6 @@
                 this.appendChild(barTitle);
                 this.UIdeployed = false;
 
-
-
-
-
-
-
-
-
                 this.addEventListener('postADC', function(evt){
                     this.updateRates(evt.detail);
                 }, false);
@@ -57,7 +49,8 @@
                     mainSectionH3 = [],
                     mainLists = [],
                     statusIDs = ['ctrl', 'rev', 'serial', 'cpu_temp', 'cc_lock', 'cc_freq', 'hw_sw_m', 'hw_id', 'hw_time', 'sw_id', 'sw_time', 'uptime', 'dac_ch', 'ref_clk', 'ch_en', 'ch_aa'],
-                    listItem, input, label, p,
+                    ADCitemTitles = ['DC Offset:', 'ADC Chan:', 'Trim:', 'Polarity:'],
+                    listItem, items, input, label, p,
                     i;
 
                 //wrapper for ADC UI
@@ -90,11 +83,16 @@
                 }
 
                 //ADC pane elements
-                listItem = document.createElement('li');
-                mainLists[1].appendChild(listItem);
-                p = document.createElement('p');
-                p.innerHTML = 'DC Offset:';
-                listItem.appendChild(p);
+                items = [];
+                for(i=0; i<ADCitemTitles.length; i++){
+                    listItem = document.createElement('li');
+                    mainLists[1].appendChild(listItem);
+                    label = document.createElement('label');
+                    label.innerHTML = ADCitemTitles[i];
+                    mainLists[1].appendChild(label);
+                    items.push(listItem);
+                }
+
                 input = document.createElement('input');
                 setAttributes(input, {
                     "id" : "a_dcofst",
@@ -104,20 +102,30 @@
                     "max" : 4095,
                 });
                 input.oninput = this.updateADC.bind(input, 'a_dcofst');
-                listItem.appendChild(input);
+                items[0].appendChild(input);
                 label = document.createElement('label');
                 label.setAttribute('id', 'dcofstLabel');
                 label.innerHTML = 'mV';
-                listItem.appendChild(label);
+                items[0].appendChild(label);
 
-                listItem = document.createElement('li');
-                mainLists[1].appendChild(listItem);
-                label = document.createElement('label');
-                label.innerHTML = 'ADC Chan:';
-                listItem.appendChild(label);
-                radioArray(listItem, ['Enabled', 'Disabled'], [true, false], 'a_off');
+                radioArray(items[1], ['Enabled', 'Disabled'], [true, false], 'a_off');
                 document.getElementById('a_off0').onchange = this.updateADC.bind(document.getElementById('a_off0'), 'a_off');
                 document.getElementById('a_off1').onchange = this.updateADC.bind(document.getElementById('a_off1'), 'a_off');
+
+                input = document.createElement('input');
+                setAttributes(input, {
+                    "id" : "a_trim",
+                    "type" : "number",
+                    "step" : 1
+                });
+                input.onchange = this.updateADC.bind(input, 'a_trim');
+                items[2].appendChild(input);
+
+                radioArray(items[3], ['Positive', 'Negative'], [true, false], 'a_pol');
+                document.getElementById('a_pol0').onchange = this.updateADC.bind(document.getElementById('a_pol0'), 'a_pol');
+                document.getElementById('a_pol1').onchange = this.updateADC.bind(document.getElementById('a_pol1'), 'a_pol');                
+
+
 
 
             },
