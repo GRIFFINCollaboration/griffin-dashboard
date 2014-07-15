@@ -89,7 +89,7 @@
                     mainLists[1].appendChild(listItem);
                     label = document.createElement('label');
                     label.innerHTML = ADCitemTitles[i];
-                    mainLists[1].appendChild(label);
+                    listItem.appendChild(label);
                     items.push(listItem);
                 }
 
@@ -116,7 +116,8 @@
                 setAttributes(input, {
                     "id" : "a_trim",
                     "type" : "number",
-                    "step" : 1
+                    "step" : 1,
+                    "class" : "stdin"
                 });
                 input.onchange = this.updateADC.bind(input, 'a_trim');
                 items[2].appendChild(input);
