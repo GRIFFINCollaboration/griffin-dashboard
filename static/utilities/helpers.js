@@ -155,7 +155,7 @@ function setAttributes(DOMelt, tribs){
     var key, newElt;
 
     for(key in tribs){
-        DOMelt.setAttibute(key, tribs.key)
+        DOMelt.setAttribute(key, tribs.key)
     }
 }
 
