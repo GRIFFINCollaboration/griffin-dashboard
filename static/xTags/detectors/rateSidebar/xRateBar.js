@@ -110,10 +110,20 @@
                 label.innerHTML = 'mV';
                 listItem.appendChild(label);
 
+                listItem = document.createElement('li');
+                mainLists[1].appendChild(listItem);
+                label = document.createElement('label');
+                label.innerHTML = 'ADC Chan:';
+                listItem.appendChild(label);
+                radioArray(listItem, ['Enabled', 'Disabled'], [true, false], 'a_off');
+                document.getElementById('a_off0').onchange = this.updateADC.bind(document.getElementById('a_off0'), 'a_off');
+                document.getElementById('a_off1').onchange = this.updateADC.bind(document.getElementById('a_off1'), 'a_off');
+
+
             },
 
             'updateADC' : function(var_name){
-                return true;
+                console.log(var_name)
             }
         }
     });
