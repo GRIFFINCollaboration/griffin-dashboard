@@ -151,7 +151,7 @@ function generateTickLabel(min, max, nTicks, n){
 }
 
 //set a bunch of attributes on a dom element:
-function setAttibutes(DOMelt, tribs){
+function setAttributes(DOMelt, tribs){
     var key, newElt;
 
     for(key in tribs){
