@@ -96,7 +96,7 @@
                 p.innerHTML = 'DC Offset:';
                 listItem.appendChild(p);
                 input = document.createElement('input');
-                input = setAttributes(input, {
+                setAttributes(input, {
                     "id" : "a_dcofst",
                     "type" : "range",
                     "step" : 1,
