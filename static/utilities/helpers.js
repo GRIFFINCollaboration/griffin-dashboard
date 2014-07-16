@@ -159,3 +159,18 @@ function setAttributes(DOMelt, tribs){
     }
 }
 
+//determine the hostname of the digitizer into which <channel> is plugged, given the <DAQ> table from the ODB
+function findHost(channel, DAQ){
+    var host;
+
+    host = DAQ.MSC.chan.indexOf(channel);  //table index of channel
+    if(host || host==0){
+        host = DAQ.MSC.MSC[host]; //MSC address of channel
+        host = (host & 0xF000) >> 12; //collector channel
+        host = 'collector0x'+host.toString(16);
+        host = DAQ.hosts[host].host; //haha
+    }
+
+    return host;
+}
+

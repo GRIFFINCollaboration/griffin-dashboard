@@ -390,13 +390,7 @@
                     host;
 
                 if(rateSidebar && RateCell){
-                    host = window.currentData.DAQ.MSC.chan.indexOf(cellName);  //table index of channel
-                    if(host || host==0){
-                        host = window.currentData.DAQ.MSC.MSC[host]; //MSC address of channel
-                        host = (host & 0xF000) >> 12; //collector channel
-                        host = 'collector0x'+host.toString(16);
-                        host = window.currentData.DAQ.hosts[host].host; //haha
-                    }
+                    host = findHost(cellName, window.currentData.DAQ);
 
                     evt = new CustomEvent('postADC', {'detail': {   'channel' : cellName,
                                                                     'host' : host} });
