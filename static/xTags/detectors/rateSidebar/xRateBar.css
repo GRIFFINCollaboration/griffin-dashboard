@@ -4,6 +4,8 @@ widget-rateBar{
 	float: right;
 	padding: 1em;
 	margin: 1em;
+	height: calc(100% - 1em);
+	overflow: scroll;
 }
 
 div.collapse{
