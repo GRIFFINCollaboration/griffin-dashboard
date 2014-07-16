@@ -51,7 +51,9 @@
                     statusIDs = ['ctrl', 'rev', 'serial', 'cpu_temp', 'cc_lock', 'cc_freq', 'hw_sw_m', 'hw_id', 'hw_time', 'sw_id', 'sw_time', 'uptime', 'dac_ch', 'ref_clk', 'ch_en', 'ch_aa'],
                     ADCitemTitles = ['DC Offset:', 'ADC Chan:', 'Trim:', 'Polarity:'],
                     triggeringItemTitles = ['Channel:', 'Hit Thresh:', 'Trig Thresh', 'Differentiation:', 'Integration:', 'Delay:', 'Pole Cxn:', 'BLR Control:'],
-                    pulseheightItemTitles = ['Integration:', 'Differentiation:', 'Delay:', 'Pole Cxn 1:', 'Pole Cxn 2:', 'Baseline Rest:', 'Gain:', 'Pileup Algo:', ],
+                    pulseheightItemTitles = ['Integration:', 'Differentiation:', 'Delay:', 'Pole Cxn 1:', 'Pole Cxn 2:', 'Baseline Rest:', 'Gain:', 'Pileup Algo:'],
+                    timeItemTitles = ['CFD Delay:', 'CFD Fraction:'],
+                    waveformItemTitles = ['', 'Pretrigger:', 'Samples:', 'Decimation:', 'Filter WF:'],
                     listItem, items, input, label, p,
                     id, step,
                     i;
@@ -192,6 +194,71 @@
                     input.onchange = this.updateADC.bind(input, id[i]);
                     items[i].appendChild(input);                    
                 }
+
+                ///////////////////////////////
+                //Time eval pane elements
+                ///////////////////////////////
+                items = [];
+                for(i=0; i<timeItemTitles.length; i++){
+                    listItem = document.createElement('li');
+                    mainLists[4].appendChild(listItem);
+                    label = document.createElement('label');
+                    label.innerHTML = timeItemTitles[i];
+                    listItem.appendChild(label);
+                    items.push(listItem);
+                }                
+
+                id = ['cfd_dly', 'cfd_frac'];
+                step = [1,"any"];
+
+                for(i=0; i<id.length; i++){
+                    input = document.createElement('input');
+                    setAttributes(input, {
+                        "id" : id[i],
+                        "type" : "number",
+                        "step" : step[i],
+                        "class" : "stdin"
+                    });
+                    input.onchange = this.updateADC.bind(input, id[i]);
+                    items[i].appendChild(input);                    
+                }   
+
+                //////////////////////////////
+                //Waveform pane elements      
+                //////////////////////////////
+                items = [];
+                for(i=1; i<waveformItemTitles.length; i++){
+                    listItem = document.createElement('li');
+                    mainLists[5].appendChild(listItem);
+                    label = document.createElement('label');
+                    label.innerHTML = triggeringItemTitles[i];
+                    listItem.appendChild(label);
+                    items.push(listItem);
+                }
+
+                radioArray(items[0], ['Enabled', 'Disabled'], [true, false], 'wrf_supp');
+                document.getElementById('wrf_supp0').onchange = this.updateADC.bind(document.getElementById('wrf_supp0'), 'wrf_supp');
+                document.getElementById('wrf_supp1').onchange = this.updateADC.bind(document.getElementById('wrf_supp1'), 'wrf_supp');
+
+                id = ['wrf_pret', 'wrf_smpl', 'wrf_dec'];
+                step = [1,1,1];
+
+                for(i=0; i<id.length; i++){
+                    input = document.createElement('input');
+                    setAttributes(input, {
+                        "id" : id[i],
+                        "type" : "number",
+                        "step" : step[i],
+                        "class" : "stdin"
+                    });
+                    input.onchange = this.updateADC.bind(input, id[i]);
+                    items[i+1].appendChild(input);                    
+                }
+
+                radioArray(items[4], ['Enabled', 'Disabled'], [true, false], 'wrf_off');
+                document.getElementById('wrf_supp0').onchange = this.updateADC.bind(document.getElementById('wrf_off0'), 'wrf_off');
+                document.getElementById('wrf_supp1').onchange = this.updateADC.bind(document.getElementById('wrf_off1'), 'wrf_off');
+
             },
 
             'updateADC' : function(var_name){
