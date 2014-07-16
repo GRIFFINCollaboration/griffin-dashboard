@@ -87,9 +87,9 @@
 
                 //state management
                 //turn appropriate GRIFFIN tables on as needed, and manage SPICE / GRIFFIN constraint in USL:
-                document.getElementById('USC0Label').onclick = turnOffSPICE;
-                document.getElementById('USC1Label').onclick = turnOffSPICE;
-                document.getElementById('USC2Label').onclick = turnOffSPICE;
+                document.getElementById('USC0Label').onclick = this.turnOffSPICE;
+                document.getElementById('USC1Label').onclick = this.turnOffSPICE;
+                document.getElementById('USC2Label').onclick = this.turnOffSPICE;
                 document.getElementById('USC3Label').onclick = function(){
                     var message = document.getElementById('USLmessage')
 
