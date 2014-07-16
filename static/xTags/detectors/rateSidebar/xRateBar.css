@@ -38,3 +38,7 @@ div#control ul{
 	padding-bottom: 1em;
 	border-bottom: 1px solid #EEEEEE;
 }
+
+div#control input[type='number']{
+	width: 6em;
+}
