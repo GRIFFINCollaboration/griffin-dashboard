@@ -164,19 +164,14 @@ function findHost(channel, DAQ){
     var host;
 
     host = DAQ.MSC.chan.indexOf(channel);  //table index of channel
-console.log(host)
-    if(host || host==0){
+    if(host !=-1){
         host = DAQ.MSC.MSC[host]; //MSC address of channel
-        console.log(host)
         host = (host & 0xF000) >> 12; //collector channel
-                console.log(host)
         host = 'collector0x'+host.toString(16);
-                console.log(host)
         host = DAQ.hosts[host].host; //haha
-                console.log(host)
     } else
         host = false;
-        console.log(host)
+
     return host;
 }
 
