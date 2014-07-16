@@ -265,7 +265,7 @@
                 //Simulation pane elements      
                 //////////////////////////////
                 items = [];
-                for(i=1; i<simulationItemTitles.length; i++){
+                for(i=0; i<simulationItemTitles.length; i++){
                     listItem = document.createElement('li');
                     mainLists[6].appendChild(listItem);
                     label = document.createElement('label');
