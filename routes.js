@@ -18,7 +18,7 @@ app.get('/SPICE', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
 	//scrape the MSC table to decide which if any auxiliaries are present
-	exec('odbedit -c "ls /DAQ/MSC.chan"', function(error, stdout, stderr){
+	exec('odbedit -c "ls /DAQ/MSC/chan"', function(error, stdout, stderr){
 		console.log(stdout)
 	});
 
