@@ -273,7 +273,18 @@ app.post('/buildMSC', function(req, res){
 		MSC = MSC.concat(table[1]);
 	}
 
+	//DESCANT
+	if(req.body.USC == 'DSCDS'){
+		table = configDESCANT();
+		names = names.concat(table[0]);
+		MSC = MSC.concat(table[1]);
+	}
+
 	console.log(configSPICE());
+	var test = configDESCANT()
+	for(var i=0; i<70; i++){
+		console.log([ test[0][i], test[1][i] ]);
+	}
 
 /*
 	//generate a script to re-create MSC table in DAQ:
@@ -424,12 +435,57 @@ app.post('/buildMSC', function(req, res){
 
 		for(i=0; i<120; i++){
 			index = i;
-			if(index.length == 1) index = '00'+index;
-			else if(index.length == 2) index = '0'+index;
-
+			if(index < 10) index = '00'+index;
+			else if(index < 100) index = '0'+index;
 
 			names.push('SPI00XN'+index);
 			MSC.push(0x4000 + 256*Math.floor(i/16) + i);
+		}
+
+		return [names, MSC];
+	}
+
+	function configDESCANT(){
+		var names = [],
+			MSC = [],
+			cableBundles = [],
+			i, j;
+
+		//weird ordering 'thanks' to cable bundling constraints:
+		cableBundles = [
+			[46, 65, 66, 67],
+			[13, 27, 26, 45],
+			[28, 47, 48, 68],
+			[5, 14, 15, 29],
+			[0, 49, 69],
+			[1, 6, 30],
+			[16, 31, 50, 51],
+			[7, 17, 18, 32],
+			[33, 52, 53, 54],
+
+			[43, 44, 63, 64],
+			[25, 42, 62],
+			[4, 11, 12, 24],
+			[23, 41, 40, 61],
+			[10, 22, 39, 60],
+			[2, 3, 8, 9],
+			[21, 38, 59],
+			[20, 37, 57, 58],
+			[19, 36, 56],
+			[34, 35, 55]
+		]
+
+		for(i=0; i<cableBundles.length; i++){
+			for(j=0; j<cableBundles[i].length; j++){
+				names.push('DSC' + ((cableBundles[i][j] < 10) ? '0'+cableBundles[i][j] : cableBundles[i][j]) + 'XN00X');
+
+				//first three cable bundles are on collector 0x2, rest are on 0x3
+				if(i<3){
+					MSC.push(0x2000 | ((9+i)<<8) | j )
+				} else{
+					MSC.push(0x3000 | ((i-3)<<8) | j )
+				}
+			}
 		}
 
 		return [names, MSC];
