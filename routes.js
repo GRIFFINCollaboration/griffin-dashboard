@@ -19,10 +19,20 @@ app.get('/SPICE', function(req, res){
 	
 	//scrape the MSC table to decide which if any auxiliaries are present
 	exec('odbedit -c "ls /DAQ/MSC/chan"', function(error, stdout, stderr){
-		console.log(stdout.split('\n'))
+		var cells = stdout.split('\n'),
+			i;
+
+		for(i=0; i<cells.length; i++){
+			if(cells[i].indexOf('SPZ') != -1)
+				return res.render('detectors/SPICE.jade', {"SPICEaux": "S2"});
+			else if(cells[i].indexOf('SPE') != -1)
+				return res.render('detectors/SPICE.jade', {"SPICEaux": "S3"});				
+		}
+
+		return res.render('detectors/SPICE.jade', {"SPICEaux": false});
 	});
 
-	res.render('detectors/SPICE.jade', {"SPICEaux": "S2"});
+	
 });
 
 app.get('/DAQ', function(req, res){
