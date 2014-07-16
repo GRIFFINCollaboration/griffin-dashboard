@@ -22,7 +22,7 @@ app.get('/SPICE', function(req, res){
 		console.log(stdout)
 	});
 
-	res.render('detectors/SPICE.jade', {"SPICEaux": });
+	res.render('detectors/SPICE.jade', {"SPICEaux": "S2"});
 });
 
 app.get('/DAQ', function(req, res){
