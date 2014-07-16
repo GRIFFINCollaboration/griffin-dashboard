@@ -386,14 +386,10 @@
                     HVsidebar = document.getElementById('HVcontrol'),
                     HVcell = this.isHV(cellName),
                     RateCell = this.isRate(cellName),
-                    crateIndex = this.findHVcrate(cellName),
-                    host;
+                    crateIndex = this.findHVcrate(cellName);
 
                 if(rateSidebar && RateCell){
-                    host = findHost(cellName, window.currentData.DAQ);
-
-                    evt = new CustomEvent('postADC', {'detail': {   'channel' : cellName,
-                                                                    'host' : host} });
+                    evt = new CustomEvent('postADC', {'detail': {'channel' : cellName} });
                     rateSidebar.dispatchEvent(evt);
 
                     if(this.lastRateClick){

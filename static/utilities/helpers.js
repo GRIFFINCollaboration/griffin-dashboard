@@ -169,7 +169,8 @@ function findHost(channel, DAQ){
         host = (host & 0xF000) >> 12; //collector channel
         host = 'collector0x'+host.toString(16);
         host = DAQ.hosts[host].host; //haha
-    }
+    } else
+        host = false;
 
     return host;
 }

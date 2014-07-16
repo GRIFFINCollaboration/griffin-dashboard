@@ -39,8 +39,14 @@
         }, 
         methods: {
             'updateRates' : function(customEventData){
+                var host = window.findHost(customEventData.channel, window.currentData.DAQ);
+
                 document.getElementById(this.id + 'Title').innerHTML = customEventData.channel;
-                document.getElementById(this.id + 'Host').innerHTML = customEventData.host;
+                if(host){
+                    document.getElementById(this.id + 'Host').innerHTML = host;
+                } else{
+                    document.getElementById(this.id + 'Host').innerHTML = 'No host!';
+                }
                 if(!this.UIdeployed){
                     this.setUpUI();
                     this.UIdeployed = true;
