@@ -229,7 +229,7 @@
                 //Waveform pane elements      
                 //////////////////////////////
                 items = [];
-                for(i=1; i<waveformItemTitles.length; i++){
+                for(i=0; i<waveformItemTitles.length; i++){
                     listItem = document.createElement('li');
                     mainLists[5].appendChild(listItem);
                     label = document.createElement('label');
@@ -274,9 +274,9 @@
                     items.push(listItem);
                 }
 
-                //radioArray(items[0], ['Enabled', 'Disabled'], [true, false], 'sim_ena');
-                //document.getElementById('sim_ena0').onchange = this.updateADC.bind(document.getElementById('sim_ena0'), 'sim_ena');
-                //document.getElementById('sim_ena1').onchange = this.updateADC.bind(document.getElementById('sim_ena1'), 'sim_ena');
+                radioArray(items[0], ['Enabled', 'Disabled'], [true, false], 'sim_ena');
+                document.getElementById('sim_ena0').onchange = this.updateADC.bind(document.getElementById('sim_ena0'), 'sim_ena');
+                document.getElementById('sim_ena1').onchange = this.updateADC.bind(document.getElementById('sim_ena1'), 'sim_ena');
 
                 id = ['sim_phgt', 'sim_rise', 'sim_fall', 'sim_rate'];
                 step = ["any", "any", "any", "any"];
