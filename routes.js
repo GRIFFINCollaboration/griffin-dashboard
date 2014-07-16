@@ -19,7 +19,7 @@ app.get('/SPICE', function(req, res){
 	
 	//scrape the MSC table to decide which if any auxiliaries are present
 	exec('odbedit -c "ls /DAQ/MSC/chan"', function(error, stdout, stderr){
-		console.log(stdout)
+		console.log(stdout.split('\n'))
 	});
 
 	res.render('detectors/SPICE.jade', {"SPICEaux": "S2"});
