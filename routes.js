@@ -280,10 +280,9 @@ app.post('/buildMSC', function(req, res){
 		MSC = MSC.concat(table[1]);
 	}
 
-	console.log(configSPICE());
 	var test = configDESCANT()
 	for(var i=0; i<70; i++){
-		console.log([ test[0][i], test[1][i] ]);
+		console.log([ test[0][i], test[1][i].toString(16) ]);
 	}
 
 /*
