@@ -37,8 +37,8 @@
                 optionWrap.setAttribute('class', 'optionWrap');
                 this.downstreamChamber.appendChild(optionWrap);
                 radioArray(optionWrap, ['Absent', 'SCEPTAR', 'ZDS', 'S2', 'S3'], ['DSCabsent', 'DSCSE', 'DSCZD', 'DSCS2', 'DSCS3'], 'DSC');
-                document.getElementById('DSC3').setAttribute('style', 'display:none');
-                document.getElementById('DSC4').setAttribute('style', 'display:none');
+                document.getElementById('DSC3Label').setAttribute('style', 'display:none');
+                document.getElementById('DSC4Label').setAttribute('style', 'display:none');
 
                 this.corona = document.createElement('div');
                 this.corona.setAttribute('class', 'detectorSection');
@@ -99,10 +99,10 @@
                     document.forms.detectors.USL[0].checked=true;
                     document.getElementById('USL0Label').onclick();
 
-                    document.getElementById('DSC1').setAttribute('style', 'display:none');
-                    document.getElementById('DSC2').setAttribute('style', 'display:none');
-                    document.getElementById('DSC3').setAttribute('style', 'display:auto');
-                    document.getElementById('DSC4').setAttribute('style', 'display:auto');
+                    document.getElementById('DSC1Label').setAttribute('style', 'display:none');
+                    document.getElementById('DSC2Label').setAttribute('style', 'display:none');
+                    document.getElementById('DSC3Label').setAttribute('style', 'display:auto');
+                    document.getElementById('DSC4Label').setAttribute('style', 'display:auto');
 
                 }
 
@@ -208,10 +208,10 @@
             'turnOffSPICE' : function(){
                 var message = document.getElementById('USLmessage')
                 message.setAttribute('class', 'message hidden');
-                document.getElementById('DSC1').setAttribute('style', 'display:auto');
-                document.getElementById('DSC2').setAttribute('style', 'display:auto');
-                document.getElementById('DSC3').setAttribute('style', 'display:none');
-                document.getElementById('DSC4').setAttribute('style', 'display:none');
+                document.getElementById('DSC1Label').setAttribute('style', 'display:auto');
+                document.getElementById('DSC2Label').setAttribute('style', 'display:auto');
+                document.getElementById('DSC3Label').setAttribute('style', 'display:none');
+                document.getElementById('DSC4Label').setAttribute('style', 'display:none');
             }
  
         }
