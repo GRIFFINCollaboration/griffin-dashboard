@@ -197,6 +197,10 @@
                     items[i].appendChild(input);                    
                 }
 
+                label = document.createElement('label');
+                label.innerHTML = 'keV/chan';
+                items[6].appendChild(label);
+
                 ///////////////////////////////
                 //Time eval pane elements
                 ///////////////////////////////
