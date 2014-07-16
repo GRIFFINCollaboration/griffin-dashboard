@@ -103,6 +103,7 @@
                     document.getElementById('DSC2Label').setAttribute('style', 'display:none');
                     document.getElementById('DSC3Label').setAttribute('style', 'display:auto');
                     document.getElementById('DSC4Label').setAttribute('style', 'display:auto');
+                    document.forms.detectors.DSC[0].checked=true;
 
                 }
 
@@ -212,6 +213,7 @@
                 document.getElementById('DSC2Label').setAttribute('style', 'display:auto');
                 document.getElementById('DSC3Label').setAttribute('style', 'display:none');
                 document.getElementById('DSC4Label').setAttribute('style', 'display:none');
+                document.forms.detectors.DSC[0].checked=true;
             }
  
         }
