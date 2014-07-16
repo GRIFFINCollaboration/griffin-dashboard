@@ -14,6 +14,12 @@ app.get('/GRIFFIN', function(req, res){
 	res.render('detectors/GRIFFIN.jade');
 });
 
+app.get('/SPICE', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	
+	res.render('detectors/SPICE.jade');
+});
+
 app.get('/DAQ', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
@@ -280,6 +286,20 @@ app.post('/buildMSC', function(req, res){
 		MSC = MSC.concat(table[1]);
 	}
 
+	//S2
+	if(req.body.DSC == 'DSCS2'){
+		table = configS2S3(2);
+		names = names.concat(table[0]);
+		MSC = MSC.concat(table[1]);
+	}
+
+	//S3
+	if(req.body.DSC == 'DSCS3'){
+		table = configS2S3(3);
+		names = names.concat(table[0]);
+		MSC = MSC.concat(table[1]);
+	}
+
 	var test = configDESCANT()
 	for(var i=0; i<70; i++){
 		console.log([ test[0][i], test[1][i].toString(16) ]);
@@ -488,6 +508,31 @@ app.post('/buildMSC', function(req, res){
 		}
 
 		return [names, MSC];
+	}
+
+	function buildS2S3(type){
+		var names = [],
+			MSC = [],
+			radial, azimuthal, typeCode,
+			M = 0x5000,
+			S, C;
+			i;
+
+		if(type == 2){
+			typeCode = 'E';
+			radial = 5;
+			azimuthal = 7;
+		} else if(type == 3){
+			typeCode = 'Z';
+			radial = 11;
+			azimuthal = 13;
+		}
+
+		for(i=0; i<radial; i++){
+
+		}
+
+
 	}
 });
 

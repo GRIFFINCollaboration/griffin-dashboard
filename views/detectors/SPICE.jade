@@ -1,0 +1,36 @@
+include ../partials/head.jade
+
+doctype html5
+html
+  head
+    +head()
+    script(type='text/javascript' src='static/xTags/detectors/xDetectorTemplate.js')
+    script(type='text/javascript' src='static/xTags/detectors/detectorHelpers.js')
+    script(type='text/javascript' src='static/xTags/detectors/SPICE/xSPICEDetector.js')
+    script(type='text/javascript' src='static/xTags/runControl/xStatus.js')
+    script(type='text/javascript' src='static/xTags/HV/xHV.js')
+    script(type='text/javascript' src='static/xTags/detectors/rateSidebar/xRateBar.js')
+    script(type='text/javascript' src='static/lib/mscb.js')
+    link(rel="stylesheet" type="text/css" href='static/xTags/detectors/xDetector.css')
+    link(rel="stylesheet" type="text/css" href='static/xTags/runControl/xStatus.css')
+    link(rel="stylesheet" type="text/css" href='static/xTags/HV/xHV.css')
+    link(rel="stylesheet" type="text/css" href='static/xTags/detectors/rateSidebar/xRateBar.css')
+
+  body   
+    div(id='wrapper')
+      branding-head(experiment='GRIFFIN')
+
+      div(id='mainContent')
+        widget-nav(id='navBar' MIDAS='grsmid00.triumf.ca:8082')
+        widget-status(id='statusBar', MIDAS='grsmid00.triumf.ca:8082')
+        detector-SPICE(id='SPICE', MIDAS='grsmid00.triumf.ca:8082', rateServer="http://midtig06.triumf.ca:8091/mother/scalar?json", thresholdServer="http://midtig06.triumf.ca:8091/mother/parameters?json")
+
+      div(id='push')
+
+    branding-foot
+
+    script.
+      document.addEventListener('DOMComponentsLoaded', function(){
+        //begin data fetch loop:
+        rebootFetch();
+      });
