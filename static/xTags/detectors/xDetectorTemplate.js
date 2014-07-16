@@ -386,10 +386,20 @@
                     HVsidebar = document.getElementById('HVcontrol'),
                     HVcell = this.isHV(cellName),
                     RateCell = this.isRate(cellName),
-                    crateIndex = this.findHVcrate(cellName)
+                    crateIndex = this.findHVcrate(cellName),
+                    host;
 
                 if(rateSidebar && RateCell){
-                    evt = new CustomEvent('postADC', {'detail': {'channel' : cellName} });
+                    host = window.currentData.DAQ.MSC.chan.indexOf(cellName);  //table index of channel
+                    if(host || host==0){
+                        host = window.currentData.DAQ.MSC.MSC[host]; //MSC address of channel
+                        host = (host & 0xF000) >> 12; //collector channel
+                        host = 'collector0x'+host.toString(16);
+                        host = window.currentData.DAQ.hosts[host].host; //haha
+                    }
+
+                    evt = new CustomEvent('postADC', {'detail': {   'channel' : cellName,
+                                                                    'host' : host} });
                     rateSidebar.dispatchEvent(evt);
 
                     if(this.lastRateClick){
@@ -455,46 +465,7 @@
 
                 return i;
             },
-/*
-            //fetch rate information
-            'acquireRates' : function(){
-                window.currentData.reqRate = {}
-                window.currentData.acptRate = {}
-                
-                XHR(this.rateServer, function(res){
-                    var data;
-                    data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) );
-                    parseRate(data);
-                    this.populate();
-                }.bind(this), 'application/json');
-                
-            },
 
-            //fetch threshold information
-            'acquireThresholds' : function(){
-                var i, URL, MSCaddr;
-
-                for(i=0; i<this.channelNames.length; i++){
-                    if( !this.isRate(this.channelNames[i]) ) continue;
-                    if( !window.currentData.MSC.hasOwnProperty(this.channelNames[i]) ) continue;
-
-                    MSCaddr = window.currentData.MSC[this.channelNames[i]]
-
-                    URL = 'http://' + MSCaddr[0] + '/mscb?node=' + (2 + MSCaddr[1]);
-
-                    XHR(URL, parseThreshold.bind(null, this.channelNames[i]), 'application/json', true);
-                }
-
-                
-                XHR(this.thresholdServer, function(res){
-                    var data;
-                    data = JSON.parse(this.responseText.slice(this.responseText.indexOf('{'), this.responseText.lastIndexOf('}')+1 ) );
-                    parseThreshold(data);
-                    this.populate();
-                }.bind(this), 'application/json');
-                
-            },
-*/
             //get dataviews from some list of DAQ nodes
             'acquireDAQ' : function(){
                 var key, i;

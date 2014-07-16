@@ -5,7 +5,8 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var barTitle = document.createElement('h2')
+                var barTitle = document.createElement('h2'),
+                    host = document.createElement('h4');
 
                 ////////////////////
                 //build the DOM
@@ -13,6 +14,10 @@
                 barTitle.setAttribute('id', this.id + 'Title');
                 barTitle.innerHTML = 'Click on a rate or threshold channel to get started.';
                 this.appendChild(barTitle);
+
+                host.setAttribute('id', this.id + 'Host');
+                this.appendChild(host);
+
                 this.UIdeployed = false;
 
                 this.addEventListener('postADC', function(evt){
@@ -34,7 +39,8 @@
         }, 
         methods: {
             'updateRates' : function(customEventData){
-                document.getElementById(this.id + 'Title').innerHTML = customEventData.channel
+                document.getElementById(this.id + 'Title').innerHTML = customEventData.channel;
+                document.getElementById(this.id + 'Host').innerHTML = customEventData.host;
                 if(!this.UIdeployed){
                     this.setUpUI();
                     this.UIdeployed = true;
