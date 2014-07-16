@@ -17,7 +17,12 @@ app.get('/GRIFFIN', function(req, res){
 app.get('/SPICE', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
-	res.render('detectors/SPICE.jade');
+	//scrape the MSC table to decide which if any auxiliaries are present
+	exec('odbedit -c "ls /DAQ/MSC.chan"', function(error, stdout, stderr){
+		console.log(stdout)
+	});
+
+	res.render('detectors/SPICE.jade', {"SPICEaux": });
 });
 
 app.get('/DAQ', function(req, res){

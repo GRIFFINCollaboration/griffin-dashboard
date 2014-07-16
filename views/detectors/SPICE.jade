@@ -23,7 +23,7 @@ html
       div(id='mainContent')
         widget-nav(id='navBar' MIDAS='grsmid00.triumf.ca:8082')
         widget-status(id='statusBar', MIDAS='grsmid00.triumf.ca:8082')
-        detector-SPICE(id='SPICE', MIDAS='grsmid00.triumf.ca:8082', rateServer="http://midtig06.triumf.ca:8091/mother/scalar?json", thresholdServer="http://midtig06.triumf.ca:8091/mother/parameters?json")
+        detector-SPICE(id='SPICE', MIDAS='grsmid00.triumf.ca:8082', rateServer="http://midtig06.triumf.ca:8091/mother/scalar?json", thresholdServer="http://midtig06.triumf.ca:8091/mother/parameters?json" auxiliary= SPICEaux)
 
       div(id='push')
 
