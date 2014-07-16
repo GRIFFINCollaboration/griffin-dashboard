@@ -39,11 +39,12 @@
         }, 
         methods: {
             'updateRates' : function(customEventData){
-                var host = window.findHost(customEventData.channel, window.currentData.DAQ);
+                window.currentData.host = findHost(customEventData.channel, window.currentData.DAQ),
+                window.currentData.ADC = findADC(customEventData.channel, window.currentData.DAQ)
 
                 document.getElementById(this.id + 'Title').innerHTML = customEventData.channel;
-                if(host){
-                    document.getElementById(this.id + 'Host').innerHTML = host;
+                if(window.currentData.host){
+                    document.getElementById(this.id + 'Host').innerHTML = window.currentData.host;
                 } else{
                     document.getElementById(this.id + 'Host').innerHTML = 'No host!';
                 }
@@ -51,6 +52,97 @@
                     this.setUpUI();
                     this.UIdeployed = true;
                 }
+
+                //summon data from the ADC
+                if(window.currentData.host && window.currentData.ADC)
+                    //XHR('http://'+host+'/mscb?node='+(parseInt(ADC,10)+2), this.mapADCdata.bind(this), 'application/json', true);
+            },
+
+            'mapADCdata' : function(response){
+                var data = JSON.parse(response),
+                    numberID = [    'a_dcofst', 'a_trim',
+                                    't_hthres', 't_thres', 't_diff', 't_int', 't_delay', 't_polcor', 't_blrctl', 
+                                    'p_int', 'p_diff', 'p_delay', 'p_polec1', 'p_polec2', 'p_bsr', 'p_gain', 'p_pactrl',
+                                    'cfd_dly', 'cfd_frac',
+                                    'wfr_pret', 'wfr_smpl', 'wfr_dec',
+                                    'sim_phgt', 'sim_rise', 'sim_fall', 'sim_rate',
+                                    'fix_dead', 'det_type'
+                    ],
+                    radioName = [   'a_off',
+                                    'a_pol',
+                                    't_off',
+                                    'wfr_supp',
+                                    'wfr_off',
+                                    'sim_ena',
+                                    'sim_rand'
+                    ],
+                    i;
+
+                //keep hold of this blobject for later, has widths and car types and stuff in it needed for writing back
+                window.ADCstructure = data;
+
+                //all number inputs have id == data key name
+                for(i=0; i<numberID.length; i++)
+                    document.getElementById(numberID[i]).value = data[this.ADC][numberID[i]]['d'];
+                //all radio inputs have name == data key name
+                for(i=0; i<radioName.length; i++){
+                    document.querySelectorAll('input[name = "'+radioName[i]+'"][value = '+data[this.ADC][radioName[i]]['d']+']')[0].checked = true;    
+                }
+
+                //special label for the DC offset slider
+                document.getElementById('dcofstLabel').innerHTML = (document.getElementById('a_dcofst').value - 2048)*0.6714 + ' mV';
+
+            },
+
+            'updateADC' : function(var_name){
+                console.log(var_name)
+/*
+                var url = 'http://' + this.host + '/mscb_rx'
+                ,   addr = 2 + this.ADC
+                ,   var_id, width, data, flag, unit, value;
+
+                var_id = window.ADCstructure[window.currentData.ADC][var_name]['id'];
+                width = window.ADCstructure[window.currentData.ADC][var_name]['w'];
+                flag = window.ADCstructure[window.currentData.ADC][var_name]['f'];
+                unit = window.ADCstructure[window.currentData.ADC][var_name]['u'];
+                data = new DataView(new ArrayBuffer(width));
+                value = this.value;
+                if(var_name == 'a_dcofst'){
+                    document.getElementById('dcofstLabel').innerHTML = ((this.value - 2048)*0.6714).toFixed(4) + ' mV';
+                }
+
+                if(unit == MSCB_DEFINES['UNIT_BOOLEAN']){
+                    data.setInt8(0, (value == 'true')? 1 : 0);
+                } else {
+
+                    if(flag & MSCB_DEFINES['MSCBF_FLOAT'])
+                        data.setFloat32(0, parseFloat(this.value) );
+                    else if(flag & MSCB_DEFINES['MSCBF_SIGNED']){
+                        if(width==1){
+                            data.setInt8(0, parseInt(value,10) );
+                        } else if(width==2){
+                            data.setInt16(0, parseInt(value,10) );
+                        } else if(width==4){
+                            data.setInt32(0, parseInt(value,10) );
+                        } else{
+                            //NOPE
+                        }
+                    } else {
+                        if(width==1){
+                            data.setUint8(0, parseInt(value,10) );
+                        } else if(width==2){
+                            data.setUint16(0, parseInt(value,10) );
+                        } else if(width==4){
+                            data.setUint32(0, parseInt(value,10) );
+                        } else{
+                            //NOPE
+                        }       
+                    }
+                }
+                    
+                //console.log('trying MSCB_WriteVar('+url+', '+addr+', '+var_id+', '+data+')' )
+                MSCB_WriteVar( url, addr, var_id, data )
+*/
             },
 
             'setUpUI' : function(){
@@ -342,10 +434,6 @@
                     items[i].appendChild(input);                    
                 }
 
-            },
-
-            'updateADC' : function(var_name){
-                console.log(var_name)
             }
         }
     });

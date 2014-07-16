@@ -175,3 +175,17 @@ function findHost(channel, DAQ){
     return host;
 }
 
+//determine the ADC index into which <channel> is plugged, given the <DAQ> table from the ODB
+function findADC(channel, DAQ){
+    var ADC;
+
+    ADC = DAQ.MSC.chan.indexOf(channel);  //table index of channel
+    if(ADC !=-1){
+        ADC = DAQ.MSC.MSC[ADC]; //MSC address of channel
+        ADC = ADC & 0xFF; //ADC index
+    } else
+        ADC = false;
+
+    return ADC;
+}
+
