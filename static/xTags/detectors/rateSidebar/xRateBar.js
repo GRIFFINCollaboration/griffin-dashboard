@@ -238,7 +238,7 @@
                     items.push(listItem);
                 }
 
-                radioArray(items[0], ['Enabled', 'Disabled'], [true, false], 'wrf_supp');
+                radioArray(items[0], ['Suppressed', 'Unsuppressed'], [true, false], 'wrf_supp');
                 document.getElementById('wrf_supp0').onchange = this.updateADC.bind(document.getElementById('wrf_supp0'), 'wrf_supp');
                 document.getElementById('wrf_supp1').onchange = this.updateADC.bind(document.getElementById('wrf_supp1'), 'wrf_supp');
 
@@ -274,9 +274,9 @@
                     items.push(listItem);
                 }
 
-                radioArray(items[0], ['Enabled', 'Disabled'], [true, false], 'sim_ena');
-                document.getElementById('sim_ena0').onchange = this.updateADC.bind(document.getElementById('sim_ena0'), 'sim_ena');
-                document.getElementById('sim_ena1').onchange = this.updateADC.bind(document.getElementById('sim_ena1'), 'sim_ena');
+                //radioArray(items[0], ['Enabled', 'Disabled'], [true, false], 'sim_ena');
+                //document.getElementById('sim_ena0').onchange = this.updateADC.bind(document.getElementById('sim_ena0'), 'sim_ena');
+                //document.getElementById('sim_ena1').onchange = this.updateADC.bind(document.getElementById('sim_ena1'), 'sim_ena');
 
                 id = ['sim_phgt', 'sim_rise', 'sim_fall', 'sim_rate'];
                 step = ["any", "any", "any", "any"];
