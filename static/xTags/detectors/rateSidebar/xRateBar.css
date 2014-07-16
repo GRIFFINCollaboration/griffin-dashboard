@@ -42,3 +42,7 @@ div#control ul{
 div#control input[type='number']{
 	width: 6em;
 }
+
+div#control label{
+	margin-right: 0.5em;
+}
