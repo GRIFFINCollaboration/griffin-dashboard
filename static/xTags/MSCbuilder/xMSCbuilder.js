@@ -36,7 +36,9 @@
                 optionWrap = document.createElement('div');
                 optionWrap.setAttribute('class', 'optionWrap');
                 this.downstreamChamber.appendChild(optionWrap);
-                radioArray(optionWrap, ['Absent', 'SCEPTAR', 'ZDS'], ['DSCabsent', 'DSCSE', 'DSCZD'], 'DSC');
+                radioArray(optionWrap, ['Absent', 'SCEPTAR', 'ZDS', 'S2', 'S3'], ['DSCabsent', 'DSCSE', 'DSCZD', 'DSCS2', 'DSCS3'], 'DSC');
+                document.getElementById('DSC3').setAttribute('style', 'display:none');
+                document.getElementById('DSC4').setAttribute('style', 'display:none');
 
                 this.corona = document.createElement('div');
                 this.corona.setAttribute('class', 'detectorSection');
@@ -85,18 +87,9 @@
 
                 //state management
                 //turn appropriate GRIFFIN tables on as needed, and manage SPICE / GRIFFIN constraint in USL:
-                document.getElementById('USC0Label').onclick = function(){
-                    var message = document.getElementById('USLmessage')
-                    message.setAttribute('class', 'message hidden');
-                }
-                document.getElementById('USC1Label').onclick = function(){
-                    var message = document.getElementById('USLmessage')
-                    message.setAttribute('class', 'message hidden');
-                }
-                document.getElementById('USC2Label').onclick = function(){
-                    var message = document.getElementById('USLmessage')
-                    message.setAttribute('class', 'message hidden');
-                }
+                document.getElementById('USC0Label').onclick = turnOffSPICE;
+                document.getElementById('USC1Label').onclick = turnOffSPICE;
+                document.getElementById('USC2Label').onclick = turnOffSPICE;
                 document.getElementById('USC3Label').onclick = function(){
                     var message = document.getElementById('USLmessage')
 
@@ -105,6 +98,11 @@
 
                     document.forms.detectors.USL[0].checked=true;
                     document.getElementById('USL0Label').onclick();
+
+                    document.getElementById('DSC1').setAttribute('style', 'display:none');
+                    document.getElementById('DSC2').setAttribute('style', 'display:none');
+                    document.getElementById('DSC3').setAttribute('style', 'display:auto');
+                    document.getElementById('DSC4').setAttribute('style', 'display:auto');
 
                 }
 
@@ -205,6 +203,15 @@
                 }
 
                 return table;
+            },
+
+            'turnOffSPICE' : function(){
+                var message = document.getElementById('USLmessage')
+                message.setAttribute('class', 'message hidden');
+                document.getElementById('DSC1').setAttribute('style', 'display:auto');
+                document.getElementById('DSC2').setAttribute('style', 'display:auto');
+                document.getElementById('DSC3').setAttribute('style', 'display:none');
+                document.getElementById('DSC4').setAttribute('style', 'display:none');
             }
  
         }
