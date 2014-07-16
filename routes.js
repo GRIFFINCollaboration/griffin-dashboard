@@ -29,7 +29,7 @@ app.get('/SPICE', function(req, res){
 				return res.render('detectors/SPICE.jade', {"SPICEaux": "S3"});				
 		}
 
-		return res.render('detectors/SPICE.jade', {"SPICEaux": false});
+		return res.render('detectors/SPICE.jade', {"SPICEaux": "S2"});
 	});
 
 	
@@ -479,6 +479,29 @@ app.post('/buildMSC', function(req, res){
 		return [names, MSC];
 	}
 
+	function buildS2S3(type){
+		var names = [],
+			MSC = [],
+			radial = 24, azimuthal, typeCode,
+			M = 0x5000,
+			S, C;
+			i;
+
+		if(type == 2){
+			typeCode = 'E';
+			azimuthal = 16;
+		} else if(type == 3){
+			typeCode = 'Z';
+			azimuthal = 32;
+		}
+//radial first: first 8 finishes off last digitizer, other 16 fill the next; then azimuthal channels fill 1 or 2 more grif16s
+		for(i=0; i<radial; i++){
+			if(i<8){
+
+			}
+		}
+	}
+
 	function configDESCANT(){
 		var names = [],
 			MSC = [],
@@ -525,29 +548,5 @@ app.post('/buildMSC', function(req, res){
 		return [names, MSC];
 	}
 
-	function buildS2S3(type){
-		var names = [],
-			MSC = [],
-			radial, azimuthal, typeCode,
-			M = 0x5000,
-			S, C;
-			i;
-
-		if(type == 2){
-			typeCode = 'E';
-			radial = 5;
-			azimuthal = 7;
-		} else if(type == 3){
-			typeCode = 'Z';
-			radial = 11;
-			azimuthal = 13;
-		}
-
-		for(i=0; i<radial; i++){
-
-		}
-
-
-	}
 });
 
