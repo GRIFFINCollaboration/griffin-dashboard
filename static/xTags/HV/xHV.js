@@ -527,7 +527,7 @@
                 voltageUp.setAttribute('id', 'voltageRampUp');
                 HVcontrol.appendChild(voltageUp);
 
-                voltageUp.setAttribute('id', 'voltageRampDown');
+                voltageDown.setAttribute('id', 'voltageRampDown');
                 HVcontrol.appendChild(voltageDown);
 
                 //set up kinetic objects
