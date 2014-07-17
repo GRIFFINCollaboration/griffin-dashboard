@@ -41,6 +41,18 @@ app.get('/PACES', function(req, res){
 	res.render('detectors/PACES.jade');
 });
 
+app.get('/DESCANT', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	
+	res.render('detectors/DESCANT.jade');
+});
+
+app.get('/SCEPTAR', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	
+	res.render('detectors/SCEPTAR.jade');
+});
+
 app.get('/DAQ', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
