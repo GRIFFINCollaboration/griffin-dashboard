@@ -35,6 +35,12 @@ app.get('/SPICE', function(req, res){
 	
 });
 
+app.get('/PACES', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	
+	res.render('detectors/PACES.jade');
+});
+
 app.get('/DAQ', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
