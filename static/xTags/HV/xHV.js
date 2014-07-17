@@ -525,9 +525,11 @@
                 }.bind(demandSlide, this.id);
 
                 voltageUp.setAttribute('id', 'voltageRampUp');
+                voltageUp.setAttribute('class', 'voltageRampReport');
                 HVcontrol.appendChild(voltageUp);
 
                 voltageDown.setAttribute('id', 'voltageRampDown');
+                voltageDown.setAttribute('class', 'voltageRampReport');
                 HVcontrol.appendChild(voltageDown);
 
                 //set up kinetic objects

@@ -57,4 +57,9 @@ widget-HVcontrol h2{
 	margin-top: 0px;
 }
 
+span.voltageRampReport{
+	width: 100%;
+	color: #777777;
+	margin-top:1em;
+}
 
