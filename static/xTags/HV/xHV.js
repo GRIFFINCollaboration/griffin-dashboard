@@ -432,14 +432,8 @@
                 ,   demandCell = document.createElement('input')
                 ,   demandUnit = document.createElement('label')
                 ,   demandSlide = document.createElement('input')
-                ,   voltageUpTitle = document.createElement('h3')
-                ,   voltageUpCell = document.createElement('input')
-                ,   voltageUpUnit = document.createElement('label')
-                ,   voltageUpSlide = document.createElement('input')
-                ,   voltageDownTitle = document.createElement('h3')
-                ,   voltageDownCell = document.createElement('input')
-                ,   voltageDownUnit = document.createElement('label')
-                ,   voltageDownSlide = document.createElement('input')
+                ,   voltageUp = document.createElement('span')
+                ,   voltageDown = document.createElement('span')
 
                 this.temperatureMax = 40;
 
@@ -530,54 +524,12 @@
                     document.getElementById(parentID+'demandVoltage').value = parseInt(this.value, 10);
                 }.bind(demandSlide, this.id);
 
-                voltageUpTitle.innerHTML = 'Voltage Ramp Up';
-                HVcontrol.appendChild(voltageUpTitle);
-                voltageUpCell.setAttribute('id', this.id + 'voltageUp');
-                voltageUpCell.setAttribute('name', 'voltageUp');
-                voltageUpCell.setAttribute('class', 'rampField');
-                voltageUpCell.setAttribute('type', 'number');
-                voltageUpCell.setAttribute('class', 'stdin');
-                voltageUpCell.setAttribute('step', 'any');
-                voltageUpCell.setAttribute('min', 0);
-                voltageUpCell.setAttribute('max', 500);
-                HVcontrol.appendChild(voltageUpCell);
-                voltageUpUnit.innerHTML = 'V/s';
-                HVcontrol.appendChild(voltageUpUnit);
-                voltageUpSlide.setAttribute('id', this.id + 'voltageUpSlide');
-                voltageUpSlide.setAttribute('type', 'range');
-                voltageUpSlide.setAttribute('min', 0);
-                voltageUpSlide.setAttribute('max', 500);
-                HVcontrol.appendChild(voltageUpSlide);
-                voltageUpCell.onchange = function(parentID){
-                    document.getElementById(parentID+'voltageUpSlide').value = parseInt(this.value, 10);
-                }.bind(voltageUpCell, this.id);
-                voltageUpSlide.oninput = function(parentID){
-                    document.getElementById(parentID+'voltageUp').value = parseInt(this.value, 10);
-                }.bind(voltageUpSlide, this.id);
+                voltageUp.setAttribute('id', 'voltageRampUp');
+                HVcontrol.appendChild(voltageUp);
 
-                voltageDownTitle.innerHTML = 'Voltage Ramp Down';
-                HVcontrol.appendChild(voltageDownTitle);
-                voltageDownCell.setAttribute('id', this.id + 'voltageDown');
-                voltageDownCell.setAttribute('name', 'voltageDown');
-                voltageDownCell.setAttribute('class', 'rampField');
-                voltageDownCell.setAttribute('type', 'number');
-                voltageDownCell.setAttribute('class', 'stdin');
-                voltageDownCell.setAttribute('step', 'any');
-                voltageDownCell.setAttribute('min', 0);
-                voltageDownCell.setAttribute('max', 500);
-                HVcontrol.appendChild(voltageDownCell);
-                voltageDownUnit.innerHTML = 'V/s';
-                HVcontrol.appendChild(voltageDownUnit);
-                voltageDownSlide.setAttribute('id', this.id + 'voltageDownSlide');
-                voltageDownSlide.setAttribute('type', 'range');
-                voltageDownSlide.setAttribute('min', 0);
-                voltageDownSlide.setAttribute('max', 500);
-                HVcontrol.appendChild(voltageDownSlide);
-                voltageDownCell.onchange = function(parentID){
-                    document.getElementById(parentID+'voltageDownSlide').value = parseInt(this.value, 10);
-                }.bind(voltageDownCell, this.id);
-                voltageDownSlide.oninput = function(parentID){
-                    document.getElementById(parentID+'voltageDown').value = parseInt(this.value, 10);
+                voltageUp.setAttribute('id', 'voltageRampDown');
+                HVcontrol.appendChild(voltageDown);
+
                 }.bind(voltageDownSlide, this.id);
 
                 //set up kinetic objects
@@ -658,10 +610,8 @@
                 document.getElementById(this.id + 'demandVoltage').value = demandVoltage;
                 document.getElementById(this.id + 'demandVoltageSlide').max = voltageLimit;
                 document.getElementById(this.id + 'demandVoltageSlide').value = demandVoltage;
-                document.getElementById(this.id + 'voltageUp').value = vUp;
-                document.getElementById(this.id + 'voltageUpSlide').value = vUp;
-                document.getElementById(this.id + 'voltageDown').value = vDown;
-                document.getElementById(this.id + 'voltageDownSlide').value = vDown;
+                document.getElementById('voltageRampUp').innerHTML = 'Voltage Ramp Up: ' + vUp + ' V/s';
+                document.getElementById('voltageRampDown').innerHTML = 'Voltage Ramp Down: ' + vDown + ' V/s';
 
                 this.updateFillMeter('Voltage', measuredVoltage, voltageLimit, 'V');
                 this.updateFillMeter('Current', current, currentLimit, '\u03BCA');
