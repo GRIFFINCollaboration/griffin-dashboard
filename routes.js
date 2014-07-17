@@ -315,7 +315,7 @@ app.post('/buildMSC', function(req, res){
 		MSC = MSC.concat(table[1]);
 	}
 
-	var test = configS2S3(3)
+	var test = configSPICE();
 	for(var i=0; i<test[0].length; i++){
 		console.log([ test[0][i], test[1][i].toString(16) ]);
 	}
