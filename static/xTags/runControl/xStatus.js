@@ -76,7 +76,7 @@
                 document.getElementById('statusResume').innerHTML = 'Resume';
 
                 //message list
-                messageWrap.setAttribute('class', 'collapse');
+                messageWrap.setAttribute('class', 'expand');
                 messageWrap.setAttribute('id', 'messageWrap');
                 this.appendChild(messageWrap);
 
