@@ -473,7 +473,7 @@ app.post('/buildMSC', function(req, res){
 			else if(index < 100) index = '0'+index;
 
 			names.push('SPI00XN'+index);
-			MSC.push(0x4000 + 256*Math.floor(i/16) + i);
+			MSC.push(0x4000 + 256*Math.floor(i/16) + (i%16) );
 		}
 
 		return [names, MSC];
