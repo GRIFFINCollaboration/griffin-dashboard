@@ -120,6 +120,15 @@
                 this.HVlayer[0].hide();
             },
 
+            'vetoSummary' : function(view, channel){
+                var last = channel.slice(9);
+
+                if(view=='HV' && last!='X')
+                    return true;
+                if(view!='HV' && last=='X')
+                    return true;
+            },
+
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             //Each SiLi crystal has 1 HV (ch --X) and 2 scalar (ch --A and --B)
             'writeTooltip': function(i){
