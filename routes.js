@@ -479,7 +479,7 @@ app.post('/buildMSC', function(req, res){
 		return [names, MSC];
 	}
 
-	function buildS2S3(type){
+	function configS2S3(type){
 		var names = [],
 			MSC = [],
 			radial = 24, azimuthal, typeCode,
