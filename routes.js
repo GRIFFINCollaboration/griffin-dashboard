@@ -315,8 +315,8 @@ app.post('/buildMSC', function(req, res){
 		MSC = MSC.concat(table[1]);
 	}
 
-	var test = configDESCANT()
-	for(var i=0; i<70; i++){
+	var test = configS2S3(2)
+	for(var i=0; i<test[0].length; i++){
 		console.log([ test[0][i], test[1][i].toString(16) ]);
 	}
 
@@ -483,8 +483,6 @@ app.post('/buildMSC', function(req, res){
 		var names = [],
 			MSC = [],
 			radial = 24, azimuthal, typeCode,
-			M = 0x5000,
-			S, C;
 			i;
 
 		if(type == 2){
@@ -494,12 +492,24 @@ app.post('/buildMSC', function(req, res){
 			typeCode = 'Z';
 			azimuthal = 32;
 		}
-//radial first: first 8 finishes off last digitizer, other 16 fill the next; then azimuthal channels fill 1 or 2 more grif16s
+		//radial first: first 8 finishes off last digitizer, other 16 fill the next; then azimuthal channels fill 1 or 2 more grif16s
 		for(i=0; i<radial; i++){
-			if(i<8){
+			names.push('SP'+typeCode+'00DP'+((i<10)? '0'+i : i)+'X');
 
+			if(i<8){
+				MSC.push(0x4708 + i);
+			} else{
+				MSC.push(0x4800 + i-8);
 			}
 		}
+
+		for(i=0; i<azimuthal; i++){
+			names.push('SP'+typeCode+'00DN'+((i<10)? '0'+i : i)+'X');
+
+			MSC.push(0x4900 + Math.floor(i/16)*0x100 + (i%16) );
+		}
+
+		return [names, MSC];
 	}
 
 	function configDESCANT(){
