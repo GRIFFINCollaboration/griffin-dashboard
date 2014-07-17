@@ -357,7 +357,7 @@
                 });
                 this.mainLayer[0].add(westLabel);
                 //center label nicely
-                westLabel.setAttr('x', 13.5*this.summaryGrid - westLabel.getTextWidth()/2);
+                westLabel.setAttr('x', 43.5*this.summaryGrid - westLabel.getTextWidth()/2);
                 westLabel.setAttr('y', 0.8*this.height - westLabel.getTextHeight());
 
                 eastLabel = new Kinetic.Text({
@@ -370,7 +370,7 @@
                 });
                 this.mainLayer[0].add(eastLabel);
                 //center label nicely
-                eastLabel.setAttr('x', 43.5*this.summaryGrid - eastLabel.getTextWidth()/2);
+                eastLabel.setAttr('x', 13.5*this.summaryGrid - eastLabel.getTextWidth()/2);
                 eastLabel.setAttr('y', 0.8*this.height - eastLabel.getTextHeight());      
 
                 beamArrow = new Kinetic.Line({

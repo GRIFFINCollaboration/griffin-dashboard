@@ -80,7 +80,7 @@
                 messageWrap.setAttribute('id', 'messageWrap');
                 this.appendChild(messageWrap);
 
-                messageTitle.innerHTML = String.fromCharCode(0x25B6) + ' Messages';
+                messageTitle.innerHTML = String.fromCharCode(0x25BC) + ' Messages';
                 messageTitle.onclick = toggleSection.bind(messageTitle, 'messageWrap');
                 messageWrap.appendChild(messageTitle);
 
