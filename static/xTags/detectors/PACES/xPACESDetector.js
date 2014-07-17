@@ -141,12 +141,20 @@
                         value = window.currentData['Threshold'][this.channelNames[i].slice(0,9)+'B'];
                         text += scrubNumber(value);
 
-                        text += '<br>Rate-A: '
-                        value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'A'];
+                        text += '<br>ReqRate-A: '
+                        value = window.currentData['reqRate'][this.channelNames[i].slice(0,9)+'A'];
                         text += scrubNumber(value);
 
-                        text += '<br>Rate-B: '
-                        value = window.currentData['Rate'][this.channelNames[i].slice(0,9)+'B'];
+                        text += '<br>ReqRate-B: '
+                        value = window.currentData['reqRate'][this.channelNames[i].slice(0,9)+'B'];
+                        text += scrubNumber(value);
+
+                        text += '<br>AcptRate-A: '
+                        value = window.currentData['acptRate'][this.channelNames[i].slice(0,9)+'A'];
+                        text += scrubNumber(value);
+
+                        text += '<br>AcptRate-B: '
+                        value = window.currentData['acptRate'][this.channelNames[i].slice(0,9)+'B'];
                         text += scrubNumber(value);
 
                     } else {
@@ -158,10 +166,13 @@
                         value = window.currentData['Threshold'][this.channelNames[i]]
                         text += scrubNumber(value);
 
-                        text += '<br>Rate: '
-                        value = window.currentData['Rate'][this.channelNames[i]]
-                        text += scrubNumber(value);                        
+                        text += '<br>ReqRate: '
+                        value = window.currentData['reqRate'][this.channelNames[i]]
+                        text += scrubNumber(value);    
 
+                        text += '<br>AcptRate: '
+                        value = window.currentData['acptRate'][this.channelNames[i]]
+                        text += scrubNumber(value);                                            
                     }
                      
                     
