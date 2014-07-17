@@ -18,7 +18,7 @@
                 ,   resume = document.createElement('button')
                 ,   redirectKludge = document.createElement('button')
                 ,   messageTitle = document.createElement('h3')
-                ,   messageWrap = document.createElement('messageWrap')
+                ,   messageWrap = document.createElement('div')
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
                 ,   i;
