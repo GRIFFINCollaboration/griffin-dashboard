@@ -530,8 +530,6 @@
                 voltageUp.setAttribute('id', 'voltageRampDown');
                 HVcontrol.appendChild(voltageDown);
 
-                }.bind(voltageDownSlide, this.id);
-
                 //set up kinetic objects
                 this.meterWidth = document.getElementById(this.id+'HVmeterWrapper').offsetWidth;
                 this.meterHeight = 0.8*document.getElementById(this.id+'HVmeterWrapper').offsetWidth;
