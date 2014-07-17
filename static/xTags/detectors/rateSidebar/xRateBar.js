@@ -439,17 +439,3 @@
     });
 
 })();
-
-
-function toggleSection(id){
-    var section = document.getElementById(id)
-
-    if(section.className == 'collapse'){
-        section.className = 'expand'
-        this.innerHTML = String.fromCharCode(0x25BC) + this.innerHTML.slice(this.innerHTML.indexOf(' '));
-    }
-    else{
-        section.className = 'collapse'
-        this.innerHTML = String.fromCharCode(0x25B6) + this.innerHTML.slice(this.innerHTML.indexOf(' '));   
-    }
-}

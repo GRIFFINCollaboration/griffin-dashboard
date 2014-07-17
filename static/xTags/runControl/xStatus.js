@@ -17,6 +17,8 @@
                 ,   pause = document.createElement('button')
                 ,   resume = document.createElement('button')
                 ,   redirectKludge = document.createElement('button')
+                ,   messageTitle = document.createElement('h3')
+                ,   messageWrap = document.createElement('messageWrap')
                 ,   messageList = document.createElement('ul')
                 ,   messages = []
                 ,   i;
@@ -74,8 +76,16 @@
                 document.getElementById('statusResume').innerHTML = 'Resume';
 
                 //message list
+                messageWrap.setAttribute('class', 'collapse');
+                messageWrap.setAttribute('id', 'messageWrap');
+                this.appendChild(messageWrap);
+
+                messageTitle.innerHTML = String.fromCharCode(0x25B6) + ' Messages';
+                messageTitle.onclick = toggleSection.bind(messageTitle, 'messageWrap');
+                messageWrap.appendChild(messageTitle);
+
                 messageList.setAttribute('id', 'statusMessageList');
-                this.appendChild(messageList);
+                messageWrap.appendChild(messageList);
 
                 for(i=0; i<5; i++){
                     messages[i].setAttribute('id', 'statusMessage'+i);
