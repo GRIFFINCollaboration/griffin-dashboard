@@ -20,6 +20,7 @@
                     'off' : '#95a5a6'
                 }
                 this.currentCrate = 0;
+                this.suspendUpdate = false;
 
                 this.cratePop = [];
                 this.cardNames = [];
@@ -348,7 +349,7 @@
                     }                   
                 }
 
-                if(controlSidebars && window.currentCell){
+                if(controlSidebars && window.currentCell && !this.suspendUpdate){
                     for(i=0; i<controlSidebars.length; i++){
 
                         evt = new CustomEvent('postHVchan', {'detail': {   
@@ -447,8 +448,9 @@
                 HVcontrol.setAttribute('id', this.id + 'Control');
                 HVcontrol.setAttribute('method', 'POST');
                 HVcontrol.setAttribute('action', 'postHV');
-                HVcontrol.onchange = function(){
-                    document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', 'stdin needCommit')
+                HVcontrol.input = function(){
+                    document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', 'stdin needCommit');
+                    this.suspendUpdate = true;
                 }.bind(this);
                 this.appendChild(HVcontrol);
 
