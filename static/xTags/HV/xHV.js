@@ -451,7 +451,7 @@
                 HVcontrol.onchange = function(){
                     document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', 'stdin needCommit');
                     this.suspendUpdate = true;                    
-                }
+                }.bind(this)
                 HVcontrol.oninput = function(){
                     document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', 'stdin needCommit');
                     this.suspendUpdate = true;
