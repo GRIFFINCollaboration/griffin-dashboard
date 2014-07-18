@@ -79,6 +79,11 @@
                     }
 
                 }.bind(this));
+
+                //let repopulate know that the active clock would like to be updated every loop:
+                if(!window.refreshTargets)
+                    window.refreshTargets = [];
+                window.refreshTargets[window.refreshTargets.length] = this;
             },
 
             inserted: function() {},
@@ -105,6 +110,7 @@
                 this.clockForm[index].setAttribute('class', 'clockSummary clockHighlight')
                 this.currentClockIndex = parseInt(index,10);
 
+/*
                 //find relevant data
                 ODBblob = {};
                 if(window.ODBEquipment && window.ODBEquipment.hasOwnProperty('GRIF-Clk'+index))
@@ -120,7 +126,10 @@
                         } });
                         controlSidebars[i].dispatchEvent(evt);
                     }
-                }                
+                }    
+*/
+                this.fetchClock(index);
+
             },
 
             'update' : function(){
@@ -141,7 +150,7 @@
                     } });
                     controlSidebars[0].dispatchEvent(evt);
 
-                }.bind(this)
+                }).bind(this)
             }
 
         },
