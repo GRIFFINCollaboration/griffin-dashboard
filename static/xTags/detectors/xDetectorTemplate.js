@@ -379,6 +379,11 @@
                     document.getElementById('tooltip').setAttribute('style', '');
             },
 
+            //decide whether or not to shuffle a clicked cell to the front
+            'shuffleCell' : function(cellName){
+                return true;
+            },
+
             //fire an event at interested parties, if they exist:
             'clickCell' : function(cellName){
                 var evt,
@@ -400,7 +405,8 @@
                     this.lastRateClick = cellName;
                     this.cells[cellName].setAttr('stroke', '#FF0000');
                     this.cells[cellName].setAttr('strokeWidth', 6);
-                    this.cells[cellName].moveToTop();
+                    if(shuffleCell(cellName))
+                        this.cells[cellName].moveToTop();
                     this.mainLayer[this.displayIndex].draw()
                 }
 
@@ -420,7 +426,8 @@
                     this.lastHVClick = cellName;
                     this.cells[cellName].setAttr('stroke', '#FF0000');
                     this.cells[cellName].setAttr('strokeWidth', 6);
-                    this.cells[cellName].moveToTop();
+                    if(shuffleCell(cellName))
+                        this.cells[cellName].moveToTop();
                     this.mainLayer[this.displayIndex].draw()
                 }
 

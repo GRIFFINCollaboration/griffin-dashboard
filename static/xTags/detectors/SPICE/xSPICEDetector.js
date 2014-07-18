@@ -182,6 +182,14 @@
                 if(this.auxPhiSteps){
                     this.stage[1].add(this.mainLayer[1]);
                 }
+            },
+
+            //S2 and S2 radial bins shouldn't be reordered onclick
+            'shuffleCell' : function(cellName){
+                if( (cellName.slice(0,3) == 'SPE' || cellName.slice(0,3) == 'SPZ') && cellName.indexOf('DP')!=-1 )
+                    return false;
+                else
+                    return true;
             }
         }
     });

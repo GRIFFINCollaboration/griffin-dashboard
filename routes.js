@@ -29,7 +29,7 @@ app.get('/SPICE', function(req, res){
 				return res.render('detectors/SPICE.jade', {"SPICEaux": "S3"});				
 		}
 
-		return res.render('detectors/SPICE.jade', {"SPICEaux": "S2"});
+		return res.render('detectors/SPICE.jade', {"SPICEaux": "S2"});  //S2 hardcoded in for testing, should be null
 	});
 
 	
