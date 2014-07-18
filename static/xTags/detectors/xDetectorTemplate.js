@@ -405,6 +405,7 @@
                 }
 
                 if(HVsidebar && HVcell){
+                    console.log(window.ODBEquipment['HV-' + crateIndex])
                     evt = new CustomEvent('postHVchan', {'detail': {
                         'channel' : cellName, 
                         'ODBblob': window.ODBEquipment['HV-' + crateIndex], 
