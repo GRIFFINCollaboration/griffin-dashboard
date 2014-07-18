@@ -209,6 +209,7 @@
                 this.cardWrap.setAttribute('action', 'updateClock');
                 this.cardWrap.setAttribute('id', 'clockCardWrap');
                 this.cardWrap.oninput = function(){
+                    console.log('form change')
                     this.suspendUpdate = true;
                 }.bind(this)
                 this.wrap.appendChild(this.cardWrap);
