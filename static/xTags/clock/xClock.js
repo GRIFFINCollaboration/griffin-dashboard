@@ -121,6 +121,27 @@
                         controlSidebars[i].dispatchEvent(evt);
                     }
                 }                
+            },
+
+            'update' : function(){
+                this.fetchClock(this.currentClockIndex);
+            },
+
+            'fetchClock' : function(index){
+                XHR('http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/GRIF-Clk'+index+'&encoding=json-nokeys', function(responseText){
+                    var data = JSON.parse(responseText)[0],
+                        controlSidebars = document.getElementsByTagName('widget-clockControl'),
+                        evt;
+
+                    window.ODBEquipment['GRIF-Clk'+index] = data;
+
+                    evt = new CustomEvent('postClockChan', {'detail': {   
+                        'index' : index,
+                        'data' : data
+                    } });
+                    controlSidebars[0].dispatchEvent(evt);
+
+                }.bind(this)
             }
 
         },
