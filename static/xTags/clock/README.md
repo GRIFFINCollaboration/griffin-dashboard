@@ -29,7 +29,7 @@ This custom element provides a simple illustration of which clocks have frontend
  - `this.slaveSwitch`, `this.masterSwitch` : arrays of radio buttons for toggling configuration of each clock. 
 
 ###Data Acquisition
-Currently `<widget-clock>` only pulls data from the ODB on page load; in future a regular poll will be implemented (see [issue #7](https://github.com/BillMills/griffinMarkII/issues/7)).
+`<widget-clock>` fetches all clock data on page load, and if a clock has been clicked on and populated in the sidebar, will refresh that sidebar's information in the usual update loop.  Note however that if a user has modified any of the form elements in the sidebar's update loop, the sidebar update will be suspended until the page is refreshed, either by committing the new parameters or refreshing the page.
 
 
 ##`<widget-clockControl>`
@@ -43,7 +43,7 @@ This custom element provides fine monitoring and control for GRIFFIN's CSACs.  I
     - `index` int 0-24 indexing which clock is being posted
     - `data` JSON object corresponding exactly to the ODB directory `/Equipment/GRIF-Clk<index>`
 
-When this custom event is received, `<widget-clockControl>` updates itself, including reconfiguring its display to suit the configuration of the new clock, via its member function `this.updateForm`.
+When this custom event is received, `<widget-clockControl>` updates itself, including reconfiguring its display to suit the configuration of the new clock, via its member function `this.updateForm`.  This behavior is vetoed if uncommitted changes are detected in the input form.
 
 ###Encoding
 A couple of parameters available from the clocks have less-than-obvious encoding:
