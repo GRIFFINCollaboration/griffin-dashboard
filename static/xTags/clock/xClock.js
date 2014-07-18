@@ -8,6 +8,7 @@
                     clockTitle, clockIndex;
 
                 this.currentClockIndex = null;
+                this.suspendUpdate = false;
                 this.clockForm = [];
                 this.clockAddress = [];
                 this.slaveSwitch = [];
@@ -133,6 +134,8 @@
             },
 
             'update' : function(){
+                if(this.suspendUpdate) return;
+
                 if(this.currentClockIndex || this.currentClockIndex === 0)
                     this.fetchClock(this.currentClockIndex);
             },
@@ -204,7 +207,10 @@
                 this.cardWrap = document.createElement('form');
                 this.cardWrap.setAttribute('method', 'POST');
                 this.cardWrap.setAttribute('action', 'updateClock');
-                this.cardWrap.setAttribute('id', 'clockCardWrap')
+                this.cardWrap.setAttribute('id', 'clockCardWrap');
+                this.cardWrap.oninput = function(){
+                    this.suspendUpdate = true;
+                }.bind(this)
                 this.wrap.appendChild(this.cardWrap);
                 xString = '<x-deck id="clockControlDeck" selected-index=0>'
                 xString += '<x-card id="summaryCard"></x-card>'
