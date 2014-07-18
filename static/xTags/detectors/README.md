@@ -155,6 +155,9 @@ Intended as the callback to receiving data, `populate()` takes care of refreshin
 ###refreshColorScale()
 Refreshes the contents and positions of the Kinetic objects in `this.tickLabels[view][tick]` and `this.scaleTitle[view]` as a function of whatever is registered in `this.scaleType`, `.min` and `.max` under the `this.currentView` key.  Intended as part of the `onchange` callback after modifying scale parameters in the plot control form, and for updating after changing the view.
 
+###shuffleCell(cellName)
+Whenever a cell is clicked on, it is moved to the topmost layer of the Kinetic stage, so that its red-highlighted border isn't hidden beneath other cells.  This causes rendering problems in detectors where the z-index of cells is meaningful; this function will abort the reordering of `cellname` if it returns false.
+
 ###summarizeData()
 Called by `this.update()` iff `this.summaryDepth` is truthy.  Constructs the average rate, threshold and HV for the summary cells declared in `this.channelNames[]` iff the summary cell key's length equals `this.summaryDepth`.  Averages are stored alongside raw channel values in `window.currentData[HV/threshold/rate][summaryKey]` for parsing by the same logic as the individual cells.  Note that if any individual detector is supposed to contribute to this average and fails to report, the whole summary cell will be marked as failing to report.
 
