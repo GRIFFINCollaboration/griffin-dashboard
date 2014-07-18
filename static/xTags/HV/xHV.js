@@ -20,7 +20,6 @@
                     'off' : '#95a5a6'
                 }
                 this.currentCrate = 0;
-                this.suspendUpdate = false;
 
                 this.cratePop = [];
                 this.cardNames = [];
@@ -349,7 +348,7 @@
                     }                   
                 }
 
-                if(controlSidebars && window.currentCell && !this.suspendUpdate){
+                if(controlSidebars && window.currentCell){
                     for(i=0; i<controlSidebars.length; i++){
 
                         evt = new CustomEvent('postHVchan', {'detail': {   
@@ -437,6 +436,7 @@
                 ,   voltageDown = document.createElement('span')
 
                 this.temperatureMax = 40;
+                this.suspendUpdate = false;
 
                 ////////////////////
                 //build the DOM
@@ -551,7 +551,7 @@
                 this.addEventListener('postHVchan', function(evt){
                     if(evt.detail.crateIndex == -1){
                         document.getElementById(this.id + 'Title').innerHTML = (evt.detail.channel + ' not found in HV equipment.')
-                    } else {
+                    } else if(!this.suspendUpdate){
                         this.updateForm(evt.detail.channel, evt.detail.ODBblob, evt.detail.crateIndex);
                     }
                 }, false);
