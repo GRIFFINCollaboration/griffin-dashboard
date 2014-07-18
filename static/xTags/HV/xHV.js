@@ -448,7 +448,7 @@
                 HVcontrol.setAttribute('id', this.id + 'Control');
                 HVcontrol.setAttribute('method', 'POST');
                 HVcontrol.setAttribute('action', 'postHV');
-                HVcontrol.input = function(){
+                HVcontrol.oninput = function(){
                     document.getElementById(this.id + 'HVparameterCommit').setAttribute('class', 'stdin needCommit');
                     this.suspendUpdate = true;
                 }.bind(this);
