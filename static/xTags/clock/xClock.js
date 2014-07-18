@@ -8,7 +8,6 @@
                     clockTitle, clockIndex;
 
                 this.currentClockIndex = null;
-                this.suspendUpdate = false;
                 this.clockForm = [];
                 this.clockAddress = [];
                 this.slaveSwitch = [];
@@ -134,8 +133,6 @@
             },
 
             'update' : function(){
-                if(this.suspendUpdate) return;
-
                 if(this.currentClockIndex || this.currentClockIndex === 0)
                     this.fetchClock(this.currentClockIndex);
             },
@@ -183,6 +180,7 @@
                 this.summaryIDs = ['Configuration', 'SyncSource', 'ClockSource', 'RefClock', 'LEMOClock', 'LEMOSync', 'eSATAClock', 'eSATASync', 'SyncTmeS'];
                 this.CSACIDs = ['Power', 'Status', 'Mode', 'Alarm', 'UnitPower', 'TuningVoltage', 'LaserCurrent', 'ClockHeaterPower', 'Temperature', 'SerialNo', 'FirmwareVersion'];
                 this.CSACunit = ['','','','','',' VDC',' mA',' mW',' C','',''];
+                this.suspendUpdate = false;
 
                 this.introTitle = document.createElement('h2');
                 this.wrap = document.createElement('div');
@@ -354,6 +352,8 @@
                     stepdown,
                     hiChan = [11,15,19,23,27,39,31,35],
                     loChan = [12,16,20,24,28,40,32,36];
+
+                if(this.suspendUpdate) return;
 
                 this.currentClock = parseInt(payload.index,10);
                 document.getElementById('clockIndex').value = this.currentClock;
