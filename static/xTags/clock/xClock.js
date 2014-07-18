@@ -133,7 +133,8 @@
             },
 
             'update' : function(){
-                this.fetchClock(this.currentClockIndex);
+                if(this.currentClockIndex || this.currentClockIndex === 0)
+                    this.fetchClock(this.currentClockIndex);
             },
 
             'fetchClock' : function(index){
@@ -141,7 +142,7 @@
                     var data = JSON.parse(responseText)[0],
                         controlSidebars = document.getElementsByTagName('widget-clockControl'),
                         evt;
-console.log(data)
+
                     window.ODBEquipment['GRIF-Clk'+index] = data;
 
                     evt = new CustomEvent('postClockChan', {'detail': {   
