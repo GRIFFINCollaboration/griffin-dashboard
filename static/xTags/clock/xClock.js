@@ -150,7 +150,7 @@
                     } });
                     controlSidebars[0].dispatchEvent(evt);
 
-                }).bind(this)
+                }.bind(this));
             }
 
         },
