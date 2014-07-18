@@ -404,8 +404,7 @@
                     this.mainLayer[this.displayIndex].draw()
                 }
 
-                if(HVsidebar && HVcell){
-                    console.log(crateIndex)
+                if(HVsidebar && HVcell && crateIndex!=-1){
                     evt = new CustomEvent('postHVchan', {'detail': {
                         'channel' : cellName, 
                         'ODBblob': window.ODBEquipment['HV-' + crateIndex], 
@@ -443,18 +442,24 @@
             //given an HV cell name, return the index of the HV crate it is powered by
             'findHVcrate' : function(cellName){
                 var i=0,
-                    match = false;
+                    match = false,
+                    crateID = -1;
 
                 if(!window.ODBEquipment || window.ODBEquipment == {}) return  //TODO: should actually deal with this
 
                 while(!match && window.ODBEquipment['HV-'+i]){
-                    if(window.ODBEquipment['HV-'+i].Settings.Names.indexOf(cellName) != -1)
-                        match = true
+                    if(window.ODBEquipment['HV-'+i].Settings.Names.indexOf(cellName) != -1){
+                        match = true;
+                        crateID = i;
+                    }
                     else 
                         i++;
                 }
 
-                return i;
+                if(match)
+                    return crateID;
+                else
+                    return -1;
             },
 
             //get dataviews from some list of DAQ nodes
@@ -536,14 +541,15 @@
             },
 
             'updateHVsidebar' : function(){
-                var HVsidebar = document.getElementsByTagName('widget-HVcontrol');
+                var HVsidebar = document.getElementsByTagName('widget-HVcontrol'),
+                    HVcrate = this.findHVcrate(this.lastHVClick)
 
-                if(!this.lastHVClick) return;  //no click = nothing to update
+                if(!this.lastHVClick || HVcrate==-1) return;  //no click = nothing to update, HVcrate==-1 => channel not found in HV
 
                 evt = new CustomEvent('postHVchan', {'detail': {
                     'channel' : this.lastHVClick, 
-                    'ODBblob': window.ODBEquipment['HV-' + this.findHVcrate(this.lastHVClick)], 
-                    'crateIndex': this.findHVcrate(this.lastHVClick)
+                    'ODBblob': window.ODBEquipment['HV-' + HVcrate], 
+                    'crateIndex': HVcrate
                 } });
                 HVsidebar[0].dispatchEvent(evt);
             },
