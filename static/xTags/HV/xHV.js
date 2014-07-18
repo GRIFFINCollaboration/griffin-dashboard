@@ -547,7 +547,11 @@
                 this.establishFillMeter('Temperature', 'C', this.mainLayer, 0, 0.69*this.meterHeight, this.meterWidth, 0.27*this.meterHeight);
 
                 this.addEventListener('postHVchan', function(evt){
-                    this.updateForm(evt.detail.channel, evt.detail.ODBblob, evt.detail.crateIndex);
+                    if(evt.detail.crateIndex == -1){
+                        document.getElementById(this.id + 'Title').innerHTML = (evt.detail.channel + ' not found in HV equipment.')
+                    } else {
+                        this.updateForm(evt.detail.channel, evt.detail.ODBblob, evt.detail.crateIndex);
+                    }
                 }, false);
 
             },

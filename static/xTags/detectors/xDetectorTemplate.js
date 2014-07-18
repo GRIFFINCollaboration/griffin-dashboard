@@ -404,7 +404,7 @@
                     this.mainLayer[this.displayIndex].draw()
                 }
 
-                if(HVsidebar && HVcell && crateIndex!=-1){
+                if(HVsidebar && HVcell){
                     evt = new CustomEvent('postHVchan', {'detail': {
                         'channel' : cellName, 
                         'ODBblob': window.ODBEquipment['HV-' + crateIndex], 
@@ -544,7 +544,7 @@
                 var HVsidebar = document.getElementsByTagName('widget-HVcontrol'),
                     HVcrate = this.findHVcrate(this.lastHVClick)
 
-                if(!this.lastHVClick || HVcrate==-1) return;  //no click = nothing to update, HVcrate==-1 => channel not found in HV
+                if(!this.lastHVClick) return;  //no click = nothing to update
 
                 evt = new CustomEvent('postHVchan', {'detail': {
                     'channel' : this.lastHVClick, 
