@@ -351,6 +351,20 @@
                 if(controlSidebars && window.currentCell){
                     for(i=0; i<controlSidebars.length; i++){
 
+/*
+                    chanIndex = ODBfe.Settings.Names.indexOf(channelName),
+                    chStatus = parseChStatus(ODBfe.Variables.ChStatus[chanIndex]),
+                    demandVoltage = ODBfe.Variables.Demand[chanIndex],
+                    measuredVoltage = ODBfe.Variables.Measured[chanIndex],
+                    voltageLimit = ODBfe.Settings['Voltage Limit'][chanIndex],
+                    currentLimit = ODBfe.Settings['Current Limit'][chanIndex],
+                    current = ODBfe.Variables.Current[chanIndex],
+                    temperature = ODBfe.Variables.Temperature[chanIndex],
+                    vUp = ODBfe.Settings['Ramp Up Speed'][chanIndex],
+                    vDown = ODBfe.Settings['Ramp Down Speed'][chanIndex],
+*/
+console.log(data.Settings['Ramp Down Speed'][data.Settings.Names.indexOf(window.currentCell)])
+
                         evt = new CustomEvent('postHVchan', {'detail': {   
                             'channel' : window.currentCell, 
                             'ODBblob': data, 
