@@ -286,7 +286,7 @@
 			   		x: leftmargin + 20*grid,
 			       	y: topmargin+4*grid,
 			       	width: cells.widthhv,
-			      	text: 'HV 0',
+			      	text: 'HV 1',
 			       	fontSize: label.maxFontSize,
 			       	fontFamily: label.font,
 			       	fill: label.fontcolour,
@@ -319,7 +319,7 @@
 			            x: leftmargin+(60+20*(i-1))*grid,
 			            y: topmargin+4*grid,
 			            width: cells.widthhv,
-			            text: 'HV '+i,
+			            text: 'HV '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
@@ -365,7 +365,7 @@
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+13*grid,
 			            width: cells.widthnim,
-			            text: 'NIM '+i,
+			            text: 'NIM '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
@@ -396,7 +396,7 @@
 			            x: leftmargin+60*grid,
 			            y: topmargin+(47+8*(i-5))*grid,
 			            width: cells.widthnim,
-			            text: 'NIM '+i,
+			            text: 'NIM '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
@@ -442,7 +442,7 @@
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+20*grid,
 			            width: cells.widthvme,
-			            text: 'VME '+i,
+			            text: 'VME '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
@@ -473,7 +473,7 @@
 			            x: leftmargin+(40+20*(i-4))*grid,
 			            y: topmargin+33*grid,
 			            width: cells.widthvme,
-			            text: 'VME '+i,
+			            text: 'VME '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
@@ -503,7 +503,7 @@
 			   		x: leftmargin+40*grid,
 			       	y: topmargin+44*grid,
 			       	width: cells.widthvme,
-			      	text: 'VME 6',
+			      	text: 'VME 7',
 			       	fontSize: label.maxFontSize,
 			       	fontFamily: label.font,
 			       	fill: label.fontcolour,
@@ -524,7 +524,7 @@
 
  						evt = new CustomEvent('postVME', {'detail': {'VME' : index} });
                     	shackSidebar.dispatchEvent(evt);
-			   		}.bind(this, i));
+			   		}.bind(this, i+1));
 			   	}
 
 
@@ -558,7 +558,7 @@
 			   		x: leftmargin,
 			       	y: topmargin+47*grid,
 			       	width: cells.widthdsa,
-			      	text: 'Data Storage Array 0',
+			      	text: 'Data Storage Array 1',
 			       	fontSize: label.maxFontSize,
 			       	fontFamily: label.font,
 			       	fill: label.fontcolour,
@@ -588,7 +588,7 @@
 			            x: leftmargin+20*(i-1)*grid,
 			            y: topmargin+54*grid,
 			            width: cells.widthdsa,
-			            text: 'Data Storage Array ' + i,
+			            text: 'Data Storage Array ' + (i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
@@ -634,7 +634,7 @@
 			            x: leftmargin+(20+20*i)*grid,
 			            y: topmargin+53*grid,
 			            width: cells.widthnet,
-			            text: 'Network Switch '+i,
+			            text: 'Network Switch '+(i+1),
 			            fontSize: label.maxFontSize/2,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
@@ -676,7 +676,7 @@
 			            x: leftmargin,
 			            y: topmargin+(40+3.1*i)*grid,
 			            width: cells.widthcomp,
-			            text: 'Computer '+i,
+			            text: 'Computer '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
@@ -837,23 +837,23 @@
 				}
 
 				for (i = 10; i < 13; i++){
-					this.tooltipContent[i] = {'HV Crate ' : (i-10)};
+					this.tooltipContent[i] = {'HV Crate ' : (i-9)};
 				}
 
 				for (i = 13; i < 20; i++){
-					this.tooltipContent[i] = {'NIM Crate' : (i-13)};
+					this.tooltipContent[i] = {'NIM Crate' : (i-12)};
 				}
 
 				for (i = 20; i < 27; i++){
-					this.tooltipContent[i] = {'VME Crate' : (i-20)};
+					this.tooltipContent[i] = {'VME Crate' : (i-19)};
 				}
 
 				for (i = 27; i < 29; i++){
-					this.tooltipContent[i] = {'Computer' : (i-27)};
+					this.tooltipContent[i] = {'Computer' : (i-26)};
 				}
 
 				for (i = 29; i < 33; i++){
-					this.tooltipContent[i] = {'Data Storage Array' : (i-29)};
+					this.tooltipContent[i] = {'Data Storage Array' : (i-30)};
 				}
 
 				this.updateRacks();
