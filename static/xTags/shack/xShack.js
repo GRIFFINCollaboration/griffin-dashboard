@@ -518,13 +518,13 @@
 			   	squishFont(label.vme[6], 18*grid);
 
 			   	for(i=0; i<cells.vme.length; i++){
-			   		cells.vme[i].on('click', function(){
+			   		cells.vme[i].on('click', function(index){
 			   			var evt,
 			   				shackSidebar = document.querySelectorAll('widget-shackControl')[0];
-console.log(shackSidebar)
- 						evt = new CustomEvent('postVME', {'detail': {'VME' : i} });
+
+ 						evt = new CustomEvent('postVME', {'detail': {'VME' : index} });
                     	shackSidebar.dispatchEvent(evt);
-			   		});
+			   		}.bind(this, i));
 			   	}
 
 
