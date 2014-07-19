@@ -5,10 +5,14 @@
         lifecycle: {
             created: function() {
             	var shackWrap = document.createElement('div'),
+            		tooltip = document.createElement('div'),
             		i;
 
             	shackWrap.setAttribute('id', 'shackStatusWrap');
             	this.appendChild(shackWrap);
+
+            	tooltip.setAttribute('class', 'tooltip');
+            	this.appendChild(tooltip);
 
             	///////////////////////////////////////////////////////////////////
             	// tooltipContent is a table of objects for populating the tooltip.
