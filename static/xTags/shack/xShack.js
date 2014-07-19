@@ -521,7 +521,7 @@
 			   		cells.vme[i].onclick = function(){
 			   			var evt,
 			   				shackSidebar = document.querySelectorAll('widget-shackControl')[0];
-
+console.log(shackSidebar)
  						evt = new CustomEvent('postVME', {'detail': {'VME' : i} });
                     	shackSidebar.dispatchEvent(evt);
 			   		}
@@ -803,7 +803,7 @@
 				} else {
 					text = ''
 					for(key in this.tooltipContent[i]){
-						text += '<br>' + key + ': ' + this.tooltipContent[i][key] + ' C' ;
+						text += key + ': ' + this.tooltipContent[i][key] + '<br>';
 					}
 
 				content.innerHTML = text;
