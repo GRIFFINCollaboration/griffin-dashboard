@@ -7,7 +7,7 @@
             created: function() {
 
                 this.baseURL = 'http://'+window.location.host;
-                this.routes = ['HV', 'DAQ', 'PPG', 'Clocks', 'Filter'];
+                this.routes = ['HV', 'DAQ', 'PPG', 'Clocks', 'Filter', 'Shack'];
                 this.present = (window.location+'').slice( (window.location+'').lastIndexOf('/') + 1);
 
                 //get the DAQ structure, use it to decide which detectors need to be linked

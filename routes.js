@@ -77,6 +77,12 @@ app.get('/Filter', function(req, res){
 	res.render('widgets/Filter.jade');
 });
 
+app.get('/Shack', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	
+	res.render('widgets/Shack.jade');
+});
+
 app.get('/MSCbuilder', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
