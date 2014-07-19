@@ -12,3 +12,11 @@ widget-shackControl{
 	margin: 1em;
 	width: 20%;
 }
+
+form input{
+	margin-bottom:1em;
+}
+
+input[type='password']{
+	width: 10em;
+}
