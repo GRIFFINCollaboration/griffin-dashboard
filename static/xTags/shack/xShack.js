@@ -771,26 +771,12 @@
 				this.rackImage.mainLayer.draw();
 			},
 
-			'moveTooltip' : function(){
+            //move the tooltip around
+            'moveTooltip' : function(evt){
+                var tt = document.getElementById('tooltip');
 
-				var tt = document.getElementById('tooltip'),
-					mousePos = this.rackImage.stage.getPointerPosition(),
-					offsetTop = 0, offsetLeft = 0,
-					left = mousePos.x,
-					top = mousePos.y,
-					element = this;
-
-				do{
-					offsetTop += element.offsetTop || 0;
-					offsetLeft += element.offsetLeft || 0;
-					element = element.offsetParent;
-				} while(element)
-
-				left += offsetLeft;
-				top += offsetTop;
-
-				tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
-			},
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + evt.pageY  + ';');
+            },
 
 			'writeTooltip' : function(i){
 
