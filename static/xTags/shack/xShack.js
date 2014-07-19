@@ -52,8 +52,8 @@
 
 			'renderRacks' : function(){
 
-				var width = 0.8*this.offsetWidth,
-					height = 0.8*this.offsetHeight,
+				var width = 0.6*window.innerWidth,
+					height = 0.8*window.innerHeight,
 					grid = Math.min(width/100, height/62),  //20*5 wide, 56+2+2+2 tall
 					cells = {},
 					label = {},
