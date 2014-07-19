@@ -286,7 +286,7 @@
 			   		x: leftmargin + 20*grid,
 			       	y: topmargin+4*grid,
 			       	width: cells.widthhv,
-			      	text: 'HV 1',
+			      	text: 'HV 0',
 			       	fontSize: label.maxFontSize,
 			       	fontFamily: label.font,
 			       	fill: label.fontcolour,
