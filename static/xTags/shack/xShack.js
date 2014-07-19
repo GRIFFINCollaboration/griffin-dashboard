@@ -904,6 +904,7 @@
                 this.pwLabel = document.createElement('label');
                 this.powerCycle = document.createElement('button');
                 this.VMEindex = document.createElement('input');
+                this.SOHhost = document.createElement('input');
 
                 this.introTitle.innerHTML = 'Click on a VME to get started.'
                 this.appendChild(this.introTitle)
@@ -929,6 +930,12 @@
                 this.VMEindex.setAttribute('name', 'VMEindex');
                 this.VMEindex.setAttribute('style', 'display:none');
                 this.wrap.appendChild(this.VMEindex);
+
+                this.SOHhost.setAttribute('type', 'text');
+                this.SOHhost.setAttribute('name', 'host');
+                this.SOHhost.setAttribute('style', 'display:none');
+                this.SOHhost.value = this.SOH;
+                this.wrap.appendChild(this.SOHhost);
 
                 this.addEventListener('postVME', function(evt){
                     this.updateForm(evt.detail);

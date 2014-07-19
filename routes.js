@@ -276,7 +276,23 @@ console.log(isMaster)
 });
 
 app.post('/powerCycleVME', function(req, res){
-	console.log([req.body.VMEindex, req.body.pw])
+	console.log([req.body.VMEindex, req.body.pw, req.body.host])
+
+/*
+	if(req.body.pw != 'pixel')
+		return res.redirect('/Shack');
+
+	//enable writing, power down the crate, wait 30 seconds, power up the crate, disable writing.
+	exec("curl 'http://grifsoh00.triumf.ca:8081/?cmd=jset&odb=Equipment/VME-0"+req.body.VMEindex+"/Settings/EnableControl&value=1'", function(error, stdout, stderr){
+		exec("curl 'http://grifsoh00.triumf.ca:8081/?cmd=jset&odb=Equipment/VME-0"+req.body.VMEindex+"/Settings/mainSwitch&value=0'", function(error, stdout, stderr){
+			setTimeout(function(){
+				exec("curl 'http://grifsoh00.triumf.ca:8081/?cmd=jset&odb=Equipment/VME-0"+req.body.VMEindex+"/Settings/mainSwitch&value=1'", function(error, stdout, stderr){
+					exec("curl 'http://grifsoh00.triumf.ca:8081/?cmd=jset&odb=Equipment/VME-0"+req.body.VMEindex+"/Settings/EnableControl&value=0'", function(error, stdout, stderr){})
+				})
+			}, 30000);
+		}
+	});
+*/
 
 	return res.redirect('/Shack');
 });
