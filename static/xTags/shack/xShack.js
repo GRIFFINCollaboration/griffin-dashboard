@@ -910,7 +910,7 @@
                 this.wrap.setAttribute('style', 'display:none');
                 this.appendChild(this.wrap);
 
-                this.pwLabel.innerHTML: 'VME Pass:'
+                this.pwLabel.innerHTML = 'VME Pass:';
                 this.wrap.appendChild(this.pwLabel);
 
                 this.pw.setAttribute('type', 'password');
