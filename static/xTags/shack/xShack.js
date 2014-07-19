@@ -875,3 +875,41 @@
     });
 
 })();
+
+(function(){  
+
+    xtag.register('widget-shackControl', {
+        extends: 'div',
+        lifecycle: {
+            created: function() {
+                var i;                  
+
+                this.introTitle = document.createElement('h2');
+                this.wrap = document.createElement('div');
+
+                this.introTitle.innerHTML = 'Click on a VME to get started.'
+                this.appendChild(this.introTitle)
+
+                this.wrap.setAttribute('style', 'display:none');
+                this.appendChild(this.wrap);
+
+                
+            },
+            inserted: function() {},
+            removed: function() {},
+            attributeChanged: function() {}
+        }, 
+        events: { 
+
+        },
+        accessors: {
+            'SOH':{
+                attribute: {} //this just needs to be declared
+            }
+        }, 
+        methods: {
+
+        }
+    });
+
+})();
