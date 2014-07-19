@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-            	var title = document.createElement('h1');
+            	var title = document.createElement('h1'),
             		shackWrap = document.createElement('div'),
             		tooltip = document.createElement('div'),
             		i;
