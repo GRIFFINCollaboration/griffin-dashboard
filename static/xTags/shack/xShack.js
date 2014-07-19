@@ -20,7 +20,7 @@
 
             	///////////////////////////////////////////////////////////////////
             	// tooltipContent is a table of objects for populating the tooltip.
-            	// structure: {key: value}
+            	// each array element is a simple object ala: {key: value, ...}
             	// indices 0-4: top temperature sensors
             	// 5-9: bottom temperature sensors
             	///////////////////////////////////////////////////////////////////
@@ -837,23 +837,23 @@
 				}
 
 				for (i = 10; i < 13; i++){
-					this.tooltipContent[i] = {'HV Crate ' : (i-9)};
+					this.tooltipContent[i] = {'HV Crate ' : (i-10)};
 				}
 
 				for (i = 13; i < 20; i++){
-					this.tooltipContent[i] = {'NIM Crate' : (i-12)};
+					this.tooltipContent[i] = {'NIM Crate' : (i-13)};
 				}
 
 				for (i = 20; i < 27; i++){
-					this.tooltipContent[i] = {'VME Crate' : (i-19)};
+					this.tooltipContent[i] = {'VME Crate' : (i-20)};
 				}
 
 				for (i = 27; i < 29; i++){
-					this.tooltipContent[i] = {'Computer' : (i-26)};
+					this.tooltipContent[i] = {'Computer' : (i-27)};
 				}
 
 				for (i = 29; i < 33; i++){
-					this.tooltipContent[i] = {'Data Storage Array' : (i-28)};
+					this.tooltipContent[i] = {'Data Storage Array' : (i-29)};
 				}
 
 				this.updateRacks();
