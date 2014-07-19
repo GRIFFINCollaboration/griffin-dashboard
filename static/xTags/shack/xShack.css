@@ -19,4 +19,5 @@ form input{
 
 input[type='password']{
 	width: 10em;
+	margin-left: 1em;
 }

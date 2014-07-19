@@ -275,6 +275,20 @@ console.log(isMaster)
 	});
 });
 
+app.post('/powerCycleVME', function(req, res){
+	console.log([req.body.VMEindex, req.body.pw])
+
+	return res.redirect('/Shack');
+});
+
+
+
+
+
+
+
+
+
 app.post('/buildMSC', function(req, res){
 	var names = [],
 		MSC = [],

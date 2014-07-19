@@ -903,11 +903,14 @@
                 this.pw = document.createElement('input');
                 this.pwLabel = document.createElement('label');
                 this.powerCycle = document.createElement('button');
+                this.VMEindex = document.createElement('input');
 
                 this.introTitle.innerHTML = 'Click on a VME to get started.'
                 this.appendChild(this.introTitle)
 
                 this.wrap.setAttribute('style', 'display:none');
+                this.wrap.setAttribute('method', 'POST')
+                this.wrap.setAttribute('action', 'powerCycleVME')
                 this.appendChild(this.wrap);
 
                 this.pwLabel.innerHTML = 'VME Pass:';
@@ -915,11 +918,16 @@
 
                 this.pw.setAttribute('type', 'password');
                 this.pw.setAttribute('class', 'stdin');
+                this.pw.setAttribute('name', 'pw');
                 this.wrap.appendChild(this.pw);
 
                 this.powerCycle.innerHTML = 'Power Cycle VME';
                 this.powerCycle.setAttribute('class', 'stdin');
                 this.wrap.appendChild(this.powerCycle);
+
+                this.VMEindex.setAttribute('type', 'number');
+                this.VMEindex.setAttribute('name', 'VMEindex');
+                this.VMEindex.setAttribute('style', 'display:none');
 
                 this.addEventListener('postVME', function(evt){
                     this.updateForm(evt.detail);
@@ -943,6 +951,8 @@
         		this.wrap.setAttribute('style', 'display:block');
 
         		this.introTitle.innerHTML = 'VME ' + payload.VME;
+
+        		this.VMEindex.value = payload.VME;
         	}
         }
     });
