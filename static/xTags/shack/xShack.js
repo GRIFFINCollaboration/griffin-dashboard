@@ -145,7 +145,7 @@
 					}),
 
 					this.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, i ) );
-					this.sensorstop[i].on('mousemove', this.moveTooltip.bind(this, false));
+					this.sensorstop[i].on('mousemove', this.moveTooltip);
 					this.sensorstop[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 
 					this.sensorsbottom[i] = new Kinetic.Rect({
@@ -160,7 +160,7 @@
 					}),
 
 					this.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, i+5 ) );
-					this.sensorsbottom[i].on('mousemove', this.moveTooltip.bind(this, false));
+					this.sensorsbottom[i].on('mousemove', this.moveTooltip);
 					this.sensorsbottom[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 
 				}
@@ -292,7 +292,7 @@
 			   	});
 
 				cells.hv0.on('mouseover', this.writeTooltip.bind(this, 10 ) );
-				cells.hv0.on('mousemove', this.moveTooltip.bind(this, false));
+				cells.hv0.on('mousemove', this.moveTooltip);
 				cells.hv0.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.hv0, 18*grid);
 
@@ -325,7 +325,7 @@
 			      	});
 
 			      	cells.hv[i].on('mouseover', this.writeTooltip.bind(this, i+10) );
-					cells.hv[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.hv[i].on('mousemove', this.moveTooltip);
 					cells.hv[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 					squishFont(label.hv[i], 18*grid);
 				}
@@ -371,7 +371,7 @@
 			        });
 
 			        cells.nim[i].on('mouseover', this.writeTooltip.bind(this, i+13 ) );
-					cells.nim[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.nim[i].on('mousemove', this.moveTooltip);
 					cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.nim[i], 18*grid);
 				} 
@@ -402,7 +402,7 @@
 			      	});
 
 			      	cells.nim[i].on('mouseover', this.writeTooltip.bind(this, i+13 ) );
-					cells.nim[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.nim[i].on('mousemove', this.moveTooltip);
 					cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			      	squishFont(label.nim[i], 18*grid);
 				}
@@ -448,7 +448,7 @@
 			      	});
 
 			      	cells.vme[i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
-					cells.vme[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.vme[i].on('mousemove', this.moveTooltip);
 					cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			      	squishFont(label.vme[i], 18*grid);
 				}   
@@ -479,7 +479,7 @@
 			     	 });
 
 				    cells.vme[i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
-					cells.vme[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.vme[i].on('mousemove', this.moveTooltip);
 					cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 				    squishFont(label.vme[i], 18*grid);
 				}   
@@ -509,7 +509,7 @@
 			   	});
 
  		      	cells.vme6.on('mouseover', this.writeTooltip.bind(this, 26 ) );
-				cells.vme6.on('mousemove', this.moveTooltip.bind(this, false));
+				cells.vme6.on('mousemove', this.moveTooltip);
 				cells.vme6.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.vme6, 18*grid);
 
@@ -554,7 +554,7 @@
 			   	});
 
 			    cells.dsa0.on('mouseover', this.writeTooltip.bind(this, 29 ) );
-				cells.dsa0.on('mousemove', this.moveTooltip.bind(this, false));
+				cells.dsa0.on('mousemove', this.moveTooltip);
 				cells.dsa0.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.dsa0, 18*grid);
 
@@ -584,7 +584,7 @@
 			        });
 
 			        cells.dsa[i].on('mouseover', this.writeTooltip.bind(this, i+29 ) );
-					cells.dsa[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.dsa[i].on('mousemove', this.moveTooltip);
 					cells.dsa[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.dsa[i], 18*grid);
 				}     
@@ -672,7 +672,7 @@
 			        });
 
 			        cells.comp[i].on('mouseover', this.writeTooltip.bind(this, i+27 ) );
-					cells.comp[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.comp[i].on('mousemove', this.moveTooltip);
 					cells.comp[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.comp[i], 18*grid);
 				}   
