@@ -4,12 +4,16 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-            	var shackWrap = document.createElement('div'),
+            	var title = document.createElement('h1');
+            		shackWrap = document.createElement('div'),
             		tooltip = document.createElement('div'),
             		i;
 
             	shackWrap.setAttribute('id', 'shackStatusWrap');
             	this.appendChild(shackWrap);
+
+            	title.innerHTML = 'Shack Status';
+            	shackWrap.appendChild(title);
 
             	tooltip.setAttribute('id', 'tooltip');
             	this.appendChild(tooltip);
@@ -484,7 +488,7 @@
 				    squishFont(label.vme[i], 18*grid);
 				}   
 
-				cells.vme6 = new Kinetic.Rect({
+				cells.vme[6] = new Kinetic.Rect({
 					x: leftmargin+40*grid,
 					y: topmargin+44*grid,
 					width: cells.widthvme,
@@ -495,7 +499,7 @@
 					opacity: cells.opacityvme
 				});
 
-			   	label.vme6 = new Kinetic.Text({
+			   	label.vme[6] = new Kinetic.Text({
 			   		x: leftmargin+40*grid,
 			       	y: topmargin+44*grid,
 			       	width: cells.widthvme,
@@ -508,10 +512,20 @@
 			       	listening: false
 			   	});
 
- 		      	cells.vme6.on('mouseover', this.writeTooltip.bind(this, 26 ) );
-				cells.vme6.on('mousemove', this.moveTooltip);
-				cells.vme6.on('mouseout', this.writeTooltip.bind(this, -1) );
-			   	squishFont(label.vme6, 18*grid);
+ 		      	cells.vme[6].on('mouseover', this.writeTooltip.bind(this, 26 ) );
+				cells.vme[6].on('mousemove', this.moveTooltip);
+				cells.vme[6].on('mouseout', this.writeTooltip.bind(this, -1) );
+			   	squishFont(label.vme[6], 18*grid);
+
+			   	for(i=0; i<cells.vme.length; i++){
+			   		cells.vme[i].onclick = function(){
+			   			var evt,
+			   				shackSidebar = document.querySelectorAll('widget-shackControl')[0];
+
+ 						evt = new CustomEvent('postVME', {'detail': {'VME' : i} });
+                    	shackSidebar.dispatchEvent(evt);
+			   		}
+			   	}
 
 
 				/////////////////////////////////////////////////////////
@@ -743,8 +757,8 @@
 					this.rackImage.mainLayer.add(cells.vme[i]),
 				    this.rackImage.mainLayer.add(label.vme[i]);
 
-				this.rackImage.mainLayer.add(cells.vme6);
-			    this.rackImage.mainLayer.add(label.vme6);
+				this.rackImage.mainLayer.add(cells.vme[6]);
+			    this.rackImage.mainLayer.add(label.vme[6]);
 
 				this.rackImage.mainLayer.add(cells.dsa0);
 			    this.rackImage.mainLayer.add(label.dsa0);
@@ -787,9 +801,9 @@
 				if(i == -1){
 					tt.setAttribute('style', 'display:none');
 				} else {
-					text = 'Data Payload '
+					text = ''
 					for(key in this.tooltipContent[i]){
-						text += '<br>' + key + ': ' + this.tooltipContent[i][key];
+						text += '<br>' + key + ': ' + this.tooltipContent[i][key] + ' C' ;
 					}
 
 				content.innerHTML = text;
@@ -893,6 +907,9 @@
                 this.wrap.setAttribute('style', 'display:none');
                 this.appendChild(this.wrap);
 
+                this.addEventListener('postVME', function(evt){
+                    this.updateForm(evt.detail);
+                }, false);
                 
             },
             inserted: function() {},
@@ -908,7 +925,9 @@
             }
         }, 
         methods: {
-
+        	'updateForm' : function(payload){
+        		this.introTitle.innerHTML = 'VME ' + payload.VME;
+        	}
         }
     });
 
