@@ -17,7 +17,10 @@ form input{
 	margin-bottom:1em;
 }
 
+form label{
+	margin-right: 1em;
+}
+
 input[type='password']{
 	width: 10em;
-	margin-left: 1em;
 }

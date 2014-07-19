@@ -928,6 +928,7 @@
                 this.VMEindex.setAttribute('type', 'number');
                 this.VMEindex.setAttribute('name', 'VMEindex');
                 this.VMEindex.setAttribute('style', 'display:none');
+                this.wrap.appendChild(this.VMEindex);
 
                 this.addEventListener('postVME', function(evt){
                     this.updateForm(evt.detail);
