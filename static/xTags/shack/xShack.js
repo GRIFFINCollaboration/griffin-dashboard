@@ -1,5 +1,5 @@
 (function(){  
-
+	/*widget-Shack originally from Lisa Morrison, https://github.com/GRIFFINCollaboration/GRIFFINshackStatus*/
     xtag.register('widget-Shack', {
         extends: 'div',
         lifecycle: {
@@ -11,7 +11,7 @@
             	shackWrap.setAttribute('id', 'shackStatusWrap');
             	this.appendChild(shackWrap);
 
-            	tooltip.setAttribute('class', 'tooltip');
+            	tooltip.setAttribute('id', 'tooltip');
             	this.appendChild(tooltip);
 
             	///////////////////////////////////////////////////////////////////
