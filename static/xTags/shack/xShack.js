@@ -899,13 +899,27 @@
                 var i;                  
 
                 this.introTitle = document.createElement('h2');
-                this.wrap = document.createElement('div');
+                this.wrap = document.createElement('form');
+                this.pw = document.createElement('input');
+                this.pwLabel = document.createElement('label');
+                this.powerCycle = document.createElement('button');
 
                 this.introTitle.innerHTML = 'Click on a VME to get started.'
                 this.appendChild(this.introTitle)
 
                 this.wrap.setAttribute('style', 'display:none');
                 this.appendChild(this.wrap);
+
+                this.pwLabel.innerHTML: 'VME Pass:'
+                this.wrap.appendChild(this.pwLabel);
+
+                this.pw.setAttribute('type', 'password');
+                this.pw.setAttribute('class', 'stdin');
+                this.wrap.appendChild(this.pw);
+
+                this.powerCycle.innerHTML = 'Power Cycle VME';
+                this.powerCycle.setAttribute('class', 'stdin');
+                this.wrap.appendChild(this.powerCycle);
 
                 this.addEventListener('postVME', function(evt){
                     this.updateForm(evt.detail);
@@ -926,6 +940,8 @@
         }, 
         methods: {
         	'updateForm' : function(payload){
+        		this.wrap.setAttribute('style', 'display:block');
+
         		this.introTitle.innerHTML = 'VME ' + payload.VME;
         	}
         }
