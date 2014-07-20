@@ -413,7 +413,7 @@
                     if(this.bypassState[i].innerHTML == 'Bypass: No')
                         this.eSATAlabel[i].innerHTML = (this.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out';
                     else
-                        this.eSATAlabel[i].innerHTML = this.masterOutputFrequency + ' MHz out';
+                        this.eSATAlabel[i].innerHTML = '';
                 }
                 document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
                 document.getElementById('masterOutputFrequencyLabel').innerHTML = this.masterOutputFrequency + ' MHz';
