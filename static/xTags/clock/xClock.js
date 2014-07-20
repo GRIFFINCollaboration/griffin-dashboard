@@ -413,7 +413,7 @@
                         this.eSATAlabel[i].innerHTML = this.masterOutputFrequency + ' MHz out';
                 }
                 document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
-                document.getElementById('masterOutputFrequencyLabel').innerHTML = (this.masterOutputFrequency + ' MHz';
+                document.getElementById('masterOutputFrequencyLabel').innerHTML = this.masterOutputFrequency + ' MHz';
 
                 //keep track of whether this is a master or slave channel internally in the form
                 document.getElementById('isMaster').value = payload.data.Variables.Output[1];
