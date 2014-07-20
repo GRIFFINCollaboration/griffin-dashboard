@@ -347,6 +347,9 @@
                     document.getElementById(this.summaryIDs[i - 1]).innerHTML = value;
                 }
 
+                //parse master frequency
+                this.masterOutputFrequency = this.masterFreq/(parseInt(payload.data.Variables.Output[11],10)+1);
+
                 if(isMaster){
                     //master needs switch for LEMO or AC Ref. Clock:
                     document.getElementById('ClockSourceLabel').innerHTML = 'Ref. Clock';
@@ -407,10 +410,10 @@
                     if(this.bypassState[i].innerHTML == 'Bypass: No')
                         this.eSATAlabel[i].innerHTML = (this.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out';
                     else
-                        this.eSATAlabel[i].innerHTML = '';
+                        this.eSATAlabel[i].innerHTML = this.masterOutputFrequency + ' MHz out';
                 }
                 document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
-                document.getElementById('masterOutputFrequencyLabel').innerHTML = (this.masterFreq/(parseInt(payload.data.Variables.Output[11],10)+1)).toFixed(1) + ' MHz';
+                document.getElementById('masterOutputFrequencyLabel').innerHTML = (this.masterOutputFrequency + ' MHz';
 
                 //keep track of whether this is a master or slave channel internally in the form
                 document.getElementById('isMaster').value = payload.data.Variables.Output[1];
