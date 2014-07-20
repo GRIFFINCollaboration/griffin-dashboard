@@ -404,7 +404,7 @@
                 //report the frequency after stepdown of each channel; set slider to stepdown corresponding to first channel:
                 for(i=0; i<8; i++){
                     stepdown = (parseInt(payload.data.Variables.Output[hiChan[i]],10) + parseInt(payload.data.Variables.Output[loChan[i]],10)) / 2
-                    if(this.bypassState[i].innerHTML = 'Bypass: No')
+                    if(this.bypassState[i].innerHTML == 'Bypass: No')
                         this.eSATAlabel[i].innerHTML = (this.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out';
                     else
                         this.eSATAlabel[i].innerHTML = '';
