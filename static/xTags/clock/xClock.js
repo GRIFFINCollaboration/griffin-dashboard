@@ -110,24 +110,6 @@
                 this.clockForm[index].setAttribute('class', 'clockSummary clockHighlight')
                 this.currentClockIndex = parseInt(index,10);
 
-/*
-                //find relevant data
-                ODBblob = {};
-                if(window.ODBEquipment && window.ODBEquipment.hasOwnProperty('GRIF-Clk'+index))
-                    ODBblob = window.ODBEquipment['GRIF-Clk'+index];
-
-                //populate sidebar
-                if(controlSidebars){
-                    for(i=0; i<controlSidebars.length; i++){
-
-                        evt = new CustomEvent('postClockChan', {'detail': {   
-                            'index' : index,
-                            'data' : ODBblob
-                        } });
-                        controlSidebars[i].dispatchEvent(evt);
-                    }
-                }    
-*/
                 this.fetchClock(index);
 
             },
@@ -422,7 +404,10 @@
                 //report the frequency after stepdown of each channel; set slider to stepdown corresponding to first channel:
                 for(i=0; i<8; i++){
                     stepdown = (parseInt(payload.data.Variables.Output[hiChan[i]],10) + parseInt(payload.data.Variables.Output[loChan[i]],10)) / 2
-                    this.eSATAlabel[i].innerHTML = (this.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out'
+                    if(this.bypassState[i].innerHTML = 'Bypass: No')
+                        this.eSATAlabel[i].innerHTML = (this.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out';
+                    else
+                        this.eSATAlabel[i].innerHTML = '';
                 }
                 document.getElementById('frequencySlider').value = 11 - parseInt(payload.data.Variables.Output[11],10);
                 document.getElementById('masterOutputFrequencyLabel').innerHTML = (this.masterFreq/(parseInt(payload.data.Variables.Output[11],10)+1)).toFixed(1) + ' MHz';
