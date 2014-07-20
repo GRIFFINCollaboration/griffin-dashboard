@@ -103,6 +103,8 @@
                 var evt, i, ODBblob,
                     controlSidebars = document.getElementsByTagName('widget-clockControl')
 
+                if(controlSidebars[0].suspendUpdate) return;
+
                 //highlight / unhighlight selected clock
                 if(this.currentClockIndex || this.currentClockIndex===0){
                     document.getElementById('clock'+this.currentClockIndex).setAttribute('class', 'clockSummary');
