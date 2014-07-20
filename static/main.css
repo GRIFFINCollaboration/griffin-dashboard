@@ -118,6 +118,12 @@ a{
 	text-decoration: none;
 }
 
+input[type='submit'].needCommit,
+input[type='button'].needCommit,
+button.needCommit{
+	border: 2px solid #2ecc71;
+}
+
 /*Collapsible div*/
 div.collapse{
 	max-height: 3em;
