@@ -200,7 +200,7 @@
             'isHV' : function(cellName){
                 var HVcell;
 
-                if(cellName.[9] == 'X') HVcell = true;
+                if(cellName[9] == 'X') HVcell = true;
                 else HVcell = false;
 
                 return HVcell;
