@@ -116,8 +116,8 @@ x-card#outputCard{
 	border-radius: 1em;
 }
 
-span.submitWarning{
+div.clockOutCell span.submitWarning{
 	margin-top: 1em;
-	display:none !important;
+	display:none;
 }
 
