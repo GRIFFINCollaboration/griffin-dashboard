@@ -195,7 +195,20 @@
                 else
                     document.getElementById('tooltip').setAttribute('style', '');
 
-            }
+            },
+
+            'isHV' : function(cellName){
+                var HVcell;
+
+                if(cellName.[9] == 'X') HVcell = true;
+                else HVcell = false;
+
+                return HVcell;
+            },
+
+            'isRate' : function(cellName){
+                return !this.isHV(cellName); //GRIFFIN HV / rate cells completely disjoint              
+            },
         }
     });
 
