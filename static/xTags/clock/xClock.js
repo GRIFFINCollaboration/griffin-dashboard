@@ -190,10 +190,9 @@
                 this.cardWrap.setAttribute('method', 'POST');
                 this.cardWrap.setAttribute('action', 'updateClock');
                 this.cardWrap.setAttribute('id', 'clockCardWrap');
-                this.cardWrap.oninput = function(){
+                this.cardWrap.onchange = function(){
                     this.suspendUpdate = true;
                     document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit')
-
                 }.bind(this)
                 this.wrap.appendChild(this.cardWrap);
                 xString = '<x-deck id="clockControlDeck" selected-index=0>'
@@ -271,7 +270,11 @@
                         eSATAtitle.innerHTML = 'Right LEMO';
                     eSATAwrap.appendChild(eSATAtitle);
 
-                    if(i<6) radioArray(eSATAwrap, ['Off', 'On'], [0,1], 'eSATAtoggle'+i);
+                    if(i<6){
+                        radioArray(eSATAwrap, ['Off', 'On'], [0,1], 'eSATAtoggle'+i);
+                        //document.getElementById('eSATAtoggle'+i+'0Label').onclick
+                    }
+
                     this.eSATAlabel[i] = document.createElement('span');
                     eSATAwrap.appendChild(this.eSATAlabel[i]);
                     this.bypassState[i] = document.createElement('span');
