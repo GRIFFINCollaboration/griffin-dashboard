@@ -190,16 +190,8 @@
                 this.cardWrap.setAttribute('method', 'POST');
                 this.cardWrap.setAttribute('action', 'updateClock');
                 this.cardWrap.setAttribute('id', 'clockCardWrap');
-                this.cardWrap.onchange = function(){
-                    this.suspendUpdate = true;
-                    document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit');
-                    document.getElementById('submitWarning').innerHTML = 'Please submit your changes, or refresh the page to abort.';
-                }.bind(this);
-                this.cardWrap.oninput = function(){
-                    this.suspendUpdate = true;
-                    document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit');
-                    document.getElementById('submitWarning').innerHTML = 'Please submit your changes, or refresh the page to abort.';
-                }.bind(this);
+                this.cardWrap.onchange = this.demandSubmit.bind(this);
+                this.cardWrap.oninput = this.demandSubmit.bind(this);
                 this.wrap.appendChild(this.cardWrap);
                 xString = '<x-deck id="clockControlDeck" selected-index=0>'
                 xString += '<x-card id="summaryCard"></x-card>'
@@ -503,6 +495,13 @@
                         window.ODBEquipment['GRIF-Clk'+this.currentClock].Variables.Output[12+4*i] = stepdown;
                     }
                 }
+            },
+
+            'demandSubmit' : function(){
+                this.suspendUpdate = true;
+                document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit');
+                document.getElementById('submitWarning').innerHTML = 'Please submit your changes, or refresh the page to abort.';
+                document.getElementById('submitWarning').setAttribute('style', 'display:block');
             }
         }
     });
