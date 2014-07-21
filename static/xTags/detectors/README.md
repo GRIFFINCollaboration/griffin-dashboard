@@ -12,6 +12,14 @@ All detectors inherit most of their functionality from the `<detector-template>`
  - [HV Data Acquisition](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#hv-data-acquisition)
  - [localStorage structure](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#localstorage-structure)
 
+##New Contributions
+The following tries to lay as much out in as gory detail as possible, but for those of us that prefer examples, start by studying ZDS - this is the simplest possible detector page, and should be the first thing you master before building your own.  Minimal things needed to build a functioning detector page:
+
+ - The detector x-tag.  See [ZDS](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/detectors/ZDS) for a minimal example.
+ - Add your detector to this list at the top of [xDetector.css](https://github.com/BillMills/griffinMarkII/blob/master/static/xTags/detectors/xDetector.css)
+ - A [Jade](http://jade-lang.com/) page template living [here](https://github.com/BillMills/griffinMarkII/tree/master/views/detectors)
+ - A [route](https://github.com/BillMills/griffinMarkII/blob/master/routes.js) in the Node + Express app.
+
 ##Web Component Creation - `lifecycle.created`
 All custom web components execute a callback upon creation, found in `lifecycle.created` for each detector; this function declares a lot of detector-specific information, so it is left empty in the `<detector-template>` object, to be defined individually for each detector; nevertheless, `lifecycle.created` typically follows a standard pattern which we describe here:
 
