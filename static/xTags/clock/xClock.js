@@ -193,7 +193,11 @@
                 this.cardWrap.onchange = function(){
                     this.suspendUpdate = true;
                     document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit')
-                }.bind(this)
+                }.bind(this);
+                this.cardWrap.oninput = function(){
+                    this.suspendUpdate = true;
+                    document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit')
+                }.bind(this);
                 this.wrap.appendChild(this.cardWrap);
                 xString = '<x-deck id="clockControlDeck" selected-index=0>'
                 xString += '<x-card id="summaryCard"></x-card>'
