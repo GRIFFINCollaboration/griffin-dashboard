@@ -53,6 +53,12 @@ app.get('/SCEPTAR', function(req, res){
 	res.render('detectors/SCEPTAR.jade');
 });
 
+app.get('/ZDS', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	
+	res.render('detectors/ZDS.jade');
+});
+
 app.get('/DAQ', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
