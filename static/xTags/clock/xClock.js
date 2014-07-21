@@ -156,7 +156,7 @@
                     summaryItems = ['Configuration:', 'Sync Source:', 'Clock Source:', 'Ref. Clock:', 'LEMO Clock:', 'LEMO Sync:', 'eSATA Clock:', 'eSATA Sync:', 'SyncTmeS:'],
                     CSACItems = ['Power:', 'Status:', 'Mode:', 'Alarm:', 'Unit Power:', 'Tuning Voltage:', 'Laser Current:', 'Clock Heater Power:', 'Temperature:', 'Serial No.:', 'Firmware Version:'],
                     i, row, cell, radios,
-                    outputFreqWrap, outputFreqSlideWrap, outputFreqTitle, outputFreqSlide, outputFreqLabel, channelSubmit,
+                    outputFreqWrap, outputFreqSlideWrap, outputFreqTitle, outputFreqSlide, outputFreqLabel, channelSubmit, submitWarning,
                     clockIndex, freqStepdown, isMaster,
                     channelCells, eSATAwrap, eSATAtitle;
 
@@ -192,11 +192,13 @@
                 this.cardWrap.setAttribute('id', 'clockCardWrap');
                 this.cardWrap.onchange = function(){
                     this.suspendUpdate = true;
-                    document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit')
+                    document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit');
+                    document.getElementById('submitWarning').innerHTML = 'Please submit your changes, or refresh the page to abort.';
                 }.bind(this);
                 this.cardWrap.oninput = function(){
                     this.suspendUpdate = true;
-                    document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit')
+                    document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit');
+                    document.getElementById('submitWarning').innerHTML = 'Please submit your changes, or refresh the page to abort.';
                 }.bind(this);
                 this.wrap.appendChild(this.cardWrap);
                 xString = '<x-deck id="clockControlDeck" selected-index=0>'
@@ -254,6 +256,9 @@
                 channelSubmit.setAttribute('type', 'submit');
                 channelSubmit.setAttribute('value', 'Submit All');
                 outputFreqWrap.appendChild(channelSubmit);
+                submitWarning = document.createElement('span');
+                submitWarning.setAttribute('id', 'submitWarning');
+                outputFreqWrap.appendChild(submitWarning);
 
                 channelCells = document.createElement('div');
                 channelCells.setAttribute('id', 'clockChannels');
