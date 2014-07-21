@@ -13,7 +13,7 @@
                 this.channelNames = ['ZDS01XN00X'];
 
                 initializeDetector.bind(this, 'ZDS', 'ZDS')();
-console.log(this.width)
+
                 //////////////////////////////////////
                 //ZDS specific drawing parameters
                 //////////////////////////////////////
@@ -62,6 +62,15 @@ console.log(this.width)
                         listening: true
                     }); 
 
+                    //set up the tooltip listeners:
+                    this.cells[this.channelNames[i]].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.cells[this.channelNames[i]].on('mousemove', this.moveTooltip.bind(this) );
+                    this.cells[this.channelNames[i]].on('mouseout', this.writeTooltip.bind(this, -1));
+
+                    //set up onclick listeners:
+                    this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
+
+                    //add cell to main layer
                     this.mainLayer[0].add(this.cells[this.channelNames[i]]);
                 }
 
