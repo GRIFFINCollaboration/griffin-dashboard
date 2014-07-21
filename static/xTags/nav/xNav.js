@@ -82,6 +82,9 @@
 
                     if(detCode == 'TPW' && this.routes.indexOf('TIPWall')==-1 )
                         this.routes.push('TIPWall');
+
+                    if(detCode == 'ZDS' && this.routes.indexOf('ZDS')==-1 )
+                        this.routes.push('ZDS');
                 }
             }
         }

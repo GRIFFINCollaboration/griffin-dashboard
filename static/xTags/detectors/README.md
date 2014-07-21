@@ -19,6 +19,7 @@ The following tries to lay as much out in as gory detail as possible, but for th
  - Add your detector to this list at the top of [xDetector.css](https://github.com/BillMills/griffinMarkII/blob/master/static/xTags/detectors/xDetector.css)
  - A [Jade](http://jade-lang.com/) page template living [here](https://github.com/BillMills/griffinMarkII/tree/master/views/detectors)
  - A [route](https://github.com/BillMills/griffinMarkII/blob/master/routes.js) in the Node + Express app.
+ - Autodetection of your detector from the MSC table [here](https://github.com/BillMills/griffinMarkII/blob/master/static/xTags/nav/xNav.js)
 
 ##Web Component Creation - `lifecycle.created`
 All custom web components execute a callback upon creation, found in `lifecycle.created` for each detector; this function declares a lot of detector-specific information, so it is left empty in the `<detector-template>` object, to be defined individually for each detector; nevertheless, `lifecycle.created` typically follows a standard pattern which we describe here:
