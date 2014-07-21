@@ -9,7 +9,8 @@ detector-DESCANT,
 detector-DANTE, 
 detector-SCEPTAR, 
 detector-PACES,
-detector-BAMBINO{
+detector-BAMBINO,
+detector-ZDS{
 	float:right;
 	width:calc(80% - 2em);
 }
