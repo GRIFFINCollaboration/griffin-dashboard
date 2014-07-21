@@ -115,4 +115,7 @@ x-card#outputCard{
 	border-radius: 1em;
 }
 
+span.submitWarning{
+	margin-top: 1em;
+}
 

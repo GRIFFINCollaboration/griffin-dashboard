@@ -258,6 +258,7 @@
                 outputFreqWrap.appendChild(channelSubmit);
                 submitWarning = document.createElement('span');
                 submitWarning.setAttribute('id', 'submitWarning');
+                submitWarning.setAttribute('class', 'submitWarning');
                 outputFreqWrap.appendChild(submitWarning);
 
                 channelCells = document.createElement('div');
@@ -440,7 +441,7 @@
                 }
 
                 //x-deck needs its height babysat:
-                document.getElementById('clockControlDeck').setAttribute('style', 'min-height: calc('+ (document.getElementById('outputFreqWrap').offsetHeight + document.getElementById('clockChannels').offsetHeight) + 'px + 2em'    );
+                document.getElementById('clockControlDeck').setAttribute('style', 'min-height: calc('+ (document.getElementById('outputFreqWrap').offsetHeight + document.getElementById('clockChannels').offsetHeight) + 'px + 3em'    );
             },
 
             'changeMasterRef' : function(){
