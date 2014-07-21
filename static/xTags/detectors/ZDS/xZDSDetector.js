@@ -13,7 +13,7 @@
                 this.channelNames = ['ZDS01XN00X'];
 
                 initializeDetector.bind(this, 'ZDS', 'ZDS')();
-
+console.log(this.width)
                 //////////////////////////////////////
                 //ZDS specific drawing parameters
                 //////////////////////////////////////
