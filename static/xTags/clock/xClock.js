@@ -433,7 +433,7 @@
                 }
 
                 //x-deck needs its height babysat:
-                document.getElementById('clockControlDeck').setAttribute('style', 'min-height: calc('+ (document.getElementById('outputFreqWrap').offsetHeight + document.getElementById('clockChannels').offsetHeight) + 'px + 3em'    );
+                document.getElementById('clockControlDeck').setAttribute('style', 'min-height: calc('+ (document.getElementById('outputFreqWrap').offsetHeight + document.getElementById('clockChannels').offsetHeight) + 'px + 2em'    );
             },
 
             'changeMasterRef' : function(){
@@ -502,6 +502,7 @@
                 document.getElementById('submitChannelConfig').setAttribute('class', 'stdin needCommit');
                 document.getElementById('submitWarning').innerHTML = 'Please submit your changes, or refresh the page to abort.';
                 document.getElementById('submitWarning').setAttribute('style', 'display:block');
+                document.getElementById('clockControlDeck').setAttribute('style', 'min-height: calc('+ (document.getElementById('outputFreqWrap').offsetHeight + document.getElementById('clockChannels').offsetHeight) + 'px + 2em'    );
             }
         }
     });
