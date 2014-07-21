@@ -118,6 +118,6 @@ x-card#outputCard{
 
 span.submitWarning{
 	margin-top: 1em;
-	display:none;
+	display:none !important;
 }
 
