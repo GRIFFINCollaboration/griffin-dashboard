@@ -21,6 +21,7 @@ form.clockHighlight{
 
 form.clockSummary:hover{
 	border: 2px solid #f1c40f;
+	cursor: pointer;
 }
 
 form.absentClock{
