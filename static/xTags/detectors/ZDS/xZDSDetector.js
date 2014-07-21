@@ -62,7 +62,7 @@
                         listening: true
                     }); 
 
-                    //this.mainLayer[0].add(this.cells[i]);
+                    this.mainLayer[0].add(this.cells[this.channelNames[i]]);
                 }
 
                 //add the layers to the stage
