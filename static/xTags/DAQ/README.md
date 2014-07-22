@@ -70,13 +70,41 @@ The buffer is packed as follows:
 
 TBD.
 
+Entries for all MSC addresses below the position held by `baz.triumf.ca` are packed into the returned ArrayBuffer; therefore, querying a collector should return the same data as querying all the digitizers is collects, and querying master should return the data for every channel in the DAQ.
+
 ##`<widget-DAQ>` Implementation Details
 `<widget-DAQ>` visualizes trigger request and accept rates for every DAQ node, as well as providing a histogram of those rates per detector system.
 
-###Member Variables
-
+###Loop Behvior
+`<widget-DAQ>` participates in the usual update loop that governs all MarkII pages.  `this.update` is called, triggering a refetch of data from all digitizers, and the routing of the returned data to the correct places in the visualization.  In principle, this loop could fetch aggregated data from the collectors or master - once data aggregation is implemented.
 
 ###Methods
+####`acquireDAQ()`
+ - constructs an array of host names pulled from `/DAQ/hosts` and stores it in `window.currentData.hostList`, if that list doesn't already exist.
+ - sends an XHR to each of the hosts found above, asking for an arraybuffer of the channels reporting there
+ - supplies `this.unpackDAQdv` as a callback to this XHR to process the data received.
+
+
+####`buildBarChart(index)`
+Draw a histogram for view `index` that summarizes the current total trigger request and accept rates per detection system for channels reporting to that view's node.  `index==0` corresponds to master node, `index==i, i>0` corresponds to collector `i+1`.  This currently relies on the [Flotr2 framework](http://humblesoftware.com/flotr2/) to draw histograms.
+
+####`buildDAQ(response)`
+Responsible for instantiating all the Kinetic objects needed for all views in the widget.  `response` is the sringified JSON of the ODB's `/DAQ` directory, specified above.  This function instantiates some member variables of note:
+ - this.collectors[i]: the ith collector, corresponding to the ODB `/DAQ/hosts/collector0x<i>`
+ - this.collectorCells[i]: the kinetic cell corresponding to the ith collector, for use on the master visualization
+ - this.masterCables[[],[],[],[]]: array of 4 arrays of kinetic lines for drawing the four 4:1 cables connecting the collectors to the master on the master view.  Each 4:1 is packed as [single end, 0-,1-,2-,3-split end].
+ - this.digitizerCells[i][j]: kinetic cell for digitizer j on collector i, for use in drawing the view for collector i.
+ - this.collectorCables: like this.masterCables, but with an additional first index indicating which collector these cables belong to.
+
+Finally, in addition to the usual scale setup and initial update, `buildDAQ` will construct an MSC table keyed by detector name from what it finds in the ODB: `this.localMSC[M][S][name]` contains, for the detector at master channel`<M>`, collector channel `<S>`, with 10-character `<name>`, the object:
+
+```
+{
+  MSC: '0xMSCC',
+  req: <int>
+  acpt: <int>
+}
+```
 
 ###DOM
 `<widget-DAQ>` contains the following rough DOM structure:
