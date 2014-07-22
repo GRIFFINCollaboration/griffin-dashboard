@@ -106,6 +106,8 @@ Finally, in addition to the usual scale setup and initial update, `buildDAQ` wil
 }
 ```
 
+###Potentially Useful Member Variables
+
 ###DOM
 `<widget-DAQ>` contains the following rough DOM structure:
 
