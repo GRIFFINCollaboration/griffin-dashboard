@@ -90,7 +90,7 @@ Draw a histogram for view `index` that summarizes the current total trigger requ
 
 ####`buildDAQ(response)`
 Responsible for instantiating all the Kinetic objects needed for all views in the widget.  `response` is the sringified JSON of the ODB's `/DAQ` directory, specified above.  This function instantiates some member variables of note:
- - this.collectors[i]: the ith collector, corresponding to the ODB `/DAQ/hosts/collector0x<i>`
+ - this.collectors[i]: the contents of the ODB `/DAQ/hosts/collector0x<i>`, typically used to check if this collector has been declared in the ODB DAQ tables.
  - this.collectorCells[i]: the kinetic cell corresponding to the ith collector, for use on the master visualization
  - this.masterCables[[],[],[],[]]: array of 4 arrays of kinetic lines for drawing the four 4:1 cables connecting the collectors to the master on the master view.  Each 4:1 is packed as [single end, 0-,1-,2-,3-split end].
  - this.digitizerCells[i][j]: kinetic cell for digitizer j on collector i, for use in drawing the view for collector i.
