@@ -205,6 +205,116 @@
             }
         }, 
         methods: {
+            //get dataviews from some list of DAQ nodes
+            'acquireDAQ' : function(){
+                var key, i;
+
+                //dump stale data
+                window.currentData.collectorTotal = [];
+                window.currentData.digitizerTotal = [];
+                window.currentData.detectorTotal = []; //indexed same as collectors, each element an object keyed as detcode : {req, acpt}
+
+                //make a list of who to ask for data
+                if(!window.currentData.hostList){
+                    window.currentData.hostList = [];
+
+                    //master
+                    //window.currentData.hostList.push(window.currentData.DAQ.hosts.master);
+                    for(key in window.currentData.DAQ.hosts){
+                        if(window.currentData.DAQ.hosts[key].host){
+                            //collectors
+                            //window.currentData.hostList.push(window.currentData.DAQ.hosts[key].host);
+                            //digitizers
+                            for(i=0; i<window.currentData.DAQ.hosts[key].digitizers.length; i++){
+                                if(window.currentData.DAQ.hosts[key].digitizers[i])
+                                    window.currentData.hostList.push(window.currentData.DAQ.hosts[key].digitizers[i])
+                            }
+                        }
+                    }
+                }
+
+                //send arraybuffer XHR requests to each of some list of URLS;
+                //callback unpacks bytes into window.currentData rates and thresholds.
+                for(i=0; i<window.currentData.hostList.length; i++){
+                    //XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, false, true);
+                }
+
+
+                    //dummy data for throughput testing:
+                    var testBuffer = new ArrayBuffer(448);
+                    var dv = new DataView(testBuffer);
+                    for(var j = 0; j<16; j++){
+                        dv.setInt16(12+14*j, j, true);
+                        dv.setInt32(8+14*j, 2154, true);
+                        dv.setInt32(4+14*j, 42, true);
+                        dv.setInt32(14*j, 1337, true);
+                    }
+                    for(var j = 16; j<32; j++){
+                        dv.setInt16(12+14*j, 4096+j-16, true);
+                        dv.setInt32(8+14*j, 2154, true);
+                        dv.setInt32(4+14*j, 42, true);
+                        dv.setInt32(14*j, 1337, true);
+                    }                  
+                    this.unpackDAQdv(dv);
+
+                this.updateCells(); // dummy test
+
+            },
+
+            'buildBarChart' : function(index){
+                var d1 = [],
+                    d2 = [],
+                    point, key, i, data, container,
+                    yAxis = {   min: 0,
+                                autoscaleMargin: 1,
+                                ticks: []
+                            };
+       
+                if(index == 0){
+                    container = document.getElementById('masterFlotrWrap');
+                    data = window.currentData.masterDetectorTotal
+                } else {
+                    container = document.getElementById('flotrWrap'+(index - 1));
+                    data = window.currentData.detectorTotal[index-1];
+                }
+
+                i=0
+                for(key in data){
+                    point = [data[key].trigReq,i];
+                    d1.push(point);
+
+                    point = [data[key].trigAcpt,i + 0.5];
+                    d2.push(point);
+
+                    yAxis.ticks.push([i + 0.25, key]);
+                    i++;
+                }
+
+                // Draw the graph
+                Flotr.draw(
+                container, [{data: d1, label: 'Trigger Requests' }, {data: d2, label: 'Trigger Accepts'}], {
+                    bars: {
+                        show: true,
+                        horizontal: true,
+                        shadowSize: 0,
+                        barWidth: 0.5
+                    },
+                    mouse: {
+                        track: true,
+                        relative: true
+                    },
+                    yaxis: yAxis,
+                    grid: {
+                        color: '#EEEEEE',
+                    },
+                    legend: {
+                        position: 'ne',
+                        backgroundColor: '#333333',
+                        labelBoxBorderColor: 'rgba(0,0,0,0)'
+                    }
+                });
+            },
+
             'buildDAQ' : function(response){
                 var data = JSON.parse(response),
                     i, j, k, option,
@@ -215,10 +325,12 @@
 
                 window.currentData.DAQ = data;
                 this.collectors = [];
-                this.digitizers = [];
+                //this.digitizers = [];
                 this.collectorCells = [];
+                this.digitizerCells = [];
+                this.collectorCables = [];
                 this.localMSC = [];
-
+                
                 //determine what collectors are present and instantiate x-cards for each one
                 for(i=0; i<16; i++){
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
@@ -298,8 +410,6 @@
                 document.getElementById('headTitle0').innerHTML = 'Master Node ' + window.currentData.DAQ.hosts.master
                 
                 //and again for each collector card
-                this.digitizerCells = [];
-                this.collectorCables = [];
                 for(i=0; i<16; i++){
                     this.digitizerCells[i] = [];
 
@@ -394,58 +504,141 @@
 
             },
 
-            'buildBarChart' : function(index){
-                var d1 = [],
-                    d2 = [],
-                    point, key, i, data, container,
-                    yAxis = {   min: 0,
-                                autoscaleMargin: 1,
-                                ticks: []
-                            };
-       
-                if(index == 0){
-                    container = document.getElementById('masterFlotrWrap');
-                    data = window.currentData.masterDetectorTotal
-                } else {
-                    container = document.getElementById('flotrWrap'+(index - 1));
-                    data = window.currentData.detectorTotal[index-1];
+            'clickCollector' : function(index){
+                document.getElementById('DAQnav').value = index+1;
+                document.getElementById('DAQnav').onchange();
+            },
+
+            //generate the color scale
+            'generateColorScale': function(){
+                var colorStops = [],
+                    i, j,
+                    tick, colorScale;
+
+                //generate a bunch of color stop points for the gradient
+                for(i=0; i<101; i++){
+                    colorStops.push(i/100);
+                    colorStops.push(scalepickr(i/100, this.scale));
                 }
 
-                i=0
-                for(key in data){
-                    point = [data[key].trigReq,i];
-                    d1.push(point);
+                this.tickLabels = [];
+                this.scaleTitle = [];
+                for(j=0; j<17; j++){
+                    if(!this.mainLayer[j]) continue;
 
-                    point = [data[key].trigAcpt,i + 0.5];
-                    d2.push(point);
+                    //draw the gradient itself
+                    colorScale = new Kinetic.Rect({
+                        x: 0.1*this.width,
+                        y: 0.85*this.height,
+                        width: 0.8*this.width,
+                        height: 0.05*this.height,
+                        fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
+                        fillLinearGradientEndPoint: {x: 0.8*this.width, y: 0},
+                        fillLinearGradientColorStops: colorStops,
+                        stroke: '#999999',
+                        strokeWidth: 2                    
+                    });
 
-                    yAxis.ticks.push([i + 0.25, key]);
-                    i++;
-                }
+                    this.scaleLayer[j].add(colorScale);
 
-                // Draw the graph
-                Flotr.draw(
-                container, [{data: d1, label: 'Trigger Requests' }, {data: d2, label: 'Trigger Accepts'}], {
-                    bars: {
-                        show: true,
-                        horizontal: true,
-                        shadowSize: 0,
-                        barWidth: 0.5
-                    },
-                    mouse: {
-                        track: true,
-                        relative: true
-                    },
-                    yaxis: yAxis,
-                    grid: {
-                        color: '#EEEEEE',
-                    },
-                    legend: {
-                        position: 'ne',
-                        backgroundColor: '#333333',
-                        labelBoxBorderColor: 'rgba(0,0,0,0)'
+                    //place ticks on scale
+                    this.tickLabels[j] = [];
+                    for(i=0; i<11; i++){
+                        //tick line
+                        tick = new Kinetic.Line({
+                            points: [(0.1+i*0.08)*this.width, 0.90*this.height, (0.1+i*0.08)*this.width, 0.91*this.height],
+                            stroke: '#999999',
+                            strokeWidth: 2
+                        });
+                        this.scaleLayer[j].add(tick);
+
+                        //tick label
+                        this.tickLabels[j][i] = new Kinetic.Text({
+                            x: (0.1+i*0.08)*this.width,
+                            y: 0.91*this.height + 2,
+                            text: '',
+                            fontSize: 14,
+                            fontFamily: 'Arial',
+                            fill: '#999999'
+                        });
+                        this.scaleLayer[j].add(this.tickLabels[j][i]);
                     }
-                });
+
+                    //place title on scale
+                    this.scaleTitle[j] = new Kinetic.Text({
+                        x: this.width/2,
+                        y: 0.85*this.height - 22,
+                        text: 'Test',
+                        fontSize : 20,
+                        fontFamily: 'Arial',
+                        fill: '#999999'
+                    })
+                    this.scaleLayer[j].add(this.scaleTitle[j]);
+
+                    //populate labels
+                    this.refreshColorScale();
+                    this.stage[j].add(this.scaleLayer[j]);
+                    this.scaleLayer[j].draw();
+                }
+            },
+
+            //move the tooltip around
+            'moveTooltip' : function(evt){
+                var tt = document.getElementById('tooltip'),
+                    left = evt.pageX;
+
+                //don't let tt fall off right edge of page
+                tt.setAttribute('style', 'display:inline-block; opacity:0'); //hack so that tt.offsetHeight is nonzero in next step
+                if(left > window.innerWidth / 2)
+                    left -= tt.offsetWidth;
+
+                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
+            },
+
+            //refresh the color scale labeling / coloring:
+            'refreshColorScale': function(){
+
+                var i, j, isLog, currentMin, currentMax, logTitle,
+                    min, max, scaleType;
+
+                if(this.showing == 0){
+                    min = this.collectorMin;
+                    max = this.collectorMax;
+                    scaleType = this.collectorScaleType;
+                } else{
+                    min = this.digitizerMin;
+                    max = this.digitizerMax;
+                    scaleType = this.digitizerScaleType;
+                }
+
+                //are we in log mode?
+                isLog = scaleType[this.currentView] == 'log';
+
+                //what minima and maxima are we using?
+                currentMin = min[this.currentView];
+                currentMax = max[this.currentView];
+                if(isLog){
+                    currentMin = Math.log10(currentMin);
+                    currentMax = Math.log10(currentMax);
+                    logTitle = 'log ';
+                } else
+                    logTitle = '';
+
+                //refresh tick labels
+                for(i=0; i<11; i++){
+                    //update text
+                    this.tickLabels[this.showing][i].setText(generateTickLabel(currentMin, currentMax, 11, i));
+                    //update position
+                    this.tickLabels[this.showing][i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[this.showing][i].getTextWidth()/2);
+                }
+
+                //update title
+                this.scaleTitle[this.showing].setText(logTitle + this.viewLabels[this.views.indexOf(this.currentView)] + ' [Hz]');
+                this.scaleTitle[this.showing].setAttr('x', this.width/2 - this.scaleTitle[this.showing].getTextWidth()/2);
+
+                this.scaleLayer[this.showing].draw();
+                
+                
             },
 
             'setupKinetic' : function(targetID){
@@ -463,151 +656,26 @@
                 this.stage[i].add(this.scaleLayer[i]);
             },
 
-            'clickCollector' : function(index){
-                document.getElementById('DAQnav').value = index+1;
-                document.getElementById('DAQnav').onchange();
-            },
+            'trackView': function(){
+                
+                var i, min, max, scaleType;
 
-            //move the tooltip around
-            'moveTooltip' : function(evt){
-                var tt = document.getElementById('tooltip'),
-                    left = evt.pageX;
+                min = (this.showing == 0) ? this.collectorMin : this.digitizerMin;
+                max = (this.showing == 0) ? this.collectorMax : this.digitizerMax;
+                scaleType = (this.showing == 0) ? this.collectorScaleType : this.digitizerScaleType;
 
-                //don't let tt fall off right edge of page
-                tt.setAttribute('style', 'display:inline-block; opacity:0'); //hack so that tt.offsetHeight is nonzero in next step
-                if(left > window.innerWidth / 2)
-                    left -= tt.offsetWidth;
+                //keep track of what state the view state radio is in
+                //intended for binding to the onchange of the radio.
+                this.currentView = document.querySelector('input[name="DAQview"]:checked').value;
 
-                tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + (evt.pageY - tt.offsetHeight)  + ';');
-            },
+                //make sure the scale control widget is up to date
+                document.getElementById(this.id + 'PlotControlMin').value = min[this.currentView];
+                document.getElementById(this.id + 'PlotControlMax').value = max[this.currentView];
+                document.getElementById(this.id + 'PlotControlScale').value = scaleType[this.currentView];
 
-            //formulate the tooltip text for cell i and write it on the tooltip layer.
-            'writeCollectorTooltip': function(i){
-                var text, j, reqRate, acptRate;
-
-                if(i!=-1){
-                    text = '<h2>Collector ' + i.toString(16) + '</h2>';
-                    text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+i.toString(16)].host +'</h3>'
-                    text += '<table class="tooltipTable"><tr><td>Collector</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
-                    for(j=0; j<16; j++){
-                        if(window.currentData.digitizerTotal[i] && window.currentData.digitizerTotal[i][j]){
-                            reqRate = window.currentData.digitizerTotal[i][j].reqRate;
-                            acptRate = window.currentData.digitizerTotal[i][j].acptRate;
-                        } else {
-                            reqRate = null;
-                            acptRate = null;
-                        }
-
-                        text += '<tr><td>'+ j +'</td>'
-                        text += '<td>'+ reqRate +'</td>'
-                        text += '<td>'+ acptRate +'</td></tr>'
-                    }
-                    text += '</table>'
-                } else {
-                    text = '';
-                }
-            
-                this.lastCollectorTTindex = i;
-                if(text != '')
-                    document.getElementById('tooltip').innerHTML = text;
-                else
-                    document.getElementById('tooltip').setAttribute('style', '');
-            },
-
-            'writeDigitizerTooltip': function(i){
-                var text, key,
-                    tt = document.getElementById('tooltip');
-
-                if(i!=-1){
-                    text = '<h2>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h2>'
-                    text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+(this.showing-1).toString(16)].digitizers[i] +'</h3>'
-                    text += '<table class="tooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
-                    for(key in this.localMSC[this.showing-1][i]){
-                        text += '<tr><td>'+ key +'</td>'
-                        text += '<td>'+ this.localMSC[this.showing-1][i][key].MSC +'</td>'
-                        text += '<td>'+ this.localMSC[this.showing-1][i][key].req +'</td>'
-                        text += '<td>'+ this.localMSC[this.showing-1][i][key].acpt +'</td></tr>'
-                    }
-                    text += '</table>'
-
-                } else {
-                    text = '';
-                }
-            
-                this.lastDigitizerTTindex = i;
-                if(text != ''){
-                    tt.innerHTML = text;
-                } else
-                    tt.setAttribute('style', '');
-            },
-
-            'update' : function(){
-                //acquire new data
-                if(window.currentData.DAQ)
-                    this.acquireDAQ();
-
-                //keep the tooltip updated:
-                if(this.showing == 0 && (this.lastCollectorTTindex || this.lastCollectorTTindex==0)){
-                    this.writeCollectorTooltip(this.lastCollectorTTindex);
-                } else if(this.lastDigitizerTTindex || this.lastDigitizerTTindex==0){
-                    this.writeDigitizerTooltip(this.lastDigitizerTTindex);
-                }
-            },
-
-            //get dataviews from some list of DAQ nodes
-            'acquireDAQ' : function(){
-                var key, i;
-
-                //dump stale data
-                window.currentData.collectorTotal = [];
-                window.currentData.digitizerTotal = [];
-                window.currentData.detectorTotal = []; //indexed same as collectors, each element an object keyed as detcode : {req, acpt}
-
-                //make a list of who to ask for data
-                if(!window.currentData.hostList){
-                    window.currentData.hostList = [];
-
-                    //master
-                    //window.currentData.hostList.push(window.currentData.DAQ.hosts.master);
-                    for(key in window.currentData.DAQ.hosts){
-                        if(window.currentData.DAQ.hosts[key].host){
-                            //collectors
-                            //window.currentData.hostList.push(window.currentData.DAQ.hosts[key].host);
-                            //digitizers
-                            for(i=0; i<window.currentData.DAQ.hosts[key].digitizers.length; i++){
-                                if(window.currentData.DAQ.hosts[key].digitizers[i])
-                                    window.currentData.hostList.push(window.currentData.DAQ.hosts[key].digitizers[i])
-                            }
-                        }
-                    }
-                }
-
-                //send arraybuffer XHR requests to each of some list of URLS;
-                //callback unpacks bytes into window.currentData rates and thresholds.
-                for(i=0; i<window.currentData.hostList.length; i++){
-                    //XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, false, true);
-                }
-
-
-                    //dummy data for throughput testing:
-                    var testBuffer = new ArrayBuffer(448);
-                    var dv = new DataView(testBuffer);
-                    for(var j = 0; j<16; j++){
-                        dv.setInt16(12+14*j, j, true);
-                        dv.setInt32(8+14*j, 2154, true);
-                        dv.setInt32(4+14*j, 42, true);
-                        dv.setInt32(14*j, 1337, true);
-                    }
-                    for(var j = 16; j<32; j++){
-                        dv.setInt16(12+14*j, 4096+j-16, true);
-                        dv.setInt32(8+14*j, 2154, true);
-                        dv.setInt32(4+14*j, 42, true);
-                        dv.setInt32(14*j, 1337, true);
-                    }                  
-                    this.unpackDAQdv(dv);
-
-                this.updateCells(); // dummy test
-
+                this.updateCells();
+                this.refreshColorScale();
+                this.mainLayer[this.showing].draw();
             },
 
             //parse DAQ dataviews into window.currentData variables
@@ -707,177 +775,17 @@
 
             },
 
-            //generate the color scale
-            'generateColorScale': function(){
-                var colorStops = [],
-                    i, j,
-                    tick, colorScale;
+            'update' : function(){
+                //acquire new data
+                if(window.currentData.DAQ)
+                    this.acquireDAQ();
 
-                //generate a bunch of color stop points for the gradient
-                for(i=0; i<101; i++){
-                    colorStops.push(i/100);
-                    colorStops.push(scalepickr(i/100, this.scale));
+                //keep the tooltip updated:
+                if(this.showing == 0 && (this.lastCollectorTTindex || this.lastCollectorTTindex==0)){
+                    this.writeCollectorTooltip(this.lastCollectorTTindex);
+                } else if(this.lastDigitizerTTindex || this.lastDigitizerTTindex==0){
+                    this.writeDigitizerTooltip(this.lastDigitizerTTindex);
                 }
-
-                this.tickLabels = [];
-                this.scaleTitle = [];
-                for(j=0; j<17; j++){
-                    if(!this.mainLayer[j]) continue;
-
-                    //draw the gradient itself
-                    colorScale = new Kinetic.Rect({
-                        x: 0.1*this.width,
-                        y: 0.85*this.height,
-                        width: 0.8*this.width,
-                        height: 0.05*this.height,
-                        fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
-                        fillLinearGradientEndPoint: {x: 0.8*this.width, y: 0},
-                        fillLinearGradientColorStops: colorStops,
-                        stroke: '#999999',
-                        strokeWidth: 2                    
-                    });
-
-                    this.scaleLayer[j].add(colorScale);
-
-                    //place ticks on scale
-                    this.tickLabels[j] = [];
-                    for(i=0; i<11; i++){
-                        //tick line
-                        tick = new Kinetic.Line({
-                            points: [(0.1+i*0.08)*this.width, 0.90*this.height, (0.1+i*0.08)*this.width, 0.91*this.height],
-                            stroke: '#999999',
-                            strokeWidth: 2
-                        });
-                        this.scaleLayer[j].add(tick);
-
-                        //tick label
-                        this.tickLabels[j][i] = new Kinetic.Text({
-                            x: (0.1+i*0.08)*this.width,
-                            y: 0.91*this.height + 2,
-                            text: '',
-                            fontSize: 14,
-                            fontFamily: 'Arial',
-                            fill: '#999999'
-                        });
-                        this.scaleLayer[j].add(this.tickLabels[j][i]);
-                    }
-
-                    //place title on scale
-                    this.scaleTitle[j] = new Kinetic.Text({
-                        x: this.width/2,
-                        y: 0.85*this.height - 22,
-                        text: 'Test',
-                        fontSize : 20,
-                        fontFamily: 'Arial',
-                        fill: '#999999'
-                    })
-                    this.scaleLayer[j].add(this.scaleTitle[j]);
-
-                    //populate labels
-                    this.refreshColorScale();
-                    this.stage[j].add(this.scaleLayer[j]);
-                    this.scaleLayer[j].draw();
-                }
-            },
-
-            //refresh the color scale labeling / coloring:
-            'refreshColorScale': function(){
-
-                var i, j, isLog, currentMin, currentMax, logTitle,
-                    min, max, scaleType;
-
-                if(this.showing == 0){
-                    min = this.collectorMin;
-                    max = this.collectorMax;
-                    scaleType = this.collectorScaleType;
-                } else{
-                    min = this.digitizerMin;
-                    max = this.digitizerMax;
-                    scaleType = this.digitizerScaleType;
-                }
-
-                //are we in log mode?
-                isLog = scaleType[this.currentView] == 'log';
-
-                //what minima and maxima are we using?
-                currentMin = min[this.currentView];
-                currentMax = max[this.currentView];
-                if(isLog){
-                    currentMin = Math.log10(currentMin);
-                    currentMax = Math.log10(currentMax);
-                    logTitle = 'log ';
-                } else
-                    logTitle = '';
-
-                //refresh tick labels
-                for(i=0; i<11; i++){
-                    //update text
-                    this.tickLabels[this.showing][i].setText(generateTickLabel(currentMin, currentMax, 11, i));
-                    //update position
-                    this.tickLabels[this.showing][i].setAttr('x', (0.1+i*0.08)*this.width - this.tickLabels[this.showing][i].getTextWidth()/2);
-                }
-
-                //update title
-                this.scaleTitle[this.showing].setText(logTitle + this.viewLabels[this.views.indexOf(this.currentView)] + ' [Hz]');
-                this.scaleTitle[this.showing].setAttr('x', this.width/2 - this.scaleTitle[this.showing].getTextWidth()/2);
-
-                this.scaleLayer[this.showing].draw();
-                
-                
-            },
-
-            'trackView': function(){
-                
-                var i, min, max, scaleType;
-
-                min = (this.showing == 0) ? this.collectorMin : this.digitizerMin;
-                max = (this.showing == 0) ? this.collectorMax : this.digitizerMax;
-                scaleType = (this.showing == 0) ? this.collectorScaleType : this.digitizerScaleType;
-
-                //keep track of what state the view state radio is in
-                //intended for binding to the onchange of the radio.
-                this.currentView = document.querySelector('input[name="DAQview"]:checked').value;
-
-                //make sure the scale control widget is up to date
-                document.getElementById(this.id + 'PlotControlMin').value = min[this.currentView];
-                document.getElementById(this.id + 'PlotControlMax').value = max[this.currentView];
-                document.getElementById(this.id + 'PlotControlScale').value = scaleType[this.currentView];
-
-                this.updateCells();
-                this.refreshColorScale();
-                this.mainLayer[this.showing].draw();
-            },
-
-            //update scale minima and maxima and other plotting parameters both locally and in localStorage.
-            'updatePlotParameters': function(){
-                var min = parseFloat(document.getElementById(this.id + 'PlotControlMin').value)
-                ,   max = parseFloat(document.getElementById(this.id + 'PlotControlMax').value)
-                ,   scaleType = selected(this.id+'PlotControlScale');
-
-                //update scale parameters locally & in localstore
-                if(this.showing == 0){
-                    this.collectorMin[this.currentView] = min;
-                    this.collectorMax[this.currentView] = max;
-                    this.collectorScaleType[this.currentView] = scaleType;
-
-                    localStorage.setItem('DAQ' + this.currentView + 'collectorMin', min);
-                    localStorage.setItem('DAQ' + this.currentView + 'collectorMax', max);
-                    localStorage.setItem('DAQ' + this.currentView + 'collectorScaleType', scaleType);
-                } else{
-                    this.digitizerMin[this.currentView] = min;
-                    this.digitizerMax[this.currentView] = max;
-                    this.digitizerScaleType[this.currentView] = scaleType;
-
-                    localStorage.setItem('DAQ' + this.currentView + 'digitizerMin', min);
-                    localStorage.setItem('DAQ' + this.currentView + 'digitizerMax', max);
-                    localStorage.setItem('DAQ' + this.currentView + 'digitizerScaleType', scaleType);
-                }
-
-                //redraw
-                this.updateCells();
-                this.refreshColorScale();
-                this.mainLayer[this.showing].draw();
-                
             },
 
             //set new colors for all cells, and repaint.
@@ -965,11 +873,99 @@
                 //also update bar graphs
                 this.buildBarChart(this.showing);
                 
-            }
+            }            
 
+            //update scale minima and maxima and other plotting parameters both locally and in localStorage.
+            'updatePlotParameters': function(){
+                var min = parseFloat(document.getElementById(this.id + 'PlotControlMin').value)
+                ,   max = parseFloat(document.getElementById(this.id + 'PlotControlMax').value)
+                ,   scaleType = selected(this.id+'PlotControlScale');
 
+                //update scale parameters locally & in localstore
+                if(this.showing == 0){
+                    this.collectorMin[this.currentView] = min;
+                    this.collectorMax[this.currentView] = max;
+                    this.collectorScaleType[this.currentView] = scaleType;
 
+                    localStorage.setItem('DAQ' + this.currentView + 'collectorMin', min);
+                    localStorage.setItem('DAQ' + this.currentView + 'collectorMax', max);
+                    localStorage.setItem('DAQ' + this.currentView + 'collectorScaleType', scaleType);
+                } else{
+                    this.digitizerMin[this.currentView] = min;
+                    this.digitizerMax[this.currentView] = max;
+                    this.digitizerScaleType[this.currentView] = scaleType;
 
+                    localStorage.setItem('DAQ' + this.currentView + 'digitizerMin', min);
+                    localStorage.setItem('DAQ' + this.currentView + 'digitizerMax', max);
+                    localStorage.setItem('DAQ' + this.currentView + 'digitizerScaleType', scaleType);
+                }
+
+                //redraw
+                this.updateCells();
+                this.refreshColorScale();
+                this.mainLayer[this.showing].draw();
+                
+            },
+
+            //formulate the tooltip text for cell i and write it on the tooltip layer.
+            'writeCollectorTooltip': function(i){
+                var text, j, reqRate, acptRate;
+
+                if(i!=-1){
+                    text = '<h2>Collector ' + i.toString(16) + '</h2>';
+                    text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+i.toString(16)].host +'</h3>'
+                    text += '<table class="tooltipTable"><tr><td>Collector</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
+                    for(j=0; j<16; j++){
+                        if(window.currentData.digitizerTotal[i] && window.currentData.digitizerTotal[i][j]){
+                            reqRate = window.currentData.digitizerTotal[i][j].reqRate;
+                            acptRate = window.currentData.digitizerTotal[i][j].acptRate;
+                        } else {
+                            reqRate = null;
+                            acptRate = null;
+                        }
+
+                        text += '<tr><td>'+ j +'</td>'
+                        text += '<td>'+ reqRate +'</td>'
+                        text += '<td>'+ acptRate +'</td></tr>'
+                    }
+                    text += '</table>'
+                } else {
+                    text = '';
+                }
+            
+                this.lastCollectorTTindex = i;
+                if(text != '')
+                    document.getElementById('tooltip').innerHTML = text;
+                else
+                    document.getElementById('tooltip').setAttribute('style', '');
+            },
+
+            'writeDigitizerTooltip': function(i){
+                var text, key,
+                    tt = document.getElementById('tooltip');
+
+                if(i!=-1){
+                    text = '<h2>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h2>'
+                    text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+(this.showing-1).toString(16)].digitizers[i] +'</h3>'
+                    text += '<table class="tooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
+                    for(key in this.localMSC[this.showing-1][i]){
+                        text += '<tr><td>'+ key +'</td>'
+                        text += '<td>'+ this.localMSC[this.showing-1][i][key].MSC +'</td>'
+                        text += '<td>'+ this.localMSC[this.showing-1][i][key].req +'</td>'
+                        text += '<td>'+ this.localMSC[this.showing-1][i][key].acpt +'</td></tr>'
+                    }
+                    text += '</table>'
+
+                } else {
+                    text = '';
+                }
+            
+                this.lastDigitizerTTindex = i;
+                if(text != ''){
+                    tt.innerHTML = text;
+                } else
+                    tt.setAttribute('style', '');
+            },
 
         }
     });
