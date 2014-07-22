@@ -330,7 +330,7 @@
                 this.digitizerCells = [];
                 this.collectorCables = [];
                 this.localMSC = [];
-                
+
                 //determine what collectors are present and instantiate x-cards for each one
                 for(i=0; i<16; i++){
                     this.collectors[i] = data.hosts['collector0x' + i.toString(16)];
@@ -873,7 +873,7 @@
                 //also update bar graphs
                 this.buildBarChart(this.showing);
                 
-            }            
+            },       
 
             //update scale minima and maxima and other plotting parameters both locally and in localStorage.
             'updatePlotParameters': function(){
