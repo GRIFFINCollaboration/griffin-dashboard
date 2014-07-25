@@ -509,22 +509,18 @@
             //information for an individual channel is packed in a 14 byte word:
             //[MSC 2 bytes][trig request 4 bytes][trig accept 4 bytes][threshold 4 bytes] <--lowest bit
             'unpackDAQdv' : function(dv){
-                var MSC, trigReq, trigAcpt, threshold,
-                    channelIndex, channelName,
+                var channelIndex, channelName, DAQblock,
                     i;
 
                 for(i=0; i<dv.byteLength/14; i++){
-                    threshold = dv.getInt32(i*14, true);
-                    trigAcpt = dv.getInt32(i*14+4, true);
-                    trigReq = dv.getInt32(i*14+8, true);
-                    MSC = dv.getInt16(i*14+12, true);
+                    DAQblock = unpackDAQ(i, dv);
 
-                    channelIndex = window.currentData.DAQ.MSC.MSC.indexOf(MSC);
+                    channelIndex = window.currentData.DAQ.MSC.MSC.indexOf(DAQblock.MSC);
                     channelName = window.currentData.DAQ.MSC.chan[channelIndex];
 
-                    window.currentData.reqRate[channelName] = trigReq;
-                    window.currentData.acptRate[channelName] = trigAcpt;
-                    window.currentData.Threshold[channelName] = threshold;
+                    window.currentData.reqRate[channelName] = DAQblock.trigReq;
+                    window.currentData.acptRate[channelName] = DAQblock.trigAcpt;
+                    window.currentData.Threshold[channelName] = DAQblock.threshold;
                 }
             },
 

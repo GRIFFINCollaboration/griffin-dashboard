@@ -202,3 +202,20 @@ function toggleSection(id){
         this.innerHTML = String.fromCharCode(0x25B6) + this.innerHTML.slice(this.innerHTML.indexOf(' '));   
     }
 }
+
+//extract the ith block out of a dataview object constructed from the arraybuffer returned by a DAQ element:
+function unpackDAQ(i, dv){
+    var blockLength = 14,
+        thresholdPos = 0,
+        trigAcptPos = 4,
+        trigReqPos = 8,
+        MSCPos = 12,
+        unpacked = {};
+
+    unpacked.threshold  = dv.getInt32(i*blockLength + thresholdPos, true);
+    unpacked.trigAcpt   = dv.getInt32(i*blockLength + trigAcptPos, true);
+    unpacked.trigReq    = dv.getInt32(i*blockLength + trigReqPos, true);
+    unpacked.MSC        = dv.getInt16(i*blockLength + MSCPos, true);
+
+    return unpacked;
+}
