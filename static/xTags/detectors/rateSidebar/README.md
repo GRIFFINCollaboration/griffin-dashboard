@@ -40,14 +40,12 @@ Unlike everything else, the information in this panel is read only, summarizes b
  - Enabled ADCs `ch_aa`
 
 ###ADC Control
-
  - DC Offset `a_dcofst`
  - ADC Chan `a_off`
  - Trim `a_trim`
  - Polarity `a_pol`
 
 ###Triggering
-
  - Channel `t_off`
  - Hit Thresh `t_hthresh`
  - Trig Thresh `t_thresh`
@@ -72,7 +70,7 @@ Unlike everything else, the information in this panel is read only, summarizes b
  - CFD Fraction `cfd_frac`
 
 ###Waveform Readout
- - (Suppressed / Unsuppressed buttons) `wfr_off`
+ - (Suppressed / Unsuppressed buttons) `wfr_supp`
  - Pretrigger `wfr_pret`
  - Samples `wfr_smpl`
  - Decimation `wfr_dec`
