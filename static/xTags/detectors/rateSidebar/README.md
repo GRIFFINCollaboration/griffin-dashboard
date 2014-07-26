@@ -16,7 +16,7 @@ Upon receipt of this event, the element will populate all its form fields with t
 
 ##Parameters
 
-The following list of 'string' `code` pairs associates the field as labeled ''string in `<widget-rateBar>` to the corresponding value in the [GRIF16 documentation]() labeled by `code`.
+The following list of 'string' `code` pairs associates the field as labeled 'string' in `<widget-rateBar>` to the corresponding value in the [GRIF16 documentation]() labeled by `code`.
 
 ###MSCB Node Info
 
@@ -67,7 +67,7 @@ Unlike everything else, the information in this panel is read only, summarizes b
  - Gain `p_gain`
  - Pileup Algo `p_pactrl`
 
-###Time Eval
+###Time Eval.
  - CFD Delay `cfd_dly`
  - CFD Fraction `cfd_frac`
 
