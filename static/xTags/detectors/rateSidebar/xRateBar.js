@@ -51,11 +51,16 @@
                     this.UIdeployed = true;
                 }
 
+/*
                 //summon data from the ADC
-                //if(window.currentData.host && window.currentData.ADC)
-                    //XHR('http://'+host+'/mscb?node='+(parseInt(ADC,10)+2), this.mapADCdata.bind(this), 'application/json', true);
+                if(window.currentData.host && window.currentData.ADC){
+                    XHR('http://'+host+'/mscb?node='+(parseInt(ADC,10)+2), this.mapADCdata.bind(this), 'application/json', true);
+                    XHR('http://'+host+'/mscb?node=1', this.mapNodeData.bind(this), 'application/json', true);
+                }
+*/
             },
 
+            //send the response to a request to an ADC node to the appropriate places
             'mapADCdata' : function(response){
                 var data = JSON.parse(response),
                     numberID = [    'a_dcofst', 'a_trim',
@@ -90,6 +95,53 @@
                 //special label for the DC offset slider
                 document.getElementById('dcofstLabel').innerHTML = (document.getElementById('a_dcofst').value - 2048)*0.6714 + ' mV';
 
+            },
+
+            //send board level information to the MSCB node info panel
+            'mapNodeData' : function(response){
+
+                var key, data, i = 0, time
+                    content,
+                    titles = [
+                        'Control Bits: ',
+                        'Revision: ',
+                        'Serial: ',
+                        'FPGA Temperature: ',
+                        'Clock Cleaner Locked: ',
+                        'Clock Cleaner Frequency: ',
+                        'Hardware / Software Match: ',
+                        'Hardware ID: ',
+                        'Hardware Timestamp: ',
+                        'Software ID: ',
+                        'Software Timestamp: ',
+                        'Uptime: ',
+                        'dac_ch: ',
+                        'Reference Clock: ',
+                        'Enabled Channels: ',
+                        'Enabled ADCs: '
+                    ]
+
+                data = JSON.parse(response);
+
+                for(key in data){
+                    content = titles[i] + data[key].d;
+                    if(i==3)
+                        content += ' C'
+                    if(i==7 || i==9)
+                        content = titles[i] + '0x' + parseInt(data[key].d, 10).toString(16);
+                    if(i==8 || i==10){
+                        time = new Date(parseInt(data[key].d, 10)*1000);
+                        content = titles[i] + time.toString();
+                    }
+                    if(i==11){
+                        time = parseInt(data[key].d, 10);
+                        content = titles[i] + chewUptime(time);
+                    }
+
+                    document.getElementById(key).innerHTML = content;
+                    i++;
+                }
+    
             },
 
             'updateADC' : function(var_name){
@@ -364,8 +416,8 @@
                 }
 
                 radioArray(items[4], ['Enabled', 'Disabled'], [true, false], 'wrf_off');
-                document.getElementById('wrf_supp0').onchange = this.updateADC.bind(document.getElementById('wrf_off0'), 'wrf_off');
-                document.getElementById('wrf_supp1').onchange = this.updateADC.bind(document.getElementById('wrf_off1'), 'wrf_off');
+                document.getElementById('wrf_off0').onchange = this.updateADC.bind(document.getElementById('wrf_off0'), 'wrf_off');
+                document.getElementById('wrf_off1').onchange = this.updateADC.bind(document.getElementById('wrf_off1'), 'wrf_off');
 
                 //////////////////////////////
                 //Simulation pane elements      
