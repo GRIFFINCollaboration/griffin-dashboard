@@ -33,9 +33,7 @@
 
         },
         accessors: {
-            'MIDAS':{
-                attribute: {} //this just needs to be declared
-            }
+
         }, 
         methods: {
             'updateRates' : function(customEventData){
