@@ -67,10 +67,16 @@
 				this.rackImage = {};
 				this.cells = {};
 				this.parameters = {	label:{
-										font: 'Ariel',
+										font: 'Arial',
 										fontcolour: 'black',
 										maxFontSize: 2*grid
-									}
+									},
+			    					widthsensors: 16*grid,
+									heightsensors: 2*grid,
+									strokesensors: 'black',
+									strokeWsensors: 2,
+									fillsensors: 'lightgray',
+									opacitysensors: 0.6
 				};
 
 			    /////////////////////////////////////////////////////////
@@ -115,12 +121,7 @@
 				// with this.cells.sensorstop at the top and this.cells.sensorsbottom at the bottom.
 			    //////////////////////////////////////////////////////////////////////////
 
-			    this.cells.widthsensors = 16*grid;
-				this.cells.heightsensors = 2*grid;
-				this.cells.strokesensors = 'black';
-				this.cells.strokeWsensors = 2;
-				this.cells.fillsensors = 'lightgray';
-				this.cells.opacitysensors = 0.6;
+
 
 				/////////////////////////////////////////////////////////
 				// Setting the content of the temperature sensor tooltip.
@@ -131,12 +132,12 @@
 					this.sensorstop[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
 						y: topmargin + 2*grid,
-						width: this.cells.widthsensors,
-						height: this.cells.heightsensors,
-						fill: this.cells.fillsensors,
-						stroke: this.cells.strokesensors,
-						strokeWidth: this.cells.strokeWsensors,
-						opacity: this.cells.opacitysensors,
+						width: this.parameters.widthsensors,
+						height: this.parameters.heightsensors,
+						fill: this.parameters.fillsensors,
+						stroke: this.parameters.strokesensors,
+						strokeWidth: this.parameters.strokeWsensors,
+						opacity: this.parameters.opacitysensors,
 					}),
 
 					this.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, i ) );
@@ -146,12 +147,12 @@
 					this.sensorsbottom[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
 						y: topmargin+60*grid,
-						width: this.cells.widthsensors,
-						height: this.cells.heightsensors,
-						fill: this.cells.fillsensors,
-						stroke: this.cells.strokesensors,
-						strokeWidth: this.cells.strokeWsensors,
-						opacity: this.cells.opacitysensors,
+						width: this.parameters.widthsensors,
+						height: this.parameters.heightsensors,
+						fill: this.parameters.fillsensors,
+						stroke: this.parameters.strokesensors,
+						strokeWidth: this.parameters.strokeWsensors,
+						opacity: this.parameters.opacitysensors,
 					}),
 
 					this.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, i+5 ) );
