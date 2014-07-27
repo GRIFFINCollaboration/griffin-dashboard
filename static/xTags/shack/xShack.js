@@ -80,6 +80,15 @@
 										opacity: 0.6									
 									},
 
+									cableman:{
+									   	width: 20*grid,
+									   	height: 1*grid,
+									   	fill: 'dimgray',
+									   	stroke: 'black',
+									   	strokeW: 2,
+									   	opacity: 0.6
+									},
+
 									hv:{
 										width: 20*grid,
 										height: 8*grid,
@@ -219,25 +228,18 @@
 			    // Cable management sections are added.
 			    ///////////////////////////////////////
 
-			   	this.cells.widthcableman = 20*grid;
-			   	this.cells.heightcableman = 1*grid;
-			   	this.cells.fillcableman = 'dimgray';
-			   	this.cells.strokecableman = 'black';
-			   	this.cells.strokeWcableman = 2;
-			   	this.cells.opacitycableman = 0.6;
-
 			   	this.cells.cableman = [];
 
 				for (i = 0; i < 4; i++){
 			        this.cells.cableman[i] = new Kinetic.Rect({
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+19*grid,
-						width: this.cells.widthcableman,
-						height: this.cells.heightcableman,
-						fill: this.cells.fillcableman,
-						stroke: this.cells.strokeWcableman,
-						strokeWidth: this.cells.strokeWcableman,
-						opacity: this.cells.opacitycableman
+						width: this.parameters.cableman.width,
+						height: this.parameters.cableman.height,
+						fill: this.parameters.cableman.fill,
+						stroke: this.parameters.cableman.strokeW,
+						strokeWidth: this.parameters.cableman.strokeW,
+						opacity: this.parameters.cableman.opacity
 					});
 				}   
 
@@ -245,12 +247,12 @@
 			        this.cells.cableman[i] = new Kinetic.Rect({
 			            x: leftmargin+20*(i-4)*grid,
 			            y: topmargin+28*grid,
-						width: this.cells.widthcableman,
-						height: this.cells.heightcableman,
-						fill: this.cells.fillcableman,
-						stroke: this.cells.strokecableman,
-						strokeWidth: this.cells.strokeWcableman,
-						opacity: this.cells.opacitycableman
+						width: this.parameters.cableman.width,
+						height: this.parameters.cableman.height,
+						fill: this.parameters.cableman.fill,
+						stroke: this.parameters.cableman.stroke,
+						strokeWidth: this.parameters.cableman.strokeW,
+						opacity: this.parameters.cableman.opacity
 					});
 				} 
 
@@ -258,12 +260,12 @@
 			        this.cells.cableman[i] = new Kinetic.Rect({
 			            x: leftmargin+(40+20*(i-8))*grid,
 			            y: topmargin+32*grid,
-						width: this.cells.widthcableman,
-						height: this.cells.heightcableman,
-						fill: this.cells.fillcableman,
-						stroke: this.cells.strokecableman,
-						strokeWidth: this.cells.strokeWcableman,
-						opacity: this.cells.opacitycableman
+						width: this.parameters.cableman.width,
+						height: this.parameters.cableman.height,
+						fill: this.parameters.cableman.fill,
+						stroke: this.parameters.cableman.stroke,
+						strokeWidth: this.parameters.cableman.strokeW,
+						opacity: this.parameters.cableman.opacity
 					});
 				} 
 
@@ -271,12 +273,12 @@
 			        this.cells.cableman[i] = new Kinetic.Rect({
 			            x: leftmargin+(40+20*(i-10))*grid,
 			            y: topmargin+41*grid,
-						width: this.cells.widthcableman,
-						height: this.cells.heightcableman,
-						fill: this.cells.fillcableman,
-						stroke: this.cells.strokecableman,
-						strokeWidth: this.cells.strokeWcableman,
-						opacity: this.cells.opacitycableman
+						width: this.parameters.cableman.width,
+						height: this.parameters.cableman.height,
+						fill: this.parameters.cableman.fill,
+						stroke: this.parameters.cableman.stroke,
+						strokeWidth: this.parameters.cableman.strokeW,
+						opacity: this.parameters.cableman.opacity
 					});
 				} 
 
@@ -284,24 +286,24 @@
 			        this.cells.cableman[i] = new Kinetic.Rect({
 			            x: leftmargin+40*grid,
 			            y: topmargin+(43+9*(i-12))*grid,
-						width: this.cells.widthcableman,
-						height: this.cells.heightcableman,
-						fill: this.cells.fillcableman,
-						stroke: this.cells.strokecableman,
-						strokeWidth: this.cells.strokeWcableman,
-						opacity: this.cells.opacitycableman
+						width: this.parameters.cableman.width,
+						height: this.parameters.cableman.height,
+						fill: this.parameters.cableman.fill,
+						stroke: this.parameters.cableman.stroke,
+						strokeWidth: this.parameters.cableman.strokeW,
+						opacity: this.parameters.cableman.opacity
 					});
 				} 
 
 				this.cells.cableman14 = new Kinetic.Rect({
 					x: leftmargin+40*grid,
 					y: topmargin+30*grid,
-					width: this.cells.widthcableman,
-					height: this.cells.heightcableman,
-					fill: this.cells.fillcableman,
-					stroke: this.cells.strokecableman,
-					strokeWidth: this.cells.strokeWcableman,
-					opacity: this.cells.opacitycableman
+					width: this.parameters.cableman.width,
+					height: this.parameters.cableman.height,
+					fill: this.parameters.cableman.fill,
+					stroke: this.parameters.cableman.stroke,
+					strokeWidth: this.parameters.cableman.strokeW,
+					opacity: this.parameters.cableman.opacity
 				});
 
 				this.cells.hv0 = new Kinetic.Rect({
