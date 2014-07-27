@@ -60,13 +60,18 @@
 					height = 0.8*window.innerHeight,
 					grid = Math.min(width/100, height/62),  //20*5 wide, 56+2+2+2 tall
 					label = {},
-					leftmargin = {},
-					topmargin = {},
+					leftmargin = (width - 100*grid)/2,
+					topmargin = (height - 62*grid)/2,
 					i;
 
 				this.rackImage = {};
 				this.cells = {};
-				this.parameters = {}
+				this.parameters = {	label:{
+										font: 'Ariel',
+										fontcolour: 'black',
+										maxFontSize: 2*grid
+									}
+				}};
 
 			    /////////////////////////////////////////////////////////
 			    // Kinetic.js is setup to create the initial environment.
@@ -85,21 +90,6 @@
 
 				this.rackImage.mainLayer = new Kinetic.Layer();
 				this.rackImage.stage.add(this.rackImage.mainLayer);
-
-				//////////////////////////////////////////////////////////////
-				// The font type and colour is set as standard for all labels.
-				//////////////////////////////////////////////////////////////
-
-				label.font = 'Arial';
-				label.fontcolour = 'black';
-				label.maxFontSize = 2*grid;
-
-				///////////////////////////////////////////////////////////////////////
-				// The left margin is set so that the racks are centered in the canvas.
-				///////////////////////////////////////////////////////////////////////
-
-				leftmargin = (width - 100*grid)/2;
-				topmargin = (height - 62*grid)/2;
 
 			    ////////////////////////////////////////////
 				// The this.cells.racks loop sets up the 5 racks.
@@ -288,9 +278,9 @@
 			       	y: topmargin+4*grid,
 			       	width: this.cells.widthhv,
 			      	text: 'HV 1',
-			       	fontSize: label.maxFontSize,
-			       	fontFamily: label.font,
-			       	fill: label.fontcolour,
+			       	fontSize: parameters.label.maxFontSize,
+			       	fontFamily: parameters.label.font,
+			       	fill: parameters.label.fontcolour,
 			       	padding: this.cells.heighthv*0.3,
 			        align: 'center',
 			        listening: false
@@ -321,9 +311,9 @@
 			            y: topmargin+4*grid,
 			            width: this.cells.widthhv,
 			            text: 'HV '+(i+1),
-			            fontSize: label.maxFontSize,
-			            fontFamily: label.font,
-			            fill: label.fontcolour,
+			            fontSize: parameters.label.maxFontSize,
+			            fontFamily: parameters.label.font,
+			            fill: parameters.label.fontcolour,
 			            padding: this.cells.heighthv*0.3,
 			            align: 'center',
 			            listening: false
@@ -367,9 +357,9 @@
 			            y: topmargin+13*grid,
 			            width: this.cells.widthnim,
 			            text: 'NIM '+(i+1),
-			            fontSize: label.maxFontSize,
-			            fontFamily: label.font,
-			            fill: label.fontcolour,
+			            fontSize: parameters.label.maxFontSize,
+			            fontFamily: parameters.label.font,
+			            fill: parameters.label.fontcolour,
 			            padding: this.cells.heightnim*0.25,
 			            align: 'center',
 			            listening: false
@@ -398,9 +388,9 @@
 			            y: topmargin+(47+8*(i-5))*grid,
 			            width: this.cells.widthnim,
 			            text: 'NIM '+(i+1),
-			            fontSize: label.maxFontSize,
-			            fontFamily: label.font,
-			            fill: label.fontcolour,
+			            fontSize: parameters.label.maxFontSize,
+			            fontFamily: parameters.label.font,
+			            fill: parameters.label.fontcolour,
 			            padding: this.cells.heightnim*0.25,
 			            align: 'center',
 			            listening: false
@@ -444,9 +434,9 @@
 			            y: topmargin+20*grid,
 			            width: this.cells.widthvme,
 			            text: 'VME '+(i+1),
-			            fontSize: label.maxFontSize,
-			            fontFamily: label.font,
-			            fill: label.fontcolour,
+			            fontSize: parameters.label.maxFontSize,
+			            fontFamily: parameters.label.font,
+			            fill: parameters.label.fontcolour,
 			            padding: this.cells.heightvme*0.3,
 			       		align: 'center',
 			       		listening: false
@@ -475,9 +465,9 @@
 			            y: topmargin+33*grid,
 			            width: this.cells.widthvme,
 			            text: 'VME '+(i+1),
-			            fontSize: label.maxFontSize,
-			            fontFamily: label.font,
-			            fill: label.fontcolour,
+			            fontSize: parameters.label.maxFontSize,
+			            fontFamily: parameters.label.font,
+			            fill: parameters.label.fontcolour,
 			            padding: this.cells.heightvme*0.3,
 			       		align: 'center',
 			       		listening: false
@@ -505,9 +495,9 @@
 			       	y: topmargin+44*grid,
 			       	width: this.cells.widthvme,
 			      	text: 'VME 7',
-			       	fontSize: label.maxFontSize,
-			       	fontFamily: label.font,
-			       	fill: label.fontcolour,
+			       	fontSize: parameters.label.maxFontSize,
+			       	fontFamily: parameters.label.font,
+			       	fill: parameters.label.fontcolour,
 			       	padding: this.cells.heightvme*0.3,
 			       	align: 'center',
 			       	listening: false
@@ -560,9 +550,9 @@
 			       	y: topmargin+47*grid,
 			       	width: this.cells.widthdsa,
 			      	text: 'Data Storage Array 1',
-			       	fontSize: label.maxFontSize,
-			       	fontFamily: label.font,
-			       	fill: label.fontcolour,
+			       	fontSize: parameters.label.maxFontSize,
+			       	fontFamily: parameters.label.font,
+			       	fill: parameters.label.fontcolour,
 			       	padding: this.cells.heightdsa*0.25,
 			        align: 'center',
 			        listening: false
@@ -590,9 +580,9 @@
 			            y: topmargin+54*grid,
 			            width: this.cells.widthdsa,
 			            text: 'Data Storage Array ' + (i+1),
-			            fontSize: label.maxFontSize,
-			            fontFamily: label.font,
-			            fill: label.fontcolour,
+			            fontSize: parameters.label.maxFontSize,
+			            fontFamily: parameters.label.font,
+			            fill: parameters.label.fontcolour,
 			            padding: this.cells.heightdsa*0.25,
 			            align: 'center',
 			            listening: false
@@ -636,9 +626,9 @@
 			            y: topmargin+53*grid,
 			            width: this.cells.widthnet,
 			            text: 'Network Switch '+(i+1),
-			            fontSize: label.maxFontSize/2,
-			            fontFamily: label.font,
-			            fill: label.fontcolour,
+			            fontSize: parameters.label.maxFontSize/2,
+			            fontFamily: parameters.label.font,
+			            fill: parameters.label.fontcolour,
 			            align: 'center',
 			            listening: false
 			        });
@@ -678,9 +668,9 @@
 			            y: topmargin+(40+3.1*i)*grid,
 			            width: this.cells.widthcomp,
 			            text: 'Computer '+(i+1),
-			            fontSize: label.maxFontSize,
-			            fontFamily: label.font,
-			            fill: label.fontcolour,
+			            fontSize: parameters.label.maxFontSize,
+			            fontFamily: parameters.label.font,
+			            fill: parameters.label.fontcolour,
 			            padding: this.cells.heightcomp*0.03,
 			            align: 'center',
 			            listening: false
@@ -716,8 +706,8 @@
 						y: topmargin,
 						width: this.cells.widthlab,
 						text: 'Rack '+(i+1),
-						fontSize: label.maxFontSize,
-						fontFamily: label.font,
+						fontSize: parameters.label.maxFontSize,
+						fontFamily: parameters.label.font,
 						fill: '#EEEEEE',
 						align: 'center'
 					});
