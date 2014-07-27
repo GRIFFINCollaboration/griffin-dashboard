@@ -27,8 +27,7 @@
 
             	this.tooltipContent = [];
             	this.flag = [];
-            	this.sensorstop = [];
-            	this.sensorsbottom = [];
+
         
             	this.renderRacks();
                 this.update();
@@ -116,20 +115,16 @@
 					});
 				}    
 
-			    //////////////////////////////////////////////////////////////////////////
-				// The temperature sensors are located at the top and bottom of the racks
-				// with this.cells.sensorstop at the top and this.cells.sensorsbottom at the bottom.
-			    //////////////////////////////////////////////////////////////////////////
-
-
-
 				/////////////////////////////////////////////////////////
 				// Setting the content of the temperature sensor tooltip.
 				/////////////////////////////////////////////////////////				
 
+				this.cells.sensorstop = [];
+				this.cells.sensorsbottom = [];
+				
 			    for (i = 0; i < 5; i++){
 
-					this.sensorstop[i] = new Kinetic.Rect({
+					this.cells.sensorstop[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
 						y: topmargin + 2*grid,
 						width: this.parameters.widthsensors,
@@ -140,11 +135,11 @@
 						opacity: this.parameters.opacitysensors,
 					}),
 
-					this.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, i ) );
-					this.sensorstop[i].on('mousemove', this.moveTooltip);
-					this.sensorstop[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+					this.cells.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, i ) );
+					this.cells.sensorstop[i].on('mousemove', this.moveTooltip);
+					this.cells.sensorstop[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 
-					this.sensorsbottom[i] = new Kinetic.Rect({
+					this.cells.sensorsbottom[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
 						y: topmargin+60*grid,
 						width: this.parameters.widthsensors,
@@ -155,9 +150,9 @@
 						opacity: this.parameters.opacitysensors,
 					}),
 
-					this.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, i+5 ) );
-					this.sensorsbottom[i].on('mousemove', this.moveTooltip);
-					this.sensorsbottom[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+					this.cells.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, i+5 ) );
+					this.cells.sensorsbottom[i].on('mousemove', this.moveTooltip);
+					this.cells.sensorsbottom[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 
 				}
 
@@ -726,8 +721,8 @@
 					this.rackImage.mainLayer.add(this.cells.racks[i]);
 
 				for (i = 0; i < 5; i++)
-					this.rackImage.mainLayer.add(this.sensorstop[i]),
-					this.rackImage.mainLayer.add(this.sensorsbottom[i]);
+					this.rackImage.mainLayer.add(this.cells.sensorstop[i]),
+					this.rackImage.mainLayer.add(this.cells.sensorsbottom[i]);
 
 				for (i = 0; i < 14; i++)
 					this.rackImage.mainLayer.add(this.cells.cableman[i]);
@@ -863,15 +858,15 @@
 				for (i = 0; i < 5; i++){
 				
 					if (this.flag[i] == 1){
-						this.sensorstop[i].setAttr('fill', 'red');
+						this.cells.sensorstop[i].setAttr('fill', 'red');
 					} else {
-						this.sensorstop[i].setAttr('fill', 'lightgray');
+						this.cells.sensorstop[i].setAttr('fill', 'lightgray');
 					}
 
 					if (this.flag[i+5] == 1){
-						this.sensorsbottom[i].setAttr('fill', 'red');
+						this.cells.sensorsbottom[i].setAttr('fill', 'red');
 					} else {
-						this.sensorsbottom[i].setAttr('fill', 'lightgray');
+						this.cells.sensorsbottom[i].setAttr('fill', 'lightgray');
 					}
 				}
 
