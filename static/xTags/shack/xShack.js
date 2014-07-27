@@ -89,7 +89,37 @@
 									fillnim: 'lightsteelblue',
 									strokenim: 'black',
 									strokeWnim: 2,
-									opacitynim: 0.77
+									opacitynim: 0.77,
+
+									widthvme: 20*grid,
+									heightvme: 8*grid,
+									fillvme: 'powderblue',
+									strokevme: 'black',
+									strokeWvme: 2,
+									opacityvme: 0.6,
+
+									widthdsa: 20*grid,
+									heightdsa: 6*grid,
+									filldsa: 'silver',
+									strokedsa: 'black',
+									strokeWdsa: 2,
+									opacitydsa: 0.7,
+
+									widthnet: 20*grid,
+									heightnet: 1*grid,
+									fillnet: 'slategray',
+									strokenet: 'black',
+									strokeWnet: 2,
+									opacitynet: 0.7,
+
+									widthcomp: 20*grid,
+									heightcomp: 2*grid,
+									fillcomp: 'steelblue',
+									strokecomp: 'black',
+									strokeWcomp: 2,
+									opacitycomp: 0.6,
+
+									widthlab: 8*grid
 				};
 
 			    /////////////////////////////////////////////////////////
@@ -395,14 +425,6 @@
 				// VME crates are added next and numbered as before.
 				////////////////////////////////////////////////////	
 
-				this.cells.widthvme = 20*grid;
-				this.cells.heightvme = 8*grid;
-				this.cells.areavme = this.cells.widthvme*this.cells.heightvme;
-				this.cells.fillvme = 'powderblue';
-				this.cells.strokevme = 'black';
-				this.cells.strokeWvme = 2;
-				this.cells.opacityvme = 0.6;
-
 				this.cells.vme = [];
 				label.vme = [];
 
@@ -410,23 +432,23 @@
 					this.cells.vme[i] = new Kinetic.Rect({
 						x: leftmargin+20*i*grid,
 						y: topmargin+20*grid,
-						width: this.cells.widthvme,
-						height: this.cells.heightvme,
-						fill: this.cells.fillvme,
-						stroke: this.cells.strokevme,
-						strokeWidth: this.cells.strokeWvme,
-						opacity: this.cells.opacityvme
+						width: this.parameters.widthvme,
+						height: this.parameters.heightvme,
+						fill: this.parameters.fillvme,
+						stroke: this.parameters.strokevme,
+						strokeWidth: this.parameters.strokeWvme,
+						opacity: this.parameters.opacityvme
 					}),
 
 				    label.vme[i] = new Kinetic.Text({
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+20*grid,
-			            width: this.cells.widthvme,
+			            width: this.parameters.widthvme,
 			            text: 'VME '+(i+1),
 			            fontSize: this.parameters.label.maxFontSize,
 			            fontFamily: this.parameters.label.font,
 			            fill: this.parameters.label.fontcolour,
-			            padding: this.cells.heightvme*0.3,
+			            padding: this.parameters.heightvme*0.3,
 			       		align: 'center',
 			       		listening: false
 			      	});
@@ -441,23 +463,23 @@
 					this.cells.vme[i] = new Kinetic.Rect({
 						x: leftmargin+(40+20*(i-4))*grid,
 						y: topmargin+33*grid,
-						width: this.cells.widthvme,
-						height: this.cells.heightvme,
-						fill: this.cells.fillvme,
-						stroke: this.cells.strokevme,
-						strokeWidth: this.cells.strokeWvme,
-						opacity: this.cells.opacityvme
+						width: this.parameters.widthvme,
+						height: this.parameters.heightvme,
+						fill: this.parameters.fillvme,
+						stroke: this.parameters.strokevme,
+						strokeWidth: this.parameters.strokeWvme,
+						opacity: this.parameters.opacityvme
 					}),
 
 				    label.vme[i] = new Kinetic.Text({
 			            x: leftmargin+(40+20*(i-4))*grid,
 			            y: topmargin+33*grid,
-			            width: this.cells.widthvme,
+			            width: this.parameters.widthvme,
 			            text: 'VME '+(i+1),
 			            fontSize: this.parameters.label.maxFontSize,
 			            fontFamily: this.parameters.label.font,
 			            fill: this.parameters.label.fontcolour,
-			            padding: this.cells.heightvme*0.3,
+			            padding: this.parameters.heightvme*0.3,
 			       		align: 'center',
 			       		listening: false
 			     	 });
@@ -471,23 +493,23 @@
 				this.cells.vme[6] = new Kinetic.Rect({
 					x: leftmargin+40*grid,
 					y: topmargin+44*grid,
-					width: this.cells.widthvme,
-					height: this.cells.heightvme,
-					fill: this.cells.fillvme,
-					stroke: this.cells.strokevme,
-					strokeWidth: this.cells.strokeWvme,
-					opacity: this.cells.opacityvme
+					width: this.parameters.widthvme,
+					height: this.parameters.heightvme,
+					fill: this.parameters.fillvme,
+					stroke: this.parameters.strokevme,
+					strokeWidth: this.parameters.strokeWvme,
+					opacity: this.parameters.opacityvme
 				});
 
 			   	label.vme[6] = new Kinetic.Text({
 			   		x: leftmargin+40*grid,
 			       	y: topmargin+44*grid,
-			       	width: this.cells.widthvme,
+			       	width: this.parameters.widthvme,
 			      	text: 'VME 7',
 			       	fontSize: this.parameters.label.maxFontSize,
 			       	fontFamily: this.parameters.label.font,
 			       	fill: this.parameters.label.fontcolour,
-			       	padding: this.cells.heightvme*0.3,
+			       	padding: this.parameters.heightvme*0.3,
 			       	align: 'center',
 			       	listening: false
 			   	});
@@ -512,37 +534,29 @@
 				// Data storage arrays are added, all numbered as before.
 				/////////////////////////////////////////////////////////
 
-				this.cells.widthdsa = 20*grid;
-				this.cells.heightdsa = 6*grid;
-				this.cells.areadsa = this.cells.widthdsa*this.cells.heightdsa;
-				this.cells.filldsa = 'silver';
-				this.cells.strokedsa = 'black';
-				this.cells.strokeWdsa = 2;
-				this.cells.opacitydsa = 0.7;
-
 				this.cells.dsa = [];
 			   	label.dsa = [];
 
 				this.cells.dsa0 = new Kinetic.Rect({
 					x: leftmargin,
 					y: topmargin+47*grid,
-					width: this.cells.widthdsa,
-					height: this.cells.heightdsa,
-					fill: this.cells.filldsa,
-					stroke: this.cells.strokedsa,
-					strokeWidth: this.cells.strokeWdsa,
-					opacity: this.cells.opacitydsa
+					width: this.parameters.widthdsa,
+					height: this.parameters.heightdsa,
+					fill: this.parameters.filldsa,
+					stroke: this.parameters.strokedsa,
+					strokeWidth: this.parameters.strokeWdsa,
+					opacity: this.parameters.opacitydsa
 				});	
 
 			   	label.dsa0 = new Kinetic.Text({
 			   		x: leftmargin,
 			       	y: topmargin+47*grid,
-			       	width: this.cells.widthdsa,
+			       	width: this.parameters.widthdsa,
 			      	text: 'Data Storage Array 1',
 			       	fontSize: this.parameters.label.maxFontSize,
 			       	fontFamily: this.parameters.label.font,
 			       	fill: this.parameters.label.fontcolour,
-			       	padding: this.cells.heightdsa*0.25,
+			       	padding: this.parameters.heightdsa*0.25,
 			        align: 'center',
 			        listening: false
 			   	});
@@ -556,23 +570,23 @@
 					this.cells.dsa[i] = new Kinetic.Rect({
 						x: leftmargin+20*(i-1)*grid,
 						y: topmargin+54*grid,
-						width: this.cells.widthdsa,
-						height: this.cells.heightdsa,
-						fill: this.cells.filldsa,
-						stroke: this.cells.strokedsa,
-						strokeWidth: this.cells.strokeWdsa,
-						opacity: this.cells.opacitydsa
+						width: this.parameters.widthdsa,
+						height: this.parameters.heightdsa,
+						fill: this.parameters.filldsa,
+						stroke: this.parameters.strokedsa,
+						strokeWidth: this.parameters.strokeWdsa,
+						opacity: this.parameters.opacitydsa
 					}),
 
 				    label.dsa[i] = new Kinetic.Text({
 			            x: leftmargin+20*(i-1)*grid,
 			            y: topmargin+54*grid,
-			            width: this.cells.widthdsa,
+			            width: this.parameters.widthdsa,
 			            text: 'Data Storage Array ' + (i+1),
 			            fontSize: this.parameters.label.maxFontSize,
 			            fontFamily: this.parameters.label.font,
 			            fill: this.parameters.label.fontcolour,
-			            padding: this.cells.heightdsa*0.25,
+			            padding: this.parameters.heightdsa*0.25,
 			            align: 'center',
 			            listening: false
 			        });
@@ -587,14 +601,6 @@
 				// The network switches are added and numbered from left to right.
 				//////////////////////////////////////////////////////////////////
 
-				this.cells.widthnet = 20*grid;
-				this.cells.heightnet = 1*grid;
-				this.cells.areanet = this.cells.widthnet*this.cells.heightnet;
-				this.cells.fillnet = 'slategray';
-				this.cells.strokenet = 'black';
-				this.cells.strokeWnet = 2;
-				this.cells.opacitynet = 0.7;
-
 				this.cells.net = [];
 				label.net = [];
 
@@ -602,18 +608,18 @@
 					this.cells.net[i] = new Kinetic.Rect({
 						x: leftmargin+(20+20*i)*grid,
 						y: topmargin+53*grid,
-						width: this.cells.widthnet,
-						height: this.cells.heightnet,
-						fill: this.cells.fillnet,
-						stroke: this.cells.strokenet,
-						strokeWidth: this.cells.strokeWnet,
-						opacity: this.cells.opacitynet
+						width: this.parameters.widthnet,
+						height: this.parameters.heightnet,
+						fill: this.parameters.fillnet,
+						stroke: this.parameters.strokenet,
+						strokeWidth: this.parameters.strokeWnet,
+						opacity: this.parameters.opacitynet
 					}),
 
 				    label.net[i] = new Kinetic.Text({
 			            x: leftmargin+(20+20*i)*grid,
 			            y: topmargin+53*grid,
-			            width: this.cells.widthnet,
+			            width: this.parameters.widthnet,
 			            text: 'Network Switch '+(i+1),
 			            fontSize: this.parameters.label.maxFontSize/2,
 			            fontFamily: this.parameters.label.font,
@@ -629,14 +635,6 @@
 				// The 2 computers are added into rack 1.
 				/////////////////////////////////////////
 
-				this.cells.widthcomp = 20*grid;
-				this.cells.heightcomp = 2*grid;
-				this.cells.areacomp = this.cells.widthcomp*this.cells.heightcomp;
-				this.cells.fillcomp = 'steelblue';
-				this.cells.strokecomp = 'black';
-				this.cells.strokeWcomp = 2;
-				this.cells.opacitycomp = 0.6;
-
 				this.cells.comp = [];
 			   	label.comp = [];
 
@@ -644,23 +642,23 @@
 					this.cells.comp[i] = new Kinetic.Rect({
 						x: leftmargin,
 						y: topmargin+(40+3*i)*grid,
-						width: this.cells.widthcomp,
-						height: this.cells.heightcomp,
-						fill: this.cells.fillcomp,
-						stroke: this.cells.strokecomp,
-						strokeWidth: this.cells.strokeWcomp,
-						opacity: this.cells.opacitycomp
+						width: this.parameters.widthcomp,
+						height: this.parameters.heightcomp,
+						fill: this.parameters.fillcomp,
+						stroke: this.parameters.strokecomp,
+						strokeWidth: this.parameters.strokeWcomp,
+						opacity: this.parameters.opacitycomp
 					}),
 
 				    label.comp[i] = new Kinetic.Text({
 			            x: leftmargin,
 			            y: topmargin+(40+3.1*i)*grid,
-			            width: this.cells.widthcomp,
+			            width: this.parameters.widthcomp,
 			            text: 'Computer '+(i+1),
 			            fontSize: this.parameters.label.maxFontSize,
 			            fontFamily: this.parameters.label.font,
 			            fill: this.parameters.label.fontcolour,
-			            padding: this.cells.heightcomp*0.03,
+			            padding: this.parameters.heightcomp*0.03,
 			            align: 'center',
 			            listening: false
 			        });
@@ -678,13 +676,6 @@
 				// the racks are correspondingly labelled from left to right (1 to 5).
 				/////////////////////////////////////////////////////////////////////////
 
-				this.cells.widthlab = 8*grid;
-				this.cells.heightlab = 2*grid;
-				this.cells.arealab = this.cells.widthlab*this.cells.heightlab;
-				this.cells.filllab = 'white';
-				this.cells.strokelab = 'white';
-				this.cells.strokeWlab = 2;
-
 				this.cells.labels = [];
 				label.racks = [];
 
@@ -693,7 +684,7 @@
 					label.racks[i] = new Kinetic.Text({
 						x: leftmargin+(6+20*i)*grid,
 						y: topmargin,
-						width: this.cells.widthlab,
+						width: this.parameters.widthlab,
 						text: 'Rack '+(i+1),
 						fontSize: this.parameters.label.maxFontSize,
 						fontFamily: this.parameters.label.font,
