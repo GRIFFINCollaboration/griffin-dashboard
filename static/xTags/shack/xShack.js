@@ -840,7 +840,7 @@
 				}
 
 				for (i = 29; i < 33; i++){
-					this.tooltipContent[i] = {'Data Storage Array' : (i-30)};
+					this.tooltipContent[i] = {'Data Storage Array' : (i-28)};
 				}
 
 				this.updateRacks();
