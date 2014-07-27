@@ -27,8 +27,7 @@
 
             	this.tooltipContent = [];
             	this.flag = [];
-
-        
+  
             	this.renderRacks();
                 this.update();
             },
@@ -295,7 +294,7 @@
 					});
 				} 
 
-				this.cells.cableman14 = new Kinetic.Rect({
+				this.cells.cableman[14] = new Kinetic.Rect({
 					x: leftmargin+40*grid,
 					y: topmargin+30*grid,
 					width: this.parameters.cableman.width,
@@ -306,7 +305,10 @@
 					opacity: this.parameters.cableman.opacity
 				});
 
-				this.cells.hv0 = new Kinetic.Rect({
+				this.cells.hv = [];
+				label.hv = [];
+
+				this.cells.hv[0] = new Kinetic.Rect({
 					x: leftmargin + 20*grid,
 					y: topmargin+4*grid,
 					width: this.parameters.hv.width,
@@ -330,13 +332,10 @@
 			        listening: false
 			   	});
 
-				this.cells.hv0.on('mouseover', this.writeTooltip.bind(this, 10 ) );
-				this.cells.hv0.on('mousemove', this.moveTooltip);
-				this.cells.hv0.on('mouseout', this.writeTooltip.bind(this, -1) );
+				this.cells.hv[0].on('mouseover', this.writeTooltip.bind(this, 10 ) );
+				this.cells.hv[0].on('mousemove', this.moveTooltip);
+				this.cells.hv[0].on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.hv0, 18*grid);
-
-				this.cells.hv = [];
-				label.hv = [];
 
 				for (i = 1; i < 3; i++){
 			        this.cells.hv[i] = new Kinetic.Rect({
@@ -554,7 +553,7 @@
 				this.cells.dsa = [];
 			   	label.dsa = [];
 
-				this.cells.dsa0 = new Kinetic.Rect({
+				this.cells.dsa[0] = new Kinetic.Rect({
 					x: leftmargin,
 					y: topmargin+47*grid,
 					width: this.parameters.dsa.width,
@@ -578,9 +577,9 @@
 			        listening: false
 			   	});
 
-			    this.cells.dsa0.on('mouseover', this.writeTooltip.bind(this, 29 ) );
-				this.cells.dsa0.on('mousemove', this.moveTooltip);
-				this.cells.dsa0.on('mouseout', this.writeTooltip.bind(this, -1) );
+			    this.cells.dsa[0].on('mouseover', this.writeTooltip.bind(this, 29 ) );
+				this.cells.dsa[0].on('mousemove', this.moveTooltip);
+				this.cells.dsa[0].on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.dsa0, 18*grid);
 
 				for (i = 1; i < 4; i++){
@@ -728,9 +727,9 @@
 				for (i = 0; i < 14; i++)
 					this.rackImage.mainLayer.add(this.cells.cableman[i]);
 
-				this.rackImage.mainLayer.add(this.cells.cableman14);
+				this.rackImage.mainLayer.add(this.cells.cableman[14]);
 
-				this.rackImage.mainLayer.add(this.cells.hv0);
+				this.rackImage.mainLayer.add(this.cells.hv[0]);
 			    this.rackImage.mainLayer.add(label.hv0);
 
 				for (i = 1; i < 3; i++)
@@ -748,7 +747,7 @@
 				this.rackImage.mainLayer.add(this.cells.vme[6]);
 			    this.rackImage.mainLayer.add(label.vme[6]);
 
-				this.rackImage.mainLayer.add(this.cells.dsa0);
+				this.rackImage.mainLayer.add(this.cells.dsa[0]);
 			    this.rackImage.mainLayer.add(label.dsa0);
 
 				for (i = 1; i < 4; i++)
