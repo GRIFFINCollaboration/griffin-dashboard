@@ -271,7 +271,7 @@
 			       	fontSize: this.parameters.label.maxFontSize,
 			       	fontFamily: this.parameters.label.font,
 			       	fill: this.parameters.label.fontcolour,
-			       	padding: this.parameters.widthhv*0.3,
+			       	padding: this.parameters.heighthv*0.3,
 			        align: 'center',
 			        listening: false
 			   	});
@@ -304,7 +304,7 @@
 			            fontSize: this.parameters.label.maxFontSize,
 			            fontFamily: this.parameters.label.font,
 			            fill: this.parameters.label.fontcolour,
-			            padding: this.parameters.widthhv*0.3,
+			            padding: this.parameters.heighthv*0.3,
 			            align: 'center',
 			            listening: false
 			      	});
