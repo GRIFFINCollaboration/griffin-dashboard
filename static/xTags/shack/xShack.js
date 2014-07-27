@@ -59,13 +59,14 @@
 				var width = document.getElementById('shackStatusWrap').offsetWidth,
 					height = 0.8*window.innerHeight,
 					grid = Math.min(width/100, height/62),  //20*5 wide, 56+2+2+2 tall
-					cells = {},
 					label = {},
 					leftmargin = {},
 					topmargin = {},
 					i;
 
 				this.rackImage = {};
+				this.cells = {};
+				this.parameters = {}
 
 			    /////////////////////////////////////////////////////////
 			    // Kinetic.js is setup to create the initial environment.
@@ -101,13 +102,13 @@
 				topmargin = (height - 62*grid)/2;
 
 			    ////////////////////////////////////////////
-				// The cells.racks loop sets up the 5 racks.
+				// The this.cells.racks loop sets up the 5 racks.
 			    ////////////////////////////////////////////
 
-			   	cells.racks = [];
+			   	this.cells.racks = [];
 
 			    for (i = 0; i < 5; i++){
-					cells.racks[i] = new Kinetic.Rect({
+					this.cells.racks[i] = new Kinetic.Rect({
 						x: leftmargin+20*i*grid,
 						y: topmargin+4*grid,
 						width: 20*grid,
@@ -121,15 +122,15 @@
 
 			    //////////////////////////////////////////////////////////////////////////
 				// The temperature sensors are located at the top and bottom of the racks
-				// with cells.sensorstop at the top and cells.sensorsbottom at the bottom.
+				// with this.cells.sensorstop at the top and this.cells.sensorsbottom at the bottom.
 			    //////////////////////////////////////////////////////////////////////////
 
-			    cells.widthsensors = 16*grid;
-				cells.heightsensors = 2*grid;
-				cells.strokesensors = 'black';
-				cells.strokeWsensors = 2;
-				cells.fillsensors = 'lightgray';
-				cells.opacitysensors = 0.6;
+			    this.cells.widthsensors = 16*grid;
+				this.cells.heightsensors = 2*grid;
+				this.cells.strokesensors = 'black';
+				this.cells.strokeWsensors = 2;
+				this.cells.fillsensors = 'lightgray';
+				this.cells.opacitysensors = 0.6;
 
 				/////////////////////////////////////////////////////////
 				// Setting the content of the temperature sensor tooltip.
@@ -140,12 +141,12 @@
 					this.sensorstop[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
 						y: topmargin + 2*grid,
-						width: cells.widthsensors,
-						height: cells.heightsensors,
-						fill: cells.fillsensors,
-						stroke: cells.strokesensors,
-						strokeWidth: cells.strokeWsensors,
-						opacity: cells.opacitysensors,
+						width: this.cells.widthsensors,
+						height: this.cells.heightsensors,
+						fill: this.cells.fillsensors,
+						stroke: this.cells.strokesensors,
+						strokeWidth: this.cells.strokeWsensors,
+						opacity: this.cells.opacitysensors,
 					}),
 
 					this.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, i ) );
@@ -155,12 +156,12 @@
 					this.sensorsbottom[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
 						y: topmargin+60*grid,
-						width: cells.widthsensors,
-						height: cells.heightsensors,
-						fill: cells.fillsensors,
-						stroke: cells.strokesensors,
-						strokeWidth: cells.strokeWsensors,
-						opacity: cells.opacitysensors,
+						width: this.cells.widthsensors,
+						height: this.cells.heightsensors,
+						fill: this.cells.fillsensors,
+						stroke: this.cells.strokesensors,
+						strokeWidth: this.cells.strokeWsensors,
+						opacity: this.cells.opacitysensors,
 					}),
 
 					this.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, i+5 ) );
@@ -173,89 +174,89 @@
 			    // Cable management sections are added.
 			    ///////////////////////////////////////
 
-			   	cells.widthcableman = 20*grid;
-			   	cells.heightcableman = 1*grid;
-			   	cells.fillcableman = 'dimgray';
-			   	cells.strokecableman = 'black';
-			   	cells.strokeWcableman = 2;
-			   	cells.opacitycableman = 0.6;
+			   	this.cells.widthcableman = 20*grid;
+			   	this.cells.heightcableman = 1*grid;
+			   	this.cells.fillcableman = 'dimgray';
+			   	this.cells.strokecableman = 'black';
+			   	this.cells.strokeWcableman = 2;
+			   	this.cells.opacitycableman = 0.6;
 
-			   	cells.cableman = [];
+			   	this.cells.cableman = [];
 
 				for (i = 0; i < 4; i++){
-			        cells.cableman[i] = new Kinetic.Rect({
+			        this.cells.cableman[i] = new Kinetic.Rect({
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+19*grid,
-						width: cells.widthcableman,
-						height: cells.heightcableman,
-						fill: cells.fillcableman,
-						stroke: cells.strokeWcableman,
-						strokeWidth: cells.strokeWcableman,
-						opacity: cells.opacitycableman
+						width: this.cells.widthcableman,
+						height: this.cells.heightcableman,
+						fill: this.cells.fillcableman,
+						stroke: this.cells.strokeWcableman,
+						strokeWidth: this.cells.strokeWcableman,
+						opacity: this.cells.opacitycableman
 					});
 				}   
 
 				for (i = 4; i < 8; i++){
-			        cells.cableman[i] = new Kinetic.Rect({
+			        this.cells.cableman[i] = new Kinetic.Rect({
 			            x: leftmargin+20*(i-4)*grid,
 			            y: topmargin+28*grid,
-						width: cells.widthcableman,
-						height: cells.heightcableman,
-						fill: cells.fillcableman,
-						stroke: cells.strokecableman,
-						strokeWidth: cells.strokeWcableman,
-						opacity: cells.opacitycableman
+						width: this.cells.widthcableman,
+						height: this.cells.heightcableman,
+						fill: this.cells.fillcableman,
+						stroke: this.cells.strokecableman,
+						strokeWidth: this.cells.strokeWcableman,
+						opacity: this.cells.opacitycableman
 					});
 				} 
 
 				for (i = 8; i < 10; i++){
-			        cells.cableman[i] = new Kinetic.Rect({
+			        this.cells.cableman[i] = new Kinetic.Rect({
 			            x: leftmargin+(40+20*(i-8))*grid,
 			            y: topmargin+32*grid,
-						width: cells.widthcableman,
-						height: cells.heightcableman,
-						fill: cells.fillcableman,
-						stroke: cells.strokecableman,
-						strokeWidth: cells.strokeWcableman,
-						opacity: cells.opacitycableman
+						width: this.cells.widthcableman,
+						height: this.cells.heightcableman,
+						fill: this.cells.fillcableman,
+						stroke: this.cells.strokecableman,
+						strokeWidth: this.cells.strokeWcableman,
+						opacity: this.cells.opacitycableman
 					});
 				} 
 
 				for (i = 10; i < 12; i++){
-			        cells.cableman[i] = new Kinetic.Rect({
+			        this.cells.cableman[i] = new Kinetic.Rect({
 			            x: leftmargin+(40+20*(i-10))*grid,
 			            y: topmargin+41*grid,
-						width: cells.widthcableman,
-						height: cells.heightcableman,
-						fill: cells.fillcableman,
-						stroke: cells.strokecableman,
-						strokeWidth: cells.strokeWcableman,
-						opacity: cells.opacitycableman
+						width: this.cells.widthcableman,
+						height: this.cells.heightcableman,
+						fill: this.cells.fillcableman,
+						stroke: this.cells.strokecableman,
+						strokeWidth: this.cells.strokeWcableman,
+						opacity: this.cells.opacitycableman
 					});
 				} 
 
 				for (i = 12; i < 14; i++){
-			        cells.cableman[i] = new Kinetic.Rect({
+			        this.cells.cableman[i] = new Kinetic.Rect({
 			            x: leftmargin+40*grid,
 			            y: topmargin+(43+9*(i-12))*grid,
-						width: cells.widthcableman,
-						height: cells.heightcableman,
-						fill: cells.fillcableman,
-						stroke: cells.strokecableman,
-						strokeWidth: cells.strokeWcableman,
-						opacity: cells.opacitycableman
+						width: this.cells.widthcableman,
+						height: this.cells.heightcableman,
+						fill: this.cells.fillcableman,
+						stroke: this.cells.strokecableman,
+						strokeWidth: this.cells.strokeWcableman,
+						opacity: this.cells.opacitycableman
 					});
 				} 
 
-				cells.cableman14 = new Kinetic.Rect({
+				this.cells.cableman14 = new Kinetic.Rect({
 					x: leftmargin+40*grid,
 					y: topmargin+30*grid,
-					width: cells.widthcableman,
-					height: cells.heightcableman,
-					fill: cells.fillcableman,
-					stroke: cells.strokecableman,
-					strokeWidth: cells.strokeWcableman,
-					opacity: cells.opacitycableman
+					width: this.cells.widthcableman,
+					height: this.cells.heightcableman,
+					fill: this.cells.fillcableman,
+					stroke: this.cells.strokecableman,
+					strokeWidth: this.cells.strokeWcableman,
+					opacity: this.cells.opacitycableman
 				});
 
 				//////////////////////////////////////////////////////////////////////
@@ -263,74 +264,74 @@
 				// descending.
 				//////////////////////////////////////////////////////////////////////	
 
-				cells.widthhv = 20*grid;
-				cells.heighthv = 8*grid;
-				cells.areahv = cells.widthhv*cells.heighthv;
-				cells.fillhv = 'lightslategray';
-				cells.strokehv = 'black';
-				cells.strokeWhv = 2;
-				cells.opacityhv = 0.6;
+				this.cells.widthhv = 20*grid;
+				this.cells.heighthv = 8*grid;
+				this.cells.areahv = this.cells.widthhv*this.cells.heighthv;
+				this.cells.fillhv = 'lightslategray';
+				this.cells.strokehv = 'black';
+				this.cells.strokeWhv = 2;
+				this.cells.opacityhv = 0.6;
 
-				cells.hv0 = new Kinetic.Rect({
+				this.cells.hv0 = new Kinetic.Rect({
 					x: leftmargin + 20*grid,
 					y: topmargin+4*grid,
-					width: cells.widthhv,
-					height: cells.heighthv,
-					fill: cells.fillhv,
-					stroke: cells.strokehv,
-					strokeWidth: cells.strokeWhv,
-					opacity: cells.opacityhv
+					width: this.cells.widthhv,
+					height: this.cells.heighthv,
+					fill: this.cells.fillhv,
+					stroke: this.cells.strokehv,
+					strokeWidth: this.cells.strokeWhv,
+					opacity: this.cells.opacityhv
 				});
 
 			    label.hv0 = new Kinetic.Text({
 			   		x: leftmargin + 20*grid,
 			       	y: topmargin+4*grid,
-			       	width: cells.widthhv,
+			       	width: this.cells.widthhv,
 			      	text: 'HV 1',
 			       	fontSize: label.maxFontSize,
 			       	fontFamily: label.font,
 			       	fill: label.fontcolour,
-			       	padding: cells.heighthv*0.3,
+			       	padding: this.cells.heighthv*0.3,
 			        align: 'center',
 			        listening: false
 			   	});
 
-				cells.hv0.on('mouseover', this.writeTooltip.bind(this, 10 ) );
-				cells.hv0.on('mousemove', this.moveTooltip);
-				cells.hv0.on('mouseout', this.writeTooltip.bind(this, -1) );
+				this.cells.hv0.on('mouseover', this.writeTooltip.bind(this, 10 ) );
+				this.cells.hv0.on('mousemove', this.moveTooltip);
+				this.cells.hv0.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.hv0, 18*grid);
 
-				cells.hv = [];
+				this.cells.hv = [];
 				label.hv = [];
 
 				for (i = 1; i < 3; i++){
-			        cells.hv[i] = new Kinetic.Rect({
+			        this.cells.hv[i] = new Kinetic.Rect({
 			            x: leftmargin+(60+20*(i-1))*grid,
 			            y: topmargin+4*grid,
-						width: cells.widthhv,
-						height: cells.heighthv,
-						fill: cells.fillhv,
-						stroke: cells.strokehv,
-						strokeWidth: cells.strokeWhv,
-						opacity: cells.opacityhv
+						width: this.cells.widthhv,
+						height: this.cells.heighthv,
+						fill: this.cells.fillhv,
+						stroke: this.cells.strokehv,
+						strokeWidth: this.cells.strokeWhv,
+						opacity: this.cells.opacityhv
 					}),
 
 			        label.hv[i] = new Kinetic.Text({
 			            x: leftmargin+(60+20*(i-1))*grid,
 			            y: topmargin+4*grid,
-			            width: cells.widthhv,
+			            width: this.cells.widthhv,
 			            text: 'HV '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
-			            padding: cells.heighthv*0.3,
+			            padding: this.cells.heighthv*0.3,
 			            align: 'center',
 			            listening: false
 			      	});
 
-			      	cells.hv[i].on('mouseover', this.writeTooltip.bind(this, i+10) );
-					cells.hv[i].on('mousemove', this.moveTooltip);
-					cells.hv[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+			      	this.cells.hv[i].on('mouseover', this.writeTooltip.bind(this, i+10) );
+					this.cells.hv[i].on('mousemove', this.moveTooltip);
+					this.cells.hv[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 					squishFont(label.hv[i], 18*grid);
 				}
 
@@ -338,76 +339,76 @@
 				// NIM crates are included next and numbered in the same way as the HV crates.
 				//////////////////////////////////////////////////////////////////////////////
 
-				cells.widthnim = 20*grid;
-				cells.heightnim = 5*grid;
-				cells.areanim = cells.widthnim*cells.heightnim;
-				cells.fillnim = 'lightsteelblue';
-				cells.strokenim = 'black';
-				cells.strokeWnim = 2;
-				cells.opacitynim = 0.7;
+				this.cells.widthnim = 20*grid;
+				this.cells.heightnim = 5*grid;
+				this.cells.areanim = this.cells.widthnim*this.cells.heightnim;
+				this.cells.fillnim = 'lightsteelblue';
+				this.cells.strokenim = 'black';
+				this.cells.strokeWnim = 2;
+				this.cells.opacitynim = 0.7;
 
-				cells.nim = [];
+				this.cells.nim = [];
 				label.nim =[];
 
 				for (i = 0; i < 5; i++){
-			        cells.nim[i] = new Kinetic.Rect({
+			        this.cells.nim[i] = new Kinetic.Rect({
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+13*grid,
-						width: cells.widthnim,
-						height: cells.heightnim,
-						fill: cells.fillnim,
-						stroke: cells.strokenim,
-						strokeWidth: cells.strokeWnim,
-						opacity: cells.opacitynim
+						width: this.cells.widthnim,
+						height: this.cells.heightnim,
+						fill: this.cells.fillnim,
+						stroke: this.cells.strokenim,
+						strokeWidth: this.cells.strokeWnim,
+						opacity: this.cells.opacitynim
 					}),
 
 					label.nim[i] = new Kinetic.Text({
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+13*grid,
-			            width: cells.widthnim,
+			            width: this.cells.widthnim,
 			            text: 'NIM '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
-			            padding: cells.heightnim*0.25,
+			            padding: this.cells.heightnim*0.25,
 			            align: 'center',
 			            listening: false
 			        });
 
-			        cells.nim[i].on('mouseover', this.writeTooltip.bind(this, i+13 ) );
-					cells.nim[i].on('mousemove', this.moveTooltip);
-					cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+			        this.cells.nim[i].on('mouseover', this.writeTooltip.bind(this, i+13 ) );
+					this.cells.nim[i].on('mousemove', this.moveTooltip);
+					this.cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.nim[i], 18*grid);
 				} 
 
 				for (i = 5; i < 7; i++){
-					cells.nim[i] = new Kinetic.Rect({
+					this.cells.nim[i] = new Kinetic.Rect({
 						x: leftmargin+60*grid,
 						y: topmargin+(47+8*(i-5))*grid,
-						width: cells.widthnim,
-						height: cells.heightnim,
-						fill: cells.fillnim,
-						stroke: cells.strokenim,
-						strokeWidth: cells.strokeWnim,
-						opacity: cells.opacitynim
+						width: this.cells.widthnim,
+						height: this.cells.heightnim,
+						fill: this.cells.fillnim,
+						stroke: this.cells.strokenim,
+						strokeWidth: this.cells.strokeWnim,
+						opacity: this.cells.opacitynim
 					}),
 
 			        label.nim[i] = new Kinetic.Text({
 			            x: leftmargin+60*grid,
 			            y: topmargin+(47+8*(i-5))*grid,
-			            width: cells.widthnim,
+			            width: this.cells.widthnim,
 			            text: 'NIM '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
-			            padding: cells.heightnim*0.25,
+			            padding: this.cells.heightnim*0.25,
 			            align: 'center',
 			            listening: false
 			      	});
 
-			      	cells.nim[i].on('mouseover', this.writeTooltip.bind(this, i+13 ) );
-					cells.nim[i].on('mousemove', this.moveTooltip);
-					cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+			      	this.cells.nim[i].on('mouseover', this.writeTooltip.bind(this, i+13 ) );
+					this.cells.nim[i].on('mousemove', this.moveTooltip);
+					this.cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			      	squishFont(label.nim[i], 18*grid);
 				}
 
@@ -415,110 +416,110 @@
 				// VME crates are added next and numbered as before.
 				////////////////////////////////////////////////////	
 
-				cells.widthvme = 20*grid;
-				cells.heightvme = 8*grid;
-				cells.areavme = cells.widthvme*cells.heightvme;
-				cells.fillvme = 'powderblue';
-				cells.strokevme = 'black';
-				cells.strokeWvme = 2;
-				cells.opacityvme = 0.6;
+				this.cells.widthvme = 20*grid;
+				this.cells.heightvme = 8*grid;
+				this.cells.areavme = this.cells.widthvme*this.cells.heightvme;
+				this.cells.fillvme = 'powderblue';
+				this.cells.strokevme = 'black';
+				this.cells.strokeWvme = 2;
+				this.cells.opacityvme = 0.6;
 
-				cells.vme = [];
+				this.cells.vme = [];
 				label.vme = [];
 
 				for (i = 0; i < 4; i++){
-					cells.vme[i] = new Kinetic.Rect({
+					this.cells.vme[i] = new Kinetic.Rect({
 						x: leftmargin+20*i*grid,
 						y: topmargin+20*grid,
-						width: cells.widthvme,
-						height: cells.heightvme,
-						fill: cells.fillvme,
-						stroke: cells.strokevme,
-						strokeWidth: cells.strokeWvme,
-						opacity: cells.opacityvme
+						width: this.cells.widthvme,
+						height: this.cells.heightvme,
+						fill: this.cells.fillvme,
+						stroke: this.cells.strokevme,
+						strokeWidth: this.cells.strokeWvme,
+						opacity: this.cells.opacityvme
 					}),
 
 				    label.vme[i] = new Kinetic.Text({
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+20*grid,
-			            width: cells.widthvme,
+			            width: this.cells.widthvme,
 			            text: 'VME '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
-			            padding: cells.heightvme*0.3,
+			            padding: this.cells.heightvme*0.3,
 			       		align: 'center',
 			       		listening: false
 			      	});
 
-			      	cells.vme[i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
-					cells.vme[i].on('mousemove', this.moveTooltip);
-					cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+			      	this.cells.vme[i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
+					this.cells.vme[i].on('mousemove', this.moveTooltip);
+					this.cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			      	squishFont(label.vme[i], 18*grid);
 				}   
 
 				for (i = 4; i < 6; i++){
-					cells.vme[i] = new Kinetic.Rect({
+					this.cells.vme[i] = new Kinetic.Rect({
 						x: leftmargin+(40+20*(i-4))*grid,
 						y: topmargin+33*grid,
-						width: cells.widthvme,
-						height: cells.heightvme,
-						fill: cells.fillvme,
-						stroke: cells.strokevme,
-						strokeWidth: cells.strokeWvme,
-						opacity: cells.opacityvme
+						width: this.cells.widthvme,
+						height: this.cells.heightvme,
+						fill: this.cells.fillvme,
+						stroke: this.cells.strokevme,
+						strokeWidth: this.cells.strokeWvme,
+						opacity: this.cells.opacityvme
 					}),
 
 				    label.vme[i] = new Kinetic.Text({
 			            x: leftmargin+(40+20*(i-4))*grid,
 			            y: topmargin+33*grid,
-			            width: cells.widthvme,
+			            width: this.cells.widthvme,
 			            text: 'VME '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
-			            padding: cells.heightvme*0.3,
+			            padding: this.cells.heightvme*0.3,
 			       		align: 'center',
 			       		listening: false
 			     	 });
 
-				    cells.vme[i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
-					cells.vme[i].on('mousemove', this.moveTooltip);
-					cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+				    this.cells.vme[i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
+					this.cells.vme[i].on('mousemove', this.moveTooltip);
+					this.cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 				    squishFont(label.vme[i], 18*grid);
 				}   
 
-				cells.vme[6] = new Kinetic.Rect({
+				this.cells.vme[6] = new Kinetic.Rect({
 					x: leftmargin+40*grid,
 					y: topmargin+44*grid,
-					width: cells.widthvme,
-					height: cells.heightvme,
-					fill: cells.fillvme,
-					stroke: cells.strokevme,
-					strokeWidth: cells.strokeWvme,
-					opacity: cells.opacityvme
+					width: this.cells.widthvme,
+					height: this.cells.heightvme,
+					fill: this.cells.fillvme,
+					stroke: this.cells.strokevme,
+					strokeWidth: this.cells.strokeWvme,
+					opacity: this.cells.opacityvme
 				});
 
 			   	label.vme[6] = new Kinetic.Text({
 			   		x: leftmargin+40*grid,
 			       	y: topmargin+44*grid,
-			       	width: cells.widthvme,
+			       	width: this.cells.widthvme,
 			      	text: 'VME 7',
 			       	fontSize: label.maxFontSize,
 			       	fontFamily: label.font,
 			       	fill: label.fontcolour,
-			       	padding: cells.heightvme*0.3,
+			       	padding: this.cells.heightvme*0.3,
 			       	align: 'center',
 			       	listening: false
 			   	});
 
- 		      	cells.vme[6].on('mouseover', this.writeTooltip.bind(this, 26 ) );
-				cells.vme[6].on('mousemove', this.moveTooltip);
-				cells.vme[6].on('mouseout', this.writeTooltip.bind(this, -1) );
+ 		      	this.cells.vme[6].on('mouseover', this.writeTooltip.bind(this, 26 ) );
+				this.cells.vme[6].on('mousemove', this.moveTooltip);
+				this.cells.vme[6].on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.vme[6], 18*grid);
 
-			   	for(i=0; i<cells.vme.length; i++){
-			   		cells.vme[i].on('click', function(index){
+			   	for(i=0; i<this.cells.vme.length; i++){
+			   		this.cells.vme[i].on('click', function(index){
 			   			var evt,
 			   				shackSidebar = document.querySelectorAll('widget-shackControl')[0];
 
@@ -532,74 +533,74 @@
 				// Data storage arrays are added, all numbered as before.
 				/////////////////////////////////////////////////////////
 
-				cells.widthdsa = 20*grid;
-				cells.heightdsa = 6*grid;
-				cells.areadsa = cells.widthdsa*cells.heightdsa;
-				cells.filldsa = 'silver';
-				cells.strokedsa = 'black';
-				cells.strokeWdsa = 2;
-				cells.opacitydsa = 0.7;
+				this.cells.widthdsa = 20*grid;
+				this.cells.heightdsa = 6*grid;
+				this.cells.areadsa = this.cells.widthdsa*this.cells.heightdsa;
+				this.cells.filldsa = 'silver';
+				this.cells.strokedsa = 'black';
+				this.cells.strokeWdsa = 2;
+				this.cells.opacitydsa = 0.7;
 
-				cells.dsa = [];
+				this.cells.dsa = [];
 			   	label.dsa = [];
 
-				cells.dsa0 = new Kinetic.Rect({
+				this.cells.dsa0 = new Kinetic.Rect({
 					x: leftmargin,
 					y: topmargin+47*grid,
-					width: cells.widthdsa,
-					height: cells.heightdsa,
-					fill: cells.filldsa,
-					stroke: cells.strokedsa,
-					strokeWidth: cells.strokeWdsa,
-					opacity: cells.opacitydsa
+					width: this.cells.widthdsa,
+					height: this.cells.heightdsa,
+					fill: this.cells.filldsa,
+					stroke: this.cells.strokedsa,
+					strokeWidth: this.cells.strokeWdsa,
+					opacity: this.cells.opacitydsa
 				});	
 
 			   	label.dsa0 = new Kinetic.Text({
 			   		x: leftmargin,
 			       	y: topmargin+47*grid,
-			       	width: cells.widthdsa,
+			       	width: this.cells.widthdsa,
 			      	text: 'Data Storage Array 1',
 			       	fontSize: label.maxFontSize,
 			       	fontFamily: label.font,
 			       	fill: label.fontcolour,
-			       	padding: cells.heightdsa*0.25,
+			       	padding: this.cells.heightdsa*0.25,
 			        align: 'center',
 			        listening: false
 			   	});
 
-			    cells.dsa0.on('mouseover', this.writeTooltip.bind(this, 29 ) );
-				cells.dsa0.on('mousemove', this.moveTooltip);
-				cells.dsa0.on('mouseout', this.writeTooltip.bind(this, -1) );
+			    this.cells.dsa0.on('mouseover', this.writeTooltip.bind(this, 29 ) );
+				this.cells.dsa0.on('mousemove', this.moveTooltip);
+				this.cells.dsa0.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.dsa0, 18*grid);
 
 				for (i = 1; i < 4; i++){
-					cells.dsa[i] = new Kinetic.Rect({
+					this.cells.dsa[i] = new Kinetic.Rect({
 						x: leftmargin+20*(i-1)*grid,
 						y: topmargin+54*grid,
-						width: cells.widthdsa,
-						height: cells.heightdsa,
-						fill: cells.filldsa,
-						stroke: cells.strokedsa,
-						strokeWidth: cells.strokeWdsa,
-						opacity: cells.opacitydsa
+						width: this.cells.widthdsa,
+						height: this.cells.heightdsa,
+						fill: this.cells.filldsa,
+						stroke: this.cells.strokedsa,
+						strokeWidth: this.cells.strokeWdsa,
+						opacity: this.cells.opacitydsa
 					}),
 
 				    label.dsa[i] = new Kinetic.Text({
 			            x: leftmargin+20*(i-1)*grid,
 			            y: topmargin+54*grid,
-			            width: cells.widthdsa,
+			            width: this.cells.widthdsa,
 			            text: 'Data Storage Array ' + (i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
-			            padding: cells.heightdsa*0.25,
+			            padding: this.cells.heightdsa*0.25,
 			            align: 'center',
 			            listening: false
 			        });
 
-			        cells.dsa[i].on('mouseover', this.writeTooltip.bind(this, i+29 ) );
-					cells.dsa[i].on('mousemove', this.moveTooltip);
-					cells.dsa[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+			        this.cells.dsa[i].on('mouseover', this.writeTooltip.bind(this, i+29 ) );
+					this.cells.dsa[i].on('mousemove', this.moveTooltip);
+					this.cells.dsa[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.dsa[i], 18*grid);
 				}     
 
@@ -607,33 +608,33 @@
 				// The network switches are added and numbered from left to right.
 				//////////////////////////////////////////////////////////////////
 
-				cells.widthnet = 20*grid;
-				cells.heightnet = 1*grid;
-				cells.areanet = cells.widthnet*cells.heightnet;
-				cells.fillnet = 'slategray';
-				cells.strokenet = 'black';
-				cells.strokeWnet = 2;
-				cells.opacitynet = 0.7;
+				this.cells.widthnet = 20*grid;
+				this.cells.heightnet = 1*grid;
+				this.cells.areanet = this.cells.widthnet*this.cells.heightnet;
+				this.cells.fillnet = 'slategray';
+				this.cells.strokenet = 'black';
+				this.cells.strokeWnet = 2;
+				this.cells.opacitynet = 0.7;
 
-				cells.net = [];
+				this.cells.net = [];
 				label.net = [];
 
 				for (i = 0; i < 4; i++){
-					cells.net[i] = new Kinetic.Rect({
+					this.cells.net[i] = new Kinetic.Rect({
 						x: leftmargin+(20+20*i)*grid,
 						y: topmargin+53*grid,
-						width: cells.widthnet,
-						height: cells.heightnet,
-						fill: cells.fillnet,
-						stroke: cells.strokenet,
-						strokeWidth: cells.strokeWnet,
-						opacity: cells.opacitynet
+						width: this.cells.widthnet,
+						height: this.cells.heightnet,
+						fill: this.cells.fillnet,
+						stroke: this.cells.strokenet,
+						strokeWidth: this.cells.strokeWnet,
+						opacity: this.cells.opacitynet
 					}),
 
 				    label.net[i] = new Kinetic.Text({
 			            x: leftmargin+(20+20*i)*grid,
 			            y: topmargin+53*grid,
-			            width: cells.widthnet,
+			            width: this.cells.widthnet,
 			            text: 'Network Switch '+(i+1),
 			            fontSize: label.maxFontSize/2,
 			            fontFamily: label.font,
@@ -649,45 +650,45 @@
 				// The 2 computers are added into rack 1.
 				/////////////////////////////////////////
 
-				cells.widthcomp = 20*grid;
-				cells.heightcomp = 2*grid;
-				cells.areacomp = cells.widthcomp*cells.heightcomp;
-				cells.fillcomp = 'steelblue';
-				cells.strokecomp = 'black';
-				cells.strokeWcomp = 2;
-				cells.opacitycomp = 0.6;
+				this.cells.widthcomp = 20*grid;
+				this.cells.heightcomp = 2*grid;
+				this.cells.areacomp = this.cells.widthcomp*this.cells.heightcomp;
+				this.cells.fillcomp = 'steelblue';
+				this.cells.strokecomp = 'black';
+				this.cells.strokeWcomp = 2;
+				this.cells.opacitycomp = 0.6;
 
-				cells.comp = [];
+				this.cells.comp = [];
 			   	label.comp = [];
 
 				for (i = 0; i < 2; i++){
-					cells.comp[i] = new Kinetic.Rect({
+					this.cells.comp[i] = new Kinetic.Rect({
 						x: leftmargin,
 						y: topmargin+(40+3*i)*grid,
-						width: cells.widthcomp,
-						height: cells.heightcomp,
-						fill: cells.fillcomp,
-						stroke: cells.strokecomp,
-						strokeWidth: cells.strokeWcomp,
-						opacity: cells.opacitycomp
+						width: this.cells.widthcomp,
+						height: this.cells.heightcomp,
+						fill: this.cells.fillcomp,
+						stroke: this.cells.strokecomp,
+						strokeWidth: this.cells.strokeWcomp,
+						opacity: this.cells.opacitycomp
 					}),
 
 				    label.comp[i] = new Kinetic.Text({
 			            x: leftmargin,
 			            y: topmargin+(40+3.1*i)*grid,
-			            width: cells.widthcomp,
+			            width: this.cells.widthcomp,
 			            text: 'Computer '+(i+1),
 			            fontSize: label.maxFontSize,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
-			            padding: cells.heightcomp*0.03,
+			            padding: this.cells.heightcomp*0.03,
 			            align: 'center',
 			            listening: false
 			        });
 
-			        cells.comp[i].on('mouseover', this.writeTooltip.bind(this, i+27 ) );
-					cells.comp[i].on('mousemove', this.moveTooltip);
-					cells.comp[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+			        this.cells.comp[i].on('mouseover', this.writeTooltip.bind(this, i+27 ) );
+					this.cells.comp[i].on('mousemove', this.moveTooltip);
+					this.cells.comp[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.comp[i], 18*grid);
 				}   
 
@@ -698,14 +699,14 @@
 				// the racks are correspondingly labelled from left to right (1 to 5).
 				/////////////////////////////////////////////////////////////////////////
 
-				cells.widthlab = 8*grid;
-				cells.heightlab = 2*grid;
-				cells.arealab = cells.widthlab*cells.heightlab;
-				cells.filllab = 'white';
-				cells.strokelab = 'white';
-				cells.strokeWlab = 2;
+				this.cells.widthlab = 8*grid;
+				this.cells.heightlab = 2*grid;
+				this.cells.arealab = this.cells.widthlab*this.cells.heightlab;
+				this.cells.filllab = 'white';
+				this.cells.strokelab = 'white';
+				this.cells.strokeWlab = 2;
 
-				cells.labels = [];
+				this.cells.labels = [];
 				label.racks = [];
 
 				for (i = 0; i < 5; i++){
@@ -713,7 +714,7 @@
 					label.racks[i] = new Kinetic.Text({
 						x: leftmargin+(6+20*i)*grid,
 						y: topmargin,
-						width: cells.widthlab,
+						width: this.cells.widthlab,
 						text: 'Rack '+(i+1),
 						fontSize: label.maxFontSize,
 						fontFamily: label.font,
@@ -731,48 +732,48 @@
 			    //////////////////////////////////////////////////////////////////////
 
 				for (i = 0; i < 5; i++)
-					this.rackImage.mainLayer.add(cells.racks[i]);
+					this.rackImage.mainLayer.add(this.cells.racks[i]);
 
 				for (i = 0; i < 5; i++)
 					this.rackImage.mainLayer.add(this.sensorstop[i]),
 					this.rackImage.mainLayer.add(this.sensorsbottom[i]);
 
 				for (i = 0; i < 14; i++)
-					this.rackImage.mainLayer.add(cells.cableman[i]);
+					this.rackImage.mainLayer.add(this.cells.cableman[i]);
 
-				this.rackImage.mainLayer.add(cells.cableman14);
+				this.rackImage.mainLayer.add(this.cells.cableman14);
 
-				this.rackImage.mainLayer.add(cells.hv0);
+				this.rackImage.mainLayer.add(this.cells.hv0);
 			    this.rackImage.mainLayer.add(label.hv0);
 
 				for (i = 1; i < 3; i++)
-					this.rackImage.mainLayer.add(cells.hv[i]),
+					this.rackImage.mainLayer.add(this.cells.hv[i]),
 					this.rackImage.mainLayer.add(label.hv[i]);
 
 				for (i = 0; i < 7; i++)
-					this.rackImage.mainLayer.add(cells.nim[i]),
+					this.rackImage.mainLayer.add(this.cells.nim[i]),
 					this.rackImage.mainLayer.add(label.nim[i]);
 
 				for (i = 0; i < 6; i++)
-					this.rackImage.mainLayer.add(cells.vme[i]),
+					this.rackImage.mainLayer.add(this.cells.vme[i]),
 				    this.rackImage.mainLayer.add(label.vme[i]);
 
-				this.rackImage.mainLayer.add(cells.vme[6]);
+				this.rackImage.mainLayer.add(this.cells.vme[6]);
 			    this.rackImage.mainLayer.add(label.vme[6]);
 
-				this.rackImage.mainLayer.add(cells.dsa0);
+				this.rackImage.mainLayer.add(this.cells.dsa0);
 			    this.rackImage.mainLayer.add(label.dsa0);
 
 				for (i = 1; i < 4; i++)
-					this.rackImage.mainLayer.add(cells.dsa[i]),
+					this.rackImage.mainLayer.add(this.cells.dsa[i]),
 					this.rackImage.mainLayer.add(label.dsa[i]);
 
 				for (i = 0; i < 4; i++)
-					this.rackImage.mainLayer.add(cells.net[i]),
+					this.rackImage.mainLayer.add(this.cells.net[i]),
 				    this.rackImage.mainLayer.add(label.net[i]);
 
 				for (i = 0; i < 2; i++)
-					this.rackImage.mainLayer.add(cells.comp[i]),
+					this.rackImage.mainLayer.add(this.cells.comp[i]),
 					this.rackImage.mainLayer.add(label.comp[i]);
 
 				for (i = 0; i < 5; i++)
@@ -863,7 +864,7 @@
 			///////////////////////////////////////////////////////////////////////////
 			// The 'updateRacks' function changes the colour of the temperature sensors
 			// if the warning or alarms are triggered to alert the user. They are set
-			// so that if the warning alarm is triggered, the cells change colour.
+			// so that if the warning alarm is triggered, the this.cells change colour.
 			///////////////////////////////////////////////////////////////////////////
 
 			'updateRacks' : function(){
