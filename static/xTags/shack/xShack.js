@@ -71,7 +71,7 @@
 										fontcolour: 'black',
 										maxFontSize: 2*grid
 									}
-				}};
+				};
 
 			    /////////////////////////////////////////////////////////
 			    // Kinetic.js is setup to create the initial environment.
