@@ -75,7 +75,14 @@
 									strokesensors: 'black',
 									strokeWsensors: 2,
 									fillsensors: 'lightgray',
-									opacitysensors: 0.6
+									opacitysensors: 0.6,
+
+									widthhv: 20*grid,
+									heighthv: 8*grid,
+									fillhv: 'lightslategray',
+									strokehv: 'black',
+									strokeWhv: 2,
+									opacityhv: 0.6
 				};
 
 			    /////////////////////////////////////////////////////////
@@ -121,7 +128,7 @@
 
 				this.cells.sensorstop = [];
 				this.cells.sensorsbottom = [];
-				
+
 			    for (i = 0; i < 5; i++){
 
 					this.cells.sensorstop[i] = new Kinetic.Rect({
@@ -245,39 +252,26 @@
 					opacity: this.cells.opacitycableman
 				});
 
-				//////////////////////////////////////////////////////////////////////
-				// The 3 HV crates are added next and numbered from left to right then
-				// descending.
-				//////////////////////////////////////////////////////////////////////	
-
-				this.cells.widthhv = 20*grid;
-				this.cells.heighthv = 8*grid;
-				this.cells.areahv = this.cells.widthhv*this.cells.heighthv;
-				this.cells.fillhv = 'lightslategray';
-				this.cells.strokehv = 'black';
-				this.cells.strokeWhv = 2;
-				this.cells.opacityhv = 0.6;
-
 				this.cells.hv0 = new Kinetic.Rect({
 					x: leftmargin + 20*grid,
 					y: topmargin+4*grid,
-					width: this.cells.widthhv,
-					height: this.cells.heighthv,
-					fill: this.cells.fillhv,
-					stroke: this.cells.strokehv,
-					strokeWidth: this.cells.strokeWhv,
-					opacity: this.cells.opacityhv
+					width: this.parameters.widthhv,
+					height: this.parameters.widthhv,
+					fill: this.parameters.fillhv,
+					stroke: this.parameters.strokehv,
+					strokeWidth: this.parameters.strokeWhv,
+					opacity: this.parameters.opacityhv
 				});
 
 			    label.hv0 = new Kinetic.Text({
 			   		x: leftmargin + 20*grid,
 			       	y: topmargin+4*grid,
-			       	width: this.cells.widthhv,
+			       	width: this.parameters.widthhv,
 			      	text: 'HV 1',
 			       	fontSize: this.parameters.label.maxFontSize,
 			       	fontFamily: this.parameters.label.font,
 			       	fill: this.parameters.label.fontcolour,
-			       	padding: this.cells.heighthv*0.3,
+			       	padding: this.parameters.widthhv*0.3,
 			        align: 'center',
 			        listening: false
 			   	});
@@ -294,23 +288,23 @@
 			        this.cells.hv[i] = new Kinetic.Rect({
 			            x: leftmargin+(60+20*(i-1))*grid,
 			            y: topmargin+4*grid,
-						width: this.cells.widthhv,
-						height: this.cells.heighthv,
-						fill: this.cells.fillhv,
-						stroke: this.cells.strokehv,
-						strokeWidth: this.cells.strokeWhv,
-						opacity: this.cells.opacityhv
+						width: this.parameters.widthhv,
+						height: this.parameters.widthhv,
+						fill: this.parameters.fillhv,
+						stroke: this.parameters.strokehv,
+						strokeWidth: this.parameters.strokeWhv,
+						opacity: this.parameters.opacityhv
 					}),
 
 			        label.hv[i] = new Kinetic.Text({
 			            x: leftmargin+(60+20*(i-1))*grid,
 			            y: topmargin+4*grid,
-			            width: this.cells.widthhv,
+			            width: this.parameters.widthhv,
 			            text: 'HV '+(i+1),
 			            fontSize: this.parameters.label.maxFontSize,
 			            fontFamily: this.parameters.label.font,
 			            fill: this.parameters.label.fontcolour,
-			            padding: this.cells.heighthv*0.3,
+			            padding: this.parameters.widthhv*0.3,
 			            align: 'center',
 			            listening: false
 			      	});
