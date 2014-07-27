@@ -82,7 +82,14 @@
 									fillhv: 'lightslategray',
 									strokehv: 'black',
 									strokeWhv: 2,
-									opacityhv: 0.6
+									opacityhv: 0.6,
+
+									widthnim: 20*grid,
+									heightnim: 5*grid,
+									fillnim: 'lightsteelblue',
+									strokenim: 'black',
+									strokeWnim: 2,
+									opacitynim: 0.77
 				};
 
 			    /////////////////////////////////////////////////////////
@@ -319,14 +326,6 @@
 				// NIM crates are included next and numbered in the same way as the HV crates.
 				//////////////////////////////////////////////////////////////////////////////
 
-				this.cells.widthnim = 20*grid;
-				this.cells.heightnim = 5*grid;
-				this.cells.areanim = this.cells.widthnim*this.cells.heightnim;
-				this.cells.fillnim = 'lightsteelblue';
-				this.cells.strokenim = 'black';
-				this.cells.strokeWnim = 2;
-				this.cells.opacitynim = 0.7;
-
 				this.cells.nim = [];
 				label.nim =[];
 
@@ -334,23 +333,23 @@
 			        this.cells.nim[i] = new Kinetic.Rect({
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+13*grid,
-						width: this.cells.widthnim,
-						height: this.cells.heightnim,
-						fill: this.cells.fillnim,
-						stroke: this.cells.strokenim,
-						strokeWidth: this.cells.strokeWnim,
-						opacity: this.cells.opacitynim
+						width: this.parameters.widthnim,
+						height: this.parameters.heightnim,
+						fill: this.parameters.fillnim,
+						stroke: this.parameters.strokenim,
+						strokeWidth: this.parameters.strokeWnim,
+						opacity: this.parameters.opacitynim
 					}),
 
 					label.nim[i] = new Kinetic.Text({
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+13*grid,
-			            width: this.cells.widthnim,
+			            width: this.parameters.widthnim,
 			            text: 'NIM '+(i+1),
 			            fontSize: this.parameters.label.maxFontSize,
 			            fontFamily: this.parameters.label.font,
 			            fill: this.parameters.label.fontcolour,
-			            padding: this.cells.heightnim*0.25,
+			            padding: this.parameters.heightnim*0.25,
 			            align: 'center',
 			            listening: false
 			        });
@@ -365,23 +364,23 @@
 					this.cells.nim[i] = new Kinetic.Rect({
 						x: leftmargin+60*grid,
 						y: topmargin+(47+8*(i-5))*grid,
-						width: this.cells.widthnim,
-						height: this.cells.heightnim,
-						fill: this.cells.fillnim,
-						stroke: this.cells.strokenim,
-						strokeWidth: this.cells.strokeWnim,
-						opacity: this.cells.opacitynim
+						width: this.parameters.widthnim,
+						height: this.parameters.heightnim,
+						fill: this.parameters.fillnim,
+						stroke: this.parameters.strokenim,
+						strokeWidth: this.parameters.strokeWnim,
+						opacity: this.parameters.opacitynim
 					}),
 
 			        label.nim[i] = new Kinetic.Text({
 			            x: leftmargin+60*grid,
 			            y: topmargin+(47+8*(i-5))*grid,
-			            width: this.cells.widthnim,
+			            width: this.parameters.widthnim,
 			            text: 'NIM '+(i+1),
 			            fontSize: this.parameters.label.maxFontSize,
 			            fontFamily: this.parameters.label.font,
 			            fill: this.parameters.label.fontcolour,
-			            padding: this.cells.heightnim*0.25,
+			            padding: this.parameters.heightnim*0.25,
 			            align: 'center',
 			            listening: false
 			      	});
