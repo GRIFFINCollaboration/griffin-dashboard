@@ -3,11 +3,11 @@ griffinMarkII
 
 GRIFFIN Mark II is the next iteration in the GRIFFIN experiment's development of an easy-to-use dashboard to serve all user needs under one UI.  
 
-The main design evolution in Mark II over the original griffin.js is a dramatically heightened level of modularity, and independence from MIDAS.  Instead of trying to provide griffin.js' over-ambitious single page experience for such a sophisticated experiment, Mark II builds all its functionality as custom web components, thanks to the [x-tags](http://www.x-tags.org/) and [brick](http://mozilla.github.io/brick/) libraries from our friends at [Mozilla](http://www.mozilla.org/en-US/).  This way, the standard pages that ship with Mark II can be easily remixed piecemeal into new projects in the future.  MarkII also avails itself of [node](http://nodejs.org/) and [express](http://expressjs.com/) for standalone servers for advanced users.
+The main design evolution in Mark II over the original griffin.js is a dramatically heightened level of modularity, and independence from MIDAS.  Instead of trying to provide griffin.js' over-ambitious single page experience for such a sophisticated experiment, Mark II builds all its functionality as custom web components, thanks to the [x-tags](http://www.x-tags.org/) and [brick](http://mozilla.github.io/brick/) libraries from our friends at [Mozilla](http://www.mozilla.org/en-US/).  This way, the standard pages that ship with Mark II can be easily remixed piecemeal into new projects in the future.  Mark II also avails itself of [node](http://nodejs.org/) and [express](http://expressjs.com/) for standalone servers.
 
 As always, the GRIFFIN Collaboration's web apps support Chrome and Firefox.
 
-##Setup
+##Setup - The Full Stack
 GRIFFIN's software control infrastructure consists of two layers: a main MIDAS experiment on grsmid00 plus an independent state of health experiment on grifsoh00, and the web interface layer provided by Mark II.  The following is a minimal setup and configuration procedure for this control layer.
 
 ###MIDAS Experiments
