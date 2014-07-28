@@ -284,7 +284,7 @@ console.log(isMaster)
 app.post('/powerCycleVME', function(req, res){
 	console.log([req.body.VMEindex, req.body.pw, req.body.host])
 
-/*
+
 	if(req.body.pw != 'pixel')
 		return res.redirect('/Shack');
 
@@ -293,12 +293,14 @@ app.post('/powerCycleVME', function(req, res){
 		exec("curl '"+req.body.host+"/?cmd=jset&odb=Equipment/VME-0"+req.body.VMEindex+"/Settings/mainSwitch&value=0'", function(error, stdout, stderr){
 			setTimeout(function(){
 				exec("curl '"+req.body.host+"/?cmd=jset&odb=Equipment/VME-0"+req.body.VMEindex+"/Settings/mainSwitch&value=1'", function(error, stdout, stderr){
-					exec("curl '"+req.body.host+"/?cmd=jset&odb=Equipment/VME-0"+req.body.VMEindex+"/Settings/EnableControl&value=0'", function(error, stdout, stderr){})
+					setTimeout(function(){
+						exec("curl '"+req.body.host+"/?cmd=jset&odb=Equipment/VME-0"+req.body.VMEindex+"/Settings/EnableControl&value=0'", function(error, stdout, stderr){});
+					}, 1000);
 				})
-			}, 30000);
+			}, 65000);
 		})
 	});
-*/
+
 
 	return res.redirect('/Shack');
 });
