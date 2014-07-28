@@ -20,7 +20,24 @@ and all the dependencies will resolve and install; then to launch the app, do
 node griffin.js
 ```
 
-And voila!  Visit `host:2154/GRIFFIN` to see the GRIFFIN summary; route directory coming soon.
+And voila!  Visit `host:2154/GRIFFIN` to see the GRIFFIN summary; full route directory as follows:
+
+Utilities
+ - `/Clocks` atomic clock control
+ - `/DAQ` DAQ visualization & rate reporting
+ - `/Filter` Filter builder & control
+ - `/HV` high voltage control
+ - `/MSCbuilder` MSC table generation tool
+ - `/PPG` cycle builder & control
+ - `/Shack` state of health monitor
+ 
+Detectors
+ - `/DESCANT`
+ - `/GRIFFIN`
+ - `/PACES`
+ - `/SCEPTAR`
+ - `/SPICE`
+ - `/ZDS`
 
 ###With Added Security
 MarkII scrapes a lot of stuff from MIDAS' ODB, and if you don't want the whole universe messing with your experiment, you'll want to set up the usual MIDAS security.  On the machine running your experiment:
