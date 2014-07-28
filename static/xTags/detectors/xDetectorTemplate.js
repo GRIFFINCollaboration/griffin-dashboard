@@ -483,11 +483,11 @@
                     window.currentData.hostList = [];
 
                     //master
-                    window.currentData.hostList.push(window.currentData.DAQ.hosts.master);
+                    //window.currentData.hostList.push(window.currentData.DAQ.hosts.master);
                     for(key in window.currentData.DAQ.hosts){
                         if(window.currentData.DAQ.hosts[key].host){
                             //collectors
-                            window.currentData.hostList.push(window.currentData.DAQ.hosts[key].host);
+                            //window.currentData.hostList.push(window.currentData.DAQ.hosts[key].host);
                             //digitizers
                             for(i=0; i<window.currentData.DAQ.hosts[key].digitizers.length; i++){
                                 if(window.currentData.DAQ.hosts[key].digitizers[i])
@@ -500,7 +500,7 @@
                 //send arraybuffer XHR requests to each of some list of URLS;
                 //callback unpacks bytes into window.currentData rates and thresholds.
                 for(i=0; i<window.currentData.hostList.length; i++){
-                    //XHR('http://'+window.currentData.hostList, this.unpackDAQdv, false, false, true);
+                    XHR('http://'+window.currentData.hostList, this.unpackDAQdv, false, false, true);
                 }
 
             },
@@ -556,36 +556,6 @@
                 } });
                 HVsidebar[0].dispatchEvent(evt);
             },
-
-/*
-            //construct hostmap as { channelName : [host, ADC number], ...} for each channel.
-            'buildHostmap' : function(){
-                XHR('http://' + this.MIDAS + '/?cmd=jcopy&encoding=json-nokeys&odb=/DAQ', function(res){
-                    var data = JSON.parse(res),
-                        MSC, collector, digitizer, i, index;
-                    
-                    window.currentData.MSC = {};
-
-                    for(i=0; i<this.channelNames.length; i++){
-                        index = data.MSC.chan.indexOf(this.channelNames[i])
-                        if( index === -1 ) continue;
-
-                        MSC = parseInt(data.MSC.chan[index], 10);
-                        window.currentData.MSC[this.channelNames[i]] = ['', MSC & 0xFF];
-
-                        collector = (MSC & 0xF000) >> 12;
-                        collector = collector.toString(16);
-                        collector = 'collector0x' + collector;
-
-                        digitizer = (MSC & 0xF00) >> 8;
-
-                        window.currentData.MSC[this.channelNames[i]][0] = data.hosts[collector].digitizers[digitizer];
-
-                    }
-                    
-                }.bind(this), 'application/json');
-            }
-*/
 
             //grab the whole DAQ table in memory
             'buildHostmap' : function(){
