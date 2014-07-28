@@ -208,63 +208,8 @@ The tooltip for detector elements is handled by the event listeners Kineitc expo
 ##JSON Services & Callbacks
 All detector components rely on being able to acquire live information about detector thresholds and scalar rates from URLs serving JSON that obey the spec below.  The `<host>:<port>/<route>?<queryString>` strings for these services are exacty the string elements of `URLs[i]` discussed above in the context of `lifecycle.created`.
 
-###Threshold Service
-Present detector threshold levels must be reported at `<host>:<port>/<route>` via the following JSON:
-
-```
-{
-    parameters: {
-        thresholds: {
-            <channel code 0> : <threshold 0 in ADC units>,
-            <channel code 1> : <threshold 1 in ADC units>,
-            ...
-        }
-    }
-}
-```
-
-where `<channel code n>` is the 10 character channel code defined in the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).  Other parallel information may be packed in this object, as long as the structure above is present.
-
-`parseThreshold()` will take the above structure and sort it into `window.currentData.threshold` as:
-```
-window.currentData.threshold = {
-        <channel code 0> : <threshold 0 in ADC units>,
-        <channel code 1> : <threshold 1 in ADC units>,
-        ...
-}
-```
-
-###Rate Service
-Present detector scalar rates must be reported at `<host>:<port>/<route>` via the following JSON:
-
-```
-{
-    <key 0>: {
-        <channel code 0> : <rate 0 in Hz>,
-        <channel code 1> : <rate 1 in Hz>,
-        ...
-    },
-
-    <key 1>: {
-        <channel code 2> : <rate 2 in Hz>,
-        <channel code 3> : <rate 3 in Hz>,
-        ...
-    }
-}
-```
-
-where `<channel code n>` is the 10 character channel code defined in the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).  `<key n>` can be any valid key name, and any number of these groups can be declared.
-
-`parseRate()` will take the above structure and sort it into `window.currentData.rate` as:
-```
-window.currentData.rate = {
-        <channel code 0> : <rate 0 in Hz>,
-        <channel code 1> : <rate 1 in Hz>,
-        <channel code 2> : <rate 2 in Hz>,
-        <channel code 3> : <rate 3 in Hz>,
-        ...
-}
-```
+###Rates & Thresholds
+Rates and thresholds are reported directly from the DAQ nodes, as specified in the [DAQ documentation](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/DAQ#daq-communication).
 
 ###HV Service
 Present detector HV is scraped from the `Equipment/HV-*` directories of the ODB being served at `this.MIDAS`.  The correct format for these directories is generated automatically by [this MIDAS HV frontend](https://github.com/GRIFFINCollaboration/MIDASfrontends); the only setup requirements are that HV frontends be consecutively named `HV-0`, `HV-1`..., and HV channel names as registered on the crate must use the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).
