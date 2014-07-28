@@ -8,19 +8,38 @@ The main design evolution in Mark II over the original griffin.js is a dramatica
 As always, the GRIFFIN Collaboration's web apps support Chrome and Firefox.
 
 ##Setup
-Setup of Mark II is designed to be as easy as possible, thanks to the power of [node](http://nodejs.org/).  After installing node (it even comes with [npm](https://www.npmjs.org/) these days), in the root directory of MarkII do
+GRIFFIN's software control infrastructure consists of two layers: a main MIDAS experiment on grsmid00 plus an independent state of health experiment on grifsoh00, and the web interface layer provided by Mark II.  The following is a minimal setup and configuration procedure for this control layer.
 
+###MIDAS Experiments
+####Main Experiment
+#####MIDAS Install
+ - Install MIDAS per their instructions; confirmed working commit 30c93027ddad0cdf5e697fd55b9d50618eabcf1f.  On grsmid00, this should already be available in `/opt/midas`
+ - Modify web security.  Open `src/mhttpd.cxx`, and change
 ```
-npm install
+    rsprintf("Access-Control-Allow-Origin: *\r\n");
+```    
+to
 ```
+   rsprintf("Access-Control-Allow-Credentials: true\r\n");
+   rsprintf("Access-Control-Allow-Origin: http://<host serving MarkII>:2154\r\n");
+```
+Then in `odbedit`, use `passwd` to configure MIDAS security as usual.  You will now be able to make credentialed requests through the dashboard.
 
-and all the dependencies will resolve and install; then to launch the app, do
+#####Frontends
+ - Set up HV frontends for each CAEN HV crate.  [The CAEN frontend found here](https://github.com/GRIFFINCollaboration/MIDASfrontends) needs to be built and run, one copy each for each CAEN high voltage crate being used.  These frontends must be named `HV-0`, `HV-1`, `HV-2`..., and they rely on version >= 5.22 of CAEN's HV wrapper library.
+ - Set up clock frontends.  Same as for the HV frontends, except each clock frontend (in the same repo) should be called `GRIF-Clk0`, ..., `GRIF-Clk24`.
 
-```
-node griffin.js
-```
+####State of Health Experiment
+An independent MIDAS experiment running nominally on `grifsoh00`.  Set up Agilent, Epics and VME frontends as per the documentation in [the SOH repo](https://github.com/GRIFFINCollaboration/GRIFFIN-SOH).
 
-And voila!  Visit `host:2154/GRIFFIN` to see the GRIFFIN summary; full route directory as follows:
+###Web Interface
+Visualization and control of GRIFFIN experiments is centralized in a web interface by [Mark II](https://github.com/BillMills/griffinMarkII).  To install and setup:
+ - Check out the latest release of Mark II from the GRIFFIN collaboration repo.
+ - in the base directory of Mark II, do `npm install`
+ - now do `node griffin.js`, and the dashboard will serve on port 2154.
+ - optionally (and this is set up on grsmid00), do `forever start griffin.js`, and the `forever` utility will make sure the dashboard stays up.  Stop with `forever stop 0` (or whatever process number corresponds to `griffin.js`, check with `forever list`, it's the number in [] in the `uid` column).
+
+Route map for Mark II:
 
 Utilities
  - `/Clocks` atomic clock control
@@ -39,32 +58,21 @@ Detectors
  - `/SPICE`
  - `/ZDS`
 
-###With Added Security
-MarkII scrapes a lot of stuff from MIDAS' ODB, and if you don't want the whole universe messing with your experiment, you'll want to set up the usual MIDAS security.  On the machine running your experiment:
+###Experiment Configuration
+Some config steps need to be in order for everything to run smoothly.
 
-```
-odbedit
-passwd
-```
+####HV
+On the CAEN crates directly, the HV channels need to be named via the [standard nomenclature](https://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).  Everything else is automatically detected once the HV frontends discussed above are up and running.
 
-and your experiment will be password protected.  But, now all of MarkII's requests will bounce.  To fix this, head into your midas source, open `src/mhttpd.cxx`, and change
+####DAQ
+Each GRIFFIN experiment must have a correctly built MSC table, registered in the main ODB at `/DAQ/MSC`, and discussed in greater detail in the [DAQ documentation](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/DAQ).  Mark II's MSC helper tool, available at `/MSCbuilder`, will help automatically configure this table via the [canonical DAQ configuration]().  **You are expected to follow the canonical DAQ configuration exactly.** When plugging physical channels into the DAQ, have a look at the `/DAQ` visualization to help follow what detectors should be plugged into what DAQ channels.  If modifications from this scheme are necessary, making the corresponding changes to the table in `/DAQ/MSC` will allow the web layer to correctly reflect these customizations.
 
-    rsprintf("Access-Control-Allow-Origin: *\r\n");
-    
-to
+In addition to `/DAQ/MSC`, `/DAQ/hosts` must also be configured correctly, by populating it with the host names of each DAQ node; see the same DAQ documentation linked above for more details.
 
-```
-   rsprintf("Access-Control-Allow-Credentials: true\r\n");
-   rsprintf("Access-Control-Allow-Origin: http://<host serving MarkII>:2154\r\n");
-```
+####Filter & PPG
+Ensure the [filter](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/Filter#odb-filter-encoding) and [PPG](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/PPG#ppg-odb-spec) ODB structures are in place and populated sensibly, per the documentation linked.
 
-Now visit your experiment's MIDAS status page, login, and you will have the credentials to allow MarkII to talk to the ODB.
 
-###MIDAS Frontends
-Some dashboard widgets communicate with MIDAS' ODB, and expect certain frontends to be alive and well:
-
-####CAEN HV
-[The CAEN frontend found here](https://github.com/GRIFFINCollaboration/MIDASfrontends) needs to be built and run, one copy each for each CAEN high voltage crate being used.  These frontends must be named `HV-0`, `HV-1`, `HV-2`..., and they rely on version >= 5.22 of CAEN's HV wrapper library.
 
 ##For Developers
 
