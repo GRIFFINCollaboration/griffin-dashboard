@@ -296,7 +296,7 @@ app.post('/powerCycleVME', function(req, res){
 					exec("curl '"+req.body.host+"/?cmd=jset&odb=Equipment/VME-0"+req.body.VMEindex+"/Settings/EnableControl&value=0'", function(error, stdout, stderr){})
 				})
 			}, 30000);
-		}
+		})
 	});
 */
 
