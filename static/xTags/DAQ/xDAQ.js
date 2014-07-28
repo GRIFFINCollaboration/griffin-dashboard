@@ -232,7 +232,7 @@
                         }
                     }
                 }
-
+console.log(window.currentData.hostList)
                 //send arraybuffer XHR requests to each of some list of URLS;
                 //callback unpacks bytes into window.currentData rates and thresholds.
                 for(i=0; i<window.currentData.hostList.length; i++){
