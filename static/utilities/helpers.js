@@ -206,10 +206,10 @@ function toggleSection(id){
 //extract the ith block out of a dataview object constructed from the arraybuffer returned by a DAQ element:
 function unpackDAQ(i, dv){
     var blockLength = 14,
-        thresholdPos = 0,
-        trigAcptPos = 4,
-        trigReqPos = 8,
-        MSCPos = 12,
+        thresholdPos = 10,
+        trigAcptPos = 6,
+        trigReqPos = 2,
+        MSCPos = 0,
         unpacked = {};
 
     unpacked.threshold  = dv.getInt32(i*blockLength + thresholdPos, true);

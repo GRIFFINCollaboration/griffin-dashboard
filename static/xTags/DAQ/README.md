@@ -66,9 +66,14 @@ A GRIFFIN DAQ node with network address `baz.triumf.ca` posts data as an [ArrayB
 http://baz.triumf.ca/report
 ```
 
-The buffer is packed as follows:
+The buffer is packed as follows (little-endian):
+ - byte 0-1: MSC (16 bit unsigned int) 
+ - byte 2-5: trigger request rate (32 bit float)
+ - byte 6-9: trigger accept rate (32 bit float)
+ - byte 10-13: threshold (32 bit float)
 
-TBD.
+ These objects should be unpacked using `unpackDAQ` from `utilities/helpers.js`.
+
 
 Entries for all MSC addresses below the position held by `baz.triumf.ca` are packed into the returned ArrayBuffer; therefore, querying a collector should return the same data as querying all the digitizers is collects, and querying master should return the data for every channel in the DAQ.
 
