@@ -4,9 +4,7 @@
         extends: 'detector-template',
         lifecycle: {
             created: function() {
-                var URLs = [this.thresholdServer,    //threshold server
-                            this.rateServer,             //rate server
-                            'http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
+                var URLs = ['http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
                     i;
 
                 //deploy the standard stuff
@@ -49,12 +47,6 @@
         },
         accessors: {
             'MIDAS':{
-                attribute: {} //this just needs to be declared
-            },
-            'rateServer':{
-                attribute: {} //this just needs to be declared
-            },
-            'thresholdServer':{
                 attribute: {} //this just needs to be declared
             }
         }, 
