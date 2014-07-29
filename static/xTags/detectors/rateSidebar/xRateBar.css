@@ -8,7 +8,7 @@ widget-rateBar{
 	overflow: auto;
 }
 
-ul li{
+widget-ratebar ul li{
 	font-size: 100%;
 	line-height: 200%;
 	clear:both;
