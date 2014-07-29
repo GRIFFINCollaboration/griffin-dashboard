@@ -280,7 +280,7 @@ function getRunSummary(host){
                 }
 
                 //trigger
-                document.getElementById('triggerEvents').innerHTML = window.currentData.ODB.Trigger['Events sent'].toFixed();
+                document.getElementById('triggerEvents').innerHTML = prettyNumber(window.currentData.ODB.Trigger['Events sent']);
                 document.getElementById('triggerEventsPerSec').innerHTML = window.currentData.ODB.Trigger['Events per sec.'].toFixed();
                 document.getElementById('triggerDataPerSec').innerHTML = window.currentData.ODB.Trigger['kBytes per sec.'].toFixed();
             }

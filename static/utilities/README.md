@@ -41,6 +41,9 @@ Returns a `Kinetic.Line` object in the shape of an arrow, with origin at canvas 
 ####`longestWord(phrase)`
 Given a string `phrase`, returns the longest substring delimited by spaces.
  
+####`prettyNumber(value)`
+Takes a number `value`, and returns a string representation of it with a sensible unit (currently M or k).
+
 ####`radioArray(parentElt, labelText, values, groupName)`
 Appends to a DOM element `parentElt` one radio button and corresponding label for each string in the array `labelText`; `values` is an array containing the value of each radio button, and `groupName` is used as the name of each radio button; `groupName+i` is the id of the ith button.
 

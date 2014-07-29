@@ -219,3 +219,16 @@ function unpackDAQ(i, dv){
 
     return unpacked;
 }
+
+//turn a number into a string with a sensible unit
+function prettyNumber(val){
+    var pretty
+
+    if(val>1000000){
+        pretty = (val / 1000000).toFixed(3) + 'M'
+    } else if(val>1000){
+        pretty = (val / 1000000).toFixed(3) + 'k'
+    }
+
+    return pretty;
+}
