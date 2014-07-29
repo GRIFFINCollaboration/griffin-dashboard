@@ -5,7 +5,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var exptTitle = document.createElement('h2')
+                var exptTitle = document.createElement('h1')
                 ,   runDetail = document.createElement('ul')
                 ,   runNumber = document.createElement('li')
                 ,   startTime = document.createElement('li')

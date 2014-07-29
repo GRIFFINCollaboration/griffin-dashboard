@@ -47,3 +47,7 @@ widget-status ul#statusMessageList li:nth-child(odd){
 widget-status td{
 	padding-left: 1em;
 }
+
+li#statusNumber{
+	font-size: 150%
+}
