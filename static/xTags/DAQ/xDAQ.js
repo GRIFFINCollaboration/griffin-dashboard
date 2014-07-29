@@ -705,7 +705,7 @@
 
                     channelIndex = window.currentData.DAQ.MSC.MSC.indexOf(MSC);
                     channelName = window.currentData.DAQ.MSC.chan[channelIndex];
-
+console.log([channelIndex, channelName])
                     //sum the data by digitizer and by collector, and by detector per collector
                     collectorIndex = ((0xF << 12) & MSC) >> 12;
                     digitizerIndex = ((0xF << 8) & MSC) >> 8;
