@@ -98,7 +98,7 @@ app.get('/Filter', function(req, res){
 app.get('/Shack', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/Shack.jade', {SOH:SOH});
+	res.render('widgets/Shack.jade', {MIDAS:MIDAS, SOH:SOH});
 });
 
 app.get('/MSCbuilder', function(req, res){
