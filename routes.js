@@ -11,7 +11,7 @@ app.get('/HV', function(req, res){
 app.get('/GRIFFIN', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/GRIFFIN.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('detectors/GRIFFIN.jade', {MIDAS:MIDAS, SOH:SOHdash});
 });
 
 app.get('/SPICE', function(req, res){
@@ -24,12 +24,12 @@ app.get('/SPICE', function(req, res){
 
 		for(i=0; i<cells.length; i++){
 			if(cells[i].indexOf('SPZ') != -1)
-				return res.render('detectors/SPICE.jade', {"SPICEaux": "S2", MIDAS:MIDAS, SOH:SOH});
+				return res.render('detectors/SPICE.jade', {"SPICEaux": "S2", MIDAS:MIDAS, SOH:SOHdash});
 			else if(cells[i].indexOf('SPE') != -1)
-				return res.render('detectors/SPICE.jade', {"SPICEaux": "S3", MIDAS:MIDAS, SOH:SOH});				
+				return res.render('detectors/SPICE.jade', {"SPICEaux": "S3", MIDAS:MIDAS, SOH:SOHdash});				
 		}
 
-		return res.render('detectors/SPICE.jade', {"SPICEaux": null, MIDAS:MIDAS, SOH:SOH});  //S2 hardcoded in for testing, should be null
+		return res.render('detectors/SPICE.jade', {"SPICEaux": null, MIDAS:MIDAS, SOH:SOHdash});  //S2 hardcoded in for testing, should be null
 	});
 
 	
@@ -38,73 +38,73 @@ app.get('/SPICE', function(req, res){
 app.get('/PACES', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/PACES.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('detectors/PACES.jade', {MIDAS:MIDAS, SOH:SOHdash});
 });
 
 app.get('/DESCANT', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/DESCANT.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('detectors/DESCANT.jade', {MIDAS:MIDAS, SOH:SOHdash});
 });
 
 app.get('/DANTE-PMT', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, SOH:SOH, readout:'PMT'});
+	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, SOH:SOHdash, readout:'PMT'});
 });
 
 app.get('/DANTE-TAC', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, SOH:SOH, readout:'TAC'});
+	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, SOH:SOHdash, readout:'TAC'});
 });
 
 app.get('/SCEPTAR', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/SCEPTAR.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('detectors/SCEPTAR.jade', {MIDAS:MIDAS, SOH:SOHdash});
 });
 
 app.get('/ZDS', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, SOH:SOHdash});
 });
 
 app.get('/DAQ', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/DAQ.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('widgets/DAQ.jade', {MIDAS:MIDAS, SOH:SOHdash});
 });
 
 app.get('/PPG', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/PPG.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('widgets/PPG.jade', {MIDAS:MIDAS, SOH:SOHdash});
 });
 
 app.get('/Clocks', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/Clock.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('widgets/Clock.jade', {MIDAS:MIDAS, SOH:SOHdash});
 });
 
 app.get('/Filter', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/Filter.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('widgets/Filter.jade', {MIDAS:MIDAS, SOH:SOHdash});
 });
 
 app.get('/Shack', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/Shack.jade', {MIDAS:MIDAS, SOH:'grifsoh00.triumf.ca:2154'});
+	res.render('widgets/Shack.jade', {MIDAS:MIDAS, SOHdash:SOHdash, SOHmhttpd:SOHmhttpd});
 });
 
 app.get('/MSCbuilder', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/MSCbuilder.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('widgets/MSCbuilder.jade', {MIDAS:MIDAS});
 });
 
 ///////////////////////////////////////
