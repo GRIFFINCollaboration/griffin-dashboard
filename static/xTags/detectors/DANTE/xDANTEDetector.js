@@ -14,8 +14,9 @@
                                         'DAS05XN00X', 'DAS06XN00X', 'DAS07XN00X', 'DAS08XN00X'
                                     ]
                 //DANTE has special views, define them by hand first
-                this.views = ['HV', 'Threshold', 'Rate', 'TAC-Threshold', 'TAC-Rate'];
-                this.units = ['V', 'ADC Units', 'Hz', 'ADC Units', 'Hz'];
+                this.views = ['HV', 'Threshold', 'reqRate', 'acptRate', 'TAC-Threshold', 'TACreqRate', 'TACacptRate'];
+                this.viewLabels = ['HV', 'Threshold', 'Trig Request Rate', 'Trig Accept Rate', 'TAC Threshold', 'TAC Trig Request Rate', 'TAC Trig Accept Rate'];
+                this.units = ['V', 'ADC Units', 'Hz', 'Hz', 'ADC Units', 'Hz', 'Hz']
                 initializeDetector.bind(this, 'DANTE', 'DANTE')();
 
                 //////////////////////////////////////
