@@ -3,19 +3,19 @@
 ///////////////////////////////////////
 
 app.get('/HV', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 
 	res.render('widgets/HV.jade');
 });
 
 app.get('/GRIFFIN', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/GRIFFIN.jade', {MIDAS:'grsmid00.triumf.ca:8082'});
+	res.render('detectors/GRIFFIN.jade', {MIDAS:MIDAS});
 });
 
 app.get('/SPICE', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	//scrape the MSC table to decide which if any auxiliaries are present
 	exec('odbedit -c "ls /DAQ/MSC/chan"', function(error, stdout, stderr){
@@ -36,61 +36,61 @@ app.get('/SPICE', function(req, res){
 });
 
 app.get('/PACES', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/PACES.jade');
 });
 
 app.get('/DESCANT', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/DESCANT.jade');
+	res.render('detectors/DESCANT.jade', {MIDAS:MIDAS});
 });
 
 app.get('/SCEPTAR', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/SCEPTAR.jade');
 });
 
 app.get('/ZDS', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/ZDS.jade');
 });
 
 app.get('/DAQ', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/DAQ.jade');
 });
 
 app.get('/PPG', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/PPG.jade');
 });
 
 app.get('/Clocks', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/Clock.jade');
 });
 
 app.get('/Filter', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/Filter.jade');
 });
 
 app.get('/Shack', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/Shack.jade');
 });
 
 app.get('/MSCbuilder', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/MSCbuilder.jade');
 });

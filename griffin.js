@@ -1,4 +1,4 @@
-MIDAS 		= 'http://grsmid00.triumf.ca:8082'			//wherever mhttpd is serving
+MIDAS 		= 'grsmid00.triumf.ca:8082'			//wherever mhttpd is serving
 express 	= require("express");		
 app 		= express();				
 minify 		= require('express-minify');				//minification tool
