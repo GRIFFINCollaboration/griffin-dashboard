@@ -428,7 +428,8 @@
                     this.cells[cellName].setAttr('strokeWidth', 6);
                     if(this.shuffleCell(cellName))
                         this.cells[cellName].moveToTop();
-                    this.HVlayer[this.displayIndex].draw()
+                    if(this.HVlayer)
+                        this.HVlayer[this.displayIndex].draw()
                 }
 
 
