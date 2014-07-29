@@ -6,19 +6,24 @@
             created: function() {
                 var URLs = ['http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
 
+                if(this.readout == 'PMT')
+                    this.suffix = 'N00X';
+                else
+                    this.suffix = 'T00X'
+
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
-                this.channelNames = [   'DAL01XN00X', 'DAL02XN00X', 'DAL03XN00X', 'DAL04XN00X',
-                                        'DAL05XN00X', 'DAL06XN00X', 'DAL07XN00X', 'DAL08XN00X',
-                                        'DAS01XN00X', 'DAS02XN00X', 'DAS03XN00X', 'DAS04XN00X',
-                                        'DAS05XN00X', 'DAS06XN00X', 'DAS07XN00X', 'DAS08XN00X'
+                this.channelNames = [   'DAL01X' + this.suffix, 'DAL02X' + this.suffix, 'DAL03X' + this.suffix, 'DAL04X' + this.suffix,
+                                        'DAL05X' + this.suffix, 'DAL06X' + this.suffix, 'DAL07X' + this.suffix, 'DAL08X' + this.suffix,
+                                        'DAS01X' + this.suffix, 'DAS02X' + this.suffix, 'DAS03X' + this.suffix, 'DAS04X' + this.suffix,
+                                        'DAS05X' + this.suffix, 'DAS06X' + this.suffix, 'DAS07X' + this.suffix, 'DAS08X' + this.suffix
                                     ]
                 //DANTE has special views, define them by hand first
-                this.views = ['HV', 'Threshold', 'reqRate', 'acptRate', 'TAC-Threshold', 'TACreqRate', 'TACacptRate'];
-                this.viewLabels = ['HV', 'Threshold', 'Trig Request Rate', 'Trig Accept Rate', 'TAC Threshold', 'TAC Trig Request Rate', 'TAC Trig Accept Rate'];
-                this.units = ['V', 'ADC Units', 'Hz', 'Hz', 'ADC Units', 'Hz', 'Hz']
-                initializeDetector.bind(this, 'DANTE', 'DANTE')();
-                this.currentView = this.views[3];;
+                this.views = ['HV', 'Threshold', 'reqRate', 'acptRate'];
+                this.viewLabels = ['HV', 'Threshold', 'Trigger Request Rate', 'Trigger Accept Rate'];
+                this.units = ['V', 'ADC Units', 'Hz', 'Hz']
+                initializeDetector.bind(this, 'DANTE', 'DANTE'+this.readout)();
+
 
                 //////////////////////////////////////
                 //DANTE specific drawing parameters
@@ -55,7 +60,12 @@
         accessors: {
             'MIDAS':{
                 attribute: {} //this just needs to be declared
+            },
+
+            'readout':{
+                attribute: {} //this just needs to be declared
             }
+
         }, 
         methods: {
             'instantiateCells': function(){
@@ -82,7 +92,7 @@
                     Y = this.detCenterY[i];
 
                     //BGO
-                    this.cells['DAS0'+(i+1)+'XN00X'] = new Kinetic.Circle({
+                    this.cells['DAS0'+(i+1)+'X'+this.suffix] = new Kinetic.Circle({
                         radius: this.outerBGORad,
                         x: X,
                         y: Y,
@@ -106,7 +116,7 @@
                     });
 
                     //LaBr
-                    this.cells['DAL0'+(i+1)+'XN00X'] = new Kinetic.Circle({
+                    this.cells['DAL0'+(i+1)+'X'+this.suffix] = new Kinetic.Circle({
                         radius: this.LaBrRad,
                         x: X,
                         y: Y,
@@ -120,12 +130,12 @@
                     });
 
                     //set up the tooltip listeners:
-                    this.cells['DAS0'+(i+1)+'XN00X'].on('mouseover', this.writeTooltip.bind(this, 8+i) );
-                    this.cells['DAL0'+(i+1)+'XN00X'].on('mouseover', this.writeTooltip.bind(this, i) );
-                    this.cells['DAS0'+(i+1)+'XN00X'].on('mousemove', this.moveTooltip.bind(this) );
-                    this.cells['DAL0'+(i+1)+'XN00X'].on('mousemove', this.moveTooltip.bind(this) );
-                    this.cells['DAS0'+(i+1)+'XN00X'].on('mouseout', this.writeTooltip.bind(this, -1));
-                    this.cells['DAL0'+(i+1)+'XN00X'].on('mouseout', this.writeTooltip.bind(this, -1));
+                    this.cells['DAS0'+(i+1)+'X'+this.suffix].on('mouseover', this.writeTooltip.bind(this, 8+i) );
+                    this.cells['DAL0'+(i+1)+'X'+this.suffix].on('mouseover', this.writeTooltip.bind(this, i) );
+                    this.cells['DAS0'+(i+1)+'X'+this.suffix].on('mousemove', this.moveTooltip.bind(this) );
+                    this.cells['DAL0'+(i+1)+'X'+this.suffix].on('mousemove', this.moveTooltip.bind(this) );
+                    this.cells['DAS0'+(i+1)+'X'+this.suffix].on('mouseout', this.writeTooltip.bind(this, -1));
+                    this.cells['DAL0'+(i+1)+'X'+this.suffix].on('mouseout', this.writeTooltip.bind(this, -1));
 
                     //set up onclick listeners:
                     this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );

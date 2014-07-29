@@ -47,10 +47,16 @@ app.get('/DESCANT', function(req, res){
 	res.render('detectors/DESCANT.jade', {MIDAS:MIDAS});
 });
 
-app.get('/DANTE', function(req, res){
+app.get('/DANTE-PMT', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/DANTE.jade', {MIDAS:MIDAS});
+	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, readout='PMT'});
+});
+
+app.get('/DANTE-TAC', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+	
+	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, readout='TAC'});
 });
 
 app.get('/SCEPTAR', function(req, res){
