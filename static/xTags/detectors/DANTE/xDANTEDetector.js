@@ -167,7 +167,16 @@
 
                 //add the layers to the stage
                 this.stage[0].add(this.mainLayer[0]);
+            },
+
+            //outer rings shouldn't be reordered onclick
+            'shuffleCell' : function(cellName){
+                if( (cellName.slice(0,3) == 'DAS'))
+                    return false;
+                else
+                    return true;
             }
+
         }
     });
 
