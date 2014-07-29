@@ -11,7 +11,7 @@ app.get('/HV', function(req, res){
 app.get('/GRIFFIN', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect(MIDAS)
 	
-	res.render('detectors/GRIFFIN.jade');
+	res.render('detectors/GRIFFIN.jade', {MIDAS:'grsmid00.triumf.ca:8082'});
 });
 
 app.get('/SPICE', function(req, res){
