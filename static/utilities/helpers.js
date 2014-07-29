@@ -225,9 +225,9 @@ function prettyNumber(val){
     var pretty
 
     if(val>1000000){
-        pretty = (val / 1000000).toFixed(3) + 'M'
+        pretty = (val / 1000000).toFixed(3) + ' M'
     } else if(val>1000){
-        pretty = (val / 1000000).toFixed(3) + 'k'
+        pretty = (val / 1000000).toFixed(3) + ' k'
     }
 
     return pretty;

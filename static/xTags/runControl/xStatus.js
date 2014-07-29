@@ -22,12 +22,15 @@
                 ,   triggerEventRow = document.createElement('tr')
                 ,   triggerEPSrow = document.createElement('tr')
                 ,   triggerDPSrow = document.createElement('tr')
+                ,   loggerRow = document.createElement('tr')
                 ,   triggerEventTitle = document.createElement('td')
                 ,   triggerEventVal = document.createElement('td')
                 ,   triggerEPSTitle = document.createElement('td')
                 ,   triggerEPSVal = document.createElement('td')
                 ,   triggerDPSTitle = document.createElement('td')
                 ,   triggerDPSVal = document.createElement('td')
+                ,   loggerTitle = document.createElement('td')
+                ,   loggerVal = document.createElement('td')
                 ,   messageTitle = document.createElement('h3')
                 ,   messageWrap = document.createElement('div')
                 ,   messageList = document.createElement('ul')
@@ -93,6 +96,7 @@
                 triggerTable.appendChild(triggerEventRow)
                 triggerTable.appendChild(triggerEPSrow)
                 triggerTable.appendChild(triggerDPSrow)
+                triggerTable.appendChild(loggerRow)
                 triggerEventTitle.innerHTML = 'Events: ';
                 triggerEventVal.setAttribute('id', 'triggerEvents');
                 triggerEventRow.appendChild(triggerEventTitle);
@@ -105,6 +109,10 @@
                 triggerDPSVal.setAttribute('id', 'triggerDataPerSec');
                 triggerDPSrow.appendChild(triggerDPSTitle);
                 triggerDPSrow.appendChild(triggerDPSVal);
+                loggerTitle.innerHTML = 'GB Written: ';
+                loggerVal.setAttribute('id', 'dataRecorded');
+                loggerRow.appendChild(loggerTitle);
+                loggerRow.appendChild(loggerVal);
 
                 //message list
                 messageWrap.setAttribute('class', 'expand');
@@ -227,6 +235,7 @@ function getRunSummary(host){
             window.currentData.ODB.Experiment = data[0];
             window.currentData.ODB.Runinfo = data[1];
             window.currentData.ODB.Trigger = data[2];
+            window.currentData.ODB.Logger  = data[3];
 
             //check to make sure the requisite buffers exist before populating all the fields
             if(window.currentData.ODB.Experiment && window.currentData.ODB.Runinfo && window.currentData.ODB.Trigger){
@@ -283,6 +292,7 @@ function getRunSummary(host){
                 document.getElementById('triggerEvents').innerHTML = prettyNumber(window.currentData.ODB.Trigger['Events sent']);
                 document.getElementById('triggerEventsPerSec').innerHTML = window.currentData.ODB.Trigger['Events per sec.'].toFixed();
                 document.getElementById('triggerDataPerSec').innerHTML = window.currentData.ODB.Trigger['kBytes per sec.'].toFixed();
+                document.getElementById('dataRecorded').innerHTML = (window.currentData.ODB.Logger['Bytes written']/1048576).toFixed(3);
             }
 
         }
@@ -290,6 +300,6 @@ function getRunSummary(host){
     }
     xmlhttp.withCredentials = true;
     //fire async
-    xmlhttp.open('GET', 'http://'+host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&encoding=json-nokeys');
+    xmlhttp.open('GET', 'http://'+host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&odb3=Logger/Channels/0/Statistics/&encoding=json-nokeys');
     xmlhttp.send();
 }
