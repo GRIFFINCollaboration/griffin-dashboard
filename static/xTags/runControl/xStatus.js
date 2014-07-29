@@ -98,7 +98,7 @@
                 triggerEventRow.appendChild(triggerEPSTitle);
                 triggerEventRow.appendChild(triggerEventVal);
                 triggerEPSTitle.innerHTML = 'Events / s: ';
-                triggerEPSVal.setAttribute('id', triggerEventsPerSec);
+                triggerEPSVal.setAttribute('id', 'triggerEventsPerSec');
                 triggerEPSrow.appendChild(triggerEPSTitle);
                 triggerEPSrow.appendChild(triggerEPSVal);
                 triggerDPSTitle.innerHTML = 'kB / s: ';
