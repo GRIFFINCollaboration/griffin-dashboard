@@ -8,10 +8,10 @@
 
                 this.baseURL = 'http://'+window.location.host;
                 //local routes here:
-                this.routes = ['HV', 'DAQ', 'PPG', 'Clocks', 'Filter'];
+                this.routes = ['HV', 'DAQ', 'PPG', 'Clocks', 'Filter', 'Shack'];
                 //hard-coded external routes here:
-                this.hardRoutes = ['http://'+this.SOH+'/Shack'];
-                this.hardRouteNames = ['Shack'];
+                this.hardRoutes = [];
+                this.hardRouteNames = [];
                 this.present = (window.location+'').slice( (window.location+'').lastIndexOf('/') + 1);
 
                 //get the DAQ structure, use it to decide which detectors need to be linked
@@ -57,9 +57,6 @@
         },
         accessors: {
             'MIDAS':{
-                attribute: {} //this just needs to be declared
-            },
-            'SOH':{
                 attribute: {} //this just needs to be declared
             }
         }, 

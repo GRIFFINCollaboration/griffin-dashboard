@@ -11,7 +11,7 @@ app.get('/HV', function(req, res){
 app.get('/GRIFFIN', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/GRIFFIN.jade', {MIDAS:MIDAS, SOH:SOHdash});
+	res.render('detectors/GRIFFIN.jade', {MIDAS:MIDAS});
 });
 
 app.get('/SPICE', function(req, res){
@@ -24,12 +24,12 @@ app.get('/SPICE', function(req, res){
 
 		for(i=0; i<cells.length; i++){
 			if(cells[i].indexOf('SPZ') != -1)
-				return res.render('detectors/SPICE.jade', {"SPICEaux": "S2", MIDAS:MIDAS, SOH:SOHdash});
+				return res.render('detectors/SPICE.jade', {"SPICEaux": "S2", MIDAS:MIDAS});
 			else if(cells[i].indexOf('SPE') != -1)
-				return res.render('detectors/SPICE.jade', {"SPICEaux": "S3", MIDAS:MIDAS, SOH:SOHdash});				
+				return res.render('detectors/SPICE.jade', {"SPICEaux": "S3", MIDAS:MIDAS});				
 		}
 
-		return res.render('detectors/SPICE.jade', {"SPICEaux": null, MIDAS:MIDAS, SOH:SOHdash});  //S2 hardcoded in for testing, should be null
+		return res.render('detectors/SPICE.jade', {"SPICEaux": null, MIDAS:MIDAS});  //S2 hardcoded in for testing, should be null
 	});
 
 	
@@ -38,67 +38,67 @@ app.get('/SPICE', function(req, res){
 app.get('/PACES', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/PACES.jade', {MIDAS:MIDAS, SOH:SOHdash});
+	res.render('detectors/PACES.jade', {MIDAS:MIDAS});
 });
 
 app.get('/DESCANT', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/DESCANT.jade', {MIDAS:MIDAS, SOH:SOHdash});
+	res.render('detectors/DESCANT.jade', {MIDAS:MIDAS});
 });
 
 app.get('/DANTE-PMT', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, SOH:SOHdash, readout:'PMT'});
+	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, readout:'PMT'});
 });
 
 app.get('/DANTE-TAC', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, SOH:SOHdash, readout:'TAC'});
+	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, readout:'TAC'});
 });
 
 app.get('/SCEPTAR', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/SCEPTAR.jade', {MIDAS:MIDAS, SOH:SOHdash});
+	res.render('detectors/SCEPTAR.jade', {MIDAS:MIDAS});
 });
 
 app.get('/ZDS', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, SOH:SOHdash});
+	res.render('detectors/ZDS.jade', {MIDAS:MIDAS});
 });
 
 app.get('/DAQ', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/DAQ.jade', {MIDAS:MIDAS, SOH:SOHdash});
+	res.render('widgets/DAQ.jade', {MIDAS:MIDAS});
 });
 
 app.get('/PPG', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/PPG.jade', {MIDAS:MIDAS, SOH:SOHdash});
+	res.render('widgets/PPG.jade', {MIDAS:MIDAS});
 });
 
 app.get('/Clocks', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/Clock.jade', {MIDAS:MIDAS, SOH:SOHdash});
+	res.render('widgets/Clock.jade', {MIDAS:MIDAS});
 });
 
 app.get('/Filter', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/Filter.jade', {MIDAS:MIDAS, SOH:SOHdash});
+	res.render('widgets/Filter.jade', {MIDAS:MIDAS});
 });
 
 app.get('/Shack', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/Shack.jade', {MIDAS:MIDAS, SOHdash:SOHdash, SOHmhttpd:SOHmhttpd});
+	res.render('widgets/Shack.jade', {SOH:SOH});
 });
 
 app.get('/MSCbuilder', function(req, res){
