@@ -18,6 +18,7 @@
                 this.viewLabels = ['HV', 'Threshold', 'Trig Request Rate', 'Trig Accept Rate', 'TAC Threshold', 'TAC Trig Request Rate', 'TAC Trig Accept Rate'];
                 this.units = ['V', 'ADC Units', 'Hz', 'Hz', 'ADC Units', 'Hz', 'Hz']
                 initializeDetector.bind(this, 'DANTE', 'DANTE')();
+                this.currentView = this.views[3];;
 
                 //////////////////////////////////////
                 //DANTE specific drawing parameters
