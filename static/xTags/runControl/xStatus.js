@@ -95,7 +95,7 @@
                 triggerTable.appendChild(triggerDPSrow)
                 triggerEventTitle.innerHTML = 'Events: ';
                 triggerEventVal.setAttribute('id', 'triggerEvents');
-                triggerEventRow.appendChild(triggerEPSTitle);
+                triggerEventRow.appendChild(triggerEventTitle);
                 triggerEventRow.appendChild(triggerEventVal);
                 triggerEPSTitle.innerHTML = 'Events / s: ';
                 triggerEPSVal.setAttribute('id', 'triggerEventsPerSec');
@@ -280,9 +280,9 @@ function getRunSummary(host){
                 }
 
                 //trigger
-                document.getElementById('triggerEvents').innerHTML = 'Events: ' + window.currentData.ODB.Trigger['Events sent'].toFixed();
-                document.getElementById('triggerEventsPerSec').innerHTML = 'Events / s: ' + window.currentData.ODB.Trigger['Events per sec.'].toFixed();
-                document.getElementById('triggerDataPerSec').innerHTML = 'kB / s: ' + window.currentData.ODB.Trigger['kBytes per sec.'].toFixed();
+                document.getElementById('triggerEvents').innerHTML = window.currentData.ODB.Trigger['Events sent'].toFixed();
+                document.getElementById('triggerEventsPerSec').innerHTML = window.currentData.ODB.Trigger['Events per sec.'].toFixed();
+                document.getElementById('triggerDataPerSec').innerHTML = window.currentData.ODB.Trigger['kBytes per sec.'].toFixed();
             }
 
         }
