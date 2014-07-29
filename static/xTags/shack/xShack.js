@@ -802,7 +802,7 @@
 
 			'update' : function(){
 
-				XHR(this.SOH+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys', this.routeData.bind(this), false, true);				
+				XHR(this.SOH+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys', this.routeData.bind(this));				
 			
 			}, 
 

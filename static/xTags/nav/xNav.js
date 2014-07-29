@@ -7,7 +7,9 @@
             created: function() {
 
                 this.baseURL = 'http://'+window.location.host;
-                this.routes = ['HV', 'DAQ', 'PPG', 'Clocks', 'Filter', 'Shack'];
+                this.routes = ['HV', 'DAQ', 'PPG', 'Clocks', 'Filter'];
+                this.hardRoutes = ['http://'+this.SOH+'/Shack'];
+                this.hardRouteNames = ['Shack'];
                 this.present = (window.location+'').slice( (window.location+'').lastIndexOf('/') + 1);
 
                 //get the DAQ structure, use it to decide which detectors need to be linked
@@ -19,6 +21,7 @@
 
                         this.traverseMSC(data.MSC);
 
+                        //link local routes
                         for(i=0; i<this.routes.length; i++){
                             link = document.createElement('a')
                             link.setAttribute('href', '/'+this.routes[i]);
@@ -29,6 +32,15 @@
                             link.innerHTML = this.routes[i];
                             this.appendChild(link);
                         }
+
+                        //link hard coded external routes
+                        for(i=0; i<this.hardRoutes.length; i++){
+                            link = document.createElement('a')
+                            link.setAttribute('href', this.hardRoutes[i]);
+
+                            link.innerHTML = this.hardRouteNames[i];
+                            this.appendChild(link);
+                        }                        
                         
                     }.bind(this), 
                     'application/json');
@@ -42,6 +54,9 @@
         },
         accessors: {
             'MIDAS':{
+                attribute: {} //this just needs to be declared
+            },
+            'SOH':{
                 attribute: {} //this just needs to be declared
             }
         }, 

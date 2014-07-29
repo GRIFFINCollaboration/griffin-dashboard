@@ -1,4 +1,5 @@
 MIDAS 		= 'grsmid00.triumf.ca:8082'			//wherever mhttpd is serving
+SOH			= 'grifsoh00.triumf.ca:8081'		//mhttpd for the state of health machine
 express 	= require("express");		
 app 		= express();				
 //minify 		= require('express-minify');				//minification tool

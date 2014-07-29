@@ -15,10 +15,10 @@ html
       branding-head(experiment='GRIFFIN')
 
       div(id='mainContent')
-        widget-nav(id='navBar' MIDAS='grsmid00.triumf.ca:8082')
-        widget-status(id='statusBar', MIDAS='grsmid00.triumf.ca:8082')
-        widget-shackControl(id='shackControl' SOH='http://grifsoh00.triumf.ca:8081')
-        widget-Shack(id='shack' SOH='http://grifsoh00.triumf.ca:8081')
+        widget-nav(id='navBar' MIDAS= MIDAS, SOH= SOH)
+        widget-status(id='statusBar', MIDAS= MIDAS)
+        widget-shackControl(id='shackControl' SOH= SOH)
+        widget-Shack(id='shack' SOH= SOH)
 
       div(id='push')
 
