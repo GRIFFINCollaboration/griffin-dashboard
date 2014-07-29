@@ -47,6 +47,12 @@ app.get('/DESCANT', function(req, res){
 	res.render('detectors/DESCANT.jade', {MIDAS:MIDAS});
 });
 
+app.get('/DANTE', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+	
+	res.render('detectors/DANTE.jade', {MIDAS:MIDAS});
+});
+
 app.get('/SCEPTAR', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
