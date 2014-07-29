@@ -17,6 +17,10 @@
                 ,   pause = document.createElement('button')
                 ,   resume = document.createElement('button')
                 ,   redirectKludge = document.createElement('button')
+                ,   triggerTitle = document.createElement('h3')
+                ,   triggerEvents = document.createElement('span')
+                ,   triggerEventsPerSec = document.createElement('span')
+                ,   triggerDataPerSec = document.createElement('span')
                 ,   messageTitle = document.createElement('h3')
                 ,   messageWrap = document.createElement('div')
                 ,   messageList = document.createElement('ul')
@@ -74,6 +78,16 @@
                 resume.setAttribute('onclick', 'runTransition("'+this.MIDAS+'", "Resume")');
                 document.getElementById('runControl').appendChild(resume);
                 document.getElementById('statusResume').innerHTML = 'Resume';
+
+                //trigger rates
+                triggerTitle.innerHTML = 'Trigger Stats:'
+                this.appendChild(triggerTitle);
+                triggerEvents.setAttribute('id', 'triggerEvents')
+                this.appendChild(triggerEvents)
+                triggerEventsPerSec.setAttribute('id', 'triggerEventsPerSec')
+                this.appendChild(triggerEventsPerSec)
+                triggerDataPerSec.setAttribute('id', 'triggerDataPerSec')
+                this.appendChild(triggerDataPerSec)
 
                 //message list
                 messageWrap.setAttribute('class', 'expand');
@@ -195,9 +209,10 @@ function getRunSummary(host){
                 window.currentData.ODB = {};
             window.currentData.ODB.Experiment = data[0];
             window.currentData.ODB.Runinfo = data[1];
+            window.currentData.ODB.Trigger = data[2];
 
             //check to make sure the requisite buffers exist before populating all the fields
-            if(window.currentData.ODB.Experiment && window.currentData.ODB.Runinfo){
+            if(window.currentData.ODB.Experiment && window.currentData.ODB.Runinfo && window.currentData.ODB.Trigger){
 
                 runNumber = 'Run ' + window.currentData.ODB.Runinfo['Run number'];
                 //show different stuff depending on run state:
@@ -246,6 +261,11 @@ function getRunSummary(host){
                     seconds = Math.floor(uptime%60);
                     document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
                 }
+
+                //trigger
+                document.getElementById('triggerEvents').innerHTML = 'Events: ' + window.currentData.ODB.Trigger['Events sent'];
+                document.getElementById('triggerEventsPerSec').innerHTML = 'Events / s: ' + window.currentData.ODB.Trigger['Events per sec.'];
+                document.getElementById('triggerDataPerSec').innerHTML = 'kB / s: ' + window.currentData.ODB.Trigger['kBytes per sec.'];
             }
 
         }
@@ -253,6 +273,6 @@ function getRunSummary(host){
     }
     xmlhttp.withCredentials = true;
     //fire async
-    xmlhttp.open('GET', 'http://'+host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&encoding=json-nokeys');
+    xmlhttp.open('GET', 'http://'+host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&encoding=json-nokeys');
     xmlhttp.send();
 }
