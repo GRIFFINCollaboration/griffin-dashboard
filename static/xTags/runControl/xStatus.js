@@ -263,9 +263,9 @@ function getRunSummary(host){
                 }
 
                 //trigger
-                document.getElementById('triggerEvents').innerHTML = 'Events: ' + window.currentData.ODB.Trigger['Events sent'];
-                document.getElementById('triggerEventsPerSec').innerHTML = 'Events / s: ' + window.currentData.ODB.Trigger['Events per sec.'];
-                document.getElementById('triggerDataPerSec').innerHTML = 'kB / s: ' + window.currentData.ODB.Trigger['kBytes per sec.'];
+                document.getElementById('triggerEvents').innerHTML = 'Events: ' + window.currentData.ODB.Trigger['Events sent'].toFixed();
+                document.getElementById('triggerEventsPerSec').innerHTML = 'Events / s: ' + window.currentData.ODB.Trigger['Events per sec.'].toFixed();
+                document.getElementById('triggerDataPerSec').innerHTML = 'kB / s: ' + window.currentData.ODB.Trigger['kBytes per sec.'].toFixed();
             }
 
         }
