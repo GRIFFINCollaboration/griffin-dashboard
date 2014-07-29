@@ -51,6 +51,8 @@ Utilities
  - `/Shack` state of health monitor
  
 Detectors
+ - `/DANTE-PMT`
+ - `/DANTE-TAC`
  - `/DESCANT`
  - `/GRIFFIN`
  - `/PACES`

@@ -56,6 +56,11 @@
                     if(detCode == 'GR' && this.routes.indexOf('GRIFFIN')==-1 )
                         this.routes.push('GRIFFIN');
 
+                    if(detCode == 'DA' && this.routes.indexOf('DANTE-PMT')==-1 ){
+                        this.routes.push('DANTE-PMT');
+                        this.routes.push('DANTE-TAC');
+                    }
+
                     if(detCode == 'TI' && this.routes.indexOf('TIGRESS')==-1 )
                         this.routes.push('TIGRESS');
 
