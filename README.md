@@ -76,7 +76,7 @@ In addition to `/DAQ/MSC`, `/DAQ/hosts` must also be configured correctly, by po
 Ensure the [filter](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/Filter#odb-filter-encoding) and [PPG](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/PPG#ppg-odb-spec) ODB structures are in place and populated sensibly, per the documentation linked.
 
 ###State of Health
-For robustness, GRIFFIN's state of health is a completely different experiment on a different machine.  For security reasons, it's most convenient to run a separate instance of the dashboard on that machine, set up exactly as above, used exclusively for its `/Shack` route with the `<widget-nav>` and `<widget-status>` elements removed (commented out in `shack.jade`), and linked to from the main dashboard as a hard-coded route in the nav widget.  In future, when it is less of an 'art' to send AJAX requests between password-protected ODBs, this can be dropped and the `/Shack` route can be served directly from the main dashboard.
+For robustness, GRIFFIN's state of health is a completely different experiment on a different machine.  Make the same modification to MIDAS's `src/mhttpd.cxx` as above, allowing the main dashboard server access to that ODB as well.
 
 ##For Developers
 
