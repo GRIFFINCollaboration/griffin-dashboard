@@ -22,7 +22,7 @@
                 this.views = ['HV', 'Threshold', 'reqRate', 'acptRate'];
                 this.viewLabels = ['HV', 'Threshold', 'Trigger Request Rate', 'Trigger Accept Rate'];
                 this.units = ['V', 'ADC Units', 'Hz', 'Hz']
-                initializeDetector.bind(this, 'DANTE', 'DANTE'+this.readout)();
+                initializeDetector.bind(this, 'DANTE', 'DANTE-'+this.readout)();
 
 
                 //////////////////////////////////////
