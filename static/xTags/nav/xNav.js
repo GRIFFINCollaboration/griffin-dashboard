@@ -7,7 +7,9 @@
             created: function() {
 
                 this.baseURL = 'http://'+window.location.host;
+                //local routes here:
                 this.routes = ['HV', 'DAQ', 'PPG', 'Clocks', 'Filter'];
+                //hard-coded external routes here:
                 this.hardRoutes = ['http://'+this.SOH+'/Shack'];
                 this.hardRouteNames = ['Shack'];
                 this.present = (window.location+'').slice( (window.location+'').lastIndexOf('/') + 1);
