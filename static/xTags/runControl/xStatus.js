@@ -94,14 +94,17 @@
                 triggerTable.appendChild(triggerEPSrow)
                 triggerTable.appendChild(triggerDPSrow)
                 triggerEventTitle.innerHTML = 'Events: ';
-                triggerEventRow.appendChild(triggerEPSTitle);
                 triggerEventVal.setAttribute('id', 'triggerEvents');
+                triggerEventRow.appendChild(triggerEPSTitle);
+                triggerEventRow.appendChild(triggerEventVal);
                 triggerEPSTitle.innerHTML = 'Events / s: ';
-                triggerEPSrow.appendChild(triggerEPSTitle);
                 triggerEPSVal.setAttribute('id', triggerEventsPerSec);
+                triggerEPSrow.appendChild(triggerEPSTitle);
+                triggerEPSrow.appendChild(triggerEPSVal);
                 triggerDPSTitle.innerHTML = 'kB / s: ';
-                triggerDPSrow.appendChild(triggerDPSTitle);
                 triggerDPSVal.setAttribute('id', 'triggerDataPerSec');
+                triggerDPSrow.appendChild(triggerDPSTitle);
+                triggerDPSrow.appendChild(triggerDPSVal);
 
                 //message list
                 messageWrap.setAttribute('class', 'expand');
