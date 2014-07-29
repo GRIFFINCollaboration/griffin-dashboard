@@ -39,6 +39,7 @@
                             link.setAttribute('href', this.hardRoutes[i]);
 
                             link.innerHTML = this.hardRouteNames[i];
+                            link.setAttribute('class', 'stdin');
                             this.appendChild(link);
                         }                        
                         
