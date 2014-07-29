@@ -98,7 +98,7 @@ app.get('/Filter', function(req, res){
 app.get('/Shack', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/Shack.jade', {MIDAS:MIDAS, SOH:SOH});
+	res.render('widgets/Shack.jade', {MIDAS:MIDAS, SOH:'grifsoh00.triumf.ca:2154'});
 });
 
 app.get('/MSCbuilder', function(req, res){
