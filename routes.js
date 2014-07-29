@@ -24,12 +24,12 @@ app.get('/SPICE', function(req, res){
 
 		for(i=0; i<cells.length; i++){
 			if(cells[i].indexOf('SPZ') != -1)
-				return res.render('detectors/SPICE.jade', {"SPICEaux": "S2"});
+				return res.render('detectors/SPICE.jade', {"SPICEaux": "S2", MIDAS:MIDAS});
 			else if(cells[i].indexOf('SPE') != -1)
-				return res.render('detectors/SPICE.jade', {"SPICEaux": "S3"});				
+				return res.render('detectors/SPICE.jade', {"SPICEaux": "S3", MIDAS:MIDAS});				
 		}
 
-		return res.render('detectors/SPICE.jade', {"SPICEaux": null});  //S2 hardcoded in for testing, should be null
+		return res.render('detectors/SPICE.jade', {"SPICEaux": null, MIDAS:MIDAS});  //S2 hardcoded in for testing, should be null
 	});
 
 	
@@ -38,7 +38,7 @@ app.get('/SPICE', function(req, res){
 app.get('/PACES', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/PACES.jade');
+	res.render('detectors/PACES.jade', {MIDAS:MIDAS});
 });
 
 app.get('/DESCANT', function(req, res){
@@ -50,37 +50,37 @@ app.get('/DESCANT', function(req, res){
 app.get('/SCEPTAR', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/SCEPTAR.jade');
+	res.render('detectors/SCEPTAR.jade', {MIDAS:MIDAS});
 });
 
 app.get('/ZDS', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/ZDS.jade');
+	res.render('detectors/ZDS.jade', {MIDAS:MIDAS});
 });
 
 app.get('/DAQ', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/DAQ.jade');
+	res.render('widgets/DAQ.jade', {MIDAS:MIDAS});
 });
 
 app.get('/PPG', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/PPG.jade');
+	res.render('widgets/PPG.jade', {MIDAS:MIDAS});
 });
 
 app.get('/Clocks', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/Clock.jade');
+	res.render('widgets/Clock.jade', {MIDAS:MIDAS});
 });
 
 app.get('/Filter', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/Filter.jade');
+	res.render('widgets/Filter.jade', {MIDAS:MIDAS});
 });
 
 app.get('/Shack', function(req, res){
@@ -92,7 +92,7 @@ app.get('/Shack', function(req, res){
 app.get('/MSCbuilder', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/MSCbuilder.jade');
+	res.render('widgets/MSCbuilder.jade', {MIDAS:MIDAS});
 });
 
 ///////////////////////////////////////
