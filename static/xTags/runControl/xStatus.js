@@ -18,9 +18,16 @@
                 ,   resume = document.createElement('button')
                 ,   redirectKludge = document.createElement('button')
                 ,   triggerTitle = document.createElement('h3')
-                ,   triggerEvents = document.createElement('span')
-                ,   triggerEventsPerSec = document.createElement('span')
-                ,   triggerDataPerSec = document.createElement('span')
+                ,   triggerTable = document.createElement('table')
+                ,   triggerEventRow = document.createElement('tr')
+                ,   triggerEPSrow = document.createElement('tr')
+                ,   triggerDPSrow = document.createElement('tr')
+                ,   triggerEventTitle = document.createElement('td')
+                ,   triggerEventVal = document.createElement('td')
+                ,   triggerEPSTitle = document.createElement('td')
+                ,   triggerEPSVal = document.createElement('td')
+                ,   triggerDPSTitle = document.createElement('td')
+                ,   triggerDPSVal = document.createElement('td')
                 ,   messageTitle = document.createElement('h3')
                 ,   messageWrap = document.createElement('div')
                 ,   messageList = document.createElement('ul')
@@ -82,12 +89,19 @@
                 //trigger rates
                 triggerTitle.innerHTML = 'Trigger Stats:'
                 this.appendChild(triggerTitle);
-                triggerEvents.setAttribute('id', 'triggerEvents')
-                this.appendChild(triggerEvents)
-                triggerEventsPerSec.setAttribute('id', 'triggerEventsPerSec')
-                this.appendChild(triggerEventsPerSec)
-                triggerDataPerSec.setAttribute('id', 'triggerDataPerSec')
-                this.appendChild(triggerDataPerSec)
+                this.appendChild(triggerTable);
+                triggerTable.appendChild(triggerEventRow)
+                triggerTable.appendChild(triggerEPSrow)
+                triggerTable.appendChild(triggerDPSrow)
+                triggerEventTitle.innerHTML = 'Events: ';
+                triggerEventRow.appendChild(triggerEPSTitle);
+                triggerEventVal.setAttribute('id', 'triggerEvents');
+                triggerEPSTitle.innerHTML = 'Events / s: ';
+                triggerEPSrow.appendChild(triggerEPSTitle);
+                triggerEPSVal.setAttribute('id', triggerEventsPerSec);
+                triggerDPSTitle.innerHTML = 'kB / s: ';
+                triggerDPSrow.appendChild(triggerDPSTitle);
+                triggerDPSVal.setAttribute('id', 'triggerDataPerSec');
 
                 //message list
                 messageWrap.setAttribute('class', 'expand');

@@ -43,7 +43,3 @@ widget-status ul#statusMessageList li{
 widget-status ul#statusMessageList li:nth-child(odd){
 	background-color: #222222
 }
-
-widget-status span{
-	display: block;
-}
