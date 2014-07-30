@@ -226,11 +226,11 @@
 
                     mainSectionH3[i] = document.createElement('h3');
                     mainSectionH3[i].setAttribute('class', 'sectionHead');
-                    mainSectionH3[i].onclick = function(){
+                    mainSectionH3[i].onclick = function(i){
                         toggleSection.bind(mainSectionH3[i], mainSections[i]);
                         //menu partially vanishes in chrome after collapsing a section - force reflow to rectify
                         document.getElementById(this.id).setAttribute('style', 'margin: 1em;')
-                    }.bind(this)
+                    }.bind(this, i)
                     mainSectionH3[i].innerHTML = String.fromCharCode(0x25B6) + ' ' +mainSectionTitles[i];
                     mainSectionDivs[i].appendChild(mainSectionH3[i]);
 
