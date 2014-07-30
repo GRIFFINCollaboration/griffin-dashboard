@@ -102,10 +102,10 @@ Responsible for instantiating all the Kinetic objects needed for all views in th
 Programatically manipulates the select element responsible for navigating between views (`id='DAQnav'`), causing the view to transition to collector `index`.
 
 ####`unpackDAQdv(dv)`
-Takes a dataview `dv` encoded as described in the DAQ Communication specification section above, decodes it, and sorts the extracted data into per-digitizer (`window.currentData.digitizerTotal`), per-collector (`window.currentData.collectorTotal`) and per-detection system (`window.currentData.detectorTotal`) sums.  Also populates both the rate fields of `this.localMSC`; all these sorted data stores are described in more detail in the section below on member variables
+Takes a dataview `dv` encoded as described in the DAQ Communication specification section above, decodes it, and sorts the extracted data into per-digitizer (`window.currentData.digitizerTotal`), per-collector (`window.currentData.collectorTotal`) and per-detection system (`window.currentData.detectorTotal`) sums.  Also populates both the rate fields of `this.localMSC`; all these sorted data stores are described in more detail in the section below on member variables.  Finally, once data is unpacked and sorted, asks for a redraw and an update of the tooltips.
 
 ####`update()`
-Triggers `acquireDAQ()` every periodic refresh, and keeps the tooltips updated as required.
+Triggers `acquireDAQ()` every periodic refresh.
 
 ####`updateCells()`
 Part of the update loop, sets colors and redraws layers for all cells as necessary; also triggers building the bar charts for the currently showing view.
