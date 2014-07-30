@@ -235,13 +235,11 @@
 
                 //send arraybuffer XHR requests to each of some list of URLS;
                 //callback unpacks bytes into window.currentData rates and thresholds.
-                /*
+                
                 for(i=0; i<window.currentData.hostList.length; i++){
                     XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, true, true);
                 }
-                */
-XHR('http://mscb500.triumf.ca/report', this.unpackDAQdv.bind(this), false, true, true);
-
+                
 /*
                     ////////////////////////////////////////
                     //dummy data for throughput testing:
@@ -708,7 +706,6 @@ XHR('http://mscb500.triumf.ca/report', this.unpackDAQdv.bind(this), false, true,
                     trigAcpt = DAQblock.trigAcpt;
                     trigReq = DAQblock.trigReq;
                     MSC = DAQblock.MSC;
-console.log([MSC, trigReq, trigAcpt])
                     channelIndex = window.currentData.DAQ.MSC.MSC.indexOf(MSC);
                     channelName = window.currentData.DAQ.MSC.chan[channelIndex];
 

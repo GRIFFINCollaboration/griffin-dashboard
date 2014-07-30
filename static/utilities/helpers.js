@@ -212,10 +212,10 @@ function unpackDAQ(i, dv){
         MSCPos = 0,
         unpacked = {};
 
-    unpacked.threshold  = dv.getInt32(i*blockLength + thresholdPos, true);
-    unpacked.trigAcpt   = dv.getInt32(i*blockLength + trigAcptPos, true);
-    unpacked.trigReq    = dv.getInt32(i*blockLength + trigReqPos, true);
-    unpacked.MSC        = dv.getInt16(i*blockLength + MSCPos, true);
+    unpacked.threshold  = dv.getUint32(i*blockLength + thresholdPos, true);
+    unpacked.trigAcpt   = dv.getFloat32(i*blockLength + trigAcptPos, true);
+    unpacked.trigReq    = dv.getFloat32(i*blockLength + trigReqPos, true);
+    unpacked.MSC        = dv.getUint16(i*blockLength + MSCPos, true);
 
     return unpacked;
 }
