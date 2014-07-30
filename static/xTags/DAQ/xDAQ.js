@@ -237,7 +237,7 @@
                 //callback unpacks bytes into window.currentData rates and thresholds.
                 
                 for(i=0; i<window.currentData.hostList.length; i++){
-                    XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, true, true);
+                    XHR('http://'+window.currentData.hostList+'/report', this.unpackDAQdv.bind(this), false, true, true);
                 }
                 
 /*
