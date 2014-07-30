@@ -277,6 +277,7 @@
                 cell.appendChild(coincConfigWrap);
                 coincConfigLabel = document.createElement('label');
                 coincConfigLabel.setAttribute('id', 'coincConfigLabel'+index+rowIndex);
+                coincConfigLabel.innerHTML = 'Coinc. Window [ns]:'
                 coincConfigWrap.appendChild(coincConfigLabel);
                 coincConfigInput = document.createElement('input');
                 coincConfigInput.setAttribute('id', 'coincConfigInput'+index+rowIndex);
