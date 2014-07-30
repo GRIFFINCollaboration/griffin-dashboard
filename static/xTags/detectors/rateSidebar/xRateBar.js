@@ -227,8 +227,7 @@
                     mainSectionH3[i] = document.createElement('h3');
                     mainSectionH3[i].setAttribute('class', 'sectionHead');
                     mainSectionH3[i].onclick = function(i){
-                        console.log([mainSectionH3[i], mainSections[i]])
-                        toggleSection.bind(mainSectionH3[i], mainSections[i]);
+                        toggleSection.bind(mainSectionH3[i], mainSections[i])();
                         //menu partially vanishes in chrome after collapsing a section - force reflow to rectify
                         document.getElementById(this.id).setAttribute('style', 'margin: 1em;')
                     }.bind(this, i)
