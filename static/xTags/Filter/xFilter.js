@@ -428,7 +428,7 @@
                             currentOr.querySelectorAll('select')[i*2+1].value = currentFilter[key][i].slice(3,4);
                             currentOr.querySelectorAll('select')[i*2+1].onchange();
                             currentOr.querySelectorAll('input')[i*2].value = parseInt(currentFilter[key][i].slice(5,lastDash),10);
-                            currentOr.querySelectorAll('input')[i*2+1].value = parseInt(currentFilter[key][i].slice(lastDash),10);
+                            currentOr.querySelectorAll('input')[i*2+1].value = parseInt(currentFilter[key][i].slice(lastDash+1),10);
 
                             if(i<currentFilter[key].length-1)
                                 currentOr.querySelectorAll('button.lightButton')[0].onclick();
@@ -439,7 +439,7 @@
                         currentOr.querySelectorAll('select')[1].value = currentFilter[key].slice(3,4);
                         currentOr.querySelectorAll('select')[1].onchange();
                         currentOr.querySelectorAll('input')[0].value = parseInt(currentFilter[key].slice(5,lastDash),10);
-                        currentOr.querySelectorAll('input')[1].value = parseInt(currentFilter[key].slice(lastDash),10);                        
+                        currentOr.querySelectorAll('input')[1].value = parseInt(currentFilter[key].slice(lastDash+1),10);                        
                     }
 
                 }
