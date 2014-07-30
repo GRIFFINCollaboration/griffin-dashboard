@@ -240,7 +240,7 @@
                     XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, false, true);
                 }
                 */
-XHR('http://mscb500.triumf.ca', this.unpackDAQdv.bind(this), false, false, true);
+XHR('http://mscb500.triumf.ca/report', this.unpackDAQdv.bind(this), false, false, true);
 
 /*
                     ////////////////////////////////////////
