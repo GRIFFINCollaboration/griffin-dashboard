@@ -758,9 +758,6 @@
                         window.currentData.detectorTotal[collectorIndex][detectorCode].trigAcpt = trigAcpt;
                     }
 
-                    //trigger repaint
-                    this.updateCells(); 
-
                 }
 
                 //make master level detector sum:
@@ -781,12 +778,8 @@
                     }
                 }
 
-            },
-
-            'update' : function(){
-                //acquire new data
-                if(window.currentData.DAQ)
-                    this.acquireDAQ();
+                //trigger repaint
+                this.updateCells(); 
 
                 //keep the tooltip updated:
                 if(this.showing == 0 && (this.lastCollectorTTindex || this.lastCollectorTTindex==0)){
@@ -794,6 +787,21 @@
                 } else if(this.lastDigitizerTTindex || this.lastDigitizerTTindex==0){
                     this.writeDigitizerTooltip(this.lastDigitizerTTindex);
                 }
+
+            },
+
+            'update' : function(){
+                //acquire new data
+                if(window.currentData.DAQ)
+                    this.acquireDAQ();
+/*
+                //keep the tooltip updated:
+                if(this.showing == 0 && (this.lastCollectorTTindex || this.lastCollectorTTindex==0)){
+                    this.writeCollectorTooltip(this.lastCollectorTTindex);
+                } else if(this.lastDigitizerTTindex || this.lastDigitizerTTindex==0){
+                    this.writeDigitizerTooltip(this.lastDigitizerTTindex);
+                }
+*/
             },
 
             //set new colors for all cells, and repaint.
@@ -918,7 +926,7 @@
             //formulate the tooltip text for cell i and write it on the tooltip layer.
             'writeCollectorTooltip': function(i){
                 var text, j, reqRate, acptRate;
-console.log(i)
+
                 if(i!=-1){
                     text = '<h2>Collector ' + i.toString(16) + '</h2>';
                     text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+i.toString(16)].host +'</h3>'
