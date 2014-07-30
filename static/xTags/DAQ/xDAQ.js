@@ -794,14 +794,6 @@
                 //acquire new data
                 if(window.currentData.DAQ)
                     this.acquireDAQ();
-/*
-                //keep the tooltip updated:
-                if(this.showing == 0 && (this.lastCollectorTTindex || this.lastCollectorTTindex==0)){
-                    this.writeCollectorTooltip(this.lastCollectorTTindex);
-                } else if(this.lastDigitizerTTindex || this.lastDigitizerTTindex==0){
-                    this.writeDigitizerTooltip(this.lastDigitizerTTindex);
-                }
-*/
             },
 
             //set new colors for all cells, and repaint.
@@ -933,11 +925,11 @@
                     text += '<table class="tooltipTable"><tr><td>Collector</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
                     for(j=0; j<16; j++){
                         if(window.currentData.digitizerTotal[i] && window.currentData.digitizerTotal[i][j]){
-                            reqRate = window.currentData.digitizerTotal[i][j].reqRate;
-                            acptRate = window.currentData.digitizerTotal[i][j].acptRate;
+                            reqRate = window.currentData.digitizerTotal[i][j].reqRate.toFixed();
+                            acptRate = window.currentData.digitizerTotal[i][j].acptRate.toFixed();
                         } else {
-                            reqRate = null;
-                            acptRate = null;
+                            reqRate = '0xDEADBEEF';
+                            acptRate = '0xDEADBEEF';
                         }
 
                         text += '<tr><td>'+ j +'</td>'
@@ -958,12 +950,14 @@
 
             'writeDigitizerTooltip': function(i){
                 var text, key,
+                    MSC, reqRate, acptRate,
                     tt = document.getElementById('tooltip');
 
                 if(i!=-1){
                     text = '<h2>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h2>'
                     text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+(this.showing-1).toString(16)].digitizers[i] +'</h3>'
                     text += '<table class="tooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
+                    console.log(this.localMSC[this.showing-1][i])
                     for(key in this.localMSC[this.showing-1][i]){
                         text += '<tr><td>'+ key +'</td>'
                         text += '<td>'+ this.localMSC[this.showing-1][i][key].MSC +'</td>'
