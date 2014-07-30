@@ -237,10 +237,10 @@
                 //callback unpacks bytes into window.currentData rates and thresholds.
                 /*
                 for(i=0; i<window.currentData.hostList.length; i++){
-                    XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, false, true);
+                    XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, true, true);
                 }
                 */
-XHR('http://mscb500.triumf.ca/report', this.unpackDAQdv.bind(this), false, false, true);
+XHR('http://mscb500.triumf.ca/report', this.unpackDAQdv.bind(this), false, true, true);
 
 /*
                     ////////////////////////////////////////
