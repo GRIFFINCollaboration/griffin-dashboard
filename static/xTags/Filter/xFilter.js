@@ -346,7 +346,7 @@
                 var filterConditions = this.querySelectorAll('div.filterCondition'),
                     tableRows,
                     selects,
-                    detector, filter, scale, condition,
+                    detector, filter, scale, condition, coinc,
                     encoded = [],
                     i,j;
 
@@ -362,8 +362,12 @@
                         filter = selected(selects[1].id);
                         scale = parseInt(tableRows[j].querySelectorAll('input')[0].value, 10);
                         if(!scale) scale = 1;
+                        if (filter == 'C')
+                            coinc = parseInt(tableRows[j].querySelectorAll('input')[1].value, 10);
 
                         condition = detector + '-' + filter + '-' + scale;
+                        if(filter == 'C')
+                            condition += '-'+coinc;
 
                         encoded[i][j] = condition;
                                                 
