@@ -229,7 +229,7 @@
                     mainSectionH3[i].onclick = function(){
                         toggleSection.bind(mainSectionH3[i], mainSections[i]);
                         //menu partially vanishes in chrome after collapsing a section - force reflow to rectify
-                        this.setAttribute('style', 'margin: 1em;')
+                        document.getElementById(this.id).setAttribute('style', 'margin: 1em;')
                     }.bind(this)
                     mainSectionH3[i].innerHTML = String.fromCharCode(0x25B6) + ' ' +mainSectionTitles[i];
                     mainSectionDivs[i].appendChild(mainSectionH3[i]);
