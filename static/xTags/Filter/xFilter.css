@@ -58,7 +58,8 @@ table.filterTable tr:nth-child(1) td:nth-child(1){
 	opacity: 0;
 }
 
-div.optionConfigWrap{
+div.optionConfigWrap,
+div.coincConfigWrap{
 	text-align: right;
 	width:15em;
 }

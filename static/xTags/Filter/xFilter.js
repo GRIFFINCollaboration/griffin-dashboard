@@ -205,7 +205,7 @@
                 var row, cell, 
                     detectorSelect, detectorOption,
                     filterSelect, filterOption,
-                    optionConfigWrap, optionConfigLabel, optionConfigInput,
+                    optionConfigWrap, optionConfigLabel, optionConfigInput, coincConfigWrap, coincConfigLabel, coincConfigInput,
                     deleteRow,
                     i, 
                     rowIndex = this.nRows[index]
@@ -250,6 +250,7 @@
                 }
                 cell.appendChild(filterSelect);
 
+                //generic config parameter (multiplicity or prescale factor)
                 cell = document.createElement('td');
                 row.appendChild(cell);
                 optionConfigWrap = document.createElement('div');
@@ -266,6 +267,24 @@
                 optionConfigInput.setAttribute('step', 1);
                 optionConfigInput.setAttribute('min', 0);
                 optionConfigWrap.appendChild(optionConfigInput);
+
+                //coincidence time window
+                cell = document.createElement('td');
+                row.appendChild(cell);
+                coincConfigWrap = document.createElement('div');
+                coincConfigWrap.setAttribute('id', 'coincConfigWrap'+index+rowIndex);
+                coincConfigWrap.setAttribute('class', 'coincConfigWrap hiddenConfig');
+                cell.appendChild(coincConfigWrap);
+                coincConfigLabel = document.createElement('label');
+                coincConfigLabel.setAttribute('id', 'coincConfigLabel'+index+rowIndex);
+                coincConfigWrap.appendChild(coincConfigLabel);
+                coincConfigInput = document.createElement('input');
+                coincConfigInput.setAttribute('id', 'coincConfigInput'+index+rowIndex);
+                coincConfigInput.setAttribute('class', 'stdin');
+                coincConfigInput.setAttribute('type', 'number');
+                coincConfigInput.setAttribute('step', 1);
+                coincConfigInput.setAttribute('min', 0);
+                coincConfigWrap.appendChild(coincConfigInput);
 
                 cell = document.createElement('td');
                 row.appendChild(cell);
@@ -287,12 +306,15 @@
 
                 if(filterType == 'S'){
                     document.getElementById('optionConfigWrap'+idCode).setAttribute('class', 'optionConfigWrap hiddenConfig');
+                    document.getElementById('coincConfigWrap'+idCode).setAttribute('class', 'coincConfigWrap hiddenConfig');
                 } else if(filterType == 'C'){
                     document.getElementById('optionConfigWrap'+idCode).setAttribute('class', 'optionConfigWrap');
+                    document.getElementById('coincConfigWrap'+idCode).setAttribute('class', 'coincConfigWrap');
                     document.getElementById('optionConfigLabel'+idCode).innerHTML = 'Multiplicity: ';
                     document.getElementById('optionConfigInput'+idCode).setAttribute('value', 2);
                 } else if(filterType == 'P'){
                     document.getElementById('optionConfigWrap'+idCode).setAttribute('class', 'optionConfigWrap');
+                    document.getElementById('coincConfigWrap'+idCode).setAttribute('class', 'coincConfigWrap hiddenConfig');
                     document.getElementById('optionConfigLabel'+idCode).innerHTML = 'Factor: ';
                     document.getElementById('optionConfigInput'+idCode).setAttribute('value', 10);
                 }
