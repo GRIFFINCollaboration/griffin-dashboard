@@ -957,12 +957,18 @@
                     text = '<h2>Collector '+ (this.showing-1) +', Digitizer '+ i +'</h2>'
                     text += '<h3>'+ window.currentData.DAQ.hosts['collector0x'+(this.showing-1).toString(16)].digitizers[i] +'</h3>'
                     text += '<table class="tooltipTable"><tr><td>Channel</td><td>MSC</td><td>Req [Hz]</td><td>Acpt [Hz]</td></tr>';
-                    console.log(this.localMSC[this.showing-1][i])
+
                     for(key in this.localMSC[this.showing-1][i]){
+                        MSC = this.localMSC[this.showing-1][i][key].MSC;
+                        reqRate = this.localMSC[this.showing-1][i][key].req;
+                        reqRate = (reqRate > -1) ? reqRate.toFixed() : '0xDEADBEEF';
+                        acptRate = this.localMSC[this.showing-1][i][key].acpt;
+                        acptRate = (acptRate > -1) ? acptRate.toFixed() : '0xDEADBEEF';
+
                         text += '<tr><td>'+ key +'</td>'
-                        text += '<td>'+ this.localMSC[this.showing-1][i][key].MSC +'</td>'
-                        text += '<td>'+ this.localMSC[this.showing-1][i][key].req.toFixed() +'</td>'
-                        text += '<td>'+ this.localMSC[this.showing-1][i][key].acpt.toFixed() +'</td></tr>'
+                        text += '<td>'+ MSC +'</td>'
+                        text += '<td>'+ reqRate +'</td>'
+                        text += '<td>'+ acptRate +'</td></tr>'
                     }
                     text += '</table>'
 
