@@ -235,12 +235,13 @@
 
                 //send arraybuffer XHR requests to each of some list of URLS;
                 //callback unpacks bytes into window.currentData rates and thresholds.
-                /*
+                
                 for(i=0; i<window.currentData.hostList.length; i++){
-                    XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, true, true);
+                    XHR('http://'+window.currentData.hostList[i]+'/report', this.unpackDAQdv.bind(this), false, true, true);
                 }
-                */
-XHR('http://mscb500.triumf.ca/report', this.unpackDAQdv.bind(this), false, true, true);
+                
+
+//XHR('http://mscb500.triumf.ca/report', this.unpackDAQdv.bind(this), false, true, true);
 
 /*
                     ////////////////////////////////////////
@@ -789,6 +790,7 @@ XHR('http://mscb500.triumf.ca/report', this.unpackDAQdv.bind(this), false, true,
 
                 //keep the tooltip updated:
                 if(this.showing == 0 && (this.lastCollectorTTindex || this.lastCollectorTTindex==0)){
+                    console.log(this.lastCollectorTTindex)
                     this.writeCollectorTooltip(this.lastCollectorTTindex);
                 } else if(this.lastDigitizerTTindex || this.lastDigitizerTTindex==0){
                     this.writeDigitizerTooltip(this.lastDigitizerTTindex);
@@ -958,8 +960,8 @@ XHR('http://mscb500.triumf.ca/report', this.unpackDAQdv.bind(this), false, true,
                     for(key in this.localMSC[this.showing-1][i]){
                         text += '<tr><td>'+ key +'</td>'
                         text += '<td>'+ this.localMSC[this.showing-1][i][key].MSC +'</td>'
-                        text += '<td>'+ this.localMSC[this.showing-1][i][key].req +'</td>'
-                        text += '<td>'+ this.localMSC[this.showing-1][i][key].acpt +'</td></tr>'
+                        text += '<td>'+ this.localMSC[this.showing-1][i][key].req.toFixed() +'</td>'
+                        text += '<td>'+ this.localMSC[this.showing-1][i][key].acpt.toFixed() +'</td></tr>'
                     }
                     text += '</table>'
 
