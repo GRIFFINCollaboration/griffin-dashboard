@@ -238,8 +238,8 @@
                 for(i=0; i<window.currentData.hostList.length; i++){
                     XHR('http://'+window.currentData.hostList, this.unpackDAQdv.bind(this), false, false, true);
                 }
-
-
+/*
+                    ////////////////////////////////////////
                     //dummy data for throughput testing:
                     var testBuffer = new ArrayBuffer(448);
                     var dv = new DataView(testBuffer);
@@ -257,8 +257,10 @@
                     }                  
                     this.unpackDAQdv(dv);
 
-                this.updateCells(); // dummy test
-
+                    this.updateCells();
+                    //end dummy
+                    ////////////////////////////////////////
+*/
             },
 
             'buildBarChart' : function(index){
@@ -705,7 +707,7 @@
 
                     channelIndex = window.currentData.DAQ.MSC.MSC.indexOf(MSC);
                     channelName = window.currentData.DAQ.MSC.chan[channelIndex];
-console.log([MSC, channelIndex, channelName])
+
                     //sum the data by digitizer and by collector, and by detector per collector
                     collectorIndex = ((0xF << 12) & MSC) >> 12;
                     digitizerIndex = ((0xF << 8) & MSC) >> 8;
