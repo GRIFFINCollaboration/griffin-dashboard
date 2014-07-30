@@ -257,8 +257,6 @@
 
             'update': function(){
                 //trigger a new round of data fetching
-                //this.acquireRates();
-                //this.acquireThresholds();
                 if(window.currentData.DAQ){
                     this.acquireDAQ();
                     this.acquireHV();                
@@ -501,7 +499,7 @@
                 //send arraybuffer XHR requests to each of some list of URLS;
                 //callback unpacks bytes into window.currentData rates and thresholds.
                 for(i=0; i<window.currentData.hostList.length; i++){
-                    XHR('http://'+window.currentData.hostList, this.unpackDAQdv, false, false, true);
+                    XHR('http://'+window.currentData.hostList+'/report', this.unpackDAQdv, false, true, true);
                 }
 
             },
