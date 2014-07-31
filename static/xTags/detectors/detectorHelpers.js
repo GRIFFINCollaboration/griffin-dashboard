@@ -104,13 +104,11 @@ function initializeDetector(name, headline){
     for(i=0; i<this.viewNames.length; i++){
         xString += '<x-card id="' + this.id+this.viewNames[i] + 'Card"></x-card>';
     }
-    xString += '<x-card id="DAQhistoCard"><div id="DAQspectrum" class="DAQhisto"></div><div id="DAQpulse" class="DAQhisto"></div><div id="DAQtime" class="DAQhisto"></div><div id="DAQwaveform" class="DAQhisto"></div></x-card>'
     xString += '</x-deck>'
     deckWrap.innerHTML = xString;
-    this.viewNames.push('Plots')
 
     //plot buffers
-    for(i=0; i<this.viewNames.length - 1; i++){  //exclude last card, special for daq
+    for(i=0; i<this.viewNames.length; i++){
         //divs to hold kinetic contexts
         drawTarget = document.createElement('div');
         drawTarget.setAttribute('id', this.id+this.viewNames[i]+'Draw');
@@ -245,7 +243,7 @@ function initializeDetector(name, headline){
     this.mainLayer = [];
     this.scaleLayer = [];
 
-    for(i=0; i<this.viewNames.length - 1; i++){
+    for(i=0; i<this.viewNames.length; i++){
 
         //point kinetic at the div and set up the staging and layers:
         this.stage[i] = new Kinetic.Stage({

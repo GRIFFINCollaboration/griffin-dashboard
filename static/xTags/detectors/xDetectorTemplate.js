@@ -30,7 +30,7 @@
 
                 this.tickLabels = [];
                 this.scaleTitle = [];
-                for(j=0; j<this.viewNames.length-1; j++){
+                for(j=0; j<this.viewNames.length; j++){
 
                     //draw the gradient itself
                     colorScale = new Kinetic.Rect({
@@ -144,7 +144,7 @@
                     logTitle = '';
 
                 //refresh tick labels
-                for(j=0; j<this.viewNames.length - 1; j++){
+                for(j=0; j<this.viewNames.length; j++){
                     //bail out if this scale isn't on display:
                     if(j != this.displayIndex)
                         continue
@@ -226,7 +226,7 @@
                 //(ie different rate / HV segmentation)
                 //summary views never segment differently.
                 if(this.HVlayer){
-                    for(i=0; i<this.viewNames.length - 1; i++){
+                    for(i=0; i<this.viewNames.length; i++){
                         if(this.currentView == 'HV' && this.viewNames[i] != 'Summary'){
                             this.mainLayer[i].hide();
                             this.HVlayer[i].show();
@@ -406,8 +406,6 @@
                     if(this.shuffleCell(cellName))
                         this.cells[cellName].moveToTop();
                     this.mainLayer[this.displayIndex].draw()
-
-
                 }
 
                 if(HVsidebar && HVcell){
