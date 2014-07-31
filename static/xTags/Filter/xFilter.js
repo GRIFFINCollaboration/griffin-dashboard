@@ -471,8 +471,12 @@
                                 currentOr.querySelectorAll('select')[i*2].value = currentFilter[key][i].slice(0,2);
                                 currentOr.querySelectorAll('select')[i*2+1].value = currentFilter[key][i].slice(3,4);
                                 currentOr.querySelectorAll('select')[i*2+1].onchange();
-                                currentOr.querySelectorAll('input')[i*2].value = parseInt(currentFilter[key][i].slice(5,lastDash),10);
-                                currentOr.querySelectorAll('input')[i*2+1].value = parseInt(currentFilter[key][i].slice(lastDash+1),10);
+                                if(currentFilter[key][i].slice(3,4) == 'C'){  //last dash is differnet for coinc vs. prescale, only use on coinc
+                                    currentOr.querySelectorAll('input')[i*2].value = parseInt(currentFilter[key][i].slice(5,lastDash),10);
+                                    currentOr.querySelectorAll('input')[i*2+1].value = parseInt(currentFilter[key][i].slice(lastDash+1),10);
+                                } else {
+                                    currentOr.querySelectorAll('input')[i*2].value = parseInt(currentFilter[key][i].slice(5),10);
+                                }
 
                                 if(i<currentFilter[key].length-1)
                                     currentOr.querySelectorAll('button.lightButton')[0].onclick();
@@ -482,8 +486,12 @@
                             currentOr.querySelectorAll('select')[0].value = currentFilter[key].slice(0,2);
                             currentOr.querySelectorAll('select')[1].value = currentFilter[key].slice(3,4);
                             currentOr.querySelectorAll('select')[1].onchange();
-                            currentOr.querySelectorAll('input')[0].value = parseInt(currentFilter[key].slice(5,lastDash),10);
-                            currentOr.querySelectorAll('input')[1].value = parseInt(currentFilter[key].slice(lastDash+1),10);                        
+                            if(currentFilter[key].slice(3,4) == 'C'){
+                                currentOr.querySelectorAll('input')[0].value = parseInt(currentFilter[key].slice(5,lastDash),10);
+                                currentOr.querySelectorAll('input')[1].value = parseInt(currentFilter[key].slice(lastDash+1),10);                        
+                            } else {
+                                currentOr.querySelectorAll('input')[0].value = parseInt(currentFilter[key].slice(5),10);   
+                            }
                         }
                     } else { // populate the cross detector coinc value
                         currentOr = this.querySelectorAll('div.filterCondition');
