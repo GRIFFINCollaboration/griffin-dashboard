@@ -61,7 +61,7 @@
                 optionWrap = document.createElement('div');
                 optionWrap.setAttribute('class', 'optionWrap');
                 this.upstreamLampshade.appendChild(optionWrap);
-                radioArray(optionWrap, ['Absent', 'GRIFFIN', 'GRIFFIN + DANTE'], ['USLabsent', 'USLGR'. 'USLGRDA'], 'USL');
+                radioArray(optionWrap, ['Absent', 'GRIFFIN', 'GRIFFIN + DANTE'], ['USLabsent', 'USLGR', 'USLGRDA'], 'USL');
                 this.upstreamLampshade.appendChild(this.generateGRIFFINtable('USL', [13,14,15,16]));
                 message = document.createElement('p');
                 message.setAttribute('id', 'USLmessage');
