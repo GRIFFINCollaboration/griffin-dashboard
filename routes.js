@@ -534,7 +534,7 @@ app.post('/buildMSC', function(req, res){
 			MSC.push((2 << 12) | ( 1 << 8) | i);
 		}
 
-		for(i=0; i<8; i++){
+		for(i=min; i<max; i++){
 			names.push('DAL0'+(1+i)+'XT00X');
 			MSC.push((2 << 12) | ( 2 << 8) | i);
 		}
