@@ -171,7 +171,7 @@
                 westLabel = new Kinetic.Text({
                     x: 0,
                     y: 0,
-                    text: 'West Ring',
+                    text: 'Downstream',
                     fontSize: 28,
                     fontFamily: 'Arial',
                     fill: '#999999'
@@ -184,7 +184,7 @@
                 eastLabel = new Kinetic.Text({
                     x: 0,
                     y: 0,
-                    text: 'East Ring',
+                    text: 'Upstream',
                     fontSize: 28,
                     fontFamily: 'Arial',
                     fill: '#999999'
