@@ -244,7 +244,6 @@ function getRunSummary(host){
                 uptime = date.getTime() / 1000 - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
                 stoptime = null;
                 //show different stuff depending on run state:
-
                 if(window.currentData.ODB.Runinfo.State == 1){
                     //run is stopped
                     if(window.currentData.ODB.Runinfo['Transition in progress'] == 1)
@@ -291,8 +290,11 @@ function getRunSummary(host){
                 hours = Math.floor(uptime / 3600);
                 minutes = Math.floor( (uptime%3600)/60 );
                 seconds = Math.floor(uptime%60);
-                document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
-                
+                if(seconds >= 0)
+                    document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
+                else
+                    document.getElementById('statusUpTime').innerHTML = '';
+
 
                 //trigger
                 document.getElementById('triggerEvents').innerHTML = prettyNumber(window.currentData.ODB.Trigger['Events sent']);
