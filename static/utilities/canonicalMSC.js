@@ -59,7 +59,7 @@ module.exports = {
 		}
 
 		return [names, MSC];
-	}
+	},
 
 	'configSCEPTAR': function(US, DS, ZDS){
 		var names = [],
@@ -86,7 +86,7 @@ module.exports = {
 		}
 
 		return [names, MSC];
-	}
+	},
 
 	'configDANTE': function(US, DS){
 		var names = [],
@@ -130,14 +130,14 @@ module.exports = {
 
 		return [names, MSC];
 
-	}
+	},
 
 	'configPACES': function(){
 		var names = ['PAC01XN00X', 'PAC02XN00X', 'PAC03XN00X', 'PAC04XN00X', 'PAC05XN00X'],
 			MSC = [0x2000, 0x2001, 0x2002, 0x2003, 0x2004];
 
 			return [names, MSC];
-	}
+	},
 
 	'configSPICE': function(){
 		var names = [],
@@ -154,7 +154,7 @@ module.exports = {
 		}
 
 		return [names, MSC];
-	}
+	},
 
 	'configS2S3': function(type){
 		var names = [],
@@ -187,7 +187,7 @@ module.exports = {
 		}
 
 		return [names, MSC];
-	}
+	},
 
 	'configDESCANT': function(){
 		var names = [],
