@@ -138,10 +138,11 @@
                 this.suspendInputRefresh = false;
                 dataDirInput.oninput = function(){
                     this.suspendInputRefresh = true;
+                    document.getElementById('dataDirIn').setAttribute('class', 'stdin needCommit')
                 }.bind(this)
                 dataDirInput.onchange = function(MIDAS){
                     XHR('http://'+MIDAS+'/?cmd=jset&odb=Logger/Data dir&value='+this.value, function(){});
-                    this.suspendInputRefresh = false;
+                    window.location.reload(); //cheapo user feedback
                 }.bind(dataDirInput, this.MIDAS);
 
                 //message list

@@ -68,6 +68,10 @@ widget-status td{
 	padding-left: 1em;
 }
 
+input.needCommit{
+	border: 2px soild #f1c40f;
+}
+
 li#statusRunNumber{
 	font-size: 150%
 }
