@@ -12,8 +12,6 @@
                         this[histos[i]].setAttribute('id', histos[i])
                         this[histos[i]].setAttribute('class', 'DAQhisto')
                         this.appendChild(this[histos[i]]);
-
-                        console.log(this[histis[i]])
                     }
 
 
