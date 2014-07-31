@@ -296,6 +296,7 @@ function getRunSummary(host){
                 seconds = Math.floor(uptime%60);
                 document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
 
+                //conditional reporting of times based on run state
                 if(state == 0)
                     document.getElementById('statusStopTime').setAttribute('style', 'display:block');
                 else
