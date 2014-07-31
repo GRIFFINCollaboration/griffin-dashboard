@@ -448,7 +448,7 @@
                     cellDelete,
                     createOr = document.getElementById('spawnCondition'),
                     currentOr,
-                    i, key, lastDash;
+                    i, key, lastDash, coincWindowInput;
 
                 for(i=0; i<orCells.length; i++){
                     cellDelete = orCells[i].querySelectorAll('button.lightButton')[1]; //TODO fragile - don't ever change that class or loading breaks!
@@ -458,32 +458,41 @@
                 for(key in currentFilter){
                     if(key.indexOf('last_written') != -1 ) continue;
 
-                    if(typeof currentFilter[key] == 'number') continue; //ie you're looking at a coinc window, bail
+                    if(typeof currentFilter[key] != 'number'){ //ie dont do this for the cross detector coinc window keys
 
-                    createOr.onclick();
+                        createOr.onclick();
 
-                    currentOr = this.querySelectorAll('div.filterCondition');
-                    currentOr = currentOr[currentOr.length - 1];
-                    //midas won't return a one element array, annoying...
-                    if(currentFilter[key] instanceof Array){
-                        for(i=0; i<currentFilter[key].length; i++){
-                            lastDash = currentFilter[key][i].lastIndexOf('-');
-                            currentOr.querySelectorAll('select')[i*2].value = currentFilter[key][i].slice(0,2);
-                            currentOr.querySelectorAll('select')[i*2+1].value = currentFilter[key][i].slice(3,4);
-                            currentOr.querySelectorAll('select')[i*2+1].onchange();
-                            currentOr.querySelectorAll('input')[i*2].value = parseInt(currentFilter[key][i].slice(5,lastDash),10);
-                            currentOr.querySelectorAll('input')[i*2+1].value = parseInt(currentFilter[key][i].slice(lastDash+1),10);
+                        currentOr = this.querySelectorAll('div.filterCondition');
+                        currentOr = currentOr[currentOr.length - 1];
+                        //midas won't return a one element array, annoying...
+                        if(currentFilter[key] instanceof Array){
+                            for(i=0; i<currentFilter[key].length; i++){
+                                lastDash = currentFilter[key][i].lastIndexOf('-');
+                                currentOr.querySelectorAll('select')[i*2].value = currentFilter[key][i].slice(0,2);
+                                currentOr.querySelectorAll('select')[i*2+1].value = currentFilter[key][i].slice(3,4);
+                                currentOr.querySelectorAll('select')[i*2+1].onchange();
+                                currentOr.querySelectorAll('input')[i*2].value = parseInt(currentFilter[key][i].slice(5,lastDash),10);
+                                currentOr.querySelectorAll('input')[i*2+1].value = parseInt(currentFilter[key][i].slice(lastDash+1),10);
 
-                            if(i<currentFilter[key].length-1)
-                                currentOr.querySelectorAll('button.lightButton')[0].onclick();
+                                if(i<currentFilter[key].length-1)
+                                    currentOr.querySelectorAll('button.lightButton')[0].onclick();
+                            }
+                        } else {
+                            lastDash = currentFilter[key].lastIndexOf('-');
+                            currentOr.querySelectorAll('select')[0].value = currentFilter[key].slice(0,2);
+                            currentOr.querySelectorAll('select')[1].value = currentFilter[key].slice(3,4);
+                            currentOr.querySelectorAll('select')[1].onchange();
+                            currentOr.querySelectorAll('input')[0].value = parseInt(currentFilter[key].slice(5,lastDash),10);
+                            currentOr.querySelectorAll('input')[1].value = parseInt(currentFilter[key].slice(lastDash+1),10);                        
                         }
-                    } else {
-                        lastDash = currentFilter[key].lastIndexOf('-');
-                        currentOr.querySelectorAll('select')[0].value = currentFilter[key].slice(0,2);
-                        currentOr.querySelectorAll('select')[1].value = currentFilter[key].slice(3,4);
-                        currentOr.querySelectorAll('select')[1].onchange();
-                        currentOr.querySelectorAll('input')[0].value = parseInt(currentFilter[key].slice(5,lastDash),10);
-                        currentOr.querySelectorAll('input')[1].value = parseInt(currentFilter[key].slice(lastDash+1),10);                        
+                    } else { // populate the cross detector coinc value
+                        currentOr = this.querySelectorAll('div.filterCondition');
+                        currentOr = currentOr[currentOr.length - 1];
+
+                        coincWindowInput = currentOr.querySelectorAll('input');
+                        coincWindowInput = coincWindowInput[coincWindowInput.length - 1];
+
+                        coincWindowInput.value = currentFilter[key];
                     }
 
                 }
