@@ -13,7 +13,7 @@
                 this.hardRoutes = [];
                 this.hardRouteNames = [];
                 this.present = (window.location+'').slice( (window.location+'').lastIndexOf('/') + 1);
-
+console.log(this.MIDAS)
                 //get the DAQ structure, use it to decide which detectors need to be linked
                 XHR('http://' + this.MIDAS + '/?cmd=jcopy&odb=/DAQ&encoding=json-nokeys', 
                     function(res){
