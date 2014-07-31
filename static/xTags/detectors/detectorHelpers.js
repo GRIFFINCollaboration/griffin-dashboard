@@ -142,7 +142,7 @@ function initializeDetector(name, headline){
             document.getElementById(this.id+'Deck').shuffleTo(viewVal);
             this.displayIndex = viewVal;
             this.update();  //repaint right away
-            this.updatePlotParameters.bind(this); //keep the scale up to date too
+            this.updatePlotParameters(); //keep the scale up to date too
         }.bind(this)
 
         //plotControlWrap.appendChild(deckNavigator);
