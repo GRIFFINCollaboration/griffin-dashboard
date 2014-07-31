@@ -10,6 +10,7 @@
                     controlWrap = document.createElement('form'),
                     controlRows = [],
                     encodedFilter = document.createElement('input'),
+                    encodedCoincWindows = document.createElement('input'),
                     applyFilter = document.createElement('input'),
                     filterNameLabel = document.createElement('label'),
                     filterName = document.createElement('input'),
@@ -73,6 +74,12 @@
                 encodedFilter.setAttribute('style', 'display:none');
                 encodedFilter.setAttribute('name', 'filterString');
                 controlRows[0].appendChild(encodedFilter);
+
+                encodedCoincWindows.setAttribute('type', 'text');
+                encodedCoincWindows.setAttribute('id', 'encodedCoincWindows');
+                encodedCoincWindows.setAttribute('style', 'display:none');
+                encodedCoincWindows.setAttribute('name', 'coincString');
+                controlRows[0].appendChild(encodedCoincWindows);
 
                 applyFilter.setAttribute('type', 'checkbox');
                 applyFilter.setAttribute('id', 'applyFilter');
@@ -405,11 +412,11 @@
 
                     crossDetCoinc = filterConditions[i].querySelectorAll('input');
                     crossDetCoinc = crossDetCoinc[crossDetCoinc.length - 1];
-                    console.log(crossDetCoinc)
-                    crossDetectorCoincs[i] = crossDetCoinc
+                    crossDetectorCoincs[i] = crossDetCoinc.value;
                 }
 
                 document.getElementById('encodedFilter').value = JSON.stringify(encoded);
+                document.getElementById('encodedCoincWindows').value = JSON.stringify(crossDetectorCoincs);
             },
 
             'registerFilterODB' : function(responseText){
