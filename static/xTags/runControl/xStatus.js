@@ -242,7 +242,9 @@ function getRunSummary(host){
 
                 runNumber = 'Run ' + window.currentData.ODB.Runinfo['Run number'];
                 uptime = date.getTime() / 1000 - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
+                stoptime = null;
                 //show different stuff depending on run state:
+
                 if(window.currentData.ODB.Runinfo.State == 1){
                     //run is stopped
                     if(window.currentData.ODB.Runinfo['Transition in progress'] == 1)
