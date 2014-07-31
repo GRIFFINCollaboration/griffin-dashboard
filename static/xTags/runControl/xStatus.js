@@ -224,7 +224,7 @@ function getRunSummary(host){
             i,
             date = new Date(),
             now, uptime, hours, minutes, seconds,
-            runNumber, stoptime,           
+            runNumber, stoptime, stoptimeInt,      
             messages;
 
         if(this.readyState == 4){
@@ -271,7 +271,7 @@ function getRunSummary(host){
                     document.getElementById('statusPause').style.display = 'inline';
                     document.getElementById('statusResume').style.display = 'none';
                 }
-
+console.log(Date.parse(window.currentData.ODB.Runinfo['Stop time']));
                 //data is present if we get this far, stick it in the correct DOM elements:
                 document.getElementById('statusTitle').innerHTML = window.currentData.ODB.Experiment.Name;
                 document.getElementById('statusRunNumber').innerHTML = runNumber;
