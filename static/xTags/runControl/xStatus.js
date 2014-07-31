@@ -137,6 +137,7 @@
 
                 this.suspendInputRefresh = false;
                 dataDirInput.oninput = function(){
+                    console.log(this)
                     this.suspendInputRefresh = true;
                 }.bind(this)
                 dataDirInput.onchange = function(){
