@@ -145,7 +145,8 @@
                 var url = 'http://' + this.host + '/mscb_rx'
                 ,   addr = 2 + window.currentData.ADC
                 ,   var_id, width, data, flag, unit, value;
-
+console.log(window.ADCstructure)
+console.log(window.currentData.ADC)
                 var_id = window.ADCstructure[window.currentData.ADC][var_name]['id'];
                 width = window.ADCstructure[window.currentData.ADC][var_name]['w'];
                 flag = window.ADCstructure[window.currentData.ADC][var_name]['f'];
