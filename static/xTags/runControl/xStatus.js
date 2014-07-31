@@ -337,6 +337,6 @@ function getRunSummary(host){
     }
     xmlhttp.withCredentials = true;
     //fire async
-    xmlhttp.open('GET', 'http://'+host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&odb3=Logger/Channels/0/Statistics/&encoding=json-nokeys');
+    xmlhttp.open('GET', 'http://'+host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&odb3=Logger/&encoding=json-nokeys');
     xmlhttp.send();
 }
