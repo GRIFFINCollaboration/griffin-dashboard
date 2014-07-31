@@ -224,7 +224,7 @@ function getRunSummary(host){
             i,
             date = new Date(),
             now, uptime, hours, minutes, seconds,
-            runNumber, stoptime, stoptimeInt,      
+            runNumber, stoptime, starttimeInt, stoptimeInt,
             messages;
 
         if(this.readyState == 4){
@@ -241,6 +241,7 @@ function getRunSummary(host){
             if(window.currentData.ODB.Experiment && window.currentData.ODB.Runinfo && window.currentData.ODB.Trigger){
 
                 runNumber = 'Run ' + window.currentData.ODB.Runinfo['Run number'];
+                uptime = date.getTime() / 1000 - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
                 //show different stuff depending on run state:
                 if(window.currentData.ODB.Runinfo.State == 1){
                     //run is stopped
@@ -253,6 +254,9 @@ function getRunSummary(host){
                     document.getElementById('statusPause').style.display = 'none';
                     document.getElementById('statusResume').style.display = 'none';
                     stoptime = 'Stopped ' + window.currentData.ODB.Runinfo['Stop time'];
+                    stoptimeInt = Date.parse(window.currentData.ODB.Runinfo['Stop time']);
+                    starttimeInt = Date.parse(window.currentData.ODB.Runinfo['Start time']);
+                    uptime = (stoptimeInt - starttimeInt) / 1000;
                 } else if(window.currentData.ODB.Runinfo.State == 2){
                     //run is paused
                     runNumber += ' Paused';
@@ -260,6 +264,7 @@ function getRunSummary(host){
                     document.getElementById('statusStop').style.display = 'none';
                     document.getElementById('statusPause').style.display = 'none';
                     document.getElementById('statusResume').style.display = 'inline';
+                    
                 } else if(window.currentData.ODB.Runinfo.State == 3){
                     //run is live
                     if(window.currentData.ODB.Runinfo['Transition in progress'] == 1)
@@ -270,23 +275,22 @@ function getRunSummary(host){
                     document.getElementById('statusStop').style.display = 'inline';
                     document.getElementById('statusPause').style.display = 'inline';
                     document.getElementById('statusResume').style.display = 'none';
+                    durationInt = date.getTime() / 1000;
                 }
-console.log(Date.parse(window.currentData.ODB.Runinfo['Stop time']));
+
                 //data is present if we get this far, stick it in the correct DOM elements:
                 document.getElementById('statusTitle').innerHTML = window.currentData.ODB.Experiment.Name;
                 document.getElementById('statusRunNumber').innerHTML = runNumber;
                 document.getElementById('statusStartTime').innerHTML = 'Started ' + window.currentData.ODB.Runinfo['Start time'];
                 if(stoptime)
-                    document.getElementById('statusUpTime').innerHTML = stoptime;
-                else{
-                    //calculate uptime:
-                    now = date.getTime() / 1000;
-                    uptime = now - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
-                    hours = Math.floor(uptime / 3600);
-                    minutes = Math.floor( (uptime%3600)/60 );
-                    seconds = Math.floor(uptime%60);
-                    document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
-                }
+                    document.getElementById('statusStopTime').innerHTML = stoptime;
+                
+                //calculate uptime:
+                hours = Math.floor(uptime / 3600);
+                minutes = Math.floor( (uptime%3600)/60 );
+                seconds = Math.floor(uptime%60);
+                document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
+                
 
                 //trigger
                 document.getElementById('triggerEvents').innerHTML = prettyNumber(window.currentData.ODB.Trigger['Events sent']);
