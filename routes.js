@@ -68,7 +68,7 @@ app.get('/SCEPTAR', function(req, res){
 app.get('/ZDS-Energy', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, readout:{'Energy'}});
+	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, readout:'Energy'});
 });
 
 app.get('/ZDS-TAC', function(req, res){
