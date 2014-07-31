@@ -132,6 +132,9 @@
                 document.getElementById('DSL1Label').onclick = function(){
                     document.getElementById('DSLGRIFFINconfig').setAttribute('class', 'GRIFFINconfig');
                 }
+                document.getElementById('DSL2Label').onclick = function(){
+                    document.getElementById('DSLGRIFFINconfig').setAttribute('class', 'GRIFFINconfig');
+                }
                 document.getElementById('DSL3Label').onclick = function(){
                     document.getElementById('DSLGRIFFINconfig').setAttribute('class', 'GRIFFINconfig hidden');
                 }
