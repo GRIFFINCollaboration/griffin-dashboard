@@ -22,7 +22,7 @@
 
                 title.innerHTML = 'Canonical MSC Table'
                 this.appendChild(title);            
-
+console.log(MSC)
                 for(j=0; j<this.MSC[0].length; j++){
                     row = document.createElement('tr')
                     this.GRIFFIN.appendChild(row)
