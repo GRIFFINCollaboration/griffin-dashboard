@@ -113,6 +113,12 @@ app.get('/MSCbuilder', function(req, res){
 	res.render('widgets/MSCbuilder.jade', {MIDAS:MIDAS});
 });
 
+app.get('/canonicalMSC', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+	
+	res.render('widgets/MSC.jade');
+});
+
 ///////////////////////////////////////
 //post routes
 ///////////////////////////////////////
@@ -388,13 +394,13 @@ app.post('/buildMSC', function(req, res){
 		names = names.concat(table[0]);
 		MSC = MSC.concat(table[1]);
 	}
-
+/*
 	var test = MSCbuilders.configDANTE(true, true);
 	for(var i=0; i<test[0].length; i++){
 		console.log([ test[0][i], test[1][i].toString(16) ]);
 	}
+*/
 
-/*
 	//generate a script to re-create MSC table in DAQ:
 	rebuildScript += 'odbedit -c "rm /DAQ/MSC"\n';
 	rebuildScript += 'odbedit -c "mkdir /DAQ/MSC"\n';
@@ -421,7 +427,5 @@ app.post('/buildMSC', function(req, res){
 						
 		});
 	});
-*/
-
 });
 

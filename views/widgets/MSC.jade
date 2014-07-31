@@ -1,0 +1,26 @@
+include ../partials/head.jade
+
+doctype html5
+html
+  head
+    +head()
+    script(type='text/javascript' src='static/xTags/MSCdump/xMSCtable.js')
+    link(rel="stylesheet" type="text/css" href='static/xTags/MSCdump/xMSCtable.css')
+
+
+  body   
+    div(id='wrapper')
+      branding-head(experiment='GRIFFIN')
+
+      div(id='mainContent')
+        widget-MSC(id='MSCdump')
+
+      div(id='push')
+
+    branding-foot
+
+    script.
+      document.addEventListener('DOMComponentsLoaded', function(){
+        //begin data fetch loop:
+        rebootFetch();
+      });
