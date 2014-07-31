@@ -39,7 +39,7 @@
             'updateRates' : function(customEventData){
                 window.currentData.host = findHost(customEventData.channel, window.currentData.DAQ),
                 window.currentData.ADC = findADC(customEventData.channel, window.currentData.DAQ)
-
+console.log(window.currentData.ADC)
                 document.getElementById(this.id + 'Title').innerHTML = customEventData.channel;
                 if(window.currentData.host){
                     document.getElementById(this.id + 'Host').innerHTML = window.currentData.host;
