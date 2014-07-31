@@ -545,7 +545,7 @@ app.post('/buildMSC', function(req, res){
 				names.push('DAS0'+(1+i)+'XN0'+j+'X');
 				//first 8 go in the bottom of 0x2100
 				if(i<2 || (i==2 && j<2))
-					MSC.push((2 << 12) | ( 1 << 8) | (3*i+j) );
+					MSC.push((2 << 12) | ( 1 << 8) | (3*i+j + 8) );
 				//rest stack up in 0x2300
 				else
 					MSC.push((2 << 12) | ( 3 << 8) | (3*i+j - 8) );
