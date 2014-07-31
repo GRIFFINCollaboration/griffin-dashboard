@@ -118,9 +118,12 @@
                         });
 
                         //set up the tooltip listeners for suppressors:
-                        this.cells[suppressorName].on('mouseover', this.writeTooltip.bind(this, 8+i) );
+                        this.cells[suppressorName].on('mouseover', this.writeTooltip.bind(this, 8+3*i+j) );
                         this.cells[suppressorName].on('mousemove', this.moveTooltip.bind(this) );
                         this.cells[suppressorName].on('mouseout', this.writeTooltip.bind(this, -1));
+
+                        //set up onclick listeners:
+                        this.cells[this.channelNames[8+3*i+j]].on('click', this.clickCell.bind(this, this.channelNames[8+3*i+j]) );
 
                         //add to main layer
                         this.mainLayer[cardIndex].add(this.cells[suppressorName]);
@@ -157,7 +160,6 @@
 
                     //set up onclick listeners:
                     this.cells[this.channelNames[i]].on('click', this.clickCell.bind(this, this.channelNames[i]) );
-                    this.cells[this.channelNames[8+i]].on('click', this.clickCell.bind(this, this.channelNames[8+i]) );
 
                     //add the cell to the main layer
                     this.mainLayer[cardIndex].add(mask[i]);
