@@ -9,6 +9,8 @@
                     row, cell, i, j,
                     MSC = JSON.parse(this.MSC);
 
+                window.refreshTargets = []
+
                 this.GRIFFIN = document.createElement('table')
                 this.SCEPTAR = document.createElement('table')
                 this.DANTE = document.createElement('table')
