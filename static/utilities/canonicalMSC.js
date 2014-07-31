@@ -1,3 +1,6 @@
+if(!module)
+	module = {}
+
 module.exports = {
 
 	'configGRIFFINclover': function(index, suppressors){
