@@ -475,7 +475,7 @@
                             if(i<currentFilter[key].length-1)
                                 currentOr.querySelectorAll('button.lightButton')[0].onclick();
                         }
-                    } else {
+                    } else if(currentFilter[key] instanceof String) {
                         console.log(currentFilter[key])
                         lastDash = currentFilter[key].lastIndexOf('-');
                         currentOr.querySelectorAll('select')[0].value = currentFilter[key].slice(0,2);
