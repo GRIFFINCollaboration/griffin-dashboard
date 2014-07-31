@@ -15,13 +15,41 @@
                 this.griffinTitle = document.createElement('caption')
                 this.griffinTitle.innerHTML = 'GRIFFIN'
                 this.GRIFFIN.appendChild(this.griffinTitle)
+
                 this.SCEPTAR = document.createElement('table')
+                this.sceptarTitle = document.createElement('caption')
+                this.sceptarTitle.innerHTML = 'SCEPTAR'
+                this.SCEPTAR.appendChild(this.sceptarTitle)
+
                 this.DANTE = document.createElement('table')
+                this.danteTitle = document.createElement('caption')
+                this.danteTitle.innerHTML = 'DANTE'
+                this.DANTE.appendChild(this.danteTitle)
+
                 this.PACES = document.createElement('table')
+                this.pacesTitle = document.createElement('caption')
+                this.pacesTitle.innerHTML = 'PACES'
+                this.PACES.appendChild(this.pacesTitle)
+
                 this.SPICE = document.createElement('table')
+                this.spiceTitle = document.createElement('caption')
+                this.spiceTitle.innerHTML = 'SPICE'
+                this.SPICE.appendChild(this.spiceTitle)
+
                 this.ZDS = document.createElement('table')
+                this.zdsTitle = document.createElement('caption')
+                this.zdsTitle.innerHTML = 'ZDS'
+                this.ZDS.appendChild(this.zdsTitle)
+
                 this.S2S3 = document.createElement('table')
+                this.s2s3Title = document.createElement('caption')
+                this.s2s3Title.innerHTML = 'S2 / S3'
+                this.s2s3.appendChild(this.s2s3Title)
+
                 this.DESCANT = document.createElement('table')
+                this.descantTitle = document.createElement('caption')
+                this.descantTitle.innerHTML = 'DESCANT'
+                this.DESCANT.appendChild(this.descantTitle)
 
                 title.innerHTML = 'Canonical MSC Table'
                 this.appendChild(title);            
