@@ -458,7 +458,7 @@
                 for(key in currentFilter){
                     if(key.indexOf('last_written') != -1 ) continue;
 
-                    if(typeof currentFilter[key] == 'number') continue;
+                    if(typeof currentFilter[key] == 'number') continue; //ie you're looking at a coinc window, bail
 
                     createOr.onclick();
 
@@ -478,7 +478,6 @@
                                 currentOr.querySelectorAll('button.lightButton')[0].onclick();
                         }
                     } else {
-                        console.log(currentFilter[key])
                         lastDash = currentFilter[key].lastIndexOf('-');
                         currentOr.querySelectorAll('select')[0].value = currentFilter[key].slice(0,2);
                         currentOr.querySelectorAll('select')[1].value = currentFilter[key].slice(3,4);
