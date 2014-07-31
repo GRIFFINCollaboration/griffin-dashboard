@@ -50,7 +50,7 @@
                     this.setUpUI();
                     this.UIdeployed = true;
                 }
-
+console.log([customEventData.channel, window.currentData.DAQ])
 console.log([window.currentData.host, window.currentData.ADC])
                 //summon data from the ADC
                 if(window.currentData.host && window.currentData.ADC){
