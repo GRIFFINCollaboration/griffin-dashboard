@@ -104,8 +104,10 @@ function initializeDetector(name, headline){
     for(i=0; i<this.viewNames.length; i++){
         xString += '<x-card id="' + this.id+this.viewNames[i] + 'Card"></x-card>';
     }
+    xString += '<x-card id="DAQhistoCard"><div id="DAQspectrum" class="DAQhisto"></div><div id="DAQpulse" class="DAQhisto"></div><div id="DAQtime" class="DAQhisto"></div><div id="DAQwaveform" class="DAQhisto"></div></x-card>'
     xString += '</x-deck>'
     deckWrap.innerHTML = xString;
+    this.viewNames.push('Plots')
 
     //plot buffers
     for(i=0; i<this.viewNames.length; i++){
