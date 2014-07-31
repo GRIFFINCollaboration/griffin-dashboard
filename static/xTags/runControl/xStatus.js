@@ -23,6 +23,7 @@
                 ,   triggerEPSrow = document.createElement('tr')
                 ,   triggerDPSrow = document.createElement('tr')
                 ,   loggerRow = document.createElement('tr')
+                ,   isWriteRow = document.createElement('tr')
                 ,   triggerEventTitle = document.createElement('td')
                 ,   triggerEventVal = document.createElement('td')
                 ,   triggerEPSTitle = document.createElement('td')
@@ -31,6 +32,8 @@
                 ,   triggerDPSVal = document.createElement('td')
                 ,   loggerTitle = document.createElement('td')
                 ,   loggerVal = document.createElement('td')
+                ,   isWriteTitle = document.createElement('td')
+                ,   isWriteVal = document.createElement('td')
                 ,   messageTitle = document.createElement('h3')
                 ,   messageWrap = document.createElement('div')
                 ,   messageList = document.createElement('ul')
@@ -113,6 +116,10 @@
                 loggerVal.setAttribute('id', 'dataRecorded');
                 loggerRow.appendChild(loggerTitle);
                 loggerRow.appendChild(loggerVal);
+                isWriteTitle.innerHTML = 'Write Data: ';
+                isWriteVal.setAttribute('id', 'isWriting');
+                isWriteRow.appendChild(isWriteTitle);
+                isWriteRow.appendChild(isWriteVal);
 
                 //message list
                 messageWrap.setAttribute('class', 'expand');
@@ -321,7 +328,8 @@ function getRunSummary(host){
                 document.getElementById('triggerEvents').innerHTML = prettyNumber(window.currentData.ODB.Trigger['Events sent']);
                 document.getElementById('triggerEventsPerSec').innerHTML = window.currentData.ODB.Trigger['Events per sec.'].toFixed();
                 document.getElementById('triggerDataPerSec').innerHTML = window.currentData.ODB.Trigger['kBytes per sec.'].toFixed();
-                document.getElementById('dataRecorded').innerHTML = (window.currentData.ODB.Logger['Bytes written']/1073742000).toFixed(3);
+                document.getElementById('dataRecorded').innerHTML = (window.currentData.ODB.Logger.Channels['0'].Statistics['Bytes written']/1073742000).toFixed(3);
+                document.getElementById('isWriting').innerHTML = window.currentData.ODB.Logger['Write data']);
             }
 
         }
