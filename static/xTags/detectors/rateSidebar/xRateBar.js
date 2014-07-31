@@ -99,45 +99,44 @@
             //send board level information to the MSCB node info panel
             'mapNodeData' : function(response){
 
-                var key, data, i = 0, time
+                var key, data, time
                     content,
-                    titles = [
-                        'Control Bits: ',
-                        'Revision: ',
-                        'Serial: ',
-                        'FPGA Temperature: ',
-                        'Clock Cleaner Locked: ',
-                        'Clock Cleaner Frequency: ',
-                        'Hardware / Software Match: ',
-                        'Hardware ID: ',
-                        'Hardware Timestamp: ',
-                        'Software ID: ',
-                        'Software Timestamp: ',
-                        'Uptime: ',
-                        'Reference Clock: ',
-                        'Enabled Channels: ',
-                        'Enabled ADCs: '
-                    ]
+                    title = {   'ctrl' : 'Control Bits: ', 
+                                'rev' : 'Revision: ',
+                                'serial': 'Serial: ',
+                                'cpu_temp': 'FPGA Temperature: ',
+                                'cc_lock': 'Clock Cleaner Locked: ',
+                                'cc_freq': 'Clock Cleaner Frequency: ',
+                                'hw_sw_m': 'Hardware / Software Match: ',
+                                'hw_id': 'Hardware ID: ',
+                                'hw_time': 'Hardware Timestamp: ',
+                                'sw_id': 'Software ID: ',
+                                'sw_time': 'Software Timestamp: ',
+                                'uptime': 'Uptime: ',
+                                'ref_clk': 'Reference Clock: ',
+                                'ch_en': 'Enabled Channels: ',
+                                'ch_aa': 'Enabled ADCs: '
+                            };
 
                 data = JSON.parse(response);
 
                 for(key in data){
-                    content = titles[i] + data[key].d;
-                    if(i==3)
+                    content = titles[key] + data[key].d;
+                    if(key == 'cpu_temp')
                         content += ' C'
-                    if(i==7 || i==9)
-                        content = titles[i] + '0x' + parseInt(data[key].d, 10).toString(16);
-                    if(i==8 || i==10){
+                    if(key=='hw_id' || key=='sw_id')
+                        content = titles[key] + '0x' + parseInt(data[key].d, 10).toString(16);
+                    if(key=='hw_time' || key=='sw_time'){
                         time = new Date(parseInt(data[key].d, 10)*1000);
-                        content = titles[i] + time.toString();
+                        content = titles[key] + time.toString();
                     }
-                    if(i==11){
+                    if(key=='uptime'){
                         time = parseInt(data[key].d, 10);
-                        content = titles[i] + chewUptime(time);
+                        content = titles[key] + chewUptime(time);
                     }
                     if(document.getElementById(key))
                         document.getElementById(key).innerHTML = content;
-                    i++;
+                    
                 }
     
             },
