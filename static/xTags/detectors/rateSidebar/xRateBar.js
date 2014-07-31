@@ -54,7 +54,7 @@
                 //summon data from the ADC
                 if(window.currentData.host && (window.currentData.ADC || window.currentData.ADC == 0)){
                     XHR('http://'+window.currentData.host+'/mscb?node='+(parseInt(window.currentData.ADC,10)+2), this.mapADCdata.bind(this), 'application/json', true);
-                    //XHR('http://'+window.currentData.host+'/mscb?node=1', this.mapNodeData.bind(this), 'application/json', true);
+                    XHR('http://'+window.currentData.host+'/mscb?node=1', this.mapNodeData.bind(this), 'application/json', true);
                 }
 
             },
@@ -84,10 +84,8 @@
                 window.ADCstructure = data;
 
                 //all number inputs have id == data key name
-                for(i=0; i<numberID.length; i++){
-                    console.log(i, document.getElementById(numberID[i]))
+                for(i=0; i<numberID.length; i++)
                     document.getElementById(numberID[i]).value = data[numberID[i]]['d'];
-                }
                 //all radio inputs have name == data key name
                 for(i=0; i<radioName.length; i++){
                     document.querySelectorAll('input[name = "'+radioName[i]+'"][value = '+data[radioName[i]]['d']+']')[0].checked = true;    
