@@ -136,7 +136,7 @@
                         time = parseInt(data[key].d, 10);
                         content = titles[i] + chewUptime(time);
                     }
-
+console.log([key, document.getElementById(key)])
                     document.getElementById(key).innerHTML = content;
                     i++;
                 }
