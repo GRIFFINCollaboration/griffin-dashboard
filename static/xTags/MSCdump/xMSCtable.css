@@ -1,3 +1,12 @@
+body{
+	width: -moz-min-content;
+	width: -webkit-min-content;
+}
+
+div#header{
+	width:100%;
+}
+
 div#mainContent{
 	width: -moz-max-content;
 	width: -webkit-max-content;
