@@ -1,8 +1,3 @@
-div#mainContent{
-	width: -moz-max-content;
-	width: -webkit-max-content;
-}
-
 widget-MSC{
 	margin: 3em;
 	display: block;
@@ -11,7 +6,7 @@ widget-MSC{
 widget-MSC table{
 	float:left;
 	line-height: 150%;
-	font-size: 120%;
+	font-size: 100%;
 	margin-right: 2em;
 }
 
