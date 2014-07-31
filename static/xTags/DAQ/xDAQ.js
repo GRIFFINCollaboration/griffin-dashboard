@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var xString, option, title, deckWrap, builderLink, dataViews, i, masterFlotrWrap
+                var xString, option, title, deckWrap, builderLink, canonicalLink, dataViews, i, masterFlotrWrap
                 ,   plotControlWrap = document.createElement('form')
                 ,   plotControlTitle = document.createElement('h3')
                 ,   plotControlMinLabel = document.createElement('label')
@@ -51,6 +51,13 @@
                 builderLink.setAttribute('class', 'stdin');
                 builderLink.setAttribute('id', 'MSCbuilderLink');
                 this.navBlock.appendChild(builderLink);
+
+                canonicalLink = document.createElement('a');
+                canonicalLink.setAttribute('href', '/canonicalMSC');
+                canonicalLink.innerHTML = 'Canonical MSC';
+                canonicalLink.setAttribute('class', 'stdin');
+                canonicalLink.setAttribute('id', 'MSCcanonicalLink');
+                this.navBlock.appendChild(canonicalLink);
 
                 //master / collector nav
                 this.cardNav = document.createElement('select');
