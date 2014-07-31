@@ -185,8 +185,8 @@
                     }
                 }
                     
-                console.log('trying MSCB_WriteVar('+url+', '+addr+', '+var_id+', '+data+')' )
-                //MSCB_WriteVar( url, addr, var_id, data )
+                //console.log('trying MSCB_WriteVar('+url+', '+addr+', '+var_id+', '+data+')' )
+                MSCB_WriteVar( url, addr, var_id, data )
 
             },
 
