@@ -6,7 +6,8 @@
         lifecycle: {
             created: function() {
                 var title = document.createElement('h1'),
-                    row, cell, MSC, i, j;
+                    row, cell, i, j,
+                    MSC = JSON.parse(this.MSC);
 
                 this.GRIFFIN = document.createElement('table')
                 this.SCEPTAR = document.createElement('table')
@@ -18,24 +19,19 @@
                 this.DESCANT = document.createElement('table')
 
                 title.innerHTML = 'Canonical MSC Table'
-                this.appendChild(title);
+                this.appendChild(title);            
 
-                //GRIFFIN
-                for(i=0; i<16; i++){
-                    MSC = module.exports.configGRIFFINclover(i, true);
-
-                    for(j=0; j<MSC[0].length; j++){
-                        row = document.createElement('tr')
-                        this.GRIFFIN.appendChild(row)
-                        cell = document.createElement('td')
-                        cell.innerHTML = MSC[0][j]
-                        row.appendChild(cell)
-                        cell = document.createElement('td')
-                        cell.innerHTML = MSC[1][j]
-                        row.appendChild(cell)
-
-                    }
+                for(j=0; j<this.MSC[0].length; j++){
+                    row = document.createElement('tr')
+                    this.GRIFFIN.appendChild(row)
+                    cell = document.createElement('td')
+                    cell.innerHTML = MSC[0][j]
+                    row.appendChild(cell)
+                    cell = document.createElement('td')
+                    cell.innerHTML = MSC[1][j]
+                    row.appendChild(cell)
                 }
+                
                 this.appendChild(this.GRIFFIN)
 
             },
@@ -47,7 +43,9 @@
 
         },
         accessors: {
-
+            'MSC':{
+                attribute: {} //this just needs to be declared
+            }
         }, 
         methods: {
 

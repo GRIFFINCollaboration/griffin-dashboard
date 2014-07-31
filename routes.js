@@ -114,9 +114,18 @@ app.get('/MSCbuilder', function(req, res){
 });
 
 app.get('/canonicalMSC', function(req, res){
+	var MSC = [], table, names = [];
+
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('widgets/MSC.jade');
+	//GRIFFIN
+	for(i=1; i<17; i++){
+			table = MSCbuilders.configGRIFFINclover(i, true);
+			names = names.concat(table[0]);
+			MSC = MSC.concat(table[1]);
+	}
+
+	res.render('widgets/MSC.jade', {MSC:JSON.stringify([names, MSC])});
 });
 
 ///////////////////////////////////////
