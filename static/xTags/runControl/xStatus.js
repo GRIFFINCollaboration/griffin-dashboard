@@ -59,11 +59,11 @@
                 startTime.setAttribute('id', 'statusStartTime');
                 document.getElementById('statusRunDetail').appendChild(startTime);
 
-                upTime.setAttribute('id', 'statusUpTime');
-                document.getElementById('statusRunDetail').appendChild(upTime);
-
                 stopTime.setAttribute('id', 'statusStopTime');
                 document.getElementById('statusRunDetail').appendChild(stopTime);
+
+                upTime.setAttribute('id', 'statusUpTime');
+                document.getElementById('statusRunDetail').appendChild(upTime);
 
                 //run control form
                 runControl.setAttribute('id', 'runControl');
