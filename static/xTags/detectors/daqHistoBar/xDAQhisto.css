@@ -1,5 +1,6 @@
 widget-DAQhisto{
 	width: 100%;
+	display: block;
 }
 
 div.DAQhisto{
