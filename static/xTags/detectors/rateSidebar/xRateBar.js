@@ -51,13 +51,13 @@
                     this.UIdeployed = true;
                 }
 
-/*
+
                 //summon data from the ADC
                 if(window.currentData.host && window.currentData.ADC){
-                    XHR('http://'+host+'/mscb?node='+(parseInt(ADC,10)+2), this.mapADCdata.bind(this), 'application/json', true);
-                    XHR('http://'+host+'/mscb?node=1', this.mapNodeData.bind(this), 'application/json', true);
+                    XHR('http://'+window.currentData.host+'/mscb?node='+(parseInt(ADC,10)+2), this.mapADCdata.bind(this), 'application/json', true);
+                    XHR('http://'+window.currentData.host+'/mscb?node=1', this.mapNodeData.bind(this), 'application/json', true);
                 }
-*/
+
             },
 
             //send the response to a request to an ADC node to the appropriate places
