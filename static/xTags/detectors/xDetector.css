@@ -48,3 +48,8 @@ div.sidebarWrap{
 	float: right;
 	height: 46em;
 }
+
+select.viewSelect{
+	display: block;
+	margin-bottom: 1em;
+}

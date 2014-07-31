@@ -128,7 +128,7 @@ function initializeDetector(name, headline){
     //x-deck navigation
     if(this.viewNames.length > 1){
         deckNavigator = document.createElement('select');
-        deckNavigator.setAttribute('class', 'stdin');
+        deckNavigator.setAttribute('class', 'stdin viewSelect');
         deckNavigator.id = this.id + 'viewSelect';
         for(i=0; i<this.viewNames.length; i++){
             deckOption = document.createElement('option');
