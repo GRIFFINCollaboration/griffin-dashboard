@@ -160,6 +160,9 @@
                     leftTab = document.createElement('div'),
                     filterContent = document.createElement('div'),
                     conditionTable = document.createElement('table'),
+                    crossDetectorCoincWrap = document.createElement('div'),
+                    crossDetectorCoincLabel = document.createElement('label'),
+                    crossDetectorCoincInput = document.createElement('input'),
                     addNewRow = document.createElement('button'),
                     deleteCondition = document.createElement('button'),
                     index = this.filterConditions.length;
@@ -180,6 +183,24 @@
                 conditionTable.setAttribute('id', 'filterTable'+index);
                 conditionTable.setAttribute('class', 'filterTable');
                 filterContent.appendChild(conditionTable);
+
+                //coincidence time window for multi-detector coincidences
+                crossDetectorCoincWrap = document.createElement('div');
+                crossDetectorCoincWrap.setAttribute('id', 'crossDetectorCoincWrap'+index+rowIndex);
+                crossDetectorCoincWrap.setAttribute('class', 'crossDetectorCoincWrap hiddenConfig');
+                filterContent.appendChild(crossDetectorCoincWrap);
+                crossDetectorCoincLabel = document.createElement('label');
+                crossDetectorCoincLabel.setAttribute('id', 'crossDetectorCoincLabel'+index+rowIndex);
+                crossDetectorCoincLabel.innerHTML = 'Cross-Detector Coinc. Window [ns]:'
+                crossDetectorCoincWrap.appendChild(crossDetectorCoincLabel);
+                crossDetectorCoincInput = document.createElement('input');
+                crossDetectorCoincInput.setAttribute('id', 'crossDetectorCoincInput'+index+rowIndex);
+                crossDetectorCoincInput.setAttribute('class', 'stdin');
+                crossDetectorCoincInput.setAttribute('type', 'number');
+                crossDetectorCoincInput.setAttribute('step', 1);
+                crossDetectorCoincInput.setAttribute('min', 0);
+                crossDetectorCoincInput.value = 50;
+                crossDetectorCoincWrap.appendChild(crossDetectorCoincInput);
 
                 addNewRow.setAttribute('id', 'addNewRow' + index);
                 addNewRow.setAttribute('class', 'stdin lightButton');
