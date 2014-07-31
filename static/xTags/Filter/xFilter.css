@@ -68,6 +68,12 @@ div.coincConfigWrap{
 	width:20em;
 }
 
+div.crossDetectorCoincWrap{
+	background-color: #444444;
+	border-radius: 1em;
+	padding: 0.5em;
+}
+
 div.hiddenConfig{
 	opacity:0;
 	pointer-events: none;
