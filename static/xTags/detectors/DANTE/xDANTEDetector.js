@@ -6,7 +6,7 @@
             created: function() {
                 var URLs = ['http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
                     i, j;
-                if(this.readout == 'PMT')
+                if(this.readout == 'Energy')
                     this.suffix = 'N00X';
                 else
                     this.suffix = 'T00X'

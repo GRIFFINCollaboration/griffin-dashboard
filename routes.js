@@ -47,10 +47,10 @@ app.get('/DESCANT', function(req, res){
 	res.render('detectors/DESCANT.jade', {MIDAS:MIDAS});
 });
 
-app.get('/DANTE-PMT', function(req, res){
+app.get('/DANTE-Energy', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, readout:'PMT'});
+	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, readout:'Energy'});
 });
 
 app.get('/DANTE-TAC', function(req, res){

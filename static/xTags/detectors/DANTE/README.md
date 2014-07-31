@@ -4,4 +4,4 @@
 
 ####Attributes
  - `MIDAS`: host:port of the MIDAS experiment the HV frontends for this detector are living at.
- - `readout`: either `PMT` or `TAC`, chooses which mode to visualize.
+ - `readout`: either `Energy` or `TAC`, chooses which mode to visualize.
