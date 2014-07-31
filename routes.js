@@ -390,13 +390,13 @@ app.post('/buildMSC', function(req, res){
 		names = names.concat(table[0]);
 		MSC = MSC.concat(table[1]);
 	}
-/*
-	var test = configDANTE(false, true);
+
+	var test = configDANTE(true, true);
 	for(var i=0; i<test[0].length; i++){
 		console.log([ test[0][i], test[1][i].toString(16) ]);
 	}
-*/
 
+/*
 	//generate a script to re-create MSC table in DAQ:
 	rebuildScript += 'odbedit -c "rm /DAQ/MSC"\n';
 	rebuildScript += 'odbedit -c "mkdir /DAQ/MSC"\n';
@@ -423,7 +423,7 @@ app.post('/buildMSC', function(req, res){
 						
 		});
 	});
-
+*/
 	function configGRIFFINclover(index, suppressors){
 		var names = [],
 			MSC = [],
@@ -515,7 +515,7 @@ app.post('/buildMSC', function(req, res){
 	function configDANTE(US, DS){
 		var names = [],
 			MSC = [],
-			i, min, max;
+			i, j, min, max, suppressorMSC;
 
 		if(!US && !DS) return [names, MSC]; //do nothing
 
@@ -529,15 +529,28 @@ app.post('/buildMSC', function(req, res){
 		else
 			max = 4;
 
+		//LaBr - energy
 		for(i=min; i<max; i++){
 			names.push('DAL0'+(1+i)+'XN00X');
 			MSC.push((2 << 12) | ( 1 << 8) | i);
 		}
-
+		//LaBr - TAC
 		for(i=min; i<max; i++){
 			names.push('DAL0'+(1+i)+'XT00X');
 			MSC.push((2 << 12) | ( 2 << 8) | i);
 		}
+		//Suppressors
+		for(i=min; i<max; i++){
+			for(j=0; j<3; j++){
+				names.push('DAS0'+(1+i)+'XN0'+j+'X');
+				//first 8 go in the bottom of 0x2100
+				if(i<2 || (i==2 && j<2))
+					MSC.push((2 << 12) | ( 1 << 8) | (3*i+j) );
+				//rest stack up in 0x2300
+				else
+					MSC.push((2 << 12) | ( 3 << 8) | (3*i+j - 8) );
+			}
+		}	
 
 		return [names, MSC];
 
