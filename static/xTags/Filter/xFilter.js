@@ -458,7 +458,7 @@
                 for(key in currentFilter){
                     if(key.indexOf('last_written') != -1 ) continue;
 
-                    if(!(currentFilter[key] instanceof Array) && !(currentFilter[key] instanceof String)) continue;  //ie you're looking at one of the coinc window numbers, skip
+                    console.log(currentFilter[key])
 
                     createOr.onclick();
 
