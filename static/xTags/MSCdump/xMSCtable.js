@@ -44,7 +44,7 @@
                 this.S2S3 = document.createElement('table')
                 this.s2s3Title = document.createElement('caption')
                 this.s2s3Title.innerHTML = 'S2 / S3'
-                this.s2s3.appendChild(this.s2s3Title)
+                this.S2S3.appendChild(this.s2s3Title)
 
                 this.DESCANT = document.createElement('table')
                 this.descantTitle = document.createElement('caption')
