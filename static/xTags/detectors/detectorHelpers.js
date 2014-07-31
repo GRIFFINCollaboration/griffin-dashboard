@@ -110,7 +110,7 @@ function initializeDetector(name, headline){
     this.viewNames.push('Plots')
 
     //plot buffers
-    for(i=0; i<this.viewNames.length; i++){
+    for(i=0; i<this.viewNames.length - 1; i++){  //exclude last card, special for daq histos
         //divs to hold kinetic contexts
         drawTarget = document.createElement('div');
         drawTarget.setAttribute('id', this.id+this.viewNames[i]+'Draw');
