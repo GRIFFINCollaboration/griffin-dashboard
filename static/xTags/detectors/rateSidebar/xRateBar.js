@@ -82,13 +82,13 @@
 
                 //keep hold of this blobject for later, has widths and car types and stuff in it needed for writing back
                 window.ADCstructure = data;
-console.log(data)
+
                 //all number inputs have id == data key name
                 for(i=0; i<numberID.length; i++)
-                    document.getElementById(numberID[i]).value = data[window.currentData.ADC][numberID[i]]['d'];
+                    document.getElementById(numberID[i]).value = data[numberID[i]]['d'];
                 //all radio inputs have name == data key name
                 for(i=0; i<radioName.length; i++){
-                    document.querySelectorAll('input[name = "'+radioName[i]+'"][value = '+data[window.currentData.ADC][radioName[i]]['d']+']')[0].checked = true;    
+                    document.querySelectorAll('input[name = "'+radioName[i]+'"][value = '+data[radioName[i]]['d']+']')[0].checked = true;    
                 }
 
                 //special label for the DC offset slider
