@@ -50,8 +50,7 @@
                     this.setUpUI();
                     this.UIdeployed = true;
                 }
-//console.log([customEventData.channel, window.currentData.DAQ])
-//console.log([window.currentData.host, window.currentData.ADC])
+
                 //summon data from the ADC
                 if(window.currentData.host && window.currentData.ADC){
                     XHR('http://'+window.currentData.host+'/mscb?node='+(parseInt(ADC,10)+2), this.mapADCdata.bind(this), 'application/json', true);
@@ -86,10 +85,10 @@
 
                 //all number inputs have id == data key name
                 for(i=0; i<numberID.length; i++)
-                    document.getElementById(numberID[i]).value = data[this.ADC][numberID[i]]['d'];
+                    document.getElementById(numberID[i]).value = data[window.currentData.ADC][numberID[i]]['d'];
                 //all radio inputs have name == data key name
                 for(i=0; i<radioName.length; i++){
-                    document.querySelectorAll('input[name = "'+radioName[i]+'"][value = '+data[this.ADC][radioName[i]]['d']+']')[0].checked = true;    
+                    document.querySelectorAll('input[name = "'+radioName[i]+'"][value = '+data[window.currentData.ADC][radioName[i]]['d']+']')[0].checked = true;    
                 }
 
                 //special label for the DC offset slider
@@ -148,7 +147,7 @@
                 console.log(var_name)
 /*
                 var url = 'http://' + this.host + '/mscb_rx'
-                ,   addr = 2 + this.ADC
+                ,   addr = 2 + window.currentData.ADC
                 ,   var_id, width, data, flag, unit, value;
 
                 var_id = window.ADCstructure[window.currentData.ADC][var_name]['id'];
