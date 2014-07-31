@@ -2,6 +2,9 @@
 
 This directory contains a bunch of helper functions.  `colorScales.js` contains the helpers for choosing colors along a scale; `fetchingData.js` contains the helpers that govern the main event loop; and `helpers.js` contains generic helper functions.
 
+##canonicalMSC.js
+Contains functions to construct the canonical MSC tables, packaged for inclusion as a node module; responsible for both the automatic generation of `/DAQ/MSC` in the ODB, and the contents of the `/canonicalMSC` page.
+
 ##colorScales.js
 
 ####`scalepickr(scale, palette)`
@@ -22,6 +25,9 @@ Governs the master update loop for all MarkII pages.  Suspends the current updat
 
 ####`canHas(a,b)`
 Returns `a` as long as `a` isn't `undefined` or `null`; returns `b` otherwise.
+
+####`chewUptime(s)`
+Turns a duration of `s` seconds into a readable string.
 
 ####`findADC(channel, DAQ)`
 Returns the ADC channel into which `channel`, the 10-character channel name of a detector element, is plugged, where `DAQ` is a JSON represetnation of the ODB's /DAQ directory.
