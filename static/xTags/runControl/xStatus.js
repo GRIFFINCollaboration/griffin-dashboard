@@ -9,7 +9,7 @@
                 ,   runDetail = document.createElement('ul')
                 ,   runNumber = document.createElement('li')
                 ,   startTime = document.createElement('li')
-                ,   upTime = document.createElement('li')
+                ,   runDuration = document.createElement('li')
                 ,   stopTime = document.createElement('li')
                 ,   runControl = document.createElement('div')
                 ,   start = document.createElement('button')
@@ -62,8 +62,8 @@
                 stopTime.setAttribute('id', 'statusStopTime');
                 document.getElementById('statusRunDetail').appendChild(stopTime);
 
-                upTime.setAttribute('id', 'statusUpTime');
-                document.getElementById('statusRunDetail').appendChild(upTime);
+                runDuration.setAttribute('id', 'statusRunDuration');
+                document.getElementById('statusRunDetail').appendChild(runDuration);
 
                 //run control form
                 runControl.setAttribute('id', 'runControl');
@@ -223,7 +223,7 @@ function getRunSummary(host){
         var data,
             i, state,
             date = new Date(),
-            now, uptime, hours, minutes, seconds,
+            now, RunDuration, hours, minutes, seconds,
             runNumber, stoptime, starttimeInt, stoptimeInt,
             messages;
 
@@ -241,7 +241,7 @@ function getRunSummary(host){
             if(window.currentData.ODB.Experiment && window.currentData.ODB.Runinfo && window.currentData.ODB.Trigger){
 
                 runNumber = 'Run ' + window.currentData.ODB.Runinfo['Run number'];
-                uptime = date.getTime() / 1000 - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
+                RunDuration = date.getTime() / 1000 - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
 
                 //show different stuff depending on run state:
                 if(window.currentData.ODB.Runinfo.State == 1){
@@ -260,7 +260,7 @@ function getRunSummary(host){
                     stoptime = 'Stopped ' + window.currentData.ODB.Runinfo['Stop time'];
                     stoptimeInt = Date.parse(window.currentData.ODB.Runinfo['Stop time']);
                     starttimeInt = Date.parse(window.currentData.ODB.Runinfo['Start time']);
-                    uptime = (stoptimeInt - starttimeInt) / 1000;
+                    RunDuration = (stoptimeInt - starttimeInt) / 1000;
                 } else if(window.currentData.ODB.Runinfo.State == 2){
                     //run is paused
                     runNumber += ' Paused';
@@ -290,11 +290,11 @@ function getRunSummary(host){
                 document.getElementById('statusStartTime').innerHTML = 'Started ' + window.currentData.ODB.Runinfo['Start time'];
                 document.getElementById('statusStopTime').innerHTML = stoptime;
                 
-                //calculate uptime:
-                hours = Math.floor(uptime / 3600);
-                minutes = Math.floor( (uptime%3600)/60 );
-                seconds = Math.floor(uptime%60);
-                document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
+                //calculate RunDuration:
+                hours = Math.floor(RunDuration / 3600);
+                minutes = Math.floor( (RunDuration%3600)/60 );
+                seconds = Math.floor(RunDuration%60);
+                document.getElementById('statusRunDuration').innerHTML = 'RunDuration ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
 
                 //conditional reporting of times based on run state
                 if(state == 0)
@@ -303,9 +303,9 @@ function getRunSummary(host){
                     document.getElementById('statusStopTime').setAttribute('style', 'display:none');
 
                 if(state == 0 || state == 3)
-                    document.getElementById('statusUpTime').setAttribute('style', 'display:block');
+                    document.getElementById('statusRunDuration').setAttribute('style', 'display:block');
                 else
-                    document.getElementById('statusUpTime').setAttribute('style', 'display:none');
+                    document.getElementById('statusRunDuration').setAttribute('style', 'display:none');
 
 
                 //trigger
