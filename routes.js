@@ -65,10 +65,16 @@ app.get('/SCEPTAR', function(req, res){
 	res.render('detectors/SCEPTAR.jade', {MIDAS:MIDAS});
 });
 
-app.get('/ZDS', function(req, res){
+app.get('/ZDS-Energy', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/ZDS.jade', {MIDAS:MIDAS});
+	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, readout:{'Energy'}});
+});
+
+app.get('/ZDS-TAC', function(req, res){
+	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+	
+	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, readout:{'TAC'}});
 });
 
 app.get('/DAQ', function(req, res){
@@ -390,13 +396,13 @@ app.post('/buildMSC', function(req, res){
 		names = names.concat(table[0]);
 		MSC = MSC.concat(table[1]);
 	}
-
+/*
 	var test = configDANTE(true, true);
 	for(var i=0; i<test[0].length; i++){
 		console.log([ test[0][i], test[1][i].toString(16) ]);
 	}
+*/
 
-/*
 	//generate a script to re-create MSC table in DAQ:
 	rebuildScript += 'odbedit -c "rm /DAQ/MSC"\n';
 	rebuildScript += 'odbedit -c "mkdir /DAQ/MSC"\n';
@@ -423,7 +429,7 @@ app.post('/buildMSC', function(req, res){
 						
 		});
 	});
-*/
+
 	function configGRIFFINclover(index, suppressors){
 		var names = [],
 			MSC = [],

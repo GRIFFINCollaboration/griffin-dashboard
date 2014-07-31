@@ -72,7 +72,7 @@
                         this.routes.push('GRIFFIN');
 
                     if(detCode == 'DA' && this.routes.indexOf('DANTE-PMT')==-1 ){
-                        this.routes.push('DANTE-PMT');
+                        this.routes.push('DANTE-Energy');
                         this.routes.push('DANTE-TAC');
                     }
 
@@ -103,8 +103,10 @@
                     if(detCode == 'TPW' && this.routes.indexOf('TIPWall')==-1 )
                         this.routes.push('TIPWall');
 
-                    if(detCode == 'ZDS' && this.routes.indexOf('ZDS')==-1 )
-                        this.routes.push('ZDS');
+                    if(detCode == 'ZDS' && this.routes.indexOf('ZDS')==-1 ){
+                        this.routes.push('ZDS-Energy');
+                        this.routes.push('ZDS-TAC');
+                    }
                 }
             }
         }

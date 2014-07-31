@@ -8,7 +8,10 @@
 
                 //deploy the standard stuff
                 this.viewNames = ['ZDS'];
-                this.channelNames = ['ZDS01XN00X'];
+                if(this.readout == 'Energy')
+                    this.channelNames = ['ZDS01XN00X'];
+                else if(this.readout == 'TAC')
+                    this.channelNames = ['ZDS01XT00X'];
 
                 initializeDetector.bind(this, 'ZDS', 'ZDS')();
 
@@ -38,6 +41,10 @@
         accessors: {
             'MIDAS':{
                 attribute: {} //this just needs to be declared
+            },
+
+            'readout':{
+                attribute: {}
             }
         }, 
         methods: {
