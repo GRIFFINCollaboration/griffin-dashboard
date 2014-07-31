@@ -74,7 +74,7 @@ app.get('/ZDS-Energy', function(req, res){
 app.get('/ZDS-TAC', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
-	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, readout:{'TAC'}});
+	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, readout:'TAC'});
 });
 
 app.get('/DAQ', function(req, res){
