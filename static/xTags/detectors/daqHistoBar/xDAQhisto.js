@@ -1,7 +1,7 @@
 (function(){  
 
     xtag.register('widget-DAQhisto', {
-        extends: 'div'
+        extends: 'div',
         lifecycle: {
             created: function() {
                 var histos = ['spectrum', 'time', 'pulse', 'waveform'],
