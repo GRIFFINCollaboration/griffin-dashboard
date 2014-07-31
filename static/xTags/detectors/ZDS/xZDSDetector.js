@@ -13,7 +13,7 @@
                 else if(this.readout == 'TAC')
                     this.channelNames = ['ZDS01XT00X'];
 
-                initializeDetector.bind(this, 'ZDS', 'ZDS')();
+                initializeDetector.bind(this, 'ZDS', 'ZDS-'+this.readout)();
 
                 //////////////////////////////////////
                 //ZDS specific drawing parameters
