@@ -16,12 +16,13 @@
 
 
                     //draw dygraphs
-                    this.spectrumPlot = new Dygraph(document.getElementById('spectrum'), 'ns,mV,\n', {
+                    this.spectrumPlot = new Dygraph(document.getElementById('spectrum'), [1,2,3], {
                         title: 'test',
                         xlabel: 'ns',
                         ylabel: 'mV',
+                        labels: ['ns', 'mV'],
                         width: this.offsetWidth*0.4,
-                        height: this.offsetWidth*0.3,
+                        height: this.offsetWidth*0.2,
                         sigFigs: 2,
                         strokeWidth: 4,
                         yAxisLabelWidth: 75,
@@ -38,7 +39,7 @@
                         xlabel: 'ns',
                         ylabel: 'mV',
                         width: this.offsetWidth*0.4,
-                        height: this.offsetWidth*0.3,
+                        height: this.offsetWidth*0.2,
                         sigFigs: 2,
                         strokeWidth: 4,
                         yAxisLabelWidth: 75,
@@ -55,7 +56,7 @@
                         xlabel: 'ns',
                         ylabel: 'mV',
                         width: this.offsetWidth*0.4,
-                        height: this.offsetWidth*0.3,
+                        height: this.offsetWidth*0.2,
                         sigFigs: 2,
                         strokeWidth: 4,
                         yAxisLabelWidth: 75,
@@ -72,7 +73,7 @@
                         xlabel: 'ns',
                         ylabel: 'mV',
                         width: this.offsetWidth*0.4,
-                        height: this.offsetWidth*0.3,
+                        height: this.offsetWidth*0.2,
                         sigFigs: 2,
                         strokeWidth: 4,
                         yAxisLabelWidth: 75,
@@ -101,9 +102,10 @@
 
             'update': function(){
                 var i,
-                    dummy = []
+                    x = [], y = []
 
                 for(i=0; i<4096; i++){
+                    x.push(i)
                     dummy.push(Math.random());
                 }
 
