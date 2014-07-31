@@ -1,0 +1,10 @@
+widget-MSC table{
+	float:left;
+	line-height: 120%;
+	font-size: 120%;
+}
+
+widget-MSC table tr:nth-child(odd){
+	background-color: #222222
+}
+
