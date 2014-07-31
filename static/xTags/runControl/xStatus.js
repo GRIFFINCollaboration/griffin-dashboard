@@ -24,6 +24,7 @@
                 ,   triggerDPSrow = document.createElement('tr')
                 ,   loggerRow = document.createElement('tr')
                 ,   isWriteRow = document.createElement('tr')
+                ,   dataDirRow = document.createElement('tr')
                 ,   triggerEventTitle = document.createElement('td')
                 ,   triggerEventVal = document.createElement('td')
                 ,   triggerEPSTitle = document.createElement('td')
@@ -34,6 +35,9 @@
                 ,   loggerVal = document.createElement('td')
                 ,   isWriteTitle = document.createElement('td')
                 ,   isWriteVal = document.createElement('td')
+                ,   dataDirTitle = document.createElement('td')
+                ,   dataDirVal = document.createElement('td')
+                ,   dataDirInput = document.createElement('input')
                 ,   messageTitle = document.createElement('h3')
                 ,   messageWrap = document.createElement('div')
                 ,   messageList = document.createElement('ul')
@@ -101,6 +105,7 @@
                 triggerTable.appendChild(triggerDPSrow)
                 triggerTable.appendChild(loggerRow)
                 triggerTable.appendChild(isWriteRow)
+                triggerTable.appendChild(dataDirRow)
                 triggerEventTitle.innerHTML = 'Events: ';
                 triggerEventVal.setAttribute('id', 'triggerEvents');
                 triggerEventRow.appendChild(triggerEventTitle);
@@ -121,6 +126,14 @@
                 isWriteVal.setAttribute('id', 'isWriting');
                 isWriteRow.appendChild(isWriteTitle);
                 isWriteRow.appendChild(isWriteVal);
+                dataDirTitle.innerHTML = 'Data Dir: ';
+                dataDirVal.setAttribute('id', 'dataDir');
+                dataDirRow.appendChild(dataDirTitle);
+                dataDirRow.appendChild(dataDirVal);
+                dataDirInput.setAttribute('type', 'text')
+                dataDirInput.setAttribute('id', 'dataDirIn')
+                dataDirInput.setAttribute('class', 'stdin')
+                dataDirVal.appendChild(dataDirInput)
 
                 //message list
                 messageWrap.setAttribute('class', 'expand');
@@ -330,7 +343,7 @@ function getRunSummary(host){
                 document.getElementById('triggerEventsPerSec').innerHTML = window.currentData.ODB.Trigger['Events per sec.'].toFixed();
                 document.getElementById('triggerDataPerSec').innerHTML = window.currentData.ODB.Trigger['kBytes per sec.'].toFixed();
                 document.getElementById('dataRecorded').innerHTML = (window.currentData.ODB.Logger.Channels['0'].Statistics['Bytes written']/1073742000).toFixed(3);
-                document.getElementById('isWriting').innerHTML = window.currentData.ODB.Logger['Write data'];
+                document.getElementById('isWriting').innerHTML = window.currentData.ODB.Logger['Write data'] ? 'Yes' : 'No';
             }
 
         }
