@@ -403,10 +403,10 @@
                 }
 
                 radioArray(items[0], ['Suppressed', 'Unsuppressed'], [true, false], 'wrf_supp');
-                document.getElementById('wrf_supp0').onchange = this.updateADC.bind(document.getElementById('wrf_supp0'), 'wrf_supp');
-                document.getElementById('wrf_supp1').onchange = this.updateADC.bind(document.getElementById('wrf_supp1'), 'wrf_supp');
+                document.getElementById('wfr_supp0').onchange = this.updateADC.bind(document.getElementById('wfr_supp0'), 'wfr_supp');
+                document.getElementById('wfr_supp1').onchange = this.updateADC.bind(document.getElementById('wfr_supp1'), 'wfr_supp');
 
-                id = ['wrf_pret', 'wrf_smpl', 'wrf_dec'];
+                id = ['wfr_pret', 'wfr_smpl', 'wfr_dec'];
                 step = [1,1,1];
 
                 for(i=0; i<id.length; i++){
@@ -422,8 +422,8 @@
                 }
 
                 radioArray(items[4], ['Enabled', 'Disabled'], [true, false], 'wrf_off');
-                document.getElementById('wrf_off0').onchange = this.updateADC.bind(document.getElementById('wrf_off0'), 'wrf_off');
-                document.getElementById('wrf_off1').onchange = this.updateADC.bind(document.getElementById('wrf_off1'), 'wrf_off');
+                document.getElementById('wfr_off0').onchange = this.updateADC.bind(document.getElementById('wfr_off0'), 'wfr_off');
+                document.getElementById('wfr_off1').onchange = this.updateADC.bind(document.getElementById('wfr_off1'), 'wfr_off');
 
                 //////////////////////////////
                 //Simulation pane elements      
