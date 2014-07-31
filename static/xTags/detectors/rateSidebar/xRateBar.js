@@ -122,6 +122,8 @@
                         'eFmCkSqE',
                         'eAlgnErr',
                         'eOctTxOK',
+                        'eOctRxOK',
+                        'eOctCkSqE',
                         'Enabled Channels: ',
                         'Enabled ADCs: '
                     ]
@@ -207,7 +209,7 @@ console.log([key, document.getElementById(key)])
                     mainSectionTitles = ['MSCB Node Info', 'ADC Control', 'Triggering', 'Pulse Height Eval.', 'Time Eval.', 'Waveform Readout', 'Simulation Pulse', 'Miscellaneous'],
                     mainSectionH3 = [],
                     mainLists = [],
-                    statusIDs = ['ctrl', 'rev', 'serial', 'cpu_temp', 'cc_lock', 'cc_freq', 'hw_sw_m', 'hw_id', 'hw_time', 'sw_id', 'sw_time', 'uptime', 'hdl_time', 'dac_ch', 'ref_clk', 'eFmTxOK', 'eFmRxOK', 'eFmCkSqE', 'eAlgnErr', 'eOctTxOK', 'ch_en', 'ch_aa'],
+                    statusIDs = ['ctrl', 'rev', 'serial', 'cpu_temp', 'cc_lock', 'cc_freq', 'hw_sw_m', 'hw_id', 'hw_time', 'sw_id', 'sw_time', 'uptime', 'hdl_time', 'dac_ch', 'ref_clk', 'eFmTxOK', 'eFmRxOK', 'eFmCkSqE', 'eAlgnErr', 'eOctTxOK', 'eOctRxOK', 'eOctCkSqE', 'ch_en', 'ch_aa'],
                     ADCitemTitles = ['DC Offset:', 'ADC Chan:', 'Trim:', 'Polarity:'],
                     triggeringItemTitles = ['Channel:', 'Hit Thresh:', 'Trig Thresh:', 'Differentiation:', 'Integration:', 'Delay:', 'Pole Cxn:', 'BLR Control:'],
                     pulseheightItemTitles = ['Integration:', 'Differentiation:', 'Delay:', 'Pole Cxn 1:', 'Pole Cxn 2:', 'Baseline Rest:', 'Gain:', 'Pileup Algo:'],
