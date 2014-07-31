@@ -52,7 +52,7 @@
                 }
 
                 //summon data from the ADC
-                if(window.currentData.host && window.currentData.ADC){
+                if(window.currentData.host && (window.currentData.ADC || window.currentData.ADC == 0)){
                     XHR('http://'+window.currentData.host+'/mscb?node='+(parseInt(window.currentData.ADC,10)+2), this.mapADCdata.bind(this), 'application/json', true);
                     //XHR('http://'+window.currentData.host+'/mscb?node=1', this.mapNodeData.bind(this), 'application/json', true);
                 }
