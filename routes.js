@@ -5,7 +5,7 @@
 app.get('/HV', function(req, res){
 	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 
-	res.render('widgets/HV.jade');
+	res.render('widgets/HV.jade', {MIDAS:MIDAS});
 });
 
 app.get('/GRIFFIN', function(req, res){
