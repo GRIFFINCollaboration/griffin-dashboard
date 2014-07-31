@@ -364,6 +364,10 @@
                 if(table.querySelectorAll('tr').length==0)
                     document.getElementById('deleteCondition' + index).onclick();
 
+                this.nRows[index]--;
+                if(this.nRows[index] == 1)
+                    document.getElementById('crossDetectorCoincWrap'+index).setAttribute('class', 'crossDetectorCoincWrap hidden');
+
                 return false;
             },
 
