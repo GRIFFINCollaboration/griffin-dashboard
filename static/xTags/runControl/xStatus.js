@@ -221,7 +221,7 @@ function getRunSummary(host){
     //once this is all dealt with, refresh the display immediately
     xmlhttp.onreadystatechange = function(){
         var data,
-            i,
+            i, state,
             date = new Date(),
             now, uptime, hours, minutes, seconds,
             runNumber, stoptime, starttimeInt, stoptimeInt,
@@ -242,14 +242,17 @@ function getRunSummary(host){
 
                 runNumber = 'Run ' + window.currentData.ODB.Runinfo['Run number'];
                 uptime = date.getTime() / 1000 - parseInt(window.currentData.ODB.Runinfo['Start time binary'], 16);
-                stoptime = null;
+
                 //show different stuff depending on run state:
                 if(window.currentData.ODB.Runinfo.State == 1){
                     //run is stopped
-                    if(window.currentData.ODB.Runinfo['Transition in progress'] == 1)
-                        runNumber += ' Spooling Up...'
-                    else
+                    if(window.currentData.ODB.Runinfo['Transition in progress'] == 1){
+                        state = 1;
+                        runNumber += ' Spooling Up...';
+                    } else{
                         runNumber += ' Stopped';
+                        state = 0;
+                    }
                     document.getElementById('statusStart').style.display = 'inline';
                     document.getElementById('statusStop').style.display = 'none';
                     document.getElementById('statusPause').style.display = 'none';
@@ -265,6 +268,7 @@ function getRunSummary(host){
                     document.getElementById('statusStop').style.display = 'none';
                     document.getElementById('statusPause').style.display = 'none';
                     document.getElementById('statusResume').style.display = 'inline';
+                    state = 2;
                     
                 } else if(window.currentData.ODB.Runinfo.State == 3){
                     //run is live
@@ -277,23 +281,30 @@ function getRunSummary(host){
                     document.getElementById('statusPause').style.display = 'inline';
                     document.getElementById('statusResume').style.display = 'none';
                     durationInt = date.getTime() / 1000;
+                    state = 3;
                 }
 
                 //data is present if we get this far, stick it in the correct DOM elements:
                 document.getElementById('statusTitle').innerHTML = window.currentData.ODB.Experiment.Name;
                 document.getElementById('statusRunNumber').innerHTML = runNumber;
                 document.getElementById('statusStartTime').innerHTML = 'Started ' + window.currentData.ODB.Runinfo['Start time'];
-                if(stoptime)
-                    document.getElementById('statusStopTime').innerHTML = stoptime;
+                document.getElementById('statusStopTime').innerHTML = stoptime;
                 
                 //calculate uptime:
                 hours = Math.floor(uptime / 3600);
                 minutes = Math.floor( (uptime%3600)/60 );
                 seconds = Math.floor(uptime%60);
-                if(seconds >= 0)
-                    document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
+                document.getElementById('statusUpTime').innerHTML = 'Uptime ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
+
+                if(state == 0)
+                    document.getElementById('statusStopTime').setAttribute('style', 'display:block');
                 else
-                    document.getElementById('statusUpTime').innerHTML = '';
+                    document.getElementById('statusStopTime').setAttribute('style', 'display:none');
+
+                if(state == 0 || state == 3)
+                    document.getElementById('statusUpTime').setAttribute('style', 'display:block');
+                else
+                    document.getElementById('statusUpTime').setAttribute('style', 'display:none');
 
 
                 //trigger
