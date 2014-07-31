@@ -22,7 +22,7 @@ app.use('/static', express.static(__dirname + '/static'));
 app.use(express.cookieParser());
 app.use(express.bodyParser());										//need this to parse submitted forms
 
-MSCbuilders = require('./static/utilities/canonicalMSC.js')
+MSCbuilders = require('utilities/canonicalMSC.js')
 
 // Load our routes
 require('./routes.js');
