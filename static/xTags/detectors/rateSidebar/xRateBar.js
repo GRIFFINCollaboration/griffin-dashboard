@@ -145,12 +145,11 @@
                 var url = 'http://' + this.host + '/mscb_rx'
                 ,   addr = 2 + window.currentData.ADC
                 ,   var_id, width, data, flag, unit, value;
-console.log(window.ADCstructure)
-console.log(window.currentData.ADC)
-                var_id = window.ADCstructure[window.currentData.ADC][var_name]['id'];
-                width = window.ADCstructure[window.currentData.ADC][var_name]['w'];
-                flag = window.ADCstructure[window.currentData.ADC][var_name]['f'];
-                unit = window.ADCstructure[window.currentData.ADC][var_name]['u'];
+
+                var_id = window.ADCstructure[var_name]['id'];
+                width = window.ADCstructure[var_name]['w'];
+                flag = window.ADCstructure[var_name]['f'];
+                unit = window.ADCstructure[var_name]['u'];
                 data = new DataView(new ArrayBuffer(width));
                 value = this.value;
                 if(var_name == 'a_dcofst'){
