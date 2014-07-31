@@ -24,7 +24,8 @@ div.DAQnav{
 	display: none;
 }
 
-a#MSCbuilderLink{
+a#MSCbuilderLink,
+a#MSCcanonicalLink{
 	float: right;
 }
 
