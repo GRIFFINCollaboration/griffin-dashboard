@@ -142,8 +142,6 @@
             },
 
             'updateADC' : function(var_name){
-                console.log(var_name)
-/*
                 var url = 'http://' + this.host + '/mscb_rx'
                 ,   addr = 2 + window.currentData.ADC
                 ,   var_id, width, data, flag, unit, value;
@@ -187,9 +185,9 @@
                     }
                 }
                     
-                //console.log('trying MSCB_WriteVar('+url+', '+addr+', '+var_id+', '+data+')' )
-                MSCB_WriteVar( url, addr, var_id, data )
-*/
+                console.log('trying MSCB_WriteVar('+url+', '+addr+', '+var_id+', '+data+')' )
+                //MSCB_WriteVar( url, addr, var_id, data )
+
             },
 
             'setUpUI' : function(){
