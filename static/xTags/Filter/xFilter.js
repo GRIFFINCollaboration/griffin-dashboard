@@ -403,7 +403,8 @@
                                                 
                     }
 
-                    crossDetCoinc = filterConditions[i].querySelectorAll('input').pop().value
+                    crossDetCoinc = filterConditions[i].querySelectorAll('input');
+                    crossDetCoinc = crossDetCoinc[crossDetCoinc.length - 1];
                     console.log(crossDetCoinc)
                     crossDetectorCoincs[i] = crossDetCoinc
                 }
