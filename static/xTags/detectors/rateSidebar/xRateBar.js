@@ -101,7 +101,7 @@
 
                 var key, data, time
                     content,
-                    title = {   'ctrl' : 'Control Bits: ', 
+                    titles = {   'ctrl' : 'Control Bits: ', 
                                 'rev' : 'Revision: ',
                                 'serial': 'Serial: ',
                                 'cpu_temp': 'FPGA Temperature: ',
