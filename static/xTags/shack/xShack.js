@@ -901,7 +901,7 @@
                 this.wrap.setAttribute('action', 'powerCycleVME')
                 this.appendChild(this.wrap);
 
-                this.pwLabel.innerHTML = 'VME Pass:';
+                this.pwLabel.innerHTML = 'VME Password:';
                 this.wrap.appendChild(this.pwLabel);
 
                 this.pw.setAttribute('type', 'password');
