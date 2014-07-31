@@ -24,6 +24,8 @@
                     this.updateRates(evt.detail);
                 }, false);
 
+                this.setUpUI();
+
             },
             inserted: function() {},
             removed: function() {},
@@ -46,10 +48,12 @@
                 } else{
                     document.getElementById(this.id + 'Host').innerHTML = 'No host!';
                 }
+                /*
                 if(!this.UIdeployed){
                     this.setUpUI();
                     this.UIdeployed = true;
                 }
+                */
 
                 //summon data from the ADC
                 if(window.currentData.host && window.currentData.ADC){
