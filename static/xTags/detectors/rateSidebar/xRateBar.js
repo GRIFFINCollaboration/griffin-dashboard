@@ -402,7 +402,7 @@
                     items.push(listItem);
                 }
 
-                radioArray(items[0], ['Suppressed', 'Unsuppressed'], [true, false], 'wrf_supp');
+                radioArray(items[0], ['Suppressed', 'Unsuppressed'], [true, false], 'wfr_supp');
                 document.getElementById('wfr_supp0').onchange = this.updateADC.bind(document.getElementById('wfr_supp0'), 'wfr_supp');
                 document.getElementById('wfr_supp1').onchange = this.updateADC.bind(document.getElementById('wfr_supp1'), 'wfr_supp');
 
@@ -421,7 +421,7 @@
                     items[i+1].appendChild(input);                    
                 }
 
-                radioArray(items[4], ['Enabled', 'Disabled'], [true, false], 'wrf_off');
+                radioArray(items[4], ['Enabled', 'Disabled'], [true, false], 'wfr_off');
                 document.getElementById('wfr_off0').onchange = this.updateADC.bind(document.getElementById('wfr_off0'), 'wfr_off');
                 document.getElementById('wfr_off1').onchange = this.updateADC.bind(document.getElementById('wfr_off1'), 'wfr_off');
 
