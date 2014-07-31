@@ -314,7 +314,7 @@
                 document.getElementById('t_off0').onchange = this.updateADC.bind(document.getElementById('t_off0'), 't_off');
                 document.getElementById('t_off1').onchange = this.updateADC.bind(document.getElementById('t_off1'), 't_off');
 
-                id = ['t_hthresh', 't_thresh', 't_diff', 't_int', 't_delay', 't_polcor', 't_blrctl'];
+                id = ['t_hthres', 't_thres', 't_diff', 't_int', 't_delay', 't_polcor', 't_blrctl'];
                 step = ["any", "any", 1, 1, 1, "any", "any"];
 
                 for(i=0; i<id.length; i++){
