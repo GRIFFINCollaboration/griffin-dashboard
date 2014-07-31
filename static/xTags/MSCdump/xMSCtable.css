@@ -5,7 +5,7 @@ widget-MSC{
 
 widget-MSC table{
 	float:left;
-	line-height: 150%;
+	line-height: 200%;
 	font-size: 120%;
 	margin-right: 2em;
 }
@@ -15,8 +15,8 @@ widget-MSC caption{
 	margin: 1em 0em 1em 0em;
 }
 
-widget-MSC table tr td:nth-child(even){
-	padding-left: 1em;
+widget-MSC td{
+	padding: 1em;
 }
 
 widget-MSC table tr:nth-child(even){
