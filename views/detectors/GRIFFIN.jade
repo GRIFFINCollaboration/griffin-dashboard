@@ -10,14 +10,11 @@ html
     script(type='text/javascript' src='static/xTags/runControl/xStatus.js')
     script(type='text/javascript' src='static/xTags/HV/xHV.js')
     script(type='text/javascript' src='static/xTags/detectors/rateSidebar/xRateBar.js')
-    script(type='text/javascript' src='static/xTags/detectors/daqHistoBar/xDAQhisto.js')
     script(type='text/javascript' src='static/lib/mscb.js')
-    script(type='text/javascript' src='static/lib/dygraph-1.0.1.min.js')
     link(rel="stylesheet" type="text/css" href='static/xTags/detectors/xDetector.css')
     link(rel="stylesheet" type="text/css" href='static/xTags/runControl/xStatus.css')
     link(rel="stylesheet" type="text/css" href='static/xTags/HV/xHV.css')
     link(rel="stylesheet" type="text/css" href='static/xTags/detectors/rateSidebar/xRateBar.css')
-    link(rel="stylesheet" type="text/css" href='static/xTags/detectors/daqHistoBar/xDAQhisto.css')
 
   body   
     div(id='wrapper')
@@ -27,7 +24,6 @@ html
         widget-nav(id='navBar' MIDAS= MIDAS)
         widget-status(id='statusBar', MIDAS= MIDAS)
         detector-GRIFFIN(id='GRIFFIN', MIDAS= MIDAS)
-        widget-DAQhisto(id='DAQhistos')
 
       div(id='push')
 
