@@ -1,3 +1,8 @@
+div#mainContent{
+	width: -moz-max-content;
+	width: -webkit-max-content;
+}
+
 widget-MSC{
 	margin: 3em;
 	display: block;
