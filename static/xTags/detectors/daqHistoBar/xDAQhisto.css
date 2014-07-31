@@ -1,8 +1,9 @@
 widget-DAQhisto{
 	width: 100%;
-	display: block;
+	float:left;
 }
 
 div.DAQhisto{
 	width: 25%;
+	display:inline-block;
 }
