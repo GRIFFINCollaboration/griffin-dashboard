@@ -167,7 +167,7 @@ function findHost(channel, DAQ){
     if(host !=-1){
         host = DAQ.MSC.MSC[host]; //MSC address of channel
 console.log(host)
-        digitizer = host & 0xFF; //digitizer channel
+        digitizer = (host & 0xF00) >> 8; //digitizer channel
 console.log(digitizer)
         host = (host & 0xF000) >> 12; //collector channel
 console.log(host)
