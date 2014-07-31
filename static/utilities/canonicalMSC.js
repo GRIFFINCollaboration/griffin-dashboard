@@ -1,5 +1,7 @@
-if(!module)
-	module = {}
+function(){
+	if(!module)
+		module = {}
+}()
 
 module.exports = {
 
