@@ -20,7 +20,7 @@
                         title: 'test',
                         xlabel: 'ns',
                         ylabel: 'mV',
-                        width = this.offsetWidth / 2,
+                        width: this.offsetWidth / 2,
                         sigFigs: 2,
                         strokeWidth: 4,
                         yAxisLabelWidth: 75,
