@@ -187,7 +187,7 @@
                 //coincidence time window for multi-detector coincidences
                 crossDetectorCoincWrap = document.createElement('div');
                 crossDetectorCoincWrap.setAttribute('id', 'crossDetectorCoincWrap'+index);
-                crossDetectorCoincWrap.setAttribute('class', 'crossDetectorCoincWrap hiddenConfig');
+                crossDetectorCoincWrap.setAttribute('class', 'crossDetectorCoincWrap');
                 filterContent.appendChild(crossDetectorCoincWrap);
                 crossDetectorCoincLabel = document.createElement('label');
                 crossDetectorCoincLabel.setAttribute('id', 'crossDetectorCoincLabel'+index);
