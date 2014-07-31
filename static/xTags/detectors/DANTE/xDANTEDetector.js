@@ -4,8 +4,8 @@
         extends: 'detector-template',
         lifecycle: {
             created: function() {
-                var URLs = ['http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'];  //ODB Equipment tree
-
+                var URLs = ['http://'+this.MIDAS+'/?cmd=jcopy&odb0=Equipment/&encoding=json-p-nokeys&callback=fetchODBEquipment'],  //ODB Equipment tree
+                    i, j;
                 if(this.readout == 'PMT')
                     this.suffix = 'N00X';
                 else
@@ -14,10 +14,15 @@
                 //deploy the standard stuff
                 this.viewNames = ['SingleView'];
                 this.channelNames = [   'DAL01X' + this.suffix, 'DAL02X' + this.suffix, 'DAL03X' + this.suffix, 'DAL04X' + this.suffix,
-                                        'DAL05X' + this.suffix, 'DAL06X' + this.suffix, 'DAL07X' + this.suffix, 'DAL08X' + this.suffix,
-                                        'DAS01X' + this.suffix, 'DAS02X' + this.suffix, 'DAS03X' + this.suffix, 'DAS04X' + this.suffix,
-                                        'DAS05X' + this.suffix, 'DAS06X' + this.suffix, 'DAS07X' + this.suffix, 'DAS08X' + this.suffix
+                                        'DAL05X' + this.suffix, 'DAL06X' + this.suffix, 'DAL07X' + this.suffix, 'DAL08X' + this.suffix
                                     ]
+                //suppressor names
+                for(i=0; i<8; i++){
+                    for(j=0; j<3; j++){
+                        this.channelNames.push('DAS0'+(i+1)+'XN0'+j+'X');
+                    }
+                }
+
                 //DANTE has special views, define them by hand first
                 this.views = ['HV', 'Threshold', 'reqRate', 'acptRate'];
                 this.viewLabels = ['HV', 'Threshold', 'Trigger Request Rate', 'Trigger Accept Rate'];
@@ -69,7 +74,7 @@
         }, 
         methods: {
             'instantiateCells': function(){
-                var i, cardIndex, X, Y, mask = [], bkgRing, westLabel, eastLabel;
+                var i, j, suppressorName, cardIndex, X, Y, mask = [], bkgRing, westLabel, eastLabel;
 
                 //draw background rings:
                 for(i=0; i<2; i++){
@@ -91,19 +96,35 @@
                     X = this.detCenterX[i];
                     Y = this.detCenterY[i];
 
-                    //BGO
-                    this.cells['DAS0'+(i+1)+'X'+this.suffix] = new Kinetic.Circle({
-                        radius: this.outerBGORad,
-                        x: X,
-                        y: Y,
-                        fill: '#000000',
-                        fillPatternOffsetX: 100*Math.random(),
-                        fillPatternOffsetY: 100*Math.random(),
-                        stroke: this.frameColor,
-                        strokeWidth: this.frameLineWidth,
-                        closed: true,
-                        listening: true
-                    });
+                    //suppressors
+                    for(j=0; j<3; j++){
+                        suppressorName = 'DAS0'+(i+1)+'XN0'+j+'X'
+
+                        this.cells[suppressorName] = new Kinetic.Arc({
+                            innerRadius: this.innerBGOrad,
+                            outerRadius: this.outerBGORad,
+                            x: X,
+                            y: Y,
+                            fill: '#000000',
+                            angle: 120,
+                            clockwise: false,
+                            rotationDeg: -120*(j+1),
+                            fillPatternOffsetX: 100*Math.random(),
+                            fillPatternOffsetY: 100*Math.random(),
+                            stroke: this.frameColor,
+                            strokeWidth: this.frameLineWidth,
+                            closed: true,
+                            listening: true
+                        });
+
+                        //set up the tooltip listeners for suppressors:
+                        this.cells[suppressorName].on('mouseover', this.writeTooltip.bind(this, 8+i) );
+                        this.cells[suppressorName].on('mousemove', this.moveTooltip.bind(this) );
+                        this.cells[suppressorName].on('mouseout', this.writeTooltip.bind(this, -1));
+
+                        //add to main layer
+                        this.mainLayer[cardIndex].add(this.cells[suppressorName]);
+                    }
 
                     //center mask (so BGO appears as annulus)
                     mask[i] = new Kinetic.Circle({
@@ -130,11 +151,8 @@
                     });
 
                     //set up the tooltip listeners:
-                    this.cells['DAS0'+(i+1)+'X'+this.suffix].on('mouseover', this.writeTooltip.bind(this, 8+i) );
                     this.cells['DAL0'+(i+1)+'X'+this.suffix].on('mouseover', this.writeTooltip.bind(this, i) );
-                    this.cells['DAS0'+(i+1)+'X'+this.suffix].on('mousemove', this.moveTooltip.bind(this) );
                     this.cells['DAL0'+(i+1)+'X'+this.suffix].on('mousemove', this.moveTooltip.bind(this) );
-                    this.cells['DAS0'+(i+1)+'X'+this.suffix].on('mouseout', this.writeTooltip.bind(this, -1));
                     this.cells['DAL0'+(i+1)+'X'+this.suffix].on('mouseout', this.writeTooltip.bind(this, -1));
 
                     //set up onclick listeners:
@@ -142,7 +160,6 @@
                     this.cells[this.channelNames[8+i]].on('click', this.clickCell.bind(this, this.channelNames[8+i]) );
 
                     //add the cell to the main layer
-                    this.mainLayer[cardIndex].add(this.cells[this.channelNames[8+i]]);
                     this.mainLayer[cardIndex].add(mask[i]);
                     this.mainLayer[cardIndex].add(this.cells[this.channelNames[i]]);
                     
