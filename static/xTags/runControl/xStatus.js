@@ -100,6 +100,7 @@
                 triggerTable.appendChild(triggerEPSrow)
                 triggerTable.appendChild(triggerDPSrow)
                 triggerTable.appendChild(loggerRow)
+                triggerTable.appendChild(isWriteRow)
                 triggerEventTitle.innerHTML = 'Events: ';
                 triggerEventVal.setAttribute('id', 'triggerEvents');
                 triggerEventRow.appendChild(triggerEventTitle);
