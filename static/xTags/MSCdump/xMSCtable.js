@@ -22,15 +22,16 @@
 
                 title.innerHTML = 'Canonical MSC Table'
                 this.appendChild(title);            
-console.log(MSC)
+
                 for(j=0; j<this.MSC[0].length; j++){
+                    console.log(MSC[0][j])
                     row = document.createElement('tr')
                     this.GRIFFIN.appendChild(row)
                     cell = document.createElement('td')
                     cell.innerHTML = MSC[0][j]
                     row.appendChild(cell)
                     cell = document.createElement('td')
-                    cell.innerHTML = MSC[1][j]
+                    cell.innerHTML = '0x'+MSC[1][j].toString(16);
                     row.appendChild(cell)
                 }
                 
