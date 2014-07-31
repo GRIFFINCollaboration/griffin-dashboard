@@ -130,6 +130,26 @@ app.get('/canonicalMSC', function(req, res){
 	names = names.concat(table[0]);
 	MSC = MSC.concat(table[1]);
 
+	//DANTE
+	table = MSCbuilders.configDANTE(true, true);
+	names = names.concat(table[0]);
+	MSC = MSC.concat(table[1]);
+
+	//PACES
+	table = MSCbuilders.configPACES();
+	names = names.concat(table[0]);
+	MSC = MSC.concat(table[1]);	
+
+	//SPICE
+	table = MSCbuilders.configSPICE();
+	names = names.concat(table[0]);
+	MSC = MSC.concat(table[1]);		
+
+	//DESCANT
+	table = MSCbuilders.configDESCANT();
+	names = names.concat(table[0]);
+	MSC = MSC.concat(table[1]);	
+
 	res.render('widgets/MSC.jade', {MSC:JSON.stringify([names, MSC])});
 });
 

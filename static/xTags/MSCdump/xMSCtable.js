@@ -29,6 +29,14 @@
                         this.GRIFFIN.appendChild(row)
                     else if (MSC[0][j].slice(0,2) == 'SE')
                         this.SCEPTAR.appendChild(row)
+                    else if (MSC[0][j].slice(0,2) == 'DA')
+                        this.DANTE.appendChild(row)
+                    else if (MSC[0][j].slice(0,2) == 'PA')
+                        this.PACES.appendChild(row)
+                    else if (MSC[0][j].slice(0,2) == 'SP')
+                        this.SPICE.appendChild(row)
+                    else if (MSC[0][j].slice(0,2) == 'DS')
+                        this.SPICE.appendChild(row)
                     cell = document.createElement('td')
                     cell.innerHTML = MSC[0][j]
                     row.appendChild(cell)
@@ -39,6 +47,7 @@
                 
                 this.appendChild(this.GRIFFIN)
                 this.appendChild(this.SCEPTAR)
+                this.appendChild(this.DANTE)
 
             },
             inserted: function() {},
