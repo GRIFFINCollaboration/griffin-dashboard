@@ -38,6 +38,7 @@
                 }
                 
                 this.appendChild(this.GRIFFIN)
+                this.appendChild(this.SCEPTAR)
 
             },
             inserted: function() {},
