@@ -82,7 +82,7 @@ Directory names under `/Filter/Filters` are strings with no whitespace naming th
 
 `orConditionN` are arrays of strings, where each string encodes an individual filter condition.  All such conditions in a single `orConditionN` array are ANDed together, and then all the resulting conditions are ORed across arrays.  The condition encoding in the strings is as follows:
 
-`XX-Y-Z`
+`XX-Y-Z[-D]`
 
 `XX` == 2-character detector code from the standard nomenclature
 
@@ -90,3 +90,4 @@ Directory names under `/Filter/Filters` are strings with no whitespace naming th
 
 `Z` == 1 for singles, multiplicity for coincidences, or prescale factor for prescale.
 
+`-D` (optional) == duration in ns of coincidence window.  Only present for coincidences, ie where `Y==C`.
