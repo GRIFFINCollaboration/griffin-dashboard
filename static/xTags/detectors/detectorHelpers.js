@@ -143,8 +143,9 @@ function initializeDetector(name, headline){
             this.displayIndex = viewVal;
             this.update();  //repaint right away
         }.bind(this)
-        
-        document.getElementById(this.id+'titleWrapper').insertBefore(deckNavigator, document.getElementById(this.id+'title').nextSibling)
+        plotControlWrap.appendChild(deckNavigator);
+
+        //document.getElementById(this.id+'titleWrapper').insertBefore(deckNavigator, document.getElementById(this.id+'title').nextSibling);
     }
 
     plotControlMinLabel.setAttribute('id', this.id+'PlotControlMinLabel');
