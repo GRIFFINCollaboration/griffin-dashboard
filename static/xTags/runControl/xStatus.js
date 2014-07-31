@@ -225,6 +225,7 @@ function getRunSummary(host){
             date = new Date(),
             now, RunDuration, hours, minutes, seconds,
             runNumber, stoptime, starttimeInt, stoptimeInt,
+            widget,
             messages;
 
         if(this.readyState == 4){
@@ -307,6 +308,14 @@ function getRunSummary(host){
                 else
                     document.getElementById('statusRunDuration').setAttribute('style', 'display:none');
 
+                //class controld border color
+                widget = document.getElementsByTagName('widget-status')[0];
+                if(state == 0)
+                    widget.setAttribute('class', 'stopped');
+                if(state == 1 || state == 2)
+                    widget.setAttribute('class', 'paused');
+                if(state == 3)
+                    widget.setAttribute('class', 'running');
 
                 //trigger
                 document.getElementById('triggerEvents').innerHTML = prettyNumber(window.currentData.ODB.Trigger['Events sent']);

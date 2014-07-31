@@ -9,6 +9,18 @@ widget-status{
 	clear:both;
 }
 
+widget-status.running{
+	border: 2px solid #2ecc71;
+}
+
+widget-status.paused{
+	border: 2px solid #f1c40f;
+}
+
+widget-status.stopped{
+	border: 2px solid #e74c3c;
+}
+
 widget-status h2{
 	margin-top: 0;
 }
