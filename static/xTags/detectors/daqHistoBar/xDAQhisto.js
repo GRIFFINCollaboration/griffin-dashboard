@@ -111,7 +111,7 @@
                     data.push([i, Math.random()]);
                 }
 
-                this.spectrumPlot.update({
+                this.spectrumPlot.updateOptions({
                     data: data
                 })
 
