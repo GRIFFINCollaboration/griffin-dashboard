@@ -375,8 +375,9 @@
                 var filterConditions = this.querySelectorAll('div.filterCondition'),
                     tableRows,
                     selects,
-                    detector, filter, scale, condition, coinc,
+                    detector, filter, scale, condition, coinc, crossDetCoinc,
                     encoded = [],
+                    crossDetectorCoincs = [],
                     i,j;
 
                 for(i=0; i<filterConditions.length; i++){
@@ -401,6 +402,10 @@
                         encoded[i][j] = condition;
                                                 
                     }
+
+                    crossDetCoinc = filterConditions[i].querySelectorAll('input').pop().value
+                    console.log(crossDetCoinc)
+                    crossDetectorCoincs[i] = crossDetCoinc
                 }
 
                 document.getElementById('encodedFilter').value = JSON.stringify(encoded);
