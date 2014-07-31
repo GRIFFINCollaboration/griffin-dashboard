@@ -166,10 +166,15 @@ function findHost(channel, DAQ){
     host = DAQ.MSC.chan.indexOf(channel);  //table index of channel
     if(host !=-1){
         host = DAQ.MSC.MSC[host]; //MSC address of channel
+console.log(host)
         digitizer = host & 0xFF; //digitizer channel
+console.log(digitizer)
         host = (host & 0xF000) >> 12; //collector channel
+console.log(host)
         host = 'collector0x'+host.toString(16);
+console.log(host)
         host = DAQ.hosts[host].digitizers[digitizer]; //haha
+console.log(host)
     } else
         host = false;
 
