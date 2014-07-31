@@ -125,6 +125,15 @@
 
                     document.getElementById('USLGRIFFINconfig').setAttribute('class', 'GRIFFINconfig');
                 }
+                document.getElementById('USL2Label').onclick = function(){
+                    var USC = document.querySelectorAll('input[name="USC"]:checked')[0]
+
+                    if(USC && USC.value == 'USCSP')
+                        return false;
+
+                    document.getElementById('USLGRIFFINconfig').setAttribute('class', 'GRIFFINconfig');
+                }
+
 
                 document.getElementById('DSL0Label').onclick = function(){
                     document.getElementById('DSLGRIFFINconfig').setAttribute('class', 'GRIFFINconfig hidden');
