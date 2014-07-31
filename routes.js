@@ -351,7 +351,8 @@ app.post('/buildMSC', function(req, res){
 	MSC = MSC.concat(table[1]);
 
 	//DANTE
-	table = configDANTE();
+	table = configDANTE(req.body.USL == 'USLGRDA',
+						req.body.DSL == 'DSLGRDA');
 	names = names.concat(table[0]);
 	MSC = MSC.concat(table[1]);
 
@@ -389,13 +390,13 @@ app.post('/buildMSC', function(req, res){
 		names = names.concat(table[0]);
 		MSC = MSC.concat(table[1]);
 	}
-/*
-	var test = configSPICE();
+
+	var test = configDANTE(true, true);
 	for(var i=0; i<test[0].length; i++){
 		console.log([ test[0][i], test[1][i].toString(16) ]);
 	}
-*/
 
+/*
 	//generate a script to re-create MSC table in DAQ:
 	rebuildScript += 'odbedit -c "rm /DAQ/MSC"\n';
 	rebuildScript += 'odbedit -c "mkdir /DAQ/MSC"\n';
@@ -422,7 +423,7 @@ app.post('/buildMSC', function(req, res){
 						
 		});
 	});
-
+*/
 	function configGRIFFINclover(index, suppressors){
 		var names = [],
 			MSC = [],
@@ -511,12 +512,24 @@ app.post('/buildMSC', function(req, res){
 		return [names, MSC];
 	}
 
-	function configDANTE(){
+	function configDANTE(US, DS){
 		var names = [],
 			MSC = [],
-			i;
+			i, min, max;
 
-		for(i=0; i<8; i++){
+		if(!US && !DS) return [name, MSC]; //do nothing
+
+		if(DS)
+			min = 0;
+		else
+			min = 4;
+
+		if(US)
+			max = 8;
+		else
+			max = 4;
+
+		for(i=min; i<max; i++){
 			names.push('DAL0'+(1+i)+'XN00X');
 			MSC.push((2 << 12) | ( 1 << 8) | i);
 		}
