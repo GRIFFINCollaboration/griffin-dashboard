@@ -77,6 +77,10 @@ div.crossDetectorCoincWrap{
 	width: -webkit-max-content;
 }
 
+div.hidden{
+	display: none;
+}
+
 div.hiddenConfig{
 	opacity:0;
 	pointer-events: none;
