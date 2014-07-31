@@ -235,3 +235,31 @@ function prettyNumber(val){
 
     return pretty;
 }
+
+//for the ADC
+function chewUptime(s){
+    var time = s,
+        elapsed = '';
+
+    if(time > 24*3600){
+        elapsed += Math.floor(time/(24*3600)) + ' d'
+        time = time % (24*3600);
+    }
+    if(time > 3600){
+        if(elapsed != '') elapsed += ', '
+        elapsed += Math.floor(time/(3600)) + ' h'
+        time = time % (3600);
+    }
+    if(time > 60){
+        if(elapsed != '') elapsed += ', '
+        elapsed += Math.floor(time/(60)) + ' min'
+        time = time % (60);
+    }
+    if(time > 0){
+        if(elapsed != '') elapsed += ', '
+        elapsed += Math.floor(time) + ' s'
+    }
+
+    return elapsed;
+
+}
