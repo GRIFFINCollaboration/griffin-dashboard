@@ -36,7 +36,7 @@
                     else if (MSC[0][j].slice(0,2) == 'SP')
                         this.SPICE.appendChild(row)
                     else if (MSC[0][j].slice(0,2) == 'DS')
-                        this.SPICE.appendChild(row)
+                        this.DESCANT.appendChild(row)
                     cell = document.createElement('td')
                     cell.innerHTML = MSC[0][j]
                     row.appendChild(cell)
@@ -48,6 +48,9 @@
                 this.appendChild(this.GRIFFIN)
                 this.appendChild(this.SCEPTAR)
                 this.appendChild(this.DANTE)
+                this.appendChild(this.PACES)
+                this.appendChild(this.SPICE)
+                this.appendChild(this.DESCANT)
 
             },
             inserted: function() {},
