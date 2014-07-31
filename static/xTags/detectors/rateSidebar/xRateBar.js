@@ -82,7 +82,7 @@
 
                 //keep hold of this blobject for later, has widths and car types and stuff in it needed for writing back
                 window.ADCstructure = data;
-
+console.log(numberID[0])
                 //all number inputs have id == data key name
                 for(i=0; i<numberID.length; i++)
                     document.getElementById(numberID[i]).value = data[numberID[i]]['d'];
