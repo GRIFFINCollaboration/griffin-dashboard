@@ -476,7 +476,7 @@
                                 currentOr.querySelectorAll('button.lightButton')[0].onclick();
                         }
                     } else {
-                        lastDash = currentFilter[key][i].lastIndexOf('-');
+                        lastDash = currentFilter[key].lastIndexOf('-');
                         currentOr.querySelectorAll('select')[0].value = currentFilter[key].slice(0,2);
                         currentOr.querySelectorAll('select')[1].value = currentFilter[key].slice(3,4);
                         currentOr.querySelectorAll('select')[1].onchange();
