@@ -107,10 +107,9 @@ function initializeDetector(name, headline){
     xString += '<x-card id="DAQhistoCard"><div id="DAQspectrum" class="DAQhisto"></div><div id="DAQpulse" class="DAQhisto"></div><div id="DAQtime" class="DAQhisto"></div><div id="DAQwaveform" class="DAQhisto"></div></x-card>'
     xString += '</x-deck>'
     deckWrap.innerHTML = xString;
-    this.viewNames.push('Plots')
 
     //plot buffers
-    for(i=0; i<this.viewNames.length - 1; i++){  //exclude last card, special for daq histos
+    for(i=0; i<this.viewNames.length; i++){  //exclude last card, special for daq histos
         //divs to hold kinetic contexts
         drawTarget = document.createElement('div');
         drawTarget.setAttribute('id', this.id+this.viewNames[i]+'Draw');
