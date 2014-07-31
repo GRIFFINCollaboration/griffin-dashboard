@@ -12,6 +12,9 @@
                 window.refreshTargets = []
 
                 this.GRIFFIN = document.createElement('table')
+                this.griffinTitle = document.createElement('caption')
+                this.griffinTitle.innerHTML('GRIFFIN')
+                this.GRIFFIN.appendChild(this.griffinTitle)
                 this.SCEPTAR = document.createElement('table')
                 this.DANTE = document.createElement('table')
                 this.PACES = document.createElement('table')
