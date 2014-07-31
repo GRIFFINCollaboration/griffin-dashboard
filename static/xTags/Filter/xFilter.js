@@ -458,6 +458,8 @@
                 for(key in currentFilter){
                     if(key.indexOf('last_written') != -1 ) continue;
 
+                    if(!(currentFilter[key] instanceof Array) && !(currentFilter[key] instanceof String)) continue;  //ie you're looking at one of the coinc window numbers, skip
+
                     createOr.onclick();
 
                     currentOr = this.querySelectorAll('div.filterCondition');
@@ -475,7 +477,7 @@
                             if(i<currentFilter[key].length-1)
                                 currentOr.querySelectorAll('button.lightButton')[0].onclick();
                         }
-                    } else if(currentFilter[key] instanceof String) {
+                    } else {
                         console.log(currentFilter[key])
                         lastDash = currentFilter[key].lastIndexOf('-');
                         currentOr.querySelectorAll('select')[0].value = currentFilter[key].slice(0,2);
