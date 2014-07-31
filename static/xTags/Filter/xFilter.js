@@ -458,7 +458,7 @@
                 for(key in currentFilter){
                     if(key.indexOf('last_written') != -1 ) continue;
 
-                    console.log(currentFilter[key])
+                    if(typeof currentFilter[key] == 'number') continue;
 
                     createOr.onclick();
 
