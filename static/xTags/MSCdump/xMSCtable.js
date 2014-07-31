@@ -22,8 +22,8 @@
 
                 title.innerHTML = 'Canonical MSC Table'
                 this.appendChild(title);            
-console.log(this.MSC[0])
-                for(j=0; j<this.MSC[0].length; j++){
+
+                for(j=0; j<MSC[0].length; j++){
                     console.log(MSC[0][j])
                     row = document.createElement('tr')
                     this.GRIFFIN.appendChild(row)
