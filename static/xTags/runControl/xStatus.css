@@ -41,6 +41,14 @@ widget-status input:hover{
 	background-color: #555555;
 }
 
+widget-status input[type='text']{
+	width: 10em;
+}
+
+widget-status input[type='text']:hover{
+	background-color: #111111;
+}
+
 widget-status ul#statusMessageList{
 	margin-top: 1em;
 	
