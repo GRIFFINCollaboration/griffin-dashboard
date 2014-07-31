@@ -285,7 +285,7 @@
                 coincConfigInput.setAttribute('type', 'number');
                 coincConfigInput.setAttribute('step', 1);
                 coincConfigInput.setAttribute('min', 0);
-                coincConfigInput.setAttribute('value', 50);
+                coincConfigInput.value = 50;
                 coincConfigWrap.appendChild(coincConfigInput);
 
                 cell = document.createElement('td');
