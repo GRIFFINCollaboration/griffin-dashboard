@@ -49,7 +49,7 @@
                 optionWrap = document.createElement('div');
                 optionWrap.setAttribute('class', 'optionWrap');
                 this.corona.appendChild(optionWrap);
-                radioArray(optionWrap, ['Absent', 'GRIFFIN + DANTE'], ['coronaAbsent', 'CoronaGR'], 'corona');
+                radioArray(optionWrap, ['Absent', 'GRIFFIN'], ['coronaAbsent', 'CoronaGR'], 'corona');
                 this.corona.appendChild(this.generateGRIFFINtable('corona', [5,6,7,8,9,10,11,12]));
 
                 this.upstreamLampshade = document.createElement('div');
@@ -61,7 +61,7 @@
                 optionWrap = document.createElement('div');
                 optionWrap.setAttribute('class', 'optionWrap');
                 this.upstreamLampshade.appendChild(optionWrap);
-                radioArray(optionWrap, ['Absent', 'GRIFFIN'], ['USLabsent', 'USLGR'], 'USL');
+                radioArray(optionWrap, ['Absent', 'GRIFFIN', 'GRIFFIN + DANTE'], ['USLabsent', 'USLGR'. 'USLGRDA'], 'USL');
                 this.upstreamLampshade.appendChild(this.generateGRIFFINtable('USL', [13,14,15,16]));
                 message = document.createElement('p');
                 message.setAttribute('id', 'USLmessage');
@@ -77,7 +77,7 @@
                 optionWrap = document.createElement('div');
                 optionWrap.setAttribute('class', 'optionWrap');
                 this.downstreamLampshade.appendChild(optionWrap);
-                radioArray(optionWrap, ['Absent', 'GRIFFIN', 'DESCANT'], ['DSLabsent', 'DSLGR', 'DSLDS'], 'DSL')
+                radioArray(optionWrap, ['Absent', 'GRIFFIN', 'GRIFFIN + DANTE', 'DESCANT'], ['DSLabsent', 'DSLGR', 'DSLGRDA', 'DSLDS'], 'DSL')
                 this.downstreamLampshade.appendChild(this.generateGRIFFINtable('DSL', [1,2,3,4]));
 
                 submit = document.createElement('button');
