@@ -67,9 +67,12 @@ Filters are encoded and stored in the ODB according to the following specificati
     /Filters
         /someFilter
             orCondition0: [<strings>]
+            coincWindow0: <int>
             orCondition1: [<strings>]
+            coincWindow1: <int>
             ...
             orConditionN: [<strings>]
+            coincWindowN: <int>
         /anotherFilter
             ...
 ```
@@ -91,3 +94,5 @@ Directory names under `/Filter/Filters` are strings with no whitespace naming th
 `Z` == 1 for singles, multiplicity for coincidences, or prescale factor for prescale.
 
 `-D` (optional) == duration in ns of coincidence window.  Only present for coincidences, ie where `Y==C`.
+
+`coincWindowN` is an integer representing the length in nanoseconds of the coincidence window enforced on cross-detector coincidences within `orConditionN`.  When `orConditionN` involves only one detector, the value of `coincWindowN` should be disregarded.
