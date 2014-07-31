@@ -294,7 +294,7 @@ function getRunSummary(host){
                 hours = Math.floor(RunDuration / 3600);
                 minutes = Math.floor( (RunDuration%3600)/60 );
                 seconds = Math.floor(RunDuration%60);
-                document.getElementById('statusRunDuration').innerHTML = 'RunDuration ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
+                document.getElementById('statusRunDuration').innerHTML = 'Run Duration ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s'
 
                 //conditional reporting of times based on run state
                 if(state == 0)
