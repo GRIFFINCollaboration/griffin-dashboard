@@ -27,7 +27,7 @@
                     row = document.createElement('tr')
                     if(MSC[0][j].slice(0,2) == 'GR')
                         this.GRIFFIN.appendChild(row)
-                    else if (MSC[0][j].slice(0,2) == 'SC')
+                    else if (MSC[0][j].slice(0,2) == 'SE')
                         this.SCEPTAR.appendChild(row)
                     cell = document.createElement('td')
                     cell.innerHTML = MSC[0][j]
