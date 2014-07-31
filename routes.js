@@ -517,7 +517,7 @@ app.post('/buildMSC', function(req, res){
 			MSC = [],
 			i, min, max;
 
-		if(!US && !DS) return [name, MSC]; //do nothing
+		if(!US && !DS) return [names, MSC]; //do nothing
 
 		if(DS)
 			min = 0;
