@@ -118,7 +118,7 @@
                 triggerDPSVal.setAttribute('id', 'triggerDataPerSec');
                 triggerDPSrow.appendChild(triggerDPSTitle);
                 triggerDPSrow.appendChild(triggerDPSVal);
-                loggerTitle.innerHTML = 'GB Written: ';
+                loggerTitle.innerHTML = 'Logger: ';
                 loggerVal.setAttribute('id', 'dataRecorded');
                 loggerRow.appendChild(loggerTitle);
                 loggerRow.appendChild(loggerVal);
@@ -353,7 +353,7 @@ function getRunSummary(host){
                 document.getElementById('triggerEvents').innerHTML = prettyNumber(window.currentData.ODB.Trigger['Events sent']);
                 document.getElementById('triggerEventsPerSec').innerHTML = window.currentData.ODB.Trigger['Events per sec.'].toFixed();
                 document.getElementById('triggerDataPerSec').innerHTML = window.currentData.ODB.Trigger['kBytes per sec.'].toFixed();
-                document.getElementById('dataRecorded').innerHTML = (window.currentData.ODB.Logger.Channels['0'].Statistics['Bytes written']/1073742000).toFixed(3);
+                document.getElementById('dataRecorded').innerHTML = (window.currentData.ODB.Logger.Channels['0'].Statistics['Bytes written']/1073742000).toFixed(3) + ' GB';
                 document.getElementById('isWriting').innerHTML = window.currentData.ODB.Logger['Write data'] ? 'Yes' : 'No';
                 if(!widget.suspendInputRefresh)
                     document.getElementById('dataDirIn').value = window.currentData.ODB.Logger['Data dir'];
