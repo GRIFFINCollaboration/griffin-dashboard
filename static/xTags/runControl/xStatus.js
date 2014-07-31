@@ -139,9 +139,10 @@
                 dataDirInput.oninput = function(){
                     this.suspendInputRefresh = true;
                 }.bind(this)
-                dataDirInput.onchange = function(){
-                    console.log(this.value)
-                }
+                dataDirInput.onchange = function(MIDAS){
+                    XHR('http://'+MIDAS+'/?cmd=jset&odb=Logger/Data dir&value='+this.value, function(){});
+                    this.suspendInputRefresh = false;
+                }.bind(dataDirInput, this.MIDAS);
 
                 //message list
                 messageWrap.setAttribute('class', 'expand');
