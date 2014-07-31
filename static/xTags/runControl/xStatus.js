@@ -135,6 +135,14 @@
                 dataDirInput.setAttribute('class', 'stdin')
                 dataDirVal.appendChild(dataDirInput);
 
+                this.suspendInputRefresh = false;
+                dataDirInput.oninput = function(){
+                    this.suspendInputRefresh = true;
+                }
+                dataDirInput.onchange = function(){
+                    console.log(this.value)
+                }
+
                 //message list
                 messageWrap.setAttribute('class', 'expand');
                 messageWrap.setAttribute('id', 'messageWrap');
@@ -344,7 +352,8 @@ function getRunSummary(host){
                 document.getElementById('triggerDataPerSec').innerHTML = window.currentData.ODB.Trigger['kBytes per sec.'].toFixed();
                 document.getElementById('dataRecorded').innerHTML = (window.currentData.ODB.Logger.Channels['0'].Statistics['Bytes written']/1073742000).toFixed(3);
                 document.getElementById('isWriting').innerHTML = window.currentData.ODB.Logger['Write data'] ? 'Yes' : 'No';
-                document.getElementById('dataDirIn').value = window.currentData.ODB.Logger['Data dir'];
+                if(!this.suspendInputRefresh)
+                    document.getElementById('dataDirIn').value = window.currentData.ODB.Logger['Data dir'];
             }
 
         }
