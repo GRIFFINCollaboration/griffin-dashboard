@@ -141,8 +141,9 @@
                     document.getElementById('dataDirIn').setAttribute('class', 'stdin needCommit')
                 }.bind(this)
                 dataDirInput.onchange = function(MIDAS){
-                    XHR('http://'+MIDAS+'/?cmd=jset&odb=Logger/Data dir&value='+this.value, function(){});
-                    window.location.reload(); //cheapo user feedback
+                    XHR('http://'+MIDAS+'/?cmd=jset&odb=Logger/Data dir&value='+this.value, function(){
+                        window.location.reload(); //cheapo user feedback
+                    });
                 }.bind(dataDirInput, this.MIDAS);
 
                 //message list
