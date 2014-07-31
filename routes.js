@@ -391,7 +391,7 @@ app.post('/buildMSC', function(req, res){
 		MSC = MSC.concat(table[1]);
 	}
 
-	var test = configDANTE(true, false);
+	var test = configDANTE(false, true);
 	for(var i=0; i<test[0].length; i++){
 		console.log([ test[0][i], test[1][i].toString(16) ]);
 	}
