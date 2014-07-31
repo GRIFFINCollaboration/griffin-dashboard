@@ -16,7 +16,7 @@
 
 
                     //draw dygraphs
-                    this.spectrumPlot = new Dygraph(document.getElementById('spectrum'), [[1],[2],[3]], {
+                    this.spectrumPlot = new Dygraph(document.getElementById('spectrum'), [[1,2,3]], {
                         title: 'test',
                         xlabel: 'ns',
                         ylabel: 'mV',
