@@ -68,7 +68,7 @@ widget-status td{
 	padding-left: 1em;
 }
 
-input.needCommit{
+widget-status input.needCommit{
 	border: 2px soild #f1c40f;
 }
 

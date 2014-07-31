@@ -142,7 +142,7 @@
                 }.bind(this)
                 dataDirInput.onchange = function(MIDAS){
                     XHR('http://'+MIDAS+'/?cmd=jset&odb=Logger/Data dir&value='+this.value, function(){
-                        window.location.reload(); //cheapo user feedback
+                        document.getElementById('dataDirIn').setAttribute('class', 'stdin')
                     });
                 }.bind(dataDirInput, this.MIDAS);
 
