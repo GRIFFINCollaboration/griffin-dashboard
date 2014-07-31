@@ -133,7 +133,7 @@
                 dataDirInput.setAttribute('type', 'text')
                 dataDirInput.setAttribute('id', 'dataDirIn')
                 dataDirInput.setAttribute('class', 'stdin')
-                dataDirVal.appendChild(dataDirInput)
+                dataDirVal.appendChild(dataDirInput);
 
                 //message list
                 messageWrap.setAttribute('class', 'expand');
@@ -344,6 +344,7 @@ function getRunSummary(host){
                 document.getElementById('triggerDataPerSec').innerHTML = window.currentData.ODB.Trigger['kBytes per sec.'].toFixed();
                 document.getElementById('dataRecorded').innerHTML = (window.currentData.ODB.Logger.Channels['0'].Statistics['Bytes written']/1073742000).toFixed(3);
                 document.getElementById('isWriting').innerHTML = window.currentData.ODB.Logger['Write data'] ? 'Yes' : 'No';
+                document.getElementById('dataDirInput').value = window.currentData.ODB.Logger['Data dir'];
             }
 
         }
