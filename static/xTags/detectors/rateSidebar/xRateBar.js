@@ -61,7 +61,7 @@
 
             //send the response to a request to an ADC node to the appropriate places
             'mapADCdata' : function(response){
-                var data = JSON.parse(response),
+                var data = JSON.parse(response);
 console.log(data)
                     numberID = [    'a_dcofst', 'a_trim',
                                     't_hthres', 't_thres', 't_diff', 't_int', 't_delay', 't_polcor', 't_blrctl', 
