@@ -24,9 +24,11 @@
                 this.appendChild(title);            
 
                 for(j=0; j<MSC[0].length; j++){
-                    console.log(MSC[0][j])
                     row = document.createElement('tr')
-                    this.GRIFFIN.appendChild(row)
+                    if(MSC[0][j].slice(0,2) == 'GR')
+                        this.GRIFFIN.appendChild(row)
+                    else if (MSC[0][j].slice(0,2) == 'SC')
+                        this.SCEPTAR.appendChild(row)
                     cell = document.createElement('td')
                     cell.innerHTML = MSC[0][j]
                     row.appendChild(cell)

@@ -125,6 +125,11 @@ app.get('/canonicalMSC', function(req, res){
 			MSC = MSC.concat(table[1]);
 	}
 
+	//SCEPTAR
+	table = MSCbuilders.configSCEPTAR(true, true, false);
+	names = names.concat(table[0]);
+	MSC = MSC.concat(table[1]);
+
 	res.render('widgets/MSC.jade', {MSC:JSON.stringify([names, MSC])});
 });
 
