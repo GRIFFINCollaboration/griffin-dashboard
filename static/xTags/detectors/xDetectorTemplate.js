@@ -516,7 +516,7 @@
 
                     channelIndex = window.currentData.DAQ.MSC.MSC.indexOf(DAQblock.MSC);
                     channelName = window.currentData.DAQ.MSC.chan[channelIndex];
-console.log([channelIndex, channelName])
+console.log([window.currentData.DAQ, DAQblock.MSC])
                     window.currentData.reqRate[channelName] = DAQblock.trigReq;
                     window.currentData.acptRate[channelName] = DAQblock.trigAcpt;
                     window.currentData.Threshold[channelName] = DAQblock.threshold;
