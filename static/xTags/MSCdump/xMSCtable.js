@@ -22,7 +22,7 @@
 
                 //GRIFFIN
                 for(i=0; i<16; i++){
-                    MSC = MSCbuilders.configGRIFFINclover(i, true);
+                    MSC = module.exports.configGRIFFINclover(i, true);
 
                     for(j=0; j<MSC[0].length; j++){
                         row = document.createElement('tr')
