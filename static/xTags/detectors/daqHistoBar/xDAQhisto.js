@@ -9,7 +9,7 @@
 
                     for(i=0; i<histos.length; i++){
                         this[histos[i]] = document.createElement('div')
-                        this[histos[i]].setAttribute('id', histos[i])
+                        this[histos[i]].setAttribute('id', histos[i] + 'Plot')
                         this[histos[i]].setAttribute('class', 'DAQhisto')
                         this.appendChild(this[histos[i]]);
                     }
@@ -43,7 +43,7 @@
                 if(this.spectrumPlot)
                     this.spectrumPlot.destroy()
 
-                this.spectrumPlot = new Dygraph(document.getElementById('spectrum'), data, {
+                this.spectrumPlot = new Dygraph(document.getElementById('spectrumPlot'), data, {
                     title: 'test',
                     xlabel: 'ns',
                     ylabel: 'mV',
@@ -63,7 +63,7 @@
                 if(this.timePlot)
                     this.timePlot.destroy()
 
-                this.timePlot = new Dygraph(document.getElementById('time'), data, {
+                this.timePlot = new Dygraph(document.getElementById('timePlot'), data, {
                     title: 'test',
                     xlabel: 'ns',
                     ylabel: 'mV',
@@ -83,7 +83,7 @@
                 if(this.pulsePlot)
                     this.pulsePlot.destroy()
 
-                this.spectrumPlot = new Dygraph(document.getElementById('pulse'), data, {
+                this.spectrumPlot = new Dygraph(document.getElementById('pulsePlot'), data, {
                     title: 'test',
                     xlabel: 'ns',
                     ylabel: 'mV',
@@ -103,7 +103,7 @@
                 if(this.waveformPlot)
                     this.waveformPlot.destroy()
 
-                this.spectrumPlot = new Dygraph(document.getElementById('waveform'), data, {
+                this.spectrumPlot = new Dygraph(document.getElementById('waveformPlot'), data, {
                     title: 'test',
                     xlabel: 'ns',
                     ylabel: 'mV',
