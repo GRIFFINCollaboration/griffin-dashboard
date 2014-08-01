@@ -5,7 +5,7 @@ widget-status{
 	padding: 1em;
 	margin: 1em;
 	width: calc(20% - 2em);
-
+	overflow: auto;
 	clear:both;
 }
 
