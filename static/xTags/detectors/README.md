@@ -4,22 +4,22 @@ Each detector subsystem supported by MarkII has its own custom element for one-l
 All detectors inherit most of their functionality from the `<detector-template>` object, and only detector-specific functionality is declared on the detector classes themselves; as such, this document focuses on the patterns established in `<detector-template>`, the `initializeDetector()` setup function, and the peripheral data these objects expect to have available when building a detector component.
 
 ####Contents
- - [Creation & Instantiation](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#web-component-creation---lifecyclecreated)
- - [Participation in the Main Event Loop](https://github.com/BillMills/griffinMarkII/blob/master/xTags/detectors/README.md#detectors-in-the-main-event-loop)
- - [Member Functions](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#member-functions)
- - [Tooltip Infrastructure](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#tooltip-infrastructure)
- - [JSONP Services & Callbacks](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#jsonp-services--callbacks)
- - [HV Data Acquisition](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#hv-data-acquisition)
- - [localStorage structure](https://github.com/BillMills/griffinMarkII/tree/master/xTags/detectors#localstorage-structure)
+ - [Creation & Instantiation](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#web-component-creation---lifecyclecreated)
+ - [Participation in the Main Event Loop](https://github.com/GRIFFINCollaboration/griffinMarkII/blob/master/xTags/detectors/README.md#detectors-in-the-main-event-loop)
+ - [Member Functions](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#member-functions)
+ - [Tooltip Infrastructure](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#tooltip-infrastructure)
+ - [JSONP Services & Callbacks](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#jsonp-services--callbacks)
+ - [HV Data Acquisition](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#hv-data-acquisition)
+ - [localStorage structure](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#localstorage-structure)
 
 ##New Contributions
 The following tries to lay as much out in as gory detail as possible, but for those of us that prefer examples, start by studying ZDS - this is the simplest possible detector page, and should be the first thing you master before building your own.  Minimal things needed to build a functioning detector page:
 
- - The detector x-tag.  See [ZDS](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/detectors/ZDS) for a minimal example.
- - Add your detector to this list at the top of [xDetector.css](https://github.com/BillMills/griffinMarkII/blob/master/static/xTags/detectors/xDetector.css)
- - A [Jade](http://jade-lang.com/) page template living [here](https://github.com/BillMills/griffinMarkII/tree/master/views/detectors)
- - A [route](https://github.com/BillMills/griffinMarkII/blob/master/routes.js) in the Node + Express app.
- - Autodetection of your detector from the MSC table [here](https://github.com/BillMills/griffinMarkII/blob/master/static/xTags/nav/xNav.js)
+ - The detector x-tag.  See [ZDS](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/detectors/ZDS) for a minimal example.
+ - Add your detector to this list at the top of [xDetector.css](https://github.com/GRIFFINCollaboration/griffinMarkII/blob/master/static/xTags/detectors/xDetector.css)
+ - A [Jade](http://jade-lang.com/) page template living [here](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/views/detectors)
+ - A [route](https://github.com/GRIFFINCollaboration/griffinMarkII/blob/master/routes.js) in the Node + Express app.
+ - Autodetection of your detector from the MSC table [here](https://github.com/GRIFFINCollaboration/griffinMarkII/blob/master/static/xTags/nav/xNav.js)
 
 ##Web Component Creation - `lifecycle.created`
 All custom web components execute a callback upon creation, found in `lifecycle.created` for each detector; this function declares a lot of detector-specific information, so it is left empty in the `<detector-template>` object, to be defined individually for each detector; nevertheless, `lifecycle.created` typically follows a standard pattern which we describe here:
@@ -209,7 +209,7 @@ The tooltip for detector elements is handled by the event listeners Kineitc expo
 All detector components rely on being able to acquire live information about detector thresholds and scalar rates from URLs serving JSON that obey the spec below.  The `<host>:<port>/<route>?<queryString>` strings for these services are exacty the string elements of `URLs[i]` discussed above in the context of `lifecycle.created`.
 
 ###Rates & Thresholds
-Rates and thresholds are reported directly from the DAQ nodes, as specified in the [DAQ documentation](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/DAQ#daq-communication).
+Rates and thresholds are reported directly from the DAQ nodes, as specified in the [DAQ documentation](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/DAQ#daq-communication).
 
 ###HV Service
 Present detector HV is scraped from the `Equipment/HV-*` directories of the ODB being served at `this.MIDAS`.  The correct format for these directories is generated automatically by [this MIDAS HV frontend](https://github.com/GRIFFINCollaboration/MIDASfrontends); the only setup requirements are that HV frontends be consecutively named `HV-0`, `HV-1`..., and HV channel names as registered on the crate must use the [Greg Standard Mneumonic](http://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).
