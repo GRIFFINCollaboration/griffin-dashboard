@@ -4,13 +4,13 @@ Each detector subsystem supported by MarkII has its own custom element for one-l
 All detectors inherit most of their functionality from the `<detector-template>` object, and only detector-specific functionality is declared on the detector classes themselves; as such, this document focuses on the patterns established in `<detector-template>`, the `initializeDetector()` setup function, and the peripheral data these objects expect to have available when building a detector component.
 
 ####Contents
- - [Creation & Instantiation](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#web-component-creation---lifecyclecreated)
- - [Participation in the Main Event Loop](https://github.com/GRIFFINCollaboration/griffinMarkII/blob/master/xTags/detectors/README.md#detectors-in-the-main-event-loop)
- - [Member Functions](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#member-functions)
- - [Tooltip Infrastructure](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#tooltip-infrastructure)
- - [JSONP Services & Callbacks](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#jsonp-services--callbacks)
- - [HV Data Acquisition](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#hv-data-acquisition)
- - [localStorage structure](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/xTags/detectors#localstorage-structure)
+ - [New Contributions](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/detectors#new-contributions)
+ - [Creation & Instantiation](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/detectors#web-component-creation---lifecyclecreated)
+ - [Detectors in the Main Event Loop](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/detectors#detectors-in-the-main-event-loop)
+ - [Member Functions](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/detectors#member-functions)
+ - [Tooltip Infrastructure](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/detectors#tooltip-infrastructure)
+ - [JSONP Services & Callbacks](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/detectors#json-services--callbacks)
+ - [localStorage structure](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/detectors#localstorage-structure)
 
 ##New Contributions
 The following tries to lay as much out in as gory detail as possible, but for those of us that prefer examples, start by studying ZDS - this is the simplest possible detector page, and should be the first thing you master before building your own.  Minimal things needed to build a functioning detector page:
