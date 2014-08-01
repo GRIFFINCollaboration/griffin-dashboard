@@ -33,7 +33,7 @@ Then in `odbedit`, use `passwd` to configure MIDAS security as usual.  You will 
 An independent MIDAS experiment running nominally on `grifsoh00`.  Set up Agilent, Epics and VME frontends as per the documentation in [the SOH repo](https://github.com/GRIFFINCollaboration/GRIFFIN-SOH).
 
 ###Web Interface
-Visualization and control of GRIFFIN experiments is centralized in a web interface by [Mark II](https://github.com/BillMills/griffinMarkII).  To install and setup:
+Visualization and control of GRIFFIN experiments is centralized in a web interface by [Mark II](https://github.com/GRIFFINCollaboration/griffinMarkII).  To install and setup:
  - Make sure `node` is installed - try doing `npm` at the command line, and if it doesn't go, follow the install instructions [here](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#rhelcentosscientific-linux-6) 
  - Check out the latest release of Mark II from the GRIFFIN collaboration repo.
  - in the base directory of Mark II, do `npm install`
@@ -68,12 +68,12 @@ Some config steps need to be in order for everything to run smoothly.
 On the CAEN crates directly, the HV channels need to be named via the [standard nomenclature](https://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).  Everything else is automatically detected once the HV frontends discussed above are up and running.
 
 ####DAQ
-Each GRIFFIN experiment must have a correctly built MSC table, registered in the main ODB at `/DAQ/MSC`, and discussed in greater detail in the [DAQ documentation](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/DAQ).  Mark II's MSC helper tool, available at `/MSCbuilder`, will help automatically configure this table via the [canonical DAQ configuration]().  **You are expected to follow the canonical DAQ configuration exactly.** When plugging physical channels into the DAQ, have a look at the `/DAQ` visualization to help follow what detectors should be plugged into what DAQ channels.  If modifications from this scheme are necessary, making the corresponding changes to the table in `/DAQ/MSC` will allow the web layer to correctly reflect these customizations.
+Each GRIFFIN experiment must have a correctly built MSC table, registered in the main ODB at `/DAQ/MSC`, and discussed in greater detail in the [DAQ documentation](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/DAQ).  Mark II's MSC helper tool, available at `/MSCbuilder`, will help automatically configure this table via the [canonical DAQ configuration]().  **You are expected to follow the canonical DAQ configuration exactly.** When plugging physical channels into the DAQ, have a look at the `/DAQ` visualization to help follow what detectors should be plugged into what DAQ channels.  If modifications from this scheme are necessary, making the corresponding changes to the table in `/DAQ/MSC` will allow the web layer to correctly reflect these customizations.
 
 In addition to `/DAQ/MSC`, `/DAQ/hosts` must also be configured correctly, by populating it with the host names of each DAQ node; see the same DAQ documentation linked above for more details.
 
 ####Filter & PPG
-Ensure the [filter](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/Filter#odb-filter-encoding) and [PPG](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/PPG#ppg-odb-spec) ODB structures are in place and populated sensibly, per the documentation linked.
+Ensure the [filter](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/Filter#odb-filter-encoding) and [PPG](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/PPG#ppg-odb-spec) ODB structures are in place and populated sensibly, per the documentation linked.
 
 ###State of Health
 For robustness, GRIFFIN's state of health is a completely different experiment on a different machine.  Make the same modification to MIDAS's `src/mhttpd.cxx` as above, allowing the main dashboard server access to that ODB as well.

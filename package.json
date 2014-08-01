@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/BillMills/griffinMarkII"
+    "url": "https://github.com/GRIFFINCollaboration/griffinMarkII"
   },
   "keywords": [
     "griffin"
@@ -16,7 +16,7 @@
   "author": "BillMills",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/BillMills/griffinMarkII/issues"
+    "url": "https://github.com/GRIFFINCollaboration/griffinMarkII/issues"
   },
   "dependencies": {
     "express": "3.4.8",

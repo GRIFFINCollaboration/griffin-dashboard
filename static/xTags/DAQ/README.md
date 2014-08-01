@@ -22,7 +22,7 @@ GRIFFIN addresses the components of its DAQ with the MSC scheme it describes in 
 Where master channel is 0-15, collector channel is 0-15, and digitizer channel is 0-15 for a GRIF16 or 0-3 for a 4G.  So, `0x2A09` is master channel 2, collector channel 10, digitizer channel 9.
 
 ###ODB DAQ Encoding
-The DAQ is encoded in the ODB via an MSC table, describing which detectors are plugged into which MSC address, and a hosts table, which records the network address of each DAQ component.  The MSC table can be generated in its canonical configuration as a function of which detectors are in use via the [MSC Table Builder](https://github.com/BillMills/griffinMarkII/tree/master/static/xTags/MSCbuilder) page of MarkII.  For custom configurations, updating the MSC table described below is necessary & sufficient for the custom configuration to be reflected throughout MarkII and the experiment.
+The DAQ is encoded in the ODB via an MSC table, describing which detectors are plugged into which MSC address, and a hosts table, which records the network address of each DAQ component.  The MSC table can be generated in its canonical configuration as a function of which detectors are in use via the [MSC Table Builder](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/MSCbuilder) page of MarkII.  For custom configurations, updating the MSC table described below is necessary & sufficient for the custom configuration to be reflected throughout MarkII and the experiment.
 
 ####MSC Table
 The MSC table lives in the ODB at `/DAQ/MSC` and has the following structure, for a DAQ with n detectors pushing data:
