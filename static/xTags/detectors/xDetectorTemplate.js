@@ -170,7 +170,7 @@
 
                 for(j=0; j<this.views.length; j++){
                     //bail out if we haven't fetched anything yet
-                    if(!window.currentData[this.views[j]])
+                    if(!window.currentData[this.views[j]] || !window.currentData.DAQ)
                         continue;
 
                     //zero out old summaries at this depth
@@ -181,9 +181,11 @@
                     }
 
                     //now repopulate all summaries; if a constituent is not reporting, the whole summary is 
-                    //flagged as not reporting.
+                    //flagged as not reporting - but only consider channels in the MSC table
                     for(i=0; i<this.channelNames.length; i++){
                     
+                        if(window.currentData.DAQ.MSC.chan.indexOf(this.channelNames[i]) == -1) continue;
+
                         summaryKey = this.channelNames[i].slice(0,this.summaryDepth);
                         if(this.channelNames[i].length == 10 && window.currentData[this.views[j]].hasOwnProperty(summaryKey) ){
 
