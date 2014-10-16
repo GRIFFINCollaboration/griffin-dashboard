@@ -89,13 +89,20 @@
                     timeLabel = document.createElement('label'),
                     duration = document.createElement('input'),
                     durationUnits = document.createElement('select'),
-                    unitOption, units = ['ms', 's', 'min'], unitScale = [1, 1000, 60000],
+                    unitOption, units = ['ms', 's', 'min'], unitScale = [1000, 1000000, 60000000],
                     durationSummary = document.createElement('span'),
                     list = document.createElement('ul'),
                     listItem, ppgOption, ppgLabel,
                     summaryState = document.getElementById('PPGtool').querySelectorAll('input[type="radio"]:checked')[0].value,
-                    ppgName = ['Beam On', 'Wildcard 1', 'Wildcard 2', 'Wildcard 3', 'Sync Clocks', 'Clear Scalars', 'Move Tape', 'HPGe Trigger', 'SCEPTAR Trigger', 'Si(Li) Trigger', 'LaBr3 Trigger', 'DESCANT Trigger', 'ZDS Trigger', 'Wildcard 4', 'Wildcard 5', 'Wildcard 6'], 
-                    ppgCode = [0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80, 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000],
+                    ppgName = ['Beam On', 'Output 2', 'Output 3', 'Move Tape',
+                               'Output 5', 'Output 6', 'Output 7', 'HPGe Trigger',
+                               'SCEPTAR Trigger', 'Si(Li) Trigger', 'LaBr3 Trigger', 'DESCANT Trigger',
+                               'Indicate Background Counting', 'Output 14', 'All Triggers Enable1', 'All Triggers Enabled2'], 
+                               // 'Clear Scalers' no longer used here
+                    ppgCode = [0x0001, 0x0002, 0x0004, 0x0008,
+                               0x0010, 0x0020, 0x0040, 0x0080, 
+                               0x0100, 0x0200, 0x0400, 0x0800,
+                               0x1000, 0x2000, 0xC000, 0xC000],
                     i;
 
                 timingWrap.setAttribute('class', summaryState);

@@ -145,18 +145,18 @@
                     lastDuration = lastDuration[lastDuration.length-1];
                     durationString = this.ribbon.querySelectorAll('span');
                     durationString = durationString[durationString.length -1];
-                    if(durations[i]%60000 == 0){
-                        lastDuration.value = durations[i] / 60000;
-                        lastDuration.nextSibling.value = 60000;
-                        durationString.innerHTML = durations[i] / 60000 + ' min';
+                    if(durations[i]%60000000 == 0){
+                        lastDuration.value = durations[i] / 60000000;
+                        lastDuration.nextSibling.value = 60000000;
+                        durationString.innerHTML = durations[i] / 60000000 + ' min';
                     }
-                    else if(durations[i]%1000 == 0){
-                        lastDuration.value = durations[i] / 1000;
-                        lastDuration.nextSibling.value = 1000;
-                        durationString.innerHTML = durations[i] / 1000 + ' s';
+                    else if(durations[i]%1000000 == 0){
+                        lastDuration.value = durations[i] / 1000000;
+                        lastDuration.nextSibling.value = 1000000;
+                        durationString.innerHTML = durations[i] / 1000000 + ' s';
                     } else{
-                        lastDuration.value = durations[i];
-                        durationString.innerHTML = durations[i] + ' ms';
+                        lastDuration.value = durations[i] / 1000;
+                        durationString.innerHTML = durations[i] / 1000 + ' ms';
                     }
 
                     for(j=0; j<16; j++){
@@ -248,10 +248,10 @@
                         timingUI[0].setAttribute('class', 'summary');
                         durationSummary[0].setAttribute('class', 'summary');
                         this.ribbon.setAttribute('class', 'summary');
-                        if(durationScale == 60000){
+                        if(durationScale == 60000000){
                             durationSummary[0].innerHTML = duration + ' min';
                         }
-                        else if(durationScale == 1000){
+                        else if(durationScale == 1000000){
                             durationSummary[0].innerHTML = duration + ' s';
                         } else{
                             durationSummary[0].innerHTML = duration + ' ms';
