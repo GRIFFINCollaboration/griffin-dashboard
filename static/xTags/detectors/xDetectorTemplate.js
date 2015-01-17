@@ -513,6 +513,7 @@
                 var channelIndex, channelName, DAQblock,
                     i;
 
+		// @TODO: make grif16 send appropriate mscs and lookup grifadc info based on sent MSC
                 for(i=0; i<dv.byteLength/14; i++){
                     DAQblock = unpackDAQ(i, dv);
 

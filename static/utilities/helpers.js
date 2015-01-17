@@ -208,8 +208,8 @@ function toggleSection(id){
 function unpackDAQ(i, dv){
     var blockLength = 14,
         thresholdPos = 10,
-        trigAcptPos = 6,
-        trigReqPos = 2,
+        trigAcptPos = 2,
+        trigReqPos = 6,
         MSCPos = 0,
         unpacked = {};
 
@@ -218,7 +218,7 @@ function unpackDAQ(i, dv){
     unpacked.trigReq    = dv.getFloat32(i*blockLength + trigReqPos, true);
     unpacked.MSC        = dv.getUint16(i*blockLength + MSCPos, true);
 
-//console.log(unpacked)
+console.log(unpacked)
 
     return unpacked;
 }

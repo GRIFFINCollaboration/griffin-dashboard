@@ -1,4 +1,4 @@
-MIDAS 		= 'grsmid00.triumf.ca:8082'			//wherever mhttpd is serving
+MIDAS 		= 'grsmid00.triumf.ca:8081'			//wherever mhttpd is serving
 SOH			= 'grifsoh00.triumf.ca:8081'		//state of health mhttpd
 express 	= require("express");		
 app 		= express();				

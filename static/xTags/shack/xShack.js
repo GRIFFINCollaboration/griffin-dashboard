@@ -832,7 +832,7 @@
 				}
 
 				for (i = 20; i < 27; i++){
-					this.tooltipContent[i] = {'VME Crate' : (i-19)};
+				        this.tooltipContent[i] = {'VME Crate' : (i-19) };
 				}
 
 				for (i = 27; i < 29; i++){
