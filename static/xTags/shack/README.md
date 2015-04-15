@@ -17,7 +17,7 @@ The VME power cycle 'password' is in no way secure; it is only intended to preve
  - `this.cells.comp[0-1]` computers
  - `this.cells.dsa[0-3]` data storage arrays
  - `this.cells.hv[0-2]` HV crates
- - `this.cells.net[0-3]` netowrk switches
+ - `this.cells.net[0-3]` network switches
  - `this.cells.nim[0-6]` NIM crates
  - `this.cells.racks[0-4]` rack backgrounds.
  - `this.cells.sensorsBottom[0-4]` the thermometers on the bottoms of the 5 racks.
