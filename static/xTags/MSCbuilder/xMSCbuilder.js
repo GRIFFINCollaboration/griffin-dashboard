@@ -137,6 +137,10 @@
 
                 document.getElementById('DSL0Label').onclick = function(){
                     document.getElementById('DSLGRIFFINconfig').setAttribute('class', 'GRIFFINconfig hidden');
+                document.forms.detectors.crystal1.checked=false;
+                document.forms.detectors.crystal2.checked=false;
+                document.forms.detectors.crystal3.checked=false;
+                document.forms.detectors.crystal4.checked=false;
                 }
                 document.getElementById('DSL1Label').onclick = function(){
                     document.getElementById('DSLGRIFFINconfig').setAttribute('class', 'GRIFFINconfig');
@@ -146,6 +150,10 @@
                 }
                 document.getElementById('DSL3Label').onclick = function(){
                     document.getElementById('DSLGRIFFINconfig').setAttribute('class', 'GRIFFINconfig hidden');
+                document.forms.detectors.crystal1.checked=false;
+                document.forms.detectors.crystal2.checked=false;
+                document.forms.detectors.crystal3.checked=false;
+                document.forms.detectors.crystal4.checked=false;
                 }
 
                 //defaults
