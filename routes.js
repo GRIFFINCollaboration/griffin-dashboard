@@ -2,20 +2,24 @@
 //get requests
 ///////////////////////////////////////
 
+app.get('/', function(req, res){
+	res.render('detectors/GRIFFIN.jade', {MIDAS:MIDAS});
+});
+
 app.get('/HV', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 
 	res.render('widgets/HV.jade', {MIDAS:MIDAS});
 });
 
 app.get('/GRIFFIN', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/GRIFFIN.jade', {MIDAS:MIDAS});
 });
 
 app.get('/SPICE', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	//scrape the MSC table to decide which if any auxiliaries are present
 	exec('odbedit -c "ls /DAQ/MSC/chan"', function(error, stdout, stderr){
@@ -36,79 +40,79 @@ app.get('/SPICE', function(req, res){
 });
 
 app.get('/PACES', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/PACES.jade', {MIDAS:MIDAS});
 });
 
 app.get('/DESCANT', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/DESCANT.jade', {MIDAS:MIDAS});
 });
 
 app.get('/DANTE-Energy', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, readout:'Energy'});
 });
 
 app.get('/DANTE-TAC', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/DANTE.jade', {MIDAS:MIDAS, readout:'TAC'});
 });
 
 app.get('/SCEPTAR', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/SCEPTAR.jade', {MIDAS:MIDAS});
 });
 
 app.get('/ZDS-Energy', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, readout:'Energy'});
 });
 
 app.get('/ZDS-TAC', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('detectors/ZDS.jade', {MIDAS:MIDAS, readout:'TAC'});
 });
 
 app.get('/DAQ', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/DAQ.jade', {MIDAS:MIDAS});
 });
 
 app.get('/PPG', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/PPG.jade', {MIDAS:MIDAS});
 });
 
 app.get('/Clocks', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/Clock.jade', {MIDAS:MIDAS});
 });
 
 app.get('/Filter', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/Filter.jade', {MIDAS:MIDAS});
 });
 
 app.get('/Shack', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/Shack.jade', {MIDAS:MIDAS, SOH:SOH});
 });
 
 app.get('/MSCbuilder', function(req, res){
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	res.render('widgets/MSCbuilder.jade', {MIDAS:MIDAS});
 });
@@ -116,7 +120,7 @@ app.get('/MSCbuilder', function(req, res){
 app.get('/canonicalMSC', function(req, res){
 	var MSC = [], table, names = [];
 
-	if(!req.cookies.midas_pwd) res.redirect('http://'+MIDAS)
+//	if(!req.cookies.midas_pwd) return res.redirect('http://'+MIDAS)
 	
 	//GRIFFIN
 	for(i=1; i<17; i++){
@@ -181,7 +185,7 @@ app.post('/postHV', function(req, res){
 	else
 		spawn('odbedit', ['-c', "set /Equipment/HV-"+req.body.crateIndex+"/Settings/ChState["+req.body.chIndex+"] 1"]);
 
-	return res.redirect('/HV?crate=0&channel='+req.body.chName);
+//	return res.redirect('/HV?crate=0&channel='+req.body.chName);
 });
 
 app.post('/registerCycle', function(req, res){
@@ -382,6 +386,8 @@ app.post('/powerCycleVME', function(req, res){
 });
 
 app.post('/buildMSC', function(req, res){
+	console.log("POST:"+req.body.USC+', '+req.body.DSC+', '+req.body.USL+', '+req.body.DSL);
+
 	var names = [],
 		MSC = [],
 		table, i,
@@ -424,7 +430,7 @@ app.post('/buildMSC', function(req, res){
 	}
 
 	//DESCANT
-	if(req.body.USC == 'DSCDS'){
+	if(req.body.DSL == 'DSLDS'){
 		table = MSCbuilders.configDESCANT();
 		names = names.concat(table[0]);
 		MSC = MSC.concat(table[1]);
@@ -469,7 +475,7 @@ app.post('/buildMSC', function(req, res){
 			
 			execFile('./rebuildMSC.sh', function(error, stdout, stderr){
 				console.log('Writing MSC table to ODB, process [error, stdout, stderr]:'); 
-				console.log([error, stdout, stderr]);
+			       	console.log([error, stdout, stderr]);
 
 				return res.redirect('/DAQ');
 			});
