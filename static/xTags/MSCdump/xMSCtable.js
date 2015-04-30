@@ -76,7 +76,12 @@
                     cell.innerHTML = MSC[0][j]
                     row.appendChild(cell)
                     cell = document.createElement('td')
-                    cell.innerHTML = '0x'+MSC[1][j].toString(16);
+                   // cell.innerHTML = '0x'+MSC[1][j].toString(16);
+		    var Letter=['A','B','C','D'];
+                    cell.innerHTML = '0x'+MSC[1][j].toString(16)+
+                        '(0x'+ (((MSC[1][j] & 0xFF00)>>2 ) | (MSC[1][j] & 0x3F)).toString(16) +') '+
+			((MSC[1][j] & 0xF000)>>12)+'-'+(Math.floor(((MSC[1][j] & 0xF00)>>8)/4)+1)+Letter[(((MSC[1][j] & 0xF00)>>8)%4)];
+
                     row.appendChild(cell)
                 }
                 
