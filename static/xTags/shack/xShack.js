@@ -26,6 +26,8 @@
             	///////////////////////////////////////////////////////////////////
 
             	this.tooltipContent = [];
+            	this.tooltipContenttemp = [];
+            	this.tooltipContenttemp = [];
             	this.flag = [];
   
             	this.renderRacks();
@@ -202,9 +204,9 @@
 						opacity: this.parameters.sensors.opacity,
 					}),
 
-					this.cells.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, i ) );
+					this.cells.sensorstop[i].on('mouseover', this.writeTooltiptemp.bind(this, i ) );
 					this.cells.sensorstop[i].on('mousemove', this.moveTooltip);
-					this.cells.sensorstop[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+					this.cells.sensorstop[i].on('mouseout', this.writeTooltiptemp.bind(this, -1) );
 
 					this.cells.sensorsbottom[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
@@ -217,9 +219,9 @@
 						opacity: this.parameters.sensors.opacity,
 					}),
 
-					this.cells.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, i+5 ) );
+					this.cells.sensorsbottom[i].on('mouseover', this.writeTooltiptemp.bind(this, i+5 ) );
 					this.cells.sensorsbottom[i].on('mousemove', this.moveTooltip);
-					this.cells.sensorsbottom[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+					this.cells.sensorsbottom[i].on('mouseout', this.writeTooltiptemp.bind(this, -1) );
 
 				}
 
@@ -305,39 +307,15 @@
 					opacity: this.parameters.cableman.opacity
 				});
 
+				//////////////////////////////////////////////////////////////////////////////
+				// HV crates are included here.
+				//////////////////////////////////////////////////////////////////////////////
+
 				this.cells.hv = [];
 				label.hv = [];
 
-				this.cells.hv[0] = new Kinetic.Rect({
-					x: leftmargin + 20*grid,
-					y: topmargin+4*grid,
-					width: this.parameters.hv.width,
-					height: this.parameters.hv.height,
-					fill: this.parameters.hv.fill,
-					stroke: this.parameters.hv.stroke,
-					strokeWidth: this.parameters.hv.strokeW,
-					opacity: this.parameters.hv.opacity
-				});
-
-			    label.hv0 = new Kinetic.Text({
-			   		x: leftmargin + 20*grid,
-			       	y: topmargin+4*grid,
-			       	width: this.parameters.hv.width,
-			      	text: 'HV 1',
-			       	fontSize: this.parameters.label.maxFontSize,
-			       	fontFamily: this.parameters.label.font,
-			       	fill: this.parameters.label.fontcolour,
-			       	padding: this.parameters.hv.height*0.3,
-			        align: 'center',
-			        listening: false
-			   	});
-
-				this.cells.hv[0].on('mouseover', this.writeTooltip.bind(this, 10 ) );
-				this.cells.hv[0].on('mousemove', this.moveTooltip);
-				this.cells.hv[0].on('mouseout', this.writeTooltip.bind(this, -1) );
-			   	squishFont(label.hv0, 18*grid);
-
-				for (i = 1; i < 3; i++){
+				// create all of the rectangles and text boxes
+				for (i = 0; i < 3; i++){
 			        this.cells.hv[i] = new Kinetic.Rect({
 			            x: leftmargin+(60+20*(i-1))*grid,
 			            y: topmargin+4*grid,
@@ -352,8 +330,9 @@
 			        label.hv[i] = new Kinetic.Text({
 			            x: leftmargin+(60+20*(i-1))*grid,
 			            y: topmargin+4*grid,
+				    height: this.parameters.hv.height,
 			            width: this.parameters.hv.width,
-			            text: 'HV '+(i+1),
+			            text: 'HV-'+(i),
 			            fontSize: this.parameters.label.maxFontSize,
 			            fontFamily: this.parameters.label.font,
 			            fill: this.parameters.label.fontcolour,
@@ -367,6 +346,14 @@
 					this.cells.hv[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 					squishFont(label.hv[i], 18*grid);
 				}
+
+				// ...then modify all the x-positions.
+				this.cells.hv[0].setX(leftmargin+20*grid);
+				label.hv[0].setX(leftmargin+20*grid);
+				this.cells.hv[1].setX(leftmargin+80*grid);
+				label.hv[1].setX(leftmargin+80*grid);
+				this.cells.hv[2].setX(leftmargin+40*grid);
+				label.hv[2].setX(leftmargin+40*grid);
 
 				//////////////////////////////////////////////////////////////////////////////
 				// NIM crates are included next and numbered in the same way as the HV crates.
@@ -444,96 +431,54 @@
 				this.cells.vme = [];
 				label.vme = [];
 
-				for (i = 0; i < 4; i++){
-					this.cells.vme[i] = new Kinetic.Rect({
-						x: leftmargin+20*i*grid,
-						y: topmargin+20*grid,
-						width: this.parameters.vme.width,
-						height: this.parameters.vme.height,
-						fill: this.parameters.vme.fill,
-						stroke: this.parameters.vme.stroke,
-						strokeWidth: this.parameters.vme.strokeW,
-						opacity: this.parameters.vme.opacity
-					}),
+				for (j = 0; j < 3; j++){
+					for (i = 0; i < 5; i++){
+						this.cells.vme[j*5+i] = new Kinetic.Rect({
+							x: leftmargin+20*i*grid,
+							y: topmargin+(j*9+20)*grid,
+							width: this.parameters.vme.width,
+							height: this.parameters.vme.height,
+							fill: this.parameters.vme.fill,
+							stroke: this.parameters.vme.stroke,
+							strokeWidth: this.parameters.vme.strokeW,
+							opacity: this.parameters.vme.opacity
+						}),
+	
+					    label.vme[j*5+i] = new Kinetic.Text({
+				            x: leftmargin+20*i*grid,
+					    y: topmargin+(j*9+20)*grid,
+			        	    width: this.parameters.vme.width,
+				            text: 'VME '+(i+1),
+				            fontSize: this.parameters.label.maxFontSize,
+				            fontFamily: this.parameters.label.font,
+				            fill: this.parameters.label.fontcolour,
+			        	    padding: this.parameters.vme.height*0.3,
+			       		    align: 'center',
+				       	    listening: false
+				      	    });
 
-				    label.vme[i] = new Kinetic.Text({
-			            x: leftmargin+20*i*grid,
-			            y: topmargin+20*grid,
-			            width: this.parameters.vme.width,
-			            text: 'VME '+(i+1),
-			            fontSize: this.parameters.label.maxFontSize,
-			            fontFamily: this.parameters.label.font,
-			            fill: this.parameters.label.fontcolour,
-			            padding: this.parameters.vme.height*0.3,
-			       		align: 'center',
-			       		listening: false
-			      	});
-
-			      	this.cells.vme[i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
-					this.cells.vme[i].on('mousemove', this.moveTooltip);
-					this.cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
-			      	squishFont(label.vme[i], 18*grid);
+					      	this.cells.vme[j*5+i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
+						this.cells.vme[j*5+i].on('mousemove', this.moveTooltip);
+						this.cells.vme[j*5+i].on('mouseout', this.writeTooltip.bind(this, -1) );
+					      	squishFont(label.vme[j*5+i], 18*grid);
+					}
+					// I know this is not a clever way to do it. It should probably be made smarter. -JKS
+					if (j==0)
+					{
+						for (i=0;i<5;i++)
+							label.vme[j*5+i].setText('VME-'+i+'A');
+					}
+					if (j==1)
+					{
+						for (i=0;i<5;i++)
+							label.vme[j*5+i].setText('VME-'+i+'B');
+					}
+					if (j==2)
+					{
+						for (i=0;i<5;i++)
+							label.vme[j*5+i].setText('VME-'+i+'C');
+					}
 				}   
-
-				for (i = 4; i < 6; i++){
-					this.cells.vme[i] = new Kinetic.Rect({
-						x: leftmargin+(40+20*(i-4))*grid,
-						y: topmargin+33*grid,
-						width: this.parameters.vme.width,
-						height: this.parameters.vme.height,
-						fill: this.parameters.vme.fill,
-						stroke: this.parameters.vme.stroke,
-						strokeWidth: this.parameters.vme.strokeW,
-						opacity: this.parameters.vme.opacity
-					}),
-
-				    label.vme[i] = new Kinetic.Text({
-			            x: leftmargin+(40+20*(i-4))*grid,
-			            y: topmargin+33*grid,
-			            width: this.parameters.vme.width,
-			            text: 'VME '+(i+1),
-			            fontSize: this.parameters.label.maxFontSize,
-			            fontFamily: this.parameters.label.font,
-			            fill: this.parameters.label.fontcolour,
-			            padding: this.parameters.vme.height*0.3,
-			       		align: 'center',
-			       		listening: false
-			     	 });
-
-				    this.cells.vme[i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
-					this.cells.vme[i].on('mousemove', this.moveTooltip);
-					this.cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
-				    squishFont(label.vme[i], 18*grid);
-				}   
-
-				this.cells.vme[6] = new Kinetic.Rect({
-					x: leftmargin+40*grid,
-					y: topmargin+44*grid,
-					width: this.parameters.vme.width,
-					height: this.parameters.vme.height,
-					fill: this.parameters.vme.fill,
-					stroke: this.parameters.vme.stroke,
-					strokeWidth: this.parameters.vme.strokeW,
-					opacity: this.parameters.vme.opacity
-				});
-
-			   	label.vme[6] = new Kinetic.Text({
-			   		x: leftmargin+40*grid,
-			       	y: topmargin+44*grid,
-			       	width: this.parameters.vme.width,
-			      	text: 'VME 7',
-			       	fontSize: this.parameters.label.maxFontSize,
-			       	fontFamily: this.parameters.label.font,
-			       	fill: this.parameters.label.fontcolour,
-			       	padding: this.parameters.vme.height*0.3,
-			       	align: 'center',
-			       	listening: false
-			   	});
-
- 		      	this.cells.vme[6].on('mouseover', this.writeTooltip.bind(this, 26 ) );
-				this.cells.vme[6].on('mousemove', this.moveTooltip);
-				this.cells.vme[6].on('mouseout', this.writeTooltip.bind(this, -1) );
-			   	squishFont(label.vme[6], 18*grid);
 
 			   	for(i=0; i<this.cells.vme.length; i++){
 			   		this.cells.vme[i].on('click', function(index){
@@ -725,14 +670,14 @@
 					this.rackImage.mainLayer.add(this.cells.sensorsbottom[i]);
 
 				for (i = 0; i < 14; i++)
+				{
+					if (i==8 || i==9) continue;
 					this.rackImage.mainLayer.add(this.cells.cableman[i]);
+				}
 
-				this.rackImage.mainLayer.add(this.cells.cableman[14]);
+//				this.rackImage.mainLayer.add(this.cells.cableman[14]);
 
-				this.rackImage.mainLayer.add(this.cells.hv[0]);
-			    this.rackImage.mainLayer.add(label.hv0);
-
-				for (i = 1; i < 3; i++)
+				for (i = 0; i < 3; i++)
 					this.rackImage.mainLayer.add(this.cells.hv[i]),
 					this.rackImage.mainLayer.add(label.hv[i]);
 
@@ -740,12 +685,13 @@
 					this.rackImage.mainLayer.add(this.cells.nim[i]),
 					this.rackImage.mainLayer.add(label.nim[i]);
 
-				for (i = 0; i < 6; i++)
+				// At some point, we should be able to use this loop fully. Until then...
+				for (i = 0; i < 10; i++)
+				{
+					if (i==2 || i==5 || i==6) continue;
 					this.rackImage.mainLayer.add(this.cells.vme[i]),
-				    this.rackImage.mainLayer.add(label.vme[i]);
-
-				this.rackImage.mainLayer.add(this.cells.vme[6]);
-			    this.rackImage.mainLayer.add(label.vme[6]);
+				 	this.rackImage.mainLayer.add(label.vme[i]);
+				}
 
 				this.rackImage.mainLayer.add(this.cells.dsa[0]);
 			    this.rackImage.mainLayer.add(label.dsa0);
@@ -778,6 +724,28 @@
 
                 tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + evt.pageX + '; top:' + evt.pageY  + ';');
             },
+
+			'writeTooltiptemp' : function(i){
+
+				var tt = document.getElementById('tooltip'),
+					content = document.createElement('p'),
+					value, text;
+
+				if(i == -1){
+					tt.setAttribute('style', 'display:none');
+				} else {
+					text = ''
+					for(key in this.tooltipContenttemp[i]){
+						text += key + ': ' + this.tooltipContenttemp[i][key] + '<br>';
+					}
+
+				content.innerHTML = text;
+				tt.innerHTML = '';
+				tt.appendChild(content);
+
+				}
+			},
+
 
 			'writeTooltip' : function(i){
 
@@ -814,7 +782,8 @@
 				data = data[0];
 
 				for(i = 0; i < 10; i++){
-					this.tooltipContent[i] = {'Temperature' : (data.Agilent34970A.Variables.DATA[i]).toFixed(1)};
+					this.tooltipContent[i] = {'Temperatures' : (data.Agilent34970A.Variables.DATA[i]).toFixed(1)};
+					this.tooltipContenttemp[i] = {'Temperature' : (data.Agilent34970A.Variables.DATA[i]).toFixed(1)};
 
 					if (data.Agilent34970A.Variables.DATA[i] > 32){
 						this.flag[i] = 1

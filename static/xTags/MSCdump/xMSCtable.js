@@ -30,22 +30,22 @@
                 this.pacesTitle = document.createElement('caption')
                 this.pacesTitle.innerHTML = 'PACES'
                 this.PACES.appendChild(this.pacesTitle)
-
+		    
                 this.SPICE = document.createElement('table')
                 this.spiceTitle = document.createElement('caption')
                 this.spiceTitle.innerHTML = 'SPICE'
                 this.SPICE.appendChild(this.spiceTitle)
-
+		    
                 this.ZDS = document.createElement('table')
                 this.zdsTitle = document.createElement('caption')
                 this.zdsTitle.innerHTML = 'ZDS'
                 this.ZDS.appendChild(this.zdsTitle)
-
+		    
                 this.S2S3 = document.createElement('table')
                 this.s2s3Title = document.createElement('caption')
                 this.s2s3Title.innerHTML = 'S2 / S3'
                 this.S2S3.appendChild(this.s2s3Title)
-
+		    
                 this.DESCANT = document.createElement('table')
                 this.descantTitle = document.createElement('caption')
                 this.descantTitle.innerHTML = 'DESCANT'
@@ -63,13 +63,13 @@
                     else if (MSC[0][j].slice(0,2) == 'ZD')
                         this.ZDS.appendChild(row)
                     else if (MSC[0][j].slice(0,2) == 'DA')
-                        this.DANTE.appendChild(row)
+			this.DANTE.appendChild(row)
                     else if (MSC[0][j].slice(0,2) == 'PA')
                         this.PACES.appendChild(row)
-                    else if (MSC[0][j].slice(0,3) == 'SPI')
-                        this.SPICE.appendChild(row)
-                    else if (MSC[0][j].slice(0,3) == 'SPE' || MSC[0][j].slice(0,3) == 'SPZ')
-                        this.S2S3.appendChild(row)
+			      else if (MSC[0][j].slice(0,3) == 'SPI')
+			      this.SPICE.appendChild(row)
+			       else if (MSC[0][j].slice(0,3) == 'SPE' || MSC[0][j].slice(0,3) == 'SPZ')
+			      this.S2S3.appendChild(row)
                     else if (MSC[0][j].slice(0,2) == 'DS')
                         this.DESCANT.appendChild(row)
                     cell = document.createElement('td')
@@ -89,8 +89,8 @@
                 this.appendChild(this.SCEPTAR)
                 this.appendChild(this.DANTE)
                 this.appendChild(this.PACES)
-                this.appendChild(this.SPICE)
-                this.appendChild(this.S2S3)
+		this.appendChild(this.SPICE)
+	        this.appendChild(this.S2S3)
                 this.appendChild(this.DESCANT)
                 this.appendChild(this.ZDS)
 

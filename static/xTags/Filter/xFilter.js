@@ -195,7 +195,7 @@
                 crossDetectorCoincWrap = document.createElement('div');
                 crossDetectorCoincWrap.setAttribute('id', 'crossDetectorCoincWrap'+index);
                 crossDetectorCoincWrap.setAttribute('class', 'crossDetectorCoincWrap hidden');
-                filterContent.appendChild(crossDetectorCoincWrap);
+	        filterContent.appendChild(crossDetectorCoincWrap);
                 crossDetectorCoincLabel = document.createElement('label');
                 crossDetectorCoincLabel.setAttribute('id', 'crossDetectorCoincLabel'+index);
                 crossDetectorCoincLabel.innerHTML = 'Cross-Detector Coinc. Window [ns]:'
@@ -206,7 +206,7 @@
                 crossDetectorCoincInput.setAttribute('type', 'number');
                 crossDetectorCoincInput.setAttribute('step', 1);
                 crossDetectorCoincInput.setAttribute('min', 0);
-                crossDetectorCoincInput.value = 50;
+                crossDetectorCoincInput.value = 250;
                 crossDetectorCoincWrap.appendChild(crossDetectorCoincInput);
 
                 addNewRow.setAttribute('id', 'addNewRow' + index);
@@ -511,7 +511,7 @@
 
 
                 if(filterName && this.presets.indexOf(filterName.value) != -1)
-                    filterName.value = '';
+                    filterName.value = 'EnterFilterName';
             }
         }
     });

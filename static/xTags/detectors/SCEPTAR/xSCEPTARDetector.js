@@ -100,7 +100,7 @@
                 upstreamLabel = new Kinetic.Text({
                     x: 0,
                     y: 0,
-                    text: 'Upstream',
+                    text: 'Downstream', // Upstream and downstream are wrong way round! Min action is this hack
                     fontSize: 28,
                     fontFamily: 'Arial',
                     fill: '#999999'
@@ -113,7 +113,7 @@
                 downstreamLabel = new Kinetic.Text({
                     x: 0,
                     y: 0,
-                    text: 'Downstream',
+                    text: 'Upstream', // Upstream and downstream are wrong way round! Min action is this hack
                     fontSize: 28,
                     fontFamily: 'Arial',
                     fill: '#999999'

@@ -8,6 +8,7 @@
                     controlWrap = document.createElement('form'),
                     savePPG = document.createElement('button'),
                     saveLoadPPG = document.createElement('button'),
+                    ApplyPPG = document.createElement('button'),
                     encodedCycle = document.createElement('input'),
                     applyCycle = document.createElement('input'),
                     cycleNameLabel = document.createElement('label'),
@@ -36,7 +37,7 @@
                 document.getElementById('ppgEdit').onchange = this.toggleSummary.bind(this);
 
                 this.ribbon.wrapperForm.onchange = function(){
-                    document.getElementById('cycleName').value = '';
+                    document.getElementById('cycleName').value = 'EnterCycleName';
                 };
 
                 controlWrap.setAttribute('class', 'PPGcontrol summary');
@@ -74,6 +75,7 @@
                 savePPG.onclick = this.registerNewCycle.bind(this);
                 controlRows[0].appendChild(savePPG);
 
+		/*
                 saveLoadPPG.setAttribute('class', 'stdin');
                 saveLoadPPG.innerHTML = 'Save & Apply Cycle Definition';
                 saveLoadPPG.onclick = function(){
@@ -81,7 +83,7 @@
                     document.getElementById('applyCycle').checked = true;
                 }.bind(this);
                 controlRows[0].appendChild(saveLoadPPG);
-
+		*/
                 controlRows[1] = document.createElement('span');
                 controlWrap.appendChild(controlRows[1]);
 
@@ -98,7 +100,7 @@
                 loadTarget.setAttribute('style', 'display:none');
                 controlRows[1].appendChild(loadTarget);
                 loadPPG.setAttribute('class', 'stdin');
-                loadPPG.innerHTML = 'Load'
+                loadPPG.innerHTML = 'Display'
                 loadPPG.onclick = function(){
                     document.getElementById('loadTarget').value = selected('cycleList')
                 }
@@ -154,13 +156,36 @@
                         lastDuration.value = durations[i] / 1000000;
                         lastDuration.nextSibling.value = 1000000;
                         durationString.innerHTML = durations[i] / 1000000 + ' s';
-                    } else{
+                    } 
+                    else if(durations[i] == 268435455){
+                        lastDuration.value = durations[i] / 1000000;
+                        lastDuration.nextSibling.value = 1000000;
+                        durationString.innerHTML = 'Forever';
+                    }else{
                         lastDuration.value = durations[i] / 1000;
                         durationString.innerHTML = durations[i] / 1000 + ' ms';
                     }
-
-                    for(j=0; j<16; j++){
-                        if( (1 << j) & ppgTable[i]){
+		    // Horrible hack, sorry ABG
+		    // Patterns should match ppgCode[] in xRibbon.js
+                      var Patterns = [//0x0001,
+			       // 0x0002,
+			       //  0x0004,
+			       0xC008C008,
+			       //  0x0010,
+			       // 0x0020,
+			       //  0x0040,
+			       //  0x0080, 
+			       //  0x0100,
+			       //  0x0200,
+			       //  0x0400,
+			       //  0x0800,
+                               0xC002C002,
+			       0xC001C001,
+			       0xC004C004,
+			       0xC010C010
+			      ];
+                    for(j=0; j<Patterns.length; j++){
+                        if( (Patterns[j]) & (ppgTable[i]&0x1F)){
                             options[j].checked = true;
                         }
                     }
@@ -197,7 +222,7 @@
 
             'registerPPGODB' : function(responseText){
                 var data = JSON.parse(responseText),
-                    currentName = data.Current,
+                    currentName = data.Display,
                     currentPPG = (data.Cycles[currentName]) ? data.Cycles[currentName].PPGcodes : [],
                     currentDuration = (data.Cycles[currentName]) ? data.Cycles[currentName].durations : [],
                     cycleSelect = document.getElementById('cycleList'),
@@ -207,7 +232,7 @@
 
                 this.loadPPG(currentPPG, currentDuration);
                 document.getElementById('cycleName').value = currentName;
-                document.getElementById('currentCycle').innerHTML = 'Current Active Cycle: ' + currentName;
+                document.getElementById('currentCycle').innerHTML = 'Displayed Cycle: ' + currentName;
 
                 for(key in data.Cycles){
                     cycleOptions = document.createElement('option');

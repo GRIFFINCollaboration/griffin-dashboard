@@ -4,7 +4,11 @@ module.exports = {
 		var names = [],
 			MSC = [],
 			masterChan = (index<9) ? 0 : 1,
-			firstCollectorChan = ((index-1)%8)*2, //ie, collector channel of first (of 2) GRIF16s used for this clover.
+
+                       // This commented out version is for when there are sufficient digitizers for two modules per GRIFFIN HPGe position
+		//	firstCollectorChan = ((index-1)%8)*2, //ie, collector channel is first of 2 GRIF-16s for this position
+	  	        firstCollectorChan = Math.floor((index-1)/4), //ie, collector channel
+
 			collectorChan,  
 			ADC,
 			name, address,
@@ -44,6 +48,8 @@ module.exports = {
 			}
 
 		} else{
+		    /*
+                       // This commented out version is for when there are sufficient digitizers for two modules per GRIFFIN HPGe position
 			for(i=0; i<crystalSuffix.length; i++){
 				for(j=0; j<color.length; j++){
 					name = crystalPrefix + color[j] + crystalSuffix[i];
@@ -55,7 +61,22 @@ module.exports = {
 					names.push(name);
 					MSC.push(address);
 				}
-			}			
+			}
+		    */	
+		    // Temporary version while we do not have enough digitizers, see above
+		                i=0; // only enough digitizers for one contact
+				for(j=0; j<color.length; j++){
+					name = crystalPrefix + color[j] + crystalSuffix[i];
+
+					collectorChan = firstCollectorChan;
+					ADC = j + 4*((index-1)%4);
+					masterChan=0;
+					address = (masterChan << 12) | (collectorChan << 8) | ADC;
+					console.log("index,masterChan,collectorChan,i,j,ADC="+index+','+masterChan+','+collectorChan+','+i+','+j+','+ADC);
+					names.push(name);
+					MSC.push(address);
+				}
+					
 		}
 
 		return [names, MSC];

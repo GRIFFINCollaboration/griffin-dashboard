@@ -69,12 +69,15 @@ div.coincConfigWrap{
 }
 
 div.crossDetectorCoincWrap{
+/*
 	background-color: #444444;
 	border-radius: 1em;
 	padding: 0.5em;
 	margin-bottom: 1em;
 	width: -moz-max-content;
 	width: -webkit-max-content;
+*/
+        display: none;
 }
 
 div.hidden{

@@ -92,13 +92,19 @@
 
                 if(cellName == 'EMPTY SLOT' || cellName == 'No Primary') return
                 if(this.oldHighlight){
+		if(this.cells[this.oldHighlight] === undefined){ }
+		  else{
                     this.cells[this.oldHighlight].setAttr('stroke', 'black');
                     this.cells[this.oldHighlight].setAttr('strokeWidth', '2'); 
-                    this.cells[this.oldHighlight].moveToBottom();                   
+                    this.cells[this.oldHighlight].moveToBottom(); 
+		   }                  
                 }
+		if(this.cells[cellName] === undefined){ }
+		else{
                 this.cells[cellName].setAttr('stroke', 'red');
                 this.cells[cellName].setAttr('strokeWidth', '6');
                 this.cells[cellName].moveToTop();
+		}
                 this.oldHighlight = cellName;
                 window.currentCell = cellName; //HACK
                 this.update();
@@ -626,7 +632,7 @@
                 this.updateFillMeter('Voltage', measuredVoltage, voltageLimit, 'V');
                 this.updateFillMeter('Current', current, currentLimit, '\u03BCA');
                 this.updateFillMeter('Temperature', temperature, this.temperatureMax, 'C');
-                this.mainLayer.draw();
+	        this.mainLayer.draw();
 
             },
 
@@ -652,7 +658,7 @@
                     fill: '#999999'
                 });
                 squishFont(label, 0.35*width*0.95)
-                label.setAttr('y', y0 + height/2 - label.getTextHeight()/2 );
+	        label.setAttr('y', y0 + height/2 - label.getTextHeight()/2 );
                 this.mainLayer.add(label);
 
                 this.meter[title] = meter = new Kinetic.Rect({
@@ -724,15 +730,15 @@
                 barLength = Math.max(barLength*width, this.shell[title].getAttr('height'));
 
                 if(val==-9999){
-                    this.meterNow[title].setAttr('text', 'Now: See Primary');
+		    this.meterNow[title].setAttr('text', 'Now: See Primary');
                     barLength = Math.max(0, this.shell[title].getAttr('height'));;
                     color = '#34495e';
                 } else
-                    this.meterNow[title].setAttr('text', 'Now: ' + val.toFixed() + ' ' +unit);
+		    this.meterNow[title].setAttr('text', 'Now: ' + val.toFixed() + ' ' +unit);
                 if(max==-9999)
-                    this.meterMax[title].setAttr('text', 'Max: See Primary');
+		    this.meterMax[title].setAttr('text', 'Max: See Primary');
                 else
-                    this.meterMax[title].setAttr('text', 'Max: ' + max.toFixed() + ' ' +unit);
+		    this.meterMax[title].setAttr('text', 'Max: ' + max.toFixed() + ' ' +unit);
                 this.meter[title].setAttr('width', barLength);
                 this.meter[title].setAttr('fill', color);
                 this.meter[title].moveToTop();
