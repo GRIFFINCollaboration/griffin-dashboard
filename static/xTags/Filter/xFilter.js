@@ -476,7 +476,9 @@
                     cellDelete,
                     createOr = document.getElementById('spawnCondition'),
                     currentOr,
-                    i, key, lastDash, coincWindowInput;
+                    i, key, lastDash, coincWindowInput,
+                    detsAllowed;
+
 
                 for(i=0; i<orCells.length; i++){
                     cellDelete = orCells[i].querySelectorAll('button.lightButton')[1]; //TODO fragile - don't ever change that class or loading breaks!
@@ -486,7 +488,16 @@
                 for(key in currentFilter){
                     if(key.indexOf('last_written') != -1 ) continue;
 
-                    if(typeof currentFilter[key] != 'number'){ //ie dont do this for the cross detector coinc window keys
+                    if(key == 'EnabledDetTypes'){
+                        console.log(currentFilter[key])
+
+                        detsAllowed = currentFilter[key].split('-');
+
+                        for(i=0; i<detsAllowed.length; i++){
+                            document.getElementById('allow' + this.detectors[this.detectorCodes.indexOf(detsAllowed[i])]).click();
+                        }
+
+                    } else if(typeof currentFilter[key] != 'number'){ //ie dont do this for the cross detector coinc window keys
 
                         createOr.onclick();
 
