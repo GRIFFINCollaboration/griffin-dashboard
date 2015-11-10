@@ -43,6 +43,7 @@
                 currentFilter.setAttribute('id', 'currentFilter');
                 this.appendChild(currentFilter);
 
+                allowedDetectorsWrap.setAttribute('class', 'allowedDets')
                 this.appendChild(allowedDetectorsWrap);
                 allowedDetTitle.innerHTML = 'Allowed Detectors'
                 allowedDetectorsWrap.appendChild(allowedDetTitle);
