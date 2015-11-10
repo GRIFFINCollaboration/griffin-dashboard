@@ -8,7 +8,8 @@ form#conditionWrap{
 	width:100%;
 }
 
-div.filterCondition{
+div.filterCondition,
+div.allowedDets{
 	background-color: #111111;
 	border-radius: 1em;
 	margin-bottom: 1em;
@@ -144,4 +145,8 @@ form#filterDefinitionForm{
 	form.filterControl{
 		margin: 0em;
 	}
+}
+
+.allowedDetCheck{
+	margin-right: 1em;
 }
