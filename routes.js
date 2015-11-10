@@ -232,6 +232,7 @@ app.post('/registerCycle', function(req, res){
 app.post('/registerFilter', function(req, res){
 	var filter = (req.body.filterString) ? JSON.parse(req.body.filterString) : null,
 		coincWindows = (req.body.coincString) ? JSON.parse(req.body.coincString) : null,
+		detsAllowed = req.body.detsAllowed,
 		odbManipulationFile = '',
 		i, j,
 		steps = [],
@@ -261,6 +262,8 @@ app.post('/registerFilter', function(req, res){
 		odbManipulationFile += 'odbedit -c "create int /Filter/Filters/' + req.body.filterName + '/coincWindow' + i + '"\n';
 		odbManipulationFile += 'odbedit -c "set /Filter/Filters/' + req.body.filterName + '/coincWindow' + i + ' ' + coincWindows[i] + '"\n';
 	}
+	odbManipulationFile += 'odbedit -c "create int /Filter/Filters/' + req.body.filterName + '/EnabledDetTypes"\n';
+	odbManipulationFile += 'odbedit -c "set /Filter/Filters/' + req.body.filterName + '/EnabledDetTypes ' + detsAllowed + '"\n';
 
 	fs.writeFile('odbManipulation.sh', odbManipulationFile, function(){
 		fs.chmod('./odbManipulation.sh', '777', function(){

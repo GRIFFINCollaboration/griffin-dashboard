@@ -11,6 +11,7 @@
                     controlRows = [],
                     encodedFilter = document.createElement('input'),
                     encodedCoincWindows = document.createElement('input'),
+                    encodedDetsAllowed = document.createElement('input'),
                     applyFilter = document.createElement('input'),
                     filterNameLabel = document.createElement('label'),
                     filterName = document.createElement('input'),
@@ -24,9 +25,7 @@
                     saveLoadFilter = document.createElement('button'),
                     allowedDetectorsWrap = document.createElement('div'),
                     allowedDetTitle = document.createElement('h4'),
-                    allowedDetLabel, allowedDetCheck,
-                    allowedDetOptions = ['GRIFFIN', 'SCEPTAR', 'DESCANT', 'DANTE'],
-                    allowedDetCodes = ['GR', 'SE', 'DS', 'DA']
+                    allowedDetLabel, allowedDetCheck
 
                 this.presets = [];
                 this.filterConditions = [];
@@ -35,6 +34,7 @@
                 this.detectorCodes = ['DA', 'DS', 'GR', 'PA', 'SE', 'ZD'],
                 this.filterOptions = ['Singles', 'Coincidences', 'Prescale'];
                 this.filterCodes = ['S', 'C', 'P'];
+                this.allowedDetectorsWord = '';
 
                 filterTitle = document.createElement('h1');
                 filterTitle.innerHTML = 'Filter Control';
@@ -44,17 +44,17 @@
                 this.appendChild(currentFilter);
 
                 this.appendChild(allowedDetectorsWrap);
-                for(i=0; i<allowedDetOptions.length; i++){
-                    allowedDetTitle.innerHTML = 'Allowed Detectors'
-                    allowedDetectorsWrap.appendChild(allowedDetTitle);
+                allowedDetTitle.innerHTML = 'Allowed Detectors'
+                allowedDetectorsWrap.appendChild(allowedDetTitle);
+                for(i=0; i<this.detectors.length; i++){
                     allowedDetLabel = document.createElement('label');
-                    allowedDetLabel.setAttribute('for', 'allow' + allowedDetOptions[i]);
-                    allowedDetLabel.innerHTML = allowedDetOptions[i];
+                    allowedDetLabel.setAttribute('for', 'allow' + this.detectors[i]);
+                    allowedDetLabel.innerHTML = this.detectors[i];
                     allowedDetCheck = document.createElement('input');
-                    allowedDetCheck.setAttribute('id', 'allow' + allowedDetOptions[i]);
+                    allowedDetCheck.setAttribute('id', 'allow' + this.detectors[i]);
                     allowedDetCheck.setAttribute('type', 'checkbox');
                     allowedDetCheck.setAttribute('class', 'allowedDetCheck');
-                    allowedDetCheck.setAttribute('value', allowedDetCodes[i]);
+                    allowedDetCheck.setAttribute('value', this.detectorCodes[i]);
                     allowedDetCheck.onchange = this.parseAllowedDets.bind(this);
                     allowedDetectorsWrap.appendChild(allowedDetLabel);
                     allowedDetectorsWrap.appendChild(allowedDetCheck);
@@ -102,6 +102,12 @@
                 encodedCoincWindows.setAttribute('style', 'display:none');
                 encodedCoincWindows.setAttribute('name', 'coincString');
                 controlRows[0].appendChild(encodedCoincWindows);
+
+                encodedDetsAllowed.setAttribute('type', 'text');
+                encodedDetsAllowed.setAttribute('id', 'encodedDetsAllowed');
+                encodedDetsAllowed.setAttribute('style', 'display:none');
+                encodedDetsAllowed.setAttribute('name', 'detsAllowed');
+                controlRows[0].appendChild(encodedDetsAllowed);
 
                 applyFilter.setAttribute('type', 'checkbox');
                 applyFilter.setAttribute('id', 'applyFilter');
@@ -550,10 +556,9 @@
                 if(word.length > 0)
                     word = word.slice(0, word.length-1)
 
-                console.log(word)
+                this.allowedDetectorsWord = word;
 
-                return word;
-
+                document.getElementById('encodedDetsAllowed').value = word;
             }
         }
     });
