@@ -232,7 +232,7 @@ app.post('/registerCycle', function(req, res){
 app.post('/registerFilter', function(req, res){
 	var filter = (req.body.filterString) ? JSON.parse(req.body.filterString) : null,
 		coincWindows = (req.body.coincString) ? JSON.parse(req.body.coincString) : null,
-		detsAllowed = req.body.detsAllowed,
+		detsAllowed = (req.body.detsAllowed) ? JSON.parse(req.body.detsAllowed) : null,
 		odbManipulationFile = '',
 		i, j,
 		steps = [],
