@@ -445,6 +445,8 @@
 
                 document.getElementById('encodedFilter').value = JSON.stringify(encoded);
                 document.getElementById('encodedCoincWindows').value = JSON.stringify(crossDetectorCoincs);
+                document.getElementById('encodedDetsAllowed').value = JSON.stringify(this.allowedDetectorsWord);
+                console.log(document.getElementById('encodedDetsAllowed').value )
             },
 
             'registerFilterODB' : function(responseText){
@@ -557,8 +559,6 @@
                     word = word.slice(0, word.length-1)
 
                 this.allowedDetectorsWord = word;
-
-                document.getElementById('encodedDetsAllowed').value = word;
             }
         }
     });
