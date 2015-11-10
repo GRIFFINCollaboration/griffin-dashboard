@@ -4,7 +4,7 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-                var spawnCondition, filterTitle, currentFilter,
+                var i, spawnCondition, filterTitle, currentFilter,
                     contentWrap = document.createElement('div'),
                     floatWrap = document.createElement('div'),
                     controlWrap = document.createElement('form'),
@@ -21,7 +21,10 @@
                     deleteFilter = document.createElement('button'),
                     loadTarget = document.createElement('input'),
                     deleteTarget = document.createElement('input'),
-                    saveLoadFilter = document.createElement('button');
+                    saveLoadFilter = document.createElement('button'),
+                    allowedDetectorsWrap = document.createElement('div'),
+                    allowedDetLabel, allowedDetCheck,
+                    allowedDetOptions = ['GRIFFIN', 'SCEPTAR', 'DESCANT']
 
                 this.presets = [];
                 this.filterConditions = [];
@@ -37,6 +40,17 @@
                 currentFilter = document.createElement('h3');
                 currentFilter.setAttribute('id', 'currentFilter');
                 this.appendChild(currentFilter);
+
+                this.appendChild(allowedDetectorsWrap);
+                for(i=0; i<allowedDetOptions.length; i++){
+                    allowedDetLabel = document.createElement('label');
+                    allowedDetLabel.setAttribute('for', 'allow' + allowedDetOptions[i]);
+                    allowedDetCheck = document.createElement('input');
+                    allowedDetCheck.setAttribute('id', 'allow' + allowedDetOptions[i]);
+                    allowedDetCheck.setAttribute('type', 'checkbox');
+                    allowedDetectorsWrap.appendChild(allowedDetLabel);
+                    allowedDetectorsWrap.appendChild(allowedDetCheck);
+                }
 
                 floatWrap.setAttribute('id', 'floatWrap');
                 this.appendChild(floatWrap);
@@ -195,7 +209,7 @@
                 crossDetectorCoincWrap = document.createElement('div');
                 crossDetectorCoincWrap.setAttribute('id', 'crossDetectorCoincWrap'+index);
                 crossDetectorCoincWrap.setAttribute('class', 'crossDetectorCoincWrap hidden');
-	        filterContent.appendChild(crossDetectorCoincWrap);
+	            filterContent.appendChild(crossDetectorCoincWrap);
                 crossDetectorCoincLabel = document.createElement('label');
                 crossDetectorCoincLabel.setAttribute('id', 'crossDetectorCoincLabel'+index);
                 crossDetectorCoincLabel.innerHTML = 'Cross-Detector Coinc. Window [ns]:'
