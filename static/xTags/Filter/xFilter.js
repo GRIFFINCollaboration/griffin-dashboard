@@ -23,8 +23,10 @@
                     deleteTarget = document.createElement('input'),
                     saveLoadFilter = document.createElement('button'),
                     allowedDetectorsWrap = document.createElement('div'),
+                    allowedDetTitle = document.createElement('h4'),
                     allowedDetLabel, allowedDetCheck,
-                    allowedDetOptions = ['GRIFFIN', 'SCEPTAR', 'DESCANT']
+                    allowedDetOptions = ['GRIFFIN', 'SCEPTAR', 'DESCANT', 'DANTE'],
+                    allowedDetCodes = ['GR', 'SE', 'DS', 'DA']
 
                 this.presets = [];
                 this.filterConditions = [];
@@ -43,11 +45,17 @@
 
                 this.appendChild(allowedDetectorsWrap);
                 for(i=0; i<allowedDetOptions.length; i++){
+                    allowedDetTitle.innerHTML = 'Allowed Detectors'
+                    allowedDetectorsWrap.appendChild(allowedDetTitle);
                     allowedDetLabel = document.createElement('label');
                     allowedDetLabel.setAttribute('for', 'allow' + allowedDetOptions[i]);
+                    allowedDetLabel.innerHTML = allowedDetOptions[i];
                     allowedDetCheck = document.createElement('input');
                     allowedDetCheck.setAttribute('id', 'allow' + allowedDetOptions[i]);
                     allowedDetCheck.setAttribute('type', 'checkbox');
+                    allowedDetCheck.setAttribute('class', 'allowedDetCheck');
+                    allowedDetCheck.setAttribute('value', allowedDetCodes[i]);
+                    allowedDetCheck.onchange = this.parseAllowedDets.bind(this);
                     allowedDetectorsWrap.appendChild(allowedDetLabel);
                     allowedDetectorsWrap.appendChild(allowedDetCheck);
                 }
@@ -526,6 +534,26 @@
 
                 if(filterName && this.presets.indexOf(filterName.value) != -1)
                     filterName.value = 'EnterFilterName';
+            },
+
+            'parseAllowedDets' : function(){
+                //create the EnabledDetTypes word
+                var i, word = '',
+                    checkboxes = document.getElementsByClassName('allowedDetCheck');
+
+                for(i=0; i<checkboxes.length; i++){
+                    if(checkboxes[i].checked)
+                        word += checkboxes[i].value + '-'
+                }
+
+                //drop trailing dash
+                if(word.length > 0)
+                    word = word.slice(0, word.length-1)
+
+                console.log(word)
+
+                return word;
+
             }
         }
     });
