@@ -262,7 +262,8 @@ app.post('/registerFilter', function(req, res){
 		odbManipulationFile += 'odbedit -c "create int /Filter/Filters/' + req.body.filterName + '/coincWindow' + i + '"\n';
 		odbManipulationFile += 'odbedit -c "set /Filter/Filters/' + req.body.filterName + '/coincWindow' + i + ' ' + coincWindows[i] + '"\n';
 	}
-	odbManipulationFile += 'odbedit -c "create int /Filter/Filters/' + req.body.filterName + '/EnabledDetTypes"\n';
+	odbManipulationFile += 'odbedit -c "create  /Filter/Filters/' + req.body.filterName + '/EnabledDetTypes"\n';
+	odbManipulationFile += 'odbedit -c "create string /Filter/Filters/' + req.body.filterName + '/EnabledDetTypes[' + detsAllowed.length + ']"\n';
 	odbManipulationFile += 'odbedit -c "set /Filter/Filters/' + req.body.filterName + '/EnabledDetTypes ' + detsAllowed + '"\n';
 
 	fs.writeFile('odbManipulation.sh', odbManipulationFile, function(){
