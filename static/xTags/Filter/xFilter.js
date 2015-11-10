@@ -486,9 +486,7 @@
                 for(key in currentFilter){
                     if(key.indexOf('last_written') != -1 ) continue;
 
-                    if(key == 'EnabledDetTypes'){
-                        console.log(currentFilter[key])
-                    } else if(typeof currentFilter[key] != 'number'){ //ie dont do this for the cross detector coinc window keys
+                    if(typeof currentFilter[key] != 'number'){ //ie dont do this for the cross detector coinc window keys
 
                         createOr.onclick();
 
