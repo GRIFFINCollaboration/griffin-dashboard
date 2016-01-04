@@ -1,6 +1,6 @@
 ###Branding
 
-Branding for all MarkII pages are provided by `<branding-head>` and `<branding-foot>`.  These are intended to live in the standard page structure:
+Branding for all dashboard pages are provided by `<branding-head>` and `<branding-foot>`.  These are intended to live in the standard page structure:
 
 ```
 ...

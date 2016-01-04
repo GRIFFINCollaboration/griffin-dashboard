@@ -22,7 +22,7 @@ GRIFFIN addresses the components of its DAQ with the MSC scheme it describes in 
 Where master channel is 0-15, collector channel is 0-15, and digitizer channel is 0-15 for a GRIF16 or 0-3 for a 4G.  So, `0x2A09` is master channel 2, collector channel 10, digitizer channel 9.
 
 ###ODB DAQ Encoding
-The DAQ is encoded in the ODB via an MSC table, describing which detectors are plugged into which MSC address, and a hosts table, which records the network address of each DAQ component.  The MSC table can be generated in its canonical configuration as a function of which detectors are in use via the [MSC Table Builder](https://github.com/GRIFFINCollaboration/griffinMarkII/tree/master/static/xTags/MSCbuilder) page of MarkII.  For custom configurations, updating the MSC table described below is necessary & sufficient for the custom configuration to be reflected throughout MarkII and the experiment.
+The DAQ is encoded in the ODB via an MSC table, describing which detectors are plugged into which MSC address, and a hosts table, which records the network address of each DAQ component.  The MSC table can be generated in its canonical configuration as a function of which detectors are in use via the [MSC Table Builder](https://github.com/GRIFFINCollaboration/griffin-dashboard/tree/master/static/xTags/MSCbuilder) page of griffin-dashboard.  For custom configurations, updating the MSC table described below is necessary & sufficient for the custom configuration to be reflected throughout the dashboard and the experiment.
 
 ####MSC Table
 The MSC table lives in the ODB at `/DAQ/MSC` and has the following structure, for a DAQ with n detectors pushing data:
@@ -81,7 +81,7 @@ Entries for all MSC addresses below the position held by `baz.triumf.ca` are pac
 `<widget-DAQ>` visualizes trigger request and accept rates for every DAQ node, as well as providing a histogram of those rates per detector system.
 
 ###Loop Behvior
-`<widget-DAQ>` participates in the usual update loop that governs all MarkII pages.  `this.update` is called, triggering a refetch of data from all digitizers, and the routing of the returned data to the correct places in the visualization.  In principle, this loop could fetch aggregated data from the collectors or master - once data aggregation is implemented.
+`<widget-DAQ>` participates in the usual update loop that governs all dashboard pages.  `this.update` is called, triggering a refetch of data from all digitizers, and the routing of the returned data to the correct places in the visualization.  In principle, this loop could fetch aggregated data from the collectors or master - once data aggregation is implemented.
 
 ###Methods
 The following are some of `<widget-DAQ>`'s more interesing methods; the rest are either generic or do essentially what their name says.
