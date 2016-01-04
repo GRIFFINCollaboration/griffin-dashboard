@@ -19,7 +19,7 @@ Returns a color string '#012DEF' constructed from a red value `R`, green value `
 Steps through `window.refreshTargets`, and calls the `update()` method of each object found there.  After triggering each `update`, calls `callback` if provided.
 
 ####`rebootFetch()`
-Governs the master update loop for all MarkII pages.  Suspends the current update loop, triggers `repopulate()`, and restarts the master loop with a 3 second `setInterval` stored in `window.masterLoop`.
+Governs the master update loop for all dashboard pages.  Suspends the current update loop, triggers `repopulate()`, and restarts the master loop with a 3 second `setInterval` stored in `window.masterLoop`.
 
 ##helpers.js
 
