@@ -1,0 +1,18 @@
+div.branding{
+    color: #FFFFFF;
+    clear: both;
+}
+
+div.header{
+    background-color: #111111;
+    padding: 2em;
+    border-bottom: 2px solid #000000;
+    margin-bottom: 1em;
+    padding-left: 2em;
+    overflow: auto;
+}
+
+img{
+    width: 100%;
+    max-width: 7em;
+}

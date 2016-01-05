@@ -1,0 +1,16 @@
+/*generic*/
+body {
+    background-color: #222222 !important;
+    color: #DDDDDD !important;
+}
+
+div.sectionWrapper{
+    clear: both;
+    overflow: auto;
+}
+
+/*lists*/
+div.longListWrapper{
+    max-height: 300px;
+    overflow: auto;
+}

@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="run-status.css">
+
+<template id='run-status'>
+    <div id='runStatus'>
+        <h1 id='statusTitle'>demo</h1>
+
+        <ul id='statusRunDetail' class='list-unstyled'>
+            <li id='statusRunNumber'>lorem</li>
+            <li id='statusStartTime'>ipsum</li>
+            <li id='statusStopTime'>dolar</li>
+            <li id='statusRunDuration'>wat</li>
+        </ul>
+
+        <div id='runControl'>
+            <button id='statusStart' class='btn btn-success status'>Start</button>
+            <button id='statusStop' class='btn btn-danger status'>Stop</button>
+            <button id='statusPause' class='btn btn-warning status'>Pause</button>
+            <button id='statusResume' class='btn btn-success status'>Resume</button>
+        </div>
+
+        <h3>Trigger stats:</h3>
+        <table>
+            <tr>
+                <td>Events:</td>
+                <td id='triggerEvents'></td>
+            </tr>
+            <tr>
+                <td>Events/s:</td>
+                <td id='triggerEventsPerSec'></td>
+            </tr>
+            <tr>
+                <td>kB/s:</td>
+                <td id='triggerDataPerSec'></td>
+            </tr>
+            <tr>
+                <td>Logger:</td>
+                <td id='dataRecorded'></td>
+            </tr>
+            <tr>
+                <td>Write Data:</td>
+                <td id='isWriting'></td>
+            </tr>
+            <tr>
+                <td>Data Dir:</td>
+                <td id='dataDir'></td>
+            </tr>
+        </table>
+
+        <h3>Messages</h3>
+        <div class='longListWrapper'>
+            <ul id='statusMessageList'>
+
+            </ul>
+        </div>
+    </div>
+</template>
+
+<script>
+    function updateRunStatus(){
+
+        //experiment title
+        document.getElementById('statusTitle').innerHTML = dataStore.ODB.Experiment.Name
+    }
+</script>

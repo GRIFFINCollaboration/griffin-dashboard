@@ -1,0 +1,9 @@
+div#runStatus{
+    background-color: #333333;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+button.status{
+    margin-bottom: 2px;
+}
