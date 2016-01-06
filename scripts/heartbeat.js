@@ -1,19 +1,28 @@
 function heartbeat(URLqueries, scriptQueries, callback){
+    //start the data fetching heartbeat
+    //note this function should be overwritten by itself with bound arguments on setup.
 
     Promise.all(URLqueries.map(promiseJSONURL)
         ).then(
             function(json){
-                console.log(json);
+                return 0;
             }
         ).then(
             Promise.all(scriptQueries.map(promiseScript)
                 ).then(
                     function(){
                         callback();
-                        dataStore.heartbeat = window.setTimeout(heartbeat, dataStore.heartbeatInterval, URLqueries, scriptQueries, callback)
+                        dataStore.heartbeat = window.setTimeout(heartbeat, dataStore.heartbeatInterval)
                     }
                 )
         )
+}
+
+function restart_heartbeat(){
+    // restart heartbeat immediately; note heartbeat must have its args bound at setup before calling this.
+
+    window.clearTimeout(dataStore.heartbeat);
+    heartbeat();
 }
 
 function promiseJSONURL(url){

@@ -9,6 +9,10 @@ div.sectionWrapper{
     overflow: auto;
 }
 
+.hidden{
+    display: none;
+}
+
 /*lists*/
 div.longListWrapper{
     max-height: 300px;

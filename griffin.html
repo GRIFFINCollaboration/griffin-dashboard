@@ -6,6 +6,7 @@
         <script src='scripts/HTMLImports.min.js' type="text/javascript"></script>
         <script src='scripts/mustache.js' type="text/javascript"></script>
         <script src="scripts/jquery1-11-3.min.js" type="text/javascript"></script>
+        <script src="scripts/kinetic-5.0.1.hackfix.js" type="text/javascript"></script>
 
         <!--helpers-->
         <script src='scripts/dataStore.js' type="text/javascript"></script>
@@ -21,6 +22,7 @@
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
+        <link id='detector-griffin' rel="import" href="templates/detectors/detector-griffin/detector-griffin.html">
     </head>
 
     <body>
@@ -28,28 +30,39 @@
 
         <div class='sectionWrapper'>
             <div id='runStat' class='col-md-2'></div>
+            <div id='detectorDisplay' class='col-md-8'></div>
         </div>
 
         <script>
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 //prep templates
-                templates = ['brand-header', 'run-status'];
+                templates = ['brand-header', 'run-status', 'detector-griffin'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
+                //header
                 document.getElementById('header').innerHTML = Mustache.to_html(
                     dataStore.templates['brand-header'], 
                     {
                         'title': 'GRIFFIN Detector Status',
                     }
                 );
-
+                //run control
                 document.getElementById('runStat').innerHTML = Mustache.to_html(
                     dataStore.templates['run-status'], 
                     {
 
                     }
                 );
+                //GRIFFIN display
+                parameterizeGRIFFIN();
+                document.getElementById('detectorDisplay').innerHTML = Mustache.to_html(
+                    dataStore.templates['detector-griffin'], 
+                    {
+                        'views': dataStore.griffin.views
+                    }
+                );
+                setupGRIFFIN();
 
                 //post-heartbeat callback:
                 function dataUpdate(){
@@ -57,7 +70,8 @@
                 }
 
                 //initiate heartbeat
-                heartbeat([], [dataStore.runSummaryQuery], dataUpdate)
+                heartbeat = heartbeat.bind(null, [], [dataStore.runSummaryQuery], dataUpdate);
+                heartbeat();
             });
         </script>
 

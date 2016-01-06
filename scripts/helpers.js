@@ -13,8 +13,23 @@ function prepareTemplates(templates){
 function deleteNode(id){
     //delete a dom node with id
     //thanks https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
+    
     var node = document.getElementById(id);
     if (node.parentNode) {
         node.parentNode.removeChild(node);
     }
+}
+
+function prettyNumber(val){
+    //turn a number into a string with a sensible unit
+
+    var pretty
+
+    if(val>1000000){
+        pretty = (val / 1000000).toFixed(3) + ' M'
+    } else if(val>1000){
+        pretty = (val / 1000000).toFixed(3) + ' k'
+    }
+
+    return pretty;
 }
