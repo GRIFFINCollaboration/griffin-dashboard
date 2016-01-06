@@ -1,9 +1,22 @@
 <link rel="stylesheet" href="detector-griffin.css">
 
 <template id='detector-griffin'>
+    <div class='nav-row'>
+        <select id='griffinView' onchange='manageView()'>
+            {{#views}}
+                <option value='{{.}}'>{{.}}</option>
+            {{/views}}            
+        </select>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" id='HVSelect' onclick='manageSubview("HV")'>HV</button>
+            <button type="button" class="btn btn-default" id='thresholdSelect' onclick='manageSubview("threshold")'>Thresholds</button>
+            <button type="button" class="btn btn-default" id='rateSelect' onclick='manageSubview("rate")'>Rates</button>
+        </div>
+    </div>
+
     <div id='visualizationCollection'>
         {{#views}}
-            <div id='{{.}}Wrap' class='visWrap'></div>
+            <div id='{{.}}Wrap' class='visWrap hidden'></div>
         {{/views}}
     </div>
 </template>
@@ -95,6 +108,11 @@
         for(i=0; i<dataStore.griffin.stage.length; i++){
             dataStore.griffin.stage[i].draw();
         }
+
+        // start with summary rates displayed
+        document.getElementById('griffinView').value = 'select';
+        document.getElementById('griffinView').onchange();
+        document.getElementById('rateSelect').onclick();
     }
 
     function instantiateCells(){
@@ -387,6 +405,40 @@
         else HVcell = false;
 
         return HVcell;
+    }
+
+    function manageView(){
+        //show the selected detector view
+        //intended as an onchange callback to the view select.
+
+        if(dataStore.griffin.currentView)
+            document.getElementById(dataStore.griffin.currentView + 'Wrap').classList.add('hidden');
+
+        document.getElementById(selected('griffinView') + 'Wrap').classList.remove('hidden');
+        dataStore.griffin.currentView = selected('griffinView');
+    }
+
+    function manageSubview(target){
+        //maange which variable is being plotted in the detector displays
+
+        var i;
+
+        //manage button state
+        if(dataStore.griffin.subview)
+            document.getElementById(dataStore.griffin.subview + 'Select').classList.remove('active');
+        document.getElementById(target + 'Select').classList.add('active');
+        dataStore.griffin.subview = target;
+
+        //manage actual image (note summary level at index 0 never changes)
+        for(i=1; i<dataStore.griffin.views.length; i++){
+            if(target == 'HV'){
+                dataStore.griffin.HVLayer[i].show();
+                dataStore.griffin.channelLayer[i].hide();
+            } else{
+                dataStore.griffin.HVLayer[i].hide();
+                dataStore.griffin.channelLayer[i].show();
+            }
+        }
     }
 
 </script>

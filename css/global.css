@@ -13,6 +13,16 @@ div.sectionWrapper{
     display: none;
 }
 
+select, input, option{
+    color: #000000 !important; 
+}
+
+/*navigation*/
+div.nav-row{
+    margin-bottom: 1em;
+}
+
+
 /*lists*/
 div.longListWrapper{
     max-height: 300px;

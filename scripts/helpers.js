@@ -13,7 +13,7 @@ function prepareTemplates(templates){
 function deleteNode(id){
     //delete a dom node with id
     //thanks https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
-    
+
     var node = document.getElementById(id);
     if (node.parentNode) {
         node.parentNode.removeChild(node);
@@ -32,4 +32,16 @@ function prettyNumber(val){
     }
 
     return pretty;
+}
+
+function selected(selectID, fetchText){
+    //returns the value selected from a select element, or the inner html of the option if fetchText is set
+    
+    var select = document.getElementById(selectID),
+        value = select.options[select.selectedIndex].value;
+
+        if(fetchText)
+            value = select.options[select.selectedIndex].innerHTML;
+
+    return value;
 }
