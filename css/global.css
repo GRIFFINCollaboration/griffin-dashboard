@@ -17,6 +17,10 @@ select, input, option{
     color: #000000 !important; 
 }
 
+.highlightText{
+    color: #FFFFFF;
+}
+
 /*navigation*/
 div.nav-row{
     margin-bottom: 1em;

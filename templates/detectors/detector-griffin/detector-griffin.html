@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="detector-griffin.css">
+<script src="../detector-helpers.js" type="text/javascript"></script>
 
 <template id='detector-griffin'>
     <div class='nav-row'>
@@ -23,47 +24,69 @@
 
 <script>
     function parameterizeGRIFFIN(){
-        // determine all the parameters needed for GRIFFIN's visualization widget that can be calculated before HTML injection, and park them on dataStore.griffin
+        // determine all the parameters needed for GRIFFIN's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
         var i, j, k;
 
-        dataStore.griffin = {}
+        dataStore.detector = {}
 
         // build up names of griffin detectors
-        dataStore.griffin.HPGEprefixes = [];
-        dataStore.griffin.BGOprefixes = [];
-        dataStore.griffin.colors = ['R', 'G', 'B', 'W'];
-        dataStore.griffin.HPGEcellCodes = ['N00A', 'N00B', 'N00X'];
-        dataStore.griffin.BGOcellCodes  = ['N01X', 'N02X', 'N03X', 'N04X', 'N05X',
+        dataStore.detector.HPGEprefixes = [];
+        dataStore.detector.BGOprefixes = [];
+        dataStore.detector.colors = ['R', 'G', 'B', 'W'];
+        dataStore.detector.HPGEcellCodes = ['N00A', 'N00B', 'N00X'];
+        dataStore.detector.BGOcellCodes  = ['N01X', 'N02X', 'N03X', 'N04X', 'N05X',
                                            'N01A', 'N02A', 'N03A', 'N04A', 'N05A',
                                            'N01B', 'N02B', 'N03B', 'N04B', 'N05B'];
         for(i=1; i<17; i++){
             j = (i<10) ? '0'+i : i;
-            dataStore.griffin.HPGEprefixes.push('GRG' + j);
-            dataStore.griffin.BGOprefixes.push('GRS' + j);
+            dataStore.detector.HPGEprefixes.push('GRG' + j);
+            dataStore.detector.BGOprefixes.push('GRS' + j);
         }
 
         //build up channel names
-        dataStore.griffin.channelNames = [];
-        for(i=0; i<dataStore.griffin.HPGEprefixes.length; i++){
-            for(j=0; j<dataStore.griffin.colors.length; j++){
-                for(k=0; k<dataStore.griffin.HPGEcellCodes.length; k++){
-                    dataStore.griffin.channelNames.push(dataStore.griffin.HPGEprefixes[i] + dataStore.griffin.colors[j] + dataStore.griffin.HPGEcellCodes[k]);
+        dataStore.detector.channelNames = [];
+        for(i=0; i<dataStore.detector.HPGEprefixes.length; i++){
+            for(j=0; j<dataStore.detector.colors.length; j++){
+                for(k=0; k<dataStore.detector.HPGEcellCodes.length; k++){
+                    dataStore.detector.channelNames.push(dataStore.detector.HPGEprefixes[i] + dataStore.detector.colors[j] + dataStore.detector.HPGEcellCodes[k]);
                 }
-                for(k=0; k<dataStore.griffin.BGOcellCodes.length; k++){
-                    dataStore.griffin.channelNames.push(dataStore.griffin.BGOprefixes[i] + dataStore.griffin.colors[j] + dataStore.griffin.BGOcellCodes[k]);
+                for(k=0; k<dataStore.detector.BGOcellCodes.length; k++){
+                    dataStore.detector.channelNames.push(dataStore.detector.BGOprefixes[i] + dataStore.detector.colors[j] + dataStore.detector.BGOcellCodes[k]);
                 }
             }
         }
         //build up summary channel names
         for(i=0; i<16; i++){
             for(j=0; j<4; j++){
-                dataStore.griffin.channelNames.push(dataStore.griffin.HPGEprefixes[i] + dataStore.griffin.colors[j]);
-                dataStore.griffin.channelNames.push(dataStore.griffin.BGOprefixes[i] + dataStore.griffin.colors[j]);
+                dataStore.detector.channelNames.push(dataStore.detector.HPGEprefixes[i] + dataStore.detector.colors[j]);
+                dataStore.detector.channelNames.push(dataStore.detector.BGOprefixes[i] + dataStore.detector.colors[j]);
             }
         }
 
         // view labels
-        dataStore.griffin.views = ['summary'].concat(dataStore.griffin.HPGEprefixes);
+        dataStore.detector.views = ['summary'].concat(dataStore.detector.HPGEprefixes);
+
+        // plot defaults
+        dataStore.detector.plotScales = {
+            'HV': {
+                'scale': 'lin',
+                'min': 0,
+                'max': 2000,
+                'color': 'blue'
+            },
+            'threshold': {
+                'scale': 'lin',
+                'min': 0,
+                'max': 1000,
+                'color': 'blue'
+            },
+            'rate': {
+                'scale': 'lin',
+                'min': 0,
+                'max': 3000,
+                'color': 'blue'
+            },
+        }
     }
 
     function setupGRIFFIN(){
@@ -71,161 +94,160 @@
         var i;
 
         // declare some post-html-rendering parameters:
-        dataStore.griffin.width = document.getElementById('visualizationCollection').offsetWidth;
-        dataStore.griffin.height = 2/3*dataStore.griffin.width;
+        dataStore.detector.width = document.getElementById('visualizationCollection').offsetWidth;
+        dataStore.detector.height = 2/3*dataStore.detector.width;
         //GRIFFIN clovers are laid out on a 24x24 square grid.
-        dataStore.griffin.grid = dataStore.griffin.height*0.8/24;
-        dataStore.griffin.xMargin = (dataStore.griffin.width - dataStore.griffin.grid*24)/2
+        dataStore.detector.grid = dataStore.detector.height*0.8/24;
+        dataStore.detector.xMargin = (dataStore.detector.width - dataStore.detector.grid*24)/2
         //GRIFFIN summary is laid out on a 58x20 square grid.
-        dataStore.griffin.summaryGrid = Math.min(0.8*dataStore.griffin.height/20, dataStore.griffin.width/58);
-        dataStore.griffin.summaryXmargin = (dataStore.griffin.width - 58*dataStore.griffin.summaryGrid)/2;
-        dataStore.griffin.summaryYmargin = (0.8*dataStore.griffin.height - 20*dataStore.griffin.summaryGrid)/2;
+        dataStore.detector.summaryGrid = Math.min(0.8*dataStore.detector.height/20, dataStore.detector.width/58);
+        dataStore.detector.summaryXmargin = (dataStore.detector.width - 58*dataStore.detector.summaryGrid)/2;
+        dataStore.detector.summaryYmargin = (0.8*dataStore.detector.height - 20*dataStore.detector.summaryGrid)/2;
 
         // set up kinetic framework - extract to generic function?
-        dataStore.griffin.stage = [];
-        dataStore.griffin.channelLayer = [];
-        dataStore.griffin.HVLayer = [];
-        dataStore.griffin.scaleLayer = [];
-        for(i=0; i<dataStore.griffin.views.length; i++){
-            dataStore.griffin.stage[i] = new Kinetic.Stage({
-                container: dataStore.griffin.views[i] + 'Wrap',
-                width: dataStore.griffin.width,
-                height: dataStore.griffin.height
+        dataStore.detector.stage = [];
+        dataStore.detector.channelLayer = [];
+        dataStore.detector.HVLayer = [];
+        dataStore.detector.scaleLayer = [];
+        for(i=0; i<dataStore.detector.views.length; i++){
+            dataStore.detector.stage[i] = new Kinetic.Stage({
+                container: dataStore.detector.views[i] + 'Wrap',
+                width: dataStore.detector.width,
+                height: dataStore.detector.height
             });
-            dataStore.griffin.channelLayer[i] = new Kinetic.Layer();
-            dataStore.griffin.HVLayer[i] = new Kinetic.Layer();
-            dataStore.griffin.scaleLayer[i] = new Kinetic.Layer();
+            dataStore.detector.channelLayer[i] = new Kinetic.Layer();
+            dataStore.detector.HVLayer[i] = new Kinetic.Layer();
+            dataStore.detector.scaleLayer[i] = new Kinetic.Layer();
 
-            dataStore.griffin.stage[i].add(dataStore.griffin.channelLayer[i]);
-            dataStore.griffin.stage[i].add(dataStore.griffin.HVLayer[i]);
-            dataStore.griffin.stage[i].add(dataStore.griffin.scaleLayer[i]);
-        }
-
-        // set up the cells
-        instantiateCells();
-        instantiateSummaryCells();
-
-        for(i=0; i<dataStore.griffin.stage.length; i++){
-            dataStore.griffin.stage[i].draw();
+            dataStore.detector.stage[i].add(dataStore.detector.channelLayer[i]);
+            dataStore.detector.stage[i].add(dataStore.detector.HVLayer[i]);
+            dataStore.detector.stage[i].add(dataStore.detector.scaleLayer[i]);
         }
 
         // start with summary rates displayed
         document.getElementById('griffinView').value = 'select';
-        document.getElementById('griffinView').onchange();
-        document.getElementById('rateSelect').onclick();
+        manageView(true);
+        manageSubview('rate', true);
+
+        // set up the cells
+        instantiateCells();
+        instantiateSummaryCells();
+        generateColorScale('blue');
+
+        repaint();
     }
 
     function instantiateCells(){
         // decalre the kinetic cells for the detail views of each clover, and plug in interactions.
 
         var i, viewIndex, cellKey,
-            g = dataStore.griffin.grid, 
+            g = dataStore.detector.grid, 
             cellCoords = {};
 
         //vertices of cells, keyed by last 5 characters 
         //Red HPGE
-        cellCoords['BN00A'] = [dataStore.griffin.xMargin+12*g,6*g, dataStore.griffin.xMargin+6*g,6*g, dataStore.griffin.xMargin+6*g,12*g];
-        cellCoords['BN00B'] = [dataStore.griffin.xMargin+12*g,6*g, dataStore.griffin.xMargin+12*g,12*g, dataStore.griffin.xMargin+6*g,12*g];
-        cellCoords['BN00X'] = [dataStore.griffin.xMargin+12*g,6*g, dataStore.griffin.xMargin+6*g,6*g, dataStore.griffin.xMargin+6*g,12*g, dataStore.griffin.xMargin+12*g,12*g];
+        cellCoords['BN00A'] = [dataStore.detector.xMargin+12*g,6*g, dataStore.detector.xMargin+6*g,6*g, dataStore.detector.xMargin+6*g,12*g];
+        cellCoords['BN00B'] = [dataStore.detector.xMargin+12*g,6*g, dataStore.detector.xMargin+12*g,12*g, dataStore.detector.xMargin+6*g,12*g];
+        cellCoords['BN00X'] = [dataStore.detector.xMargin+12*g,6*g, dataStore.detector.xMargin+6*g,6*g, dataStore.detector.xMargin+6*g,12*g, dataStore.detector.xMargin+12*g,12*g];
         //Green HPGE
-        cellCoords['WN00A'] = [dataStore.griffin.xMargin+12*g,6*g, dataStore.griffin.xMargin+18*g,6*g, dataStore.griffin.xMargin+18*g,12*g];
-        cellCoords['WN00B'] = [dataStore.griffin.xMargin+12*g,6*g, dataStore.griffin.xMargin+12*g,12*g, dataStore.griffin.xMargin+18*g,12*g];
-        cellCoords['WN00X'] = [dataStore.griffin.xMargin+12*g,6*g, dataStore.griffin.xMargin+18*g,6*g, dataStore.griffin.xMargin+18*g,12*g, dataStore.griffin.xMargin+12*g,12*g];
+        cellCoords['WN00A'] = [dataStore.detector.xMargin+12*g,6*g, dataStore.detector.xMargin+18*g,6*g, dataStore.detector.xMargin+18*g,12*g];
+        cellCoords['WN00B'] = [dataStore.detector.xMargin+12*g,6*g, dataStore.detector.xMargin+12*g,12*g, dataStore.detector.xMargin+18*g,12*g];
+        cellCoords['WN00X'] = [dataStore.detector.xMargin+12*g,6*g, dataStore.detector.xMargin+18*g,6*g, dataStore.detector.xMargin+18*g,12*g, dataStore.detector.xMargin+12*g,12*g];
         //Blue HPGE
-        cellCoords['RN00A'] = [dataStore.griffin.xMargin+18*g,12*g, dataStore.griffin.xMargin+18*g,18*g, dataStore.griffin.xMargin+12*g,18*g];
-        cellCoords['RN00B'] = [dataStore.griffin.xMargin+18*g,12*g, dataStore.griffin.xMargin+12*g,12*g, dataStore.griffin.xMargin+12*g,18*g];
-        cellCoords['RN00X'] = [dataStore.griffin.xMargin+18*g,12*g, dataStore.griffin.xMargin+18*g,18*g, dataStore.griffin.xMargin+12*g,18*g, dataStore.griffin.xMargin+12*g,12*g];
+        cellCoords['RN00A'] = [dataStore.detector.xMargin+18*g,12*g, dataStore.detector.xMargin+18*g,18*g, dataStore.detector.xMargin+12*g,18*g];
+        cellCoords['RN00B'] = [dataStore.detector.xMargin+18*g,12*g, dataStore.detector.xMargin+12*g,12*g, dataStore.detector.xMargin+12*g,18*g];
+        cellCoords['RN00X'] = [dataStore.detector.xMargin+18*g,12*g, dataStore.detector.xMargin+18*g,18*g, dataStore.detector.xMargin+12*g,18*g, dataStore.detector.xMargin+12*g,12*g];
         //White HPGE
-        cellCoords['GN00A'] = [dataStore.griffin.xMargin+12*g,18*g, dataStore.griffin.xMargin+6*g,18*g, dataStore.griffin.xMargin+6*g,12*g];
-        cellCoords['GN00B'] = [dataStore.griffin.xMargin+12*g,18*g, dataStore.griffin.xMargin+12*g,12*g, dataStore.griffin.xMargin+6*g,12*g];
-        cellCoords['GN00X'] = [dataStore.griffin.xMargin+12*g,18*g, dataStore.griffin.xMargin+6*g,18*g, dataStore.griffin.xMargin+6*g,12*g, dataStore.griffin.xMargin+12*g,12*g];
+        cellCoords['GN00A'] = [dataStore.detector.xMargin+12*g,18*g, dataStore.detector.xMargin+6*g,18*g, dataStore.detector.xMargin+6*g,12*g];
+        cellCoords['GN00B'] = [dataStore.detector.xMargin+12*g,18*g, dataStore.detector.xMargin+12*g,12*g, dataStore.detector.xMargin+6*g,12*g];
+        cellCoords['GN00X'] = [dataStore.detector.xMargin+12*g,18*g, dataStore.detector.xMargin+6*g,18*g, dataStore.detector.xMargin+6*g,12*g, dataStore.detector.xMargin+12*g,12*g];
         //Red BGO
-        cellCoords['BN05X'] = [dataStore.griffin.xMargin+5*g,12*g, dataStore.griffin.xMargin+4*g,12*g, dataStore.griffin.xMargin+4*g,4*g, dataStore.griffin.xMargin+12*g,4*g, dataStore.griffin.xMargin+12*g,5*g, dataStore.griffin.xMargin+5*g,5*g];
-        cellCoords['BN04X'] = [dataStore.griffin.xMargin+3*g,12*g, dataStore.griffin.xMargin+2*g,12*g, dataStore.griffin.xMargin+2*g,2*g, dataStore.griffin.xMargin+3*g,3*g];
-        cellCoords['BN03X'] = [dataStore.griffin.xMargin+2*g,2*g, dataStore.griffin.xMargin+12*g,2*g, dataStore.griffin.xMargin+12*g,3*g, dataStore.griffin.xMargin+3*g,3*g];
-        cellCoords['BN02X'] = [dataStore.griffin.xMargin+1*g,12*g, dataStore.griffin.xMargin+0*g,12*g, dataStore.griffin.xMargin+0*g,1*g, dataStore.griffin.xMargin+1*g,2*g];
-        cellCoords['BN01X'] = [dataStore.griffin.xMargin+1*g,0*g, dataStore.griffin.xMargin+12*g,0*g, dataStore.griffin.xMargin+12*g,1*g, dataStore.griffin.xMargin+2*g,1*g];
+        cellCoords['BN05X'] = [dataStore.detector.xMargin+5*g,12*g, dataStore.detector.xMargin+4*g,12*g, dataStore.detector.xMargin+4*g,4*g, dataStore.detector.xMargin+12*g,4*g, dataStore.detector.xMargin+12*g,5*g, dataStore.detector.xMargin+5*g,5*g];
+        cellCoords['BN04X'] = [dataStore.detector.xMargin+3*g,12*g, dataStore.detector.xMargin+2*g,12*g, dataStore.detector.xMargin+2*g,2*g, dataStore.detector.xMargin+3*g,3*g];
+        cellCoords['BN03X'] = [dataStore.detector.xMargin+2*g,2*g, dataStore.detector.xMargin+12*g,2*g, dataStore.detector.xMargin+12*g,3*g, dataStore.detector.xMargin+3*g,3*g];
+        cellCoords['BN02X'] = [dataStore.detector.xMargin+1*g,12*g, dataStore.detector.xMargin+0*g,12*g, dataStore.detector.xMargin+0*g,1*g, dataStore.detector.xMargin+1*g,2*g];
+        cellCoords['BN01X'] = [dataStore.detector.xMargin+1*g,0*g, dataStore.detector.xMargin+12*g,0*g, dataStore.detector.xMargin+12*g,1*g, dataStore.detector.xMargin+2*g,1*g];
 
-        cellCoords['BN05A'] = [dataStore.griffin.xMargin+5*g,12*g, dataStore.griffin.xMargin+4*g,12*g, dataStore.griffin.xMargin+4*g,4*g, dataStore.griffin.xMargin+5*g,5*g];
-        cellCoords['BN04A'] = [dataStore.griffin.xMargin+3*g,12*g, dataStore.griffin.xMargin+2*g,12*g, dataStore.griffin.xMargin+2*g,7*g, dataStore.griffin.xMargin+3*g,7*g];
-        cellCoords['BN03A'] = [dataStore.griffin.xMargin+7*g,2*g, dataStore.griffin.xMargin+7*g,3*g, dataStore.griffin.xMargin+12*g,3*g, dataStore.griffin.xMargin+12*g,2*g];
-        cellCoords['BN02A'] = [dataStore.griffin.xMargin+1*g,12*g, dataStore.griffin.xMargin+0*g,12*g, dataStore.griffin.xMargin+0*g,7*g, dataStore.griffin.xMargin+1*g,7*g];
-        cellCoords['BN01A'] = [dataStore.griffin.xMargin+7*g,0*g, dataStore.griffin.xMargin+12*g,0*g, dataStore.griffin.xMargin+12*g,1*g, dataStore.griffin.xMargin+7*g,1*g];
+        cellCoords['BN05A'] = [dataStore.detector.xMargin+5*g,12*g, dataStore.detector.xMargin+4*g,12*g, dataStore.detector.xMargin+4*g,4*g, dataStore.detector.xMargin+5*g,5*g];
+        cellCoords['BN04A'] = [dataStore.detector.xMargin+3*g,12*g, dataStore.detector.xMargin+2*g,12*g, dataStore.detector.xMargin+2*g,7*g, dataStore.detector.xMargin+3*g,7*g];
+        cellCoords['BN03A'] = [dataStore.detector.xMargin+7*g,2*g, dataStore.detector.xMargin+7*g,3*g, dataStore.detector.xMargin+12*g,3*g, dataStore.detector.xMargin+12*g,2*g];
+        cellCoords['BN02A'] = [dataStore.detector.xMargin+1*g,12*g, dataStore.detector.xMargin+0*g,12*g, dataStore.detector.xMargin+0*g,7*g, dataStore.detector.xMargin+1*g,7*g];
+        cellCoords['BN01A'] = [dataStore.detector.xMargin+7*g,0*g, dataStore.detector.xMargin+12*g,0*g, dataStore.detector.xMargin+12*g,1*g, dataStore.detector.xMargin+7*g,1*g];
 
-        cellCoords['BN05B'] = [dataStore.griffin.xMargin+4*g,4*g, dataStore.griffin.xMargin+12*g,4*g, dataStore.griffin.xMargin+12*g,5*g, dataStore.griffin.xMargin+5*g,5*g];
-        cellCoords['BN04B'] = [dataStore.griffin.xMargin+3*g,7*g, dataStore.griffin.xMargin+2*g,7*g, dataStore.griffin.xMargin+2*g,2*g, dataStore.griffin.xMargin+3*g,3*g];
-        cellCoords['BN03B'] = [dataStore.griffin.xMargin+2*g,2*g, dataStore.griffin.xMargin+7*g,2*g, dataStore.griffin.xMargin+7*g,3*g, dataStore.griffin.xMargin+3*g,3*g];
-        cellCoords['BN02B'] = [dataStore.griffin.xMargin+1*g,7*g, dataStore.griffin.xMargin+0*g,7*g, dataStore.griffin.xMargin+0*g,1*g, dataStore.griffin.xMargin+1*g,2*g];
-        cellCoords['BN01B'] = [dataStore.griffin.xMargin+1*g,0*g, dataStore.griffin.xMargin+7*g,0*g, dataStore.griffin.xMargin+7*g,1*g, dataStore.griffin.xMargin+2*g,1*g];
+        cellCoords['BN05B'] = [dataStore.detector.xMargin+4*g,4*g, dataStore.detector.xMargin+12*g,4*g, dataStore.detector.xMargin+12*g,5*g, dataStore.detector.xMargin+5*g,5*g];
+        cellCoords['BN04B'] = [dataStore.detector.xMargin+3*g,7*g, dataStore.detector.xMargin+2*g,7*g, dataStore.detector.xMargin+2*g,2*g, dataStore.detector.xMargin+3*g,3*g];
+        cellCoords['BN03B'] = [dataStore.detector.xMargin+2*g,2*g, dataStore.detector.xMargin+7*g,2*g, dataStore.detector.xMargin+7*g,3*g, dataStore.detector.xMargin+3*g,3*g];
+        cellCoords['BN02B'] = [dataStore.detector.xMargin+1*g,7*g, dataStore.detector.xMargin+0*g,7*g, dataStore.detector.xMargin+0*g,1*g, dataStore.detector.xMargin+1*g,2*g];
+        cellCoords['BN01B'] = [dataStore.detector.xMargin+1*g,0*g, dataStore.detector.xMargin+7*g,0*g, dataStore.detector.xMargin+7*g,1*g, dataStore.detector.xMargin+2*g,1*g];
 
         //Greem BGO
-        cellCoords['WN05X'] = [dataStore.griffin.xMargin+12*g,4*g, dataStore.griffin.xMargin+12*g,5*g, dataStore.griffin.xMargin+19*g,5*g, dataStore.griffin.xMargin+19*g,12*g, dataStore.griffin.xMargin+20*g,12*g, dataStore.griffin.xMargin+20*g,4*g];
-        cellCoords['WN04X'] = [dataStore.griffin.xMargin+12*g,3*g, dataStore.griffin.xMargin+12*g,2*g, dataStore.griffin.xMargin+22*g,2*g, dataStore.griffin.xMargin+21*g,3*g];
-        cellCoords['WN03X'] = [dataStore.griffin.xMargin+21*g,12*g, dataStore.griffin.xMargin+22*g,12*g, dataStore.griffin.xMargin+22*g,2*g, dataStore.griffin.xMargin+21*g,3*g];
-        cellCoords['WN02X'] = [dataStore.griffin.xMargin+12*g,0*g, dataStore.griffin.xMargin+12*g,1*g, dataStore.griffin.xMargin+22*g,1*g, dataStore.griffin.xMargin+23*g,0*g];
-        cellCoords['WN01X'] = [dataStore.griffin.xMargin+24*g,12*g, dataStore.griffin.xMargin+23*g,12*g, dataStore.griffin.xMargin+23*g,2*g, dataStore.griffin.xMargin+24*g,1*g];
+        cellCoords['WN05X'] = [dataStore.detector.xMargin+12*g,4*g, dataStore.detector.xMargin+12*g,5*g, dataStore.detector.xMargin+19*g,5*g, dataStore.detector.xMargin+19*g,12*g, dataStore.detector.xMargin+20*g,12*g, dataStore.detector.xMargin+20*g,4*g];
+        cellCoords['WN04X'] = [dataStore.detector.xMargin+12*g,3*g, dataStore.detector.xMargin+12*g,2*g, dataStore.detector.xMargin+22*g,2*g, dataStore.detector.xMargin+21*g,3*g];
+        cellCoords['WN03X'] = [dataStore.detector.xMargin+21*g,12*g, dataStore.detector.xMargin+22*g,12*g, dataStore.detector.xMargin+22*g,2*g, dataStore.detector.xMargin+21*g,3*g];
+        cellCoords['WN02X'] = [dataStore.detector.xMargin+12*g,0*g, dataStore.detector.xMargin+12*g,1*g, dataStore.detector.xMargin+22*g,1*g, dataStore.detector.xMargin+23*g,0*g];
+        cellCoords['WN01X'] = [dataStore.detector.xMargin+24*g,12*g, dataStore.detector.xMargin+23*g,12*g, dataStore.detector.xMargin+23*g,2*g, dataStore.detector.xMargin+24*g,1*g];
 
-        cellCoords['WN05A'] = [dataStore.griffin.xMargin+12*g,4*g, dataStore.griffin.xMargin+12*g,5*g, dataStore.griffin.xMargin+19*g,5*g, dataStore.griffin.xMargin+20*g,4*g];
-        cellCoords['WN04A'] = [dataStore.griffin.xMargin+12*g,3*g, dataStore.griffin.xMargin+12*g,2*g, dataStore.griffin.xMargin+17*g,2*g, dataStore.griffin.xMargin+17*g,3*g];
-        cellCoords['WN03A'] = [dataStore.griffin.xMargin+21*g,12*g, dataStore.griffin.xMargin+22*g,12*g, dataStore.griffin.xMargin+22*g,7*g, dataStore.griffin.xMargin+21*g,7*g];
-        cellCoords['WN02A'] = [dataStore.griffin.xMargin+12*g,0*g, dataStore.griffin.xMargin+12*g,1*g, dataStore.griffin.xMargin+17*g,1*g, dataStore.griffin.xMargin+17*g,0*g];
-        cellCoords['WN01A'] = [dataStore.griffin.xMargin+24*g,12*g, dataStore.griffin.xMargin+23*g,12*g, dataStore.griffin.xMargin+23*g,7*g, dataStore.griffin.xMargin+24*g,7*g];
+        cellCoords['WN05A'] = [dataStore.detector.xMargin+12*g,4*g, dataStore.detector.xMargin+12*g,5*g, dataStore.detector.xMargin+19*g,5*g, dataStore.detector.xMargin+20*g,4*g];
+        cellCoords['WN04A'] = [dataStore.detector.xMargin+12*g,3*g, dataStore.detector.xMargin+12*g,2*g, dataStore.detector.xMargin+17*g,2*g, dataStore.detector.xMargin+17*g,3*g];
+        cellCoords['WN03A'] = [dataStore.detector.xMargin+21*g,12*g, dataStore.detector.xMargin+22*g,12*g, dataStore.detector.xMargin+22*g,7*g, dataStore.detector.xMargin+21*g,7*g];
+        cellCoords['WN02A'] = [dataStore.detector.xMargin+12*g,0*g, dataStore.detector.xMargin+12*g,1*g, dataStore.detector.xMargin+17*g,1*g, dataStore.detector.xMargin+17*g,0*g];
+        cellCoords['WN01A'] = [dataStore.detector.xMargin+24*g,12*g, dataStore.detector.xMargin+23*g,12*g, dataStore.detector.xMargin+23*g,7*g, dataStore.detector.xMargin+24*g,7*g];
 
-        cellCoords['WN05B'] = [dataStore.griffin.xMargin+19*g,5*g, dataStore.griffin.xMargin+19*g,12*g, dataStore.griffin.xMargin+20*g,12*g, dataStore.griffin.xMargin+20*g,4*g];
-        cellCoords['WN04B'] = [dataStore.griffin.xMargin+17*g,3*g, dataStore.griffin.xMargin+17*g,2*g, dataStore.griffin.xMargin+22*g,2*g, dataStore.griffin.xMargin+21*g,3*g];
-        cellCoords['WN03B'] = [dataStore.griffin.xMargin+21*g,7*g, dataStore.griffin.xMargin+22*g,7*g, dataStore.griffin.xMargin+22*g,2*g, dataStore.griffin.xMargin+21*g,3*g];
-        cellCoords['WN02B'] = [dataStore.griffin.xMargin+17*g,0*g, dataStore.griffin.xMargin+17*g,1*g, dataStore.griffin.xMargin+22*g,1*g, dataStore.griffin.xMargin+23*g,0*g];
-        cellCoords['WN01B'] = [dataStore.griffin.xMargin+24*g,7*g, dataStore.griffin.xMargin+23*g,7*g, dataStore.griffin.xMargin+23*g,2*g, dataStore.griffin.xMargin+24*g,1*g];
+        cellCoords['WN05B'] = [dataStore.detector.xMargin+19*g,5*g, dataStore.detector.xMargin+19*g,12*g, dataStore.detector.xMargin+20*g,12*g, dataStore.detector.xMargin+20*g,4*g];
+        cellCoords['WN04B'] = [dataStore.detector.xMargin+17*g,3*g, dataStore.detector.xMargin+17*g,2*g, dataStore.detector.xMargin+22*g,2*g, dataStore.detector.xMargin+21*g,3*g];
+        cellCoords['WN03B'] = [dataStore.detector.xMargin+21*g,7*g, dataStore.detector.xMargin+22*g,7*g, dataStore.detector.xMargin+22*g,2*g, dataStore.detector.xMargin+21*g,3*g];
+        cellCoords['WN02B'] = [dataStore.detector.xMargin+17*g,0*g, dataStore.detector.xMargin+17*g,1*g, dataStore.detector.xMargin+22*g,1*g, dataStore.detector.xMargin+23*g,0*g];
+        cellCoords['WN01B'] = [dataStore.detector.xMargin+24*g,7*g, dataStore.detector.xMargin+23*g,7*g, dataStore.detector.xMargin+23*g,2*g, dataStore.detector.xMargin+24*g,1*g];
 
         //Blue BGO
-        cellCoords['RN05X'] = [dataStore.griffin.xMargin+12*g,19*g, dataStore.griffin.xMargin+12*g,20*g, dataStore.griffin.xMargin+20*g,20*g, dataStore.griffin.xMargin+20*g,12*g, dataStore.griffin.xMargin+19*g,12*g, dataStore.griffin.xMargin+19*g,19*g];
-        cellCoords['RN04X'] = [dataStore.griffin.xMargin+21*g,12*g, dataStore.griffin.xMargin+22*g,12*g, dataStore.griffin.xMargin+22*g,22*g, dataStore.griffin.xMargin+21*g,21*g];
-        cellCoords['RN03X'] = [dataStore.griffin.xMargin+22*g,22*g, dataStore.griffin.xMargin+12*g,22*g, dataStore.griffin.xMargin+12*g,21*g, dataStore.griffin.xMargin+21*g,21*g];
-        cellCoords['RN02X'] = [dataStore.griffin.xMargin+24*g,23*g, dataStore.griffin.xMargin+23*g,22*g, dataStore.griffin.xMargin+23*g,12*g, dataStore.griffin.xMargin+24*g,12*g];
-        cellCoords['RN01X'] = [dataStore.griffin.xMargin+23*g,24*g, dataStore.griffin.xMargin+22*g,23*g, dataStore.griffin.xMargin+12*g,23*g, dataStore.griffin.xMargin+12*g,24*g];
+        cellCoords['RN05X'] = [dataStore.detector.xMargin+12*g,19*g, dataStore.detector.xMargin+12*g,20*g, dataStore.detector.xMargin+20*g,20*g, dataStore.detector.xMargin+20*g,12*g, dataStore.detector.xMargin+19*g,12*g, dataStore.detector.xMargin+19*g,19*g];
+        cellCoords['RN04X'] = [dataStore.detector.xMargin+21*g,12*g, dataStore.detector.xMargin+22*g,12*g, dataStore.detector.xMargin+22*g,22*g, dataStore.detector.xMargin+21*g,21*g];
+        cellCoords['RN03X'] = [dataStore.detector.xMargin+22*g,22*g, dataStore.detector.xMargin+12*g,22*g, dataStore.detector.xMargin+12*g,21*g, dataStore.detector.xMargin+21*g,21*g];
+        cellCoords['RN02X'] = [dataStore.detector.xMargin+24*g,23*g, dataStore.detector.xMargin+23*g,22*g, dataStore.detector.xMargin+23*g,12*g, dataStore.detector.xMargin+24*g,12*g];
+        cellCoords['RN01X'] = [dataStore.detector.xMargin+23*g,24*g, dataStore.detector.xMargin+22*g,23*g, dataStore.detector.xMargin+12*g,23*g, dataStore.detector.xMargin+12*g,24*g];
 
-        cellCoords['RN05A'] = [dataStore.griffin.xMargin+20*g,20*g, dataStore.griffin.xMargin+20*g,12*g, dataStore.griffin.xMargin+19*g,12*g, dataStore.griffin.xMargin+19*g,19*g];
-        cellCoords['RN04A'] = [dataStore.griffin.xMargin+21*g,12*g, dataStore.griffin.xMargin+22*g,12*g, dataStore.griffin.xMargin+22*g,17*g, dataStore.griffin.xMargin+21*g,17*g];
-        cellCoords['RN03A'] = [dataStore.griffin.xMargin+17*g,22*g, dataStore.griffin.xMargin+12*g,22*g, dataStore.griffin.xMargin+12*g,21*g, dataStore.griffin.xMargin+17*g,21*g];
-        cellCoords['RN02A'] = [dataStore.griffin.xMargin+24*g,17*g, dataStore.griffin.xMargin+23*g,17*g, dataStore.griffin.xMargin+23*g,12*g, dataStore.griffin.xMargin+24*g,12*g];
-        cellCoords['RN01A'] = [dataStore.griffin.xMargin+17*g,24*g, dataStore.griffin.xMargin+17*g,23*g, dataStore.griffin.xMargin+12*g,23*g, dataStore.griffin.xMargin+12*g,24*g];
+        cellCoords['RN05A'] = [dataStore.detector.xMargin+20*g,20*g, dataStore.detector.xMargin+20*g,12*g, dataStore.detector.xMargin+19*g,12*g, dataStore.detector.xMargin+19*g,19*g];
+        cellCoords['RN04A'] = [dataStore.detector.xMargin+21*g,12*g, dataStore.detector.xMargin+22*g,12*g, dataStore.detector.xMargin+22*g,17*g, dataStore.detector.xMargin+21*g,17*g];
+        cellCoords['RN03A'] = [dataStore.detector.xMargin+17*g,22*g, dataStore.detector.xMargin+12*g,22*g, dataStore.detector.xMargin+12*g,21*g, dataStore.detector.xMargin+17*g,21*g];
+        cellCoords['RN02A'] = [dataStore.detector.xMargin+24*g,17*g, dataStore.detector.xMargin+23*g,17*g, dataStore.detector.xMargin+23*g,12*g, dataStore.detector.xMargin+24*g,12*g];
+        cellCoords['RN01A'] = [dataStore.detector.xMargin+17*g,24*g, dataStore.detector.xMargin+17*g,23*g, dataStore.detector.xMargin+12*g,23*g, dataStore.detector.xMargin+12*g,24*g];
 
-        cellCoords['RN05B'] = [dataStore.griffin.xMargin+12*g,19*g, dataStore.griffin.xMargin+12*g,20*g, dataStore.griffin.xMargin+20*g,20*g, dataStore.griffin.xMargin+19*g,19*g];
-        cellCoords['RN04B'] = [dataStore.griffin.xMargin+21*g,17*g, dataStore.griffin.xMargin+22*g,17*g, dataStore.griffin.xMargin+22*g,22*g, dataStore.griffin.xMargin+21*g,21*g];
-        cellCoords['RN03B'] = [dataStore.griffin.xMargin+22*g,22*g, dataStore.griffin.xMargin+17*g,22*g, dataStore.griffin.xMargin+17*g,21*g, dataStore.griffin.xMargin+21*g,21*g];
-        cellCoords['RN02B'] = [dataStore.griffin.xMargin+24*g,23*g, dataStore.griffin.xMargin+23*g,22*g, dataStore.griffin.xMargin+23*g,17*g, dataStore.griffin.xMargin+24*g,17*g];
-        cellCoords['RN01B'] = [dataStore.griffin.xMargin+23*g,24*g, dataStore.griffin.xMargin+22*g,23*g, dataStore.griffin.xMargin+17*g,23*g, dataStore.griffin.xMargin+17*g,24*g];
+        cellCoords['RN05B'] = [dataStore.detector.xMargin+12*g,19*g, dataStore.detector.xMargin+12*g,20*g, dataStore.detector.xMargin+20*g,20*g, dataStore.detector.xMargin+19*g,19*g];
+        cellCoords['RN04B'] = [dataStore.detector.xMargin+21*g,17*g, dataStore.detector.xMargin+22*g,17*g, dataStore.detector.xMargin+22*g,22*g, dataStore.detector.xMargin+21*g,21*g];
+        cellCoords['RN03B'] = [dataStore.detector.xMargin+22*g,22*g, dataStore.detector.xMargin+17*g,22*g, dataStore.detector.xMargin+17*g,21*g, dataStore.detector.xMargin+21*g,21*g];
+        cellCoords['RN02B'] = [dataStore.detector.xMargin+24*g,23*g, dataStore.detector.xMargin+23*g,22*g, dataStore.detector.xMargin+23*g,17*g, dataStore.detector.xMargin+24*g,17*g];
+        cellCoords['RN01B'] = [dataStore.detector.xMargin+23*g,24*g, dataStore.detector.xMargin+22*g,23*g, dataStore.detector.xMargin+17*g,23*g, dataStore.detector.xMargin+17*g,24*g];
 
         //White BGO
-        cellCoords['GN05X'] = [dataStore.griffin.xMargin+12*g,19*g, dataStore.griffin.xMargin+12*g,20*g, dataStore.griffin.xMargin+4*g,20*g, dataStore.griffin.xMargin+4*g,12*g, dataStore.griffin.xMargin+5*g,12*g, dataStore.griffin.xMargin+5*g,19*g];
-        cellCoords['GN04X'] = [dataStore.griffin.xMargin+12*g,21*g, dataStore.griffin.xMargin+12*g,22*g, dataStore.griffin.xMargin+2*g,22*g, dataStore.griffin.xMargin+3*g,21*g];
-        cellCoords['GN03X'] = [dataStore.griffin.xMargin+3*g,21*g, dataStore.griffin.xMargin+2*g,22*g, dataStore.griffin.xMargin+2*g,12*g, dataStore.griffin.xMargin+3*g,12*g];
-        cellCoords['GN02X'] = [dataStore.griffin.xMargin+12*g,24*g, dataStore.griffin.xMargin+12*g,23*g, dataStore.griffin.xMargin+2*g,23*g, dataStore.griffin.xMargin+1*g,24*g];
-        cellCoords['GN01X'] = [dataStore.griffin.xMargin+0*g,12*g, dataStore.griffin.xMargin+1*g,12*g, dataStore.griffin.xMargin+1*g,22*g, dataStore.griffin.xMargin+0*g,23*g];
+        cellCoords['GN05X'] = [dataStore.detector.xMargin+12*g,19*g, dataStore.detector.xMargin+12*g,20*g, dataStore.detector.xMargin+4*g,20*g, dataStore.detector.xMargin+4*g,12*g, dataStore.detector.xMargin+5*g,12*g, dataStore.detector.xMargin+5*g,19*g];
+        cellCoords['GN04X'] = [dataStore.detector.xMargin+12*g,21*g, dataStore.detector.xMargin+12*g,22*g, dataStore.detector.xMargin+2*g,22*g, dataStore.detector.xMargin+3*g,21*g];
+        cellCoords['GN03X'] = [dataStore.detector.xMargin+3*g,21*g, dataStore.detector.xMargin+2*g,22*g, dataStore.detector.xMargin+2*g,12*g, dataStore.detector.xMargin+3*g,12*g];
+        cellCoords['GN02X'] = [dataStore.detector.xMargin+12*g,24*g, dataStore.detector.xMargin+12*g,23*g, dataStore.detector.xMargin+2*g,23*g, dataStore.detector.xMargin+1*g,24*g];
+        cellCoords['GN01X'] = [dataStore.detector.xMargin+0*g,12*g, dataStore.detector.xMargin+1*g,12*g, dataStore.detector.xMargin+1*g,22*g, dataStore.detector.xMargin+0*g,23*g];
 
-        cellCoords['GN05A'] = [dataStore.griffin.xMargin+12*g,19*g, dataStore.griffin.xMargin+12*g,20*g, dataStore.griffin.xMargin+4*g,20*g, dataStore.griffin.xMargin+5*g,19*g];
-        cellCoords['GN04A'] = [dataStore.griffin.xMargin+12*g,21*g, dataStore.griffin.xMargin+12*g,22*g, dataStore.griffin.xMargin+7*g,22*g, dataStore.griffin.xMargin+7*g,21*g];
-        cellCoords['GN03A'] = [dataStore.griffin.xMargin+3*g,17*g, dataStore.griffin.xMargin+2*g,17*g, dataStore.griffin.xMargin+2*g,12*g, dataStore.griffin.xMargin+3*g,12*g];
-        cellCoords['GN02A'] = [dataStore.griffin.xMargin+12*g,24*g, dataStore.griffin.xMargin+12*g,23*g, dataStore.griffin.xMargin+7*g,23*g, dataStore.griffin.xMargin+7*g,24*g];
-        cellCoords['GN01A'] = [dataStore.griffin.xMargin+0*g,12*g, dataStore.griffin.xMargin+1*g,12*g, dataStore.griffin.xMargin+1*g,17*g, dataStore.griffin.xMargin+0*g,17*g];
+        cellCoords['GN05A'] = [dataStore.detector.xMargin+12*g,19*g, dataStore.detector.xMargin+12*g,20*g, dataStore.detector.xMargin+4*g,20*g, dataStore.detector.xMargin+5*g,19*g];
+        cellCoords['GN04A'] = [dataStore.detector.xMargin+12*g,21*g, dataStore.detector.xMargin+12*g,22*g, dataStore.detector.xMargin+7*g,22*g, dataStore.detector.xMargin+7*g,21*g];
+        cellCoords['GN03A'] = [dataStore.detector.xMargin+3*g,17*g, dataStore.detector.xMargin+2*g,17*g, dataStore.detector.xMargin+2*g,12*g, dataStore.detector.xMargin+3*g,12*g];
+        cellCoords['GN02A'] = [dataStore.detector.xMargin+12*g,24*g, dataStore.detector.xMargin+12*g,23*g, dataStore.detector.xMargin+7*g,23*g, dataStore.detector.xMargin+7*g,24*g];
+        cellCoords['GN01A'] = [dataStore.detector.xMargin+0*g,12*g, dataStore.detector.xMargin+1*g,12*g, dataStore.detector.xMargin+1*g,17*g, dataStore.detector.xMargin+0*g,17*g];
 
-        cellCoords['GN05B'] = [dataStore.griffin.xMargin+4*g,20*g, dataStore.griffin.xMargin+4*g,12*g, dataStore.griffin.xMargin+5*g,12*g, dataStore.griffin.xMargin+5*g,19*g];
-        cellCoords['GN04B'] = [dataStore.griffin.xMargin+7*g,21*g, dataStore.griffin.xMargin+7*g,22*g, dataStore.griffin.xMargin+2*g,22*g, dataStore.griffin.xMargin+3*g,21*g];
-        cellCoords['GN03B'] = [dataStore.griffin.xMargin+3*g,21*g, dataStore.griffin.xMargin+2*g,22*g, dataStore.griffin.xMargin+2*g,17*g, dataStore.griffin.xMargin+3*g,17*g];
-        cellCoords['GN02B'] = [dataStore.griffin.xMargin+7*g,24*g, dataStore.griffin.xMargin+7*g,23*g, dataStore.griffin.xMargin+2*g,23*g, dataStore.griffin.xMargin+1*g,24*g];
-        cellCoords['GN01B'] = [dataStore.griffin.xMargin+0*g,17*g, dataStore.griffin.xMargin+1*g,17*g, dataStore.griffin.xMargin+1*g,22*g, dataStore.griffin.xMargin+0*g,23*g];
+        cellCoords['GN05B'] = [dataStore.detector.xMargin+4*g,20*g, dataStore.detector.xMargin+4*g,12*g, dataStore.detector.xMargin+5*g,12*g, dataStore.detector.xMargin+5*g,19*g];
+        cellCoords['GN04B'] = [dataStore.detector.xMargin+7*g,21*g, dataStore.detector.xMargin+7*g,22*g, dataStore.detector.xMargin+2*g,22*g, dataStore.detector.xMargin+3*g,21*g];
+        cellCoords['GN03B'] = [dataStore.detector.xMargin+3*g,21*g, dataStore.detector.xMargin+2*g,22*g, dataStore.detector.xMargin+2*g,17*g, dataStore.detector.xMargin+3*g,17*g];
+        cellCoords['GN02B'] = [dataStore.detector.xMargin+7*g,24*g, dataStore.detector.xMargin+7*g,23*g, dataStore.detector.xMargin+2*g,23*g, dataStore.detector.xMargin+1*g,24*g];
+        cellCoords['GN01B'] = [dataStore.detector.xMargin+0*g,17*g, dataStore.detector.xMargin+1*g,17*g, dataStore.detector.xMargin+1*g,22*g, dataStore.detector.xMargin+0*g,23*g];
 
-        //each channel listed in dataStore.griffin.channelNames gets an entry in dataStore.griffin.cells as a Kinetic object:
-        dataStore.griffin.cells = {};
-        for(i=0; i<dataStore.griffin.channelNames.length; i++){
+        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+        dataStore.detector.cells = {};
+        for(i=0; i<dataStore.detector.channelNames.length; i++){
             //not dealing with summary channels here, skip them:
-            if(dataStore.griffin.channelNames[i].length < 10)
+            if(dataStore.detector.channelNames[i].length < 10)
                 continue;
 
-            viewIndex = parseInt( dataStore.griffin.channelNames[i].slice(3,5) ,10);
-            cellKey = dataStore.griffin.channelNames[i].slice(5);
+            viewIndex = parseInt( dataStore.detector.channelNames[i].slice(3,5) ,10);
+            cellKey = dataStore.detector.channelNames[i].slice(5);
 
-            dataStore.griffin.cells[dataStore.griffin.channelNames[i]] = new Kinetic.Line({
+            dataStore.detector.cells[dataStore.detector.channelNames[i]] = new Kinetic.Line({
                 points: cellCoords[cellKey],
                 fill: '#000000',
                 fillPatternOffsetX: 100*Math.random(),
@@ -237,18 +259,18 @@
             });
 
             //set up the tooltip listeners:
-            // dataStore.griffin.cells[dataStore.griffin.channelNames[i]].on('mouseover', dataStore.griffin.writeTooltip.bind(dataStore.griffin, i) );
-            // dataStore.griffin.cells[dataStore.griffin.channelNames[i]].on('mousemove', dataStore.griffin.moveTooltip.bind(dataStore.griffin) );
-            // dataStore.griffin.cells[dataStore.griffin.channelNames[i]].on('mouseout', dataStore.griffin.writeTooltip.bind(dataStore.griffin, -1));
+            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mouseover', dataStore.detector.writeTooltip.bind(dataStore.detector, i) );
+            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mousemove', dataStore.detector.moveTooltip.bind(dataStore.detector) );
+            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mouseout', dataStore.detector.writeTooltip.bind(dataStore.detector, -1));
 
             //set up onclick listeners:
-            // dataStore.griffin.cells[dataStore.griffin.channelNames[i]].on('click', dataStore.griffin.clickCell.bind(dataStore.griffin, dataStore.griffin.channelNames[i]) );
+            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('click', dataStore.detector.clickCell.bind(dataStore.detector, dataStore.detector.channelNames[i]) );
 
             //add the cell to the appropriate main layer or HV layer
-            if(griffinIsHV(dataStore.griffin.channelNames[i]))
-                dataStore.griffin.HVLayer[viewIndex].add(dataStore.griffin.cells[dataStore.griffin.channelNames[i]])
+            if(griffinIsHV(dataStore.detector.channelNames[i]))
+                dataStore.detector.HVLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]])
             else
-                dataStore.griffin.channelLayer[viewIndex].add(dataStore.griffin.cells[dataStore.griffin.channelNames[i]]);
+                dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]]);
 
 
         }
@@ -260,21 +282,21 @@
             offset = [],
             colors = ['G', 'B', 'W', 'R'],
             i, j, k, index, viewIndex,
-            g = dataStore.griffin.summaryGrid,
+            g = dataStore.detector.summaryGrid,
             westLabel, eastLabel, beamArrow;
 
-        //analog of dataStore.griffin.cells
-        dataStore.griffin.summaryCells = {};
+        //analog of dataStore.detector.cells
+        dataStore.detector.summaryCells = {};
 
         //GRG04 appears in upper left, one position left of the corner, state these explicitly and build other 15 from there. 
-        baseCoords['GRGB'] = [dataStore.griffin.summaryXmargin+9*g,2*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,2*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+9*g,3*g+dataStore.griffin.summaryYmargin]; 
-        baseCoords['GRGW'] = [dataStore.griffin.summaryXmargin+10*g,2*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+11*g,2*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+11*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,3*g+dataStore.griffin.summaryYmargin]; 
-        baseCoords['GRGR'] = [dataStore.griffin.summaryXmargin+10*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+11*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+11*g,4*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,4*g+dataStore.griffin.summaryYmargin]; 
-        baseCoords['GRGG'] = [dataStore.griffin.summaryXmargin+10*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,4*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+9*g,4*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+9*g,3*g+dataStore.griffin.summaryYmargin]; 
-        baseCoords['GRSB'] = [dataStore.griffin.summaryXmargin+7*g,0*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,0*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,1*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+8*g,1*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+8*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+7*g,3*g+dataStore.griffin.summaryYmargin]; 
-        baseCoords['GRSW'] = [dataStore.griffin.summaryXmargin+10*g,0*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+13*g,0*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+13*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+12*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+12*g,1*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,1*g+dataStore.griffin.summaryYmargin]; 
-        baseCoords['GRSR'] = [dataStore.griffin.summaryXmargin+12*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+13*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+13*g,6*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,6*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,5*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+12*g,5*g+dataStore.griffin.summaryYmargin]; 
-        baseCoords['GRSG'] = [dataStore.griffin.summaryXmargin+10*g,5*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+10*g,6*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+7*g,6*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+7*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+8*g,3*g+dataStore.griffin.summaryYmargin, dataStore.griffin.summaryXmargin+8*g,5*g+dataStore.griffin.summaryYmargin]; 
+        baseCoords['GRGB'] = [dataStore.detector.summaryXmargin+9*g,2*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,2*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+9*g,3*g+dataStore.detector.summaryYmargin]; 
+        baseCoords['GRGW'] = [dataStore.detector.summaryXmargin+10*g,2*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+11*g,2*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+11*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,3*g+dataStore.detector.summaryYmargin]; 
+        baseCoords['GRGR'] = [dataStore.detector.summaryXmargin+10*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+11*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+11*g,4*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,4*g+dataStore.detector.summaryYmargin]; 
+        baseCoords['GRGG'] = [dataStore.detector.summaryXmargin+10*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,4*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+9*g,4*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+9*g,3*g+dataStore.detector.summaryYmargin]; 
+        baseCoords['GRSB'] = [dataStore.detector.summaryXmargin+7*g,0*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,0*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,1*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+8*g,1*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+8*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+7*g,3*g+dataStore.detector.summaryYmargin]; 
+        baseCoords['GRSW'] = [dataStore.detector.summaryXmargin+10*g,0*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+13*g,0*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+13*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+12*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+12*g,1*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,1*g+dataStore.detector.summaryYmargin]; 
+        baseCoords['GRSR'] = [dataStore.detector.summaryXmargin+12*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+13*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+13*g,6*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,6*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,5*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+12*g,5*g+dataStore.detector.summaryYmargin]; 
+        baseCoords['GRSG'] = [dataStore.detector.summaryXmargin+10*g,5*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,6*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+7*g,6*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+7*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+8*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+8*g,5*g+dataStore.detector.summaryYmargin]; 
 
         //tabulate offsets in [x,y] relative to GRG04:
         offset[1] = [14*g, 0*g];
@@ -326,17 +348,17 @@
             }
         }
 
-        //each channel listed in dataStore.griffin.channelNames gets an entry in dataStore.griffin.cells as a Kinetic object:
-        for(i=0; i<dataStore.griffin.channelNames.length; i++){
+        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+        for(i=0; i<dataStore.detector.channelNames.length; i++){
             //only doing summaries here
-            if(dataStore.griffin.channelNames[i].length == 10)
+            if(dataStore.detector.channelNames[i].length == 10)
                 continue;
 
             //all summaries go on card 0:
             viewIndex = 0;
-            cellKey = dataStore.griffin.channelNames[i];
+            cellKey = dataStore.detector.channelNames[i];
 
-            dataStore.griffin.cells[dataStore.griffin.channelNames[i]] = new Kinetic.Line({
+            dataStore.detector.cells[dataStore.detector.channelNames[i]] = new Kinetic.Line({
                 points: cellCoords[cellKey],
                 fill: '#000000',
                 fillPatternOffsetX: 100*Math.random(),
@@ -348,15 +370,15 @@
             });
 
             //set up the tooltip listeners:
-            // dataStore.griffin.cells[dataStore.griffin.channelNames[i]].on('mouseover', dataStore.griffin.writeTooltip.bind(dataStore.griffin, i) );
-            // dataStore.griffin.cells[dataStore.griffin.channelNames[i]].on('mousemove', dataStore.griffin.moveTooltip.bind(dataStore.griffin) );
-            // dataStore.griffin.cells[dataStore.griffin.channelNames[i]].on('mouseout', dataStore.griffin.writeTooltip.bind(dataStore.griffin, -1));
+            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mouseover', dataStore.detector.writeTooltip.bind(dataStore.detector, i) );
+            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mousemove', dataStore.detector.moveTooltip.bind(dataStore.detector) );
+            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mouseout', dataStore.detector.writeTooltip.bind(dataStore.detector, -1));
 
             //set up onclick listeners:
-            // dataStore.griffin.cells[dataStore.griffin.channelNames[i]].on('click', dataStore.griffin.clickCell.bind(dataStore.griffin, dataStore.griffin.channelNames[i]) );
+            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('click', dataStore.detector.clickCell.bind(dataStore.detector, dataStore.detector.channelNames[i]) );
 
             //add the cell to the appropriate main layer
-            dataStore.griffin.channelLayer[viewIndex].add(dataStore.griffin.cells[dataStore.griffin.channelNames[i]]);
+            dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]]);
         }
 
         //label hemispheres and beam direction
@@ -368,10 +390,10 @@
             fontFamily: 'Arial',
             fill: '#999999'
         });
-        dataStore.griffin.channelLayer[0].add(westLabel);
+        dataStore.detector.channelLayer[0].add(westLabel);
         //center label nicely
-        westLabel.setAttr('x', 43.5*dataStore.griffin.summaryGrid - westLabel.getTextWidth()/2);
-        westLabel.setAttr('y', 0.8*dataStore.griffin.height - westLabel.getTextHeight());
+        westLabel.setAttr('x', 43.5*dataStore.detector.summaryGrid - westLabel.getTextWidth()/2);
+        westLabel.setAttr('y', 0.8*dataStore.detector.height - westLabel.getTextHeight());
 
         eastLabel = new Kinetic.Text({
             x: 0,
@@ -381,20 +403,20 @@
             fontFamily: 'Arial',
             fill: '#999999'
         });
-        dataStore.griffin.channelLayer[0].add(eastLabel);
+        dataStore.detector.channelLayer[0].add(eastLabel);
         //center label nicely
-        eastLabel.setAttr('x', 13.5*dataStore.griffin.summaryGrid - eastLabel.getTextWidth()/2);
-        eastLabel.setAttr('y', 0.8*dataStore.griffin.height - eastLabel.getTextHeight());      
+        eastLabel.setAttr('x', 13.5*dataStore.detector.summaryGrid - eastLabel.getTextWidth()/2);
+        eastLabel.setAttr('y', 0.8*dataStore.detector.height - eastLabel.getTextHeight());      
 
         beamArrow = new Kinetic.Line({
-            points: [28.5*dataStore.griffin.summaryGrid, 2*dataStore.griffin.summaryGrid, 29*dataStore.griffin.summaryGrid,2*dataStore.griffin.summaryGrid, 28.5*dataStore.griffin.summaryGrid,1*dataStore.griffin.summaryGrid, 28*dataStore.griffin.summaryGrid,2*dataStore.griffin.summaryGrid, 28.5*dataStore.griffin.summaryGrid,2*dataStore.griffin.summaryGrid, 28.5*dataStore.griffin.summaryGrid,dataStore.griffin.height*0.8],
+            points: [28.5*dataStore.detector.summaryGrid, 2*dataStore.detector.summaryGrid, 29*dataStore.detector.summaryGrid,2*dataStore.detector.summaryGrid, 28.5*dataStore.detector.summaryGrid,1*dataStore.detector.summaryGrid, 28*dataStore.detector.summaryGrid,2*dataStore.detector.summaryGrid, 28.5*dataStore.detector.summaryGrid,2*dataStore.detector.summaryGrid, 28.5*dataStore.detector.summaryGrid,dataStore.detector.height*0.8],
             fill: '#999999',
             stroke: '#999999',
-            strokeWidth: dataStore.griffin.frameLineWidth,
+            strokeWidth: dataStore.detector.frameLineWidth,
             closed: true,
             listening: true
         });      
-        dataStore.griffin.channelLayer[0].add(beamArrow);  
+        dataStore.detector.channelLayer[0].add(beamArrow);  
     }
 
     function griffinIsHV(cellName){
@@ -407,38 +429,63 @@
         return HVcell;
     }
 
-    function manageView(){
+    function manageView(suppressRepaint){
         //show the selected detector view
         //intended as an onchange callback to the view select.
 
-        if(dataStore.griffin.currentView)
-            document.getElementById(dataStore.griffin.currentView + 'Wrap').classList.add('hidden');
+        if(dataStore.detector.currentView)
+            document.getElementById(dataStore.detector.currentView + 'Wrap').classList.add('hidden');
 
         document.getElementById(selected('griffinView') + 'Wrap').classList.remove('hidden');
-        dataStore.griffin.currentView = selected('griffinView');
+        dataStore.detector.currentView = selected('griffinView');
+
+        if(!suppressRepaint)
+            repaint();
     }
 
-    function manageSubview(target){
+    function manageSubview(target, suppressRepaint){
         //maange which variable is being plotted in the detector displays
 
         var i;
 
         //manage button state
-        if(dataStore.griffin.subview)
-            document.getElementById(dataStore.griffin.subview + 'Select').classList.remove('active');
+        if(dataStore.detector.subview)
+            document.getElementById(dataStore.detector.subview + 'Select').classList.remove('active');
         document.getElementById(target + 'Select').classList.add('active');
-        dataStore.griffin.subview = target;
+        dataStore.detector.subview = target;
+
+        //manage plot parameters
+        if(target == 'HV'){
+            dataStore.detector.currentUnit = 'kV';
+        } else if (target == 'threshold'){
+            dataStore.detector.currentUnit = 'ADC units';
+        } else if (target == 'rate'){
+            dataStore.detector.currentUnit = 'kHz';
+        }
 
         //manage actual image (note summary level at index 0 never changes)
-        for(i=1; i<dataStore.griffin.views.length; i++){
+        for(i=1; i<dataStore.detector.views.length; i++){
             if(target == 'HV'){
-                dataStore.griffin.HVLayer[i].show();
-                dataStore.griffin.channelLayer[i].hide();
+                dataStore.detector.HVLayer[i].show();
+                dataStore.detector.channelLayer[i].hide();
             } else{
-                dataStore.griffin.HVLayer[i].hide();
-                dataStore.griffin.channelLayer[i].show();
+                dataStore.detector.HVLayer[i].hide();
+                dataStore.detector.channelLayer[i].show();
             }
         }
+
+        if(!suppressRepaint)
+            repaint();
+    }
+
+    function repaint(){
+        // repaint the currently displayed image based on the current state of the dataStore
+
+        var currentIndex = dataStore.detector.views.indexOf(dataStore.detector.currentView);
+
+        refreshColorScale(currentIndex);
+
+        dataStore.detector.stage[currentIndex].draw();
     }
 
 </script>

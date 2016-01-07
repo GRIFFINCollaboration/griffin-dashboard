@@ -36,7 +36,7 @@ function prettyNumber(val){
 
 function selected(selectID, fetchText){
     //returns the value selected from a select element, or the inner html of the option if fetchText is set
-    
+
     var select = document.getElementById(selectID),
         value = select.options[select.selectedIndex].value;
 
@@ -44,4 +44,26 @@ function selected(selectID, fetchText){
             value = select.options[select.selectedIndex].innerHTML;
 
     return value;
+}
+
+function generateTickLabel(min, max, nTicks, n){
+    //function to make a reasonable decision on how many decimal places to show, whether to to use 
+    //sci. notation on an axis tick mark, where <min> and <max> are the axis minimum and maximum,
+    //<nTicks> is the number of tickmarks on the axis, and we are returning the label for the <n>th
+    //tick mark
+
+    var range = max - min,
+        smallestPrecision = range / (nTicks-1),
+        tickValue = min + (max-min)/(nTicks-1)*n;
+
+    //tickmark needs to be labeled to enough precision to show the difference between subsequent ticks:
+    smallestPrecision = Math.floor(Math.log(smallestPrecision) / Math.log(10));
+
+
+    if(smallestPrecision < 0)
+        return tickValue.toFixed(-smallestPrecision)
+
+    tickValue = Math.floor(tickValue/Math.pow(10, smallestPrecision)) * Math.pow(10, smallestPrecision);
+    return tickValue+'';
+
 }
