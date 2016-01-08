@@ -34,9 +34,6 @@ function fetchDAQ(payload){
     for(i=0; i<dataStore.hosts.length; i++){
         dataStore.heartbeat.URLqueries.push('http://' + dataStore.hosts[i] + '/report')
     }
-
-    //HACK: ODB table seems to be wrong, stick stuff in by hand for now:
-    dataStore.heartbeat.URLqueries = ['http://grifadc03.triumf.ca/report']
 }
 
 function unpackDAQdv(dv){
@@ -60,8 +57,6 @@ function unpackDAQdv(dv){
         }
 
     }
-
-    console.log(dataStore.data['GRG06RN00A'])
 }
 
 //extract the ith block out of a dataview object constructed from the arraybuffer returned by a DAQ element:

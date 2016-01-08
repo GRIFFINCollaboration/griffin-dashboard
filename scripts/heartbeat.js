@@ -80,9 +80,14 @@ function promiseArrayBuffer(url){
             resolve(dv);
         }
 
+        req.onerror = function() {
+            reject(Error("Network Error"));
+        };
+
         req.open('GET', url);
 
         req.responseType = "arraybuffer";
+        req.timeout = 500;
         // Make the request
         req.send();
     });
