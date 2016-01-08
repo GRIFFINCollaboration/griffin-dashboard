@@ -4,12 +4,52 @@ dataStore = {
     "host": 'grsmid00.triumf.ca:8081',
     "ODB": {},                              // place to park info pulled from ODB
     "data": {},                             // place to park raw data from non-ODB sources
+    "detector": {                           // place to park deector-specific data 
+        "subviewUnits": {
+            'HV': 'V', 
+            'threshold': 'ADC Units', 
+            'trigger_request': 'Hz', 
+            'trigger_accept': 'Hz'
+        },
+        "subviewPrettyText": {
+            'HV': 'HV', 
+            'threshold': 'Threshold', 
+            'trigger_request': 'Trigger Request', 
+            'trigger_accept': 'Trigger Accept'
+        },
+        "plotScales": {                   // defaults, feel free to update later
+            'HV': {
+                'scale': 'lin',
+                'min': 0,
+                'max': 2000,
+                'color': 'blue'
+            },
+            'threshold': {
+                'scale': 'lin',
+                'min': 0,
+                'max': 1000,
+                'color': 'blue'
+            },
+            'trigger_request': {
+                'scale': 'lin',
+                'min': 0,
+                'max': 3000,
+                'color': 'blue'
+            },
+            'trigger_accept': {
+                'scale': 'lin',
+                'min': 0,
+                'max': 3000,
+                'color': 'blue'
+            }
+        }
+    },       
     "heartbeat": {                          // queries and callbacks for the periodic data poll
         "URLqueries": [],
         "scriptQueries": []
     },                        
     "nMessages": 5,                         // number of ODB messages to list in the status sidebar
-    "frameColor": '#FFFFFF',                // outline color for visualizations
+    "frameColor": '#000000',                // outline color for visualizations
     "frameLineWidth": 2                     // outline width for visualization
 }
 

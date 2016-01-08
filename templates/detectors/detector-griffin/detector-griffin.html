@@ -3,7 +3,7 @@
 
 <template id='detector-griffin'>
     <div class='nav-row'>
-        <select id='griffinView' onchange='manageView()'>
+        <select id='detectorView' onchange='manageView()'>
             {{#views}}
                 <option value='{{.}}'>{{.}}</option>
             {{/views}}            
@@ -29,10 +29,8 @@
 <script>
     function parameterizeGRIFFIN(){
         // determine all the parameters needed for GRIFFIN's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
-        var i, j, k,
-            channel, subview;
 
-        dataStore.detector = {}
+        var i, j, k;
 
         // build up names of griffin detectors
         dataStore.detector.HPGEprefixes = [];
@@ -70,69 +68,23 @@
 
         // view labels
         dataStore.detector.views = ['summary'].concat(dataStore.detector.HPGEprefixes);
+
+        //subview info
         dataStore.detector.subviews = ['HV', 'threshold', 'trigger_request', 'trigger_accept'];
 
         // how many characters are in the summary view channel names?
         dataStore.detector.summaryDepth = 6;
 
         // build up raw data structure
-        dataStore.data = {};
-        for(i=0; i<dataStore.detector.channelNames.length; i++){
-            channel = dataStore.detector.channelNames[i];
-            if(channel.length == dataStore.detector.summaryDepth){
-                dataStore.data[channel] = {
-                    'HV': null,
-                    'threshold': null,
-                    'trigger_request': null,
-                    'trigger_accept': null,
-                }
-            } else{
-                dataStore.data[channel] = {};
-                for(j=0; j<dataStore.detector.subviews.length; j++){
-                    subview = dataStore.detector.subviews[j];
-                    if(channelInSubview(channel, subview)){
-                        dataStore.data[channel][subview] = null;
-                    }
-                }
-            }
-        }
-
-        // plot defaults
-        dataStore.detector.plotScales = {
-            'HV': {
-                'scale': 'lin',
-                'min': 0,
-                'max': 2000,
-                'color': 'blue'
-            },
-            'threshold': {
-                'scale': 'lin',
-                'min': 0,
-                'max': 1000,
-                'color': 'blue'
-            },
-            'trigger_request': {
-                'scale': 'lin',
-                'min': 0,
-                'max': 3000,
-                'color': 'blue'
-            },
-            'trigger_accept': {
-                'scale': 'lin',
-                'min': 0,
-                'max': 3000,
-                'color': 'blue'
-            }
-        }
+        createDataStructure();
     }
 
     function setupGRIFFIN(){
-        // once the HTML is in place, finish setting up the GRIFFIN visualization. 
-        var i, assignErrorPattern;
+        // once the HTML is in place, finish setting up the GRIFFIN visualization.
 
-        // declare some post-html-rendering parameters:
-        dataStore.detector.width = document.getElementById('visualizationCollection').offsetWidth;
-        dataStore.detector.height = 2/3*dataStore.detector.width;
+        //generic setup
+        setupDetector();
+
         //GRIFFIN clovers are laid out on a 24x24 square grid.
         dataStore.detector.grid = dataStore.detector.height*0.8/24;
         dataStore.detector.xMargin = (dataStore.detector.width - dataStore.detector.grid*24)/2
@@ -141,50 +93,14 @@
         dataStore.detector.summaryXmargin = (dataStore.detector.width - 58*dataStore.detector.summaryGrid)/2;
         dataStore.detector.summaryYmargin = (0.8*dataStore.detector.height - 20*dataStore.detector.summaryGrid)/2;
 
-        // set up kinetic framework - extract to generic function?
-        dataStore.detector.stage = [];
-        dataStore.detector.channelLayer = [];
-        dataStore.detector.HVLayer = [];
-        dataStore.detector.scaleLayer = [];
-        for(i=0; i<dataStore.detector.views.length; i++){
-            dataStore.detector.stage[i] = new Kinetic.Stage({
-                container: dataStore.detector.views[i] + 'Wrap',
-                width: dataStore.detector.width,
-                height: dataStore.detector.height
-            });
-            dataStore.detector.channelLayer[i] = new Kinetic.Layer();
-            dataStore.detector.HVLayer[i] = new Kinetic.Layer();
-            dataStore.detector.scaleLayer[i] = new Kinetic.Layer();
-
-            dataStore.detector.stage[i].add(dataStore.detector.channelLayer[i]);
-            dataStore.detector.stage[i].add(dataStore.detector.HVLayer[i]);
-            dataStore.detector.stage[i].add(dataStore.detector.scaleLayer[i]);
-        }
-
         // start with summary trigger accepts displayed
-        document.getElementById('griffinView').value = 'select';
         manageView(true);
         manageSubview('trigger_accept', true);
 
         // set up the cells
         instantiateCells();
         instantiateSummaryCells();
-        generateColorScale('blue');
-
-        //set up error pattern
-        dataStore.errorPattern = document.getElementById('errorPattern');
-        assignErrorPattern = function(){
-            var key;
-            for(key in dataStore.detector.cells){
-                dataStore.detector.cells[key].setAttr('fillPatternImage', dataStore.errorPattern);
-            }
-            repaint();
-        }
-        if(dataStore.errorPattern.complete){
-            assignErrorPattern();
-        } else {
-            dataStore.errorPattern.addEventListener('load', assignErrorPattern);
-        }
+        generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
 
         repaint();
     }
@@ -301,32 +217,13 @@
             viewIndex = parseInt( channel.slice(3,5) ,10);
             cellKey = channel.slice(5);
 
-            dataStore.detector.cells[channel] = new Kinetic.Line({
-                points: cellCoords[cellKey],
-                fill: '#000000',
-                fillPatternOffsetX: 100*Math.random(),
-                fillPatternOffsetY: 100*Math.random(),
-                stroke: dataStore.frameColor,
-                strokeWidth: dataStore.frameLineWidth,
-                closed: true,
-                listening: true
-            });
-
-            //set up the tooltip listeners:
-            dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
-            dataStore.detector.cells[channel].on('mousemove', moveTooltip);
-            dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
-
-            //set up onclick listeners:
-            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('click', dataStore.detector.clickCell.bind(dataStore.detector, dataStore.detector.channelNames[i]) );
+            createCell(channel, cellKey, cellCoords);
 
             //add the cell to the appropriate main layer or HV layer
             if(griffinIsHV(dataStore.detector.channelNames[i]))
                 dataStore.detector.HVLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]])
             else
                 dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]]);
-
-
         }
     }
 
@@ -339,9 +236,6 @@
             g = dataStore.detector.summaryGrid,
             westLabel, eastLabel, beamArrow,
             channel;
-
-        //analog of dataStore.detector.cells
-        dataStore.detector.summaryCells = {};
 
         //GRG04 appears in upper left, one position left of the corner, state these explicitly and build other 15 from there. 
         baseCoords['GRGB'] = [dataStore.detector.summaryXmargin+9*g,2*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,2*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+9*g,3*g+dataStore.detector.summaryYmargin]; 
@@ -414,27 +308,10 @@
             //all summaries go on card 0:
             viewIndex = 0;
 
-            dataStore.detector.cells[dataStore.detector.channelNames[i]] = new Kinetic.Line({
-                points: cellCoords[channel],
-                fill: '#000000',
-                fillPatternOffsetX: 100*Math.random(),
-                fillPatternOffsetY: 100*Math.random(),
-                stroke: dataStore.frameColor,
-                strokeWidth: dataStore.frameLineWidth,
-                closed: true,
-                listening: true
-            });
-
-            //set up the tooltip listeners:
-            dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
-            dataStore.detector.cells[channel].on('mousemove', moveTooltip);
-            dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
-
-            //set up onclick listeners:
-            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('click', dataStore.detector.clickCell.bind(dataStore.detector, dataStore.detector.channelNames[i]) );
+            createCell(channel, channel, cellCoords);
 
             //add the cell to the appropriate main layer
-            dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]]);
+            dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[channel]);
         }
 
         //label hemispheres and beam direction
@@ -483,66 +360,6 @@
         else HVcell = false;
 
         return HVcell;
-    }
-
-    function manageView(suppressRepaint){
-        //show the selected detector view
-        //intended as an onchange callback to the view select.
-
-        if(dataStore.detector.currentView)
-            document.getElementById(dataStore.detector.currentView + 'Wrap').classList.add('hidden');
-
-        document.getElementById(selected('griffinView') + 'Wrap').classList.remove('hidden');
-        dataStore.detector.currentView = selected('griffinView');
-
-        if(!suppressRepaint)
-            repaint();
-    }
-
-    function manageSubview(target, suppressRepaint){
-        //maange which variable is being plotted in the detector displays
-
-        var i;
-
-        //manage button state
-        if(dataStore.detector.subview)
-            document.getElementById(dataStore.detector.subview + 'Select').classList.remove('active');
-        document.getElementById(target + 'Select').classList.add('active');
-        dataStore.detector.subview = target;
-
-        //manage plot parameters
-        if(target == 'HV'){
-            dataStore.detector.currentUnit = 'kV';
-        } else if (target == 'threshold'){
-            dataStore.detector.currentUnit = 'ADC units';
-        } else if (target == 'trigger_accept' || target == 'trigger_request'){
-            dataStore.detector.currentUnit = 'kHz';
-        }
-
-        //manage actual image (note summary level at index 0 never changes)
-        for(i=1; i<dataStore.detector.views.length; i++){
-            if(target == 'HV'){
-                dataStore.detector.HVLayer[i].show();
-                dataStore.detector.channelLayer[i].hide();
-            } else{
-                dataStore.detector.HVLayer[i].hide();
-                dataStore.detector.channelLayer[i].show();
-            }
-        }
-
-        if(!suppressRepaint)
-            repaint();
-    }
-
-    function repaint(){
-        // repaint the currently displayed image based on the current state of the dataStore
-
-        var currentViewIndex = dataStore.detector.views.indexOf(dataStore.detector.currentView);
-
-        refreshColorScale(currentViewIndex);
-        updateCells();
-
-        dataStore.detector.stage[currentViewIndex].draw();
     }
 
     function inCurrentView(channelName){

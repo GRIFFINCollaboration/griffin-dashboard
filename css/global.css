@@ -38,4 +38,5 @@ div#tooltip{
     display: none;
     pointer-events: none;
     padding: 1em;
+    white-space: nowrap;
 }

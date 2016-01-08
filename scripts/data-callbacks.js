@@ -34,6 +34,10 @@ function fetchDAQ(payload){
     for(i=0; i<dataStore.hosts.length; i++){
         dataStore.heartbeat.URLqueries.push('http://' + dataStore.hosts[i] + '/report')
     }
+
+    //bump the heartbeat if it's available
+    if(dataStore.heartbeatTimer)
+        restart_heartbeat();
 }
 
 function unpackDAQdv(dv){
