@@ -11,7 +11,8 @@
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-default" id='HVSelect' onclick='manageSubview("HV")'>HV</button>
             <button type="button" class="btn btn-default" id='thresholdSelect' onclick='manageSubview("threshold")'>Thresholds</button>
-            <button type="button" class="btn btn-default" id='rateSelect' onclick='manageSubview("rate")'>Rates</button>
+            <button type="button" class="btn btn-default" id='trigger_requestSelect' onclick='manageSubview("trigger_request")'>Trigger Requests</button>
+            <button type="button" class="btn btn-default" id='trigger_acceptSelect' onclick='manageSubview("trigger_accept")'>Trigger Accepts</button>
         </div>
     </div>
 
@@ -20,12 +21,16 @@
             <div id='{{.}}Wrap' class='visWrap hidden'></div>
         {{/views}}
     </div>
+
+    <img id='errorPattern' src='img/static.gif' class='hidden'></img>
+    <div id='tooltip' style='display:none;'></div>
 </template>
 
 <script>
     function parameterizeGRIFFIN(){
         // determine all the parameters needed for GRIFFIN's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
-        var i, j, k;
+        var i, j, k,
+            channel, subview;
 
         dataStore.detector = {}
 
@@ -65,6 +70,32 @@
 
         // view labels
         dataStore.detector.views = ['summary'].concat(dataStore.detector.HPGEprefixes);
+        dataStore.detector.subviews = ['HV', 'threshold', 'trigger_request', 'trigger_accept'];
+
+        // how many characters are in the summary view channel names?
+        dataStore.detector.summaryDepth = 6;
+
+        // build up raw data structure
+        dataStore.data = {};
+        for(i=0; i<dataStore.detector.channelNames.length; i++){
+            channel = dataStore.detector.channelNames[i];
+            if(channel.length == dataStore.detector.summaryDepth){
+                dataStore.data[channel] = {
+                    'HV': null,
+                    'threshold': null,
+                    'trigger_request': null,
+                    'trigger_accept': null,
+                }
+            } else{
+                dataStore.data[channel] = {};
+                for(j=0; j<dataStore.detector.subviews.length; j++){
+                    subview = dataStore.detector.subviews[j];
+                    if(channelInSubview(channel, subview)){
+                        dataStore.data[channel][subview] = null;
+                    }
+                }
+            }
+        }
 
         // plot defaults
         dataStore.detector.plotScales = {
@@ -80,18 +111,24 @@
                 'max': 1000,
                 'color': 'blue'
             },
-            'rate': {
+            'trigger_request': {
                 'scale': 'lin',
                 'min': 0,
                 'max': 3000,
                 'color': 'blue'
             },
+            'trigger_accept': {
+                'scale': 'lin',
+                'min': 0,
+                'max': 3000,
+                'color': 'blue'
+            }
         }
     }
 
     function setupGRIFFIN(){
         // once the HTML is in place, finish setting up the GRIFFIN visualization. 
-        var i;
+        var i, assignErrorPattern;
 
         // declare some post-html-rendering parameters:
         dataStore.detector.width = document.getElementById('visualizationCollection').offsetWidth;
@@ -124,15 +161,30 @@
             dataStore.detector.stage[i].add(dataStore.detector.scaleLayer[i]);
         }
 
-        // start with summary rates displayed
+        // start with summary trigger accepts displayed
         document.getElementById('griffinView').value = 'select';
         manageView(true);
-        manageSubview('rate', true);
+        manageSubview('trigger_accept', true);
 
         // set up the cells
         instantiateCells();
         instantiateSummaryCells();
         generateColorScale('blue');
+
+        //set up error pattern
+        dataStore.errorPattern = document.getElementById('errorPattern');
+        assignErrorPattern = function(){
+            var key;
+            for(key in dataStore.detector.cells){
+                dataStore.detector.cells[key].setAttr('fillPatternImage', dataStore.errorPattern);
+            }
+            repaint();
+        }
+        if(dataStore.errorPattern.complete){
+            assignErrorPattern();
+        } else {
+            dataStore.errorPattern.addEventListener('load', assignErrorPattern);
+        }
 
         repaint();
     }
@@ -140,7 +192,7 @@
     function instantiateCells(){
         // decalre the kinetic cells for the detail views of each clover, and plug in interactions.
 
-        var i, viewIndex, cellKey,
+        var i, viewIndex, channel, cellKey,
             g = dataStore.detector.grid, 
             cellCoords = {};
 
@@ -240,14 +292,16 @@
         //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
         dataStore.detector.cells = {};
         for(i=0; i<dataStore.detector.channelNames.length; i++){
+            channel = dataStore.detector.channelNames[i];
+
             //not dealing with summary channels here, skip them:
-            if(dataStore.detector.channelNames[i].length < 10)
+            if(channel.length < 10)
                 continue;
 
-            viewIndex = parseInt( dataStore.detector.channelNames[i].slice(3,5) ,10);
-            cellKey = dataStore.detector.channelNames[i].slice(5);
+            viewIndex = parseInt( channel.slice(3,5) ,10);
+            cellKey = channel.slice(5);
 
-            dataStore.detector.cells[dataStore.detector.channelNames[i]] = new Kinetic.Line({
+            dataStore.detector.cells[channel] = new Kinetic.Line({
                 points: cellCoords[cellKey],
                 fill: '#000000',
                 fillPatternOffsetX: 100*Math.random(),
@@ -259,9 +313,9 @@
             });
 
             //set up the tooltip listeners:
-            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mouseover', dataStore.detector.writeTooltip.bind(dataStore.detector, i) );
-            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mousemove', dataStore.detector.moveTooltip.bind(dataStore.detector) );
-            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mouseout', dataStore.detector.writeTooltip.bind(dataStore.detector, -1));
+            dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
+            dataStore.detector.cells[channel].on('mousemove', moveTooltip);
+            dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
 
             //set up onclick listeners:
             // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('click', dataStore.detector.clickCell.bind(dataStore.detector, dataStore.detector.channelNames[i]) );
@@ -283,7 +337,8 @@
             colors = ['G', 'B', 'W', 'R'],
             i, j, k, index, viewIndex,
             g = dataStore.detector.summaryGrid,
-            westLabel, eastLabel, beamArrow;
+            westLabel, eastLabel, beamArrow,
+            channel;
 
         //analog of dataStore.detector.cells
         dataStore.detector.summaryCells = {};
@@ -350,16 +405,17 @@
 
         //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
         for(i=0; i<dataStore.detector.channelNames.length; i++){
+            channel = dataStore.detector.channelNames[i];
+
             //only doing summaries here
-            if(dataStore.detector.channelNames[i].length == 10)
+            if(channel.length == 10)
                 continue;
 
             //all summaries go on card 0:
             viewIndex = 0;
-            cellKey = dataStore.detector.channelNames[i];
 
             dataStore.detector.cells[dataStore.detector.channelNames[i]] = new Kinetic.Line({
-                points: cellCoords[cellKey],
+                points: cellCoords[channel],
                 fill: '#000000',
                 fillPatternOffsetX: 100*Math.random(),
                 fillPatternOffsetY: 100*Math.random(),
@@ -370,9 +426,9 @@
             });
 
             //set up the tooltip listeners:
-            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mouseover', dataStore.detector.writeTooltip.bind(dataStore.detector, i) );
-            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mousemove', dataStore.detector.moveTooltip.bind(dataStore.detector) );
-            // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('mouseout', dataStore.detector.writeTooltip.bind(dataStore.detector, -1));
+            dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
+            dataStore.detector.cells[channel].on('mousemove', moveTooltip);
+            dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
 
             //set up onclick listeners:
             // dataStore.detector.cells[dataStore.detector.channelNames[i]].on('click', dataStore.detector.clickCell.bind(dataStore.detector, dataStore.detector.channelNames[i]) );
@@ -459,7 +515,7 @@
             dataStore.detector.currentUnit = 'kV';
         } else if (target == 'threshold'){
             dataStore.detector.currentUnit = 'ADC units';
-        } else if (target == 'rate'){
+        } else if (target == 'trigger_accept' || target == 'trigger_request'){
             dataStore.detector.currentUnit = 'kHz';
         }
 
@@ -481,11 +537,42 @@
     function repaint(){
         // repaint the currently displayed image based on the current state of the dataStore
 
-        var currentIndex = dataStore.detector.views.indexOf(dataStore.detector.currentView);
+        var currentViewIndex = dataStore.detector.views.indexOf(dataStore.detector.currentView);
 
-        refreshColorScale(currentIndex);
+        refreshColorScale(currentViewIndex);
+        updateCells();
 
-        dataStore.detector.stage[currentIndex].draw();
+        dataStore.detector.stage[currentViewIndex].draw();
+    }
+
+    function inCurrentView(channelName){
+        //is channelName currently displayed on screen?
+
+        var currentViewIndex = dataStore.detector.views.indexOf(dataStore.detector.currentView);
+
+        //summary
+        if(currentViewIndex == 0 && channelName.length==6)
+            return true;
+        else if(currentViewIndex == 0 && channelName.length!=6)
+            return false;
+        //detail
+        if(currentViewIndex == parseInt(channelName.slice(3,5),10))
+            return true;
+        else
+            return false;
+    }
+
+    function channelInSubview(channelName, subview){
+        //should channelName have information relevant to subview?
+
+        var isHPGE = channelName.slice(0,3) == 'GRG',
+            isBGO = channelName.slice(0,3) == 'GRS',
+            last = channelName.slice(9);
+
+        if(subview=='HV'){
+            return (isHPGE && last=='X') || (isBGO && (last == 'A' || last == 'B'))
+        } else
+            return (isBGO && last=='X') || (isHPGE && (last == 'A' || last == 'B'))
     }
 
 </script>

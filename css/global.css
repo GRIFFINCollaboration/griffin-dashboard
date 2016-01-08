@@ -9,10 +9,6 @@ div.sectionWrapper{
     overflow: auto;
 }
 
-.hidden{
-    display: none;
-}
-
 select, input, option{
     color: #000000 !important; 
 }
@@ -31,4 +27,15 @@ div.nav-row{
 div.longListWrapper{
     max-height: 300px;
     overflow: auto;
+}
+
+/*tooltip*/
+div#tooltip{
+    opacity: 0.9;
+    background-color: #000000;
+    border-radius: 1em;
+    border: 0.25em solid #FFFFFF;
+    display: none;
+    pointer-events: none;
+    padding: 1em;
 }

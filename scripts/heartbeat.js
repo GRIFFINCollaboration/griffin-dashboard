@@ -1,18 +1,21 @@
-function heartbeat(URLqueries, scriptQueries, callback){
+function heartbeat(){
     //start the data fetching heartbeat
-    //note this function should be overwritten by itself with bound arguments on setup.
+    //note the dataStore.heartbeat object needs to be defined first.
 
-    Promise.all(URLqueries.map(promiseJSONURL)
+    Promise.all(dataStore.heartbeat.URLqueries.map(promiseArrayBuffer)
         ).then(
-            function(json){
-                return 0;
+            function(dv){
+                var i;
+
+                for(i=0; i<dv.length; i++)
+                    unpackDAQdv(dv[i]);
             }
         ).then(
-            Promise.all(scriptQueries.map(promiseScript)
+            Promise.all(dataStore.heartbeat.scriptQueries.map(promiseScript)
                 ).then(
                     function(){
-                        callback();
-                        dataStore.heartbeat = window.setTimeout(heartbeat, dataStore.heartbeatInterval)
+                        dataStore.heartbeat.callback();
+                        dataStore.heartbeatTimer = window.setTimeout(heartbeat, dataStore.heartbeatInterval)
                     }
                 )
         )
@@ -21,46 +24,100 @@ function heartbeat(URLqueries, scriptQueries, callback){
 function restart_heartbeat(){
     // restart heartbeat immediately; note heartbeat must have its args bound at setup before calling this.
 
-    window.clearTimeout(dataStore.heartbeat);
+    window.clearTimeout(dataStore.heartbeatTimer);
     heartbeat();
 }
 
-function promiseJSONURL(url){
-    // promise to get response from <url> 
+// function promiseJSONURL(url){
+//     // promise to get response from <url> 
+//     //thanks http://www.html5rocks.com/en/tutorials/es6/promises/
+
+//     // Return a new promise.
+//     return new Promise(function(resolve, reject) {
+//         // Do the usual XHR stuff
+//         var req = new XMLHttpRequest();
+//         req.open('GET', url);
+
+//         req.onload = function() {
+//             // This is called even on 404 etc
+//             // so check the status
+//             if (req.status == 200) {
+//                 // Resolve the promise with the response text parsed as JSON
+//                 resolve(JSON.parse(req.response));
+//             }
+//             else {
+//                 // Otherwise reject with the status text
+//                 // which will hopefully be a meaningful error
+//                 reject(Error(req.statusText));
+//             }
+//         };
+
+//         // Handle network errors
+//         req.onerror = function() {
+//             reject(Error("Network Error"));
+//         };
+
+//         // Make the request
+//         req.send();
+//     });
+// }
+
+function promiseArrayBuffer(url){
+    // promise to get array buffer response from <url> 
     //thanks http://www.html5rocks.com/en/tutorials/es6/promises/
 
     // Return a new promise.
     return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
+
+        req.onreadystatechange = function(){
+            var dv;
+
+            if(this.readyState != 4) return;
+
+            dv = new DataView(this.response);
+            resolve(dv);
+        }
+
         req.open('GET', url);
 
-        req.onload = function() {
-            // This is called even on 404 etc
-            // so check the status
-            if (req.status == 200) {
-                // Resolve the promise with the response text parsed as JSON
-                resolve(JSON.parse(req.response));
-            }
-            else {
-                // Otherwise reject with the status text
-                // which will hopefully be a meaningful error
-                reject(Error(req.statusText));
-            }
-        };
-
-        // Handle network errors
-        req.onerror = function() {
-            reject(Error("Network Error"));
-        };
-
+        req.responseType = "arraybuffer";
         // Make the request
         req.send();
     });
 }
 
+// function XHR(URL, callback, mime, noCredentials, isDataview){
+//     var xmlhttp = new XMLHttpRequest();
+
+//     xmlhttp.onreadystatechange = function(){
+//         var dv;
+
+//         if(this.readyState != 4) return;
+//         if(isDataview){
+//             dv = new DataView(this.response);
+//             callback(dv);
+//         } else {
+//             callback(this.responseText);
+//         }
+//     }
+
+//     if(!noCredentials)
+//         xmlhttp.withCredentials = true;
+//     if(mime)
+//         xmlhttp.overrideMimeType(mime);
+
+//     xmlhttp.open('GET', URL);
+
+//     if(isDataview)
+//         xmlhttp.responseType = "arraybuffer";
+
+//     xmlhttp.send();   
+// }
+
 function promiseScript(url){
-    //like promiseURL, but does the script tag dance to avoid non-CORS-compliant servers
+    //similar to above, but does the script tag dance to avoid non-CORS-compliant servers
 
     // Return a new promise.
     return new Promise(function(resolve, reject) {

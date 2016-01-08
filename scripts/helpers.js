@@ -67,3 +67,43 @@ function generateTickLabel(min, max, nTicks, n){
     return tickValue+'';
 
 }
+
+Math.log10 = function(x){
+    //base 10 log
+
+    return Math.log(x) / Math.log(10);
+}
+
+function getPosition(element) {
+    //modified from http://www.kirupa.com/html5/get_element_position_using_javascript.htm
+
+    var xPosition = 0;
+    var yPosition = 0;
+  
+    while(element) {
+        xPosition += (element.offsetLeft + element.clientLeft);
+        yPosition += (element.offsetTop + element.clientTop);
+        element = element.offsetParent;
+    }
+    return { x: xPosition, y: yPosition };
+}
+
+function isNumeric(n) {
+    // is n a number?
+
+    return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
+}
+
+function fetchScript(url, id){
+    // simple script hack fetch
+
+    var script = document.createElement('script');
+
+    script.setAttribute('src', url);
+    script.onload = function(){
+            deleteNode(id); 
+    }
+    script.id = id;
+    document.head.appendChild(script);
+    
+}
