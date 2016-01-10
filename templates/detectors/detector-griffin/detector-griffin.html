@@ -220,7 +220,7 @@
             createCell(channel, cellKey, cellCoords);
 
             //add the cell to the appropriate main layer or HV layer
-            if(griffinIsHV(dataStore.detector.channelNames[i]))
+            if(isHV(dataStore.detector.channelNames[i]))
                 dataStore.detector.HVLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]])
             else
                 dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]]);
@@ -352,7 +352,9 @@
         dataStore.detector.channelLayer[0].add(beamArrow);  
     }
 
-    function griffinIsHV(cellName){
+    function isHV(cellName){
+        // is cellName an HV channel?
+
         var HVcell;
 
         if(cellName.slice(0,3) == 'GRG' && cellName[9] == 'X') HVcell = true;
@@ -360,6 +362,12 @@
         else HVcell = false;
 
         return HVcell;
+    }
+
+    function isADCChannel(cellName){
+        // is cellName a rate / threshold channel?
+
+        return !isHV(cellName);
     }
 
     function inCurrentView(channelName){
@@ -390,6 +398,24 @@
             return (isHPGE && last=='X') || (isBGO && (last == 'A' || last == 'B'))
         } else
             return (isBGO && last=='X') || (isHPGE && (last == 'A' || last == 'B'))
+    }
+
+    function clickCell(cellName){
+        var viewSelector = document.getElementById('detectorView');
+
+        //summary -> details
+        if(cellName.length == 6){
+            viewSelector.value = 'GRG' + cellName.slice(3,5);
+            viewSelector.onchange();
+            hideTooltip();
+            return;
+        }
+
+        // let everyone know this cell was clicked
+        broadcastCellClick(cellName);
+
+        // highlight the cell
+        highlightCell(cellName);
     }
 
 </script>

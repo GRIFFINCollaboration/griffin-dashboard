@@ -50,7 +50,8 @@ dataStore = {
     },                        
     "nMessages": 5,                         // number of ODB messages to list in the status sidebar
     "frameColor": '#000000',                // outline color for visualizations
-    "frameLineWidth": 2                     // outline width for visualization
+    "frameLineWidth": 2,                    // outline width for visualization
+    "ADCClickListeners": []                 // ids of elements listening for custom click events on detector displays
 }
 
 dataStore.runSummaryQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&odb3=Logger/&encoding=json-p-nokeys&callback=runSummaryCB';
