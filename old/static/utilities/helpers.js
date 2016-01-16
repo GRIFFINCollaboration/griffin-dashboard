@@ -218,8 +218,6 @@ function unpackDAQ(i, dv){
     unpacked.trigReq    = dv.getFloat32(i*blockLength + trigReqPos, true);
     unpacked.MSC        = dv.getUint16(i*blockLength + MSCPos, true);
 
-console.log(unpacked)
-
     return unpacked;
 }
 

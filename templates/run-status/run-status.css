@@ -7,3 +7,15 @@ div#runStatus{
 button.status{
     margin-bottom: 2px;
 }
+
+div.running{
+    border: 3px solid #2ecc71;
+}
+
+div.paused{
+    border: 3px solid #f1c40f;
+}
+
+div.stopped{
+    border: 3px solid #e74c3c;
+}

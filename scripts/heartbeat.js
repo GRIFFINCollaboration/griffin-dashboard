@@ -1,57 +1,91 @@
-function heartbeat(URLqueries, scriptQueries, callback){
+function heartbeat(){
+    //start the data fetching heartbeat
+    //note the dataStore.heartbeat object needs to be defined first.
 
-    Promise.all(URLqueries.map(promiseJSONURL)
+    var URLqueries = dataStore.heartbeat.URLqueries.slice();
+
+    if(dataStore.heartbeat.ADCrequest.length > 0)
+        URLqueries = URLqueries.concat(dataStore.heartbeat.ADCrequest);
+
+    Promise.all(URLqueries.map(promiseURL)
         ).then(
-            function(json){
-                console.log(json);
+            function(responses){
+                var i;
+
+                for(i=0; i<responses.length; i++){
+                    //callbacks
+                    URLqueries[i][2](responses[i]);
+                }
+
+                Promise.all(dataStore.heartbeat.scriptQueries.map(promiseScript)
+                    ).then(
+                        function(){
+                            dataStore.heartbeat.callback();
+                            dataStore.heartbeatTimer = window.setTimeout(heartbeat, dataStore.heartbeatInterval)
+                        }
+                    )
             }
-        ).then(
-            Promise.all(scriptQueries.map(promiseScript)
-                ).then(
-                    function(){
-                        callback();
-                        dataStore.heartbeat = window.setTimeout(heartbeat, dataStore.heartbeatInterval, URLqueries, scriptQueries, callback)
-                    }
-                )
         )
 }
 
-function promiseJSONURL(url){
-    // promise to get response from <url> 
-    //thanks http://www.html5rocks.com/en/tutorials/es6/promises/
+function restart_heartbeat(){
+    // restart heartbeat immediately; note heartbeat must have its args bound at setup before calling this.
+
+    window.clearTimeout(dataStore.heartbeatTimer);
+    heartbeat();
+}
+
+function promiseURL(query){
+    // promise to get array buffer response from <query> == ['url', 'request type', callback],
+    // where request type can be 'arraybuffer' or 'json' 
+    // thanks http://www.html5rocks.com/en/tutorials/es6/promises/
 
     // Return a new promise.
     return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
-        req.open('GET', url);
 
-        req.onload = function() {
-            // This is called even on 404 etc
-            // so check the status
-            if (req.status == 200) {
-                // Resolve the promise with the response text parsed as JSON
-                resolve(JSON.parse(req.response));
-            }
-            else {
-                // Otherwise reject with the status text
-                // which will hopefully be a meaningful error
-                reject(Error(req.statusText));
-            }
-        };
-
-        // Handle network errors
         req.onerror = function() {
             reject(Error("Network Error"));
         };
 
+        if(query[1] == 'arraybuffer'){
+            req.onreadystatechange = function(){
+                var dv;
+
+                if(this.readyState != 4) return;
+
+                dv = new DataView(this.response);
+                resolve(dv);
+            }
+            req.responseType = "arraybuffer";
+        } else if (query[1] == 'json'){
+            req.onreadystatechange = function(){
+                var blobject
+
+                if(this.readyState != 4) return;
+
+                try {
+                    blobject = JSON.parse(this.response);
+                }
+                catch (e) {
+                   console.log(query[0], ' failed to return valid JSON');
+                   console.log(this.response);
+                   blobject = {}
+                }
+                resolve(blobject);
+            }   
+        }
+
+        req.open('GET', query[0]);
+        req.timeout = 500;
         // Make the request
         req.send();
     });
 }
 
 function promiseScript(url){
-    //like promiseURL, but does the script tag dance to avoid non-CORS-compliant servers
+    //similar to above, but does the script tag dance to avoid non-CORS-compliant servers
 
     // Return a new promise.
     return new Promise(function(resolve, reject) {

@@ -1,0 +1,183 @@
+<link rel="stylesheet" href="hv-sidebar.css">
+
+<template id='hv-sidebar'>
+    <h3>{{channel}}</h3>
+
+    <ul class='list-unstyled'>
+        <li>
+            <button id='writeHV' class='btn btn-info disabled' onclick='writeHV()'>Write HV</button>
+            <button id='abortHVupdate' class='btn btn-danger disabled' onclick='abortHV()'>Abort Update</button>
+        </li>
+        <li>
+            <label>Channel Bias:</label>
+            <ul class='list-unstyled sublist'>
+                <li>
+                    <input value="true" name="HVbias" id="HVon" type="radio" onchange='demandHVwrite()'></input>
+                    <label for="HVon">On</label>
+                </li>
+                <li>
+                    <input value="false" name="HVbias" id="HVoff" type="radio" onchange='demandHVwrite()'></input>
+                    <label for="HVoff">Off</label>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <label id='voltageReport'></label>
+            <div class="progress">
+                <div id='voltageBar' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
+            </div>
+        </li>
+
+        <li>
+            <label id='currentReport'></label>
+            <div class="progress">
+                <div id='currentBar' class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
+            </div>
+        </li>
+
+        <li>
+            <label id='temperatureReport'></label>
+            <div class="progress">
+                <div id='temperatureBar' class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
+            </div>
+        </li>
+
+        <li>
+            <label id='demandVoltageReport'>Demand Voltage</label>
+            <input id='demandVoltageSlide' type='range' min='0' step='1' onchange='demandHVwrite()' oninput='reportHVdemand()'></input>
+        </li>
+
+        <li id='voltageRampUpReport'></li>
+        <li id='voltageRampDownReport'></li>
+    </ul>
+
+</template>
+
+<script>
+    function setupHVSidebar(wrapperID){
+        // plug in the event listeners for the HV sidebar
+
+        document.getElementById(wrapperID).addEventListener('postHV', function(evt){
+            document.getElementById(wrapperID).innerHTML = Mustache.to_html(
+                dataStore.templates['hv-sidebar'], 
+                {
+                    'channel': evt.detail.channel,
+                }
+            );
+
+            // suppress ADC requests and ask for updates on this HV sidebar
+            dataStore.heartbeat.ADCrequest = [];
+            dataStore.activeHVsidebar = evt.detail.channel;
+
+            //populate sidebar with current data
+            populateHVsidebar(evt.detail.channel);
+            
+        }, false);
+        dataStore.HVClickListeners = dataStore.HVClickListeners.concat(wrapperID);
+    }
+
+    function populateHVsidebar(channel){
+        // write HV data currently in the dataStore to the HV sidebar for the requested channel
+
+        var crate = findHVcrate(channel),
+            index = dataStore.ODB.Equipment['HV-'+crate].Settings.Names.indexOf(channel),
+            isOn = dataStore.ODB.Equipment['HV-'+crate].Settings.ChState[index] == 1,
+            voltage = dataStore.ODB.Equipment['HV-'+crate].Variables.Measured[index],
+            voltageLimit = dataStore.ODB.Equipment['HV-'+crate].Settings['Voltage Limit'][index],
+            voltageFraction = voltage / voltageLimit,
+            voltageDemand = dataStore.ODB.Equipment['HV-'+crate].Variables.Demand[index],
+            current = dataStore.ODB.Equipment['HV-'+crate].Variables.Current[index],
+            currentLimit = dataStore.ODB.Equipment['HV-'+crate].Settings['Current Limit'][index],
+            currentFraction = current / currentLimit,
+            temperature = dataStore.ODB.Equipment['HV-'+crate].Variables.Temperature[index],
+            temperatureLimit = 40,
+            temperatureFraction = temperature / temperatureLimit,
+            rampUp = dataStore.ODB.Equipment['HV-'+crate].Settings['Ramp Up Speed'][index],
+            rampDown = dataStore.ODB.Equipment['HV-'+crate].Settings['Ramp Down Speed'][index]
+
+        //on / off
+        if(!dataStore.suspendHVsidebar){
+            if(isOn)
+                document.getElementById('HVon').checked = true;
+            else
+                document.getElementById('HVoff').checked = true;
+
+            //demand voltage
+            document.getElementById('demandVoltageSlide').setAttribute('max', voltageLimit);
+            document.getElementById('demandVoltageSlide').value = voltageDemand;
+            document.getElementById('demandVoltageReport').innerHTML = 'Demand: ' + voltageDemand + ' V';
+        }
+
+        //voltage meter
+        document.getElementById('voltageBar').setAttribute('style', 'width:' + voltageFraction*100 + '%;');
+        document.getElementById('voltageReport').innerHTML = 'Voltage: ' + voltage + ' / ' + voltageLimit + ' V';
+
+        //current meter
+        document.getElementById('currentBar').setAttribute('style', 'width:' + currentFraction*100 + '%;');
+        document.getElementById('currentReport').innerHTML = 'Current: ' + current.toFixed(3) + ' / ' + currentLimit.toFixed(3) + ' uA';
+
+        //temperature meter
+        document.getElementById('temperatureBar').setAttribute('style', 'width:' + temperatureFraction*100 + '%;');
+        document.getElementById('temperatureReport').innerHTML = 'Temperature: ' + temperature + ' / ' + temperatureLimit + ' C';
+
+        //ramp speeds
+        document.getElementById('voltageRampUpReport').innerHTML = 'Ramp up speed: ' + rampUp + ' V/s';
+        document.getElementById('voltageRampDownReport').innerHTML = 'Ramp down speed: ' + rampDown + ' V/s';
+    }
+
+    function demandHVwrite(){
+        // once the user has entered information into the HV sidebar, stop overwriting their input and remind them to commit their changes
+
+        var writeIt = document.getElementById('writeHV');
+
+        dataStore.suspendHVsidebar = true;
+
+        writeIt.classList.remove('btn-info');
+        writeIt.classList.add('btn-success');
+        writeIt.classList.remove('disabled');
+        document.getElementById('abortHVupdate').classList.remove('disabled');
+    }
+
+    function reportHVdemand(){
+        // make sure the HV demand label keeps up with the slider
+
+        var label = document.getElementById('demandVoltageReport'),
+            demand = document.getElementById('demandVoltageSlide');
+
+        label.innerHTML = 'Demand: ' + demand.value + ' V';
+    }
+
+    function writeHV(){
+        // write the current UI parameters to the ODB, and stand down from update suppression
+
+        var writeIt = document.getElementById('writeHV'),
+            crate = findHVcrate(dataStore.activeHVsidebar),
+            index = dataStore.ODB.Equipment['HV-'+crate].Settings.Names.indexOf(dataStore.activeHVsidebar),
+            isOn = document.getElementById('HVon').checked ? 1 : 0,
+            demandURL = 'http://' + dataStore.host + '/?cmd=jset&odb=/Equipment/HV-' + crate + '/Variables/Demand[' + index + ']&value=' +  parseInt(document.getElementById('demandVoltageSlide').value, 10), 
+            powerURL = 'http://' + dataStore.host + '/?cmd=jset&odb=/Equipment/HV-' + crate + '/Settings/ChState[' + index + ']&value=' + isOn;
+
+
+        dataStore.suspendHVsidebar = false;
+        writeIt.classList.add('btn-info');
+        writeIt.classList.remove('btn-success');
+
+        pokeURL(demandURL);
+        pokeURL(powerURL);
+    }
+
+    function abortHV(){
+        // abandon the changes made to the HV sidebar
+
+        // unlock updates + do it
+        dataStore.suspendHVsidebar = false;
+        populateHVsidebar(dataStore.activeHVsidebar);
+
+        // reset button states
+        document.getElementById('writeHV').classList.add('btn-info');
+        document.getElementById('writeHV').classList.remove('btn-success');
+        document.getElementById('writeHV').classList.add('disabled');
+        document.getElementById('abortHVupdate').classList.add('disabled');
+    }
+
+</script>

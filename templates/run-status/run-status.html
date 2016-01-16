@@ -2,20 +2,20 @@
 
 <template id='run-status'>
     <div id='runStatus'>
-        <h1 id='statusTitle'>demo</h1>
+        <h1 id='statusTitle'></h1>
 
         <ul id='statusRunDetail' class='list-unstyled'>
-            <li id='statusRunNumber'>lorem</li>
-            <li id='statusStartTime'>ipsum</li>
-            <li id='statusStopTime'>dolar</li>
-            <li id='statusRunDuration'>wat</li>
+            <li id='statusRunNumber' class='highlightText'></li>
+            <li id='statusStartTime'></li>
+            <li id='statusStopTime'></li>
+            <li id='statusRunDuration'></li>
         </ul>
 
         <div id='runControl'>
-            <button id='statusStart' class='btn btn-success status'>Start</button>
-            <button id='statusStop' class='btn btn-danger status'>Stop</button>
-            <button id='statusPause' class='btn btn-warning status'>Pause</button>
-            <button id='statusResume' class='btn btn-success status'>Resume</button>
+            <button id='statusStart' onclick='runTransition("Start")' class='btn btn-success status hidden'>Start</button>
+            <button id='statusStop' onclick='runTransition("Stop")' class='btn btn-danger status hidden'>Stop</button>
+            <button id='statusPause' onclick='runTransition("Pause")' class='btn btn-warning status hidden'>Pause</button>
+            <button id='statusResume' onclick='runTransition("Resume")' class='btn btn-success status hidden'>Resume</button>
         </div>
 
         <h3>Trigger stats:</h3>
@@ -58,7 +58,135 @@
 <script>
     function updateRunStatus(){
 
-        //experiment title
-        document.getElementById('statusTitle').innerHTML = dataStore.ODB.Experiment.Name
+        var runNumber = dataStore.ODB.Runinfo['Run number'],
+            date = new Date(),
+            runDuration = date.getTime() / 1000 - parseInt(dataStore.ODB.Runinfo['Start time binary'], 16),
+            stoptime = dataStore.ODB.Runinfo['Stop time'],
+            runStatusWidget = document.getElementById('runStatus'),
+            state, stoppedAt, stoptimeInt, starttimeInt, runMessage, hours, minutes, seconds;
+
+        //show different stuff depending on run state:
+        if(dataStore.ODB.Runinfo.State == 1){
+            //run is stopped
+            if(dataStore.ODB.Runinfo['Transition in progress'] == 1){
+                state = 1;
+                runMessage = 'Run ' + runNumber + ' Spooling Up...';
+            } else{
+                runMessage = 'Run ' + runNumber + ' Stopped';
+                state = 0;
+            }
+            document.getElementById('statusStart').classList.remove('hidden');
+            document.getElementById('statusStop').classList.add('hidden');
+            document.getElementById('statusPause').classList.add('hidden');
+            document.getElementById('statusResume').classList.add('hidden');
+            stoppedAt = 'Stopped ' + stoptime;
+            stoptimeInt = Date.parse(dataStore.ODB.Runinfo['Stop time']);
+            starttimeInt = Date.parse(dataStore.ODB.Runinfo['Start time']);
+            runDuration = (stoptimeInt - starttimeInt) / 1000;
+        } else if(dataStore.ODB.Runinfo.State == 2){
+            //run is paused
+            runMessage = 'Run ' + runNumber +  ' Paused';
+            document.getElementById('statusStart').classList.add('hidden');
+            document.getElementById('statusStop').classList.add('hidden');
+            document.getElementById('statusPause').classList.add('hidden');
+            document.getElementById('statusResume').classList.remove('hidden');
+            state = 2;
+            
+        } else if(dataStore.ODB.Runinfo.State == 3){
+            //run is live
+            if(dataStore.ODB.Runinfo['Transition in progress'] == 1)
+                runMessage = runNumber + ' Ending Run...';
+            else
+                runMessage = 'Run ' + runNumber + ' Live';
+            document.getElementById('statusStart').classList.add('hidden');
+            document.getElementById('statusStop').classList.remove('hidden');
+            document.getElementById('statusPause').classList.remove('hidden');
+            document.getElementById('statusResume').classList.add('hidden');
+            durationInt = date.getTime() / 1000;
+            state = 3;
+        }
+
+        //calculate RunDuration:
+        hours = Math.floor(runDuration / 3600);
+        minutes = Math.floor( (runDuration%3600)/60 );
+        seconds = Math.floor(runDuration%60);
+        
+        //conditional reporting of times based on run state
+        if(state == 0)
+            document.getElementById('statusStopTime').classList.remove('hidden');
+        else
+            document.getElementById('statusStopTime').classList.add('hidden');
+
+        if(state == 0 || state == 3)
+            document.getElementById('statusRunDuration').classList.remove('hidden');
+        else
+            document.getElementById('statusRunDuration').classList.add('hidden');
+
+        //class controld border color
+        if(state == 0){
+            runStatusWidget.classList.remove('paused');
+            runStatusWidget.classList.remove('running');
+            runStatusWidget.classList.add('stopped');
+        }
+        if(state == 1 || state == 2){
+            runStatusWidget.classList.add('paused');
+            runStatusWidget.classList.remove('running');
+            runStatusWidget.classList.remove('stopped');
+        }
+        if(state == 3){
+            runStatusWidget.classList.remove('paused');
+            runStatusWidget.classList.add('running');
+            runStatusWidget.classList.remove('stopped');
+        }
+
+        //trigger
+        document.getElementById('triggerEvents').innerHTML = prettyNumber(dataStore.ODB.Equipment_Trigger_Statistics['Events sent']);
+        document.getElementById('triggerEventsPerSec').innerHTML = dataStore.ODB.Equipment_Trigger_Statistics['Events per sec.'].toFixed();
+        document.getElementById('triggerDataPerSec').innerHTML = dataStore.ODB.Equipment_Trigger_Statistics['kBytes per sec.'].toFixed();
+        document.getElementById('dataRecorded').innerHTML = (dataStore.ODB.Logger.Channels['0'].Statistics['Bytes written']/1073742000).toFixed(3) + ' GB';
+        document.getElementById('isWriting').innerHTML = dataStore.ODB.Logger['Write data'] ? 'Yes' : 'No';
+
+        //write info to display
+        document.getElementById('statusTitle').innerHTML = dataStore.ODB.Experiment.Name;
+        document.getElementById('statusRunNumber').innerHTML = runMessage;
+        document.getElementById('statusStartTime').innerHTML = 'Started ' + dataStore.ODB.Runinfo['Start time'];
+        document.getElementById('statusStopTime').innerHTML = stoppedAt;
+        document.getElementById('statusRunDuration').innerHTML = 'Run Duration ' + hours + ' h, ' + minutes + ' m, ' + seconds +' s';
+    }
+
+    //run control
+    function runTransition(command){
+        
+        var xmlhttp = new XMLHttpRequest(),
+            cmd;
+
+        //Start is too dumb to know how to increment the run number by itself :/
+        if(command == 'Start'){
+            cmd = command + '&value=' + (dataStore.ODB.Runinfo['Run number']+1);
+        } else
+            cmd = command;
+
+        //once this is all dealt with, refresh the display immediately
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState == 4)
+                restart_heartbeat();
+        }
+        xmlhttp.withCredentials = true;
+        //fire
+        xmlhttp.open('GET', 'http://' + dataStore.host + '/?cmd=' + cmd);
+        xmlhttp.send();        
     }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+

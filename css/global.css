@@ -9,8 +9,47 @@ div.sectionWrapper{
     overflow: auto;
 }
 
+select, input, option, .dark-text{
+    color: #000000 !important; 
+}
+
+.highlightText{
+    color: #FFFFFF;
+}
+
+div.warning{
+    padding: 1em;
+    background-color: #F2DEDE;
+    border: 2px solid #FF0000;
+    color: #000000 !important;
+    border-radius: 1em;
+    margin-bottom: 1em;
+}
+
+/*navigation*/
+div.nav-row{
+    margin-bottom: 1em;
+}
+
+
 /*lists*/
 div.longListWrapper{
     max-height: 300px;
     overflow: auto;
+}
+
+ul.sublist{
+    margin-left: 1em;
+}
+
+/*tooltip*/
+div#tooltip{
+    opacity: 0.9;
+    background-color: #000000;
+    border-radius: 1em;
+    border: 0.25em solid #FFFFFF;
+    display: none;
+    pointer-events: none;
+    padding: 1em;
+    white-space: nowrap;
 }
