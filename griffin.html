@@ -14,6 +14,7 @@
         <script src='scripts/dataStore.js' type="text/javascript"></script>
         <script src='scripts/heartbeat.js' type="text/javascript"></script>
         <script src='scripts/colorScales.js' type="text/javascript"></script>
+        <script src="templates/detectors/detector-helpers.js" type="text/javascript"></script>
 
         <!--style-->
         <link rel="stylesheet" href="css/global.css">
@@ -24,7 +25,8 @@
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
         <link id='detector-griffin' rel="import" href="templates/detectors/detector-griffin/detector-griffin.html">
-        <link id='adc-sidebar' rel="import" href="templates/detectors/detector-griffin/adc-sidebar.html">
+        <link id='adc-sidebar' rel="import" href="templates/detectors/adc-sidebar/adc-sidebar.html">
+        <link id='hv-sidebar' rel="import" href="templates/detectors/hv-sidebar/hv-sidebar.html">
     </head>
 
     <body>
@@ -40,9 +42,25 @@
         </div>
 
         <script>
+            ////////////////////////////////////////
+            //detector-specific dataStore prep:
+            ////////////////////////////////////////
+
+            //get the ODB DAQ dir and set up adc requests:
+            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+            function processDAQ(payload){
+                fetchDAQ(payload);
+                determineADCrequests();
+            }
+
+            //set up HV requests
+            dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
+
             window.addEventListener('HTMLImportsLoaded', function(e) {
-                //prep templates
-                templates = ['brand-header', 'run-status', 'detector-griffin', 'adc-sidebar'];
+                ///////////////////////////
+                //handle templates
+                ///////////////////////////
+                templates = ['brand-header', 'run-status', 'detector-griffin', 'adc-sidebar', 'hv-sidebar'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -71,6 +89,8 @@
                 setupGRIFFIN();
                 //ADC sidebar
                 setupADCSidebar('controlSidebar');
+                //HV sidebar
+                setupHVSidebar('controlSidebar');
 
                 //post-heartbeat callback:
                 function dataUpdate(){
@@ -79,8 +99,10 @@
                     repaint();
                 }
 
+                ////////////////////////////
                 //initiate heartbeat
-                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery]
+                ////////////////////////////
+                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery, dataStore.equipmentQuery]
                 dataStore.heartbeat.callback = dataUpdate
                 heartbeat();
             });

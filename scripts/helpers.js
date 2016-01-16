@@ -107,3 +107,13 @@ function fetchScript(url, id){
     document.head.appendChild(script);
     
 }
+
+function pokeURL(url){
+    // poke the requested URL, don't care about the response
+
+    var req = new XMLHttpRequest();
+
+    req.open('GET', url);
+    // Make the request
+    req.send();
+}

@@ -9,12 +9,21 @@ div.sectionWrapper{
     overflow: auto;
 }
 
-select, input, option{
+select, input, option, .dark-text{
     color: #000000 !important; 
 }
 
 .highlightText{
     color: #FFFFFF;
+}
+
+div.warning{
+    padding: 1em;
+    background-color: #F2DEDE;
+    border: 2px solid #FF0000;
+    color: #000000 !important;
+    border-radius: 1em;
+    margin-bottom: 1em;
 }
 
 /*navigation*/
@@ -27,6 +36,10 @@ div.nav-row{
 div.longListWrapper{
     max-height: 300px;
     overflow: auto;
+}
+
+ul.sublist{
+    margin-left: 1em;
 }
 
 /*tooltip*/

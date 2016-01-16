@@ -1,0 +1,385 @@
+<link rel="stylesheet" href="adc-sidebar.css">
+
+<template id='adc-sidebar'>
+    <h3>{{channel}}</h3>
+    <h4>{{ADC}}</h4>
+    <div id='ADCwarning' class='warning hidden'>
+        <h3>ADC response mangled!</h3>
+    </div>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="MSCB-node-info-head">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#MSCB-node-info" aria-expanded="false" aria-controls="MSCB-node-info">MSCB Node Info</a>
+                </h4>
+            </div>
+            <div id="MSCB-node-info" class="panel-collapse collapse collapse" role="tabpanel" aria-labelledby="MSCB-node-info-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li id="ctrl"></li>
+                        <li id="rev"></li>
+                        <li id="serial"></li>
+                        <li id="cpu_temp"></li>
+                        <li id="cc_lock"></li>
+                        <li id="cc_freq"></li>
+                        <li id="hw_sw_m"></li>
+                        <li id="hw_id"></li>
+                        <li id="hw_time"></li>
+                        <li id="sw_id"></li>
+                        <li id="sw_time"></li>
+                        <li id="uptime"></li>
+                        <li id="ref_clk"></li>
+                        <li id="ch_en"></li>
+                        <li id="ch_aa"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="ADC-control-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#ADC-control" aria-expanded="true" aria-controls="ADC-control">ADC Control</a>
+                </h4>
+            </div>
+            <div id="ADC-control" class="panel-collapse in" role="tabpanel" aria-labelledby="ADC-control-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <label>DC Offset [mV]:</label>
+                            <input max="4095" min="0" step="1" id="a_dcofst" type="number"></input>
+                        </li>
+                        <li>
+                            <label>ADC Chan:</label>
+                            <ul class='list-unstyled sublist'>
+                                <li>
+                                    <input value="true" name="a_off" id="a_off0" class="stdin" type="radio"></input>
+                                    <label id="a_off0Label" for="a_off0">Enabled</label>
+                                </li>
+                                <li>
+                                    <input value="false" name="a_off" id="a_off1" class="stdin" type="radio"></input>
+                                    <label id="a_off1Label" for="a_off1">Disabled</label>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <label>Trim:</label>
+                            <input class="stdin" step="1" id="a_trim" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Polarity:</label>
+                            <ul class='list-unstyled sublist'>
+                                <li>
+                                    <input value="true" name="a_pol" id="a_pol0" class="stdin" type="radio"></input>
+                                    <label id="a_pol0Label" for="a_pol0">Positive</label>
+                                </li>
+                                <li>
+                                    <input value="false" name="a_pol" id="a_pol1" class="stdin" type="radio"></input>
+                                    <label id="a_pol1Label" for="a_pol1">Negative</label>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="triggering-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#triggering" aria-expanded="false" aria-controls="triggering">Triggering</a>
+                </h4>
+            </div>
+            <div id="triggering" class="panel-collapse collapse" role="tabpanel" aria-labelledby="triggering-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <label>Channel:</label>
+                            <ul class='list-unstyled sublist'>
+                                <li>
+                                    <input value="true" name="t_off" id="t_off0" class="stdin" type="radio"></input>
+                                    <label id="t_off0Label" for="t_off0">Enabled</label>
+                                </li>
+                                <li>
+                                    <input value="false" name="t_off" id="t_off1" class="stdin" type="radio"></input>
+                                    <label id="t_off1Label" for="t_off1">Disabled</label>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <label>Hit Thresh:</label>
+                            <input class="stdin" step="any" id="t_hthres" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Trig Thresh:</label>
+                            <input class="stdin" step="any" id="t_thres" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Differentiation:</label>
+                            <input class="stdin" step="1" id="t_diff" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Integration:</label>
+                            <input class="stdin" step="1" id="t_int" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay:</label>
+                            <input class="stdin" step="1" id="t_delay" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Pole Cxn:</label>
+                            <input class="stdin" step="any" id="t_polcor" type="number"></input>
+                        </li>
+                        <li>
+                            <label>BLR Control:</label>
+                            <input class="stdin" step="any" id="t_blrctl" type="number"></input>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="pulse-height-eval-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#pulse-height-eval" aria-expanded="false" aria-controls="pulse-height-eval">Pulse Height Eval.</a>
+                </h4>
+            </div>
+            <div id="pulse-height-eval" class="panel-collapse collapse" role="tabpanel" aria-labelledby="pulse-height-eval-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <label>Integration:</label>
+                            <input class="stdin" step="1" id="p_int" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Differentiation:</label>
+                            <input class="stdin" step="1" id="p_diff" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay:</label>
+                            <input class="stdin" step="1" id="p_delay" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Pole Cxn 1:</label>
+                            <input class="stdin" step="any" id="p_polec1" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Pole Cxn 2:</label>
+                            <input class="stdin" step="any" id="p_polec2" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Baseline Rest:</label>
+                            <input class="stdin" step="any" id="p_bsr" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Gain [keV/chan]:</label>
+                            <input class="stdin" step="any" id="p_gain" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Pileup Algo:</label>
+                            <input class="stdin" step="1" id="p_pactrl" type="number"></input>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="time-eval-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#time-eval" aria-expanded="false" aria-controls="time-eval">Time Eval.</a>
+                </h4>
+            </div>
+            <div id="time-eval" class="panel-collapse collapse" role="tabpanel" aria-labelledby="time-eval-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <label>CFD Delay:</label>
+                            <input class="stdin" step="1" id="cfd_dly" type="number"></input>
+                        </li>
+                        <li>
+                            <label>CFD Fraction:</label>
+                            <input class="stdin" step="any" id="cfd_frac" type="number"></input>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="waveform-readout-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#waveform-readout" aria-expanded="false" aria-controls="waveform-readout">Waveform Readout</a>
+                </h4>
+            </div>
+            <div id="waveform-readout" class="panel-collapse collapse" role="tabpanel" aria-labelledby="waveform-readout-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <label>Suppression</label>
+                            <ul class='list-unstyled sublist'>
+                                <li>
+                                    <input value="true" name="wfr_supp" id="wfr_supp0" class="stdin" type="radio"></input>
+                                    <label id="wfr_supp0Label" for="wfr_supp0">Suppressed</label>
+                                </li>
+                                <li>
+                                    <input value="false" name="wfr_supp" id="wfr_supp1" class="stdin" type="radio"></input>
+                                    <label id="wfr_supp1Label" for="wfr_supp1">Unsuppressed</label>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <label>Pretrigger:</label>
+                            <input class="stdin" step="1" id="wfr_pret" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Samples:</label>
+                            <input class="stdin" step="1" id="wfr_smpl" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Decimation:</label>
+                            <input class="stdin" step="1" id="wfr_dec" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Filter WF:</label>
+                            <ul class='list-unstyled sublist'>
+                                <li>
+                                    <input value="true" name="wfr_off" id="wfr_off0" class="stdin" type="radio"></input>
+                                    <label id="wfr_off0Label" for="wfr_off0">Enabled</label>
+                                </li>
+                                <li>
+                                    <input value="false" name="wfr_off" id="wfr_off1" class="stdin" type="radio"></input>
+                                    <label id="wfr_off1Label" for="wfr_off1">Disabled</label>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="simulation-pulse-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#simulation-pulse" aria-expanded="false" aria-controls="simulation-pulse">Simulation Pulse</a>
+                </h4>
+            </div>
+            <div id="simulation-pulse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="simulation-pulse-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <label>Pulse</label>
+                            <ul class='list-unstyled sublist'>
+                                <li>
+                                    <input value="true" name="sim_ena" id="sim_ena0" class="stdin" type="radio"></input>
+                                    <label id="sim_ena0Label" for="sim_ena0">Enabled</label>
+                                </li>
+                                <li>
+                                    <input value="false" name="sim_ena" id="sim_ena1" class="stdin" type="radio"></input>
+                                    <label id="sim_ena1Label" for="sim_ena1">Disabled</label>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <label>Pulse Height:</label>
+                            <input class="stdin" step="any" id="sim_phgt" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Risetime:</label>
+                            <input class="stdin" step="any" id="sim_rise" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Falltime:</label>
+                            <input class="stdin" step="any" id="sim_fall" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Rate:</label>
+                            <input class="stdin" step="any" id="sim_rate" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Period:</label>
+                            <ul class='list-unstyled sublist'>
+                                <li>
+                                    <input value="true" name="sim_rand" id="sim_rand0" class="stdin" type="radio"></input>
+                                    <label id="sim_rand0Label" for="sim_rand0">Random</label>
+                                </li>
+                                <li>
+                                    <input value="false" name="sim_rand" id="sim_rand1" class="stdin" type="radio"></input>
+                                    <label id="sim_rand1Label" for="sim_rand1">Fixed</label>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="misc-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#misc" aria-expanded="false" aria-controls="misc">Miscellaneous</a>
+                </h4>
+            </div>
+            <div id="misc" class="panel-collapse collapse" role="tabpanel" aria-labelledby="misc-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <label>Fixed Deadtime:</label>
+                            <input class="stdin" step="1" id="fix_dead" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Detector Type:</label>
+                            <input class="stdin" step="1" id="det_type" type="number"></input>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    function setupADCSidebar(wrapperID){
+        // plug in the event listeners for the ADC sidebar
+
+        document.getElementById(wrapperID).addEventListener('postADC', function(evt){
+            document.getElementById(wrapperID).innerHTML = Mustache.to_html(
+                dataStore.templates['adc-sidebar'], 
+                {
+                    'channel': evt.detail.channel,
+                    'ADC': findADC(evt.detail.channel)
+                }
+            );
+
+            // inject ADC requests into heartbeat:
+            dataStore.heartbeat.ADCrequest = [
+                                                [
+                                                    'http://'+findADC(evt.detail.channel)+'/mscb?node='+(findChannel(evt.detail.channel)+2), 
+                                                    'json', 
+                                                    routeADCchannel
+                                                ],
+                                                [
+                                                    'http://'+findADC(evt.detail.channel)+'/mscb?node=1',
+                                                    'json',
+                                                    routeADCboard
+                                                ]
+                                            ];
+
+            // grab info immediately, before next heartbeat
+            Promise.all(dataStore.heartbeat.ADCrequest.map(promiseURL)).then(function(payload){
+                var i;
+                for(i=0; i<payload.length; i++){
+                    //callbacks
+                    dataStore.heartbeat.ADCrequest[i][2](payload[i]);
+                }
+            })
+
+            
+        }, false);
+        dataStore.ADCClickListeners = dataStore.ADCClickListeners.concat(wrapperID);
+    }
+
+</script>
