@@ -19,6 +19,16 @@
         {{#views}}
             <div id='{{.}}Wrap' class='visWrap hidden'></div>
         {{/views}}
+        <form id='scaleControl' onchange='managePlotScale()'>
+            <label for='linScale'>Linear</label>
+            <input id='linScale' name='plotScale' value='lin' type='radio' checked></input>
+            <label for='logScale' class='uiRow'>Log</label>
+            <input id='logScale' name='plotScale' value='log' type='radio'></input>
+            <label for='scaleMin', class='uiRow'>Min</label>
+            <input id='scaleMin', type='number' min='0' step='1'></input>
+            <label for='scaleMax', class='uiRow'>Max</label>
+            <input id='scaleMax', type='number' min='0' step='1'></input>
+        </form>
     </div>
 
     <img id='errorPattern' src='img/static.gif' class='hidden'></img>

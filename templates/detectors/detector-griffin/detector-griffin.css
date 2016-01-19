@@ -4,5 +4,9 @@ div#visualizationCollection{
 
 div.visWrap{
     width: 100%;
-    height: 100%;
+    margin-bottom: 1em;
+}
+
+div#scaleControl{
+    margin-left: 10%;
 }

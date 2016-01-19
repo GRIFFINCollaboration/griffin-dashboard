@@ -26,6 +26,10 @@ div.warning{
     margin-bottom: 1em;
 }
 
+label.uiRow{
+    margin-left: 1em
+}
+
 /*navigation*/
 div.nav-row{
     margin-bottom: 1em;

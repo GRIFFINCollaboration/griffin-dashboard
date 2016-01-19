@@ -5,6 +5,7 @@ dataStore = {
     "ODB": {},                              // place to park info pulled from ODB
     "data": {},                             // place to park raw data from non-ODB sources
     "detector": {                           // place to park deector-specific data 
+        "subview": null,                    // current subview on display
         "subviewUnits": {
             'HV': 'V', 
             'HV_demand': 'V',
