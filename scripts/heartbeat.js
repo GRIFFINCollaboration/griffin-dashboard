@@ -18,6 +18,9 @@ function heartbeat(){
     if(dataStore.heartbeat.ADCrequest.length > 0)
         URLqueries = URLqueries.concat(dataStore.heartbeat.ADCrequest);
 
+    // dump raw data store to prevent stale data from hanging around
+    createDataStructure();
+
     Promise.all(URLqueries.map(promiseURL)
         ).then(
             function(responses){

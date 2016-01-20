@@ -471,6 +471,46 @@ function findHVcrate(channel){
         return -1;
 }
 
+function unpackDAQdv(dv){
+    //parse DAQ dataviews into dataStore.data variables
+    //information for an individual channel is packed in a 14 byte word:
+    //[MSC 2 bytes][trig request 4 bytes][trig accept 4 bytes][threshold 4 bytes] <--lowest bit
+    var channelIndex, channelName, DAQblock,
+        i;
+
+    // @TODO: make grif16 send appropriate mscs and lookup grifadc info based on sent MSC
+    for(i=0; i<dv.byteLength/14; i++){
+        DAQblock = unpackDAQ(i, dv);
+
+        channelIndex = dataStore.DAQ.MSC.MSC.indexOf(DAQblock.MSC);
+        channelName = dataStore.DAQ.MSC.chan[channelIndex];
+
+        if(dataStore.data[channelName]){
+            dataStore.data[channelName]['trigger_request'] = DAQblock.trigReq;
+            dataStore.data[channelName]['trigger_accept'] = DAQblock.trigAcpt;
+            dataStore.data[channelName]['threshold'] = DAQblock.threshold;
+        }
+
+    }
+}
+
+function unpackDAQ(i, dv){
+    //extract the ith block out of a dataview object constructed from the arraybuffer returned by a DAQ element:
+    var blockLength = 14,
+        thresholdPos = 10,
+        trigAcptPos = 2,
+        trigReqPos = 6,
+        MSCPos = 0,
+        unpacked = {};
+
+    unpacked.threshold  = dv.getUint32(i*blockLength + thresholdPos, true);
+    unpacked.trigAcpt   = dv.getFloat32(i*blockLength + trigAcptPos, true);
+    unpacked.trigReq    = dv.getFloat32(i*blockLength + trigReqPos, true);
+    unpacked.MSC        = dv.getUint16(i*blockLength + MSCPos, true);
+
+    return unpacked;
+}
+
 //////////////////////////
 // tooltip management
 //////////////////////////
