@@ -1,3 +1,14 @@
+function startHeart(){
+    // start the heartbeat if you haven't yet, or restart it if it's already going
+
+    if(dataStore.heartbeatTimer){
+        restart_heartbeat();
+    } else {
+        heartbeat();
+    }
+
+}
+
 function heartbeat(){
     //start the data fetching heartbeat
     //note the dataStore.heartbeat object needs to be defined first.

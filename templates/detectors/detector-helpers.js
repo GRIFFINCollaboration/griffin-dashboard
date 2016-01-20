@@ -402,7 +402,7 @@ function findChannel(channel){
 }
 
 function determineADCrequests(){
-    // generate the URLs for rate and threshold requests, park them in the datastore, and kick the heartbeat to start fetching.
+    // generate the URLs for rate and threshold requests, park them in the dataStore, and kick the heartbeat to start fetching.
 
     var i;
 
@@ -411,9 +411,9 @@ function determineADCrequests(){
         dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
     }
 
-    //bump the heartbeat if it's available
-    if(dataStore.heartbeatTimer)
-        restart_heartbeat();
+    //bump the heartbeat
+    startHeart();
+
 }
 
 function sortODBEquipment(payload){
