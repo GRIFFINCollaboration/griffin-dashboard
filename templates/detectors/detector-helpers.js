@@ -8,7 +8,7 @@ function setupDetector(){
     var i, assignErrorPattern;
 
     // declare some post-html-rendering parameters:
-    dataStore.detector.width = document.getElementById('visualizationCollection').offsetWidth;
+    dataStore.detector.width = document.getElementById('visualizationcollection').offsetWidth;
     dataStore.detector.height = 2/3*dataStore.detector.width;
 
     // set up kinetic framework
