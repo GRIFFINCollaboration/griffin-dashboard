@@ -235,7 +235,7 @@ function managePlotScale(setFromDataStore){
         max.value = dataStore.detector.plotScales[currentSubview].max;
     } else {
         scale = document.querySelector('input[name="plotScale"]:checked').value;
-        minValue = min.value;
+        minValue = parseInt(min.value, 10);
         if(scale == 'log' && minValue == 0){
             minValue = 1;
             min.value = 1;
@@ -243,7 +243,7 @@ function managePlotScale(setFromDataStore){
 
         dataStore.detector.plotScales[currentSubview].scale = scale;
         dataStore.detector.plotScales[currentSubview].min = minValue;
-        dataStore.detector.plotScales[currentSubview].max = max.value;
+        dataStore.detector.plotScales[currentSubview].max = parseInt(max.value,10);
 
         repaint();
     }

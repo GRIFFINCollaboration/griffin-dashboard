@@ -59,11 +59,12 @@ function generateTickLabel(min, max, nTicks, n){
     //tickmark needs to be labeled to enough precision to show the difference between subsequent ticks:
     smallestPrecision = Math.floor(Math.log(smallestPrecision) / Math.log(10));
 
-
-    if(smallestPrecision < 0)
+    if(smallestPrecision < 0){
         return tickValue.toFixed(-smallestPrecision)
+    }
 
     tickValue = Math.floor(tickValue/Math.pow(10, smallestPrecision)) * Math.pow(10, smallestPrecision);
+
     return tickValue+'';
 
 }
