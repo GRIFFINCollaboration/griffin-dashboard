@@ -55,7 +55,10 @@ function promiseURL(query){
 
                 if(this.readyState != 4) return;
 
-                dv = new DataView(this.response);
+                if(this.response)
+                    dv = new DataView(this.response);
+                else
+                    dv = new DataView(new ArrayBuffer(0));
                 resolve(dv);
             }
             req.responseType = "arraybuffer";
