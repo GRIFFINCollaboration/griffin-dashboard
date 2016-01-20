@@ -10,7 +10,6 @@
 
         <!--helpers-->
         <script src='scripts/helpers.js' type="text/javascript"></script>
-        <script src='scripts/data-callbacks.js' type="text/javascript"></script>
         <script src='scripts/dataStore.js' type="text/javascript"></script>
         <script src='scripts/heartbeat.js' type="text/javascript"></script>
         <script src='scripts/colorScales.js' type="text/javascript"></script>
@@ -102,7 +101,7 @@
                 ////////////////////////////
                 //initiate heartbeat
                 ////////////////////////////
-                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery, dataStore.equipmentQuery]
+                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery]
                 dataStore.heartbeat.callback = dataUpdate
                 heartbeat();
             });

@@ -117,3 +117,28 @@ function pokeURL(url){
     // Make the request
     req.send();
 }
+
+function fetchDAQ(payload){
+    //get the contents of the ODB DAQ directory.
+
+    var i, key;
+
+    dataStore.DAQ = payload;
+
+    //extract hosts list
+    dataStore.hosts = [];
+
+    //master
+    //dataStore.hosts.push(dataStore.DAQ.hosts.master);
+    for(key in dataStore.DAQ.hosts){
+        if(dataStore.DAQ.hosts[key].host){
+            //collectors
+            //dataStore.hosts.push(dataStore.DAQ.hosts[key].host);
+            //digitizers
+            for(i=0; i<dataStore.DAQ.hosts[key].digitizers.length; i++){
+                if(dataStore.DAQ.hosts[key].digitizers[i])
+                    dataStore.hosts.push(dataStore.DAQ.hosts[key].digitizers[i])
+            }
+        }
+    }
+}

@@ -4,44 +4,71 @@ griffin-dashboard
 
 ## Programmatic Logic
 
-### HTML
+All `griffin-dashboard` pages rely on a pattern of [HTML templates](http://www.html5rocks.com/en/tutorials/webcomponents/template/) and [HTML imports](http://webcomponents.org/articles/introduction-to-html-imports/) to minimize the amount of repeated markup, support client-side templating via [mustache.js](https://github.com/janl/mustache.js/), and avoid the declarative HTML that was prevalent in previous version of the dashboard.
 
-All `griffin-dashboard` pages rely on a pattern of [HTML templates]() and [HTML imports]() to minimize the amount of repeated markup, support client-side templating via [mustache.js](), and avoid the declarative HTML that was prevalent in previous version of the dashboard.
+### Simplest Example
 
-#### Constructing a template
+**New web developers start here**
 
-To create a template `my-template`, follow these steps:
+`demo.html` is a minimal working example of the engineering techniques that underlie all dashboard pages. The files relevant to this example are (where indented bullet points indicate subdirectories):
 
- - create a directory `templates/my-template`
- - create two files, `templates/my-template/my-template.html` and `templates/my-template/my-template.css`
- - `my-template.html` should follow this pattern:
+ - `demo.html`
+ - templates
+   - demo
+     - demo-template.html
+     - demo.css
 
+Plus a bunch of boilerplate helpers and frameworks you can see listed in the `<head>` of `demo.html` - but you should never need to touch most of these.
+
+Key points in `demo.html`:
+
+ - The line 
 ```
-<link rel="stylesheet" href="my-template.css">
-
-<template id='my-template'>
-    whatever HTML + mustache you want in your element
-</template>
+<link id='demo-template' rel="import" href="templates/demo/demo-template.html">
 ```
-
-#### Using a template
-
-Once you've built your template, include it in your page via these steps:
-
- - In the `<header>` tag, include your template, and notice that `my-template` appears identically in several places:
-
+ is an example of pulling in an html template. For consistency, always use the same id as the name of the template.
+ - Most everything happens inside the code block
 ```
-<link id='my-template' rel="import" href="templates/my-template/my-template.html">
+window.addEventListener('HTMLImportsLoaded', function(e){
+    ...
+})
 ```
+ Code executed there will happen *after* all templates and related assets are loaded; you can do things without waiting, as long as those things don't expect any of those assets to be available.
+ - All pages get their templates ready with the block:
+```
+templates = ['demo-template'];
+dataStore.templates = prepareTemplates(templates);
+```
+ List all your template ids that you loaded in `<head>` in `templates`, and the subsequent line will make sure all the template HTML is ready to use.
+ - Templates can be injected into the DOM via:
+```
+document.getElementById('demo-target').innerHTML = Mustache.to_html(
+    dataStore.templates['demo-template'], 
+    {
+        'mustacheExample': 'img/demo.svg'
+    }
+);
+```
+ See mustache.js's docs for more information on how to use their templating system. Notice that you'll typically want to put a few `<div>` elements in your main html file, as targets for injecting your templates into.
+ - Finally, start the data fetching cycle with the block
+```
+function dataUpdate(){
+    console.log(dataStore.ODB['Run Title'])
+}
 
- - Inside the main `<script>` tag in the `<body>`, list your templates in an array: `['my-template', 'some-other-template', ...]`
- - The line `dataStore.templates = prepareTemplates(templates);` will use the `prepareTemplates` helper to put the HTML that was inside your `<template>` tag onto a similarly-named key in `dataStore.templates` - so in this case, your HTML is available at `dataStore.templates.my-template`
+dataStore.heartbeat.scriptQueries = ['http://'+dataStore.host+'/?cmd=jcopy&odb0=Experiment&encoding=json-p-nokeys&callback=ODBfetchCallback']
+dataStore.heartbeat.callback = dataUpdate;
+heartbeat();
+```
+ Here we:
+   - define `dataUpdate`, which is what we want to do *after* we've received all the information we requested.
+   - make sure `dataStore.hearbeat.scriptQueries` has something to go looking for; these queries will circumvent cross origin restrictions, most notably useful for pulling stuff out of the ODB.
+   - kick things off with a call to `heartbeat()`.
 
- You can now use that HTML any way you like, typically injecting it via mustache.js.
+Also have a look at `templates/demo/demo-template.html`. Key points:
 
-### The Data Heartbeat
+ - CSS (or other scripts) that pretain only to this template should live alongside the template html in the same directory, and be pulled in with the usual `<link>` and `<script>` tags here, like the very first line in this file.
+ - Wrap all your html in a template tag that looks like `<template id='template-name'>`
+ - Any javascript specific to this template can be included in `<script>` tags at the end, and will be available at global scope.
 
-All `griffin-dashboard` pages periodically update their data via the `heartbeat` function, which chains together some promises to fetch responses from URLs either directly or via the script tag hack (for uncooperative CORS requests). Things to note:
-
- - `heartbeat` usage is `heartbeat([array of url strings to query (CORS enforced)], [array of url strings to query (CORS circumvented)], sync callback function)`
- - data is updated every `dataStore.heartbeatInterval` ms.
+That's it! The actual dashboard pages provide more sophisticated examples, but they all follow this basic structure.

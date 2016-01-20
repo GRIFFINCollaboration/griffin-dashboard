@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="demo.css">
+
+<template id='demo-template'>
+    <img src='{{mustacheExample}}'></img>
+</template>
+
+<script>
+    // javascript added here will be aviailable at global scope.
+
+    // post-ODB fetch callback:
+    function ODBfetchCallback(payload){
+        // usually take what we find from the ODB, and stick it in the datastore for later
+        dataStore.ODB['Run Title'] = payload[0]['Run parameters']['Run Title'];
+
+        console.log(payload);
+    }
+</script>
