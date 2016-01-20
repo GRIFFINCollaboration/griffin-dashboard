@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="run-status.css">
 
 <template id='run-status'>
-    <div id='runStatus'>
+    <div id='runstatus'>
         <h1 id='statusTitle'></h1>
 
         <ul id='statusRunDetail' class='list-unstyled'>
@@ -62,7 +62,7 @@
             date = new Date(),
             runDuration = date.getTime() / 1000 - parseInt(dataStore.ODB.Runinfo['Start time binary'], 16),
             stoptime = dataStore.ODB.Runinfo['Stop time'],
-            runStatusWidget = document.getElementById('runStatus'),
+            runStatusWidget = document.getElementById('runstatus'),
             state, stoppedAt, stoptimeInt, starttimeInt, runMessage, hours, minutes, seconds;
 
         //show different stuff depending on run state:
