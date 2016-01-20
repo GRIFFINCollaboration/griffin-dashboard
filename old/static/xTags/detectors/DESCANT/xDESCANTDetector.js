@@ -120,29 +120,29 @@
             'generateCoords': function(i){
                 var phi = Math.floor(i / 14),
                     grid = 1.2*0.07*this.height,
-		    initial = 72,
+                    initial = 72,
                     phase = -54,
                     baseCoords = [  
-				  // White
-                                [Math.sin((initial*phi+phase)/180*Math.PI)*0.8*grid + this.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*0.8*grid +  0.4*this.height],
-                                [Math.sin((initial*phi+phase)/180*Math.PI)*1.8*grid + this.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*1.8*grid +  0.4*this.height],
-                                [Math.sin((initial*phi+phase)/180*Math.PI)*2.8*grid + this.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*2.8*grid +  0.4*this.height],
-                                [Math.sin((initial*phi+phase)/180*Math.PI)*3.8*grid + this.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*3.8*grid +  0.4*this.height],
-				// Yellow
-                                [Math.sin((initial*phi+12+phase)/180*Math.PI)*4.5*grid + this.width/2, -Math.cos((initial*phi+12+phase)/180*Math.PI)*4.5*grid + 0.4*this.height],
-                                [Math.sin((initial*phi+27+phase)/180*Math.PI)*4.3*grid + this.width/2, -Math.cos((initial*phi+27+phase)/180*Math.PI)*4.3*grid + 0.4*this.height],
-				// Green
-                                [Math.sin((initial*phi+60+phase)/180*Math.PI)*4.5*grid + this.width/2, -Math.cos((initial*phi+60+phase)/180*Math.PI)*4.5*grid + 0.4*this.height],
-                                [Math.sin((initial*phi+45+phase)/180*Math.PI)*4.3*grid + this.width/2, -Math.cos((initial*phi+45+phase)/180*Math.PI)*4.3*grid + 0.4*this.height],
-				// Red
-                                [Math.sin((initial*phi+36+phase)/180*Math.PI)*1.5*grid + this.width/2, -Math.cos((initial*phi+36+phase)/180*Math.PI)*1.5*grid + 0.4*this.height],
-                                [Math.sin((initial*phi+16+phase)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((initial*phi+16+phase)/180*Math.PI)*3.4*grid + 0.4*this.height],
-                                [Math.sin((initial*phi+56+phase)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((initial*phi+56+phase)/180*Math.PI)*3.4*grid + 0.4*this.height],
-				// Blue
-                                [Math.sin((initial*phi+23+phase)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((initial*phi+23+phase)/180*Math.PI)*2.5*grid + 0.4*this.height],
-                                [Math.sin((initial*phi+50+phase)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((initial*phi+50+phase)/180*Math.PI)*2.5*grid + 0.4*this.height],
-                                [Math.sin((initial*phi+36+phase)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((initial*phi+36+phase)/180*Math.PI)*3.4*grid + 0.4*this.height]
-                ]
+		                // White
+                        [Math.sin((initial*phi+phase)/180*Math.PI)*0.8*grid + this.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*0.8*grid +  0.4*this.height],
+                        [Math.sin((initial*phi+phase)/180*Math.PI)*1.8*grid + this.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*1.8*grid +  0.4*this.height],
+                        [Math.sin((initial*phi+phase)/180*Math.PI)*2.8*grid + this.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*2.8*grid +  0.4*this.height],
+                        [Math.sin((initial*phi+phase)/180*Math.PI)*3.8*grid + this.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*3.8*grid +  0.4*this.height],
+		                // Yellow
+                        [Math.sin((initial*phi+12+phase)/180*Math.PI)*4.5*grid + this.width/2, -Math.cos((initial*phi+12+phase)/180*Math.PI)*4.5*grid + 0.4*this.height],
+                        [Math.sin((initial*phi+27+phase)/180*Math.PI)*4.3*grid + this.width/2, -Math.cos((initial*phi+27+phase)/180*Math.PI)*4.3*grid + 0.4*this.height],
+		                // Green
+                        [Math.sin((initial*phi+60+phase)/180*Math.PI)*4.5*grid + this.width/2, -Math.cos((initial*phi+60+phase)/180*Math.PI)*4.5*grid + 0.4*this.height],
+                        [Math.sin((initial*phi+45+phase)/180*Math.PI)*4.3*grid + this.width/2, -Math.cos((initial*phi+45+phase)/180*Math.PI)*4.3*grid + 0.4*this.height],
+		                // Red
+                        [Math.sin((initial*phi+36+phase)/180*Math.PI)*1.5*grid + this.width/2, -Math.cos((initial*phi+36+phase)/180*Math.PI)*1.5*grid + 0.4*this.height],
+                        [Math.sin((initial*phi+16+phase)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((initial*phi+16+phase)/180*Math.PI)*3.4*grid + 0.4*this.height],
+                        [Math.sin((initial*phi+56+phase)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((initial*phi+56+phase)/180*Math.PI)*3.4*grid + 0.4*this.height],
+		                // Blue
+                        [Math.sin((initial*phi+23+phase)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((initial*phi+23+phase)/180*Math.PI)*2.5*grid + 0.4*this.height],
+                        [Math.sin((initial*phi+50+phase)/180*Math.PI)*2.5*grid + this.width/2, -Math.cos((initial*phi+50+phase)/180*Math.PI)*2.5*grid + 0.4*this.height],
+                        [Math.sin((initial*phi+36+phase)/180*Math.PI)*3.4*grid + this.width/2, -Math.cos((initial*phi+36+phase)/180*Math.PI)*3.4*grid + 0.4*this.height]
+                    ]
 
                 return baseCoords[i%14]
             }

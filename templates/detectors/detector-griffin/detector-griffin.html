@@ -226,7 +226,7 @@
             viewIndex = parseInt( channel.slice(3,5) ,10);
             cellKey = channel.slice(5);
 
-            createCell(channel, cellKey, cellCoords);
+            createCell(channel, cellCoords[cellKey]);
 
             //add the cell to the appropriate main layer or HV layer
             if(isHV(dataStore.detector.channelNames[i]))
@@ -317,7 +317,7 @@
             //all summaries go on card 0:
             viewIndex = 0;
 
-            createCell(channel, channel, cellCoords);
+            createCell(channel, cellCoords[channel]);
 
             //add the cell to the appropriate main layer
             dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[channel]);

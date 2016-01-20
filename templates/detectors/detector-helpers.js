@@ -2,6 +2,12 @@
 // setup
 /////////////////////////
 
+function dataUpdate(){
+    //post-heartbeat callback:
+    updateRunStatus();
+    repaint();
+}
+
 function setupDetector(){
     // once the HTML is in place, finish setting up the detector visualization.
 
@@ -71,6 +77,33 @@ function createDataStructure(){
                 }
             }
         }
+    }
+}
+
+function instantiateCells(){
+    // decalre the kinetic cells for detectors with only a single view and no summary
+
+    var i, channel, cellKey,
+        cellCoords = {};
+
+    //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+    dataStore.detector.cells = {};
+    for(i=0; i<dataStore.detector.channelNames.length; i++){
+        channel = dataStore.detector.channelNames[i];
+
+        createCell(
+            channel, 
+            dataStore.detector.cellCoords[channel].vertices,
+            dataStore.detector.cellCoords[channel].x,
+            dataStore.detector.cellCoords[channel].y,
+            dataStore.detector.cellCoords[channel].internalRotation
+        );
+
+        //add the cell to the appropriate main layer or HV layer
+        if(isHV(channel))
+            dataStore.detector.HVLayer[0].add(dataStore.detector.cells[channel])
+        else
+            dataStore.detector.channelLayer[0].add(dataStore.detector.cells[channel]);
     }
 }
 
@@ -179,13 +212,16 @@ function refreshColorScale(index){
     
 }
 
-function createCell(channel, cellKey, cellCoords){
+function createCell(channel, vertices, x, y, internalRotation){
     // stamp out a cell for the given channel and coordinate array key
     // note that cell still has to be added to an appropriate layer on a per-detector basis.
 
     dataStore.detector.cells[channel] = new Kinetic.Line({
-        points: cellCoords[cellKey],
+        points: vertices,
         fill: '#000000',
+        x: x || 0,
+        y: y || 0,
+        rotation: internalRotation || 0,
         fillPatternOffsetX: 100*Math.random(),
         fillPatternOffsetY: 100*Math.random(),
         stroke: dataStore.frameColor,
@@ -210,6 +246,9 @@ function repaint(){
 
     refreshColorScale(currentViewIndex);
     updateCells();
+
+    if(dataStore.tooltip.currentTooltipTarget)
+        writeTooltip(dataStore.tooltip.currentTooltipTarget);
 
     dataStore.detector.stage[currentViewIndex].draw();
 }
@@ -522,6 +561,8 @@ function writeTooltip(channel){
         i, key, val,
         dataKeys = Object.keys(dataStore.data[channel]);
 
+    dataStore.tooltip.currentTooltipTarget = channel;
+
     for(i=0; i<dataKeys.length; i++){
         key = dataKeys[i];
         val = dataStore.data[channel][dataKeys[i]];
@@ -553,7 +594,7 @@ function moveTooltip(event){
 
 function manageView(suppressRepaint){
     //show the selected detector view
-    //intended as an onchange callback to the view select.
+    //intended as an onchange callback to the view select for multi-view detectors
 
     if(dataStore.detector.currentView)
         document.getElementById(dataStore.detector.currentView + 'Wrap').classList.add('hidden');
@@ -594,9 +635,43 @@ function manageSubview(target, suppressRepaint){
         repaint();
 }
 
+function isHV(cellName){
+    // is the named cell an HV channel? To be reimplemented for more complicated detectors.
+
+    return true;
+}
+
+function isADCChannel(cellName){
+    // is cellName a rate / threshold channel? To be reimplemented for more complicated detectors.
+
+    return true;
+}
+
+function inCurrentView(channelName){
+    //is channelName currently displayed on screen? To be reimplemented for more complicated detectors.
+
+    return true;
+}
+
+function channelInSubview(channelName, subview){
+    //should channelName have information relevant to subview? To be reimplemented for more complicated detectors.
+
+    return true;
+}
+
 ///////////////////////////
 // cell click management
 ///////////////////////////
+
+function clickCell(cellName){
+    // response to clicking on <cellName>; reimplemented for detectors with a summary view
+
+    // let everyone know this cell was clicked
+    broadcastCellClick(cellName);
+
+    // highlight the cell
+    highlightCell(cellName);
+}
 
 function broadcastCellClick(channel){
     // send the string <channel> in a custom event to everyone listening listed on dataStore.ADCClickListeners

@@ -58,7 +58,10 @@ dataStore = {
     "ADCClickListeners": [],                // ids of elements listening for custom click events on adc channel detector displays
     "HVClickListeners": [],                 // ids of elements listening for custom click events on hv channel detector displays
     "activeHVsidebar": null,                // channel name of HV channel currently displayed in HV sidebar
-    "suspendHVsidebar": false               // user has entered stuff into the hv sidebar, don't overwrite it on update
+    "suspendHVsidebar": false,              // user has entered stuff into the hv sidebar, don't overwrite it on update
+    "tooltip": {                            // place to park tooltip information
+        'currentTooltipTarget': null
+    }                           
 }
 
 dataStore.runSummaryQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&odb3=Logger/&encoding=json-p-nokeys&callback=runSummaryCB';
