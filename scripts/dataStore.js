@@ -44,7 +44,7 @@ dataStore = {
                 'min': 0,
                 'max': 3000,
                 'color': 'blue'
-            }
+            },
         },
         "cellCoords": {},                   //object with keys == cell names, values == arrays of vertex coordinates for that cell [x0, y0, x1, y1, ....] 
         "cells": {}                         //object keyed by nomenclature code, values == corresponding Kinetic objects

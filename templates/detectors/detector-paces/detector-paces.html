@@ -69,7 +69,7 @@
         dataStore.detector.SiLiRad = 0.1*dataStore.detector.height;
         dataStore.detector.arraySpoke = 0.3*dataStore.detector.height;
         dataStore.detector.arrayVertexX = [dataStore.detector.width/2, dataStore.detector.width/2 + Math.sin(72/180*Math.PI)*dataStore.detector.arraySpoke, dataStore.detector.width/2 + Math.sin(144/180*Math.PI)*dataStore.detector.arraySpoke, dataStore.detector.width/2 + Math.sin(216/180*Math.PI)*dataStore.detector.arraySpoke, dataStore.detector.width/2 + Math.sin(288/180*Math.PI)*dataStore.detector.arraySpoke];
-        dataStore.detector.arrayVertexY = [0.4*dataStore.detector.height-dataStore.detector.arraySpoke, 0.4*dataStore.detector.height-Math.cos(72/180*Math.PI)*dataStore.detector.arraySpoke, 0.4*dataStore.detector.height-Math.cos(144/180*Math.PI)*dataStore.detector.arraySpoke, 0.4*dataStore.detector.height-Math.cos(216/180*Math.PI)*dataStore.detector.arraySpoke, 0.4*dataStore.detector.height-Math.cos(288/180*Math.PI)*dataStore.detector.arraySpoke];
+        dataStore.detector.arrayVertexY = [0.45*dataStore.detector.height-dataStore.detector.arraySpoke, 0.45*dataStore.detector.height-Math.cos(72/180*Math.PI)*dataStore.detector.arraySpoke, 0.45*dataStore.detector.height-Math.cos(144/180*Math.PI)*dataStore.detector.arraySpoke, 0.45*dataStore.detector.height-Math.cos(216/180*Math.PI)*dataStore.detector.arraySpoke, 0.45*dataStore.detector.height-Math.cos(288/180*Math.PI)*dataStore.detector.arraySpoke];
 
         // only one view, set and forget:
         dataStore.detector.currentView = 'main';

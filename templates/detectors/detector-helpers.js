@@ -32,9 +32,9 @@ function setupDetector(){
         dataStore.detector.HVLayer[i] = new Kinetic.Layer();
         dataStore.detector.scaleLayer[i] = new Kinetic.Layer();
 
+        dataStore.detector.stage[i].add(dataStore.detector.scaleLayer[i]);
         dataStore.detector.stage[i].add(dataStore.detector.channelLayer[i]);
         dataStore.detector.stage[i].add(dataStore.detector.HVLayer[i]);
-        dataStore.detector.stage[i].add(dataStore.detector.scaleLayer[i]);
     }
 
     //set up error pattern
@@ -95,7 +95,7 @@ function instantiateCells(view){
 
         createCell(channel);
 
-        //add the cell to the appropriate layer; we'll use the HV layer in the case where HV cells == scalar cells
+        //add the cell to the appropriate layer; we'll use the HV layer for everything in the case where HV cells == scalar cells
         if(isHV(channel))
             dataStore.detector.HVLayer[view].add(dataStore.detector.cells[channel])
         else if(isADCChannel(channel))
