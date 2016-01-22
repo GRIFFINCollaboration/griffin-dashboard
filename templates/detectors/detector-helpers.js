@@ -80,8 +80,10 @@ function createDataStructure(){
     }
 }
 
-function instantiateCells(){
-    // decalre the kinetic cells for detectors with only a single view and no summary
+function instantiateCells(view){
+    // decalre the kinetic cells for detectors with only a single view
+    // view == 0 for detectors where hv cells == scalar cells
+    // view == 1 ow
 
     var i, channel, cellKey,
         cellCoords = {};
@@ -91,19 +93,13 @@ function instantiateCells(){
     for(i=0; i<dataStore.detector.channelNames.length; i++){
         channel = dataStore.detector.channelNames[i];
 
-        createCell(
-            channel, 
-            dataStore.detector.cellCoords[channel].vertices,
-            dataStore.detector.cellCoords[channel].x,
-            dataStore.detector.cellCoords[channel].y,
-            dataStore.detector.cellCoords[channel].internalRotation
-        );
+        createCell(channel);
 
-        //add the cell to the appropriate main layer or HV layer
+        //add the cell to the appropriate layer; we'll use the HV layer in the case where HV cells == scalar cells
         if(isHV(channel))
-            dataStore.detector.HVLayer[0].add(dataStore.detector.cells[channel])
-        else
-            dataStore.detector.channelLayer[0].add(dataStore.detector.cells[channel]);
+            dataStore.detector.HVLayer[view].add(dataStore.detector.cells[channel])
+        else if(isADCChannel(channel))
+            dataStore.detector.channelLayer[view].add(dataStore.detector.cells[channel]);
     }
 }
 
@@ -212,16 +208,16 @@ function refreshColorScale(index){
     
 }
 
-function createCell(channel, vertices, x, y, internalRotation){
+function createCell(channel){
     // stamp out a cell for the given channel and coordinate array key
     // note that cell still has to be added to an appropriate layer on a per-detector basis.
 
     dataStore.detector.cells[channel] = new Kinetic.Line({
-        points: vertices,
+        points: dataStore.detector.cellCoords[channel].vertices,
         fill: '#000000',
-        x: x || 0,
-        y: y || 0,
-        rotation: internalRotation || 0,
+        x: dataStore.detector.cellCoords[channel].x || 0,
+        y: dataStore.detector.cellCoords[channel].y || 0,
+        rotation: dataStore.detector.cellCoords[channel].internalRotation || 0,
         fillPatternOffsetX: 100*Math.random(),
         fillPatternOffsetY: 100*Math.random(),
         stroke: dataStore.frameColor,
@@ -617,7 +613,7 @@ function manageSubview(target, suppressRepaint){
     document.getElementById(target + 'Select').classList.add('active');
     dataStore.detector.subview = target;
 
-    //manage actual image (note summary level at index 0 never changes)
+    //manage actual image; note first view always shows the HV layer, ie for summaries and detectors with HV channels == scalar channels
     for(i=1; i<dataStore.detector.views.length; i++){
         if(target == 'HV'){
             dataStore.detector.HVLayer[i].show();

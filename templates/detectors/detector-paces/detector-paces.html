@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="../detector.css">
+
+<template id='detector-paces'>
+    <div class='nav-row'>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" id='HVSelect' onclick='manageSubview("HV")'>HV</button>
+            <button type="button" class="btn btn-default" id='thresholdSelect' onclick='manageSubview("threshold")'>Thresholds</button>
+            <button type="button" class="btn btn-default" id='trigger_requestSelect' onclick='manageSubview("trigger_request")'>Trigger Requests</button>
+            <button type="button" class="btn btn-default" id='trigger_acceptSelect' onclick='manageSubview("trigger_accept")'>Trigger Accepts</button>
+        </div>
+    </div>
+
+    <div id='visualizationcollection'>
+        {{#views}}
+            <div id='{{.}}Wrap' class='visWrap hidden'></div>
+        {{/views}}
+        <form id='scalecontrol' onchange='managePlotScale()'>
+            <label for='linScale'>Linear</label>
+            <input id='linScale' name='plotScale' value='lin' type='radio' checked></input>
+            <label for='logScale' class='uiRow'>Log</label>
+            <input id='logScale' name='plotScale' value='log' type='radio'></input>
+            <label for='scaleMin', class='uiRow'>Min</label>
+            <input id='scaleMin', type='number' min='0' step='1'></input>
+            <label for='scaleMax', class='uiRow'>Max</label>
+            <input id='scaleMax', type='number' min='0' step='1'></input>
+        </form>
+    </div>
+
+    <img id='errorPattern' src='img/static.gif' class='hidden'></img>
+    <div id='tooltip' style='display:none;'></div>
+</template>
+
+<script>
+    function parameterizePACES(){
+        // determine all the parameters needed for PACES's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
+
+        var i, j, k;
+
+        //build up dataStore.detector.channel names
+        dataStore.detector.channelNames = [   'PAC01XN00A', 'PAC01XN00B', 'PAC02XN00A', 'PAC02XN00B', 'PAC03XN00A',
+                                'PAC03XN00B', 'PAC04XN00A', 'PAC04XN00B', 'PAC05XN00A', 'PAC05XN00B',
+                                'PAC01XN00X', 'PAC02XN00X', 'PAC03XN00X', 'PAC04XN00X', 'PAC05XN00X'
+                            ]
+
+        // view labels
+        dataStore.detector.views = ['dummy', 'main'];
+
+        //subview info
+        dataStore.detector.subviews = ['HV', 'threshold', 'trigger_request', 'trigger_accept'];
+
+        // how many characters are in the summary view channel names?
+        dataStore.detector.summaryDepth = 0;
+
+        // build up raw data structure
+        createDataStructure();
+    }
+
+    function setupPACES(){
+        // once the HTML is in place, finish setting up visualization.
+
+        var i, X, Y;
+
+        //generic setup
+        setupDetector();
+
+        //////////////////////////////////////
+        //PACES specific drawing parameters
+        //////////////////////////////////////
+        dataStore.detector.SiLiRad = 0.1*dataStore.detector.height;
+        dataStore.detector.arraySpoke = 0.3*dataStore.detector.height;
+        dataStore.detector.arrayVertexX = [dataStore.detector.width/2, dataStore.detector.width/2 + Math.sin(72/180*Math.PI)*dataStore.detector.arraySpoke, dataStore.detector.width/2 + Math.sin(144/180*Math.PI)*dataStore.detector.arraySpoke, dataStore.detector.width/2 + Math.sin(216/180*Math.PI)*dataStore.detector.arraySpoke, dataStore.detector.width/2 + Math.sin(288/180*Math.PI)*dataStore.detector.arraySpoke];
+        dataStore.detector.arrayVertexY = [0.4*dataStore.detector.height-dataStore.detector.arraySpoke, 0.4*dataStore.detector.height-Math.cos(72/180*Math.PI)*dataStore.detector.arraySpoke, 0.4*dataStore.detector.height-Math.cos(144/180*Math.PI)*dataStore.detector.arraySpoke, 0.4*dataStore.detector.height-Math.cos(216/180*Math.PI)*dataStore.detector.arraySpoke, 0.4*dataStore.detector.height-Math.cos(288/180*Math.PI)*dataStore.detector.arraySpoke];
+
+        // only one view, set and forget:
+        dataStore.detector.currentView = 'main';
+        document.getElementById('mainWrap').classList.remove('hidden');
+        // start with summary trigger accepts displayed
+        manageSubview('trigger_accept', true);
+
+        // set up the cells
+        instantiateCells(1);
+        generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
+
+        repaint();
+    }
+
+    function createCell(channel){
+        // reimplemented for paces - circular cells instead of polygons
+        // stamp out a cell for the given channel and coordinate array key
+        // note that cell still has to be added to an appropriate layer on a per-detector basis.
+
+        var SiLiIndex = parseInt(channel.slice(3,5), 10) - 1,
+            i = dataStore.detector.channelNames.indexOf(channel);
+
+        if(isADCChannel(channel)){
+            dataStore.detector.cells[channel] = new Kinetic.Wedge({
+                x: dataStore.detector.arrayVertexX[SiLiIndex],
+                y: dataStore.detector.arrayVertexY[SiLiIndex],
+                radius: dataStore.detector.SiLiRad,
+                angle: 180,
+                rotation: SiLiIndex*72,
+                fill: '#000000',
+                clockwise: (i%2)==1,
+                fillPatternOffsetX: 100*Math.random(),
+                fillPatternOffsetY: 100*Math.random(),
+                stroke: dataStore.frameColor,
+                strokeWidth: dataStore.frameLineWidth,
+                closed: true,
+                listening: true
+            });
+        } else if(isHV(channel)){
+            dataStore.detector.cells[channel] = new Kinetic.Circle({
+                x: dataStore.detector.arrayVertexX[SiLiIndex],
+                y: dataStore.detector.arrayVertexY[SiLiIndex],
+                radius: dataStore.detector.SiLiRad,
+                rotation: SiLiIndex*72,
+                fill: '#000000',
+                clockwise: (i%2)==1,
+                fillPatternOffsetX: 100*Math.random(),
+                fillPatternOffsetY: 100*Math.random(),
+                stroke: dataStore.frameColor,
+                strokeWidth: dataStore.frameLineWidth,
+                closed: true,
+                listening: true
+            });
+        }
+
+        //set up the tooltip listeners:
+        dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
+        dataStore.detector.cells[channel].on('mousemove', moveTooltip);
+        dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+
+        //set up onclick listeners:
+        dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+    }
+
+    function isHV(cellName){
+        // is the named cell an HV channel?
+
+        return cellName.slice(9) == 'X';
+    }
+
+    function isADCChannel(cellName){
+        // is cellName a rate / threshold channel?
+
+        return cellName.slice(9) == 'A' || cellName.slice(9) == 'B';
+    }
+
+    function channelInSubview(channelName, subview){
+        //should channelName have information relevant to subview? To be reimplemented for more complicated detectors.
+
+        if(subview == 'HV')
+            return isHV(channelName);
+        else
+            return isADCChannel(channelName);
+    }
+</script>

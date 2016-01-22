@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <title>PACES</title>
+
+        <!--libraries-->
+        <script src='scripts/HTMLImports.min.js' type="text/javascript"></script>
+        <script src='scripts/mustache.js' type="text/javascript"></script>
+        <script src="scripts/jquery1-11-3.min.js" type="text/javascript"></script>
+        <script src="scripts/kinetic-5.0.1.hackfix.js" type="text/javascript"></script>
+
+        <!--helpers-->
+        <script src='scripts/helpers.js' type="text/javascript"></script>
+        <script src='scripts/dataStore.js' type="text/javascript"></script>
+        <script src='scripts/heartbeat.js' type="text/javascript"></script>
+        <script src='scripts/colorScales.js' type="text/javascript"></script>
+        <script src="templates/detectors/detector-helpers.js" type="text/javascript"></script>
+
+        <!--style-->
+        <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="scripts/bootstrap3-3-5.min.js" type="text/javascript"></script>
+
+        <!--html imports-->
+        <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
+        <link id='run-status' rel="import" href="templates/run-status/run-status.html">
+        <link id='detector-paces' rel="import" href="templates/detectors/detector-paces/detector-paces.html">
+        <link id='adc-sidebar' rel="import" href="templates/detectors/adc-sidebar/adc-sidebar.html">
+        <link id='hv-sidebar' rel="import" href="templates/detectors/hv-sidebar/hv-sidebar.html">
+    </head>
+
+    <body>
+        <div id='header'></div>
+
+        <div class='sectionWrapper'>
+            <div id='runStat' class='col-md-2'></div>
+            <div id='detectorDisplay' class='col-md-8'></div>
+            <div id='controlsidebar' class='col-md-2'>
+                <h3>ADC / HV Control</h3>
+                <p>Click on a channel to get started.</p>
+            </div>
+        </div>
+
+        <script>
+            ////////////////////////////////////////
+            //detector-specific dataStore prep:
+            ////////////////////////////////////////
+
+            //get the ODB DAQ dir and set up adc requests:
+            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+            function processDAQ(payload){
+                fetchDAQ(payload);
+                determineADCrequests();
+            }
+
+            //set up HV requests
+            dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
+
+            window.addEventListener('HTMLImportsLoaded', function(e) {
+                ///////////////////////////
+                //handle templates
+                ///////////////////////////
+                templates = ['brand-header', 'run-status', 'detector-paces', 'adc-sidebar', 'hv-sidebar'];
+                dataStore.templates = prepareTemplates(templates);
+
+                //inject templates
+                //header
+                document.getElementById('header').innerHTML = Mustache.to_html(
+                    dataStore.templates['brand-header'], 
+                    {
+                        'title': 'PACES Detector Status',
+                    }
+                );
+                //run control
+                document.getElementById('runStat').innerHTML = Mustache.to_html(
+                    dataStore.templates['run-status'], 
+                    {
+
+                    }
+                );
+                //detector display
+                parameterizePACES();
+                document.getElementById('detectorDisplay').innerHTML = Mustache.to_html(
+                    dataStore.templates['detector-paces'], 
+                    {
+                        'views': dataStore.detector.views
+                    }
+                );
+                setupPACES();
+                //ADC sidebar
+                setupADCSidebar('controlsidebar');
+                //HV sidebar
+                setupHVSidebar('controlsidebar');
+
+                ////////////////////////////
+                //initiate heartbeat
+                ////////////////////////////
+                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery, dataStore.equipmentQuery]
+                dataStore.heartbeat.callback = dataUpdate
+                startHeart();
+            });
+        </script>
+
+    </body>
+</html>
