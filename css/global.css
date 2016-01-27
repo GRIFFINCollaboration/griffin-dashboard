@@ -30,6 +30,10 @@ label.uiRow{
     margin-left: 1em
 }
 
+input.smallNumber{
+    width: 4em;
+}
+
 /*navigation*/
 div.nav-row{
     margin-bottom: 1em;
