@@ -9,6 +9,18 @@ div.sectionWrapper{
     overflow: auto;
 }
 
+div.panel{
+    margin: 1em 0em 1em 0em;
+    background-color: #333333;
+    padding: 1em;
+    border-radius: 1em;
+    display: inline-block;
+}
+
+div.panel div{
+    margin-bottom: 1em;
+}
+
 select, input, option, .dark-text{
     color: #000000 !important; 
 }
@@ -32,6 +44,10 @@ label.uiRow{
 
 input.smallNumber{
     width: 4em;
+}
+
+input.wideText{
+    width: 15em;
 }
 
 /*navigation*/
