@@ -1,48 +1,53 @@
 <link rel="stylesheet" href="filter-builder.css">
 
 <template id='filter-builder'>
-    <h3 id='currentFilter'></h3>
+    <div class='panel top-panel'>
+        <h4 id='currentActiveFilter'></h4>
 
-    <div class='panel'>
-        <h4>Allowed Detectors</h4>
-        <label for="allowDANTE">DANTE</label>
-        <input value="DA" class="allowedDetCheck" id="allowDANTE" type="checkbox"></input>
-        <label for="allowDESCANT">DESCANT</label>
-        <input value="DS" class="allowedDetCheck" id="allowDESCANT" type="checkbox"></input>
-        <label for="allowGRIFFIN">GRIFFIN</label>
-        <input value="GR" class="allowedDetCheck" id="allowGRIFFIN" type="checkbox"></input>
-        <label for="allowPACES">PACES</label>
-        <input value="PA" class="allowedDetCheck" id="allowPACES" type="checkbox"></input>
-        <label for="allowSCEPTAR">SCEPTAR</label>
-        <input value="SE" class="allowedDetCheck" id="allowSCEPTAR" type="checkbox"></input>
-        <label for="allowZDS">ZDS</label>
-        <input value="ZD" class="allowedDetCheck" id="allowZDS" type="checkbox"></input>
-    </div>
-
-    <div>
-        <h4>Filter Logic</h4>
-        <div id='logic-wrap'></div>
-        <button class='btn btn-info' onclick='addNewOR();'>OR new condition</button>
-    </div>
-
-    <div class='panel'>
         <div>
-            <label for='filterName'>Filter Name:</label>
+            <label for='filterName'>Current Displayed Filter:</label>
             <input type='text' id='filterName' class='wideText'></input>
             <button class='btn btn-info' onclick='writeNewFilter()'>Save Filter Definition</button>
-            <button class='btn btn-success'>Save & Apply Filter Definition</button>
+            <button class='btn btn-success' onclick='writeNewFilter(true)'>Save & Apply Filter Definition</button>
         </div>
 
         <div>
             <label for='filterMenu'>Load / Delete Filter:</label>
             <select id='filterMenu'></select>
-            <button class='btn btn-warning'>Load</button>
-            <button class='btn btn-danger'>Delete</button>
+            <button class='btn btn-warning' onclick='switchFilter()'>Load</button>
+            <button class='btn btn-danger' onclick='deleteFilter()'>Delete</button>
+        </div>
+    </div>
+
+    <div>
+        <div class='panel' id='allowedDetectors'>
+            <h4>Allowed Detectors</h4>
+            <label for="allowDANTE">DANTE</label>
+            <input value="DA" class="allowedDetCheck" id="allowDANTE" type="checkbox" onchange='requestNewFilterName()'></input>
+            <label for="allowDESCANT">DESCANT</label>
+            <input value="DS" class="allowedDetCheck" id="allowDESCANT" type="checkbox" onchange='requestNewFilterName()'></input>
+            <label for="allowGRIFFIN">GRIFFIN</label>
+            <input value="GR" class="allowedDetCheck" id="allowGRIFFIN" type="checkbox" onchange='requestNewFilterName()'></input>
+            <label for="allowPACES">PACES</label>
+            <input value="PA" class="allowedDetCheck" id="allowPACES" type="checkbox" onchange='requestNewFilterName()'></input>
+            <label for="allowSCEPTAR">SCEPTAR</label>
+            <input value="SE" class="allowedDetCheck" id="allowSCEPTAR" type="checkbox" onchange='requestNewFilterName()'></input>
+            <label for="allowZDS">ZDS</label>
+            <input value="ZD" class="allowedDetCheck" id="allowZDS" type="checkbox" onchange='requestNewFilterName()'></input>
+        </div>
+
+        <div>
+            <h4>Filter Logic</h4>
+            <div id='logic-wrap'></div>
+            <button class='btn btn-info' onclick='addNewOR();'>OR new condition</button>
         </div>
     </div>
 </template>
 
 <script>
+    ////////////////
+    // setup
+    ////////////////
 
     function setupFilter(){
         // start initial setup
@@ -60,10 +65,16 @@
         dataStore.filter.orIndex = 0;       // monotonically increasing counter to create unique IDs for new OR blocks
         dataStore.filter.nRows = [];        // array of monotonic counters for number of rows inserted into OR block; OR block # == array index. 
 
+        setTitle(dataStore.filter.table.Current);
+
         // populate the current filter
-        loadFilter();
+        loadFilter(dataStore.filter.table.Current);
         buildFilterMenu();
     }
+
+    //////////////////////////
+    // DOM manipulations
+    //////////////////////////
 
     function addNewOR(){
         // add a new OR block to the current filter
@@ -81,12 +92,14 @@
 
         dataStore.filter.nRows[dataStore.filter.orIndex] = 0;
         dataStore.filter.orIndex++;
+        requestNewFilterName()
     }
 
     function deleteOR(orNumber){
         // delete the indexed OR block
 
         deleteNode('filterCondition' + orNumber);
+        requestNewFilterName()
     }
 
     function addNewAND(orIndex){
@@ -106,13 +119,19 @@
         table.appendChild(row);
 
         dataStore.filter.nRows[orIndex]++;
+        requestNewFilterName()
     }
 
     function deleteAND(orNumber, andNumber){
         // delete the indexed AND row in the indexed OR block
 
         deleteNode('ANDrow' + orNumber + andNumber);
+        requestNewFilterName()
     }
+
+    /////////////////////
+    // data loading
+    /////////////////////
 
     function changeCounting(orNumber, andNumber){
         // update the UI to reflect whether the indexed row is for singles, coincidences or prescale
@@ -138,31 +157,43 @@
             document.getElementById('subconfigS0' + orNumber + andNumber).classList.add('hidden');
             document.getElementById('subconfigS1' + orNumber + andNumber).classList.add('hidden');            
         }
+
+        requestNewFilterName()
     }
 
-    function loadFilter(){
-        // populate the UI with whatever filter definition is currently active according to dataStore.filter.table (== last fetch of /Filter from ODB)
+    function loadFilter(filterName){
+        // populate the UI with whatever filter definition is requested
 
-        var currentFilterName = dataStore.filter.table.Current,
-            i=0, j,
+        var i=0, j,
             conditions;
 
-        setTitle();
+        // dump previous filter:
+        document.getElementById('logic-wrap').innerHTML = '';
 
-        while(dataStore.filter.table.Filters[dataStore.filter.table.Current]['orCondition'+i]){
+        while(dataStore.filter.table.Filters[filterName]['orCondition'+i]){
             addNewOR()
             
-            conditions = dataStore.filter.table.Filters[dataStore.filter.table.Current]['orCondition'+i];
+            conditions = dataStore.filter.table.Filters[filterName]['orCondition'+i];
             if(Array.isArray(conditions)){
                 for(j=0; j<conditions.length; j++)
-                    loadAndRow(i, conditions[j])
+                    loadAndRow(dataStore.filter.orIndex-1, conditions[j])
             }
             else
-                loadAndRow(i, conditions)
+                loadAndRow(dataStore.filter.orIndex-1, conditions)
 
             i++;
 
         }
+
+        document.getElementById('filterName').value = filterName;
+        setAllowedDetectors(dataStore.filter.table.Filters[filterName].EnabledDetTypes)
+    }
+
+    function switchFilter(){
+        // switch the current filter based on the select menu
+
+        var newFilter = selected('filterMenu', true);
+        loadFilter(newFilter);
     }
 
     function buildFilterMenu(){
@@ -216,31 +247,55 @@
 
     }
 
-    function setTitle(){
+    function setTitle(title){
         // update the title of the current filter from what's been pulled from the odb
 
-        document.getElementById('currentFilter').innerHTML = dataStore.filter.table.Current;
-        document.getElementById('filterName').value = dataStore.filter.table.Current;
+        document.getElementById('currentActiveFilter').innerHTML = 'Current Applied Filter: ' + title;
+        document.getElementById('filterName').value = title;
     }
 
-    function writeNewFilter(){
+    function setAllowedDetectors(encoding){
+        // set the checkboxes in the allowed detectors panel based on a string encoding as found in EnabledDetTypes
+
+        if(!encoding) return; // not all filters currently have this attribute...
+
+        var detectors = encoding.split('-'),
+            i, checkbox;
+
+        for(i=0; i<detectors.length; i++){
+            checkbox = document.querySelector('div#allowedDetectors input[value='+detectors[i]+']');
+            checkbox.checked = true;
+        }
+    }
+
+    function requestNewFilterName(){
+        //when something changes in the filter definition, remind the user to change the name of the filter
+
+        var nameField = document.getElementById('filterName'),
+            currentName = nameField.value;
+
+        if(dataStore.filter.table.Filters.hasOwnProperty(currentName))
+            nameField.value = 'my-new-filter';
+    }
+
+    ///////////////////////
+    // ODB writing
+    ///////////////////////
+
+    function writeNewFilter(apply){
         // write new filter to the odb
         // note that since we can only write one thing at a time, and must create the variables in a separate operation first,
         // the synchronous order of operations here is important...
 
-        var filterName = 'dummy',//document.getElementById('filterName').value,
+        var filterName = document.getElementById('filterName').value,
             orBlocks = document.getElementById('logic-wrap').getElementsByClassName('or-block'),
-            createDeletionRequest, i, andRows, 
+            orIndex, andIndex,
+            i, andRows, 
             filterEncoding,
             detectorType, countingType, multiplicity, windowSize, prescale,
             multiIn, prescaleIn, windowIn;
 
-        orBlocks = [orBlocks[0], orBlocks[1]]
-
         // create request URLs
-        // first delete this if it exists
-        createDeletionRequest = 'http://' + dataStore.host + '?cmd=jdelete&odb=/Filter/Filters/' + filterName + '&encoding=json&callback=createODBstructure';
-        // then recreate the array....
         dataStore.filter.createFilterRequest = 'http://' + dataStore.host + '?cmd=jcreate&';
         for(i=0; i<orBlocks.length; i++){
             dataStore.filter.createFilterRequest += 'odb' + (2*i) + '=/Filter/Filters/' + filterName + '/orCondition' + i + '&type' + (2*i) + '=12&strlen' + (2*i) + '=32&arraylen'+ (2*i) +'='+orBlocks[i].getElementsByClassName('and-row').length+'&';
@@ -251,17 +306,19 @@
         // then set the values in the array
         dataStore.filter.setFilterStepRequests = [];
         for(i=0; i<orBlocks.length; i++){
+            orIndex = parseInt(orBlocks[i].id.slice(15), 10);
             andRows = orBlocks[i].getElementsByClassName('and-row');
 
             // filter encodings and coincidence windows
             filterEncoding = '';
             for(j=0; j<andRows.length; j++){
-                multiIn = document.getElementById('coincConfigInput0' + i + j );
-                windowIn = document.getElementById('coincConfigInput1' + i + j );
-                prescaleIn = document.getElementById('prescaleConfigInput0' + i + j );
+                andIndex = parseInt(andRows[j].id.slice(6 + (''+orIndex).length), 10);
+                multiIn = document.getElementById('coincConfigInput0' + orIndex + andIndex );
+                windowIn = document.getElementById('coincConfigInput1' + orIndex + andIndex );
+                prescaleIn = document.getElementById('prescaleConfigInput0' + orIndex + andIndex );
 
-                detectorType = selected('detectorSelect' + i + j);
-                countingType = selected('filterType' + i + j);
+                detectorType = selected('detectorSelect' + orIndex + andIndex);
+                countingType = selected('filterType' + orIndex + andIndex);
                 multiplicity = multiIn.value;
                 windowSize = windowIn.value;
                 prescale = prescaleIn.value;
@@ -286,8 +343,53 @@
                 dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/orCondition' + i + '[*]&value=' + filterEncoding);
         }
 
+        // allowed detectors encoding:
+        dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/EnabledDetTypes&value=' + parseAllowedDetectors());
+
+        // prepare rquest to apply filter
+        if(apply)
+            dataStore.filter.applyFilterRequest = 'http://' + dataStore.host + '?cmd=jset&odb=/Filter/Current&value=' + filterName
+
         // sets off a chain of callbacks to delete -> recreate -> populate
-        promiseScript(createDeletionRequest)
+        dataStore.filter.applyOnWrite = apply;
+        promiseScript(generateDeletionURL(filterName, 'createODBstructure'))
+    }
+
+    function parseAllowedDetectors(){
+        // return the encoded strung describing the allowed detectors
+
+        var detectors = document.getElementById('allowedDetectors').getElementsByTagName('input'),
+            encoded = '',
+            i;
+
+        for(i=0; i<detectors.length; i++){
+            if(detectors[i].checked){
+                if (encoded!='')
+                    encoded += '-';
+                encoded += detectors[i].value;
+            }
+        }
+
+        return encoded;
+    }
+
+    function generateDeletionURL(filterName, callback){
+        // return a url to delete filterName from the odb
+
+        var url = 'http://' + dataStore.host + '?cmd=jdelete&odb=/Filter/Filters/' + filterName
+
+        if(callback)
+            url += '&encoding=json&callback=' + callback;
+
+        return url
+    }
+
+    function deleteFilter(){
+        // remove a filter from the odb
+
+        var filter = selected('filterMenu', true);
+        promiseScript(generateDeletionURL(filter, 'reloadPage'))
+
     }
 
     function createODBstructure(){
@@ -298,10 +400,14 @@
     function populateFilter(){
         // callback after recreating filter keys; sends request to populate keys
         Promise.all(dataStore.filter.setFilterStepRequests.map(promiseScript)).then(
-            console.log('filter rewrite complete')
+            function(){
+                if(dataStore.filter.applyOnWrite)
+                    promiseScript(dataStore.filter.applyFilterRequest);
+                else
+                    reloadPage();
+            }
         )      
     }
-
 </script>
 
 

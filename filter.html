@@ -21,6 +21,7 @@
 
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
+        <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
         <link id='filter-builder' rel="import" href="templates/filter-builder/filter-builder.html">
         <link id='andRow' rel="import" href="templates/filter-builder/andRow.html">
@@ -35,6 +36,8 @@
             <div id='filterWrap' class='col-md-10'></div>
         </div>
 
+        <div id='footer'></div>
+
         <script>
             ////////////////////////////////////////
             //filter-specific dataStore prep:
@@ -44,7 +47,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'run-status', 'filter-builder', 'orBlock', 'andRow'];
+                templates = ['brand-header', 'brand-footer', 'run-status', 'filter-builder', 'orBlock', 'andRow'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -55,6 +58,14 @@
                         'title': 'GRIFFIN Filter',
                     }
                 );
+                //footer
+                document.getElementById('footer').innerHTML = Mustache.to_html(
+                    dataStore.templates['brand-footer'], 
+                    {
+                        
+                    }
+                );
+                setupFooter('footerImage', 2, '#999999');
                 //run control
                 document.getElementById('runStat').innerHTML = Mustache.to_html(
                     dataStore.templates['run-status'], 
