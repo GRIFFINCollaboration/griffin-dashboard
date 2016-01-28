@@ -1,0 +1,8 @@
+<template id='orBlock'>
+    <div id='leftTab{{orNumber}}' class='col-md-1 left-tab'>OR</div>
+    <div id='filterContent{{orNumber}}' class='col-md-11 filterContent'></div>
+    <div class='or-control'>
+        <button id='andNewRow{{orNumber}}' class='btn btn-info' onclick='addNewAND({{orNumber}});'>AND new condition</button>
+        <button id='deleteCondition{{orNumber}}' class='btn btn-danger' onclick='deleteOR({{orNumber}})'>Delete This Block</button>
+    </div>
+</template>
