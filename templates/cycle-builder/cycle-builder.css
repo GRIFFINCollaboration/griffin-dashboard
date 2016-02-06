@@ -1,33 +1,33 @@
-div.and-row{
-    margin-bottom: 4px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid #777777;
+body {
+  counter-reset: step;
 }
 
-div.or-block{
-    background-color: #111111;
-    border-radius: 2em;
-    padding: 2em;
-    margin-bottom: 1em;
+div.cycle-step::before {
+  counter-increment: step;
+  content: counter(step);
+  font-size: 200%;
+  background-color: #5CB85C;
+  width: 2em;
+  height: 2em;
+  border-radius: 1em;
+  display: inline-block;
+  margin-bottom: 2px;
+  text-align: center;
+  padding-top: 0.25em;
 }
 
-div.left-tab{
-    background-color: #222222;
-    text-align: center;
-    font-size: 300%;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+div.cycle-step{
+    border-radius: 50px;
+    background-color: #444444;
+    padding: 1em;
+    margin: 0em 0em 1em 0em;
+    border: 1em solid #222222;
 }
 
-div.or-control{
-    clear: both;
+div.order-control{
+    display: inline;
 }
 
-div#logic-wrap div:nth-child(1) div.left-tab{
-    opacity: 0;
-}
-
-div.or-block div.and-row:nth-child(1) div.and-label{
-    opacity: 0;
+input[type=checkbox]:checked + label{
+    color: #FF0000;
 }

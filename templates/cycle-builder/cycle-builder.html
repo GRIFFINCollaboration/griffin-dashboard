@@ -38,103 +38,113 @@
         dataStore.cycle = {};               // place to park cycle info on the dataStore
         dataStore.cycle.stepIndex = 0;     // monotonically increasing counter to create unique IDs for new cycle steps 
 
-        dataStore.cycle.actions = [
-            {
-                'id': 'beamOn',
-                'code': 0x00010001,
-                'prettyName': 'Beam On'
-            },
+        dataStore.cycle.actions = {
 
-            {
-                'id': 'output2',
-                'code': 0x00020002,
-                'prettyName': 'Output 2'
-            },
+            'RunControl': [
+                {
+                    'id': 'beamOn',
+                    'code': 0x00010001,
+                    'prettyName': 'Beam On'
+                },
 
-            {
-                'id': 'output3',
-                'code': 0x00040004,
-                'prettyName': 'Output 3'
-            },
+                {
+                    'id': 'moveTape',
+                    'code': 0xC008C008,
+                    'prettyName': 'Move Tape'
+                }
+            ],
 
-            {
-                'id': 'moveTape',
-                'code': 0xC008C008,
-                'prettyName': 'Move Tape'
-            },
+            'Triggers': [
+                {
+                    'id': 'hpgeTrig',
+                    'code': 0x00800080,
+                    'prettyName': 'HPGe Trigger'
+                },
 
-            {
-                'id': 'output5',
-                'code': 0x00100010,
-                'prettyName': 'Output 5'
-            },
+                {
+                    'id': 'scpTrig',
+                    'code': 0x01000100,
+                    'prettyName': 'SCEPTAR Trigger'
+                },
 
-            {
-                'id': 'output6',
-                'code': 0x00200020,
-                'prettyName': 'Output 6'
-            },
+                {
+                    'id': 'siliTrig',
+                    'code': 0x02000200,
+                    'prettyName': 'Si(Li) Trigger'
+                },
 
-            {
-                'id': 'output7',
-                'code': 0x00400040,
-                'prettyName': 'Output 7'
-            },
+                {
+                    'id': 'labr3Trig',
+                    'code': 0x04000400,
+                    'prettyName': 'LaBr3 Trigger'
+                },
 
-            {
-                'id': 'hpgeTrig',
-                'code': 0x00800080,
-                'prettyName': 'HPGe Trigger'
-            },
+                {
+                    'id': 'dscTrig',
+                    'code': 0x08000800,
+                    'prettyName': 'DESCANT Trigger'
+                }
+            ],
 
-            {
-                'id': 'scpTrig',
-                'code': 0x01000100,
-                'prettyName': 'SCEPTAR Trigger'
-            },
+            'DataCollection': [
+                {
+                    'id': 'bkg',
+                    'code': 0xC002C002,
+                    'prettyName': 'Collect Background'
+                },
 
-            {
-                'id': 'siliTrig',
-                'code': 0x02000200,
-                'prettyName': 'Si(Li) Trigger'
-            },
+                {
+                    'id': 'collectDataWithBeamOn',
+                    'code': 0xC001C001,
+                    'prettyName': 'Collect Data with Beam on'
+                },
 
-            {
-                'id': 'labr3Trig',
-                'code': 0x04000400,
-                'prettyName': 'LaBr3 Trigger'
-            },
+                {
+                    'id': 'collectDataWithBeamOff',
+                    'code': 0xC004C004,
+                    'prettyName': 'Collect Data with Beam off'
+                },
 
-            {
-                'id': 'dscTrig',
-                'code': 0x08000800,
-                'prettyName': 'DESCANT Trigger'
-            },
+                {
+                    'id': 'collectSourceData',
+                    'code': 0xC010C010,
+                    'prettyName': 'Collect Source Data'
+                }
+            ],
 
-            {
-                'id': 'bkg',
-                'code': 0xC002C002,
-                'prettyName': 'Collect Background'
-            },
+            'Unassigned': [
+                {
+                    'id': 'output2',
+                    'code': 0x00020002,
+                    'prettyName': 'Output 2'
+                },
 
-            {
-                'id': 'collectDataWithBeamOn',
-                'code': 0xC001C001,
-                'prettyName': 'Collect Data with Beam on'
-            },
+                {
+                    'id': 'output3',
+                    'code': 0x00040004,
+                    'prettyName': 'Output 3'
+                },
 
-            {
-                'id': 'collectDataWithBeamOff',
-                'code': 0xC004C004,
-                'prettyName': 'Collect Data with Beam off'
-            },
+                {
+                    'id': 'output5',
+                    'code': 0x00100010,
+                    'prettyName': 'Output 5'
+                },
 
-            {
-                'id': 'collectSourceData',
-                'code': 0xC010C010,
-                'prettyName': 'Collect Source Data'
-            }
-        ]
+                {
+                    'id': 'output6',
+                    'code': 0x00200020,
+                    'prettyName': 'Output 6'
+                },
+
+                {
+                    'id': 'output7',
+                    'code': 0x00400040,
+                    'prettyName': 'Output 7'
+                }
+            ]
+
+        }
 
         // get the ODB PPG dir:
         fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/PPG&encoding=json-p-nokeys&callback=processCycle');
@@ -160,13 +170,16 @@
         // add a new step to the current cycle
 
         var wrap = document.createElement('div');
-        wrap.setAttribute('class', 'cycle-step');
+        wrap.setAttribute('class', 'cycle-step col-md-4');
         wrap.setAttribute('id', 'cycleStep' + dataStore.cycle.stepIndex);
         wrap.innerHTML = Mustache.to_html(
             dataStore.templates['cycle-step'], 
             {  
                 "index": dataStore.cycle.stepIndex,
-                "actions": dataStore.cycle.actions
+                "RunControl": dataStore.cycle.actions.RunControl,
+                "Triggers": dataStore.cycle.actions.Triggers,
+                "DataCollection": dataStore.cycle.actions.DataCollection,
+                "Unassigned": dataStore.cycle.actions.Unassigned
             }
         );
         document.getElementById('logic-wrap').appendChild(wrap);
@@ -251,7 +264,7 @@
     function loadCycleStep(stepIndex, cycleEncoding, duration){
         // parse the encoding of a cycle step and fill it in at the appropriate index.
 
-        var i, dur, durationUnit;
+        var i, j, keys, dur, durationUnit;
 
         //decide on a sensible unit for the duration
         if(duration % 60000 == 0){
@@ -270,11 +283,15 @@
         document.getElementById(stepIndex+'DurationUnit').querySelector('option[value="'+durationUnit+'"]').selected = true;
     
         //set step actions
-        for(i=0; i<dataStore.cycle.actions.length; i++){
-            if( (dataStore.cycle.actions[i].code & (cycleEncoding>>>0))>>>0 == dataStore.cycle.actions[i].code){
-                document.getElementById(stepIndex + dataStore.cycle.actions[i].id).checked = true;
-            }
+        keys = Object.keys(dataStore.cycle.actions);
+        for(i=0; i<keys.length; i++){
+            for(j=0; j<dataStore.cycle.actions[keys[i]].length; j++){
+                if( (dataStore.cycle.actions[keys[i]][j].code & (cycleEncoding>>>0))>>>0 == dataStore.cycle.actions[keys[i]][j].code){
+                    document.getElementById(stepIndex + dataStore.cycle.actions[keys[i]][j].id).checked = true;
+                }
+            }            
         }
+
     }
 
     function setTitle(title){
@@ -325,7 +342,7 @@
 
             //or together all actions in this cycle step
             stepCode = 0
-            cycleActions = document.querySelectorAll('ul#cycle'+stepIndex+'Action input[type="checkbox"]:checked');
+            cycleActions = document.querySelectorAll('input.cycleOption[type="checkbox"]:checked');
             for(j=0; j<cycleActions.length; j++){
                 stepCode = stepCode | cycleActions[j].value;
             }
