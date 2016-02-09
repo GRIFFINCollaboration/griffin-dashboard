@@ -18,8 +18,7 @@ function heartbeat(){
     if(dataStore.heartbeat.ADCrequest.length > 0)
         URLqueries = URLqueries.concat(dataStore.heartbeat.ADCrequest);
 
-    // dump raw data store to prevent stale data from hanging around
-    createDataStructure();
+    preFetch();
 
     Promise.all(URLqueries.map(promiseURL)
         ).then(
@@ -35,7 +34,7 @@ function heartbeat(){
                     ).then(
                         function(){
                             dataStore.heartbeat.callback();
-                            dataStore.heartbeatTimer = window.setTimeout(heartbeat, dataStore.heartbeatInterval)
+                            dataStore.heartbeatTimer = window.setTimeout(heartbeat, dataStore.heartbeatInterval);
                         }
                     )
             }

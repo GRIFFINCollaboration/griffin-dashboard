@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DAQ Monitor Testing</title>
+
+        <link rel="stylesheet" href="../css/qunit.css">
+        <script src="../scripts/qunit.js"></script>
+
+        <script src='../scripts/helpers.js' type="text/javascript"></script>
+        <script src='../templates/daq-monitor/daq-monitor.js' type="text/javascript"></script>
+    </head>
+    <body>
+        <div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+
+        <script>
+            QUnit.module('DAQ unpacking', {
+                beforeEach: function(){
+                    dataStore = {
+                        DAQ: {
+                            MSC: {
+                                MSC: [0x230A, 0x230B],
+                                chan: ['GRG--', 'XXX--']
+                            }
+
+                        }
+                    };
+                    regenerateDatastructure()
+                },
+
+                afterEach: function(){
+                    delete dataStore;
+                }
+            })
+
+            QUnit.test('single-sort', function(assert){
+                //check that individual objects returned by unpackDAQ get sorted into the summary correctly
+
+                sortDAQitem('GRG06BN00A', {
+                    MSC: 0x230A,
+                    threshold: 100,
+                    trigReq: 1000,
+                    trigAcpt: 732
+                });
+
+                assert.equal(1000, dataStore.DAQ.summary.master.requests)
+                assert.equal(732, dataStore.DAQ.summary.master.accepts)
+                assert.equal(1000, dataStore.DAQ.summary.collectors.requests[2])
+                assert.equal(732, dataStore.DAQ.summary.collectors.accepts[2])
+                assert.equal(1000, dataStore.DAQ.summary.digitizers.requests[2][3])
+                assert.equal(732, dataStore.DAQ.summary.digitizers.accepts[2][3])
+                assert.equal(1000, dataStore.DAQ.summary.channels.requests[2][3][10])
+                assert.equal(732, dataStore.DAQ.summary.channels.accepts[2][3][10])
+                assert.equal(1000, dataStore.DAQ.summary.detectors.GR.requests)
+                assert.equal(732, dataStore.DAQ.summary.detectors.GR.accepts)
+            });
+
+            QUnit.test('sum-sort', function(assert){
+                //check that multiple objects returned by unpackDAQ get sorted into the summary correctly
+
+                sortDAQitem('GRG06BN00A', {
+                    MSC: 0x230A,
+                    threshold: 100,
+                    trigReq: 1000,
+                    trigAcpt: 732
+                });
+
+                sortDAQitem('XXX06BN00A', {
+                    MSC: 0x230B,
+                    threshold: 101,
+                    trigReq: 500,
+                    trigAcpt: 200
+                });
+
+                assert.equal(1500, dataStore.DAQ.summary.master.requests)
+                assert.equal(932, dataStore.DAQ.summary.master.accepts)
+                assert.equal(1500, dataStore.DAQ.summary.collectors.requests[2])
+                assert.equal(932, dataStore.DAQ.summary.collectors.accepts[2])
+                assert.equal(1500, dataStore.DAQ.summary.digitizers.requests[2][3])
+                assert.equal(932, dataStore.DAQ.summary.digitizers.accepts[2][3])
+                assert.equal(1000, dataStore.DAQ.summary.channels.requests[2][3][10])
+                assert.equal(732, dataStore.DAQ.summary.channels.accepts[2][3][10])
+                assert.equal(500, dataStore.DAQ.summary.channels.requests[2][3][11])
+                assert.equal(200, dataStore.DAQ.summary.channels.accepts[2][3][11])
+                assert.equal(1000, dataStore.DAQ.summary.detectors.GR.requests)
+                assert.equal(732, dataStore.DAQ.summary.detectors.GR.accepts)
+                assert.equal(500, dataStore.DAQ.summary.detectors.XX.requests)
+                assert.equal(200, dataStore.DAQ.summary.detectors.XX.accepts)
+            });
+        </script>
+      </body>
+</html>

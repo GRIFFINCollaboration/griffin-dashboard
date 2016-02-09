@@ -119,6 +119,23 @@ function pokeURL(url){
     req.send();
 }
 
+function getParameterByName(name) {
+    // get a parameter out of the query string
+    // thanks http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript/901144#901144
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function reloadPage(){
+    document.location.reload();
+}
+
+///////////////////////////////
+// daq requests & unpacking
+///////////////////////////////
+
 function fetchDAQ(payload){
     //get the contents of the ODB DAQ directory.
 
@@ -144,15 +161,46 @@ function fetchDAQ(payload){
     }
 }
 
-function getParameterByName(name) {
-    // get a parameter out of the query string
-    // thanks http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript/901144#901144
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+function determineADCrequests(){
+    // generate the URLs for rate and threshold requests, park them in the dataStore, and kick the heartbeat to start fetching.
+
+    var i;
+
+    //insert url queries into heartbeat polls:
+    for(i=0; i<dataStore.hosts.length; i++){
+        dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
+    }
+
+    //bump the heartbeat
+    startHeart();
+
 }
 
-function reloadPage(){
-    document.location.reload();
+function unpackDAQ(i, dv){
+    //extract the ith block out of a dataview object constructed from the arraybuffer returned by a DAQ element:
+    var blockLength = 14,
+        thresholdPos = 10,
+        trigAcptPos = 2,
+        trigReqPos = 6,
+        MSCPos = 0,
+        unpacked = {};
+
+    unpacked.threshold  = dv.getUint32(i*blockLength + thresholdPos, true);
+    unpacked.trigAcpt   = dv.getFloat32(i*blockLength + trigAcptPos, true);
+    unpacked.trigReq    = dv.getFloat32(i*blockLength + trigReqPos, true);
+    unpacked.MSC        = dv.getUint16(i*blockLength + MSCPos, true);
+
+    return unpacked;
+}
+
+function parseMSCindex(MSC){
+    //decode an MSC index into [master channel, collector channel, digitizer channel]
+
+    var masterChannel, collectorChannel, digitizerChannel;
+
+    masterChannel = (MSC & 0xF000) >> 12;
+    collectorChannel = (MSC & 0xF00) >> 8;
+    digitizerChannel = (MSC & 0xFF);
+    
+    return [masterChannel, collectorChannel, digitizerChannel]
 }

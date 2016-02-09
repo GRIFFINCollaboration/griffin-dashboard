@@ -52,6 +52,10 @@ function setupDetector(){
     }
 }
 
+function preFetch(){
+    createDataStructure();
+}
+
 function createDataStructure(){
     // set up an empty data structure:
     // dataStore.data[channel name][subview name]
@@ -436,21 +440,6 @@ function findChannel(channel){
     return (MSC & 0x00FF)
 }
 
-function determineADCrequests(){
-    // generate the URLs for rate and threshold requests, park them in the dataStore, and kick the heartbeat to start fetching.
-
-    var i;
-
-    //insert url queries into heartbeat polls:
-    for(i=0; i<dataStore.hosts.length; i++){
-        dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
-    }
-
-    //bump the heartbeat
-    startHeart();
-
-}
-
 function sortODBEquipment(payload){
     // take the ODB equipment directory and populate the HV info with it.
 
@@ -507,7 +496,7 @@ function findHVcrate(channel){
 }
 
 function unpackDAQdv(dv){
-    //parse DAQ dataviews into dataStore.data variables
+    //parse DAQ dataviews into dataStore.data variables - detector style
     //information for an individual channel is packed in a 14 byte word:
     //[MSC 2 bytes][trig request 4 bytes][trig accept 4 bytes][threshold 4 bytes] <--lowest bit
     var channelIndex, channelName, DAQblock,
@@ -527,23 +516,6 @@ function unpackDAQdv(dv){
         }
 
     }
-}
-
-function unpackDAQ(i, dv){
-    //extract the ith block out of a dataview object constructed from the arraybuffer returned by a DAQ element:
-    var blockLength = 14,
-        thresholdPos = 10,
-        trigAcptPos = 2,
-        trigReqPos = 6,
-        MSCPos = 0,
-        unpacked = {};
-
-    unpacked.threshold  = dv.getUint32(i*blockLength + thresholdPos, true);
-    unpacked.trigAcpt   = dv.getFloat32(i*blockLength + trigAcptPos, true);
-    unpacked.trigReq    = dv.getFloat32(i*blockLength + trigReqPos, true);
-    unpacked.MSC        = dv.getUint16(i*blockLength + MSCPos, true);
-
-    return unpacked;
 }
 
 //////////////////////////
