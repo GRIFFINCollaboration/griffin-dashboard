@@ -30,7 +30,7 @@ function unpackDAQdv(dv){
     }
 }
 
-function regenerateDatastructure(){
+function regenerateDatastructure(suppressDOMconfig){
     // rebuild an empty data structure to hold sorted DAQ data, based on the MSC table:
     // dataStore.DAQ.summary = {
     //      master: {
@@ -128,14 +128,18 @@ function regenerateDatastructure(){
     }
 
     // dom setup
-    for(i=0; i<dataStore.DAQ.summary.collectors.titles.length; i++){
-        collectorOption = document.createElement('option');
-        collectorOption.setAttribute('value', dataStore.DAQ.summary.collectors.titles[i].slice(2,3));
-        collectorOption.innerHTML = dataStore.DAQ.summary.collectors.titles[i];
-        document.getElementById('collectorPicker').appendChild(collectorOption);
-        document.getElementById('digiCollectorPicker').appendChild(collectorOption.cloneNode(true));
+    if(!suppressDOMconfig){
+        for(i=0; i<dataStore.DAQ.summary.collectors.titles.length; i++){
+            if(dataStore.DAQ.summary.collectors.titles[i]){
+                collectorOption = document.createElement('option');
+                collectorOption.setAttribute('value', dataStore.DAQ.summary.collectors.titles[i].slice(2,3));
+                collectorOption.innerHTML = dataStore.DAQ.summary.collectors.titles[i];
+                document.getElementById('collectorPicker').appendChild(collectorOption);
+                document.getElementById('digiCollectorPicker').appendChild(collectorOption.cloneNode(true));
+            }
+        }
+        document.getElementById('digiCollectorPicker').onchange();
     }
-    document.getElementById('digiCollectorPicker').onchange();
 
     dataStore.DAQ.summaryJSON = JSON.stringify(dataStore.DAQ.summary);
 }
