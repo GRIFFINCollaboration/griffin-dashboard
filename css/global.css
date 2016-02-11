@@ -8,7 +8,7 @@ a, button {
     outline: none !important; 
 }
 
-div.sectionWrapper{
+div.section-wrapper{
     clear: both;
     overflow: auto;
 }
@@ -35,6 +35,10 @@ select, input, option, .dark-text{
 
 .highlightText{
     color: #FFFFFF;
+}
+
+.inline{
+    display: inline-block;
 }
 
 div.warning{

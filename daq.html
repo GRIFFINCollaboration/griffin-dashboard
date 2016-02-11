@@ -28,7 +28,7 @@
     <body>
         <div id='header'></div>
 
-        <div class='sectionWrapper'>
+        <div class='section-wrapper'>
             <div id='runStat' class='col-md-2'></div>
             <div id='DAQDisplay' class='col-md-10'></div>
         </div>
@@ -43,6 +43,14 @@
             function processDAQ(payload){
                 fetchDAQ(payload);
                 dataStore.DAQ.summary = {};
+                dataStore.DAQ.detectorNames = {
+                    'GR': 'GRIFFIN',
+                    'ZD': 'Zero-Degree Scintillator',
+                    'SE': 'SCEPTAR',
+                    'DS': 'DESCANT',
+                    'PA': 'PACES',
+                    'DA': 'DANTE'
+                };
                 determineADCrequests();
             }
 

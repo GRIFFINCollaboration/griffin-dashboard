@@ -132,6 +132,7 @@ function reloadPage(){
     document.location.reload();
 }
 
+
 ///////////////////////////////
 // daq requests & unpacking
 ///////////////////////////////
@@ -203,4 +204,18 @@ function parseMSCindex(MSC){
     digitizerChannel = (MSC & 0xFF);
     
     return [masterChannel, collectorChannel, digitizerChannel]
+}
+
+Array.prototype.unique = function(){
+    // thanks http://jszen.com/best-way-to-get-unique-values-of-an-array-in-javascript.7.html
+    var n = {},r=[];
+    for(var i = 0; i < this.length; i++) 
+    {
+        if (!n[this[i]]) 
+        {
+            n[this[i]] = true; 
+            r.push(this[i]); 
+        }
+    }
+    return r;
 }
