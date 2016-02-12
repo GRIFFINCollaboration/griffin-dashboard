@@ -138,7 +138,7 @@ function reloadPage(){
 ///////////////////////////////
 
 function fetchDAQ(payload){
-    //get the contents of the ODB DAQ directory.
+    //parse the contents of the ODB DAQ directory.
 
     var i, key;
 

@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="clock-control.css">
+
+<template id='clock-control'>
+    <div class="panel-group" id="accordion{{col}}" role="tablist" aria-multiselectable="true">
+        {{#clocks}}
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading{{.}}">
+                    <span class="panel-title">
+                        <h4 class='inline'>
+                            <a role="button" data-toggle="collapse" data-parent="#accordion{{col}}" href="#collapse{{.}}" aria-expanded="false" aria-controls="collapse{{.}}" class='btn btn-info'>{{.}}</a>
+                        </h4>
+                        <span id='host{{.}}'>No Host</span>
+                        <div>
+                            <input type='radio' name='config{{.}}' value='master' id='masterToggle{{.}}'></input>
+                            <label for='masterToggle{{.}}' class='inline'>Master</label>
+                            <input type='radio' name='config{{.}}' value='follower' id='followerToggle{{.}}' checked></input>
+                            <label for='followerToggle{{.}}'>Follower</label>
+                        </div>
+                    </span>
+                </div>
+                <div id="collapse{{.}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{.}}">
+                    <div class="panel-body" id='content{{.}}'>
+
+                    </div>
+                </div>
+            </div>
+        {{/clocks}}
+    </div>
+</template>
+
+<script>
+
+    function setupClocks(){
+        // some dom-free config and parameters for the clocks
+        dataStore.clocks = {};
+    }
+
+    function setupDetail(clockName){
+        // set up the named clock's details as a follower or master depending on its toggle
+
+        var mode = document.querySelector('input[name="config'+ clockName +'"]:checked').value; 
+
+        if(mode == 'follower'){
+            document.getElementById('content' + clockName).innerHTML = Mustache.to_html(
+                dataStore.templates['follower-detail'], 
+                {
+                    'clockName': clockName,
+                    'summaryConfigRows': dataStore.clocks.clockFollowerSummaryRows,
+                    'eSATAindices': [0,1,2,3,4,5]
+                }
+            );
+        }
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

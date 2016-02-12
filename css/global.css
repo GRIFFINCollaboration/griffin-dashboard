@@ -4,6 +4,14 @@ body {
     color: #DDDDDD !important;
 }
 
+div.panel *{
+    color: #000000 !important;
+}
+
+div.panel .btn-info, div.panel .btn-success{
+    color: #FFFFFF !important;
+}
+
 a, button { 
     outline: none !important; 
 }
@@ -13,7 +21,7 @@ div.section-wrapper{
     overflow: auto;
 }
 
-div.panel{
+div.pan{
     margin: 1em 0em 1em 0em;
     background-color: #333333;
     padding: 1em;
@@ -21,11 +29,11 @@ div.panel{
     display: inline-block;
 }
 
-div.top-panel{
+div.top-pan{
     margin-top: 0px;
 }
 
-div.panel div{
+div.pan div{
     margin-bottom: 1em;
 }
 
@@ -39,6 +47,7 @@ select, input, option, .dark-text{
 
 .inline{
     display: inline-block;
+    margin-right: 1em;
 }
 
 div.warning{

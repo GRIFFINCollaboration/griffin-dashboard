@@ -3,14 +3,14 @@
 
 <template id='daq-monitor'>
     <div class='section-wrapper'>
-        <div class='col-md-12 panel' id='masterStats'>
+        <div class='col-md-12 pan' id='masterStats'>
             <h2>Master Stats</h2>
             <div id='collectorsHisto'></div>
         </div>
     </div>
 
     <div class='section-wrapper'>
-        <div class='col-md-12 panel' id='collectorsWrap'>
+        <div class='col-md-12 pan' id='collectorsWrap'>
             <h2>Collectors</h2>
             <label for='collectorPicker'>Collector: </label>
             <select id='collectorPicker' onchange='repaint()'></select>
@@ -19,7 +19,7 @@
     </div>
 
     <div class='section-wrapper'>
-        <div class='col-md-12 panel'>
+        <div class='col-md-12 pan'>
             <h2>Digitizers</h2>
             <label for='digiCollectorPicker'>Collector: </label>
             <select id='digiCollectorPicker' onchange='updateDigitizerList("digiCollectorPicker"); repaint()'></select>
@@ -30,7 +30,7 @@
     </div>
 
     <div class='section-wrapper'>
-        <div class='col-md-12 panel'>
+        <div class='col-md-12 pan'>
             <h2>Detectors</h2>
             <div id='detectorsHisto'></div>
         </div>
