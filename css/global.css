@@ -8,7 +8,7 @@ div.panel *{
     color: #000000 !important;
 }
 
-div.panel .btn-info, div.panel .btn-success{
+div.panel .btn{
     color: #FFFFFF !important;
 }
 
@@ -31,6 +31,10 @@ div.pan{
 
 div.top-pan{
     margin-top: 0px;
+}
+
+.top-gutter{
+    margin-top: 0.5em;
 }
 
 div.pan div{
@@ -69,6 +73,21 @@ input.smallNumber{
 
 input.wideText{
     width: 15em;
+}
+
+div.div-disable{
+    position: relative;
+}
+
+div.div-disable:before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    cursor: not-allowed;
 }
 
 /*navigation*/

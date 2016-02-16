@@ -24,6 +24,7 @@
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
         <link id='clock-control' rel="import" href="templates/clock-control/clock-control.html">
         <link id='follower-detail' rel="import" href="templates/clock-control/follower-detail.html">
+        <link id='master-detail' rel="import" href="templates/clock-control/master-detail.html">
     </head>
 
     <body>
@@ -63,7 +64,10 @@
                             table: dataStore.Equipment[keys[i]]
                         });
                     }
-                } 
+                }
+
+                //fill info into the dom
+                populateInfo();
             }
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
@@ -75,7 +79,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'run-status', 'clock-control', 'follower-detail'];
+                templates = ['brand-header', 'run-status', 'clock-control', 'follower-detail', 'master-detail'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -115,11 +119,7 @@
                         'clocks': clocks.slice(17)
                     }
                 );
-
-                for(i=0; i<clocks.length; i++){
-                    setupDetail(clocks[i]);
-                }
-
+                
                 ////////////////////////////
                 //set up heartbeat
                 ////////////////////////////
