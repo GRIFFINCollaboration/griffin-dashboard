@@ -206,6 +206,10 @@ function parseMSCindex(MSC){
     return [masterChannel, collectorChannel, digitizerChannel]
 }
 
+//////////////////////////////////
+// prototype modifications
+//////////////////////////////////
+
 Array.prototype.unique = function(){
     // thanks http://jszen.com/best-way-to-get-unique-values-of-an-array-in-javascript.7.html
     var n = {},r=[];

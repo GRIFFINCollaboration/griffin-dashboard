@@ -68,7 +68,7 @@
                     {{#eSATAindices}}
                         <div class='col-md-6 control-block'>
                             <h4>eSATA {{.}}</h4>
-                            <input type='checkbox' id='{{clockName}}eSATA{{.}}Active'></input>
+                            <input type='checkbox' id='{{clockName}}eSATA{{.}}Active' onchange='toggleChannels("{{clockName}}")'></input>
                             <label for='{{clockName}}eSATA{{.}}Active'>Active</label>
                             <div id='{{clockName}}bypassESATA{{.}}'>--</div>
                         </div>
@@ -82,7 +82,7 @@
                         <div id='{{clockName}}bypassRightLEMO'>--</div>
                     </div>
                     <div class='col-md-12 text-center top-gutter'>
-                        <button id='{{clockName}}writeOutputs' class='btn btn-warning'>Write Outputs</button>
+                        <button id='{{clockName}}writeOutputs' class='btn btn-warning disabled' onclick='writeOutputs("{{clockName}}")'>Write Outputs</button>
                     </div>
 
                 </div>
