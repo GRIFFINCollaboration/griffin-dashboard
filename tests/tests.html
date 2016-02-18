@@ -2,20 +2,21 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>DAQ Monitor Testing</title>
+        <title>GRIFFIN Dashboard Testing</title>
 
         <link rel="stylesheet" href="../css/qunit.css">
         <script src="../scripts/qunit.js"></script>
 
         <script src='../scripts/helpers.js' type="text/javascript"></script>
         <script src='../templates/daq-monitor/daq-monitor.js' type="text/javascript"></script>
+        <script src='../templates/hv-monitor/hv-monitor.js' type="text/javascript"></script>
     </head>
     <body>
         <div id="qunit"></div>
         <div id="qunit-fixture"></div>
 
         <script>
-            QUnit.module('DAQ unpacking', {
+            QUnit.module('DAQ', {
                 beforeEach: function(){
                     dataStore = {
                         DAQ: {
@@ -97,6 +98,38 @@
                 assert.equal(500, dataStore.DAQ.summary.detectors.requests[1])
                 assert.equal(200, dataStore.DAQ.summary.detectors.accepts[1])
             });
+
+            ////////////////////////////////////////////////////
+
+            QUnit.module('HV', {
+                beforeEach: function(){
+                    dataStore = {
+                        ODB: {},
+                        HV: {
+                            crates: {}
+                        }
+                    }
+                },
+
+                afterEach: function(){
+                    delete dataStore;
+                }
+            })
+
+            QUnit.test('cratemap unpacking', function(assert){
+                //check that cratempas are unpacked correctly
+
+                var cratemap = unpackHVCrateMap(1141182468);
+                assert.deepEqual(cratemap, [12, 0, 12, 0, 0, 0, 12, 12, 0, 12, 0, 0, 0, 0, 12, 0]);
+
+                cratemap = unpackHVCrateMap(1145044994);
+                assert.deepEqual(cratemap, [12, 0, 12, 0, 12, 0]);
+
+                cratemap = unpackHVCrateMap(-2004877310);
+                assert.deepEqual(cratemap, [24,0,24,0,24,0]);
+
+            });
+
         </script>
       </body>
 </html>
