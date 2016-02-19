@@ -472,29 +472,6 @@ function sortODBEquipment(payload){
         populateHVsidebar(dataStore.activeHVsidebar);
 }
 
-
-function findHVcrate(channel){
-    //given an HV cell name, return the index of the HV crate it is powered by
-
-    var i=0,
-        match = false,
-        crateID = -1;
-
-    while(!match && dataStore.ODB.Equipment['HV-'+i]){
-        if(dataStore.ODB.Equipment['HV-'+i].Settings.Names.indexOf(channel) != -1){
-            match = true;
-            crateID = i;
-        }
-        else 
-            i++;
-    }
-
-    if(match)
-        return crateID;
-    else
-        return -1;
-}
-
 function unpackDAQdv(dv){
     //parse DAQ dataviews into dataStore.data variables - detector style
     //information for an individual channel is packed in a 14 byte word:
@@ -539,21 +516,6 @@ function writeTooltip(channel){
     }
 
     tooltip.innerHTML = text;
-}
-
-function hideTooltip(){
-
-    var tooltip = document.getElementById('tooltip');
-    tooltip.setAttribute('style', 'display:none;');   
-}
-
-function moveTooltip(event){
-
-    var tooltip = document.getElementById('tooltip'),
-        offset = getPosition(document.getElementById('detectorDisplay')),
-        gap = 20;
-
-    tooltip.setAttribute('style', 'display:inline-block; z-index:10; position: absolute; left:' + (event.pageX - offset.x + gap) + '; top:' + (event.pageY - offset.y + gap)  + ';');
 }
 
 /////////////////////
@@ -638,11 +600,11 @@ function clickCell(cellName){
     broadcastCellClick(cellName);
 
     // highlight the cell
-    highlightCell(cellName);
+    highlightCell(dataStore.detector.cells[cellName]);
 }
 
 function broadcastCellClick(channel){
-    // send the string <channel> in a custom event to everyone listening listed on dataStore.ADCClickListeners
+    // send the string <channel> in a custom event to everyone listening listed on dataStore.ADCClickListeners or dataStore.HVClickListners
 
     var evt, i;
 
@@ -652,33 +614,19 @@ function broadcastCellClick(channel){
             document.getElementById(dataStore.ADCClickListeners[i]).dispatchEvent(evt);
         }
     } else if(isHV(channel)){
-        evt = new CustomEvent('postHV', {'detail': {'channel' : channel} });
+        evt = new CustomEvent('postHV', 
+            {
+                'detail': {
+                    'channel' : channel,
+                    'crate': 'HV-'+findHVcrate(channel)
+                } 
+            }
+        );
         for(i=0; i<dataStore.HVClickListeners.length; i++){
             document.getElementById(dataStore.HVClickListeners[i]).dispatchEvent(evt);
         }
     }
 }
-
-function highlightCell(channel){
-    // draw a big red border around the last cell clicked, and remove the previous big red border if it exists.
-
-    if(dataStore.detector.lastCellClick){
-        dataStore.detector.cells[dataStore.detector.lastCellClick].setAttr('stroke', dataStore.frameColor);
-        dataStore.detector.cells[dataStore.detector.lastCellClick].setAttr('strokeWidth', dataStore.frameLineWidth);
-    }
-    dataStore.detector.lastCellClick = channel;
-    dataStore.detector.cells[channel].setAttr('stroke', '#FF0000');
-    dataStore.detector.cells[channel].setAttr('strokeWidth', 6);
-    dataStore.detector.cells[channel].moveToTop();
-    
-    repaint();
-}
-
-
-
-
-
-
 
 
 

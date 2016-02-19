@@ -206,6 +206,66 @@ function parseMSCindex(MSC){
     return [masterChannel, collectorChannel, digitizerChannel]
 }
 
+function findHVcrate(channel){
+    //given an HV cell name, return the index of the HV crate it is powered by
+
+    var i=0,
+        match = false,
+        crateID = -1;
+
+    while(!match && dataStore.ODB.Equipment['HV-'+i]){
+        if(dataStore.ODB.Equipment['HV-'+i].Settings.Names.indexOf(channel) != -1){
+            match = true;
+            crateID = i;
+        }
+        else 
+            i++;
+    }
+
+    if(match)
+        return crateID;
+    else
+        return -1;
+}
+
+////////////////////////////
+// tooltip management
+////////////////////////////
+
+function hideTooltip(){
+
+    var tooltip = document.getElementById('tooltip');
+    tooltip.setAttribute('style', 'display:none;');   
+}
+
+function moveTooltip(event){
+
+    var tooltip = document.getElementById('tooltip'),
+        offset = getPosition(tooltip.parentElement),
+        gap = 20;
+
+    tooltip.setAttribute('style', 'display:inline-block; z-index:10; position: absolute; left:' + (event.pageX - offset.x + gap) + '; top:' + (event.pageY - offset.y + gap)  + ';');
+}
+
+///////////////////////////////
+// cell click management
+///////////////////////////////
+
+function highlightCell(cell){
+    // draw a big red border around the last cell clicked, and remove the previous big red border if it exists.
+
+    if(dataStore.lastCellClick){
+        dataStore.lastCellClick.setAttr('stroke', dataStore.frameColor);
+        dataStore.lastCellClick.setAttr('strokeWidth', dataStore.frameLineWidth);
+    }
+    dataStore.lastCellClick = cell;
+    cell.setAttr('stroke', '#FF0000');
+    cell.setAttr('strokeWidth', 6);
+    cell.moveToTop();
+    
+    repaint();
+}
+
 //////////////////////////////////
 // prototype modifications
 //////////////////////////////////

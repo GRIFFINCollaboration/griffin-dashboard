@@ -58,19 +58,25 @@
         // plug in the event listeners for the HV sidebar
 
         document.getElementById(wrapperID).addEventListener('postHV', function(evt){
-            document.getElementById(wrapperID).innerHTML = Mustache.to_html(
-                dataStore.templates['hv-sidebar'], 
-                {
-                    'channel': evt.detail.channel,
-                }
-            );
+            if(dataStore.ODB.Equipment[evt.detail.crate].Settings.Names.indexOf(evt.detail.channel) != -1) {
+                document.getElementById(wrapperID).innerHTML = Mustache.to_html(
+                    dataStore.templates['hv-sidebar'], 
+                    {
+                        'channel': evt.detail.channel,
+                    }
+                );
 
-            // suppress ADC requests and ask for updates on this HV sidebar
-            dataStore.heartbeat.ADCrequest = [];
-            dataStore.activeHVsidebar = evt.detail.channel;
+                // suppress ADC requests and ask for updates on this HV sidebar
+                dataStore.heartbeat.ADCrequest = [];
+                dataStore.activeHVsidebar = evt.detail.channel;
 
-            //populate sidebar with current data
-            populateHVsidebar(evt.detail.channel);
+                //populate sidebar with current data
+                populateHVsidebar(evt.detail.channel);
+            } else {
+                document.getElementById(wrapperID).innerHTML = "<h3>Channel Control</h3><p>Click on a channel to get started.</p>"
+                dataStore.heartbeat.ADCrequest = [];
+                dataStore.activeHVsidebar = null;            
+            }
             
         }, false);
         dataStore.HVClickListeners = dataStore.HVClickListeners.concat(wrapperID);
@@ -81,7 +87,7 @@
 
         var crate = findHVcrate(channel),
             index = dataStore.ODB.Equipment['HV-'+crate].Settings.Names.indexOf(channel),
-            isOn = dataStore.ODB.Equipment['HV-'+crate].Settings.ChState[index] == 1,
+            isOn = dataStore.ODB.Equipment['HV-'+crate].Variables.ChStatus[index]%2 == 1,
             voltage = dataStore.ODB.Equipment['HV-'+crate].Variables.Measured[index],
             voltageLimit = dataStore.ODB.Equipment['HV-'+crate].Settings['Voltage Limit'][index],
             voltageFraction = voltage / voltageLimit,
@@ -160,6 +166,8 @@
 
         dataStore.suspendHVsidebar = false;
         writeIt.classList.add('btn-info');
+        writeIt.classList.add('disabled');
+        document.getElementById('abortHVupdate').classList.add('disabled');
         writeIt.classList.remove('btn-success');
 
         pokeURL(demandURL);
