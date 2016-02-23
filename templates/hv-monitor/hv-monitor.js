@@ -89,16 +89,25 @@ function setupDisplay(){
 function setupGridLayer(crateName, crateContent){
     // set up the kinetic objects to represent an HV crate
 
-    var i, j, cells, cardSize, ODBindexes,
+    var i, j, x, y, cells, cardSize, ODBindexes,
         channelCount = 0,
-        wrap = document.getElementById('HVMonitor'),
-        marginLeft = wrap.offsetWidth*0.1,
-        marginTop = wrap.offsetHeight*0.05,
-        scale = (wrap.offsetWidth - 2*marginLeft) / 16,
-        x = marginLeft,
-        y = marginTop
+        wrap = document.getElementById('HVMonitor');
 
+    dataStore.HV.marginLeft = wrap.offsetWidth*0.1;
+    dataStore.HV.marginTop = wrap.offsetHeight*0.05;
+    dataStore.HV.scale = (wrap.offsetWidth - 2*dataStore.HV.marginLeft) / 16;
+    dataStore.HV.cardGutter = 4
+    dataStore.HV.colors = {
+        'ok': '#5CB85C',
+        'alarm': '#D9534F',
+        'extTrip': '#5BC0DE',
+        'off': '#FCFCFC',
+        'ramping': '#F0AD4E'
+    };
     dataStore.HV.cells[crateName] = [];
+
+    x = dataStore.HV.marginLeft;
+    y = dataStore.HV.marginTop
 
     for(i=0; i<crateContent.length; i+=cardSize/12){
         //generate cells, associate corresponding index in Settings.Names with each cell
@@ -116,10 +125,10 @@ function setupGridLayer(crateName, crateContent){
                 channelCount++;
             }
         }
-        cells = setupCard(cardSize, x, y, scale, ODBindexes);
+        cells = setupCard(cardSize, x, y, dataStore.HV.scale, ODBindexes);
 
         //step along horizontally for next card
-        x += scale * cardSize/12;
+        x += dataStore.HV.scale * cardSize/12 + dataStore.HV.cardGutter;
 
         //add to layer
         for(j=0; j<cells.length; j++){
@@ -133,6 +142,8 @@ function setupGridLayer(crateName, crateContent){
         //and again for all cells (ie for applying error pattern on load)
         dataStore.HV.cells.all = dataStore.HV.cells.all.concat(cells);
     }
+
+    windowDressing(dataStore.HV.crateLayers[crateName], crateContent);
 
 }
 
@@ -150,30 +161,30 @@ function setupCard(cardSize, x0, y0, scale, ODBindexes){
         primary = new Kinetic.Rect({
             x: x,
             y: y,
-            width: scale*(cardSize/12),
-            height: scale,
+            width: dataStore.HV.scale*(cardSize/12),
+            height: dataStore.HV.scale,
             stroke: dataStore.frameColor,
             fillPatternOffsetX: 100*Math.random(),
             fillPatternOffsetY: 100*Math.random(),
-            strokeWidth: 2
+            strokeWidth: dataStore.frameLineWidth
         });
         cells.push(primary);
     }
 
     for(i=0; i<cardSize; i++){
         //columns of 12 below primary
-        x = x0 + scale*(Math.floor(i/12));
-        y = y0 + scale*(1 + i%12);
+        x = x0 + dataStore.HV.scale*(Math.floor(i/12));
+        y = y0 + dataStore.HV.scale*(1 + i%12);
 
         cell = new Kinetic.Rect({
             x: x,
             y: y,
-            width: scale,
-            height: scale,
+            width: dataStore.HV.scale,
+            height: dataStore.HV.scale,
             stroke: dataStore.frameColor,
             fillPatternOffsetX: 100*Math.random(),
             fillPatternOffsetY: 100*Math.random(),
-            strokeWidth: 2
+            strokeWidth: dataStore.frameLineWidth
         });
         cells.push(cell);
     }
@@ -190,30 +201,23 @@ function setupCard(cardSize, x0, y0, scale, ODBindexes){
 }
 
 function recolorCells(){
-    // recolor cells based on whatever is in the datastore
+    // recolor cells based on whatever is in the dataStore
 
-    var i, status, color,
-        colors = {
-            'ok': '#5CB85C',
-            'alarm': '#D9534F',
-            'extTrip': '#5BC0DE',
-            'off': '#FCFCFC',
-            'ramping': '#F0AD4E'
-        };
+    var i, status, color;
 
     for(i=0; i<dataStore.HV.cells[dataStore.HV.currentCrate].length; i++){
         status = parseChStatus(dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.ChStatus[i]);
 
         if(status.indexOf('EXTERNAL DISABLE') != -1 || status.indexOf('EXTERNAL TRIP') != -1)
-            color = colors.extTrip;
+            color = dataStore.HV.colors.extTrip;
         else if(status.indexOf('Bias Off') != -1)
-            color = colors.off;
+            color = dataStore.HV.colors.off;
         else if(status.indexOf('Ramping Up') != -1 || status.indexOf('Ramping Down') != -1)
-            color = colors.ramping;
+            color = dataStore.HV.colors.ramping;
         else if(dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.ChStatus[i] == 1)
-            color = colors.ok;
+            color = dataStore.HV.colors.ok;
         else
-            color = colors.alarm;
+            color = dataStore.HV.colors.alarm;
 
         dataStore.HV.cells[dataStore.HV.currentCrate][i].setFillPriority('color');
         dataStore.HV.cells[dataStore.HV.currentCrate][i].setAttr('fill', color);
@@ -224,8 +228,97 @@ function repaint(){
     // redraw the display
 
     recolorCells();
-    console.log(dataStore.HV.cells)
     dataStore.HV.crateLayers[dataStore.HV.currentCrate].draw();
+}
+
+function windowDressing(layer, crateContent){
+    // draw all the window dressing on the provided layer: labels, legend, annotations etc.
+
+    var i, text, cell,
+        baseFontSize = 14,
+        rowLabels = ['Primary', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+        columnLabels,
+        totalColumns = crateContent.length,
+        currentSlot = 0,
+        currentCardLeft = dataStore.HV.marginLeft,
+        currentCardWidth = null,
+        legendLeft = dataStore.HV.marginLeft,
+        legendLabels = {
+            'ok': 'OK',
+            'alarm': 'Alarm',
+            'extTrip': 'Trip / Disable',
+            'off': 'Off',
+            'ramping': 'Ramping'
+        }
+
+    // row labels
+    for(i=0; i<rowLabels.length; i++){
+        text = new Kinetic.Text({
+            x: 0,
+            y: dataStore.HV.marginTop + (i+0.5)*dataStore.HV.scale - baseFontSize/2,
+            text: rowLabels[i],
+            fontSize: baseFontSize,
+            fontFamily: 'Arial',
+            fill: dataStore.frameTextColor
+        });
+        layer.add(text);
+        text.setAttr('x', dataStore.HV.marginLeft - baseFontSize - text.getTextWidth());
+    }
+
+    // slot labels
+    for(i=0; i<crateContent.length; i+=Math.max(1,crateContent[i]/12)){
+        currentCardWidth = Math.max(1, crateContent[i]/12)*dataStore.HV.scale;
+        text = new Kinetic.Text({
+            x: 0,
+            y: dataStore.HV.marginTop-baseFontSize,
+            text: i,
+            fontSize: baseFontSize,
+            fontFamily: 'Arial',
+            fill: dataStore.frameTextColor
+        }) 
+        layer.add(text);
+        text.setAttr('x', currentCardLeft + currentCardWidth/2 - text.getTextWidth()/2);   
+        currentCardLeft += currentCardWidth + dataStore.HV.cardGutter;
+    }
+
+    text = new Kinetic.Text({
+        x: 0,
+        y: baseFontSize,
+        text: 'Slot',
+        fontSize: 1.5*baseFontSize,
+        fontFamily: 'Arial',
+        fill: dataStore.frameTextColor
+    })
+    layer.add(text)
+    text.setAttr('x', dataStore.HV.marginLeft + totalColumns*dataStore.HV.scale/2 - text.getTextWidth()/2);
+
+    // legend
+    for(state in dataStore.HV.colors){
+        cell = new Kinetic.Rect({
+            x: legendLeft,
+            y: dataStore.HV.marginTop + 14*dataStore.HV.scale,
+            width: dataStore.HV.scale,
+            height: dataStore.HV.scale,
+            stroke: dataStore.frameColor,
+            strokeWidth: dataStore.frameLineWidth,
+            fill: dataStore.HV.colors[state]
+        });
+        layer.add(cell);
+        legendLeft += dataStore.HV.scale + baseFontSize/2;
+
+        text = new Kinetic.Text({
+            x: legendLeft,
+            y: dataStore.HV.marginTop + 14*dataStore.HV.scale + 1.25*baseFontSize,
+            text: legendLabels[state],
+            fontSize: baseFontSize,
+            fontFamily: 'Arial',
+            fill: dataStore.frameTextColor
+        })
+        layer.add(text)
+        legendLeft += text.getTextWidth() + 3*baseFontSize;
+
+    }
+
 }
 
 //////////////////////////
@@ -333,6 +426,16 @@ function nameFromIndex(indexString){
 
     return name;
 
+}
+
+function sortODBEquipment(payload){
+    // take the ODB equipment directory and populate the HV info with it.
+
+    dataStore.ODB.Equipment = payload[0];
+
+    // update hv sidebar if present
+    if(dataStore.activeHVsidebar)
+        populateHVsidebar(dataStore.activeHVsidebar);
 }
 
 function parseChStatus(chStatus){

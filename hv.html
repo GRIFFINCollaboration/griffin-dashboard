@@ -46,7 +46,7 @@
             fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb0=/DAQ&odb1=/Equipment&encoding=json-p-nokeys&callback=registerODB');
 
             //set up HV requests
-            //dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
+            dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 ///////////////////////////
@@ -81,18 +81,17 @@
                 setupHVSidebar('controlsidebar');
 
                 //post-heartbeat callback:
-                // function dataUpdate(){                    
-                //     updateRunStatus();
-                //     summarizeData();
-                //     repaint();
-                // }
+                function dataUpdate(){                    
+                    updateRunStatus();
+                    repaint();
+                }
 
                 ////////////////////////////
                 //initiate heartbeat
                 ////////////////////////////
-                // dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery, dataStore.equipmentQuery]
-                // dataStore.heartbeat.callback = dataUpdate
-                // startHeart();
+                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery, dataStore.equipmentQuery]
+                dataStore.heartbeat.callback = dataUpdate
+                startHeart();
             });
         </script>
 

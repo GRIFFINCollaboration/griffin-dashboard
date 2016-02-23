@@ -56,6 +56,7 @@ dataStore = {
     },                        
     "nMessages": 5,                         // number of ODB messages to list in the status sidebar
     "frameColor": '#000000',                // outline color for visualizations
+    "frameTextColor": '#DDDDDD',            // text color for in-figure text
     "frameLineWidth": 2,                    // outline width for visualization
     "ADCClickListeners": [],                // ids of elements listening for custom click events on adc channel detector displays
     "HVClickListeners": [],                 // ids of elements listening for custom click events on hv channel detector displays

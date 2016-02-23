@@ -18,7 +18,9 @@ function heartbeat(){
     if(dataStore.heartbeat.ADCrequest.length > 0)
         URLqueries = URLqueries.concat(dataStore.heartbeat.ADCrequest);
 
-    preFetch();
+    if (typeof preFetch === "function"){ 
+        preFetch();
+    }
 
     Promise.all(URLqueries.map(promiseURL)
         ).then(
@@ -33,7 +35,9 @@ function heartbeat(){
                 Promise.all(dataStore.heartbeat.scriptQueries.map(promiseScript)
                     ).then(
                         function(){
-                            dataStore.heartbeat.callback();
+                            if(typeof dataStore.heartbeat.callback === 'function'){
+                                dataStore.heartbeat.callback();
+                            }
                             dataStore.heartbeatTimer = window.setTimeout(heartbeat, dataStore.heartbeatInterval);
                         }
                     )

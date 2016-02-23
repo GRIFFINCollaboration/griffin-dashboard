@@ -170,6 +170,10 @@
         // dump previous filter:
         document.getElementById('logic-wrap').innerHTML = '';
 
+        if(filterName == ''){
+            window.alert("There doesn't seem to be a valid filter name set. In the ODB, look in /Filter/Current, and make sure this is set to one of the cycles listed in /Filter/Filters.")
+        }
+
         while(dataStore.filter.table.Filters[filterName]['orCondition'+i]){
             addNewOR()
             
