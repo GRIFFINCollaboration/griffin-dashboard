@@ -44,7 +44,7 @@ function setupDisplay(){
         height: wrap.offsetWidth*4/3
     });
     dataStore.HV.crateLayers = {};
-    dataStore.HV.cells = {};
+    dataStore.HV.cells = {'all': []};
 
     for(i=0; i<keys.length; i++){
         // add an option to the view picker
@@ -64,6 +64,22 @@ function setupDisplay(){
 
     // start display out on first layer
     dataStore.HV.currentCrate = selected('HVCratePicker');
+
+    //set up error pattern
+    dataStore.errorPattern = document.getElementById('errorPattern');
+    assignErrorPattern = function(){
+        var i;
+
+        for(i=0; i<dataStore.HV.cells.all.length; i++){
+            dataStore.HV.cells.all[i].setAttr('fillPatternImage', dataStore.errorPattern);
+            dataStore.HV.cells.all[i].setFillPriority('pattern');
+        }
+    }
+    if(dataStore.errorPattern.complete){
+        assignErrorPattern();
+    } else {
+        dataStore.errorPattern.addEventListener('load', assignErrorPattern);
+    }
 }
 
 //////////////////
@@ -73,7 +89,7 @@ function setupDisplay(){
 function setupGridLayer(crateName, crateContent){
     // set up the kinetic objects to represent an HV crate
 
-    var i, j, cells, cardSize, ODBindex,
+    var i, j, cells, cardSize, ODBindexes,
         channelCount = 0,
         wrap = document.getElementById('HVMonitor'),
         marginLeft = wrap.offsetWidth*0.1,
@@ -86,25 +102,21 @@ function setupGridLayer(crateName, crateContent){
 
     for(i=0; i<crateContent.length; i+=cardSize/12){
         //generate cells, associate corresponding index in Settings.Names with each cell
-        ODBindex = []; 
+        ODBindexes = []; 
         cardSize = Math.max(12, crateContent[i]);
-        if(cardSize == 48){
-            ODBindex.push(channelCount);
+        if(cardSize == 48){ // add primary
+            ODBindexes.push(channelCount);
             channelCount++;
-        } else if(crateContent[i] == 0){
-            ODBindex.push('Empty Slot'); 
-        } else {
-            ODBindex.push('No Primary');
-        }
+        } 
         for(j=0; j<cardSize; j++){
             if(crateContent[i] == 0){
-                ODBindex.push('Empty Slot');
+                ODBindexes.push('Empty Slot');
             } else {
-                ODBindex.push(channelCount);
+                ODBindexes.push(channelCount);
                 channelCount++;
             }
         }
-        cells = setupCard(cardSize, x, y, scale, ODBindex);
+        cells = setupCard(cardSize, x, y, scale, ODBindexes);
 
         //step along horizontally for next card
         x += scale * cardSize/12;
@@ -114,13 +126,17 @@ function setupGridLayer(crateName, crateContent){
             dataStore.HV.crateLayers[crateName].add(cells[j]);
         }
 
-        //keep track of kinetic cells on the dataStore for future updates
-        dataStore.HV.cells[i] = cells;
+        //keep track of kinetic cells for reporting channels on the dataStore for future updates
+        if(crateContent[i] != 0)
+            dataStore.HV.cells[crateName] = dataStore.HV.cells[crateName].concat(cells);
+
+        //and again for all cells (ie for applying error pattern on load)
+        dataStore.HV.cells.all = dataStore.HV.cells.all.concat(cells);
     }
 
 }
 
-function setupCard(cardSize, x0, y0, scale, ODBindex){
+function setupCard(cardSize, x0, y0, scale, ODBindexes){
     // create the kinetic objects representing a card with <cardSize> channels, top left corner at (x0,y0).
     // return an array of these objects.
 
@@ -130,17 +146,19 @@ function setupCard(cardSize, x0, y0, scale, ODBindex){
         cells = [];
 
     // primary
-    primary = new Kinetic.Rect({
-        x: x,
-        y: y,
-        width: scale*(cardSize/12),
-        height: scale,
-        fill: 'blue',
-        stroke: dataStore.frameColor,
-        strokeWidth: 2
-    });
-
-    cells.push(primary);
+    if(cardSize == 48){
+        primary = new Kinetic.Rect({
+            x: x,
+            y: y,
+            width: scale*(cardSize/12),
+            height: scale,
+            stroke: dataStore.frameColor,
+            fillPatternOffsetX: 100*Math.random(),
+            fillPatternOffsetY: 100*Math.random(),
+            strokeWidth: 2
+        });
+        cells.push(primary);
+    }
 
     for(i=0; i<cardSize; i++){
         //columns of 12 below primary
@@ -152,8 +170,9 @@ function setupCard(cardSize, x0, y0, scale, ODBindex){
             y: y,
             width: scale,
             height: scale,
-            fill: 'blue',
             stroke: dataStore.frameColor,
+            fillPatternOffsetX: 100*Math.random(),
+            fillPatternOffsetY: 100*Math.random(),
             strokeWidth: 2
         });
         cells.push(cell);
@@ -161,18 +180,51 @@ function setupCard(cardSize, x0, y0, scale, ODBindex){
 
     //set up the tooltip listeners & onclick listeners:
     for(i=0; i<cells.length; i++){
-        cells[i].on('mouseover', writeTooltip.bind(null, ODBindex[i]));
+        cells[i].on('mouseover', writeTooltip.bind(null, ODBindexes[i]));
         cells[i].on('mousemove', moveTooltip);
         cells[i].on('mouseout',  hideTooltip);
-        cells[i].on('click', clickCell.bind(cells[i], ODBindex[i]) );
+        cells[i].on('click', clickCell.bind(cells[i], ODBindexes[i]) );
     }
 
     return cells;
 }
 
+function recolorCells(){
+    // recolor cells based on whatever is in the datastore
+
+    var i, status, color,
+        colors = {
+            'ok': '#5CB85C',
+            'alarm': '#D9534F',
+            'extTrip': '#5BC0DE',
+            'off': '#FCFCFC',
+            'ramping': '#F0AD4E'
+        };
+
+    for(i=0; i<dataStore.HV.cells[dataStore.HV.currentCrate].length; i++){
+        status = parseChStatus(dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.ChStatus[i]);
+
+        if(status.indexOf('EXTERNAL DISABLE') != -1 || status.indexOf('EXTERNAL TRIP') != -1)
+            color = colors.extTrip;
+        else if(status.indexOf('Bias Off') != -1)
+            color = colors.off;
+        else if(status.indexOf('Ramping Up') != -1 || status.indexOf('Ramping Down') != -1)
+            color = colors.ramping;
+        else if(dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.ChStatus[i] == 1)
+            color = colors.ok;
+        else
+            color = colors.alarm;
+
+        dataStore.HV.cells[dataStore.HV.currentCrate][i].setFillPriority('color');
+        dataStore.HV.cells[dataStore.HV.currentCrate][i].setAttr('fill', color);
+    }
+}
+
 function repaint(){
     // redraw the display
 
+    recolorCells();
+    console.log(dataStore.HV.cells)
     dataStore.HV.crateLayers[dataStore.HV.currentCrate].draw();
 }
 
