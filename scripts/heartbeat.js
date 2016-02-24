@@ -1,14 +1,3 @@
-function startHeart(){
-    // start the heartbeat if you haven't yet, or restart it if it's already going
-
-    if(dataStore.heartbeatTimer){
-        restart_heartbeat();
-    } else {
-        heartbeat();
-    }
-
-}
-
 function heartbeat(){
     //start the data fetching heartbeat
     //note the dataStore.heartbeat object needs to be defined first.
@@ -21,12 +10,11 @@ function heartbeat(){
     if (typeof preFetch === "function"){ 
         preFetch();
     }
-
+    
     Promise.all(URLqueries.map(promiseURL)
         ).then(
             function(responses){
                 var i;
-
                 for(i=0; i<responses.length; i++){
                     //callbacks
                     URLqueries[i][2](responses[i]);
@@ -38,18 +26,12 @@ function heartbeat(){
                             if(typeof dataStore.heartbeat.callback === 'function'){
                                 dataStore.heartbeat.callback();
                             }
+                            window.clearTimeout(dataStore.heartbeatTimer)
                             dataStore.heartbeatTimer = window.setTimeout(heartbeat, dataStore.heartbeatInterval);
                         }
                     )
             }
         )
-}
-
-function restart_heartbeat(){
-    // restart heartbeat immediately; note heartbeat must have its args bound at setup before calling this.
-
-    window.clearTimeout(dataStore.heartbeatTimer);
-    heartbeat();
 }
 
 function promiseURL(query){

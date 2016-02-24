@@ -166,14 +166,13 @@ function determineADCrequests(){
     // generate the URLs for rate and threshold requests, park them in the dataStore, and kick the heartbeat to start fetching.
 
     var i;
-
     //insert url queries into heartbeat polls:
     for(i=0; i<dataStore.hosts.length; i++){
         dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
     }
 
     //bump the heartbeat
-    startHeart();
+    heartbeat();
 
 }
 

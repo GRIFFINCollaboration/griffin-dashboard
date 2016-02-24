@@ -169,7 +169,7 @@
         //once this is all dealt with, refresh the display immediately
         xmlhttp.onreadystatechange = function(){
             if(this.readyState == 4)
-                restart_heartbeat();
+                heartbeat();
         }
         xmlhttp.withCredentials = true;
         //fire
