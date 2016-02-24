@@ -22,6 +22,7 @@
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
         <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
+        <link id='nav-bar' rel="import" href="templates/nav-bar/nav-bar.html">
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
         <link id='cycle-builder' rel="import" href="templates/cycle-builder/cycle-builder.html">
         <link id='cycle-step' rel="import" href="templates/cycle-builder/cycle-step.html">
@@ -31,6 +32,7 @@
         <div id='header'></div>
 
         <div class='section-wrapper'>
+            <div id='nav' class='col-md-12'></div>
             <div id='runStat' class='col-md-2'></div>
             <div id='cycleWrap' class='col-md-10'></div>
         </div>
@@ -42,11 +44,18 @@
             //cycle-specific dataStore prep:
             ////////////////////////////////////////
 
+            //get the ODB DAQ directory for the nav bar
+            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+            function processDAQ(payload){
+                fetchDAQ(payload);
+                detectDetectors();
+            }
+
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'run-status', 'cycle-builder', 'cycle-step'];
+                templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'cycle-builder', 'cycle-step'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -65,6 +74,13 @@
                     }
                 );
                 setupFooter('footerImage', 2, '#999999');
+                //nav
+                document.getElementById('nav').innerHTML = Mustache.to_html(
+                    dataStore.templates['nav-bar'], 
+                    {
+                        
+                    }
+                );
                 //run control
                 document.getElementById('runStat').innerHTML = Mustache.to_html(
                     dataStore.templates['run-status'], 

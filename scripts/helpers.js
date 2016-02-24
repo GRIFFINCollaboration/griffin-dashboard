@@ -212,8 +212,8 @@ function findHVcrate(channel){
         match = false,
         crateID = -1;
 
-    while(!match && dataStore.ODB.Equipment['HV-'+i]){
-        if(dataStore.ODB.Equipment['HV-'+i].Settings.Names.indexOf(channel) != -1){
+    while(!match && dataStore.Equipment['HV-'+i]){
+        if(dataStore.Equipment['HV-'+i].Settings.Names.indexOf(channel) != -1){
             match = true;
             crateID = i;
         }

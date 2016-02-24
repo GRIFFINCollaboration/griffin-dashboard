@@ -2,6 +2,14 @@
 // setup
 /////////////////////////
 
+function processDAQ(payload){
+    // do setup things with the DAQ directory from the ODB when it arrives
+
+    fetchDAQ(payload);              // sort the data into useful places
+    determineADCrequests();         // decide which ADCs will need to be queried for rates and thresholds
+    detectDetectors();              // decide which detectors to link to in the nav bar based on MSC table
+}
+
 function dataUpdate(){
     //post-heartbeat callback:
     updateRunStatus();
@@ -448,7 +456,7 @@ function sortODBEquipment(payload){
         HVcrates = [],
         channel;
 
-    dataStore.ODB.Equipment = payload[0];
+    dataStore.Equipment = payload[0];
 
     //extract the HV crates from the equipment directory
     for(i=0; i<keys.length; i++){

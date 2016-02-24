@@ -22,6 +22,7 @@
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
         <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
+        <link id='nav-bar' rel="import" href="templates/nav-bar/nav-bar.html">
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
         <link id='clock-control' rel="import" href="templates/clock-control/clock-control.html">
         <link id='follower-detail' rel="import" href="templates/clock-control/follower-detail.html">
@@ -32,6 +33,7 @@
         <div id='header'></div>
 
         <div class='section-wrapper'>
+            <div id='nav' class='col-md-12'></div>
             <div id='runStat' class='col-md-2'></div>
             <div class='col-md-10 top-pan'>
                 <h2>Clock Control</h2>
@@ -50,6 +52,13 @@
 
             //pre-dom-ready setup
             setupClocks();
+
+            //get the ODB DAQ directory for the nav bar
+            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+            function processDAQ(payload){
+                fetchDAQ(payload);
+                detectDetectors();
+            }
 
             //get the ODB Equipment dir and set up clock host requests:
             fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/Equipment&encoding=json-p-nokeys&callback=processEquipment');
@@ -82,7 +91,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'run-status', 'clock-control', 'follower-detail', 'master-detail'];
+                templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'clock-control', 'follower-detail', 'master-detail'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -101,6 +110,13 @@
                     }
                 );
                 setupFooter('footerImage', 2, '#999999');
+                //nav
+                document.getElementById('nav').innerHTML = Mustache.to_html(
+                    dataStore.templates['nav-bar'], 
+                    {
+                        
+                    }
+                );
                 //run control
                 document.getElementById('runStat').innerHTML = Mustache.to_html(
                     dataStore.templates['run-status'], 

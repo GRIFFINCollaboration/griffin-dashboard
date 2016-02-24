@@ -65,7 +65,13 @@ dataStore = {
     "tooltip": {                            // place to park tooltip information
         'currentTooltipTarget': null
     },
-    "counter": 0                            // dummy, remove this                           
+    "detPrefix": {                          // standard two-character prefixes for all detectors
+        'DA': 'DANTE',
+        'DS': 'DESCANT',
+        'GR': 'GRIFFIN',
+        'PA': 'PACES',
+        'SE': 'SCEPTAR'
+    }                     
 }
 
 dataStore.runSummaryQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&odb3=Logger/&encoding=json-p-nokeys&callback=runSummaryCB';
