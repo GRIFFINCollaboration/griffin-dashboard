@@ -37,11 +37,24 @@ function setupDisplay(){
         picker = document.getElementById('HVCratePicker'),
         wrap = document.getElementById('HVMonitor')
 
+    // drawing parameters
+    dataStore.HV.marginLeft = wrap.offsetWidth*0.1;
+    dataStore.HV.scale = (wrap.offsetWidth - 2*dataStore.HV.marginLeft) / 16;
+    dataStore.HV.marginTop = 1.5*dataStore.HV.scale;
+    dataStore.HV.cardGutter = 4
+    dataStore.HV.colors = {
+        'ok': '#5CB85C',
+        'alarm': '#D9534F',
+        'extTrip': '#5BC0DE',
+        'off': '#FCFCFC',
+        'ramping': '#F0AD4E'
+    };
+
     // set up a kinetic stage
     dataStore.HV.stage = new Kinetic.Stage({
         container: 'HVDisplay',
         width: wrap.offsetWidth,
-        height: wrap.offsetWidth*4/3
+        height: dataStore.HV.marginTop + 16*dataStore.HV.scale
     });
     dataStore.HV.crateLayers = {};
     dataStore.HV.cells = {'all': []};
@@ -90,20 +103,8 @@ function setupGridLayer(crateName, crateContent){
     // set up the kinetic objects to represent an HV crate
 
     var i, j, x, y, cells, cardSize, ODBindexes,
-        channelCount = 0,
-        wrap = document.getElementById('HVMonitor');
+        channelCount = 0;
 
-    dataStore.HV.marginLeft = wrap.offsetWidth*0.1;
-    dataStore.HV.marginTop = wrap.offsetHeight*0.05;
-    dataStore.HV.scale = (wrap.offsetWidth - 2*dataStore.HV.marginLeft) / 16;
-    dataStore.HV.cardGutter = 4
-    dataStore.HV.colors = {
-        'ok': '#5CB85C',
-        'alarm': '#D9534F',
-        'extTrip': '#5BC0DE',
-        'off': '#FCFCFC',
-        'ramping': '#F0AD4E'
-    };
     dataStore.HV.cells[crateName] = [];
 
     x = dataStore.HV.marginLeft;
