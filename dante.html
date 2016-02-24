@@ -22,6 +22,7 @@
 
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
+        <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
         <link id='detector-dante' rel="import" href="templates/detectors/detector-dante/detector-dante.html">
         <link id='adc-sidebar' rel="import" href="templates/detectors/adc-sidebar/adc-sidebar.html">
@@ -39,6 +40,8 @@
                 <p>Click on a channel to get started.</p>
             </div>
         </div>
+
+        <div id='footer'></div>
 
         <script>
             ////////////////////////////////////////
@@ -62,7 +65,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'run-status', 'detector-dante', 'adc-sidebar', 'hv-sidebar'];
+                templates = ['brand-header', 'brand-footer', 'run-status', 'detector-dante', 'adc-sidebar', 'hv-sidebar'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -73,6 +76,13 @@
                         'title': dataStore.detector.channelType == 'energy' ? 'DANTE Detector Status (Energy)' : 'DANTE Detector Status (Time)'
                     }
                 );
+                document.getElementById('footer').innerHTML = Mustache.to_html(
+                    dataStore.templates['brand-footer'], 
+                    {
+                        
+                    }
+                );
+                setupFooter('footerImage', 2, '#999999');
                 //run control
                 document.getElementById('runStat').innerHTML = Mustache.to_html(
                     dataStore.templates['run-status'], 

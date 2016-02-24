@@ -21,6 +21,7 @@
 
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
+        <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
         <link id='clock-control' rel="import" href="templates/clock-control/clock-control.html">
         <link id='follower-detail' rel="import" href="templates/clock-control/follower-detail.html">
@@ -39,6 +40,8 @@
                 <div id='clockTable3' class='col-md-4'></div>
             </div>
         </div>
+
+        <div id="footer"></div>
 
         <script>
             ////////////////////////////////////////
@@ -79,7 +82,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'run-status', 'clock-control', 'follower-detail', 'master-detail'];
+                templates = ['brand-header', 'brand-footer', 'run-status', 'clock-control', 'follower-detail', 'master-detail'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -90,6 +93,14 @@
                         'title': 'GRIFFIN Clocks',
                     }
                 );
+                //footer
+                document.getElementById('footer').innerHTML = Mustache.to_html(
+                    dataStore.templates['brand-footer'], 
+                    {
+                        
+                    }
+                );
+                setupFooter('footerImage', 2, '#999999');
                 //run control
                 document.getElementById('runStat').innerHTML = Mustache.to_html(
                     dataStore.templates['run-status'], 

@@ -174,10 +174,6 @@ function sortDAQitem(detector, block){
 }
 
 function dataUpdate(){
-    if(dataStore.hasOwnProperty('DAQ')){     
-        console.log(dataStore.DAQ.summary)
-    }
-
     //repaint histograms
     repaint()
 }
