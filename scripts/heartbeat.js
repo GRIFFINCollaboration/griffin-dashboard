@@ -11,27 +11,27 @@ function heartbeat(){
         preFetch();
     }
     
-    Promise.all(URLqueries.map(promiseURL)
-        ).then(
-            function(responses){
-                var i;
-                for(i=0; i<responses.length; i++){
-                    //callbacks
-                    URLqueries[i][2](responses[i]);
-                }
-
-                Promise.all(dataStore.heartbeat.scriptQueries.map(promiseScript)
-                    ).then(
-                        function(){
-                            if(typeof dataStore.heartbeat.callback === 'function'){
-                                dataStore.heartbeat.callback();
-                            }
-                            window.clearTimeout(dataStore.heartbeatTimer)
-                            dataStore.heartbeatTimer = window.setTimeout(heartbeat, dataStore.heartbeatInterval);
-                        }
-                    )
+    Promise.all(URLqueries.map(promiseURL)).then(
+        function(responses){
+            var i;
+            for(i=0; i<responses.length; i++){
+                //callbacks
+                URLqueries[i][2](responses[i]);
             }
-        )
+
+            Promise.all(dataStore.heartbeat.scriptQueries.map(promiseScript)).then(
+                function(){
+                    if(typeof dataStore.heartbeat.callback === 'function'){
+                        dataStore.heartbeat.callback();
+                    }
+                    window.clearTimeout(dataStore.heartbeatTimer)
+                    dataStore.heartbeatTimer = window.setTimeout(heartbeat, dataStore.heartbeatInterval);
+                }
+            )
+        }
+    )
+
+
 }
 
 function promiseURL(query){

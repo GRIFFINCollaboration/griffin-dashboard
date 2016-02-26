@@ -2,6 +2,13 @@
 // setup
 ////////////////////
 
+//post-heartbeat callback:
+function dataUpdate(){                    
+    updateRunStatus();
+    updateRunStatus();
+    repaint();
+}
+
 function registerODB(payload){
     //park the ODB responses in the dataStore, and run through initial parsing
 

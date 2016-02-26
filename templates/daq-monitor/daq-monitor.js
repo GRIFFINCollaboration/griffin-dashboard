@@ -175,7 +175,10 @@ function sortDAQitem(detector, block){
 
 function dataUpdate(){
     //repaint histograms
-    repaint()
+    repaint();
+
+    //run status
+    updateRunStatus();
 }
 
 function preFetch(){

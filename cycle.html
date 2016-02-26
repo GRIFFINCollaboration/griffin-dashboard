@@ -101,9 +101,9 @@
                 ////////////////////////////
                 //initiate heartbeat
                 ////////////////////////////
-                // dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery, dataStore.equipmentQuery]
-                // dataStore.heartbeat.callback = dataUpdate
-                // heartbeat();
+                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery];
+                dataStore.heartbeat.callback = updateRunStatus;
+                heartbeat();
             });
         </script>
 

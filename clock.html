@@ -150,8 +150,9 @@
                 ////////////////////////////
                 //set up heartbeat
                 ////////////////////////////
-                //dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery]
-                //dataStore.heartbeat.callback = dataUpdate
+                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery];
+                dataStore.heartbeat.callback = updateRunStatus;
+                heartbeat();
             });
         </script>
 
