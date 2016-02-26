@@ -47,39 +47,23 @@
             <div id="ADC-control" class="panel-collapse in" role="tabpanel" aria-labelledby="ADC-control-head">
                 <div class="panel-body">
                     <ul class='list-unstyled dark-text'>
+                        <li>    
+                            <input id="a_enable" type="checkbox"></input>
+                            <label id="a_enableLabel" for="a_enable">Enabled</label>
+                        </li>
                         <li>
                             <label>DC Offset [mV]:</label>
-                            <input max="4095" min="0" step="1" id="a_dcofst" type="number"></input>
+                            <input min='-2047' max='2048' step="1" id="a_dcofst" type="number"></input>
                         </li>
                         <li>
-                            <label>ADC Chan:</label>
-                            <ul class='list-unstyled sublist'>
-                                <li>
-                                    <input value="true" name="a_off" id="a_off0" class="stdin" type="radio"></input>
-                                    <label id="a_off0Label" for="a_off0">Enabled</label>
-                                </li>
-                                <li>
-                                    <input value="false" name="a_off" id="a_off1" class="stdin" type="radio"></input>
-                                    <label id="a_off1Label" for="a_off1">Disabled</label>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <label>Trim:</label>
-                            <input class="stdin" step="1" id="a_trim" type="number"></input>
-                        </li>
-                        <li>
-                            <label>Polarity:</label>
-                            <ul class='list-unstyled sublist'>
-                                <li>
-                                    <input value="true" name="a_pol" id="a_pol0" class="stdin" type="radio"></input>
-                                    <label id="a_pol0Label" for="a_pol0">Positive</label>
-                                </li>
-                                <li>
-                                    <input value="false" name="a_pol" id="a_pol1" class="stdin" type="radio"></input>
-                                    <label id="a_pol1Label" for="a_pol1">Negative</label>
-                                </li>
-                            </ul>
+                            <label>ADC Gain</label>
+                            <select id='a_fgain'>
+                                <option value='0'>1.0 Vp-p</option>
+                                <option value='1'>1.14 Vp-p</option>
+                                <option value='2'>1.33 Vp-p</option>
+                                <option value='3'>1.6 Vp-p</option>
+                                <option value='4'>2.0 Vp-p</option>
+                            </select>
                         </li>
                     </ul>
                 </div>
@@ -96,45 +80,37 @@
                 <div class="panel-body">
                     <ul class='list-unstyled dark-text'>
                         <li>
-                            <label>Channel:</label>
+                            <input id="t_on" type="checkbox"></input>
+                            <label id="t_onLabel" for="t_on">Enabled</label>
+                        </li>
+                        <li>
+                            <label>Polarity:</label>
                             <ul class='list-unstyled sublist'>
                                 <li>
-                                    <input value="true" name="t_off" id="t_off0" class="stdin" type="radio"></input>
-                                    <label id="t_off0Label" for="t_off0">Enabled</label>
+                                    <input value="true" name="a_pol" id="a_pol0" type="radio"></input>
+                                    <label id="a_pol0Label" for="a_pol0">Positive</label>
                                 </li>
                                 <li>
-                                    <input value="false" name="t_off" id="t_off1" class="stdin" type="radio"></input>
-                                    <label id="t_off1Label" for="t_off1">Disabled</label>
+                                    <input value="false" name="a_pol" id="a_pol1" type="radio"></input>
+                                    <label id="a_pol1Label" for="a_pol1">Negative</label>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <label>Hit Thresh:</label>
-                            <input class="stdin" step="any" id="t_hthres" type="number"></input>
-                        </li>
-                        <li>
                             <label>Trig Thresh:</label>
-                            <input class="stdin" step="any" id="t_thres" type="number"></input>
+                            <input step="any" id="t_thres" type="number" min='0' max='65535'></input>
                         </li>
                         <li>
                             <label>Differentiation:</label>
-                            <input class="stdin" step="1" id="t_diff" type="number"></input>
+                            <input step="1" id="t_diff" type="number" min='0' max='255'></input>
                         </li>
                         <li>
                             <label>Integration:</label>
-                            <input class="stdin" step="1" id="t_int" type="number"></input>
-                        </li>
-                        <li>
-                            <label>Delay:</label>
-                            <input class="stdin" step="1" id="t_delay" type="number"></input>
+                            <input step="1" id="t_int" type="number" min='0' max='255'></input>
                         </li>
                         <li>
                             <label>Pole Cxn:</label>
-                            <input class="stdin" step="any" id="t_polcor" type="number"></input>
-                        </li>
-                        <li>
-                            <label>BLR Control:</label>
-                            <input class="stdin" step="any" id="t_blrctl" type="number"></input>
+                            <input step="any" id="t_polcor" type="number" min='0' max='65535'></input>
                         </li>
                     </ul>
                 </div>
@@ -152,57 +128,23 @@
                     <ul class='list-unstyled dark-text'>
                         <li>
                             <label>Integration:</label>
-                            <input class="stdin" step="1" id="p_int" type="number"></input>
+                            <input min='0' max='4095' id="p_int" type="number"></input>
                         </li>
                         <li>
                             <label>Differentiation:</label>
-                            <input class="stdin" step="1" id="p_diff" type="number"></input>
+                            <input min='0' max='4095' id="p_diff" type="number"></input>
                         </li>
                         <li>
                             <label>Delay:</label>
-                            <input class="stdin" step="1" id="p_delay" type="number"></input>
+                            <input min='0' max='4095' id="p_delay" type="number"></input>
                         </li>
                         <li>
-                            <label>Pole Cxn 1:</label>
-                            <input class="stdin" step="any" id="p_polec1" type="number"></input>
+                            <label>Pole Cxn:</label>
+                            <input min='0' max='65535' id="p_polec1" type="number"></input>
                         </li>
-                        <li>
-                            <label>Pole Cxn 2:</label>
-                            <input class="stdin" step="any" id="p_polec2" type="number"></input>
-                        </li>
-                        <li>
-                            <label>Baseline Rest:</label>
-                            <input class="stdin" step="any" id="p_bsr" type="number"></input>
-                        </li>
-                        <li>
-                            <label>Gain [keV/chan]:</label>
-                            <input class="stdin" step="any" id="p_gain" type="number"></input>
-                        </li>
-                        <li>
-                            <label>Pileup Algo:</label>
-                            <input class="stdin" step="1" id="p_pactrl" type="number"></input>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="time-eval-head">
-                <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#time-eval" aria-expanded="false" aria-controls="time-eval">Time Eval.</a>
-                </h4>
-            </div>
-            <div id="time-eval" class="panel-collapse collapse" role="tabpanel" aria-labelledby="time-eval-head">
-                <div class="panel-body">
-                    <ul class='list-unstyled dark-text'>
                         <li>
                             <label>CFD Delay:</label>
-                            <input class="stdin" step="1" id="cfd_dly" type="number"></input>
-                        </li>
-                        <li>
-                            <label>CFD Fraction:</label>
-                            <input class="stdin" step="any" id="cfd_frac" type="number"></input>
+                            <input min='0' max='255' id="cfd_dly" type="number"></input>
                         </li>
                     </ul>
                 </div>
@@ -219,43 +161,22 @@
                 <div class="panel-body">
                     <ul class='list-unstyled dark-text'>
                         <li>
-                            <label>Suppression</label>
-                            <ul class='list-unstyled sublist'>
-                                <li>
-                                    <input value="true" name="wfr_supp" id="wfr_supp0" class="stdin" type="radio"></input>
-                                    <label id="wfr_supp0Label" for="wfr_supp0">Suppressed</label>
-                                </li>
-                                <li>
-                                    <input value="false" name="wfr_supp" id="wfr_supp1" class="stdin" type="radio"></input>
-                                    <label id="wfr_supp1Label" for="wfr_supp1">Unsuppressed</label>
-                                </li>
-                            </ul>
+                            <label>Waveform Mode</label>
+                            <select id='wfr_mode'>
+                                <option value='0'>Do not store</option>
+                                <option value='1'>Store all</option>
+                                <option value='3'>If space available</option>
+                            </select>
                         </li>
                         <li>
                             <label>Pretrigger:</label>
-                            <input class="stdin" step="1" id="wfr_pret" type="number"></input>
+                            <input min='0' max='4095' id="wfr_pret" type="number"></input>
                         </li>
                         <li>
                             <label>Samples:</label>
-                            <input class="stdin" step="1" id="wfr_smpl" type="number"></input>
+                            <input min='0' max='4095' id="wfr_smpl" type="number"></input>
                         </li>
-                        <li>
-                            <label>Decimation:</label>
-                            <input class="stdin" step="1" id="wfr_dec" type="number"></input>
-                        </li>
-                        <li>
-                            <label>Filter WF:</label>
-                            <ul class='list-unstyled sublist'>
-                                <li>
-                                    <input value="true" name="wfr_off" id="wfr_off0" class="stdin" type="radio"></input>
-                                    <label id="wfr_off0Label" for="wfr_off0">Enabled</label>
-                                </li>
-                                <li>
-                                    <input value="false" name="wfr_off" id="wfr_off1" class="stdin" type="radio"></input>
-                                    <label id="wfr_off1Label" for="wfr_off1">Disabled</label>
-                                </li>
-                            </ul>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -271,46 +192,151 @@
                 <div class="panel-body">
                     <ul class='list-unstyled dark-text'>
                         <li>
-                            <label>Pulse</label>
-                            <ul class='list-unstyled sublist'>
-                                <li>
-                                    <input value="true" name="sim_ena" id="sim_ena0" class="stdin" type="radio"></input>
-                                    <label id="sim_ena0Label" for="sim_ena0">Enabled</label>
-                                </li>
-                                <li>
-                                    <input value="false" name="sim_ena" id="sim_ena1" class="stdin" type="radio"></input>
-                                    <label id="sim_ena1Label" for="sim_ena1">Disabled</label>
-                                </li>
-                            </ul>
+                            <input id="sim_ena" type="checkbox"></input>
+                            <label id="sim_enaLabel" for="sim_ena">Enabled</label>
                         </li>
                         <li>
-                            <label>Pulse Height:</label>
-                            <input class="stdin" step="any" id="sim_phgt" type="number"></input>
+                            <input id="sim_enat" type="checkbox"></input>
+                            <label id="sim_enatLabel" for="sim_enat">Enabled Trigger</label>
                         </li>
                         <li>
-                            <label>Risetime:</label>
-                            <input class="stdin" step="any" id="sim_rise" type="number"></input>
+                            <input id="sim_enar" type="checkbox"></input>
+                            <label id="sim_enarLabel" for="sim_enar">Enabled Random</label>
                         </li>
                         <li>
-                            <label>Falltime:</label>
-                            <input class="stdin" step="any" id="sim_fall" type="number"></input>
+                            <input id="sim_cyc" type="checkbox"></input>
+                            <label id="sim_cycLabel" for="sim_cyc">Cycle Waveform</label>
                         </li>
                         <li>
-                            <label>Rate:</label>
-                            <input class="stdin" step="any" id="sim_rate" type="number"></input>
+                            <input id="sim_pol" type="checkbox"></input>
+                            <label id="sim_polLabel" for="sim_pol">Polarity</label>
+                        </li>
+
+                        <li>
+                            <label>Rise: </label>
+                            <input min='0' max='127' id="sim_rise" type="number"></input>
                         </li>
                         <li>
-                            <label>Period:</label>
-                            <ul class='list-unstyled sublist'>
-                                <li>
-                                    <input value="true" name="sim_rand" id="sim_rand0" class="stdin" type="radio"></input>
-                                    <label id="sim_rand0Label" for="sim_rand0">Random</label>
-                                </li>
-                                <li>
-                                    <input value="false" name="sim_rand" id="sim_rand1" class="stdin" type="radio"></input>
-                                    <label id="sim_rand1Label" for="sim_rand1">Fixed</label>
-                                </li>
-                            </ul>
+                            <label>Rate: </label>
+                            <input min='0' max='268435455' id="sim_rate" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Amplitude: </label>
+                            <input min='0' max='1048575' id="sim_amp" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay 0: </label>
+                            <input min='0' max='4095' id="sim_dly0" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Amplitude 0: </label>
+                            <input min='0' max='65535' id="sim_amp0" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay 1: </label>
+                            <input min='0' max='4095' id="sim_dly1" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Amplitude 1: </label>
+                            <input min='0' max='65535' id="sim_amp1" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay 2: </label>
+                            <input min='0' max='4095' id="sim_dly2" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Amplitude 2: </label>
+                            <input min='0' max='65535' id="sim_amp2" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay 3: </label>
+                            <input min='0' max='4095' id="sim_dly3" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Amplitude 3: </label>
+                            <input min='0' max='65535' id="sim_amp3" type="number"></input>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="rt-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#rt" aria-expanded="false" aria-controls="rt">RT</a>
+                </h4>
+            </div>
+            <div id="rt" class="panel-collapse collapse" role="tabpanel" aria-labelledby="rt-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+
+                        <li>
+                            <label>Request Rate: </label>
+                            <span id="rt_rqst"></span>
+                        </li>
+                        <li>
+                            <label>Accept Rate: </label>
+                            <span id="rt_acpt"></span>
+                        </li>
+                        <li>
+                            <label>Trigger Buffer</label>
+                            <div class="progress">
+                                <div id='st_btrig' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="255" style="width: 40%"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>Wave Buffer</label>
+                            <div class="progress">
+                                <div id='st_bwv' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="4095" style="width: 40%"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>QT Buffer</label>
+                            <div class="progress">
+                                <div id='st_bqt' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="255" style="width: 40%"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>Event Buffer Read</label>
+                            <div class="progress">
+                                <div id='st_bevr' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="4095" style="width: 40%"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>Event Buffer Write</label>
+                            <div class="progress">
+                                <div id='st_bevw' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="4095" style="width: 40%"></div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <label>Dropped Wave: </label>
+                            <span id="rt_dwav"></span>
+                        </li>
+                        <li>
+                            <label>Dropped Busy: </label>
+                            <span id="rt_dbsy"></span>
+                        </li>                        
+                        <li>
+                            <label>Dropped QT: </label>
+                            <span id="rt_dqt"></span>
+                        </li>
+                        <li>
+                            <label>Dropped Trig: </label>
+                            <span id="rt_dtrg"></span>
+                        </li>
+                        <li>
+                            <label>Dropped Dead: </label>
+                            <span id="rt_dded"></span>
+                        </li>
+                        <li>
+                            <label>Trigger Count: </label>
+                            <span id="st_trig"></span>
+                        </li>
+                        <li>
+                            <label>Request Count: </label>
+                            <span id="st_trigr"></span>
                         </li>
                     </ul>
                 </div>
@@ -327,12 +353,39 @@
                 <div class="panel-body">
                     <ul class='list-unstyled dark-text'>
                         <li>
-                            <label>Fixed Deadtime:</label>
-                            <input class="stdin" step="1" id="fix_dead" type="number"></input>
+                            <label>Deadtime Readout:</label>
+                            <input id="dtsclr_b" type="number" min='10000000' max='4294967295'></input>
                         </li>
                         <li>
-                            <label>Detector Type:</label>
-                            <input class="stdin" step="1" id="det_type" type="number"></input>
+                            <label>Trigger Readout:</label>
+                            <input id="trsclr_b" type="number" min='50000000' max='4294967295'></input>
+                        </li>
+                        <li>
+                            <label>Prog Deadtime:</label>
+                            <input id="prg_ddtm" type="number" min='0' max='4294967295'></input>
+                        </li>
+                        <li>
+                            <label>Sync Livetime:</label>
+                            <input id="syn_lvtm" type="number" min='0' max='4294967295'></input>
+                        </li>
+                        <li>
+                            <label>Sync Deadtime:</label>
+                            <input id="syn_ddtm" type="number" min='0' max='4294967295'></input>
+                        </li>
+                        <li>
+                            <label>Detector Type</label>
+                            <select id='det_type'>
+                                <option value='0'>GRIFFIN Low Gain</option>
+                                <option value='1'>GRIFFIN High Gain</option>
+                                <option value='2'>SCEPTAR</option>
+                                <option value='3'>DANTE (Energy)</option>
+                                <option value='4'>DANTE (Time)</option>
+                                <option value='5'>PACES</option>
+                                <option value='6'>DESCANT</option>
+                                <option value='7'>GRIFFIN Suppressors</option>
+                                <option value='8'>DANTE Suppressors</option>
+                                <option value='9'>ZDS</option>
+                            </select>
                         </li>
                     </ul>
                 </div>
@@ -385,24 +438,52 @@
     function routeADCchannel(ADCjson){
         // take the parsed JSON response of a request like http://grifadc03.triumf.ca/mscb?node=17 and sort it into the adc-sidebar.
 
-        var numberID = [    'a_dcofst', 'a_trim',
-                            't_hthres', 't_thres', 't_diff', 't_int', 't_delay', 't_polcor', 't_blrctl', 
-                            'p_int', 'p_diff', 'p_delay', 'p_polec1', 'p_polec2', 'p_bsr', 'p_gain', 'p_pactrl',
-                            'cfd_dly', 'cfd_frac',
-                            'wfr_pret', 'wfr_smpl', 'wfr_dec',
-                            'sim_phgt', 'sim_rise', 'sim_fall', 'sim_rate',
-                            'fix_dead', 'det_type'
+        var numberID = [    
+                'a_dcofst',
+                't_thres', 't_diff', 't_int', 't_polcor', 
+                'p_int', 'p_diff', 'p_delay', 'p_polec1', 'cfd_dly',
+                'wfr_pret', 'wfr_smpl',
+                'sim_rise', 'sim_rate', 'sim_amp', 'sim_dly0', 'sim_amp0', 'sim_dly1', 'sim_amp1', 'sim_dly2', 'sim_amp2', 'sim_dly3', 'sim_amp3', 
+                'dtsclr_b', 'trsclr_b', 'prg_ddtm', 'syn_lvtm', 'syn_ddtm'
             ],
-            radioName = [   'a_off',
-                            'a_pol',
-                            't_off',
-                            'wfr_supp',
-                            'wfr_off',
-                            'sim_ena',
-                            'sim_rand'
+            checkboxID = [
+                'a_enable',
+                't_on',
+                'sim_ena',
+                'sim_enat',
+                'sim_enar',
+                'sim_cyc',
+                'sim_pol'
+            ],
+            radioName = [  
+                'a_pol',
+                'sim_rand'
+            ],
+            readOnlyText = [
+                'rt_rqst',
+                'rt_acpt',
+                'rt_dwav',
+                'rt_dbsy',
+                'rt_dqt',
+                'rt_dtrg',
+                'rt_dded',
+                'st_trig',
+                'st_trigr'
+            ],
+            progressBars = [
+                'st_btrig',
+                'st_bwv',
+                'st_bqt',
+                'st_bevr',
+                'st_bevw'
+            ],
+            optionLists = [
+                'a_fgain',
+                'wfr_mode',
+                'det_type'
             ],
             warningDiv = document.getElementById('ADCwarning'),
-            i;
+            i, textEncoding, barMax;
 
         //empty response from ADC?
         if(Object.keys(ADCjson).length == 0){
@@ -412,7 +493,7 @@
         }
         warningDiv.classList.add('hidden');
 
-        //keep hold of this blobject for later, has widths and car types and stuff in it needed for writing back
+        //keep hold of this blobject for later, has widths and card types and stuff in it needed for writing back
         dataStore.ADCstructure = ADCjson.vars;
 
         //all number inputs have id == data key name
@@ -420,10 +501,36 @@
             if(dataStore.ADCstructure[numberID[i]])
                 document.getElementById(numberID[i]).value = dataStore.ADCstructure[numberID[i]]['d'];
         }
+        //all checkbox inputs have id == data key name
+        for(i=0; i<checkboxID.length; i++){
+            if(dataStore.ADCstructure[checkboxID[i]])
+                document.getElementById(checkboxID[i]).checked = dataStore.ADCstructure[checkboxID[i]]['d'];
+        }
         //all radio inputs have name == data key name
         for(i=0; i<radioName.length; i++){
             if(dataStore.ADCstructure[radioName[i]])
                 document.querySelectorAll('input[name = "'+radioName[i]+'"][value = '+dataStore.ADCstructure[radioName[i]]['d']+']')[0].checked = true;    
+        }
+        // read only inputs have id == data key name
+        for(i=0; i<readOnlyText.length; i++){
+            if(dataStore.ADCstructure[readOnlyText[i]]){
+                    textEncoding = dataStore.ADCstructure[readOnlyText[i]]['d']
+                    if(isNumeric(textEncoding))
+                        textEncoding = textEncoding.toFixed(0);
+                    document.getElementById(readOnlyText[i]).innerHTML = textEncoding;
+                }
+        }
+        //progress bars have id == data key name
+        for(i=0; i<progressBars.length; i++){
+            if(dataStore.ADCstructure[progressBars[i]]){
+                barMax = parseInt(document.getElementById(progressBars[i]).getAttribute('aria-valuemax'), 10)
+                document.getElementById(progressBars[i]).setAttribute('style', 'width:' + dataStore.ADCstructure[progressBars[i]]['d']/barMax*100 + '%;');
+            }
+        }
+        // selects have id == data key name
+        for(i=0; i<optionLists.length; i++){
+            if(dataStore.ADCstructure[optionLists[i]])
+                document.getElementById(optionLists[i]).value = dataStore.ADCstructure[optionLists[i]]['d'];
         }
     }
 

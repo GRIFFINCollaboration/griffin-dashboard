@@ -1,3 +1,8 @@
+function isNumeric(n) {
+    // thanks http://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 function prepareTemplates(templates){
     //take an array of template names, and load their inner html into a simmilarly keyed object.
 
