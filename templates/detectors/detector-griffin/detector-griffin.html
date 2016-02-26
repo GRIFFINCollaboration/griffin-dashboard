@@ -231,7 +231,10 @@
                 dataStore.detector.HVLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]])
             else
                 dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]]);
+
         }
+
+        setupErrorPattern();
     }
 
     function instantiateSummaryCells(){
@@ -356,6 +359,8 @@
             listening: true
         });      
         dataStore.detector.channelLayer[0].add(beamArrow);  
+
+        setupErrorPattern();
     }
 
     function createCell(channel, cellKey){

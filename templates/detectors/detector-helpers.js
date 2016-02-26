@@ -44,20 +44,6 @@ function setupDetector(){
         dataStore.detector.stage[i].add(dataStore.detector.channelLayer[i]);
         dataStore.detector.stage[i].add(dataStore.detector.HVLayer[i]);
     }
-
-    //set up error pattern
-    dataStore.errorPattern = document.getElementById('errorPattern');
-    assignErrorPattern = function(){
-        var key;
-        for(key in dataStore.detector.cells){
-            dataStore.detector.cells[key].setAttr('fillPatternImage', dataStore.errorPattern);
-        }
-    }
-    if(dataStore.errorPattern.complete){
-        assignErrorPattern();
-    } else {
-        dataStore.errorPattern.addEventListener('load', assignErrorPattern);
-    }
 }
 
 function preFetch(){
@@ -113,6 +99,27 @@ function instantiateCells(view){
         else if(isADCChannel(channel))
             dataStore.detector.channelLayer[view].add(dataStore.detector.cells[channel]);
     }
+
+    setupErrorPattern();
+}
+
+function setupErrorPattern(){
+    // get the error pattern in place once it arrives
+
+    dataStore.errorPattern = document.getElementById('errorPattern');
+    assignErrorPattern = function(){
+        var key;
+
+        for(key in dataStore.detector.cells){
+            dataStore.detector.cells[key].setAttr('fillPatternImage', dataStore.errorPattern);
+        }
+    }
+    if(dataStore.errorPattern.complete){
+        assignErrorPattern();
+    } else {
+        dataStore.errorPattern.addEventListener('load', assignErrorPattern);
+    }
+
 }
 
 ///////////////////////////
