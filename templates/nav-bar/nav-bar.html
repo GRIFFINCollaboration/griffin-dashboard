@@ -15,14 +15,14 @@
 <script>
 
     function detectDetectors(){
-        // decide which detectors need to be linked to, based on the MSC table in the ODB, pre-registered on dataStore.DAQ
+        // decide which detectors need to be linked to, based on the MSC table in the ODB, pre-registered on dataStore.ODB.DAQ
 
         var i, newLink, current
             detectors = [],
             wrap = document.getElementById('nav-wrap');
 
-        for(i=0; i<dataStore.DAQ.MSC.chan.length; i++){
-            detectors.push(dataStore.DAQ.MSC.chan[i].slice(0,2));
+        for(i=0; i<dataStore.ODB.DAQ.MSC.chan.length; i++){
+            detectors.push(dataStore.ODB.DAQ.MSC.chan[i].slice(0,2));
         }
         detectors = detectors.unique();
 

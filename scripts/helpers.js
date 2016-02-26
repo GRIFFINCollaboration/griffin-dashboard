@@ -147,21 +147,21 @@ function fetchDAQ(payload){
 
     var i, key;
 
-    dataStore.DAQ = payload;
+    dataStore.ODB.DAQ = payload;
 
     //extract hosts list
     dataStore.hosts = [];
 
     //master
-    //dataStore.hosts.push(dataStore.DAQ.hosts.master);
-    for(key in dataStore.DAQ.hosts){
-        if(dataStore.DAQ.hosts[key].host){
+    //dataStore.hosts.push(dataStore.ODB.DAQ.hosts.master);
+    for(key in dataStore.ODB.DAQ.hosts){
+        if(dataStore.ODB.DAQ.hosts[key].host){
             //collectors
-            //dataStore.hosts.push(dataStore.DAQ.hosts[key].host);
+            //dataStore.hosts.push(dataStore.ODB.DAQ.hosts[key].host);
             //digitizers
-            for(i=0; i<dataStore.DAQ.hosts[key].digitizers.length; i++){
-                if(dataStore.DAQ.hosts[key].digitizers[i])
-                    dataStore.hosts.push(dataStore.DAQ.hosts[key].digitizers[i])
+            for(i=0; i<dataStore.ODB.DAQ.hosts[key].digitizers.length; i++){
+                if(dataStore.ODB.DAQ.hosts[key].digitizers[i])
+                    dataStore.hosts.push(dataStore.ODB.DAQ.hosts[key].digitizers[i])
             }
         }
     }
@@ -217,8 +217,8 @@ function findHVcrate(channel){
         match = false,
         crateID = -1;
 
-    while(!match && dataStore.Equipment['HV-'+i]){
-        if(dataStore.Equipment['HV-'+i].Settings.Names.indexOf(channel) != -1){
+    while(!match && dataStore.ODB.Equipment['HV-'+i]){
+        if(dataStore.ODB.Equipment['HV-'+i].Settings.Names.indexOf(channel) != -1){
             match = true;
             crateID = i;
         }

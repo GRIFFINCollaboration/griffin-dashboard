@@ -22,8 +22,8 @@ function unpackDAQdv(dv){
     for(i=0; i<dv.byteLength/14; i++){
         DAQblock = unpackDAQ(i, dv);
 
-        channelIndex = dataStore.DAQ.MSC.MSC.indexOf(DAQblock.MSC);
-        channelName = dataStore.DAQ.MSC.chan[channelIndex];
+        channelIndex = dataStore.ODB.DAQ.MSC.MSC.indexOf(DAQblock.MSC);
+        channelName = dataStore.ODB.DAQ.MSC.chan[channelIndex];
 
         if(channelName) // ie channel *must* be in the ODB MSC table
             sortDAQitem(channelName, DAQblock);
@@ -32,7 +32,7 @@ function unpackDAQdv(dv){
 
 function regenerateDatastructure(suppressDOMconfig){
     // rebuild an empty data structure to hold sorted DAQ data, based on the MSC table:
-    // dataStore.DAQ.summary = {
+    // dataStore.ODB.DAQ.summary = {
     //      master: {
     //          requests: int; total requests
     //          accepts:  int; total accepts
@@ -69,12 +69,12 @@ function regenerateDatastructure(suppressDOMconfig){
 
     var i, address, M,S,C, detPrefix, collectorOption, detectorOption;
 
-    if(dataStore.DAQ.summaryJSON){
-        dataStore.DAQ.summary = JSON.parse(dataStore.DAQ.summaryJSON);
+    if(dataStore.ODB.DAQ.summaryJSON){
+        dataStore.ODB.DAQ.summary = JSON.parse(dataStore.ODB.DAQ.summaryJSON);
         return;
     }
 
-    dataStore.DAQ.summary = {
+    dataStore.ODB.DAQ.summary = {
         master: {requests: 0, accepts: 0},
         collectors: {requests: [], accepts: [], titles: []},
         digitizers: {requests:[], accepts:[], titles: []},
@@ -85,55 +85,55 @@ function regenerateDatastructure(suppressDOMconfig){
     // initialize 0s in appropriate places
     // msc addresses
 
-    for(i=0; i<dataStore.DAQ.MSC.MSC.length; i++){
-        address = parseMSCindex(dataStore.DAQ.MSC.MSC[i]);
+    for(i=0; i<dataStore.ODB.DAQ.MSC.MSC.length; i++){
+        address = parseMSCindex(dataStore.ODB.DAQ.MSC.MSC[i]);
 
         M = address[0];
         S = address[1];
         C = address[2];
 
-        dataStore.DAQ.summary.collectors.requests[M] = 0;
-        dataStore.DAQ.summary.collectors.accepts[M] = 0;
-        dataStore.DAQ.summary.collectors.titles[M] = '0x' + M.toString(16) + '---';
+        dataStore.ODB.DAQ.summary.collectors.requests[M] = 0;
+        dataStore.ODB.DAQ.summary.collectors.accepts[M] = 0;
+        dataStore.ODB.DAQ.summary.collectors.titles[M] = '0x' + M.toString(16) + '---';
 
-        dataStore.DAQ.summary.digitizers.requests[M] = dataStore.DAQ.summary.digitizers.requests[M] || [];
-        dataStore.DAQ.summary.digitizers.accepts[M] = dataStore.DAQ.summary.digitizers.accepts[M] || [];
-        dataStore.DAQ.summary.digitizers.titles[M] = dataStore.DAQ.summary.digitizers.titles[M] || [];
-        dataStore.DAQ.summary.digitizers.requests[M][S] = 0;
-        dataStore.DAQ.summary.digitizers.accepts[M][S] = 0;
-        dataStore.DAQ.summary.digitizers.titles[M][S] = '0x' + M.toString(16) + S.toString(16) + '--';
+        dataStore.ODB.DAQ.summary.digitizers.requests[M] = dataStore.ODB.DAQ.summary.digitizers.requests[M] || [];
+        dataStore.ODB.DAQ.summary.digitizers.accepts[M] = dataStore.ODB.DAQ.summary.digitizers.accepts[M] || [];
+        dataStore.ODB.DAQ.summary.digitizers.titles[M] = dataStore.ODB.DAQ.summary.digitizers.titles[M] || [];
+        dataStore.ODB.DAQ.summary.digitizers.requests[M][S] = 0;
+        dataStore.ODB.DAQ.summary.digitizers.accepts[M][S] = 0;
+        dataStore.ODB.DAQ.summary.digitizers.titles[M][S] = '0x' + M.toString(16) + S.toString(16) + '--';
 
-        dataStore.DAQ.summary.channels.requests[M] = dataStore.DAQ.summary.channels.requests[M] || [];
-        dataStore.DAQ.summary.channels.requests[M][S] = dataStore.DAQ.summary.channels.requests[M][S] || [];
-        dataStore.DAQ.summary.channels.accepts[M] = dataStore.DAQ.summary.channels.accepts[M] || [];
-        dataStore.DAQ.summary.channels.accepts[M][S] = dataStore.DAQ.summary.channels.accepts[M][S] || [];
-        dataStore.DAQ.summary.channels.titles[M] = dataStore.DAQ.summary.channels.titles[M] || [];
-        dataStore.DAQ.summary.channels.titles[M][S] = dataStore.DAQ.summary.channels.titles[M][S] || [];
-        dataStore.DAQ.summary.channels.requests[M][S][C] = 0;
-        dataStore.DAQ.summary.channels.accepts[M][S][C] = 0;
-        dataStore.DAQ.summary.channels.titles[M][S][C] = '0x' + M.toString(16) + S.toString(16) + (C<16 ? '0' : '') + C.toString(16);
+        dataStore.ODB.DAQ.summary.channels.requests[M] = dataStore.ODB.DAQ.summary.channels.requests[M] || [];
+        dataStore.ODB.DAQ.summary.channels.requests[M][S] = dataStore.ODB.DAQ.summary.channels.requests[M][S] || [];
+        dataStore.ODB.DAQ.summary.channels.accepts[M] = dataStore.ODB.DAQ.summary.channels.accepts[M] || [];
+        dataStore.ODB.DAQ.summary.channels.accepts[M][S] = dataStore.ODB.DAQ.summary.channels.accepts[M][S] || [];
+        dataStore.ODB.DAQ.summary.channels.titles[M] = dataStore.ODB.DAQ.summary.channels.titles[M] || [];
+        dataStore.ODB.DAQ.summary.channels.titles[M][S] = dataStore.ODB.DAQ.summary.channels.titles[M][S] || [];
+        dataStore.ODB.DAQ.summary.channels.requests[M][S][C] = 0;
+        dataStore.ODB.DAQ.summary.channels.accepts[M][S][C] = 0;
+        dataStore.ODB.DAQ.summary.channels.titles[M][S][C] = '0x' + M.toString(16) + S.toString(16) + (C<16 ? '0' : '') + C.toString(16);
     }
 
     //detectors
-    for(i=0; i<dataStore.DAQ.MSC.chan.length; i++){
-        detPrefix = dataStore.DAQ.MSC.chan[i].slice(0,2);
+    for(i=0; i<dataStore.ODB.DAQ.MSC.chan.length; i++){
+        detPrefix = dataStore.ODB.DAQ.MSC.chan[i].slice(0,2);
 
-        if(dataStore.DAQ.summary.detectors.titles.indexOf(detPrefix) == -1){
-            dataStore.DAQ.summary.detectors.titles.push(detPrefix);
-            dataStore.DAQ.summary.detectors.requests.push(0);
-            dataStore.DAQ.summary.detectors.accepts.push(0);
-            dataStore.DAQ.summary.detectors.prettyName.push(dataStore.DAQ.detectorNames[detPrefix]);
+        if(dataStore.ODB.DAQ.summary.detectors.titles.indexOf(detPrefix) == -1){
+            dataStore.ODB.DAQ.summary.detectors.titles.push(detPrefix);
+            dataStore.ODB.DAQ.summary.detectors.requests.push(0);
+            dataStore.ODB.DAQ.summary.detectors.accepts.push(0);
+            dataStore.ODB.DAQ.summary.detectors.prettyName.push(dataStore.ODB.DAQ.detectorNames[detPrefix]);
         }
-        dataStore.DAQ.summary.detectors[detPrefix] = {requests: 0, accepts: 0};
+        dataStore.ODB.DAQ.summary.detectors[detPrefix] = {requests: 0, accepts: 0};
     }
 
     // dom setup
     if(!suppressDOMconfig){
-        for(i=0; i<dataStore.DAQ.summary.collectors.titles.length; i++){
-            if(dataStore.DAQ.summary.collectors.titles[i]){
+        for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
+            if(dataStore.ODB.DAQ.summary.collectors.titles[i]){
                 collectorOption = document.createElement('option');
-                collectorOption.setAttribute('value', dataStore.DAQ.summary.collectors.titles[i].slice(2,3));
-                collectorOption.innerHTML = dataStore.DAQ.summary.collectors.titles[i];
+                collectorOption.setAttribute('value', dataStore.ODB.DAQ.summary.collectors.titles[i].slice(2,3));
+                collectorOption.innerHTML = dataStore.ODB.DAQ.summary.collectors.titles[i];
                 document.getElementById('collectorPicker').appendChild(collectorOption);
                 document.getElementById('digiCollectorPicker').appendChild(collectorOption.cloneNode(true));
             }
@@ -141,7 +141,7 @@ function regenerateDatastructure(suppressDOMconfig){
         document.getElementById('digiCollectorPicker').onchange();
     }
 
-    dataStore.DAQ.summaryJSON = JSON.stringify(dataStore.DAQ.summary);
+    dataStore.ODB.DAQ.summaryJSON = JSON.stringify(dataStore.ODB.DAQ.summary);
 }
 
 function sortDAQitem(detector, block){
@@ -152,24 +152,24 @@ function sortDAQitem(detector, block){
         S = address[1],
         C = address[2],
         detectorCode = detector.slice(0,2),
-        detectorIndex = dataStore.DAQ.summary.detectors.titles.indexOf(detectorCode);
+        detectorIndex = dataStore.ODB.DAQ.summary.detectors.titles.indexOf(detectorCode);
 
     // sort data into summary:
     // master
-    dataStore.DAQ.summary.master.requests += block.trigReq;
-    dataStore.DAQ.summary.master.accepts += block.trigAcpt;
+    dataStore.ODB.DAQ.summary.master.requests += block.trigReq;
+    dataStore.ODB.DAQ.summary.master.accepts += block.trigAcpt;
     // collectors
-    dataStore.DAQ.summary.collectors.requests[M] += block.trigReq;
-    dataStore.DAQ.summary.collectors.accepts[M] += block.trigAcpt;
+    dataStore.ODB.DAQ.summary.collectors.requests[M] += block.trigReq;
+    dataStore.ODB.DAQ.summary.collectors.accepts[M] += block.trigAcpt;
     // digitizers
-    dataStore.DAQ.summary.digitizers.requests[M][S] += block.trigReq;
-    dataStore.DAQ.summary.digitizers.accepts[M][S] += block.trigAcpt;
+    dataStore.ODB.DAQ.summary.digitizers.requests[M][S] += block.trigReq;
+    dataStore.ODB.DAQ.summary.digitizers.accepts[M][S] += block.trigAcpt;
     // digi channels
-    dataStore.DAQ.summary.channels.requests[M][S][C] += block.trigReq;
-    dataStore.DAQ.summary.channels.accepts[M][S][C] += block.trigAcpt;
+    dataStore.ODB.DAQ.summary.channels.requests[M][S][C] += block.trigReq;
+    dataStore.ODB.DAQ.summary.channels.accepts[M][S][C] += block.trigAcpt;
     // detector
-    dataStore.DAQ.summary.detectors.requests[detectorIndex] += block.trigReq;
-    dataStore.DAQ.summary.detectors.accepts[detectorIndex]  += block.trigAcpt;     
+    dataStore.ODB.DAQ.summary.detectors.requests[detectorIndex] += block.trigReq;
+    dataStore.ODB.DAQ.summary.detectors.accepts[detectorIndex]  += block.trigAcpt;     
 
 }
 
@@ -201,36 +201,36 @@ function repaint(){
     //master summary
     createBarchart(
         'collectorsHisto', 
-        dataStore.DAQ.summary.collectors.titles, 
-        dataStore.DAQ.summary.collectors.requests, 
-        dataStore.DAQ.summary.collectors.accepts, 
+        dataStore.ODB.DAQ.summary.collectors.titles, 
+        dataStore.ODB.DAQ.summary.collectors.requests, 
+        dataStore.ODB.DAQ.summary.collectors.accepts, 
         'Master Channel', 'Collector', 'Hz'
     );
 
     //Collectors plot
     createBarchart(
         'digitizersHisto', 
-        dataStore.DAQ.summary.digitizers.titles[collectorFigureIndex], 
-        dataStore.DAQ.summary.digitizers.requests[collectorFigureIndex], 
-        dataStore.DAQ.summary.digitizers.accepts[collectorFigureIndex], 
-        'Collector ' + dataStore.DAQ.summary.collectors.titles[collectorFigureIndex] + ' Channels', 'Digitizer', 'Hz'
+        dataStore.ODB.DAQ.summary.digitizers.titles[collectorFigureIndex], 
+        dataStore.ODB.DAQ.summary.digitizers.requests[collectorFigureIndex], 
+        dataStore.ODB.DAQ.summary.digitizers.accepts[collectorFigureIndex], 
+        'Collector ' + dataStore.ODB.DAQ.summary.collectors.titles[collectorFigureIndex] + ' Channels', 'Digitizer', 'Hz'
     );
 
     //Digitizers plot
     createBarchart(
         'channelsHisto', 
-        dataStore.DAQ.summary.channels.titles[digiCollectorIndex][digitizerFigureIndex], 
-        dataStore.DAQ.summary.channels.requests[digiCollectorIndex][digitizerFigureIndex], 
-        dataStore.DAQ.summary.channels.accepts[digiCollectorIndex][digitizerFigureIndex], 
-        'Digitizer ' + dataStore.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels', 'Channel', 'Hz'
+        dataStore.ODB.DAQ.summary.channels.titles[digiCollectorIndex][digitizerFigureIndex], 
+        dataStore.ODB.DAQ.summary.channels.requests[digiCollectorIndex][digitizerFigureIndex], 
+        dataStore.ODB.DAQ.summary.channels.accepts[digiCollectorIndex][digitizerFigureIndex], 
+        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels', 'Channel', 'Hz'
     );    
 
     //Detectors plot   
     createBarchart(
         'detectorsHisto', 
-        dataStore.DAQ.summary.detectors.prettyName, 
-        dataStore.DAQ.summary.detectors.requests, 
-        dataStore.DAQ.summary.detectors.accepts, 
+        dataStore.ODB.DAQ.summary.detectors.prettyName, 
+        dataStore.ODB.DAQ.summary.detectors.requests, 
+        dataStore.ODB.DAQ.summary.detectors.accepts, 
         'Detector Channels', 'Channel', 'Hz'
     );    
 }
@@ -280,11 +280,11 @@ function updateDigitizerList(digiSelectID){
 
     digiSelect.innerHTML = '';
 
-    for(i=0; i<dataStore.DAQ.summary.digitizers.titles[masterChannel].length; i++){
-        if(dataStore.DAQ.summary.digitizers.titles[masterChannel][i]){
+    for(i=0; i<dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel].length; i++){
+        if(dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel][i]){
             option = document.createElement('option')
-            option.setAttribute('value', dataStore.DAQ.summary.digitizers.titles[masterChannel][i].slice(3,4));
-            option.innerHTML = dataStore.DAQ.summary.digitizers.titles[masterChannel][i];
+            option.setAttribute('value', dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel][i].slice(3,4));
+            option.innerHTML = dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel][i];
             digiSelect.appendChild(option);           
         }
     }

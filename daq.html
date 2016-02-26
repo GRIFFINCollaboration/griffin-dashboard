@@ -47,8 +47,8 @@
             fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
             function processDAQ(payload){
                 fetchDAQ(payload);
-                dataStore.DAQ.summary = {};
-                dataStore.DAQ.detectorNames = {
+                dataStore.ODB.DAQ.summary = {};
+                dataStore.ODB.DAQ.detectorNames = {
                     'GR': 'GRIFFIN',
                     'ZD': 'Zero-Degree Scintillator',
                     'SE': 'SCEPTAR',

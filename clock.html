@@ -65,7 +65,7 @@
             function processEquipment(payload){
                 var i, keys = Object.keys(payload);
 
-                dataStore.Equipment = payload;
+                dataStore.ODB.Equipment = payload;
 
                 //identify the clocks present
                 dataStore.clocks = []
@@ -73,7 +73,7 @@
                     if(keys[i].slice(0,8) == 'GRIF-Clk'){
                         dataStore.clocks.push({
                             title: keys[i], 
-                            table: dataStore.Equipment[keys[i]]
+                            table: dataStore.ODB.Equipment[keys[i]]
                         });
                     }
                 }

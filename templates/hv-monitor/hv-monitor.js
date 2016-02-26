@@ -12,8 +12,8 @@ function dataUpdate(){
 function registerODB(payload){
     //park the ODB responses in the dataStore, and run through initial parsing
 
-    dataStore.DAQ = payload[0];
-    dataStore.Equipment = payload[1];
+    dataStore.ODB.DAQ = payload[0];
+    dataStore.ODB.Equipment = payload[1];
 
     detectDetectors();
     exploreCrates();
@@ -22,16 +22,16 @@ function registerODB(payload){
 }
 
 function exploreCrates(){
-    // use dataStore.Equipment to decide how many crates there are, and what is plugged into each slot
+    // use dataStore.ODB.Equipment to decide how many crates there are, and what is plugged into each slot
 
     var i,
-        keys = Object.keys(dataStore.Equipment)
+        keys = Object.keys(dataStore.ODB.Equipment)
 
     for(i=0; i<keys.length; i++){
         if(keys[i].slice(0,3) == 'HV-'){
             dataStore.HV.crates[keys[i]] = {
-                content: unpackHVCrateMap(dataStore.Equipment[keys[i]].Settings.Devices.sy2527.DD.crateMap),
-                data: dataStore.Equipment[keys[i]]
+                content: unpackHVCrateMap(dataStore.ODB.Equipment[keys[i]].Settings.Devices.sy2527.DD.crateMap),
+                data: dataStore.ODB.Equipment[keys[i]]
             };
         }
     }
@@ -215,7 +215,7 @@ function recolorCells(){
     var i, status, color;
 
     for(i=0; i<dataStore.HV.cells[dataStore.HV.currentCrate].length; i++){
-        status = parseChStatus(dataStore.Equipment[dataStore.HV.currentCrate].Variables.ChStatus[i]);
+        status = parseChStatus(dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.ChStatus[i]);
 
         if(status.indexOf('EXTERNAL DISABLE') != -1 || status.indexOf('EXTERNAL TRIP') != -1)
             color = dataStore.HV.colors.extTrip;
@@ -223,7 +223,7 @@ function recolorCells(){
             color = dataStore.HV.colors.off;
         else if(status.indexOf('Ramping Up') != -1 || status.indexOf('Ramping Down') != -1)
             color = dataStore.HV.colors.ramping;
-        else if(dataStore.Equipment[dataStore.HV.currentCrate].Variables.ChStatus[i] == 1)
+        else if(dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.ChStatus[i] == 1)
             color = dataStore.HV.colors.ok;
         else
             color = dataStore.HV.colors.alarm;
@@ -345,16 +345,16 @@ function writeTooltip(index){
 
     if(!isNaN(index)){
         text += '<ul class="list-unstyled">'
-        chStatus = parseChStatus(dataStore.Equipment[dataStore.HV.currentCrate].Variables.ChStatus[index])
+        chStatus = parseChStatus(dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.ChStatus[index])
         text += '<li>Status:<ul>'
         for(i=0; i<chStatus.length; i++){
             text += '<li>' + chStatus[i] + '</li>'
         }
         text += '</ul></li>'
-        text += '<li>Demand: ' + dataStore.Equipment[dataStore.HV.currentCrate].Variables.Demand[index] + ' V</li>'
-        text += '<li>Measured: ' + dataStore.Equipment[dataStore.HV.currentCrate].Variables.Measured[index] + ' V</li>'
-        text += '<li>Current: ' + dataStore.Equipment[dataStore.HV.currentCrate].Variables.Current[index] + ' uA</li>'
-        text += '<li>Temp: ' + dataStore.Equipment[dataStore.HV.currentCrate].Variables.Temperature[index] + ' C</li>'
+        text += '<li>Demand: ' + dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.Demand[index] + ' V</li>'
+        text += '<li>Measured: ' + dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.Measured[index] + ' V</li>'
+        text += '<li>Current: ' + dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.Current[index] + ' uA</li>'
+        text += '<li>Temp: ' + dataStore.ODB.Equipment[dataStore.HV.currentCrate].Variables.Temperature[index] + ' C</li>'
         text += '</ul>'
     }
 
@@ -440,7 +440,7 @@ function nameFromIndex(indexString){
 function sortODBEquipment(payload){
     // take the ODB equipment directory and populate the HV info with it.
 
-    dataStore.Equipment = payload[0];
+    dataStore.ODB.Equipment = payload[0];
 
     // update hv sidebar if present
     if(dataStore.activeHVsidebar)

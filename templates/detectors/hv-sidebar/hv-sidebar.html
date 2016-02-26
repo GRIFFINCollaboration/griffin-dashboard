@@ -58,7 +58,7 @@
         // plug in the event listeners for the HV sidebar
 
         document.getElementById(wrapperID).addEventListener('postHV', function(evt){
-            if(dataStore.Equipment[evt.detail.crate].Settings.Names.indexOf(evt.detail.channel) != -1) {
+            if(dataStore.ODB.Equipment[evt.detail.crate].Settings.Names.indexOf(evt.detail.channel) != -1) {
                 document.getElementById(wrapperID).innerHTML = Mustache.to_html(
                     dataStore.templates['hv-sidebar'], 
                     {
@@ -86,20 +86,20 @@
         // write HV data currently in the dataStore to the HV sidebar for the requested channel
 
         var crate = findHVcrate(channel),
-            index = dataStore.Equipment['HV-'+crate].Settings.Names.indexOf(channel),
-            isOn = dataStore.Equipment['HV-'+crate].Variables.ChStatus[index]%2 == 1,
-            voltage = dataStore.Equipment['HV-'+crate].Variables.Measured[index],
-            voltageLimit = dataStore.Equipment['HV-'+crate].Settings['Voltage Limit'][index],
+            index = dataStore.ODB.Equipment['HV-'+crate].Settings.Names.indexOf(channel),
+            isOn = dataStore.ODB.Equipment['HV-'+crate].Variables.ChStatus[index]%2 == 1,
+            voltage = dataStore.ODB.Equipment['HV-'+crate].Variables.Measured[index],
+            voltageLimit = dataStore.ODB.Equipment['HV-'+crate].Settings['Voltage Limit'][index],
             voltageFraction = voltage / voltageLimit,
-            voltageDemand = dataStore.Equipment['HV-'+crate].Variables.Demand[index],
-            current = dataStore.Equipment['HV-'+crate].Variables.Current[index],
-            currentLimit = dataStore.Equipment['HV-'+crate].Settings['Current Limit'][index],
+            voltageDemand = dataStore.ODB.Equipment['HV-'+crate].Variables.Demand[index],
+            current = dataStore.ODB.Equipment['HV-'+crate].Variables.Current[index],
+            currentLimit = dataStore.ODB.Equipment['HV-'+crate].Settings['Current Limit'][index],
             currentFraction = current / currentLimit,
-            temperature = dataStore.Equipment['HV-'+crate].Variables.Temperature[index],
+            temperature = dataStore.ODB.Equipment['HV-'+crate].Variables.Temperature[index],
             temperatureLimit = 40,
             temperatureFraction = temperature / temperatureLimit,
-            rampUp = dataStore.Equipment['HV-'+crate].Settings['Ramp Up Speed'][index],
-            rampDown = dataStore.Equipment['HV-'+crate].Settings['Ramp Down Speed'][index]
+            rampUp = dataStore.ODB.Equipment['HV-'+crate].Settings['Ramp Up Speed'][index],
+            rampDown = dataStore.ODB.Equipment['HV-'+crate].Settings['Ramp Down Speed'][index]
 
         //on / off
         if(!dataStore.suspendHVsidebar){
@@ -158,7 +158,7 @@
 
         var writeIt = document.getElementById('writeHV'),
             crate = findHVcrate(dataStore.activeHVsidebar),
-            index = dataStore.Equipment['HV-'+crate].Settings.Names.indexOf(dataStore.activeHVsidebar),
+            index = dataStore.ODB.Equipment['HV-'+crate].Settings.Names.indexOf(dataStore.activeHVsidebar),
             isOn = document.getElementById('HVon').checked ? 1 : 0,
             demandURL = 'http://' + dataStore.host + '/?cmd=jset&odb=/Equipment/HV-' + crate + '/Variables/Demand[' + index + ']&value=' +  parseInt(document.getElementById('demandVoltageSlide').value, 10), 
             powerURL = 'http://' + dataStore.host + '/?cmd=jset&odb=/Equipment/HV-' + crate + '/Settings/ChState[' + index + ']&value=' + isOn;

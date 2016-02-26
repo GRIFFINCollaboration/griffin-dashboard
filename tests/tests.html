@@ -19,20 +19,22 @@
             QUnit.module('DAQ', {
                 beforeEach: function(){
                     dataStore = {
-                        DAQ: {
-                            MSC: {
-                                MSC: [0x230A, 0x230B],
-                                chan: ['GRG--', 'XXX--']
-                            },
+                        ODB: {
+                            DAQ: {
+                                MSC: {
+                                    MSC: [0x230A, 0x230B],
+                                    chan: ['GRG--', 'XXX--']
+                                },
 
-                            detectorNames: {
-                                'GR': 'GRIFFIN',
-                                'ZD': 'Zero-Degree Scintillator',
-                                'SE': 'SCEPTAR',
-                                'DS': 'DESCANT',
-                                'PA': 'PACES',
-                                'DA': 'DANTE'
-                            },
+                                detectorNames: {
+                                    'GR': 'GRIFFIN',
+                                    'ZD': 'Zero-Degree Scintillator',
+                                    'SE': 'SCEPTAR',
+                                    'DS': 'DESCANT',
+                                    'PA': 'PACES',
+                                    'DA': 'DANTE'
+                                }
+                            }
                         }
                     };
 
@@ -54,16 +56,16 @@
                     trigAcpt: 732
                 });
 
-                assert.equal(1000, dataStore.DAQ.summary.master.requests)
-                assert.equal(732, dataStore.DAQ.summary.master.accepts)
-                assert.equal(1000, dataStore.DAQ.summary.collectors.requests[2])
-                assert.equal(732, dataStore.DAQ.summary.collectors.accepts[2])
-                assert.equal(1000, dataStore.DAQ.summary.digitizers.requests[2][3])
-                assert.equal(732, dataStore.DAQ.summary.digitizers.accepts[2][3])
-                assert.equal(1000, dataStore.DAQ.summary.channels.requests[2][3][10])
-                assert.equal(732, dataStore.DAQ.summary.channels.accepts[2][3][10])
-                assert.equal(1000, dataStore.DAQ.summary.detectors.requests[0])
-                assert.equal(732, dataStore.DAQ.summary.detectors.accepts[0])
+                assert.equal(1000, dataStore.ODB.DAQ.summary.master.requests)
+                assert.equal(732, dataStore.ODB.DAQ.summary.master.accepts)
+                assert.equal(1000, dataStore.ODB.DAQ.summary.collectors.requests[2])
+                assert.equal(732, dataStore.ODB.DAQ.summary.collectors.accepts[2])
+                assert.equal(1000, dataStore.ODB.DAQ.summary.digitizers.requests[2][3])
+                assert.equal(732, dataStore.ODB.DAQ.summary.digitizers.accepts[2][3])
+                assert.equal(1000, dataStore.ODB.DAQ.summary.channels.requests[2][3][10])
+                assert.equal(732, dataStore.ODB.DAQ.summary.channels.accepts[2][3][10])
+                assert.equal(1000, dataStore.ODB.DAQ.summary.detectors.requests[0])
+                assert.equal(732, dataStore.ODB.DAQ.summary.detectors.accepts[0])
             });
 
             QUnit.test('sum-sort', function(assert){
@@ -83,20 +85,20 @@
                     trigAcpt: 200
                 });
 
-                assert.equal(1500, dataStore.DAQ.summary.master.requests)
-                assert.equal(932, dataStore.DAQ.summary.master.accepts)
-                assert.equal(1500, dataStore.DAQ.summary.collectors.requests[2])
-                assert.equal(932, dataStore.DAQ.summary.collectors.accepts[2])
-                assert.equal(1500, dataStore.DAQ.summary.digitizers.requests[2][3])
-                assert.equal(932, dataStore.DAQ.summary.digitizers.accepts[2][3])
-                assert.equal(1000, dataStore.DAQ.summary.channels.requests[2][3][10])
-                assert.equal(732, dataStore.DAQ.summary.channels.accepts[2][3][10])
-                assert.equal(500, dataStore.DAQ.summary.channels.requests[2][3][11])
-                assert.equal(200, dataStore.DAQ.summary.channels.accepts[2][3][11])
-                assert.equal(1000, dataStore.DAQ.summary.detectors.requests[0])
-                assert.equal(732, dataStore.DAQ.summary.detectors.accepts[0])
-                assert.equal(500, dataStore.DAQ.summary.detectors.requests[1])
-                assert.equal(200, dataStore.DAQ.summary.detectors.accepts[1])
+                assert.equal(1500, dataStore.ODB.DAQ.summary.master.requests)
+                assert.equal(932, dataStore.ODB.DAQ.summary.master.accepts)
+                assert.equal(1500, dataStore.ODB.DAQ.summary.collectors.requests[2])
+                assert.equal(932, dataStore.ODB.DAQ.summary.collectors.accepts[2])
+                assert.equal(1500, dataStore.ODB.DAQ.summary.digitizers.requests[2][3])
+                assert.equal(932, dataStore.ODB.DAQ.summary.digitizers.accepts[2][3])
+                assert.equal(1000, dataStore.ODB.DAQ.summary.channels.requests[2][3][10])
+                assert.equal(732, dataStore.ODB.DAQ.summary.channels.accepts[2][3][10])
+                assert.equal(500, dataStore.ODB.DAQ.summary.channels.requests[2][3][11])
+                assert.equal(200, dataStore.ODB.DAQ.summary.channels.accepts[2][3][11])
+                assert.equal(1000, dataStore.ODB.DAQ.summary.detectors.requests[0])
+                assert.equal(732, dataStore.ODB.DAQ.summary.detectors.accepts[0])
+                assert.equal(500, dataStore.ODB.DAQ.summary.detectors.requests[1])
+                assert.equal(200, dataStore.ODB.DAQ.summary.detectors.accepts[1])
             });
 
             ////////////////////////////////////////////////////

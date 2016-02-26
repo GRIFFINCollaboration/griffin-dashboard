@@ -361,7 +361,7 @@ function summarizeData(){
     var i, j, summaryKey, newValue, channel, subview;
 
     // don't bother if the MSC table hasn't arrived yet:
-    if(!dataStore.DAQ)
+    if(!dataStore.ODB.DAQ)
         return 0;
 
     //zero out old summaries at this depth
@@ -379,7 +379,7 @@ function summarizeData(){
         channel = dataStore.detector.channelNames[i];
 
         // channel intentionally not plugged in, abort
-        if(isADCChannel(channel) && dataStore.DAQ.MSC.chan.indexOf(channel) == -1) continue;
+        if(isADCChannel(channel) && dataStore.ODB.DAQ.MSC.chan.indexOf(channel) == -1) continue;
         if(isHV(channel) && findHVcrate(channel) == -1) continue;
 
         // only summarize the base channels (don't make summaries of summaries):
@@ -426,11 +426,11 @@ function findADC(channel){
     var MSC, channelIndex, M, S, C,
         collectorKey;
 
-    channelIndex = dataStore.DAQ.MSC.chan.indexOf(channel);
+    channelIndex = dataStore.ODB.DAQ.MSC.chan.indexOf(channel);
     if(channelIndex == -1)
         return null;
 
-    MSC = dataStore.DAQ.MSC.MSC[channelIndex];
+    MSC = dataStore.ODB.DAQ.MSC.MSC[channelIndex];
 
     M = (MSC & 0xF000) >>> 12;
     S = (MSC & 0x0F00) >>> 8;
@@ -438,7 +438,7 @@ function findADC(channel){
 
     collectorKey = 'collector0x' + M.toString(16);
 
-    return dataStore.DAQ.hosts[collectorKey].digitizers[S];
+    return dataStore.ODB.DAQ.hosts[collectorKey].digitizers[S];
 }
 
 function findChannel(channel){
@@ -446,11 +446,11 @@ function findChannel(channel){
 
     var MSC, channelIndex
 
-    channelIndex = dataStore.DAQ.MSC.chan.indexOf(channel);
+    channelIndex = dataStore.ODB.DAQ.MSC.chan.indexOf(channel);
     if(channelIndex == -1)
         return null;
 
-    MSC = dataStore.DAQ.MSC.MSC[channelIndex];
+    MSC = dataStore.ODB.DAQ.MSC.MSC[channelIndex];
 
     return (MSC & 0x00FF)
 }
@@ -463,7 +463,7 @@ function sortODBEquipment(payload){
         HVcrates = [],
         channel;
 
-    dataStore.Equipment = payload[0];
+    dataStore.ODB.Equipment = payload[0];
 
     //extract the HV crates from the equipment directory
     for(i=0; i<keys.length; i++){
@@ -498,8 +498,8 @@ function unpackDAQdv(dv){
     for(i=0; i<dv.byteLength/14; i++){
         DAQblock = unpackDAQ(i, dv);
 
-        channelIndex = dataStore.DAQ.MSC.MSC.indexOf(DAQblock.MSC);
-        channelName = dataStore.DAQ.MSC.chan[channelIndex];
+        channelIndex = dataStore.ODB.DAQ.MSC.MSC.indexOf(DAQblock.MSC);
+        channelName = dataStore.ODB.DAQ.MSC.chan[channelIndex];
 
         if(dataStore.data[channelName]){
             dataStore.data[channelName]['trigger_request'] = DAQblock.trigReq;
