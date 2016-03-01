@@ -42,9 +42,10 @@
             </tr>
             <tr>
                 <td>Data Dir:</td>
-                <td id='dataDir'></td>
+                <td></td>
             </tr>
         </table>
+        <input type='text' id='dataDirIn' data-toggle="tooltip" data-placement="bottom" title="Press return to set new dir, or ctrl-z to undo."></input>
 
         <h3>Messages</h3>
         <div class='longListWrapper'>
@@ -56,6 +57,10 @@
 </template>
 
 <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
     function updateRunStatus(){
 
         var runNumber = dataStore.ODB.Runinfo['Run number'],
@@ -145,6 +150,9 @@
         document.getElementById('triggerDataPerSec').innerHTML = dataStore.ODB.Equipment_Trigger_Statistics['kBytes per sec.'].toFixed();
         document.getElementById('dataRecorded').innerHTML = (dataStore.ODB.Logger.Channels['0'].Statistics['Bytes written']/1073742000).toFixed(3) + ' GB';
         document.getElementById('isWriting').innerHTML = dataStore.ODB.Logger['Write data'] ? 'Yes' : 'No';
+        if(document.activeElement != document.getElementById('dataDirIn'))
+            document.getElementById('dataDirIn').value = dataStore.ODB.Logger['Data dir'];
+        document.getElementById('dataDirIn').onchange = writeDataDir;
 
         //write info to display
         document.getElementById('statusTitle').innerHTML = dataStore.ODB.Experiment.Name;
@@ -183,6 +191,12 @@
         dataStore.ODB.Runinfo = payload[1];
         dataStore.ODB.Equipment_Trigger_Statistics = payload[2];
         dataStore.ODB.Logger = payload[3];
+    }
+
+    function writeDataDir(){
+        // update the data dir in the odb
+
+        pokeURL('http://'+dataStore.host+'/?cmd=jset&odb=Logger/Data dir&value='+document.getElementById('dataDirIn').value);
     }
 </script>
 
