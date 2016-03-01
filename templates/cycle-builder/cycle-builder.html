@@ -153,12 +153,12 @@
 
     function processCycle(payload){
         // finish initial setup after active cycle has arrived
-        dataStore.cycle.table = payload;
+        dataStore.ODB.PPG = payload;
 
-        setTitle(dataStore.cycle.table.Current);
+        setTitle(dataStore.ODB.PPG.Current);
 
         // populate the current cycle
-        loadCycle(dataStore.cycle.table.Current);
+        loadCycle(dataStore.ODB.PPG.Current);
         buildCycleMenu();
     }
 
@@ -235,10 +235,10 @@
             window.alert("There doesn't seem to be a valid cycle name set. In the ODB, look in /PPG/Current, and make sure this is set to one of the cycles listed in /PPG/Cycles.")
         }
 
-        for(i=0; i<dataStore.cycle.table.Cycles[cycleName].PPGcodes.length; i++){
+        for(i=0; i<dataStore.ODB.PPG.Cycles[cycleName].PPGcodes.length; i++){
         
             addNewCycleStep();
-            loadCycleStep(dataStore.cycle.stepIndex-1, dataStore.cycle.table.Cycles[cycleName].PPGcodes[i], dataStore.cycle.table.Cycles[cycleName].durations[i]);
+            loadCycleStep(dataStore.cycle.stepIndex-1, dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i], dataStore.ODB.PPG.Cycles[cycleName].durations[i]);
         }
 
         document.getElementById('cycleName').value = cycleName;
@@ -255,7 +255,7 @@
         // populate the cycle dropdown menu with whatever we found in the odb
 
         var i, option,
-            keys = Object.keys(dataStore.cycle.table.Cycles),
+            keys = Object.keys(dataStore.ODB.PPG.Cycles),
             select = document.getElementById('cycleMenu');
 
         for(i=0; i<keys.length; i++){
@@ -311,7 +311,7 @@
         var nameField = document.getElementById('cycleName'),
             currentName = nameField.value;
 
-        if(dataStore.cycle.table.Cycles.hasOwnProperty(currentName))
+        if(dataStore.ODB.PPG.Cycles.hasOwnProperty(currentName))
             nameField.value = 'my-new-cycle';
     }
 

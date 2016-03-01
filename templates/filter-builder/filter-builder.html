@@ -61,14 +61,14 @@
         // finish initial setup after active filter has arrived
 
         dataStore.filter = {};              // place to park filter info on the dataStore
-        dataStore.filter.table = payload;
+        dataStore.ODB.Filter = payload;
         dataStore.filter.orIndex = 0;       // monotonically increasing counter to create unique IDs for new OR blocks
         dataStore.filter.nRows = [];        // array of monotonic counters for number of rows inserted into OR block; OR block # == array index. 
 
-        setTitle(dataStore.filter.table.Current);
+        setTitle(dataStore.ODB.Filter.Current);
 
         // populate the current filter
-        loadFilter(dataStore.filter.table.Current);
+        loadFilter(dataStore.ODB.Filter.Current);
         buildFilterMenu();
     }
 
@@ -174,10 +174,10 @@
             window.alert("There doesn't seem to be a valid filter name set. In the ODB, look in /Filter/Current, and make sure this is set to one of the cycles listed in /Filter/Filters.")
         }
 
-        while(dataStore.filter.table.Filters[filterName]['orCondition'+i]){
+        while(dataStore.ODB.Filter.Filters[filterName]['orCondition'+i]){
             addNewOR()
             
-            conditions = dataStore.filter.table.Filters[filterName]['orCondition'+i];
+            conditions = dataStore.ODB.Filter.Filters[filterName]['orCondition'+i];
             if(Array.isArray(conditions)){
                 for(j=0; j<conditions.length; j++)
                     loadAndRow(dataStore.filter.orIndex-1, conditions[j])
@@ -190,7 +190,7 @@
         }
 
         document.getElementById('filterName').value = filterName;
-        setAllowedDetectors(dataStore.filter.table.Filters[filterName].EnabledDetTypes)
+        setAllowedDetectors(dataStore.ODB.Filter.Filters[filterName].EnabledDetTypes)
     }
 
     function switchFilter(){
@@ -204,7 +204,7 @@
         // populate the filter dropdown menu with whatever we found in the odb
 
         var i, option,
-            keys = Object.keys(dataStore.filter.table.Filters),
+            keys = Object.keys(dataStore.ODB.Filter.Filters),
             select = document.getElementById('filterMenu');
 
         for(i=0; i<keys.length; i++){
@@ -278,7 +278,7 @@
         var nameField = document.getElementById('filterName'),
             currentName = nameField.value;
 
-        if(dataStore.filter.table.Filters.hasOwnProperty(currentName))
+        if(dataStore.ODB.Filter.Filters.hasOwnProperty(currentName))
             nameField.value = 'my-new-filter';
     }
 
