@@ -1,10 +1,48 @@
 <link rel="stylesheet" href="adc-sidebar.css">
 
 <template id='adc-sidebar'>
-    <h3>{{channel}}</h3>
+    <h3 id='channelName'>{{channel}}</h3>
     <h4>{{ADC}}</h4>
     <div id='ADCwarning' class='warning hidden'>
         <h3>ADC response mangled!</h3>
+    </div>
+
+    <div class="panel-group" id='adc-write-target' role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="adc-write-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#adc-write" aria-expanded="true" aria-controls="adc-write">ODB Updates</a>
+                </h4>
+            </div>
+            <div id="adc-write" class="panel-collapse in" role="tabpanel" aria-labelledby="adc-write-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled'>
+                        <li>
+                            <div class='col-md-2 no-pad'>
+                                <input type='radio' name='adc-target' id='adc-template' value='template' class=''></input>
+                            </div>
+                            <div class='col-md-10 no-pad'>
+                                <label for='adc-template' id='adc-template-label'></label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='col-md-2 no-pad'>          
+                                <input type='radio' name='adc-target' id='adc-custom' value='custom' style='float:left;' checked></input>
+                            </div>
+                            <div class='col-md-10 no-pad'>
+                                <label for='adc-custom' id='adc-custom-label' style='float:right'>Write {{channel}} custom params</label>
+                            </div>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+                                <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Reset to Template
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -392,13 +430,86 @@
             </div>
         </div>
     </div>
+
+    <!--are you sure modal-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Reset {{channel}} ADC to defaults?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>This will delete the contents of the ODB directory /DAQ/params/grif16/custom/{{channel}}; there is no undo.</p>
+                    <input type='checkbox' id='yesDefinitelyWriteODB' onclick='enableReset()'></input>
+                    <label for='yesDefinitelyWriteODB'>I'm very sure.</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id='dismissODBmodal'>
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Abort
+                    </button>
+                    <button type="button" class="btn btn-default disabled" id='writeToODB' onclick='eraseCustom("{{channel}}")'>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Write
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>    
 </template>
 
 <script>
     function setupADCSidebar(wrapperID){
-        // plug in the event listeners for the ADC sidebar
+        // plug in the event listeners for the ADC sidebar, set up parameter writing
+
+        dataStore.ADCids = {};
+        dataStore.ADCids.numberID = [    
+            'a_dcofst',
+            't_thres', 't_diff', 't_int', 't_polcor', 
+            'p_int', 'p_diff', 'p_delay', 'p_polec1', 'cfd_dly',
+            'wfr_pret', 'wfr_smpl',
+            'sim_rise', 'sim_rate', 'sim_amp', 'sim_dly0', 'sim_amp0', 'sim_dly1', 'sim_amp1', 'sim_dly2', 'sim_amp2', 'sim_dly3', 'sim_amp3', 
+            'dtsclr_b', 'trsclr_b', 'prg_ddtm', 'syn_lvtm', 'syn_ddtm'
+        ]
+        dataStore.ADCids.checkboxID = [
+            'a_enable',
+            't_on',
+            'sim_ena',
+            'sim_enat',
+            'sim_enar',
+            'sim_cyc',
+            'sim_pol'
+        ]
+        dataStore.ADCids.radioName = [  
+            'a_pol',
+            'sim_rand'
+        ]
+        dataStore.ADCids.readOnlyText = [
+            'rt_rqst',
+            'rt_acpt',
+            'rt_dwav',
+            'rt_dbsy',
+            'rt_dqt',
+            'rt_dtrg',
+            'rt_dded',
+            'st_trig',
+            'st_trigr'
+        ]
+        dataStore.ADCids.progressBars = [
+            'st_btrig',
+            'st_bwv',
+            'st_bqt',
+            'st_bevr',
+            'st_bevw'
+        ]
+        dataStore.ADCids.optionLists = [
+            'a_fgain',
+            'wfr_mode',
+            'det_type'
+        ]
 
         document.getElementById(wrapperID).addEventListener('postADC', function(evt){
+            var i;
+
             document.getElementById(wrapperID).innerHTML = Mustache.to_html(
                 dataStore.templates['adc-sidebar'], 
                 {
@@ -421,6 +532,11 @@
                                                 ]
                                             ];
 
+            // set up odb parameter writing for each input
+            for(i=0; i<dataStore.ADCids.numberID.length; i++){
+                document.getElementById(dataStore.ADCids.numberID[i]).onchange = writeParameter.bind(null, dataStore.ADCids.numberID[i], 9);
+            }
+
             // grab info immediately, before next heartbeat
             Promise.all(dataStore.heartbeat.ADCrequest.map(promiseURL)).then(function(payload){
                 var i;
@@ -438,52 +554,8 @@
     function routeADCchannel(ADCjson){
         // take the parsed JSON response of a request like http://grifadc03.triumf.ca/mscb?node=17 and sort it into the adc-sidebar.
 
-        var numberID = [    
-                'a_dcofst',
-                't_thres', 't_diff', 't_int', 't_polcor', 
-                'p_int', 'p_diff', 'p_delay', 'p_polec1', 'cfd_dly',
-                'wfr_pret', 'wfr_smpl',
-                'sim_rise', 'sim_rate', 'sim_amp', 'sim_dly0', 'sim_amp0', 'sim_dly1', 'sim_amp1', 'sim_dly2', 'sim_amp2', 'sim_dly3', 'sim_amp3', 
-                'dtsclr_b', 'trsclr_b', 'prg_ddtm', 'syn_lvtm', 'syn_ddtm'
-            ],
-            checkboxID = [
-                'a_enable',
-                't_on',
-                'sim_ena',
-                'sim_enat',
-                'sim_enar',
-                'sim_cyc',
-                'sim_pol'
-            ],
-            radioName = [  
-                'a_pol',
-                'sim_rand'
-            ],
-            readOnlyText = [
-                'rt_rqst',
-                'rt_acpt',
-                'rt_dwav',
-                'rt_dbsy',
-                'rt_dqt',
-                'rt_dtrg',
-                'rt_dded',
-                'st_trig',
-                'st_trigr'
-            ],
-            progressBars = [
-                'st_btrig',
-                'st_bwv',
-                'st_bqt',
-                'st_bevr',
-                'st_bevw'
-            ],
-            optionLists = [
-                'a_fgain',
-                'wfr_mode',
-                'det_type'
-            ],
-            warningDiv = document.getElementById('ADCwarning'),
-            i, textEncoding, barMax;
+        var warningDiv = document.getElementById('ADCwarning'),
+            i, textEncoding, barMax, target;
 
         //empty response from ADC?
         if(Object.keys(ADCjson).length == 0){
@@ -497,41 +569,45 @@
         dataStore.ADCstructure = ADCjson.vars;
 
         //all number inputs have id == data key name
-        for(i=0; i<numberID.length; i++){
-            if(dataStore.ADCstructure[numberID[i]])
-                document.getElementById(numberID[i]).value = dataStore.ADCstructure[numberID[i]]['d'];
+        for(i=0; i<dataStore.ADCids.numberID.length; i++){
+            target = document.getElementById(dataStore.ADCids.numberID[i]);
+            if(dataStore.ADCstructure[dataStore.ADCids.numberID[i]] && document.activeElement != target)
+                target.value = dataStore.ADCstructure[dataStore.ADCids.numberID[i]]['d'];
         }
         //all checkbox inputs have id == data key name
-        for(i=0; i<checkboxID.length; i++){
-            if(dataStore.ADCstructure[checkboxID[i]])
-                document.getElementById(checkboxID[i]).checked = dataStore.ADCstructure[checkboxID[i]]['d'];
+        for(i=0; i<dataStore.ADCids.checkboxID.length; i++){
+            if(dataStore.ADCstructure[dataStore.ADCids.checkboxID[i]])
+                document.getElementById(dataStore.ADCids.checkboxID[i]).checked = dataStore.ADCstructure[dataStore.ADCids.checkboxID[i]]['d'];
         }
         //all radio inputs have name == data key name
-        for(i=0; i<radioName.length; i++){
-            if(dataStore.ADCstructure[radioName[i]])
-                document.querySelectorAll('input[name = "'+radioName[i]+'"][value = '+dataStore.ADCstructure[radioName[i]]['d']+']')[0].checked = true;    
+        for(i=0; i<dataStore.ADCids.radioName.length; i++){
+            if(dataStore.ADCstructure[dataStore.ADCids.radioName[i]])
+                document.querySelectorAll('input[name = "'+dataStore.ADCids.radioName[i]+'"][value = '+dataStore.ADCstructure[dataStore.ADCids.radioName[i]]['d']+']')[0].checked = true;    
         }
         // read only inputs have id == data key name
-        for(i=0; i<readOnlyText.length; i++){
-            if(dataStore.ADCstructure[readOnlyText[i]]){
-                    textEncoding = dataStore.ADCstructure[readOnlyText[i]]['d']
+        for(i=0; i<dataStore.ADCids.readOnlyText.length; i++){
+            if(dataStore.ADCstructure[dataStore.ADCids.readOnlyText[i]]){
+                    textEncoding = dataStore.ADCstructure[dataStore.ADCids.readOnlyText[i]]['d']
                     if(isNumeric(textEncoding))
                         textEncoding = textEncoding.toFixed(0);
-                    document.getElementById(readOnlyText[i]).innerHTML = textEncoding;
+                    document.getElementById(dataStore.ADCids.readOnlyText[i]).innerHTML = textEncoding;
                 }
         }
         //progress bars have id == data key name
-        for(i=0; i<progressBars.length; i++){
-            if(dataStore.ADCstructure[progressBars[i]]){
-                barMax = parseInt(document.getElementById(progressBars[i]).getAttribute('aria-valuemax'), 10)
-                document.getElementById(progressBars[i]).setAttribute('style', 'width:' + dataStore.ADCstructure[progressBars[i]]['d']/barMax*100 + '%;');
+        for(i=0; i<dataStore.ADCids.progressBars.length; i++){
+            if(dataStore.ADCstructure[dataStore.ADCids.progressBars[i]]){
+                barMax = parseInt(document.getElementById(dataStore.ADCids.progressBars[i]).getAttribute('aria-valuemax'), 10)
+                document.getElementById(dataStore.ADCids.progressBars[i]).setAttribute('style', 'width:' + dataStore.ADCstructure[dataStore.ADCids.progressBars[i]]['d']/barMax*100 + '%;');
             }
         }
         // selects have id == data key name
-        for(i=0; i<optionLists.length; i++){
-            if(dataStore.ADCstructure[optionLists[i]])
-                document.getElementById(optionLists[i]).value = dataStore.ADCstructure[optionLists[i]]['d'];
+        for(i=0; i<dataStore.ADCids.optionLists.length; i++){
+            if(dataStore.ADCstructure[dataStore.ADCids.optionLists[i]])
+                document.getElementById(dataStore.ADCids.optionLists[i]).value = dataStore.ADCstructure[dataStore.ADCids.optionLists[i]]['d'];
         }
+
+        // write target label updates:
+        document.getElementById('adc-template-label').innerHTML = 'Write ' + selected('det_type', true) + ' template'
     }
 
     function routeADCboard(ADCjson){
@@ -582,6 +658,59 @@
             if(document.getElementById(keys[i]))
                 document.getElementById(keys[i]).innerHTML = content;        
         }
+    }
+
+    function eraseCustom(channel){
+        // erase the custom adc parameters for the names channel
+
+        pokeURL('http://' + dataStore.host + '/?cmd=jdelete&odb=/DAQ/params/grif16/custom/' + channel);
+        pokeURL('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/custom/' + channel + '&type=15');
+
+        document.getElementById('dismissODBmodal').click()
+    }
+
+    function enableReset(){
+        // allow the active channel to be reset to defaults
+
+        var allow = document.getElementById('yesDefinitelyWriteODB').checked,
+            writeButton = document.getElementById('writeToODB');
+
+        if(allow){
+            writeButton.classList.remove('disabled');
+        } else {
+            writeButton.classList.add('disabled');
+        }
+    }
+
+    function writeParameter(id, type){
+        // write a parameter onchange to the appropriate place
+        // type == type of odb variable, see TID* variables in https://daq.triumf.ca/~daqweb/doc/midas-devel/resources/mhttpd.js
+
+        var value,
+            target = document.querySelector('input[name="adc-target"]:checked').value,
+            templateIndex = parseInt(selected('det_type'), 10),
+            channel = document.getElementById('channelName').innerHTML;
+
+        // decide what value to write to the odb
+        if(dataStore.ADCids.numberID.indexOf(id) != -1 || dataStore.ADCids.checkboxID.indexOf(id) != -1)
+            value = document.getElementById(id).value;
+        else if(dataStore.ADCids.radioName.indexOf(id) != -1)
+            value = document.querySelector('input[name="'+id+'"]:checked').value;
+        else if (dataStore.ADCids.optionLists.indexOf(id) != -1)
+            value = selected(id);
+        else{
+            console.log('Tried to set undefined ADC parameter, aborting.');
+            return;
+        }
+
+        if(target == 'custom'){
+            pokeURL('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/custom/' + channel + '/' + id + '&type=' + type);
+            pokeURL('http://' + dataStore.host + '/?cmd=jset&odb=/DAQ/params/grif16/custom/' + channel + '/' + id + '&value=' + value);
+        } else {
+            pokeURL('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/template/' + templateIndex + '/' + id + '&type=' + type);
+            pokeURL('http://' + dataStore.host + '/?cmd=jset&odb=/DAQ/params/grif16/template/' + templateIndex + '/' + id + '&value=' + value);
+        }
+        
     }
 
 </script>

@@ -232,6 +232,13 @@ function findHVcrate(channel){
         return -1;
 }
 
+function squishFont(string, maxWidth){
+    // given a kinetic string, keep reducing its font until it fits in maxWidth
+    while(string.getTextWidth() > maxWidth){
+        string.setAttr('fontSize', string.getAttr('fontSize') - 1);
+    }
+}
+
 ////////////////////////////
 // tooltip management
 ////////////////////////////

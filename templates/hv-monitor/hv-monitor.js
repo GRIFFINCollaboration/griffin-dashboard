@@ -5,7 +5,6 @@
 //post-heartbeat callback:
 function dataUpdate(){                    
     updateRunStatus();
-    updateRunStatus();
     repaint();
 }
 

@@ -8,7 +8,8 @@ div.panel *{
     color: #000000 !important;
 }
 
-div.panel .btn{
+div.panel .btn,
+div.panel .btn span{
     color: #FFFFFF !important;
 }
 
@@ -29,6 +30,10 @@ div.pan{
     display: inline-block;
 }
 
+.center{
+    text-align: center;
+}
+
 div.top-pan{
     margin-top: 0px;
 }
@@ -39,6 +44,10 @@ div.top-pan{
 
 div.pan div{
     margin-bottom: 1em;
+}
+
+div.no-pad{
+    padding: 0px !important;
 }
 
 select, input, option, .dark-text{
@@ -52,6 +61,10 @@ select, input, option, .dark-text{
 .inline{
     display: inline-block;
     margin-right: 1em;
+}
+
+.modal-body, .modal-header, .modal-footer{
+    color: #000000;
 }
 
 div.warning{

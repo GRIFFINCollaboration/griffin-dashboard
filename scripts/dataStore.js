@@ -2,6 +2,7 @@
 dataStore = {
     "heartbeatInterval": 3000,              // ms between data updates
     "host": 'grsmid00.triumf.ca:8081',
+    "SOHhost": 'grifsoh00.triumf.ca:8081',
     "ODB": {},                              // place to park info pulled from ODB
     "data": {},                             // place to park raw data from non-ODB sources; note this gets dumped at the start of every heartbeat!
     "detector": {                           // place to park deector-specific data 
