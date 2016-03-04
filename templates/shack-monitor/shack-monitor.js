@@ -708,7 +708,20 @@ function writeTooltip(channel){
 }
 
 function powerCycleVME(target){
-    // power cycle the target vme
+    // power cycle the target vme:
+    // enable power cycle bit, power down, wait 65 seconds, power up, disable power cycle bit.
 
-    console.log(target)
+        promiseScript('http://' + dataStore.SOHhost + '/?cmd=jset&odb=Equipment/' + target + '/Settings/EnableControl&value=1').then(function(){
+            promiseScript('http://' + dataStore.SOHhost + '/?cmd=jset&odb=Equipment/' + target + '/Settings/mainSwitch&value=0').then(function(){
+                window.setTimeout(function(){
+                    promiseScript('http://' + dataStore.SOHhost + '/?cmd=jset&odb=Equipment/' + target + '/Settings/mainSwitch&value=1').then(function(){
+                        promiseScript('http://' + dataStore.SOHhost + '/?cmd=jset&odb=Equipment/' + target + '/Settings/EnableControl&value=0')
+                    })
+                }, 65000)
+            })
+        });
+
+
 }
+
+
