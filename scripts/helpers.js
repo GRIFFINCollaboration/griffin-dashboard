@@ -107,10 +107,15 @@ function fetchScript(url, id){
 
     script.setAttribute('src', url);
     script.onload = function(){
-            deleteNode(id); 
+        deleteNode(id); 
     }
     script.id = id;
-    document.head.appendChild(script);
+
+    try{
+        document.head.appendChild(script);
+    } catch(err){
+        console.log('boooooo')
+    }
     
 }
 
@@ -255,7 +260,7 @@ function moveTooltip(event){
         offset = getPosition(tooltip.parentElement),
         gap = 20;
 
-    tooltip.setAttribute('style', 'display:inline-block; z-index:10; position: absolute; left:' + (event.pageX - offset.x + gap) + '; top:' + (event.pageY - offset.y + gap)  + ';');
+    tooltip.setAttribute('style', 'display:inline-block; z-index:10; position: absolute; left:' + (event.pageX - offset.x + gap) + '; top:' + event.pageY  + ';');
 }
 
 ///////////////////////////////
