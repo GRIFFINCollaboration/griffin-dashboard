@@ -146,10 +146,6 @@
                             <label>Integration:</label>
                             <input step="1" id="t_int" type="number" min='0' max='255'></input>
                         </li>
-                        <li>
-                            <label>Pole Cxn:</label>
-                            <input step="any" id="t_polcor" type="number" min='0' max='65535'></input>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -464,7 +460,7 @@
         dataStore.ADCids = {};
         dataStore.ADCids.numberID = [    
             'a_dcofst',
-            't_thres', 't_diff', 't_int', 't_polcor', 
+            't_thres', 't_diff', 't_int',
             'p_int', 'p_diff', 'p_delay', 'p_polec1', 'cfd_dly',
             'wfr_pret', 'wfr_smpl',
             'sim_rise', 'sim_rate', 'sim_amp', 'sim_dly0', 'sim_amp0', 'sim_dly1', 'sim_amp1', 'sim_dly2', 'sim_amp2', 'sim_dly3', 'sim_amp3', 
@@ -480,8 +476,7 @@
             'sim_pol'
         ]
         dataStore.ADCids.radioName = [  
-            'a_pol',
-            'sim_rand'
+            'a_pol'
         ]
         dataStore.ADCids.readOnlyText = [
             'rt_rqst',
@@ -508,7 +503,7 @@
         ]
 
         document.getElementById(wrapperID).addEventListener('postADC', function(evt){
-            var i;
+            var i, j;
 
             document.getElementById(wrapperID).innerHTML = Mustache.to_html(
                 dataStore.templates['adc-sidebar'], 
@@ -535,6 +530,18 @@
             // set up odb parameter writing for each input
             for(i=0; i<dataStore.ADCids.numberID.length; i++){
                 document.getElementById(dataStore.ADCids.numberID[i]).onchange = writeParameter.bind(null, dataStore.ADCids.numberID[i], 9);
+            }
+            for(i=0; i<dataStore.ADCids.checkboxID.length; i++){
+                document.getElementById(dataStore.ADCids.checkboxID[i]).onchange = writeParameter.bind(null, dataStore.ADCids.checkboxID[i], 8);
+            }
+            for(i=0; i<dataStore.ADCids.radioName.length; i++){
+                radios = document.querySelectorAll('input[name="'+dataStore.ADCids.radioName[i]+'"]')
+                for(j=0; j<radios.length; j++){
+                    radios[j].onclick = writeParameter.bind(null, dataStore.ADCids.radioName[i], 8);
+                }
+            }
+            for(i=0; i<dataStore.ADCids.optionLists.length; i++){
+                document.getElementById(dataStore.ADCids.optionLists[i]).onchange = writeParameter.bind(null, dataStore.ADCids.optionLists[i], 6);
             }
 
             // grab info immediately, before next heartbeat
@@ -565,7 +572,7 @@
         }
         warningDiv.classList.add('hidden');
 
-        //keep hold of this blobject for later, has widths and card types and stuff in it needed for writing back
+        //keep hold of this object for later, has widths and card types and stuff in it needed for writing back
         dataStore.ADCstructure = ADCjson.vars;
 
         //all number inputs have id == data key name
@@ -663,8 +670,9 @@
     function eraseCustom(channel){
         // erase the custom adc parameters for the names channel
 
-        pokeURL('http://' + dataStore.host + '/?cmd=jdelete&odb=/DAQ/params/grif16/custom/' + channel);
-        pokeURL('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/custom/' + channel + '&type=15');
+        promiseScript('http://' + dataStore.host + '/?cmd=jdelete&odb=/DAQ/params/grif16/custom/' + channel).then(function(){
+            promiseScript('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/custom/' + channel + '&type=15')
+        });
 
         document.getElementById('dismissODBmodal').click()
     }
@@ -692,23 +700,26 @@
             channel = document.getElementById('channelName').innerHTML;
 
         // decide what value to write to the odb
-        if(dataStore.ADCids.numberID.indexOf(id) != -1 || dataStore.ADCids.checkboxID.indexOf(id) != -1)
+        if(dataStore.ADCids.numberID.indexOf(id) != -1)
             value = document.getElementById(id).value;
+        else if(dataStore.ADCids.checkboxID.indexOf(id) != -1)
+            value = document.getElementById(id).checked === true ? 1 : 0;
         else if(dataStore.ADCids.radioName.indexOf(id) != -1)
-            value = document.querySelector('input[name="'+id+'"]:checked').value;
+            value = document.querySelector('input[name="'+id+'"]:checked').value == 'true' ? 1 : 0 ;
         else if (dataStore.ADCids.optionLists.indexOf(id) != -1)
             value = selected(id);
         else{
             console.log('Tried to set undefined ADC parameter, aborting.');
             return;
         }
-
         if(target == 'custom'){
-            pokeURL('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/custom/' + channel + '/' + id + '&type=' + type);
-            pokeURL('http://' + dataStore.host + '/?cmd=jset&odb=/DAQ/params/grif16/custom/' + channel + '/' + id + '&value=' + value);
+            promiseScript('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/custom/' + channel + '/' + id + '&type=' + type).then(function(){
+                promiseScript('http://' + dataStore.host + '/?cmd=jset&odb=/DAQ/params/grif16/custom/' + channel + '/' + id + '&value=' + value)
+            });
         } else {
-            pokeURL('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/template/' + templateIndex + '/' + id + '&type=' + type);
-            pokeURL('http://' + dataStore.host + '/?cmd=jset&odb=/DAQ/params/grif16/template/' + templateIndex + '/' + id + '&value=' + value);
+            promiseScript('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/template/' + templateIndex + '/' + id + '&type=' + type).then(function(){
+                promiseScript('http://' + dataStore.host + '/?cmd=jset&odb=/DAQ/params/grif16/template/' + templateIndex + '/' + id + '&value=' + value)
+            });
         }
         
     }
