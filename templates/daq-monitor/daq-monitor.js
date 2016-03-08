@@ -111,7 +111,7 @@ function regenerateDatastructure(suppressDOMconfig){
         dataStore.ODB.DAQ.summary.channels.titles[M][S] = dataStore.ODB.DAQ.summary.channels.titles[M][S] || [];
         dataStore.ODB.DAQ.summary.channels.requests[M][S][C] = 0;
         dataStore.ODB.DAQ.summary.channels.accepts[M][S][C] = 0;
-        dataStore.ODB.DAQ.summary.channels.titles[M][S][C] = '0x' + M.toString(16) + S.toString(16) + (C<16 ? '0' : '') + C.toString(16);
+        dataStore.ODB.DAQ.summary.channels.titles[M][S][C] = '.0x' + M.toString(16) + S.toString(16) + (C<16 ? '0' : '') + C.toString(16); // terrible, shameful hack to prevent plotly from turning the hex labels into decimal numbers :/ BM
     }
 
     //detectors
@@ -174,17 +174,17 @@ function sortDAQitem(detector, block){
 }
 
 function dataUpdate(){
-    //repaint histograms
-    repaint();
-
     //run status
     updateRunStatus();
+
+    //repaint histograms
+    repaint();
 }
 
 function preFetch(){
     //dump old data:
 
-    if(dataStore.hasOwnProperty('DAQ'))
+    if(dataStore.ODB.hasOwnProperty('DAQ'))
         regenerateDatastructure();
 }
 

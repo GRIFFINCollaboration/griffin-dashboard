@@ -10,7 +10,7 @@ function heartbeat(){
     if (typeof preFetch === "function"){ 
         preFetch();
     }
-    
+
     Promise.all(URLqueries.map(promiseURL)).then(
         function(responses){
             var i;
@@ -21,9 +21,11 @@ function heartbeat(){
 
             Promise.all(dataStore.heartbeat.scriptQueries.map(promiseScript)).then(
                 function(){
+                    
                     if(typeof dataStore.heartbeat.callback === 'function'){
                         dataStore.heartbeat.callback();
                     }
+                    
                     window.clearTimeout(dataStore.heartbeatTimer)
                     dataStore.heartbeatTimer = window.setTimeout(heartbeat, dataStore.heartbeatInterval);
                 }

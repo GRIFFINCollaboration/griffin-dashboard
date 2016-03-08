@@ -114,7 +114,7 @@ function fetchScript(url, id){
     try{
         document.head.appendChild(script);
     } catch(err){
-        console.log('boooooo')
+        console.log('script fetch fail')
     }
     
 }
