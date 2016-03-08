@@ -1,16 +1,37 @@
 griffin-dashboard
 =================
 
+GRIFFIN's dashboard provides a visual user interface for GRIFFIN, it's ancillary detectors, data acquisition system, and supporting infrastructure.
+
+ - **For scientists,** please read and understand the maintenance requirements below. These instructions will describe the expectations and setup requirements of the Dashboard; if something doesn't work, making sure that these requirements are satisfied are the first place to check.
+
+ - **For programmers & contributors,** please start with the [Programmatic Logic]() section below; this will walk you through an example of the basic infrastructure, including everything you'll need to create new Dashboard pages.
+
+## Maintenance Requirements
 
 ## Programmatic Logic
 
-All `griffin-dashboard` pages rely on a pattern of [HTML templates](http://www.html5rocks.com/en/tutorials/webcomponents/template/) and [HTML imports](http://webcomponents.org/articles/introduction-to-html-imports/) to minimize the amount of repeated markup, support client-side templating via [mustache.js](https://github.com/janl/mustache.js/), and avoid the declarative HTML that was prevalent in previous version of the dashboard.
+**Start here** if you're planning on doing major development on the Dashboard - below, we walk through the project's dependencies, a simple demonstration of the infrastructure, and go through code contribution guidelines.
+
+### Dependencies
+
+Basic fluency with these dependencies will help in understanding and extending the Dashboard codebase. Taking some time to explore each of them on their own will make Dashboard maintenance much easier!
+
+ - [HTML templates](http://www.html5rocks.com/en/tutorials/webcomponents/template/) are used to minimize repeated markup and avoid declarative HTML. If you're modifying or adding any HTML to the project, it should probably be in a template.
+
+ - [HTML imports](http://webcomponents.org/articles/introduction-to-html-imports/) are used to assemble templates from separate files and sources to reinforce the modularity begun with HTML templates. Note that at the time of this writing, Firefox relies on the `HTMLImports.min.js` polyfill for import support; this should be phased out when native support becomes available.
+
+ - [mustache.js](https://github.com/janl/mustache.js/) assembles templates into completed HTML
+
+ - [kinetic.js](https://github.com/ericdrowell/KineticJS/) (for freeform drawing like the detector views) and [plotly.js](https://plot.ly/javascript/) (for more traditional histograms and other charts) are responsible for drawing and visualization in the Dashboard.
+
+ - [Twitter Bootstrap](http://getbootstrap.com/) governs CSS and layout. Bootstrap also requires us to pull in [jQuery](https://jquery.com/), but explicit use of that framework is avoided in the Dashboard.
+
+ - [qunit.js](https://qunitjs.com/) provides the Dashboard's unit testing framework.
 
 ### Simplest Example
 
-**New web developers start here**
-
-`demo.html` is a minimal working example of the engineering techniques that underlie all dashboard pages. The files relevant to this example are (where indented bullet points indicate subdirectories):
+`demo.html` is a minimal working example of the engineering techniques that underlie all Dashboard pages. The files relevant to this example are (where indented bullet points indicate subdirectories):
 
  - `demo.html`
  - templates
@@ -18,7 +39,7 @@ All `griffin-dashboard` pages rely on a pattern of [HTML templates](http://www.h
      - demo-template.html
      - demo.css
 
-Plus a bunch of boilerplate helpers and frameworks you can see listed in the `<head>` of `demo.html` - but you should never need to touch most of these.
+Plus a bunch of boilerplate helpers and frameworks you can see listed in the `<head>` of `demo.html` (see list above) - but you should never need to touch most of these.
 
 Key points in `demo.html`:
 
