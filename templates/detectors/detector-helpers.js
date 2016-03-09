@@ -2,6 +2,70 @@
 // setup
 /////////////////////////
 
+function setupRequests(){
+
+    //get the ODB DAQ dir and set up adc requests:
+    fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+
+    //set up HV requests
+    dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
+
+}
+
+function initializeDetector(){
+    // set up sidebars and start the heart
+
+    setupADCSidebar('controlsidebar');
+    setupHVSidebar('controlsidebar');
+
+    // initiate heartbeat
+    dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery, dataStore.equipmentQuery]
+    dataStore.heartbeat.callback = dataUpdate
+    heartbeat();
+}
+
+function injectBoilerplateTemplates(detectorName){
+    // set up the boilerplate templates - header, footer, detector structure, navigation and run control
+
+    //header
+    document.getElementById('header').innerHTML = Mustache.to_html(
+        dataStore.templates['brand-header'], 
+        {
+            'title': detectorName + ' Detector Status',
+        }
+    );
+    //footer
+    document.getElementById('footer').innerHTML = Mustache.to_html(
+        dataStore.templates['brand-footer'], 
+        {
+            
+        }
+    );
+    setupFooter('footerImage', 2, '#999999');
+    //detector structure
+    document.getElementById('detector-wrap').innerHTML = Mustache.to_html(
+        dataStore.templates['detector-structure'], 
+        {
+
+        }
+    );
+    //nav
+    document.getElementById('nav').innerHTML = Mustache.to_html(
+        dataStore.templates['nav-bar'], 
+        {
+            
+        }
+    );
+    //run control
+    document.getElementById('runStat').innerHTML = Mustache.to_html(
+        dataStore.templates['run-status'], 
+        {
+
+        }
+    );
+
+}
+
 function processDAQ(payload){
     // do setup things with the DAQ directory from the ODB when it arrives
 

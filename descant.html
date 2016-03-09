@@ -25,6 +25,7 @@
         <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
         <link id='nav-bar' rel="import" href="templates/nav-bar/nav-bar.html">
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
+        <link id='detector-structure' rel="import" href="templates/detectors/detector-structure.html">
         <link id='detector-descant' rel="import" href="templates/detectors/detector-descant/detector-descant.html">
         <link id='adc-sidebar' rel="import" href="templates/detectors/adc-sidebar/adc-sidebar.html">
         <link id='hv-sidebar' rel="import" href="templates/detectors/hv-sidebar/hv-sidebar.html">
@@ -32,68 +33,23 @@
 
     <body>
         <div id='header'></div>
-
-        <div class='section-wrapper'>
-            <div id='nav' class='col-md-12'></div>
-            <div id='runStat' class='col-md-2'></div>
-            <div id='detectorDisplay' class='col-md-8'></div>
-            <div id='controlsidebar' class='col-md-2'>
-                <h3>ADC / HV Control</h3>
-                <p>Click on a channel to get started.</p>
-            </div>
-            <div id='tooltip' style='display:none;'></div>
-        </div>
-
+        <div class='section-wrapper' id='detector-wrap'></div>
         <div id='footer'></div>
 
         <script>
-            ////////////////////////////////////////
-            //detector-specific dataStore prep:
-            ////////////////////////////////////////
 
-            //get the ODB DAQ dir and set up adc requests:
-            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
-
-            //set up HV requests
-            dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
+            setupRequests()
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'detector-descant', 'adc-sidebar', 'hv-sidebar'];
+                templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'detector-structure', 'detector-descant', 'adc-sidebar', 'hv-sidebar'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
-                //header
-                document.getElementById('header').innerHTML = Mustache.to_html(
-                    dataStore.templates['brand-header'], 
-                    {
-                        'title': 'DESCANT Detector Status',
-                    }
-                );
-                //footer
-                document.getElementById('footer').innerHTML = Mustache.to_html(
-                    dataStore.templates['brand-footer'], 
-                    {
-                        
-                    }
-                );
-                setupFooter('footerImage', 2, '#999999');
-                //nav
-                document.getElementById('nav').innerHTML = Mustache.to_html(
-                    dataStore.templates['nav-bar'], 
-                    {
-                        
-                    }
-                );
-                //run control
-                document.getElementById('runStat').innerHTML = Mustache.to_html(
-                    dataStore.templates['run-status'], 
-                    {
+                injectBoilerplateTemplates('DESCANT');
 
-                    }
-                );
                 //detector display
                 parameterizeDESCANT();
                 document.getElementById('detectorDisplay').innerHTML = Mustache.to_html(
@@ -103,17 +59,8 @@
                     }
                 );
                 setupDESCANT();
-                //ADC sidebar
-                setupADCSidebar('controlsidebar');
-                //HV sidebar
-                setupHVSidebar('controlsidebar');
 
-                ////////////////////////////
-                //initiate heartbeat
-                ////////////////////////////
-                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery, dataStore.equipmentQuery]
-                dataStore.heartbeat.callback = dataUpdate
-                heartbeat();
+                initializeDetector();
             });
         </script>
 

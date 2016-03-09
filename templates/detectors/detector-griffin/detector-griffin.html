@@ -35,6 +35,14 @@
 </template>
 
 <script>
+                
+    function dataUpdate(){                    
+        // special post-heartbeat callback for GRIFFIN:
+        updateRunStatus();
+        summarizeData();
+        repaint();
+    }
+
     function parameterizeGRIFFIN(){
         // determine all the parameters needed for GRIFFIN's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
 
