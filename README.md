@@ -56,7 +56,7 @@ Basic fluency with these dependencies will help in understanding and extending t
 
  - [HTML imports](http://webcomponents.org/articles/introduction-to-html-imports/) are used to assemble templates from separate files and sources to reinforce the modularity begun with HTML templates. Note that at the time of this writing, Firefox relies on the `HTMLImports.min.js` polyfill for import support; this should be phased out when native support becomes available.
 
- - [mustache.js](https://github.com/janl/mustache.js/) assembles templates into completed HTML
+ - [mustache.js](https://github.com/janl/mustache.js/) assembles templates into completed HTML.
 
  - [kinetic.js](https://github.com/ericdrowell/KineticJS/) (for freeform drawing like the detector views) and [plotly.js](https://plot.ly/javascript/) (for more traditional histograms and other charts) are responsible for drawing and visualization in the Dashboard.
 
@@ -108,9 +108,6 @@ document.getElementById('demo-target').innerHTML = Mustache.to_html(
  See mustache.js's docs for more information on how to use their templating system. Notice that you'll typically want to put a few `<div>` elements in your main html file, as targets for injecting your templates into.
  - Finally, start the data fetching cycle with the block
 ```
-function dataUpdate(){
-    console.log(dataStore.ODB.Experiment['Name'])
-}
 dataStore.heartbeat.callback = dataUpdate;
 
 dataStore.heartbeat.scriptQueries = ['http://'+dataStore.host+'/?cmd=jcopy&odb0=Experiment&encoding=json-p-nokeys&callback=ODBfetchCallback']
@@ -127,12 +124,13 @@ Also have a look at `templates/demo/demo-template.html`. Key points:
  - Wrap all your html in a template tag that looks like `<template id='template-name'>`
  - Any javascript specific to this template can be included in `<script>` tags at the end, and will be available at global scope.
 
-That's it! Fire up demo.html in Chrome or Firefox, and don't forget to open the console to see the callbacks at work. The actual dashboard pages provide more sophisticated examples, but they all follow this basic structure.
+That's it! Fire up `demo.html` in Chrome or Firefox, and don't forget to open the console to see the callbacks at work. The actual Dashboard pages provide more sophisticated examples, but they all follow this basic structure.
 
 ### Contributing Guidelines
 
 Contributions to the Dashboard are very welcome! Please follow the guidelines below:
 
+ - Start by opening an issue in the [main repo](https://github.com/GRIFFINCollaboration/griffin-dashboard) to discuss your proposed changes.
  - Fork the [main repo](https://github.com/GRIFFINCollaboration/griffin-dashboard) and send your changes in a pull request to the gh-pages branch (which is the default). If you've never worked with git or GitHub before, [start with Software Carpentry](http://swcarpentry.github.io/git-novice/).
  - Please write some unit tests to examine as much of your code as possible; see examples in the `/tests` directory. Good candidates for unit testing are any physics calculations, data manipulations, or any other function that returns a result. Functions that affect the DOM are more complicated to test, to be expanded on in future - for now, try and separate calculations from DOM manipulations for ease of testing.
  - Please limit individual functions to 50 lines or less - functions longer than this can probably be re-written as several simpler functions, making them easier to test, debug and reuse.
