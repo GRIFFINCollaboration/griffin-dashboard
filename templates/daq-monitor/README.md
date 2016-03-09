@@ -37,7 +37,7 @@ The DAQ (and many other pages) requires the following ODB structure to exist and
 
  - **/DAQ/hosts/collector0x?**: one such directory for each collector, where `?` is the master channel that collector is plugged in on (nominally `0` through `F`).
  - **/DAQ/hosts/master**: host of master, ex `foo.triumf.ca`.
- - **/DAQ/hosts/collector0x?/host**: host of this collector, ex 'bar.triumf.ca'.
+ - **/DAQ/hosts/collector0x?/host**: host of this collector, ex `bar.triumf.ca`.
  - **/DAQ/hosts/collector0x?/digitizers**: array of hosts of each digitizer, where array index corresponds to collector channel.
  - **/DAQ/params**: template and custom parameters for ADC channels; all entries below those listed above not explicitly required (will be defined on the fly by the Dashboard or ADCs).
  - **/DAQ/MSC/MSC**: Array of MSC addresses `0xMSCC`, where `M` == master channel, `S` == collector channel, `CC` == digitizer channel
