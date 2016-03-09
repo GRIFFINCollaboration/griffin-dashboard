@@ -1,11 +1,11 @@
 griffin-dashboard
 =================
 
-GRIFFIN's dashboard provides a visual user interface for GRIFFIN, it's ancillary detectors, data acquisition system, and supporting infrastructure.
+GRIFFIN's dashboard provides a visual user interface for GRIFFIN, its ancillary detectors, data acquisition system, and supporting infrastructure.
 
  - **For scientists,** please read and understand the maintenance requirements below. These instructions will describe the expectations and setup requirements of the Dashboard; if something doesn't work, making sure that these requirements are satisfied are the first place to check.
 
- - **For programmers & contributors,** please start with the [Programmatic Logic]() section below; this will walk you through an example of the basic infrastructure, including everything you'll need to create new Dashboard pages.
+ - **For programmers & contributors,** please start with the [Programmatic Logic](https://github.com/BillMills/griffin-dashboard/tree/gh-pages#programmatic-logic) section below; this will walk you through an example of the basic infrastructure, including everything you'll need to create new Dashboard pages.
 
 ## Maintenance Requirements
 
@@ -25,7 +25,7 @@ Note that these need to be followed for every MIDAS installation the Dashboard d
 to
 ```
    rsprintf("Access-Control-Allow-Credentials: true\r\n");
-   rsprintf("Access-Control-Allow-Origin: http://<host serving the dashboard>:2154\r\n");
+   rsprintf("Access-Control-Allow-Origin: *\r\n");
 ```
 Then in `odbedit`, use `passwd` to configure MIDAS security as usual.  You will now be able to make credentialed requests through the Dashboard.
 
@@ -128,3 +128,12 @@ Also have a look at `templates/demo/demo-template.html`. Key points:
  - Any javascript specific to this template can be included in `<script>` tags at the end, and will be available at global scope.
 
 That's it! Fire up demo.html in Chrome or Firefox, and don't forget to open the console to see the callbacks at work. The actual dashboard pages provide more sophisticated examples, but they all follow this basic structure.
+
+### Contributing Guidelines
+
+Contributions to the Dashboard are very welcome! Please follow the guidelines below:
+
+ - Fork the [main repo](https://github.com/GRIFFINCollaboration/griffin-dashboard) and send your changes in a pull request to the gh-pages branch (which is the default). If you've never worked with git or GitHub before, [start with Software Carpentry](http://swcarpentry.github.io/git-novice/).
+ - Please write some unit tests to examine as much of your code as possible; see examples in the `/tests` directory. Good candidates for unit testing are any physics calculations, data manipulations, or any other function that returns a result. Functions that affect the DOM are more complicated to test, to be expanded on in future - for now, try and separate calculations from DOM manipulations for ease of testing.
+ - Please limit individual functions to 50 lines or less - functions longer than this can probably be re-written as several simpler functions, making them easier to test, debug and reuse.
+ - Please limit pull requests to less than 500 lines at a time. (Why? See figure 1 [here](https://smartbear.com/SmartBear/media/pdfs/11_Best_Practices_for_Peer_Code_Review.pdf)).
