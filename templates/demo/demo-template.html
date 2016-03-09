@@ -9,11 +9,15 @@
 <script>
     // javascript added here will be aviailable at global scope.
 
-    // post-ODB fetch callback:
-    function ODBfetchCallback(payload){
-        // usually take what we find from the ODB, and stick it in the datastore for later
-        dataStore.ODB['Run Title'] = payload[0]['Run parameters']['Run Title'];
+    //this'll happen after every heartbeat:
+    function dataUpdate(){
+        console.log(dataStore.ODB.Experiment['Name'])
+    }
 
+    // post-ODB fetch callback: this'll happen after every odb fetch with `callback=ODBfetchCallback` in the query.
+    function ODBfetchCallback(payload){
         console.log(payload);
+
+        dataStore.ODB.Experiment = payload[0];
     }
 </script>

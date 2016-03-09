@@ -46,10 +46,6 @@
                 //initiate heartbeat
                 ////////////////////////////
 
-                //this'll happen after every heartbeat:
-                function dataUpdate(){
-                    console.log(dataStore.ODB['Run Title'])
-                }
                 dataStore.heartbeat.callback = dataUpdate;
 
                 //this list of url's will get queried every update
@@ -57,10 +53,5 @@
                 heartbeat();
             });
 
-            // post-ODB fetch callback: this'll happen after every odb fetch with `callback=ODBfetchCallback` in the query.
-            function ODBfetchCallback(payload){
-                dataStore.ODB.Experiment = JSON.parse(payload[0]);
-                console.log(payload);
-            }
         </script>
     </body>

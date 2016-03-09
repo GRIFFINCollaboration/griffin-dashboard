@@ -9,6 +9,41 @@ GRIFFIN's dashboard provides a visual user interface for GRIFFIN, it's ancillary
 
 ## Maintenance Requirements
 
+### MIDAS
+
+The Dashboard uses MIDAS and the ODB as its backend. A number of configuration steps and frontends are required for the Dashboard to function correctly:
+
+#### MIDAS Installation
+
+Note that these need to be followed for every MIDAS installation the Dashboard depends on, which is nominally two: the actual experiment, and the state of health machine.
+
+ - Install MIDAS per their instructions; confirmed working commit 30c93027ddad0cdf5e697fd55b9d50618eabcf1f.  On grsmid00, this should already be available in `/opt/midas`
+ - Modify web security.  Open `src/mhttpd.cxx`, and change
+```
+    rsprintf("Access-Control-Allow-Origin: *\r\n");
+```    
+to
+```
+   rsprintf("Access-Control-Allow-Credentials: true\r\n");
+   rsprintf("Access-Control-Allow-Origin: http://<host serving the dashboard>:2154\r\n");
+```
+Then in `odbedit`, use `passwd` to configure MIDAS security as usual.  You will now be able to make credentialed requests through the Dashboard.
+
+####Frontends
+ - Set up HV frontends for each CAEN HV crate.  [The CAEN frontend found here](https://github.com/GRIFFINCollaboration/MIDASfrontends) needs to be built and run, one copy each for each CAEN high voltage crate being used.  These frontends must be named `HV-0`, `HV-1`, `HV-2`..., and they rely on version >= 5.22 of CAEN's HV wrapper library.
+ - Set up clock frontends.  Same as for the HV frontends, except each clock frontend (in the same repo) should be called `GRIF-Clk0`, ..., `GRIF-Clk24`.
+
+####State of Health Experiment
+An independent MIDAS experiment running nominally on `grifsoh00`.  Set up Agilent, Epics and VME frontends as per the documentation in [the SOH repo](https://github.com/GRIFFINCollaboration/GRIFFIN-SOH).
+
+### ODB Structures
+
+The Dashboard makes use of a number of ODB structures that must be adhered to. They are fully specified in the relevant documentation:
+
+ - T
+ - B
+ - D
+
 ## Programmatic Logic
 
 **Start here** if you're planning on doing major development on the Dashboard - below, we walk through the project's dependencies, a simple demonstration of the infrastructure, and go through code contribution guidelines.
@@ -47,14 +82,14 @@ Key points in `demo.html`:
 ```
 <link id='demo-template' rel="import" href="templates/demo/demo-template.html">
 ```
- is an example of pulling in an html template. For consistency, always use the same id as the name of the template.
+ is an example of pulling in an html template. For consistency, always use the same id as the template.
  - Most everything happens inside the code block
 ```
 window.addEventListener('HTMLImportsLoaded', function(e){
     ...
 })
 ```
- Code executed there will happen *after* all templates and related assets are loaded; you can do things without waiting, as long as those things don't expect any of those assets to be available.
+ Code executed there will happen *after* all templates and related assets are loaded; you can do things without waiting outside this loop, as long as those things don't expect any of those assets to be available.
  - All pages get their templates ready with the block:
 ```
 templates = ['demo-template'];
@@ -74,22 +109,22 @@ document.getElementById('demo-target').innerHTML = Mustache.to_html(
  - Finally, start the data fetching cycle with the block
 ```
 function dataUpdate(){
-    console.log(dataStore.ODB['Run Title'])
+    console.log(dataStore.ODB.Experiment['Name'])
 }
+dataStore.heartbeat.callback = dataUpdate;
 
 dataStore.heartbeat.scriptQueries = ['http://'+dataStore.host+'/?cmd=jcopy&odb0=Experiment&encoding=json-p-nokeys&callback=ODBfetchCallback']
-dataStore.heartbeat.callback = dataUpdate;
 heartbeat();
 ```
  Here we:
-   - define `dataUpdate`, which is what we want to do *after* we've received all the information we requested.
+   - set `dataStore.heartbeat.callback` to `dataUpdate`, or the name of whatever function we want to run after every heartbeat is complete.
    - make sure `dataStore.hearbeat.scriptQueries` has something to go looking for; these queries will circumvent cross origin restrictions, most notably useful for pulling stuff out of the ODB.
    - kick things off with a call to `heartbeat()`.
 
 Also have a look at `templates/demo/demo-template.html`. Key points:
 
- - CSS (or other scripts) that pretain only to this template should live alongside the template html in the same directory, and be pulled in with the usual `<link>` and `<script>` tags here, like the very first line in this file.
+ - CSS (or other scripts) that pertain only to this template should live alongside the template html in the same directory, and be pulled in with the usual `<link>` and `<script>` tags here, like the very first line in this file.
  - Wrap all your html in a template tag that looks like `<template id='template-name'>`
  - Any javascript specific to this template can be included in `<script>` tags at the end, and will be available at global scope.
 
-That's it! The actual dashboard pages provide more sophisticated examples, but they all follow this basic structure.
+That's it! Fire up demo.html in Chrome or Firefox, and don't forget to open the console to see the callbacks at work. The actual dashboard pages provide more sophisticated examples, but they all follow this basic structure.
