@@ -100,14 +100,8 @@ function processDAQ(payload){
     detectDetectors();              // decide which detectors to link to in the nav bar based on MSC table
 }
 
-function dataUpdate(){
-    //post-heartbeat callback:
-    updateRunStatus();
-    repaint();
-}
-
 function setupDetector(){
-    // once the HTML is in place, finish setting up the detector visualization.
+    // once the HTML is in place, set up the generic aspects of detector visualization
 
     var i, assignErrorPattern;
 
@@ -137,7 +131,15 @@ function setupDetector(){
 }
 
 function preFetch(){
+    // just before every heartbeat
+
     createDataStructure();
+}
+
+function dataUpdate(){
+    // just after every heartbeat
+    updateRunStatus();
+    repaint();
 }
 
 function createDataStructure(){
@@ -448,6 +450,8 @@ function updateCells(){
 }
 
 function summarizeData(){
+    // add up totals for aggregate cells in summary view
+
     var i, j, summaryKey, newValue, channel, subview;
 
     // don't bother if the MSC table hasn't arrived yet:
