@@ -37,36 +37,13 @@
         <div id='footer'></div>
 
         <script>
-
             //are we doing energy or time? Energy by default.
             dataStore.detector.channelType = getParameterByName('channel') || 'energy';
 
-            setupRequests()
+            setupRequests();
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
-                ///////////////////////////
-                //handle templates
-                ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'detector-structure', 'detector-dante', 'adc-sidebar', 'hv-sidebar'];
-                dataStore.templates = prepareTemplates(templates);
-
-                //inject templates
-                injectBoilerplateTemplates(dataStore.detector.channelType == 'energy' ? 'DANTE (Energy)' : 'DANTE (Time)');
-
-                //detector display
-                parameterizeDANTE();
-
-                document.getElementById('detectorDisplay').innerHTML = Mustache.to_html(
-                    dataStore.templates['detector-dante'], 
-                    {
-                        'views': dataStore.detector.views,
-                        'energyButton': dataStore.detector.channelType == 'time' ? [0] : [],
-                        'timeButton': dataStore.detector.channelType == 'energy' ? [0] : []
-                    }
-                );
-                setupDANTE();
-
-                initializeDetector();
+                deployDetector('detector-dante', dataStore.detector.channelType == 'energy' ? 'DANTE (Energy)' : 'DANTE (Time)');
             });
         </script>
 

@@ -37,30 +37,10 @@
         <div id='footer'></div>
 
         <script>
-
-            setupRequests()
+            setupRequests();
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
-                ///////////////////////////
-                //handle templates
-                ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'detector-structure', 'detector-sceptar', 'adc-sidebar', 'hv-sidebar'];
-                dataStore.templates = prepareTemplates(templates);
-
-                //inject templates
-                injectBoilerplateTemplates('SCEPTAR');
-
-                //detector display
-                parameterizeSCEPTAR();
-                document.getElementById('detectorDisplay').innerHTML = Mustache.to_html(
-                    dataStore.templates['detector-sceptar'], 
-                    {
-                        'views': dataStore.detector.views
-                    }
-                );
-                setupSCEPTAR();
-
-                initializeDetector();
+                deployDetector('detector-sceptar', 'SCEPTAR');
             });
         </script>
 

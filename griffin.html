@@ -37,30 +37,10 @@
         <div id='footer'></div>
 
         <script>
-
             setupRequests();
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
-                ///////////////////////////
-                //handle templates
-                ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'detector-structure', 'detector-griffin', 'adc-sidebar', 'hv-sidebar'];
-                dataStore.templates = prepareTemplates(templates);
-
-                //inject templates
-                injectBoilerplateTemplates('GRIFFIN');
-
-                //GRIFFIN display
-                parameterizeGRIFFIN();
-                document.getElementById('detectorDisplay').innerHTML = Mustache.to_html(
-                    dataStore.templates['detector-griffin'], 
-                    {
-                        'views': dataStore.detector.views
-                    }
-                );
-                setupGRIFFIN();
-
-                initializeDetector();
+                deployDetector('detector-griffin', 'GRIFFIN');
             });
         </script>
 
