@@ -114,6 +114,8 @@
         manageSubview('trigger_accept', true);
 
         // set up the cells
+        generateCoords();
+        generateSummaryCoords();
         instantiateCells();
         instantiateSummaryCells();
         generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
@@ -124,8 +126,35 @@
     function instantiateCells(){
         // decalre the kinetic cells for the detail views of each clover, and plug in interactions.
 
-        var i, viewIndex, channel, cellKey,
-            g = dataStore.detector.grid;
+        var i, viewIndex, channel, cellKey
+
+        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+        for(i=0; i<dataStore.detector.channelNames.length; i++){
+            channel = dataStore.detector.channelNames[i];
+
+            //not dealing with summary channels here, skip them:
+            if(channel.length != 10)
+                continue;
+
+            viewIndex = parseInt( channel.slice(3,5) ,10);
+            cellKey = channel.slice(5);
+
+            createCell(channel, cellKey);
+
+            //add the cell to the appropriate main layer or HV layer
+            if(isHV(channel))
+                dataStore.detector.HVLayer[viewIndex].add(dataStore.detector.cells[channel])
+            else
+                dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[channel]);
+
+        }
+
+        setupErrorPattern();
+    }
+
+    function generateCoords(){
+        // generate the coordinates of cell vertices for detail views
+        var g = dataStore.detector.grid;
 
         //vertices of cells, keyed by last 5 characters 
         //Red HPGE
@@ -163,7 +192,7 @@
         dataStore.detector.cellCoords['BN02B'] = [dataStore.detector.xMargin+1*g,7*g, dataStore.detector.xMargin+0*g,7*g, dataStore.detector.xMargin+0*g,1*g, dataStore.detector.xMargin+1*g,2*g];
         dataStore.detector.cellCoords['BN01B'] = [dataStore.detector.xMargin+1*g,0*g, dataStore.detector.xMargin+7*g,0*g, dataStore.detector.xMargin+7*g,1*g, dataStore.detector.xMargin+2*g,1*g];
 
-        //Greem BGO
+        //Green BGO
         dataStore.detector.cellCoords['WN05X'] = [dataStore.detector.xMargin+12*g,4*g, dataStore.detector.xMargin+12*g,5*g, dataStore.detector.xMargin+19*g,5*g, dataStore.detector.xMargin+19*g,12*g, dataStore.detector.xMargin+20*g,12*g, dataStore.detector.xMargin+20*g,4*g];
         dataStore.detector.cellCoords['WN04X'] = [dataStore.detector.xMargin+12*g,3*g, dataStore.detector.xMargin+12*g,2*g, dataStore.detector.xMargin+22*g,2*g, dataStore.detector.xMargin+21*g,3*g];
         dataStore.detector.cellCoords['WN03X'] = [dataStore.detector.xMargin+21*g,12*g, dataStore.detector.xMargin+22*g,12*g, dataStore.detector.xMargin+22*g,2*g, dataStore.detector.xMargin+21*g,3*g];
@@ -219,39 +248,41 @@
         dataStore.detector.cellCoords['GN03B'] = [dataStore.detector.xMargin+3*g,21*g, dataStore.detector.xMargin+2*g,22*g, dataStore.detector.xMargin+2*g,17*g, dataStore.detector.xMargin+3*g,17*g];
         dataStore.detector.cellCoords['GN02B'] = [dataStore.detector.xMargin+7*g,24*g, dataStore.detector.xMargin+7*g,23*g, dataStore.detector.xMargin+2*g,23*g, dataStore.detector.xMargin+1*g,24*g];
         dataStore.detector.cellCoords['GN01B'] = [dataStore.detector.xMargin+0*g,17*g, dataStore.detector.xMargin+1*g,17*g, dataStore.detector.xMargin+1*g,22*g, dataStore.detector.xMargin+0*g,23*g];
+    }
+
+    function instantiateSummaryCells(){
+        var i, viewIndex, channel;
 
         //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
         for(i=0; i<dataStore.detector.channelNames.length; i++){
             channel = dataStore.detector.channelNames[i];
 
-            //not dealing with summary channels here, skip them:
-            if(channel.length != 10)
+            //only doing summaries here
+            if(channel.length != dataStore.detector.summaryDepth)
                 continue;
 
-            viewIndex = parseInt( channel.slice(3,5) ,10);
-            cellKey = channel.slice(5);
+            //all summaries go on card 0:
+            viewIndex = 0;
 
-            createCell(channel, cellKey);
+            createCell(channel, channel);
 
-            //add the cell to the appropriate main layer or HV layer
-            if(isHV(dataStore.detector.channelNames[i]))
-                dataStore.detector.HVLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]])
-            else
-                dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[dataStore.detector.channelNames[i]]);
-
+            //add the cell to the appropriate main layer
+            dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[channel]);
         }
 
+        drawWindowDressing();
         setupErrorPattern();
     }
 
-    function instantiateSummaryCells(){
+    function generateSummaryCoords(){
+        // generate the coordinates of cell vertices for summary views        
+
         var baseCoords = {},
             offset = [],
             colors = ['G', 'B', 'W', 'R'],
-            i, j, k, index, viewIndex,
             g = dataStore.detector.summaryGrid,
-            westLabel, eastLabel, beamArrow,
-            channel;
+            i,j,k, index;
+
 
         //GRG04 appears in upper left, one position left of the corner, state these explicitly and build other 15 from there. 
         baseCoords['GRGB'] = [dataStore.detector.summaryXmargin+9*g,2*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,2*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+10*g,3*g+dataStore.detector.summaryYmargin, dataStore.detector.summaryXmargin+9*g,3*g+dataStore.detector.summaryYmargin]; 
@@ -312,23 +343,11 @@
 
             }
         }
+    }
 
-        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
-        for(i=0; i<dataStore.detector.channelNames.length; i++){
-            channel = dataStore.detector.channelNames[i];
-
-            //only doing summaries here
-            if(channel.length != dataStore.detector.summaryDepth)
-                continue;
-
-            //all summaries go on card 0:
-            viewIndex = 0;
-
-            createCell(channel, channel);
-
-            //add the cell to the appropriate main layer
-            dataStore.detector.channelLayer[viewIndex].add(dataStore.detector.cells[channel]);
-        }
+    function drawWindowDressing(){
+        //set up the window dressing for the summary view (beam arrow, hemisphere labels...)
+        var westLabel, eastLabel, beamArrow
 
         //label hemispheres and beam direction
         westLabel = new Kinetic.Text({
@@ -365,9 +384,8 @@
             closed: true,
             listening: true
         });      
-        dataStore.detector.channelLayer[0].add(beamArrow);  
+        dataStore.detector.channelLayer[0].add(beamArrow); 
 
-        setupErrorPattern();
     }
 
     function createCell(channel, cellKey){
