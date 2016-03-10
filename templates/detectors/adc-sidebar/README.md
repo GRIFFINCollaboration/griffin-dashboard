@@ -34,180 +34,184 @@ The `/mscb` endpoint provides a JSON response containing the current settings an
 
 Found in the response under key `vars`:
 
-- `serial`
-- `cpu_temp`
-- `cc_lock`
-- `cc_freq1`
-- `cc_refck`
-- `cc_freq0`
-- `dc_freq`
-- `hw_time`
-- `hw_id`
-- `sw_id`
-- `hw_sw_m`
-- `sw_time`
-- `hwbuild`
-- `swbuild`
-- `up_time`
-- `dac_ch1`
-- `dac_ch0`
-- `ref_clk`
-- `allowWr`
-- `sp_run`
-- `sp_rst`
-- `sp_mod`
-- `sp_invr`
-- `a_cid0`
-- `a_cid1`
-- `a_cid3`
-- `a_grad0`
-- `a_cid2`
-- `a_grad1`
-- `a_grad2`
-- `a_grad3`
-- `a_locka`
-- `a_align`
-- `a_lkcn0`
-- `a_lkcn1`
-- `a_lkcn2`
-- `a_lkcn3`
-- `a_lock0`
-- `a_lock1`
-- `a_lock2`
-- `a_lock3`
-- `s0_lock`
-- `s0_trdy`
-- `s0_rrdy`
-- `s0_rdata`
-- `s0_crc`
-- `s0_rack`
-- `s0_ridle`
-- `s0_lkcnt`
-- `s0_rparm`
-- `s0_runkn`
-- `s0_rerr`
-- `s0_tidle`
-- `s0_tdata`
-- `s0_tack`
-- `s0_tparm`
-- `s0_rlstl`
-- `s0_rlsth`
-- `sp_rncnt`
-- `sp_rstat`
-- `sp_estat`
-- `sp_runst`
-- `sp_runtm`
-- `sp_evbuf`
-- `cc_loss`
-- `cc_clke`
-- `sfp_nm`
-- `sfp_pn`
-- `sfp_oui`
-- `sfp_sn`
-- `sfp_rev`
-- `sfp_conn`
-- `eFmTxOK`
-- `eFmRxOK`
-- `eFmCkSqE`
-- `eAlgnErr`
-- `eOctTxOK`
-- `eOctRxOK`
-- `eTxPsCFm`
-- `eRxPsCFm`
-- `eIInErr`
-- `eIOutErr`
-- `eIUcPkt`
-- `eIMcPkt`
-- `eIBcPkt`
-- `eODscrd`
-- `eOUcPkt`
-- `eOMcPkt`
-- `eOBcPkt`
-- `ethOct`
-- `ethPkt`
-- `eDropEv`
-- `ethUsz`
-- `ethOsz`
-- `eth128`
-- `eth256`
-- `eth65`
-- `eth640`
-- `eth512`
-- `eth1024`
-- `eth1519`
-- `ethJab`
-- `daq_name`
-- `coll_ch`
-- `mstr_ch`
-- `ethFrag`
-- `boardId`
-- `daq_ip`
-- `daq_port`
-- `daq_dtcr`
-- `daq_tmpl`
-- `daq_cstm`
+key|definition
+---|----------
+`serial` | Digitizer serial number
+`cpu_temp`| FPGA temperature [C]
+`cc_lock`| Clock cleaner locked
+`cc_freq1`|
+`cc_refck`|
+`cc_freq0`|
+`dc_freq`|
+`hw_time`| Hardware timestamp
+`hw_id`| Hardware ID
+`sw_id`| Software ID
+`hw_sw_m`| Hardware/Software match
+`sw_time`| Software timestamp
+`hwbuild`|
+`swbuild`|
+`up_time`| Uptime [s]
+`dac_ch1`|
+`dac_ch0`|
+`ref_clk`| Reference Clock
+`allowWr`|
+`sp_run`|
+`sp_rst`|
+`sp_mod`|
+`sp_invr`|
+`a_cid0`|
+`a_cid1`|
+`a_cid3`|
+`a_grad0`|
+`a_cid2`|
+`a_grad1`|
+`a_grad2`|
+`a_grad3`|
+`a_locka`|
+`a_align`|
+`a_lkcn0`|
+`a_lkcn1`|
+`a_lkcn2`|
+`a_lkcn3`|
+`a_lock0`|
+`a_lock1`|
+`a_lock2`|
+`a_lock3`|
+`s0_lock`|
+`s0_trdy`|
+`s0_rrdy`|
+`s0_rdata`|
+`s0_crc`|
+`s0_rack`|
+`s0_ridle`|
+`s0_lkcnt`|
+`s0_rparm`|
+`s0_runkn`|
+`s0_rerr`|
+`s0_tidle`|
+`s0_tdata`|
+`s0_tack`|
+`s0_tparm`|
+`s0_rlstl`|
+`s0_rlsth`|
+`sp_rncnt`|
+`sp_rstat`|
+`sp_estat`|
+`sp_runst`|
+`sp_runtm`|
+`sp_evbuf`|
+`cc_loss`|
+`cc_clke`|
+`sfp_nm`|
+`sfp_pn`|
+`sfp_oui`|
+`sfp_sn`|
+`sfp_rev`|
+`sfp_conn`|
+`eFmTxOK`|
+`eFmRxOK`|
+`eFmCkSqE`|
+`eAlgnErr`|
+`eOctTxOK`|
+`eOctRxOK`|
+`eTxPsCFm`|
+`eRxPsCFm`|
+`eIInErr`|
+`eIOutErr`|
+`eIUcPkt`|
+`eIMcPkt`|
+`eIBcPkt`|
+`eODscrd`|
+`eOUcPkt`|
+`eOMcPkt`|
+`eOBcPkt`|
+`ethOct`|
+`ethPkt`|
+`eDropEv`|
+`ethUsz`|
+`ethOsz`|
+`eth128`|
+`eth256`|
+`eth65`|
+`eth640`|
+`eth512`|
+`eth1024`|
+`eth1519`|
+`ethJab`|
+`daq_name`|
+`coll_ch`|
+`mstr_ch`|
+`ethFrag`|
+`boardId`|
+`daq_ip`|
+`daq_port`|
+`daq_dtcr`|
+`daq_tmpl`|
+`daq_cstm`|
 
 ##### ADC-Level Keys
 
 Found in the response under key `vars`:
 
-- `a_enable`
-- `a_pol`
-- `a_fgain`
-- `a_trim`
-- `a_dcofst`
-- `t_on`
-- `t_thres`
-- `t_diff`
-- `t_int`
-- `p_int`
-- `p_diff`
-- `p_delay`
-- `p_polec1`
-- `wfr_smpl`
-- `wfr_pret`
-- `wfr_mode`
-- `sim_ena`
-- `sim_enat`
-- `sim_enar`
-- `sim_pol`
-- `sim_rise`
-- `sim_amp`
-- `sim_rate`
-- `sim_cyc`
-- `sim_dly0`
-- `sim_dly1`
-- `sim_dly2`
-- `sim_dly3`
-- `sim_amp0`
-- `sim_amp1`
-- `sim_amp2`
-- `sim_amp3`
-- `dtsclr_b`
-- `trsclr_b`
-- `cfd_dly`
-- `rt_d0`
-- `rt_d1`
-- `rt_d10`
-- `rt_d100`
-- `rt_acpt`
-- `rt_rqst`
-- `rt_dwav`
-- `rt_dbsy`
-- `rt_dqt`
-- `rt_dtrg`
-- `rt_dded`
-- `st_trig`
-- `st_trigr`
-- `st_btrig`
-- `st_bwv`
-- `st_bqt`
-- `st_bevr`
-- `st_bevw`
-- `prg_ddtm`
-- `det_type`
-- `syn_lvtm`
-- `syn_ddtm`
-- `daq_chnm`
-- `daq_wrTp`
-- `daq_clrC`
+key|definition
+---|----------
+`a_enable`| ADC enabled
+`a_pol`| Polarity
+`a_fgain`| ADC gain
+`a_trim`|
+`a_dcofst`| DC offset
+`t_on`| Triggering enabled
+`t_thres`| Trigger threshold
+`t_diff`| Trigger differentiation
+`t_int`| Trigger integration
+`p_int`| Pulse height integration
+`p_diff`| Pulse height differentiation
+`p_delay`| Pulse height delay
+`p_polec1`| Pulse height pole correction
+`wfr_smpl`| Waveform samples
+`wfr_pret`| Waveform pretrigger
+`wfr_mode`| Waveform mode
+`sim_ena`| Simulation enabled
+`sim_enat`| Simulation trigger enabled
+`sim_enar`| Simulation random enabled
+`sim_pol`| Simulation polarity
+`sim_rise`| Simulation rise time
+`sim_amp`| Simulation amplitude
+`sim_rate`| Simulation rate
+`sim_cyc`| Simulation cycle waveform
+`sim_dly0`| Simulation delay 0
+`sim_dly1`| Simulation delay 1
+`sim_dly2`| Simulation delay 2
+`sim_dly3`| Simulation delay 3
+`sim_amp0`| Simulation amplitude 0
+`sim_amp1`| Simulation amplitude 1
+`sim_amp2`| Simulation amplitude 2
+`sim_amp3`| Simulation amplitude 3
+`dtsclr_b`| Deadtime readout
+`trsclr_b`| Trigger readout
+`cfd_dly`| CFD delay
+`rt_d0`|
+`rt_d1`|
+`rt_d10`|
+`rt_d100`|
+`rt_acpt`| Trigger accept rate
+`rt_rqst`| Trigger request rate
+`rt_dwav`| Dropped waveform
+`rt_dbsy`| Dropped busy
+`rt_dqt`| Dropped QT
+`rt_dtrg`| Dropped trigger
+`rt_dded`| Dropped deadtime
+`st_trig`| Trigger count
+`st_trigr`| Trigger request count
+`st_btrig`| Trigger buffer fill level
+`st_bwv`| Waveform buffer fill level
+`st_bqt`| QT buffer fill level
+`st_bevr`| Event buffer read
+`st_bevw`| Event buffer write
+`prg_ddtm`| Prog deadtime
+`det_type`| Detector type
+`syn_lvtm`| Sync livetime
+`syn_ddtm`| Sync deadtime
+`daq_chnm`|
+`daq_wrTp`|
+`daq_clrC`|

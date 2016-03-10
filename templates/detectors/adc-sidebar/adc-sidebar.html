@@ -56,21 +56,16 @@
             <div id="MSCB-node-info" class="panel-collapse collapse collapse" role="tabpanel" aria-labelledby="MSCB-node-info-head">
                 <div class="panel-body">
                     <ul class='list-unstyled dark-text'>
-                        <li id="ctrl"></li>
-                        <li id="rev"></li>
                         <li id="serial"></li>
                         <li id="cpu_temp"></li>
                         <li id="cc_lock"></li>
-                        <li id="cc_freq"></li>
                         <li id="hw_sw_m"></li>
                         <li id="hw_id"></li>
                         <li id="hw_time"></li>
                         <li id="sw_id"></li>
                         <li id="sw_time"></li>
-                        <li id="uptime"></li>
                         <li id="ref_clk"></li>
-                        <li id="ch_en"></li>
-                        <li id="ch_aa"></li>
+                        <li id="up_time"></li>
                     </ul>
                 </div>
             </div>
@@ -622,21 +617,16 @@
 
         var keys, time, content, i,
             warningDiv = document.getElementById('ADCwarning'),
-            titles = {  'ctrl' : '<br>Control Bits:<br>', 
-                        'rev' : '<br>Revision:<br>',
-                        'serial': '<br>Serial:<br>',
+            titles = {  'serial': '<br>Serial:<br>',
                         'cpu_temp': '<br>FPGA Temperature:<br>',
                         'cc_lock': '<br>Clock Cleaner Locked:<br>',
-                        'cc_freq': '<br>Clock Cleaner Frequency:<br>',
                         'hw_sw_m': '<br>Hardware / Software Match:<br>',
                         'hw_id': '<br>Hardware ID:<br>',
                         'hw_time': '<br>Hardware Timestamp:<br>',
                         'sw_id': '<br>Software ID:<br>',
                         'sw_time': '<br>Software Timestamp:<br>',
-                        'uptime': '<br>Uptime:<br>',
                         'ref_clk': '<br>Reference Clock:<br>',
-                        'ch_en': '<br>Enabled Channels:<br>',
-                        'ch_aa': '<br>Enabled ADCs:<br>'
+                        'up_time': '<br>Uptime:<br>'
                     };
 
         //empty response from ADC?
@@ -648,7 +638,7 @@
         warningDiv.classList.add('hidden');
 
         keys = Object.keys(ADCjson.vars);
-        for(i=0; i<keys.length; i++ ){
+        for(i=0; i<keys.length; i++){
             content = titles[keys[i]] + ADCjson.vars[keys[i]].d;
             if(keys[i] == 'cpu_temp')
                 content += ' C'
