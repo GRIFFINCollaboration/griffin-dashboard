@@ -40,9 +40,8 @@ An independent MIDAS experiment running nominally on `grifsoh00`.  Set up Agilen
 
 The Dashboard makes use of a number of ODB structures that must be adhered to. They are fully specified in the relevant documentation:
 
- - T
- - B
- - D
+ - [`/DAQ`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/daq-monitor#odb-structures)
+ - [`/Equipment/HV-*`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/hv-monitor#odb-structures)
 
 ## Programmatic Logic
 
