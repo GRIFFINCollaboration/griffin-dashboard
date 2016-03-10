@@ -42,6 +42,8 @@ The Dashboard makes use of a number of ODB structures that must be adhered to. T
 
  - [`/DAQ`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/daq-monitor#odb-structures)
  - [`/Equipment/HV-*`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/hv-monitor#odb-structures)
+ - [`/PPG`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/cycle-builder#odb-structures)
+ - [`/Filter`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/filter-builder#odb-structures)
 
 Whenever an ODB directory is pulled in, the Dashboard will go looking for its contents at `dataStore.ODB.<dir name>`. In other words, `dataStore.ODB` is structured exactly like the ODB's directories (though it will only have the necessary subset of information available on it). When pulling in new ODB information, please follow this pattern.
 

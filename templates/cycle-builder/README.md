@@ -13,19 +13,19 @@ The cycle builider expects the following ODB structure to exist:
 /PPG
 |_______Current (string)
 |_______/Cycles
-        |_________________/<filter def 1>
+        |_________________/<cycle def 1>
                           |______________________PPGcodes  (int array)
                           |______________________durations (int array)
-        |_________________/<filter def 2>
+        |_________________/<cycle def 2>
         .
         .
         .
-        |_________________/<filter def n>
+        |_________________/<cycle def n>
 ```
 
  - **`/PPG/Current`**: the string title of the currently active cycle; must match the name of a subdirectory of `/PPG/Cycles`.
- - **`/PPG/Cycles/<filter def>/PPGcodes`**: array of integers containing the PPG codes (see below) for each step in order for filter <filter def>.
- - **`/PPG/Cycles/<filter def>/durations`**: array of integers describing the length [ms] of the cycle step found at the same array position in `PPGcodes`.
+ - **`/PPG/Cycles/<cycle def>/PPGcodes`**: array of integers containing the PPG codes (see below) for each step in order for cycle <cycle def>.
+ - **`/PPG/Cycles/<cycle def>/durations`**: array of integers describing the length [ms] of the cycle step found at the same array position in `PPGcodes`.
 
  ### PPG Codes
 
