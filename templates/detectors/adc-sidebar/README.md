@@ -5,6 +5,51 @@ The Dashboard communicates with GRIF-16 digitizers via their API described below
 
 ## Maintenance Requirements
 
+### Communication Logic
+
+The Dashboard, ODB and electronics can read and write ADC control parameters to each other. To avoid control chaos, we follow the following flow; arrow direction indicates information flowing from one place to another:
+
+![ADC data flow](https://github.com/BillMills/griffin-dashboard/blob/gh-pages/img/adc-flow.png)
+
+Note that this means the Dashboard may pull a stale parameter from the ADC after writing a fresh one to the ODB, but before the ODB has pushed to the ADC; wait a couple seconds and the round trip should complete itself.
+
+### ADC ODB Hierarchy
+
+All GRIF-16s pull their parameters from the ODB, following a template and custom model. See [the DAQ docs](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/daq-monitor) for an illustration of the relevant ODB structure, `/DAQ/params`. Under `/DAQ/params/grif16/template` are numbered subdirectories (0 through 9), corresponding to templates for the 10 different detector types supported:
+
+Detector index | Detector Type
+---------------|--------------
+0 | GRIFFIN Low Gain
+1 | GRIFFIN High Gain
+2 | SCEPTAR
+3 | DANTE (Energy)
+4 | DANTE (Time)
+5 | PACES
+6 | DESCANT
+7 | GRIFFIN Suppressors
+8 | DANTE Suppressors
+9 | ZDS
+
+Beneath these sit key / values (see list of ADC keys below) with the default values for each key, for the given detector type; this default will be applied to all matching ADC channels in the absence of a custom parameter.
+
+Under `/DAQ/params/grif16/custom` sit directories with channel names matching the [standard naming convention](https://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature); these directories contain keys drawn from the same list as the template directories, with custom settings to be applied only to the corresponding channel.
+
+So for example:
+
+```
+/DAQ/params/grif16
+           |__________/template
+                      |__________/0
+                                 |____a_dcofst: 0
+           |
+           |__________/custom
+                      |__________/GRG01BN00A
+                                 |____a_dcofst: 1
+
+```
+
+Would set all GRIFFIN low gain detectors to have 0 DC offset, except for the blue crystal in detector 1, which would have a DC offset of 1 mV.
+
 ### ADC API
 
 GRIF-16s provide a web-facing API from which to poll information, and expose ADC parameter control. This API consists of two parts: a high rate endpoint for frequent real-time reporting of trigger rates, and a settings endpoint for reading back settings of individual ADC channels.
