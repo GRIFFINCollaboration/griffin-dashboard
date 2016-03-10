@@ -43,6 +43,8 @@ The Dashboard makes use of a number of ODB structures that must be adhered to. T
  - [`/DAQ`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/daq-monitor#odb-structures)
  - [`/Equipment/HV-*`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/hv-monitor#odb-structures)
 
+Whenever an ODB directory is pulled in, the Dashboard will go looking for its contents at `dataStore.ODB.<dir name>`. In other words, `dataStore.ODB` is structured exactly like the ODB's directories (though it will only have the necessary subset of information available on it). When pulling in new ODB information, please follow this pattern.
+
 ### APIs
 
 The Dashboard relies on communication with GRIFFIN's digitizers both directly and through the ODB; see [the ADC docs](https://github.com/BillMills/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md) for a detailed discussion of the GRIF-16 API that must be in place.
@@ -66,6 +68,8 @@ Basic fluency with these dependencies will help in understanding and extending t
  - [Twitter Bootstrap](http://getbootstrap.com/) governs CSS and layout. Bootstrap also requires us to pull in [jQuery](https://jquery.com/), but explicit use of that framework is avoided in the Dashboard.
 
  - [qunit.js](https://qunitjs.com/) provides the Dashboard's unit testing framework.
+
+ - [MIDAS AJAX](https://midas.triumf.ca/MidasWiki/index.php/AJAX), a set of queries available on any MIDAS experiment to read and write to the ODB.
 
 ### Simplest Example
 
