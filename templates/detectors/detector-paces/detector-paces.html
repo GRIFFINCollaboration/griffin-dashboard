@@ -2,12 +2,7 @@
 
 <template id='detector-paces'>
     <div class='nav-row'>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" id='HVSelect' onclick='manageSubview("HV")'>HV</button>
-            <button type="button" class="btn btn-default" id='thresholdSelect' onclick='manageSubview("threshold")'>Thresholds</button>
-            <button type="button" class="btn btn-default" id='trigger_requestSelect' onclick='manageSubview("trigger_request")'>Trigger Requests</button>
-            <button type="button" class="btn btn-default" id='trigger_acceptSelect' onclick='manageSubview("trigger_accept")'>Trigger Accepts</button>
-        </div>
+        <div class="btn-group" role="group" id="view-nav"></div>
     </div>
 
     <div id='visualizationcollection'>

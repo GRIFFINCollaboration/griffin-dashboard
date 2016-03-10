@@ -6,25 +6,16 @@ function deployDetector(template, title){
     // top level detector setup function
 
     //handle templates
-    templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'detector-structure', template, 'adc-sidebar', 'hv-sidebar'];
+    templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'detector-structure', 'detector-view', template, 'adc-sidebar', 'hv-sidebar'];
     dataStore.templates = prepareTemplates(templates);
 
-    //inject templates
-    injectBoilerplateTemplates(title);
-
-    //detector display
     parameterizeDetector();
 
-    document.getElementById('detectorDisplay').innerHTML = Mustache.to_html(
-        dataStore.templates[template], 
-        {
-            'views': dataStore.detector.views,
-            'energyButton': dataStore.detector.channelType == 'time' ? [0] : [],
-            'timeButton': dataStore.detector.channelType == 'energy' ? [0] : []
-        }
-    );
-    drawDetector();
+    //inject templates
+    injectBoilerplateTemplates(template, title);
 
+    //finish set up and start data fetching
+    drawDetector();
     initializeDetector();
 }
 
@@ -50,7 +41,7 @@ function initializeDetector(){
     heartbeat();
 }
 
-function injectBoilerplateTemplates(detectorName){
+function injectBoilerplateTemplates(template, detectorName){
     // set up the boilerplate templates - header, footer, detector structure, navigation and run control
 
     //header
@@ -85,6 +76,22 @@ function injectBoilerplateTemplates(detectorName){
     //run control
     document.getElementById('runStat').innerHTML = Mustache.to_html(
         dataStore.templates['run-status'], 
+        {
+
+        }
+    );
+    //detector display
+    document.getElementById('detectorDisplay').innerHTML = Mustache.to_html(
+        dataStore.templates[template], 
+        {
+            'views': dataStore.detector.views,
+            'energyButton': dataStore.detector.channelType == 'time' ? [0] : [],
+            'timeButton': dataStore.detector.channelType == 'energy' ? [0] : []
+        }
+    );
+    //detector view navigation
+    document.getElementById('view-nav').innerHTML = Mustache.to_html(
+        dataStore.templates['detector-view'], 
         {
 
         }

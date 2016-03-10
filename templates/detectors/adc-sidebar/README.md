@@ -30,7 +30,7 @@ Detector index | Detector Type
 8 | DANTE Suppressors
 9 | ZDS
 
-Beneath these sit key / values (see list of ADC keys below) with the default values for each key, for the given detector type; this default will be applied to all matching ADC channels in the absence of a custom parameter.
+Beneath these sit key / values (see list of [ADC keys below](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/detectors/adc-sidebar#adc-level-keys)) with the default values for each key, for the given detector type; this default will be applied to all matching ADC channels in the absence of a custom parameter.
 
 Under `/DAQ/params/grif16/custom` sit directories with channel names matching the [standard naming convention](https://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature); these directories contain keys drawn from the same list as the template directories, with custom settings to be applied only to the corresponding channel.
 

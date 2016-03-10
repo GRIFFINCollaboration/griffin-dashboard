@@ -43,6 +43,10 @@ The Dashboard makes use of a number of ODB structures that must be adhered to. T
  - [`/DAQ`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/daq-monitor#odb-structures)
  - [`/Equipment/HV-*`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/hv-monitor#odb-structures)
 
+### APIs
+
+The Dashboard relies on communication with GRIFFIN's digitizers both directly and through the ODB; see [the ADC docs](https://github.com/BillMills/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md) for a detailed discussion of the GRIF-16 API that must be in place.
+
 ## Programmatic Logic
 
 **Start here** if you're planning on doing major development on the Dashboard - below, we walk through the project's dependencies, a simple demonstration of the infrastructure, and go through code contribution guidelines.
@@ -94,7 +98,7 @@ window.addEventListener('HTMLImportsLoaded', function(e){
 templates = ['demo-template'];
 dataStore.templates = prepareTemplates(templates);
 ```
- List all your template ids that you loaded in `<head>` in `templates`, and the subsequent line will make sure all the template HTML is ready to use.
+ List all your template ids that you loaded in `<head>` in `templates`, and the subsequent line will make sure all the template HTML is ready to use. Also, this is an example of the use of the `dataStore` object - an object at global scope meant to namespace global variables. Default information available on the `dataStore` is set up in `scripts/dataStore.js` - *the `dataStore` is the correct place to add all new global variables*.
  - Templates can be injected into the DOM via:
 ```
 document.getElementById('demo-target').innerHTML = Mustache.to_html(
