@@ -44,7 +44,6 @@
                 // setup
                 ///////////////
                 //get the ODB DAQ dir and set up adc requests:
-                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
                 function processDAQ(payload){
                     fetchDAQ(payload);
                     dataStore.ODB.DAQ.summary = {};
@@ -59,6 +58,7 @@
                     determineADCrequests();
                     detectDetectors();
                 }
+                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
 
                 ///////////////////////////
                 //handle templates
