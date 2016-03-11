@@ -48,33 +48,17 @@
             dataStore.HV = {
                 crates: {}      //keyed same as ODB Equipment, holds objects describing crate contents & layout
             };
-            //get the ODB DAQ and Equipment dirs:
-            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb0=/DAQ&odb1=/Equipment&encoding=json-p-nokeys&callback=registerODB');
-            function registerODB(payload){
-                //park the ODB responses in the dataStore, and run through initial parsing
-
-                dataStore.ODB.DAQ = payload[0];
-                dataStore.ODB.Equipment = payload[1];
-
-                detectDetectors();
-                exploreCrates();
-                setupDisplay();
-                updateView();
-            }
-
-            //set up HV requests
-            dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
-            function sortODBEquipment(payload){
-                // take the ODB equipment directory and populate the HV info with it.
-
-                dataStore.ODB.Equipment = payload[0];
-
-                // update hv sidebar if present
-                if(dataStore.activeHVsidebar)
-                    populateHVsidebar(dataStore.activeHVsidebar);
-            }
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
+                ///////////////////
+                // setup
+                ///////////////////
+                //get the ODB DAQ and Equipment dirs:
+                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb0=/DAQ&odb1=/Equipment&encoding=json-p-nokeys&callback=registerODB');
+
+                //set up HV requests
+                dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
+
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////

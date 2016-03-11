@@ -39,28 +39,27 @@
         <div id='footer'></div>
 
         <script>
-            ////////////////////////////////////////
-            //pre-load setup
-            ////////////////////////////////////////
-
-            //get the ODB DAQ dir and set up adc requests:
-            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
-            function processDAQ(payload){
-                fetchDAQ(payload);
-                dataStore.ODB.DAQ.summary = {};
-                dataStore.ODB.DAQ.detectorNames = {
-                    'GR': 'GRIFFIN',
-                    'ZD': 'Zero-Degree Scintillator',
-                    'SE': 'SCEPTAR',
-                    'DS': 'DESCANT',
-                    'PA': 'PACES',
-                    'DA': 'DANTE'
-                };
-                determineADCrequests();
-                detectDetectors();
-            }
-
             window.addEventListener('HTMLImportsLoaded', function(e) {
+                ///////////////
+                // setup
+                ///////////////
+                //get the ODB DAQ dir and set up adc requests:
+                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+                function processDAQ(payload){
+                    fetchDAQ(payload);
+                    dataStore.ODB.DAQ.summary = {};
+                    dataStore.ODB.DAQ.detectorNames = {
+                        'GR': 'GRIFFIN',
+                        'ZD': 'Zero-Degree Scintillator',
+                        'SE': 'SCEPTAR',
+                        'DS': 'DESCANT',
+                        'PA': 'PACES',
+                        'DA': 'DANTE'
+                    };
+                    determineADCrequests();
+                    detectDetectors();
+                }
+
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////

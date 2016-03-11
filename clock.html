@@ -53,39 +53,42 @@
             //pre-dom-ready setup
             setupClocks();
 
-            //get the ODB DAQ directory for the nav bar
-            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
-            function processDAQ(payload){
-                fetchDAQ(payload);
-                detectDetectors();
-            }
-
-            //get the ODB Equipment dir and set up clock host requests:
-            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/Equipment&encoding=json-p-nokeys&callback=processEquipment');
-            function processEquipment(payload){
-                var i, keys = Object.keys(payload);
-
-                dataStore.ODB.Equipment = payload;
-
-                //identify the clocks present
-                dataStore.clocks = []
-                for(i=0; i<keys.length; i++){
-                    if(keys[i].slice(0,8) == 'GRIF-Clk'){
-                        dataStore.clocks.push({
-                            title: keys[i], 
-                            table: dataStore.ODB.Equipment[keys[i]]
-                        });
-                    }
-                }
-
-                //fill info into the dom
-                populateInfo();
-            }
-
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 var i, clocks = []
                 for(i=0; i<25; i++){
                     clocks.push('GRIF-Clk'+i);
+                }
+
+                //////////////
+                // setup
+                //////////////
+                //get the ODB DAQ directory for the nav bar
+                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+                function processDAQ(payload){
+                    fetchDAQ(payload);
+                    detectDetectors();
+                }
+
+                //get the ODB Equipment dir and set up clock host requests:
+                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/Equipment&encoding=json-p-nokeys&callback=processEquipment');
+                function processEquipment(payload){
+                    var i, keys = Object.keys(payload);
+
+                    dataStore.ODB.Equipment = payload;
+
+                    //identify the clocks present
+                    dataStore.clocks = []
+                    for(i=0; i<keys.length; i++){
+                        if(keys[i].slice(0,8) == 'GRIF-Clk'){
+                            dataStore.clocks.push({
+                                title: keys[i], 
+                                table: dataStore.ODB.Equipment[keys[i]]
+                            });
+                        }
+                    }
+
+                    //fill info into the dom
+                    populateInfo();
                 }
 
                 ///////////////////////////

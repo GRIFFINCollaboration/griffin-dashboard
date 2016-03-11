@@ -8,6 +8,18 @@ function dataUpdate(){
     repaint();
 }
 
+function registerODB(payload){
+    //park the ODB responses in the dataStore, and run through initial parsing
+
+    dataStore.ODB.DAQ = payload[0];
+    dataStore.ODB.Equipment = payload[1];
+
+    detectDetectors();
+    exploreCrates();
+    setupDisplay();
+    updateView();
+}
+
 function exploreCrates(){
     // use dataStore.ODB.Equipment to decide how many crates there are, and what is plugged into each slot
 
@@ -422,6 +434,16 @@ function nameFromIndex(indexString){
 
     return name;
 
+}
+
+function sortODBEquipment(payload){
+    // take the ODB equipment directory and populate the HV info with it.
+
+    dataStore.ODB.Equipment = payload[0];
+
+    // update hv sidebar if present
+    if(dataStore.activeHVsidebar)
+        populateHVsidebar(dataStore.activeHVsidebar);
 }
 
 function parseChStatus(chStatus){

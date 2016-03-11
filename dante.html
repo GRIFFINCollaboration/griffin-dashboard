@@ -41,9 +41,8 @@
             //are we doing energy or time? Energy by default.
             dataStore.detector.channelType = getParameterByName('channel') || 'energy';
 
-            setupRequests();
-
             window.addEventListener('HTMLImportsLoaded', function(e) {
+                setupRequests();
                 deployDetector('detector-dante', dataStore.detector.channelType == 'energy' ? 'DANTE (Energy)' : 'DANTE (Time)');
             });
         </script>

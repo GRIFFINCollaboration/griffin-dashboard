@@ -50,16 +50,19 @@
                 ODB: {}
             }
 
-            //get the ODB DAQ dir:
-            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=registerODB');
-
-            //get the ODB SOH Equipment dir:
-            fetchScript('http://' + dataStore.SOHhost + '/?cmd=jcopy&odb=/Equipment&encoding=json-p-nokeys&callback=registerSOHODB');
-
-            //set up equipment requests
-            dataStore.equipmentQuery = 'http://'+dataStore.SOHhost+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=registerSOHODB';
-
             window.addEventListener('HTMLImportsLoaded', function(e) {
+                ///////////////////
+                // setup
+                ///////////////////
+                //get the ODB DAQ dir:
+                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=registerODB');
+
+                //get the ODB SOH Equipment dir:
+                fetchScript('http://' + dataStore.SOHhost + '/?cmd=jcopy&odb=/Equipment&encoding=json-p-nokeys&callback=registerSOHODB');
+
+                //set up equipment requests
+                dataStore.equipmentQuery = 'http://'+dataStore.SOHhost+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=registerSOHODB';
+
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////

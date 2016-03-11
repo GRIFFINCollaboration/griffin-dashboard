@@ -38,9 +38,8 @@
         <div id='footer'></div>
 
         <script>
-            setupRequests();
-
             window.addEventListener('HTMLImportsLoaded', function(e) {
+                setupRequests();
                 deployDetector('detector-sceptar', 'SCEPTAR');
             });
         </script>
