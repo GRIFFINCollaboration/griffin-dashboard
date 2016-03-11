@@ -48,13 +48,15 @@
             dataStore.HV = {
                 crates: {}      //keyed same as ODB Equipment, holds objects describing crate contents & layout
             };
-            //get the ODB DAQ and Equipment dirs:
-            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb0=/DAQ&odb1=/Equipment&encoding=json-p-nokeys&callback=registerODB');
-
-            //set up HV requests
-            dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
+
+                //get the ODB DAQ and Equipment dirs:
+                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb0=/DAQ&odb1=/Equipment&encoding=json-p-nokeys&callback=registerODB');
+
+                //set up HV requests
+                dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
+
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
