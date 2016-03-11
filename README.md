@@ -145,3 +145,4 @@ Contributions to the Dashboard are very welcome! Please follow the guidelines be
  - Please write some unit tests to examine as much of your code as possible; see examples in the `/tests` directory. Good candidates for unit testing are any physics calculations, data manipulations, or any other function that returns a result. Functions that affect the DOM are more complicated to test, to be expanded on in future - for now, try and separate calculations from DOM manipulations for ease of testing.
  - Please limit individual functions to 50 lines or less - functions longer than this can probably be re-written as several simpler functions, making them easier to test, debug and reuse.
  - Please limit pull requests to less than 500 lines at a time. (Why? See figure 1 [here](https://smartbear.com/SmartBear/media/pdfs/11_Best_Practices_for_Peer_Code_Review.pdf)).
+ 
