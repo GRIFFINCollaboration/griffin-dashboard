@@ -41,16 +41,17 @@
         <div id='footer'></div>
 
         <script>
+            function processDAQ(payload){
+                fetchDAQ(payload);
+                detectDetectors();
+            }
+                
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 /////////////
                 // setup
                 /////////////
                 //get the ODB DAQ directory for the nav bar
                 fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
-                function processDAQ(payload){
-                    fetchDAQ(payload);
-                    detectDetectors();
-                }
 
                 ///////////////////////////
                 //handle templates
