@@ -5,7 +5,7 @@ The DAQ Monitor provides real-time summaries of trigger request and accept rates
 
 ## Maintenance Requirements
 
-#### ODB Structures
+### ODB Structures
 
 The DAQ (and many other pages) requires the following ODB structure to exist and be correctly populated:
 
@@ -42,3 +42,22 @@ The DAQ (and many other pages) requires the following ODB structure to exist and
  - **/DAQ/params**: template and custom parameters for ADC channels; all entries below those listed above not explicitly required (will be defined on the fly by the Dashboard or ADCs). See the [ADC docs](https://github.com/BillMills/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md) for further discussion on how to use this structure.
  - **/DAQ/MSC/MSC**: Array of MSC addresses `0xMSCC`, where `M` == master channel, `S` == collector channel, `CC` == digitizer channel
  - **/DAQ/MSC/chan**: Array of [10-character channel names](https://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature) in the same order as `/DAQ/MSC/MSC`.
+
+### APIs
+
+The DAQ page polls trigger request and accept rates from the digitizers at the bottom of DAQ hierarchy, via the high-rate API [described here](https://github.com/BillMills/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md).
+
+## Developer Notes
+
+After polling the digitizers, the DAQ page sums trigger request and accept rates per collector, per detector, and overall for a grand total at master. A couple of notes:
+
+ - All information is read from the digitizers at the bottom of the DAQ hierarchy; it may be worthwhile to also poll collectors and masters directly for sanity checking etc.
+ - Detectors to summarize in the 'Detectors' historgram are inferred from the channel names found in the MSC table at `/DAQ/MSC/chan` in the ODB.
+
+
+
+
+
+
+
+

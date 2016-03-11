@@ -36,9 +36,9 @@ The filter builider expects the following ODB structure to exist:
 
  ### Filter String Encoding
 
- Filter conditions are encoded in strings of the format: `XX-Y-Z[-D]`
+Filter conditions are encoded in strings of the format: `XX-Y-Z[-D]`
 
-`XX` == 2-character detector code from the [standard nomenclature](https://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature).
+`XX` == 2-character ID from the [DAQ detector types](https://rawgit.com/wiki/GriffinCollaboration/GRSISort/technical-docs/GRIFFIN_Event_Format.pdf), table 5.4
 
 `Y` == condition type: (S)ingles, (C)oincidence or (P)rescale.
 
@@ -55,10 +55,10 @@ So, the following structure:
 |_______Current: xyz
 |_______/Filters
         |_________________/demo
-                          |______________________orCondition0: [GR-C-2-50] 
+                          |______________________orCondition0: [00-C-2-50] 
                           |______________________coincWindow0: 25
-                          |______________________orCondition1: [DS-S-1, SE-S-1]
+                          |______________________orCondition1: [06-S-1, 02-S-1]
                           |______________________coincWindow1: 25
 ```
 
-would describe a filter named `demo` that triggers on multiplicity 2 GRIFFIN coincidences with a 50 ns window, OR a 25 ns coincidence between DESCANT singles and SCEPTAR singles. But, the `demo` filter wouldn't be active, since `xyz` is listed under `/Filter/Current`.
+would describe a filter named `demo` that triggers on multiplicity 2 GRIFFIN low gain coincidences with a 50 ns window, OR a 25 ns coincidence between DESCANT singles and SCEPTAR singles. But, the `demo` filter wouldn't be active, since `xyz` is listed under `/Filter/Current`.

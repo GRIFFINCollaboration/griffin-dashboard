@@ -1,19 +1,6 @@
-function isNumeric(n) {
-    // thanks http://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric
-    return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
-function prepareTemplates(templates){
-    //take an array of template names, and load their inner html into a simmilarly keyed object.
-
-    var i, guts = {};
-
-    for(i=0; i<templates.length; i++){
-        guts[templates[i]] = document.getElementById(templates[i]).import.getElementById(templates[i]).innerHTML
-    }
-
-    return guts
-}
+//////////////
+// generic
+//////////////
 
 function deleteNode(id){
     //delete a dom node with id
@@ -23,6 +10,32 @@ function deleteNode(id){
     if (node.parentNode) {
         node.parentNode.removeChild(node);
     }
+}
+
+Math.log10 = function(x){
+    //base 10 log
+
+    return Math.log(x) / Math.log(10);
+}
+
+function getPosition(element) {
+    //modified from http://www.kirupa.com/html5/get_element_position_using_javascript.htm
+
+    var xPosition = 0;
+    var yPosition = 0;
+  
+    while(element) {
+        xPosition += (element.offsetLeft + element.clientLeft);
+        yPosition += (element.offsetTop + element.clientTop);
+        element = element.offsetParent;
+    }
+    return { x: xPosition, y: yPosition };
+}
+
+function isNumeric(n) {
+    // is n a number?
+
+    return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
 }
 
 function prettyNumber(val){
@@ -51,6 +64,39 @@ function selected(selectID, fetchText){
     return value;
 }
 
+function getParameterByName(name) {
+    // get a parameter out of the query string
+    // thanks http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript/901144#901144
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function reloadPage(){
+    document.location.reload();
+}
+
+///////////////
+// templating
+///////////////
+
+function prepareTemplates(templates){
+    //take an array of template names, and load their inner html into a simmilarly keyed object.
+
+    var i, guts = {};
+
+    for(i=0; i<templates.length; i++){
+        guts[templates[i]] = document.getElementById(templates[i]).import.getElementById(templates[i]).innerHTML
+    }
+
+    return guts
+}
+
+//////////////////////////
+// plots and drawing
+//////////////////////////
+
 function generateTickLabel(min, max, nTicks, n){
     //function to make a reasonable decision on how many decimal places to show, whether to to use 
     //sci. notation on an axis tick mark, where <min> and <max> are the axis minimum and maximum,
@@ -74,31 +120,16 @@ function generateTickLabel(min, max, nTicks, n){
 
 }
 
-Math.log10 = function(x){
-    //base 10 log
-
-    return Math.log(x) / Math.log(10);
-}
-
-function getPosition(element) {
-    //modified from http://www.kirupa.com/html5/get_element_position_using_javascript.htm
-
-    var xPosition = 0;
-    var yPosition = 0;
-  
-    while(element) {
-        xPosition += (element.offsetLeft + element.clientLeft);
-        yPosition += (element.offsetTop + element.clientTop);
-        element = element.offsetParent;
+function squishFont(string, maxWidth){
+    // given a kinetic string, keep reducing its font until it fits in maxWidth
+    while(string.getTextWidth() > maxWidth){
+        string.setAttr('fontSize', string.getAttr('fontSize') - 1);
     }
-    return { x: xPosition, y: yPosition };
 }
 
-function isNumeric(n) {
-    // is n a number?
-
-    return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
-}
+//////////////////////////
+// network requests
+//////////////////////////
 
 function fetchScript(url, id){
     // simple script hack fetch
@@ -128,20 +159,6 @@ function pokeURL(url){
     // Make the request
     req.send();
 }
-
-function getParameterByName(name) {
-    // get a parameter out of the query string
-    // thanks http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript/901144#901144
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-function reloadPage(){
-    document.location.reload();
-}
-
 
 ///////////////////////////////
 // daq requests & unpacking
@@ -235,13 +252,6 @@ function findHVcrate(channel){
         return crateID;
     else
         return -1;
-}
-
-function squishFont(string, maxWidth){
-    // given a kinetic string, keep reducing its font until it fits in maxWidth
-    while(string.getTextWidth() > maxWidth){
-        string.setAttr('fontSize', string.getAttr('fontSize') - 1);
-    }
 }
 
 ////////////////////////////

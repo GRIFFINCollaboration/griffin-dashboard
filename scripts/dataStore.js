@@ -72,7 +72,83 @@ dataStore = {
         'GR': 'GRIFFIN',
         'PA': 'PACES',
         'SE': 'SCEPTAR'
-    }                     
+    },
+    "detectorTypes": [                      // detector types acknowledged by grif16 and grif4g
+        {                                   // see table 5.4 in https://rawgit.com/wiki/GriffinCollaboration/GRSISort/technical-docs/GRIFFIN_Event_Format.pdf
+            "id": '00',
+            "short": 'GRGa',
+            "full": 'Ge',
+            "description": 'GRIFFIN (Low Gain)'   
+        },
+        {
+            "id": '01',
+            "short": 'GRGb',
+            "full": 'Ge',
+            "description": 'GRIFFIN (High Gain)'
+        },
+        {
+            "id": '02',
+            "short": 'SEP',
+            "full": 'Beta',
+            "description": 'SCEPTAR'
+        },
+        {
+            "id": '03',
+            "short": 'DAN',
+            "full": 'DANTE',
+            "description": 'DANTE (Energy)'
+        },
+        {
+            "id": '04',
+            "short": 'DAT',
+            "full": 'DANTE',
+            "description": 'DANTE (Time)'
+        },
+        {
+            "id": '05',
+            "short": 'PAC',
+            "full": 'PACES',
+            "description": 'PACES'
+        },
+        {
+            "id": '06',
+            "short": 'DSC',
+            "full": 'DESCANT',
+            "description": 'DESCANT'
+        },
+        {
+            "id": '07',
+            "short": 'GRS',
+            "full": 'Suppressors',
+            "description": 'GRIFFIN Suppressors'
+        },
+        {
+            "id": '08',
+            "short": 'DAS',
+            "full": 'Suppressors',
+            "description": 'DANTE Suppressors'
+        },
+        {
+            "id": '09',
+            "short": 'SET',
+            "full": 'Beta',
+            "description": 'ZDS'
+        },
+        {
+            "id": '10',
+            "short": 'DSC',
+            "full": 'DESCANT (gamma)',
+            "description": 'DSC-gamma pulse shape'
+        },
+        {
+            "id": '11',
+            "short": 'DSC',
+            "full": 'DESCANT (neutron)',
+            "description": 'DSC-neutron pulse shape'
+        }
+
+    ]
+
 }
 
 dataStore.runSummaryQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&odb3=Logger/&encoding=json-p-nokeys&callback=runSummaryCB';

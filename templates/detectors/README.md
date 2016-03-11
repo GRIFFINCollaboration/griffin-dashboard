@@ -14,7 +14,7 @@ The Dashboard provides skeuomorphic representations of all detectors involved in
 
  - **ADC API**, as outlined in the [ADC docs](https://github.com/BillMills/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md).
 
-## Programmatic Logic
+## Developer Notes
 
 All detectors make heavy use of shared resources, and follow the same patterns for setup and data updates. A few tips to get you started making sense of these:
 

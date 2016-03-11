@@ -23,17 +23,17 @@
         <div class='pan' id='allowedDetectors'>
             <h4>Allowed Detectors</h4>
             <label for="allowDANTE">DANTE</label>
-            <input value="DA" class="allowedDetCheck" id="allowDANTE" type="checkbox" onchange='requestNewFilterName()'></input>
+            <input value="DA" class="allowed-det-check" id="allowDANTE" type="checkbox" onchange='requestNewFilterName()'></input>
             <label for="allowDESCANT">DESCANT</label>
-            <input value="DS" class="allowedDetCheck" id="allowDESCANT" type="checkbox" onchange='requestNewFilterName()'></input>
+            <input value="DS" class="allowed-det-check" id="allowDESCANT" type="checkbox" onchange='requestNewFilterName()'></input>
             <label for="allowGRIFFIN">GRIFFIN</label>
-            <input value="GR" class="allowedDetCheck" id="allowGRIFFIN" type="checkbox" onchange='requestNewFilterName()'></input>
+            <input value="GR" class="allowed-det-check" id="allowGRIFFIN" type="checkbox" onchange='requestNewFilterName()'></input>
             <label for="allowPACES">PACES</label>
-            <input value="PA" class="allowedDetCheck" id="allowPACES" type="checkbox" onchange='requestNewFilterName()'></input>
+            <input value="PA" class="allowed-det-check" id="allowPACES" type="checkbox" onchange='requestNewFilterName()'></input>
             <label for="allowSCEPTAR">SCEPTAR</label>
-            <input value="SE" class="allowedDetCheck" id="allowSCEPTAR" type="checkbox" onchange='requestNewFilterName()'></input>
+            <input value="SE" class="allowed-det-check" id="allowSCEPTAR" type="checkbox" onchange='requestNewFilterName()'></input>
             <label for="allowZDS">ZDS</label>
-            <input value="ZD" class="allowedDetCheck" id="allowZDS" type="checkbox" onchange='requestNewFilterName()'></input>
+            <input value="ZD" class="allowed-det-check" id="allowZDS" type="checkbox" onchange='requestNewFilterName()'></input>
         </div>
 
         <div>
@@ -113,7 +113,8 @@
             dataStore.templates['andRow'], 
             {  
                 "orNumber": orIndex,
-                "andNumber": dataStore.filter.nRows[orIndex]
+                "andNumber": dataStore.filter.nRows[orIndex],
+                "detType": dataStore.detectorTypes
             }
         );
         table.appendChild(row);
@@ -184,6 +185,8 @@
             }
             else
                 loadAndRow(dataStore.filter.orIndex-1, conditions)
+
+            document.getElementById('coincWindow'+(dataStore.filter.orIndex-1)).value = dataStore.ODB.Filter.Filters[filterName]['coincWindow'+i];
 
             i++;
 
@@ -345,6 +348,9 @@
                 dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/orCondition' + i + '&value=' + filterEncoding);
             else
                 dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/orCondition' + i + '[*]&value=' + filterEncoding);
+
+            //inter-detector coincidence window width:
+            dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/coincWindow' + i + '&value=' + document.getElementById('coincWindow'+orIndex).value);
         }
 
         // allowed detectors encoding:

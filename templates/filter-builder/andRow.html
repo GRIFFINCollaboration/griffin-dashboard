@@ -1,13 +1,10 @@
 <template id='andRow'>
-    <div class='col-md-1 and-label'>AND</div>
-    <div class='col-md-2'>
+    <div class='col-md-3'>
+        <span class='and-label'>AND</span>
         <select id="detectorSelect{{orNumber}}{{andNumber}}" onchange='requestNewFilterName()'>
-            <option value="DA">DANTE</option>
-            <option value="DS">DESCANT</option>
-            <option value="GR">GRIFFIN</option>
-            <option value="PA">PACES</option>
-            <option value="SE">SCEPTAR</option>
-            <option value="ZD">ZDS</option>
+            {{#detType}}
+                <option value="{{id}}">{{description}}</option>
+            {{/detType}}
         </select>
     </div>
     <div class='col-md-2'>
@@ -22,13 +19,13 @@
     <div id='subconfigC0{{orNumber}}{{andNumber}}' class='col-md-3 hidden'>
         <div id="coincConfigWrap0{{orNumber}}{{andNumber}}">
             <label id="coincConfigLabel0{{orNumber}}{{andNumber}}">Multiplicity: </label>
-            <input value="2" min="0" step="1" id="coincConfigInput0{{orNumber}}{{andNumber}}" type="number" class='smallNumber' onchange='requestNewFilterName()'>
+            <input value="2" min="0" step="1" id="coincConfigInput0{{orNumber}}{{andNumber}}" type="number" class='small-number' onchange='requestNewFilterName()'>
         </div>
     </div>
     <div id='subconfigP0{{orNumber}}{{andNumber}}' class='col-md-3 hidden'>
         <div id="prescaleConfigWrap0{{orNumber}}{{andNumber}}">
             <label id="prescaleConfigLabel0{{orNumber}}{{andNumber}}">Factor: </label>
-            <input value="10" min="0" step="1" id="prescaleConfigInput0{{orNumber}}{{andNumber}}" type="number" class='smallNumber' onchange='requestNewFilterName()'>
+            <input value="10" min="0" step="1" id="prescaleConfigInput0{{orNumber}}{{andNumber}}" type="number" class='small-number' onchange='requestNewFilterName()'>
         </div>
     </div>
 
@@ -36,7 +33,7 @@
     <div id='subconfigC1{{orNumber}}{{andNumber}}' class='col-md-3 hidden'>
         <div id="coincConfigWrap1{{orNumber}}{{andNumber}}">
             <label id="coincConfigLabel1{{orNumber}}{{andNumber}}">Coinc. Window [ns]:</label>
-            <input min="0" step="1" id="coincConfigInput1{{orNumber}}{{andNumber}}" type="number" class='smallNumber' onchange='requestNewFilterName()'>
+            <input min="0" step="1" id="coincConfigInput1{{orNumber}}{{andNumber}}" type="number" class='small-number' onchange='requestNewFilterName()'>
         </div>
     </div>
     <div id='subconfigP1{{orNumber}}{{andNumber}}' class='col-md-3 hidden'></div>
