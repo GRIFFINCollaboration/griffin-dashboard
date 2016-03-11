@@ -29,42 +29,6 @@
 </template>
 
 <script>
-
-    function setupClocks(){
-        // some dom-free config and parameters for the clocks
-        dataStore.clockParameters = {
-            summarySuffixes: [  //element id suffixes for entries in the summary table
-                'Config',
-                'syncSrc',
-                'clockSrc',
-                'refClock',
-                'lemoClock',
-                'lemoSync',
-                'esataClock',
-                'esataSync',
-                'lastEsata'
-            ],
-            csacSuffixes: [    //element id suffixes for entries in the csac table
-                'CSACPower',
-                'CSACStatus',
-                'CSACMode',
-                'CSACAlarm',
-                'CSACUnitPower',
-                'CSACTuningVoltage',
-                'CSACLaserCurrent',
-                'CSACHeaterPower',
-                'CSACTemperature',
-                'CSACSerial',
-                'CSACFirmware'
-            ],
-            hiChan: [11,15,19,23,27,39,31,35],  // indices for cycles high for ESATA0-5, left lemo, right lemo (note weird order...)
-            loChan: [12,16,20,24,28,40,32,36],
-            channelSuffixes: ['ESATA0', 'ESATA1', 'ESATA2', 'ESATA3', 'ESATA4', 'LeftLEMO', 'RightLEMO', 'ESATA5'],
-            masterFreq: 100,    //master steps down from 200MHz in the spec, but seems to be 100 in practice?  TBD.
-            CSACunit: ['','','','','',' VDC',' mA',' mW',' C','','']
-        };
-    }
-
     function setupDetail(clockName){
         // set up the named clock's details as a follower or master depending on its toggle
 

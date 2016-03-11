@@ -39,13 +39,13 @@ The DAQ (and many other pages) requires the following ODB structure to exist and
  - **/DAQ/hosts/master**: host of master, ex `foo.triumf.ca`.
  - **/DAQ/hosts/collector0x?/host**: host of this collector, ex `bar.triumf.ca`.
  - **/DAQ/hosts/collector0x?/digitizers**: array of hosts of each digitizer, where array index corresponds to collector channel.
- - **/DAQ/params**: template and custom parameters for ADC channels; all entries below those listed above not explicitly required (will be defined on the fly by the Dashboard or ADCs). See the [ADC docs](https://github.com/BillMills/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md) for further discussion on how to use this structure.
+ - **/DAQ/params**: template and custom parameters for ADC channels; all entries below those listed above not explicitly required (will be defined on the fly by the Dashboard or ADCs). See the [ADC docs](https://github.com/GRIFFINCollaboration/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md) for further discussion on how to use this structure.
  - **/DAQ/MSC/MSC**: Array of MSC addresses `0xMSCC`, where `M` == master channel, `S` == collector channel, `CC` == digitizer channel
  - **/DAQ/MSC/chan**: Array of [10-character channel names](https://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature) in the same order as `/DAQ/MSC/MSC`.
 
 ### APIs
 
-The DAQ page polls trigger request and accept rates from the digitizers at the bottom of DAQ hierarchy, via the high-rate API [described here](https://github.com/BillMills/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md).
+The DAQ page polls trigger request and accept rates from the digitizers at the bottom of DAQ hierarchy, via the high-rate API [described here](https://github.com/GRIFFINCollaboration/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md).
 
 ## Developer Notes
 

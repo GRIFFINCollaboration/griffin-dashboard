@@ -5,7 +5,7 @@ GRIFFIN's dashboard provides a visual user interface for GRIFFIN, its ancillary 
 
  - **For scientists,** please read and understand the maintenance requirements below. These instructions will describe the expectations and setup requirements of the Dashboard; if something doesn't work, making sure that these requirements are satisfied are the first place to check. Similar instructions can be found in the `README.md` files of individual components.
 
- - **For programmers & contributors,** please start with the [Developer Notes](https://github.com/BillMills/griffin-dashboard/tree/gh-pages#developer-notes) section below; this will walk you through an example of the basic infrastructure, including everything you'll need to create new Dashboard pages. Some other sub-`README.md`s in the project have their own developer notes, to point out some of the more idiosyncratic engineering decisions.
+ - **For programmers & contributors,** please start with the [Developer Notes](https://github.com/GRIFFINCollaboration/griffin-dashboard/tree/gh-pages#developer-notes) section below; this will walk you through an example of the basic infrastructure, including everything you'll need to create new Dashboard pages. Some other sub-`README.md`s in the project have their own developer notes, to point out some of the more idiosyncratic engineering decisions.
 
 ## Maintenance Requirements
 
@@ -40,17 +40,18 @@ An independent MIDAS experiment running nominally on `grifsoh00`.  Set up Agilen
 
 The Dashboard makes use of a number of ODB structures that must be adhered to. They are fully specified in the relevant documentation:
 
- - [`/DAQ`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/daq-monitor#odb-structures)
- - [`/Equipment/HV-*`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/hv-monitor#odb-structures)
- - [`/Equipment/GRIF-Clk*`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/clock-control#odb-structures)
- - [`/Filter`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/filter-builder#odb-structures)
- - [`/PPG`](https://github.com/BillMills/griffin-dashboard/tree/gh-pages/templates/cycle-builder#odb-structures)
+ - [`/Cycle`](https://github.com/GRIFFINCollaboration/griffin-dashboard/tree/gh-pages/templates/cycle-builder#odb-structures)
+ - [`/DAQ`](https://github.com/GRIFFINCollaboration/griffin-dashboard/tree/gh-pages/templates/daq-monitor#odb-structures)
+ - [`/Equipment/HV-*`](https://github.com/GRIFFINCollaboration/griffin-dashboard/tree/gh-pages/templates/hv-monitor#odb-structures)
+ - [`/Equipment/GRIF-Clk*`](https://github.com/GRIFFINCollaboration/griffin-dashboard/tree/gh-pages/templates/clock-control#odb-structures)
+ - [`/Filter`](https://github.com/GRIFFINCollaboration/griffin-dashboard/tree/gh-pages/templates/filter-builder#odb-structures)
+ - [`/PPG`](https://github.com/GRIFFINCollaboration/griffin-dashboard/tree/gh-pages/templates/cycle-builder#odb-structures)
 
 Whenever an ODB directory is pulled in, the Dashboard will go looking for its contents at `dataStore.ODB.<dir name>`. In other words, `dataStore.ODB` is structured exactly like the ODB's directories (though it will only have the necessary subset of information available on it). When pulling in new ODB information, please follow this pattern.
 
 ### APIs
 
-The Dashboard relies on communication with GRIFFIN's digitizers both directly and through the ODB; see [the ADC docs](https://github.com/BillMills/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md) for a detailed discussion of the GRIF-16 API that must be in place.
+The Dashboard relies on communication with GRIFFIN's digitizers both directly and through the ODB; see [the ADC docs](https://github.com/GRIFFINCollaboration/griffin-dashboard/blob/gh-pages/templates/detectors/adc-sidebar/README.md) for a detailed discussion of the GRIF-16 API that must be in place.
 
 ## Developer Notes
 
