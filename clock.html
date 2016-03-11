@@ -51,8 +51,6 @@
             ////////////////////////////////////////
 
             //pre-dom-ready setup
-            setupClocks();
-
             function processDAQ(payload){
                 fetchDAQ(payload);
                 detectDetectors();
@@ -79,6 +77,7 @@
             }
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
+
                 var i, clocks = []
                 for(i=0; i<25; i++){
                     clocks.push('GRIF-Clk'+i);
@@ -87,6 +86,7 @@
                 //////////////
                 // setup
                 //////////////
+                setupClocks();
                 //get the ODB DAQ directory for the nav bar
                 fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
 
