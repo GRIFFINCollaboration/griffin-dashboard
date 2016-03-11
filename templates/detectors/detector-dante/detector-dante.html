@@ -1,0 +1,215 @@
+<link rel="stylesheet" href="../detector.css">
+
+<template id='detector-dante'>
+    <div class='nav-row'>
+        {{#energyButton}}
+            <a class='btn btn-success' href='?channel=energy'>Switch to Energy</a>
+        {{/energyButton}}
+        {{#timeButton}}
+            <a class='btn btn-success' href='?channel=time'>Switch to TAC</a>
+        {{/timeButton}}
+        <div class="btn-group" role="group" id="view-nav"></div>
+    </div>
+
+    <div id='visualizationcollection'>
+        {{#views}}
+            <div id='{{.}}Wrap' class='visWrap hidden'></div>
+        {{/views}}
+        <form id='scalecontrol' onchange='managePlotScale()'>
+            <label for='linScale'>Linear</label>
+            <input id='linScale' name='plotScale' value='lin' type='radio' checked></input>
+            <label for='logScale' class='uiRow'>Log</label>
+            <input id='logScale' name='plotScale' value='log' type='radio'></input>
+            <label for='scaleMin', class='uiRow'>Min</label>
+            <input id='scaleMin', type='number' min='0' step='1'></input>
+            <label for='scaleMax', class='uiRow'>Max</label>
+            <input id='scaleMax', type='number' min='0' step='1'></input>
+        </form>
+    </div>
+
+    <img id='errorPattern' src='img/static.gif' class='hidden'></img>
+</template>
+
+<script>
+    function parameterizeDetector(){
+        // determine all the parameters needed for DANTE's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
+
+        var suppressors = [
+            'DAS01XN00X', 'DAS01XN01X', 'DAS01XN02X',
+            'DAS02XN00X', 'DAS02XN01X', 'DAS02XN02X',
+            'DAS03XN00X', 'DAS03XN01X', 'DAS03XN02X',
+            'DAS04XN00X', 'DAS04XN01X', 'DAS04XN02X', 
+            'DAS05XN00X', 'DAS05XN01X', 'DAS05XN02X',
+            'DAS06XN00X', 'DAS06XN01X', 'DAS06XN02X',
+            'DAS07XN00X', 'DAS07XN01X', 'DAS07XN02X',
+            'DAS08XN00X', 'DAS08XN01X', 'DAS08XN02X'
+        ];
+
+        //build up dataStore.detector.channel names
+        if(dataStore.detector.channelType == 'energy'){
+            dataStore.detector.channelNames = [ 
+                'DAL01XN00X', 'DAL02XN00X', 'DAL03XN00X', 'DAL04XN00X',
+                'DAL05XN00X', 'DAL06XN00X', 'DAL07XN00X', 'DAL08XN00X'
+            ];            
+        } else {
+            dataStore.detector.channelNames = [ 
+                'DAL01TN00X', 'DAL02XT00X', 'DAL03XT00X', 'DAL04XT00X',
+                'DAL05TN00X', 'DAL06XT00X', 'DAL07XT00X', 'DAL08XT00X'
+            ]; 
+        }
+        dataStore.detector.channelNames = suppressors.concat(dataStore.detector.channelNames);
+
+        // view labels
+        dataStore.detector.views = ['main'];
+
+        //subview info
+        dataStore.detector.subviews = ['HV', 'threshold', 'trigger_request', 'trigger_accept'];
+
+        // how many characters are in the summary view channel names?
+        dataStore.detector.summaryDepth = 0;
+
+        // build up raw data structure
+        createDataStructure();
+    }
+
+    function drawDetector(){
+        // once the HTML is in place, finish setting up visualization.
+
+        var i, X, Y;
+
+        //generic setup + TAC layer
+        setupDetector(true);
+
+        //////////////////////////////////////
+        //DANTE specific drawing parameters
+        //////////////////////////////////////
+        dataStore.detector.outerBGORad = 0.1*0.8*dataStore.detector.height;
+        dataStore.detector.innerBGOrad = 0.08*0.8*dataStore.detector.height;
+        dataStore.detector.LaBrRad = 0.05*0.8*dataStore.detector.height;
+        dataStore.detector.ringRad = Math.min(0.3*dataStore.detector.height, 0.5*0.45*dataStore.detector.width - dataStore.detector.outerBGORad);
+        dataStore.detector.westCenterX = dataStore.detector.ringRad+dataStore.detector.outerBGORad;
+        dataStore.detector.westCenterY = 0.4*dataStore.detector.height;
+        dataStore.detector.eastCenterX = dataStore.detector.width - dataStore.detector.ringRad - dataStore.detector.outerBGORad;
+        dataStore.detector.eastCenterY = 0.4*dataStore.detector.height;
+        dataStore.detector.detCenterX = [ 
+            dataStore.detector.westCenterX + dataStore.detector.ringRad, 
+            dataStore.detector.westCenterX, 
+            dataStore.detector.westCenterX - dataStore.detector.ringRad, 
+            dataStore.detector.westCenterX,
+            dataStore.detector.eastCenterX + dataStore.detector.ringRad, 
+            dataStore.detector.eastCenterX, 
+            dataStore.detector.eastCenterX - dataStore.detector.ringRad, 
+            dataStore.detector.eastCenterX
+        ];
+        dataStore.detector.detCenterY = [ 
+            dataStore.detector.westCenterY, 
+            dataStore.detector.westCenterY - dataStore.detector.ringRad, 
+            dataStore.detector.westCenterY, 
+            dataStore.detector.westCenterY + dataStore.detector.ringRad,
+            dataStore.detector.eastCenterY, 
+            dataStore.detector.eastCenterY - dataStore.detector.ringRad, 
+            dataStore.detector.eastCenterY, 
+            dataStore.detector.eastCenterY + dataStore.detector.ringRad
+        ]
+
+
+        // only one view, set and forget:
+        dataStore.detector.currentView = 'main';
+        document.getElementById('mainWrap').classList.remove('hidden');
+        // start with summary trigger accepts displayed
+        manageSubview('trigger_accept', true);
+
+        // set up the cells
+        drawWindowdressing(); 
+        instantiateCells(0);
+        generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
+
+        repaint();
+    }
+
+    function createCell(channel){
+        // reimplemented for dante - circular cells instead of polygons
+        // stamp out a cell for the given channel and coordinate array key
+        // note that cell still has to be added to an appropriate layer on a per-detector basis.
+
+        var detector = parseInt(channel.slice(3,5), 10) - 1,
+            segment  = parseInt(channel.slice(7,9), 10),
+            X = dataStore.detector.detCenterX[detector],
+            Y = dataStore.detector.detCenterY[detector],
+            mask;
+
+        if(channel.slice(2,3) == 'S'){
+            dataStore.detector.cells[channel] = new Kinetic.Arc({
+                innerRadius: dataStore.detector.innerBGOrad,
+                outerRadius: dataStore.detector.outerBGORad,
+                x: X,
+                y: Y,
+                fill: '#000000',
+                angle: 120,
+                clockwise: false,
+                rotationDeg: -120*(segment+1),
+                fillPatternOffsetX: 100*Math.random(),
+                fillPatternOffsetY: 100*Math.random(),
+                stroke: this.frameColor,
+                strokeWidth: this.frameLineWidth,
+                closed: true,
+                listening: true
+            });
+        } else {
+            //note all suppressors get added first; need to mask out center of cells so they appear as annuli, then add actual detector cells
+
+            // add masks
+            mask = new Kinetic.Circle({
+                radius: dataStore.detector.innerBGOrad,
+                x: X,
+                y: Y,
+                fill: '#222222',
+                stroke: dataStore.frameColor,
+                strokeWidth: dataStore.frameLineWidth
+            });
+            dataStore.detector.HVLayer[0].add(mask);
+
+            // generate LaBr3
+            dataStore.detector.cells[channel] = new Kinetic.Circle({
+                radius: dataStore.detector.LaBrRad,
+                x: X,
+                y: Y,
+                fill: '#000000',
+                fillPatternOffsetX: 100*Math.random(),
+                fillPatternOffsetY: 100*Math.random(),
+                stroke: dataStore.frameColor,
+                strokeWidth: dataStore.frameLineWidth,
+                closed: true,
+                listening: true
+            });
+        }
+
+        //set up the tooltip listeners:
+        dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
+        dataStore.detector.cells[channel].on('mousemove', moveTooltip);
+        dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+
+        //set up onclick listeners:
+        dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+    }
+
+    function drawWindowdressing(){
+        // add static annotations to the detector visualization
+
+        var i, bkgRing
+
+        // add detector rings
+        for(i=0; i<2; i++){
+            bkgRing = new Kinetic.Circle({
+                radius: dataStore.detector.ringRad,
+                x: (i==0) ? dataStore.detector.westCenterX : dataStore.detector.eastCenterX,
+                y: (i==0) ? dataStore.detector.westCenterY : dataStore.detector.eastCenterY,
+                stroke: '#999999',
+                strokeWidth: dataStore.frameLineWidth,
+                listening: false
+            })
+            dataStore.detector.scaleLayer[0].add(bkgRing);
+        }
+    }
+
+</script>

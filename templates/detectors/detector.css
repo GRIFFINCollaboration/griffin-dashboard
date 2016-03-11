@@ -1,0 +1,12 @@
+div#visualizationcollection{
+    width: 100%;
+}
+
+div.visWrap{
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+form#scalecontrol{
+    margin-left: 10%;
+}

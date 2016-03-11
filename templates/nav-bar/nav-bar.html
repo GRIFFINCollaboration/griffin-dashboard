@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="nav-bar.css">
+
+<template id='nav-bar'>
+    
+    <div id='nav-wrap'>
+        <a class='btn btn-info' id='hv-link' href='hv.html'>HV</a> 
+        <a class='btn btn-info' id='daq-link' href='daq.html'>DAQ</a>
+        <a class='btn btn-info' id='cycle-link' href='cycle.html'>Cycle</a>    
+        <a class='btn btn-info' id='clock-link' href='clock.html'>Clock</a>    
+        <a class='btn btn-info' id='filter-link' href='filter.html'>Filter</a>
+        <a class='btn btn-info' id='shack-link' href='shack.html'>Shack</a>    
+    </div>
+
+</template>
+
+<script>
+
+    function detectDetectors(){
+        // decide which detectors need to be linked to, based on the MSC table in the ODB, pre-registered on dataStore.ODB.DAQ
+
+        var i, newLink, current
+            detectors = [],
+            wrap = document.getElementById('nav-wrap');
+
+        for(i=0; i<dataStore.ODB.DAQ.MSC.chan.length; i++){
+            detectors.push(dataStore.ODB.DAQ.MSC.chan[i].slice(0,2));
+        }
+        detectors = detectors.unique();
+
+        for(i=0; i<detectors.length; i++){
+            if(dataStore.detPrefix[detectors[i]]){
+                newLink = document.createElement('a');
+                newLink.setAttribute('class', 'btn btn-info btn-fudge');
+                newLink.setAttribute('href', dataStore.detPrefix[detectors[i]].toLowerCase() + '.html');
+                newLink.setAttribute('id', dataStore.detPrefix[detectors[i]].toLowerCase() + '-link');
+                newLink.innerHTML = dataStore.detPrefix[detectors[i]];
+                wrap.appendChild(newLink);
+            }
+        }
+
+        //set active state
+        current = window.location.pathname.split('/').pop();
+        current = current.slice(0, current.indexOf('.')) + '-link';
+        if(document.getElementById(current))
+            document.getElementById(current).classList.add('btn-warning');    
+    }
+
+</script>

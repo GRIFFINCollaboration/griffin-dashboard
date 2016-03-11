@@ -1,0 +1,59 @@
+<template id='cycle-step'>
+
+    <div id='{{index}}OrderControl' class='order-control'>
+        <button id='{{index}}Earlier' class='btn btn-info' onclick='moveStep("cycleStep{{index}}", -1)'>Earlier</button>
+        <button id='{{index}}Remove' class='btn btn-danger' onclick='deleteCycleStep({{index}})'>Remove</button>
+        <button id='{{index}}Later' class='btn btn-info' onclick='moveStep("cycleStep{{index}}", 1)'>Later</button>
+    </div>
+
+    <div id='{{index}}DurationControl'>
+        <label for='{{index}}Duration'>Duration:</label>
+        <input id='{{index}}Duration' type='number' min='0' step='any' value='1' class='small-number'></input>
+        <select id='{{index}}DurationUnit' value='1'>
+            <option value='1'>ms</option>
+            <option value='1000'>s</option>
+            <option value='60000'>min</option>
+        </select>
+    </div>
+
+    <h3>Run Control</h3>
+    <ul id='cycle{{index}}RunControl'>
+        {{#RunControl}}
+            <li>
+                <input type='checkbox' id='{{index}}{{id}}' class='cycleOption' value={{code}}></input>
+                <label for='{{index}}{{id}}'>{{prettyName}}</label>
+            </li>
+        {{/RunControl}}
+    </ul>
+
+    <h3>Triggers</h3>
+    <ul id='cycle{{index}}Trigger'>
+        {{#Triggers}}
+            <li>
+                <input type='checkbox' id='{{index}}{{id}}' class='cycleOption' value={{code}}></input>
+                <label for='{{index}}{{id}}'>{{prettyName}}</label>
+            </li>
+        {{/Triggers}}
+    </ul>
+
+    <h3>Data Collection</h3>
+    <ul id='cycle{{index}}DataCollection'>
+        {{#DataCollection}}
+            <li>
+                <input type='checkbox' id='{{index}}{{id}}' class='cycleOption' value={{code}}></input>
+                <label for='{{index}}{{id}}'>{{prettyName}}</label>
+            </li>
+        {{/DataCollection}}
+    </ul>
+
+    <h3>Unassigned</h3>
+    <ul id='cycle{{index}}Unassigned'>
+        {{#Unassigned}}
+            <li>
+                <input type='checkbox' id='{{index}}{{id}}' class='cycleOption' value={{code}}></input>
+                <label for='{{index}}{{id}}'>{{prettyName}}</label>
+            </li>
+        {{/Unassigned}}
+    </ul>
+
+</template>

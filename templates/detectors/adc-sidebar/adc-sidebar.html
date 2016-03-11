@@ -1,0 +1,717 @@
+<link rel="stylesheet" href="adc-sidebar.css">
+
+<template id='adc-sidebar'>
+    <h3 id='channelName'>{{channel}}</h3>
+    <h4>{{ADC}}</h4>
+    <div id='ADCwarning' class='warning hidden'>
+        <h3>ADC response mangled!</h3>
+    </div>
+
+    <div class="panel-group" id='adc-write-target' role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="adc-write-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#adc-write" aria-expanded="true" aria-controls="adc-write">ODB Updates</a>
+                </h4>
+            </div>
+            <div id="adc-write" class="panel-collapse in" role="tabpanel" aria-labelledby="adc-write-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled'>
+                        <li>
+                            <div class='col-md-2 no-pad'>
+                                <input type='radio' name='adc-target' id='adc-template' value='template' class=''></input>
+                            </div>
+                            <div class='col-md-10 no-pad'>
+                                <label for='adc-template' id='adc-template-label'></label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='col-md-2 no-pad'>          
+                                <input type='radio' name='adc-target' id='adc-custom' value='custom' style='float:left;' checked></input>
+                            </div>
+                            <div class='col-md-10 no-pad'>
+                                <label for='adc-custom' id='adc-custom-label' style='float:right'>Write {{channel}} custom params</label>
+                            </div>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+                                <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Reset to Template
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="MSCB-node-info-head">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#MSCB-node-info" aria-expanded="false" aria-controls="MSCB-node-info">MSCB Node Info</a>
+                </h4>
+            </div>
+            <div id="MSCB-node-info" class="panel-collapse collapse collapse" role="tabpanel" aria-labelledby="MSCB-node-info-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li id="serial"></li>
+                        <li id="cpu_temp"></li>
+                        <li id="cc_lock"></li>
+                        <li id="hw_sw_m"></li>
+                        <li id="hw_id"></li>
+                        <li id="hw_time"></li>
+                        <li id="sw_id"></li>
+                        <li id="sw_time"></li>
+                        <li id="ref_clk"></li>
+                        <li id="up_time"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="ADC-control-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#ADC-control" aria-expanded="true" aria-controls="ADC-control">ADC Control</a>
+                </h4>
+            </div>
+            <div id="ADC-control" class="panel-collapse in" role="tabpanel" aria-labelledby="ADC-control-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>    
+                            <input id="a_enable" type="checkbox"></input>
+                            <label id="a_enableLabel" for="a_enable">Enabled</label>
+                        </li>
+                        <li>
+                            <label>DC Offset [mV]:</label>
+                            <input min='-2047' max='2048' step="1" id="a_dcofst" type="number"></input>
+                        </li>
+                        <li>
+                            <label>ADC Gain</label>
+                            <select id='a_fgain'>
+                                <option value='0'>1.0 Vp-p</option>
+                                <option value='1'>1.14 Vp-p</option>
+                                <option value='2'>1.33 Vp-p</option>
+                                <option value='3'>1.6 Vp-p</option>
+                                <option value='4'>2.0 Vp-p</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="triggering-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#triggering" aria-expanded="false" aria-controls="triggering">Triggering</a>
+                </h4>
+            </div>
+            <div id="triggering" class="panel-collapse collapse" role="tabpanel" aria-labelledby="triggering-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <input id="t_on" type="checkbox"></input>
+                            <label id="t_onLabel" for="t_on">Enabled</label>
+                        </li>
+                        <li>
+                            <label>Polarity:</label>
+                            <ul class='list-unstyled sublist'>
+                                <li>
+                                    <input value="true" name="a_pol" id="a_pol0" type="radio"></input>
+                                    <label id="a_pol0Label" for="a_pol0">Positive</label>
+                                </li>
+                                <li>
+                                    <input value="false" name="a_pol" id="a_pol1" type="radio"></input>
+                                    <label id="a_pol1Label" for="a_pol1">Negative</label>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <label>Trig Thresh:</label>
+                            <input step="any" id="t_thres" type="number" min='0' max='65535'></input>
+                        </li>
+                        <li>
+                            <label>Differentiation:</label>
+                            <input step="1" id="t_diff" type="number" min='0' max='255'></input>
+                        </li>
+                        <li>
+                            <label>Integration:</label>
+                            <input step="1" id="t_int" type="number" min='0' max='255'></input>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="pulse-height-eval-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#pulse-height-eval" aria-expanded="false" aria-controls="pulse-height-eval">Pulse Height Eval.</a>
+                </h4>
+            </div>
+            <div id="pulse-height-eval" class="panel-collapse collapse" role="tabpanel" aria-labelledby="pulse-height-eval-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <label>Integration:</label>
+                            <input min='0' max='4095' id="p_int" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Differentiation:</label>
+                            <input min='0' max='4095' id="p_diff" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay:</label>
+                            <input min='0' max='4095' id="p_delay" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Pole Cxn:</label>
+                            <input min='0' max='65535' id="p_polec1" type="number"></input>
+                        </li>
+                        <li>
+                            <label>CFD Delay:</label>
+                            <input min='0' max='255' id="cfd_dly" type="number"></input>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="waveform-readout-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#waveform-readout" aria-expanded="false" aria-controls="waveform-readout">Waveform Readout</a>
+                </h4>
+            </div>
+            <div id="waveform-readout" class="panel-collapse collapse" role="tabpanel" aria-labelledby="waveform-readout-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <label>Waveform Mode</label>
+                            <select id='wfr_mode'>
+                                <option value='0'>Do not store</option>
+                                <option value='1'>Store all</option>
+                                <option value='3'>If space available</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>Pretrigger:</label>
+                            <input min='0' max='4095' id="wfr_pret" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Samples:</label>
+                            <input min='0' max='4095' id="wfr_smpl" type="number"></input>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="simulation-pulse-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#simulation-pulse" aria-expanded="false" aria-controls="simulation-pulse">Simulation Pulse</a>
+                </h4>
+            </div>
+            <div id="simulation-pulse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="simulation-pulse-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <input id="sim_ena" type="checkbox"></input>
+                            <label id="sim_enaLabel" for="sim_ena">Enabled</label>
+                        </li>
+                        <li>
+                            <input id="sim_enat" type="checkbox"></input>
+                            <label id="sim_enatLabel" for="sim_enat">Enabled Trigger</label>
+                        </li>
+                        <li>
+                            <input id="sim_enar" type="checkbox"></input>
+                            <label id="sim_enarLabel" for="sim_enar">Enabled Random</label>
+                        </li>
+                        <li>
+                            <input id="sim_cyc" type="checkbox"></input>
+                            <label id="sim_cycLabel" for="sim_cyc">Cycle Waveform</label>
+                        </li>
+                        <li>
+                            <input id="sim_pol" type="checkbox"></input>
+                            <label id="sim_polLabel" for="sim_pol">Polarity</label>
+                        </li>
+
+                        <li>
+                            <label>Rise: </label>
+                            <input min='0' max='127' id="sim_rise" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Rate: </label>
+                            <input min='0' max='268435455' id="sim_rate" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Amplitude: </label>
+                            <input min='0' max='1048575' id="sim_amp" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay 0: </label>
+                            <input min='0' max='4095' id="sim_dly0" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Amplitude 0: </label>
+                            <input min='0' max='65535' id="sim_amp0" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay 1: </label>
+                            <input min='0' max='4095' id="sim_dly1" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Amplitude 1: </label>
+                            <input min='0' max='65535' id="sim_amp1" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay 2: </label>
+                            <input min='0' max='4095' id="sim_dly2" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Amplitude 2: </label>
+                            <input min='0' max='65535' id="sim_amp2" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Delay 3: </label>
+                            <input min='0' max='4095' id="sim_dly3" type="number"></input>
+                        </li>
+                        <li>
+                            <label>Amplitude 3: </label>
+                            <input min='0' max='65535' id="sim_amp3" type="number"></input>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="rt-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#rt" aria-expanded="false" aria-controls="rt">Statistics</a>
+                </h4>
+            </div>
+            <div id="rt" class="panel-collapse collapse" role="tabpanel" aria-labelledby="rt-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+
+                        <li>
+                            <label>Request Rate: </label>
+                            <span id="rt_rqst"></span>
+                        </li>
+                        <li>
+                            <label>Accept Rate: </label>
+                            <span id="rt_acpt"></span>
+                        </li>
+                        <li>
+                            <label>Trigger Buffer</label>
+                            <div class="progress">
+                                <div id='st_btrig' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="255" style="width: 40%"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>Wave Buffer</label>
+                            <div class="progress">
+                                <div id='st_bwv' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="4095" style="width: 40%"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>QT Buffer</label>
+                            <div class="progress">
+                                <div id='st_bqt' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="255" style="width: 40%"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>Event Buffer Read</label>
+                            <div class="progress">
+                                <div id='st_bevr' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="4095" style="width: 40%"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>Event Buffer Write</label>
+                            <div class="progress">
+                                <div id='st_bevw' class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="4095" style="width: 40%"></div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <label>Dropped Wave: </label>
+                            <span id="rt_dwav"></span>
+                        </li>
+                        <li>
+                            <label>Dropped Busy: </label>
+                            <span id="rt_dbsy"></span>
+                        </li>                        
+                        <li>
+                            <label>Dropped QT: </label>
+                            <span id="rt_dqt"></span>
+                        </li>
+                        <li>
+                            <label>Dropped Trig: </label>
+                            <span id="rt_dtrg"></span>
+                        </li>
+                        <li>
+                            <label>Dropped Dead: </label>
+                            <span id="rt_dded"></span>
+                        </li>
+                        <li>
+                            <label>Trigger Count: </label>
+                            <span id="st_trig"></span>
+                        </li>
+                        <li>
+                            <label>Request Count: </label>
+                            <span id="st_trigr"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="misc-head">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#misc" aria-expanded="false" aria-controls="misc">Miscellaneous</a>
+                </h4>
+            </div>
+            <div id="misc" class="panel-collapse collapse" role="tabpanel" aria-labelledby="misc-head">
+                <div class="panel-body">
+                    <ul class='list-unstyled dark-text'>
+                        <li>
+                            <label>Deadtime Readout:</label>
+                            <input id="dtsclr_b" type="number" min='10000000' max='4294967295'></input>
+                        </li>
+                        <li>
+                            <label>Trigger Readout:</label>
+                            <input id="trsclr_b" type="number" min='50000000' max='4294967295'></input>
+                        </li>
+                        <li>
+                            <label>Prog Deadtime:</label>
+                            <input id="prg_ddtm" type="number" min='0' max='4294967295'></input>
+                        </li>
+                        <li>
+                            <label>Sync Livetime:</label>
+                            <input id="syn_lvtm" type="number" min='0' max='4294967295'></input>
+                        </li>
+                        <li>
+                            <label>Sync Deadtime:</label>
+                            <input id="syn_ddtm" type="number" min='0' max='4294967295'></input>
+                        </li>
+                        <li>
+                            <label>Detector Type</label>
+                            <select id='det_type'>
+                                <option value='0'>GRIFFIN Low Gain</option>
+                                <option value='1'>GRIFFIN High Gain</option>
+                                <option value='2'>SCEPTAR</option>
+                                <option value='3'>DANTE (Energy)</option>
+                                <option value='4'>DANTE (Time)</option>
+                                <option value='5'>PACES</option>
+                                <option value='6'>DESCANT</option>
+                                <option value='7'>GRIFFIN Suppressors</option>
+                                <option value='8'>DANTE Suppressors</option>
+                                <option value='9'>ZDS</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--are you sure modal-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Reset {{channel}} ADC to defaults?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>This will delete the contents of the ODB directory /DAQ/params/grif16/custom/{{channel}}; there is no undo.</p>
+                    <input type='checkbox' id='yesDefinitelyWriteODB' onclick='enableReset()'></input>
+                    <label for='yesDefinitelyWriteODB'>I'm very sure.</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id='dismissODBmodal'>
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Abort
+                    </button>
+                    <button type="button" class="btn btn-default disabled" id='writeToODB' onclick='eraseCustom("{{channel}}")'>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Write
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>    
+</template>
+
+<script>
+    function setupADCSidebar(wrapperID){
+        // plug in the event listeners for the ADC sidebar, set up parameter writing
+
+        dataStore.ADCids = {};
+        dataStore.ADCids.numberID = [    
+            'a_dcofst',
+            't_thres', 't_diff', 't_int',
+            'p_int', 'p_diff', 'p_delay', 'p_polec1', 'cfd_dly',
+            'wfr_pret', 'wfr_smpl',
+            'sim_rise', 'sim_rate', 'sim_amp', 'sim_dly0', 'sim_amp0', 'sim_dly1', 'sim_amp1', 'sim_dly2', 'sim_amp2', 'sim_dly3', 'sim_amp3', 
+            'dtsclr_b', 'trsclr_b', 'prg_ddtm', 'syn_lvtm', 'syn_ddtm'
+        ]
+        dataStore.ADCids.checkboxID = [
+            'a_enable',
+            't_on',
+            'sim_ena',
+            'sim_enat',
+            'sim_enar',
+            'sim_cyc',
+            'sim_pol'
+        ]
+        dataStore.ADCids.radioName = [  
+            'a_pol'
+        ]
+        dataStore.ADCids.readOnlyText = [
+            'rt_rqst',
+            'rt_acpt',
+            'rt_dwav',
+            'rt_dbsy',
+            'rt_dqt',
+            'rt_dtrg',
+            'rt_dded',
+            'st_trig',
+            'st_trigr'
+        ]
+        dataStore.ADCids.progressBars = [
+            'st_btrig',
+            'st_bwv',
+            'st_bqt',
+            'st_bevr',
+            'st_bevw'
+        ]
+        dataStore.ADCids.optionLists = [
+            'a_fgain',
+            'wfr_mode',
+            'det_type'
+        ]
+
+        document.getElementById(wrapperID).addEventListener('postADC', function(evt){
+            var i, j;
+
+            document.getElementById(wrapperID).innerHTML = Mustache.to_html(
+                dataStore.templates['adc-sidebar'], 
+                {
+                    'channel': evt.detail.channel,
+                    'ADC': findADC(evt.detail.channel)
+                }
+            );
+
+            // inject ADC requests into heartbeat:
+            dataStore.heartbeat.ADCrequest = [
+                                                [
+                                                    'http://'+findADC(evt.detail.channel)+'/mscb?node='+(findChannel(evt.detail.channel)+2), 
+                                                    'json', 
+                                                    routeADCchannel
+                                                ],
+                                                [
+                                                    'http://'+findADC(evt.detail.channel)+'/mscb?node=1',
+                                                    'json',
+                                                    routeADCboard
+                                                ]
+                                            ];
+
+            // set up odb parameter writing for each input
+            for(i=0; i<dataStore.ADCids.numberID.length; i++){
+                document.getElementById(dataStore.ADCids.numberID[i]).onchange = writeParameter.bind(null, dataStore.ADCids.numberID[i], 9);
+            }
+            for(i=0; i<dataStore.ADCids.checkboxID.length; i++){
+                document.getElementById(dataStore.ADCids.checkboxID[i]).onchange = writeParameter.bind(null, dataStore.ADCids.checkboxID[i], 8);
+            }
+            for(i=0; i<dataStore.ADCids.radioName.length; i++){
+                radios = document.querySelectorAll('input[name="'+dataStore.ADCids.radioName[i]+'"]')
+                for(j=0; j<radios.length; j++){
+                    radios[j].onclick = writeParameter.bind(null, dataStore.ADCids.radioName[i], 8);
+                }
+            }
+            for(i=0; i<dataStore.ADCids.optionLists.length; i++){
+                document.getElementById(dataStore.ADCids.optionLists[i]).onchange = writeParameter.bind(null, dataStore.ADCids.optionLists[i], 6);
+            }
+
+            // grab info immediately, before next heartbeat
+            Promise.all(dataStore.heartbeat.ADCrequest.map(promiseURL)).then(function(payload){
+                var i;
+                for(i=0; i<payload.length; i++){
+                    //callbacks
+                    dataStore.heartbeat.ADCrequest[i][2](payload[i]);
+                }
+            })
+
+            
+        }, false);
+        dataStore.ADCClickListeners = dataStore.ADCClickListeners.concat(wrapperID);
+    }
+
+    function routeADCchannel(ADCjson){
+        // take the parsed JSON response of a request like http://grifadc03.triumf.ca/mscb?node=17 and sort it into the adc-sidebar.
+
+        var warningDiv = document.getElementById('ADCwarning'),
+            i, textEncoding, barMax, target;
+
+        //empty response from ADC?
+        if(Object.keys(ADCjson).length == 0){
+            console.log('no keys')
+            warningDiv.classList.remove('hidden');
+            return;
+        }
+        warningDiv.classList.add('hidden');
+
+        //keep hold of this object for later, has widths and card types and stuff in it needed for writing back
+        dataStore.ADCstructure = ADCjson.vars;
+
+        //all number inputs have id == data key name
+        for(i=0; i<dataStore.ADCids.numberID.length; i++){
+            target = document.getElementById(dataStore.ADCids.numberID[i]);
+            if(dataStore.ADCstructure[dataStore.ADCids.numberID[i]] && document.activeElement != target)
+                target.value = dataStore.ADCstructure[dataStore.ADCids.numberID[i]]['d'];
+        }
+        //all checkbox inputs have id == data key name
+        for(i=0; i<dataStore.ADCids.checkboxID.length; i++){
+            if(dataStore.ADCstructure[dataStore.ADCids.checkboxID[i]])
+                document.getElementById(dataStore.ADCids.checkboxID[i]).checked = dataStore.ADCstructure[dataStore.ADCids.checkboxID[i]]['d'];
+        }
+        //all radio inputs have name == data key name
+        for(i=0; i<dataStore.ADCids.radioName.length; i++){
+            if(dataStore.ADCstructure[dataStore.ADCids.radioName[i]])
+                document.querySelectorAll('input[name = "'+dataStore.ADCids.radioName[i]+'"][value = '+dataStore.ADCstructure[dataStore.ADCids.radioName[i]]['d']+']')[0].checked = true;    
+        }
+        // read only inputs have id == data key name
+        for(i=0; i<dataStore.ADCids.readOnlyText.length; i++){
+            if(dataStore.ADCstructure[dataStore.ADCids.readOnlyText[i]]){
+                    textEncoding = dataStore.ADCstructure[dataStore.ADCids.readOnlyText[i]]['d']
+                    if(isNumeric(textEncoding))
+                        textEncoding = textEncoding.toFixed(0);
+                    document.getElementById(dataStore.ADCids.readOnlyText[i]).innerHTML = textEncoding;
+                }
+        }
+        //progress bars have id == data key name
+        for(i=0; i<dataStore.ADCids.progressBars.length; i++){
+            if(dataStore.ADCstructure[dataStore.ADCids.progressBars[i]]){
+                barMax = parseInt(document.getElementById(dataStore.ADCids.progressBars[i]).getAttribute('aria-valuemax'), 10)
+                document.getElementById(dataStore.ADCids.progressBars[i]).setAttribute('style', 'width:' + dataStore.ADCstructure[dataStore.ADCids.progressBars[i]]['d']/barMax*100 + '%;');
+            }
+        }
+        // selects have id == data key name
+        for(i=0; i<dataStore.ADCids.optionLists.length; i++){
+            if(dataStore.ADCstructure[dataStore.ADCids.optionLists[i]])
+                document.getElementById(dataStore.ADCids.optionLists[i]).value = dataStore.ADCstructure[dataStore.ADCids.optionLists[i]]['d'];
+        }
+
+        // write target label updates:
+        document.getElementById('adc-template-label').innerHTML = 'Write ' + selected('det_type', true) + ' template'
+    }
+
+    function routeADCboard(ADCjson){
+        // take the parsed JSON response of a request like http://grifadc03.triumf.ca/mscb?node=1 and sort it into the adc-sidebar.
+
+        var keys, time, content, i,
+            warningDiv = document.getElementById('ADCwarning'),
+            titles = {  'serial': '<br>Serial:<br>',
+                        'cpu_temp': '<br>FPGA Temperature:<br>',
+                        'cc_lock': '<br>Clock Cleaner Locked:<br>',
+                        'hw_sw_m': '<br>Hardware / Software Match:<br>',
+                        'hw_id': '<br>Hardware ID:<br>',
+                        'hw_time': '<br>Hardware Timestamp:<br>',
+                        'sw_id': '<br>Software ID:<br>',
+                        'sw_time': '<br>Software Timestamp:<br>',
+                        'ref_clk': '<br>Reference Clock:<br>',
+                        'up_time': '<br>Uptime:<br>'
+                    };
+
+        //empty response from ADC?
+        if(Object.keys(ADCjson).length == 0){
+            console.log('no keys')
+            warningDiv.classList.remove('hidden');
+            return;
+        }
+        warningDiv.classList.add('hidden');
+
+        keys = Object.keys(ADCjson.vars);
+        for(i=0; i<keys.length; i++){
+            content = titles[keys[i]] + ADCjson.vars[keys[i]].d;
+            if(keys[i] == 'cpu_temp')
+                content += ' C'
+            if(keys[i]=='hw_id' || keys[i]=='sw_id')
+                content = titles[keys[i]] + '0x' + parseInt(ADCjson.vars[keys[i]].d, 10).toString(16);
+            if(keys[i]=='hw_time' || keys[i]=='sw_time'){
+                time = new Date(parseInt(ADCjson.vars[keys[i]].d, 10)*1000);
+                content = titles[keys[i]] + time.toString();
+            }
+            if(keys[i]=='uptime'){
+                time = parseInt(ADCjson.vars[keys[i]].d, 10);
+                content = titles[keys[i]] + chewUptime(time);
+            }
+            if(document.getElementById(keys[i]))
+                document.getElementById(keys[i]).innerHTML = content;        
+        }
+    }
+
+    function eraseCustom(channel){
+        // erase the custom adc parameters for the names channel
+
+        promiseScript('http://' + dataStore.host + '/?cmd=jdelete&odb=/DAQ/params/grif16/custom/' + channel).then(function(){
+            promiseScript('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/custom/' + channel + '&type=15')
+        });
+
+        document.getElementById('dismissODBmodal').click()
+    }
+
+    function enableReset(){
+        // allow the active channel to be reset to defaults
+
+        var allow = document.getElementById('yesDefinitelyWriteODB').checked,
+            writeButton = document.getElementById('writeToODB');
+
+        if(allow){
+            writeButton.classList.remove('disabled');
+        } else {
+            writeButton.classList.add('disabled');
+        }
+    }
+
+    function writeParameter(id, type){
+        // write a parameter onchange to the appropriate place
+        // type == type of odb variable, see TID* variables in https://daq.triumf.ca/~daqweb/doc/midas-devel/resources/mhttpd.js
+
+        var value,
+            target = document.querySelector('input[name="adc-target"]:checked').value,
+            templateIndex = parseInt(selected('det_type'), 10),
+            channel = document.getElementById('channelName').innerHTML;
+
+        // decide what value to write to the odb
+        if(dataStore.ADCids.numberID.indexOf(id) != -1)
+            value = document.getElementById(id).value;
+        else if(dataStore.ADCids.checkboxID.indexOf(id) != -1)
+            value = document.getElementById(id).checked === true ? 1 : 0;
+        else if(dataStore.ADCids.radioName.indexOf(id) != -1)
+            value = document.querySelector('input[name="'+id+'"]:checked').value == 'true' ? 1 : 0 ;
+        else if (dataStore.ADCids.optionLists.indexOf(id) != -1)
+            value = selected(id);
+        else{
+            console.log('Tried to set undefined ADC parameter, aborting.');
+            return;
+        }
+        if(target == 'custom'){
+            promiseScript('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/custom/' + channel + '/' + id + '&type=' + type).then(function(){
+                promiseScript('http://' + dataStore.host + '/?cmd=jset&odb=/DAQ/params/grif16/custom/' + channel + '/' + id + '&value=' + value)
+            });
+        } else {
+            promiseScript('http://' + dataStore.host + '/?cmd=jcreate&odb=/DAQ/params/grif16/template/' + templateIndex + '/' + id + '&type=' + type).then(function(){
+                promiseScript('http://' + dataStore.host + '/?cmd=jset&odb=/DAQ/params/grif16/template/' + templateIndex + '/' + id + '&value=' + value)
+            });
+        }
+        
+    }
+
+</script>

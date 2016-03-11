@@ -1,0 +1,140 @@
+/*generic*/
+body {
+    background-color: #222222 !important;
+    color: #DDDDDD !important;
+}
+
+div.panel *{
+    color: #000000 !important;
+}
+
+div.panel .btn,
+div.panel .btn span{
+    color: #FFFFFF !important;
+}
+
+a, button { 
+    outline: none !important; 
+}
+
+div.section-wrapper{
+    clear: both;
+    overflow: auto;
+}
+
+div.pan{
+    margin: 1em 0em 1em 0em;
+    background-color: #333333;
+    padding: 1em;
+    border-radius: 1em;
+    display: inline-block;
+}
+
+.center{
+    text-align: center;
+}
+
+div.top-pan{
+    margin-top: 0px;
+}
+
+.top-gutter{
+    margin-top: 0.5em;
+}
+
+div.pan div{
+    margin-bottom: 1em;
+}
+
+div.no-pad{
+    padding: 0px !important;
+}
+
+select, input, option, .dark-text{
+    color: #000000 !important; 
+}
+
+.highlightText{
+    color: #FFFFFF;
+}
+
+.inline{
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.modal-body, .modal-header, .modal-footer{
+    color: #000000;
+}
+
+div.warning{
+    padding: 1em;
+    background-color: #F2DEDE;
+    border: 2px solid #FF0000;
+    color: #000000 !important;
+    border-radius: 1em;
+    margin-bottom: 1em;
+}
+
+label.uiRow{
+    margin-left: 1em
+}
+
+input.small-number{
+    width: 4em;
+}
+
+input.wideText{
+    width: 15em;
+}
+
+div.div-disable{
+    position: relative;
+}
+
+div.div-disable:before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    cursor: not-allowed;
+}
+
+/*right sidebar*/
+div#controlsidebar{
+    background-color: #333333;
+    padding: 1em;
+    border-radius: 1em;
+    border: 2px solid #999999;
+}
+
+/*navigation*/
+div.nav-row{
+    margin-bottom: 1em;
+}
+
+
+/*lists*/
+div.longListWrapper{
+    max-height: 300px;
+    overflow: auto;
+}
+
+ul.sublist{
+    margin-left: 1em;
+}
+
+/*tooltip*/
+div#tooltip{
+    opacity: 0.9;
+    background-color: #000000;
+    border-radius: 1em;
+    border: 0.25em solid #FFFFFF;
+    display: none;
+    pointer-events: none;
+    padding: 1em;
+    white-space: nowrap;
+}

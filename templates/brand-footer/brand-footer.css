@@ -1,0 +1,10 @@
+div#footer{
+    background-color: #111111;
+    padding: 0em 5em 2em 5em;
+    overflow: auto;
+    margin-top: 2em;
+}
+
+div.footer-text{
+    margin-top: 5em;
+}

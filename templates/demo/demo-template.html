@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="demo.css">
+
+<template id='demo-template'>
+    <img src='{{mustacheExample}}'></img>
+    <img src='{{mustacheExample}}'></img>
+    <img src='{{mustacheExample}}'></img>
+</template>
+
+<script>
+    // javascript added here will be aviailable at global scope.
+
+    //this'll happen after every heartbeat:
+    function dataUpdate(){
+        console.log(dataStore.ODB.Experiment['Name'])
+    }
+
+    // post-ODB fetch callback: this'll happen after every odb fetch with `callback=ODBfetchCallback` in the query.
+    function ODBfetchCallback(payload){
+        console.log(payload);
+
+        dataStore.ODB.Experiment = payload[0];
+    }
+</script>

@@ -1,0 +1,158 @@
+<link rel="stylesheet" href="../detector.css">
+
+<template id='detector-descant'>
+    <div class='nav-row'>
+        <div class="btn-group" role="group" id="view-nav"></div>
+    </div>
+
+    <div id='visualizationcollection'>
+        {{#views}}
+            <div id='{{.}}Wrap' class='visWrap hidden'></div>
+        {{/views}}
+        <form id='scalecontrol' onchange='managePlotScale()'>
+            <label for='linScale'>Linear</label>
+            <input id='linScale' name='plotScale' value='lin' type='radio' checked></input>
+            <label for='logScale' class='uiRow'>Log</label>
+            <input id='logScale' name='plotScale' value='log' type='radio'></input>
+            <label for='scaleMin', class='uiRow'>Min</label>
+            <input id='scaleMin', type='number' min='0' step='1'></input>
+            <label for='scaleMax', class='uiRow'>Max</label>
+            <input id='scaleMax', type='number' min='0' step='1'></input>
+        </form>
+    </div>
+
+    <img id='errorPattern' src='img/static.gif' class='hidden'></img>
+</template>
+
+<script>
+    function parameterizeDetector(){
+        // determine all the parameters needed for SCEPTAR's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
+
+        var i, j, k;
+
+        //build up dataStore.detector.channel names
+        dataStore.detector.channelNames = [];
+        for(i=0; i<5; i++){
+            //white
+            dataStore.detector.channelNames[i*14]     = 'DSC0' + (1+i) + 'XN00X';
+            index = 6 + 2*i;
+            dataStore.detector.channelNames[i*14 + 1] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            index = 16+ 3*i;
+            dataStore.detector.channelNames[i*14 + 2] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            index = 31+ 4*i;
+            dataStore.detector.channelNames[i*14 + 3] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            //yellow
+            index = 52+ 4*i;
+            dataStore.detector.channelNames[i*14 + 4] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            index = 53+ 4*i;
+            dataStore.detector.channelNames[i*14 + 5] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            //green
+            index = 55+ 4*i; if(index==71) index = 51;
+            dataStore.detector.channelNames[i*14 + 6] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            index = 54+ 4*i;
+            dataStore.detector.channelNames[i*14 + 7] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            //red
+            index = 7+ 2*i;
+            dataStore.detector.channelNames[i*14 + 8] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            index = 32+ 4*i;
+            dataStore.detector.channelNames[i*14 + 9] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            index = 34+ 4*i;
+            dataStore.detector.channelNames[i*14 + 10] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            //blue
+            index = 17+ 3*i;
+            dataStore.detector.channelNames[i*14 + 11] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            index = 18+ 3*i;
+            dataStore.detector.channelNames[i*14 + 12] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+            index = 33+ 4*i;
+            dataStore.detector.channelNames[i*14 + 13] = 'DSC' + ((index<10) ? '0'+index : index) + 'XN00X';
+        }
+
+        // view labels
+        dataStore.detector.views = ['main'];
+
+        //subview info
+        dataStore.detector.subviews = ['HV', 'threshold', 'trigger_request', 'trigger_accept'];
+
+        // how many characters are in the summary view channel names?
+        dataStore.detector.summaryDepth = 0;
+
+        // build up raw data structure
+        createDataStructure();
+    }
+
+    function drawDetector(){
+        // once the HTML is in place, finish setting up visualization.
+
+        var i, X, Y, cellCoords, internalRotation, scale, cellVertices,
+            cellOrder = ['white', 'white', 'white', 'white', 'yellow', 'yellow', 'green', 'green', 'red', 'red', 'red', 'blue', 'blue', 'blue'],
+            internalRotation = [0,0,0,0, -70,-60,135,130, 130,125,130, 5,70,70];
+
+        //generic setup
+        setupDetector();
+
+        scale = 1.2*0.0004*dataStore.detector.height;
+        cellVertices = {
+            'white': [scale*41.5,scale*(71.9), scale*(-41.5),scale*(71.9), scale*(-93),0, scale*(-41.5),scale*(-79.6), scale*41.5,scale*(-79.6), scale*93,0],
+            'red': [scale*37.4,scale*(-87.1), scale*(-51.6),scale*(-83.3), scale*(-101.8),0, scale*(-51.6),scale*(83.3), scale*37.4,scale*(87.1), scale*73.1,0],
+            'blue': [scale*52.6,scale*(-79.4), scale*(-45.1),scale*(-79.4), scale*(-97.6),0, scale*(-45.1),scale*(79.4), scale*52.6,scale*(79.4), scale*99.2,0], 
+            'yellow': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-93),0, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*62.3,scale*47.6],
+            'green': [scale*41.5,scale*(-71.9), scale*(-41.5),scale*(-71.9), scale*(-62.3),scale*47.6, scale*(-41.5),scale*(79.6), scale*41.5,scale*(79.6), scale*93,0]
+        };
+
+        //create vertices for plot:
+        dataStore.detector.cellCoords = {}
+        for(i=0; i<dataStore.detector.channelNames.length; i++){
+
+            dataStore.detector.cellCoords[dataStore.detector.channelNames[i]] = {
+                "vertices": cellVertices[cellOrder[i%14]],
+                "x": generateCoords(i)[0],
+                "y": generateCoords(i)[1],
+                "internalRotation": internalRotation[i%14] + 72*Math.floor(i/14) - 54
+            }
+        }
+
+        // only one view, set and forget:
+        dataStore.detector.currentView = 'main';
+        document.getElementById('mainWrap').classList.remove('hidden');
+        // start with summary trigger accepts displayed
+        manageSubview('trigger_accept', true);
+
+        // set up the cells
+        instantiateCells(0);
+        generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
+
+        repaint();
+    }
+
+    function generateCoords(i){
+        // generate the cell vertex coordinates in their local coordinate system for DESCANT cells.
+
+        var phi = Math.floor(i / 14),
+            grid = 1.2*0.07*dataStore.detector.height,
+            initial = 72,
+            phase = -54,
+            baseCoords = [  
+                // White
+                [Math.sin((initial*phi+phase)/180*Math.PI)*0.8*grid + dataStore.detector.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*0.8*grid +  0.4*dataStore.detector.height],
+                [Math.sin((initial*phi+phase)/180*Math.PI)*1.8*grid + dataStore.detector.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*1.8*grid +  0.4*dataStore.detector.height],
+                [Math.sin((initial*phi+phase)/180*Math.PI)*2.8*grid + dataStore.detector.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*2.8*grid +  0.4*dataStore.detector.height],
+                [Math.sin((initial*phi+phase)/180*Math.PI)*3.8*grid + dataStore.detector.width/2, -Math.cos((initial*phi+phase)/180*Math.PI)*3.8*grid +  0.4*dataStore.detector.height],
+                // Yellow
+                [Math.sin((initial*phi+12+phase)/180*Math.PI)*4.5*grid + dataStore.detector.width/2, -Math.cos((initial*phi+12+phase)/180*Math.PI)*4.5*grid + 0.4*dataStore.detector.height],
+                [Math.sin((initial*phi+27+phase)/180*Math.PI)*4.3*grid + dataStore.detector.width/2, -Math.cos((initial*phi+27+phase)/180*Math.PI)*4.3*grid + 0.4*dataStore.detector.height],
+                // Green
+                [Math.sin((initial*phi+60+phase)/180*Math.PI)*4.5*grid + dataStore.detector.width/2, -Math.cos((initial*phi+60+phase)/180*Math.PI)*4.5*grid + 0.4*dataStore.detector.height],
+                [Math.sin((initial*phi+45+phase)/180*Math.PI)*4.3*grid + dataStore.detector.width/2, -Math.cos((initial*phi+45+phase)/180*Math.PI)*4.3*grid + 0.4*dataStore.detector.height],
+                // Red
+                [Math.sin((initial*phi+36+phase)/180*Math.PI)*1.5*grid + dataStore.detector.width/2, -Math.cos((initial*phi+36+phase)/180*Math.PI)*1.5*grid + 0.4*dataStore.detector.height],
+                [Math.sin((initial*phi+16+phase)/180*Math.PI)*3.4*grid + dataStore.detector.width/2, -Math.cos((initial*phi+16+phase)/180*Math.PI)*3.4*grid + 0.4*dataStore.detector.height],
+                [Math.sin((initial*phi+56+phase)/180*Math.PI)*3.4*grid + dataStore.detector.width/2, -Math.cos((initial*phi+56+phase)/180*Math.PI)*3.4*grid + 0.4*dataStore.detector.height],
+                // Blue
+                [Math.sin((initial*phi+23+phase)/180*Math.PI)*2.5*grid + dataStore.detector.width/2, -Math.cos((initial*phi+23+phase)/180*Math.PI)*2.5*grid + 0.4*dataStore.detector.height],
+                [Math.sin((initial*phi+50+phase)/180*Math.PI)*2.5*grid + dataStore.detector.width/2, -Math.cos((initial*phi+50+phase)/180*Math.PI)*2.5*grid + 0.4*dataStore.detector.height],
+                [Math.sin((initial*phi+36+phase)/180*Math.PI)*3.4*grid + dataStore.detector.width/2, -Math.cos((initial*phi+36+phase)/180*Math.PI)*3.4*grid + 0.4*dataStore.detector.height]
+            ]
+
+        return baseCoords[i%14]
+    }
+</script>

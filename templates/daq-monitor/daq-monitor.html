@@ -1,0 +1,51 @@
+<link rel="stylesheet" href="daq-monitor.css">
+<script src='daq-monitor.js' type="text/javascript"></script>
+
+<template id='daq-monitor'>
+    <div class='section-wrapper'>
+        <div class='col-md-12 pan' id='masterStats'>
+            <h2>Master Stats</h2>
+            <div id='collectorsHisto'></div>
+        </div>
+    </div>
+
+    <div class='section-wrapper'>
+        <div class='col-md-12 pan' id='collectorsWrap'>
+            <h2>Collectors</h2>
+            <label for='collectorPicker'>Collector: </label>
+            <select id='collectorPicker' onchange='repaint()'></select>
+            <div id='digitizersHisto'></div>
+        </div>
+    </div>
+
+    <div class='section-wrapper'>
+        <div class='col-md-12 pan'>
+            <h2>Digitizers</h2>
+            <label for='digiCollectorPicker'>Collector: </label>
+            <select id='digiCollectorPicker' onchange='updateDigitizerList("digiCollectorPicker"); repaint()'></select>
+            <label for='digitizerPicker'>Digitizer: </label>
+            <select id='digitizerPicker' onchange='repaint()'></select>
+            <div id='channelsHisto'></div>
+        </div>
+    </div>
+
+    <div class='section-wrapper'>
+        <div class='col-md-12 pan'>
+            <h2>Detectors</h2>
+            <div id='detectorsHisto'></div>
+        </div>
+    </div>
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+

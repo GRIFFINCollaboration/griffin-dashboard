@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <!--libraries-->
+        <script src='scripts/HTMLImports.min.js' type="text/javascript"></script>
+        <script src='scripts/mustache.js' type="text/javascript"></script>
+        <script src="scripts/jquery1-11-3.min.js" type="text/javascript"></script>
+
+        <!--helpers-->
+        <script src='scripts/dataStore.js' type="text/javascript"></script>
+        <script src='scripts/helpers.js' type="text/javascript"></script>
+        <script src='scripts/heartbeat.js' type="text/javascript"></script>
+
+        <!--style-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="scripts/bootstrap3-3-5.min.js" type="text/javascript"></script>
+
+        <!--html imports-->
+        <link id='demo-template' rel="import" href="templates/demo/demo-template.html">
+
+    </head>
+
+
+    <body>
+        <div id='demo-target' class='section-wrapper'><!-- our markup is going to get injected here --></div>
+
+        <script>
+
+            // do most everything inside this event listener; ie wait until all your templates have arrived before trying to use them!
+            window.addEventListener('HTMLImportsLoaded', function(e) {
+
+                ///////////////////////////
+                //handle templates
+                ///////////////////////////
+                templates = ['demo-template']; //add more templates to this list as needed - note they are named the same as the corresponding <link> elements above, which is also the same as the id of the <template> tag they correspond to.
+                dataStore.templates = prepareTemplates(templates);
+
+                //inject templates
+                document.getElementById('demo-target').innerHTML = Mustache.to_html(
+                    dataStore.templates['demo-template'], 
+                    {
+                        'mustacheExample': 'img/demo.svg'
+                    }
+                );
+
+                ////////////////////////////
+                //initiate heartbeat
+                ////////////////////////////
+
+                dataStore.heartbeat.callback = dataUpdate;
+
+                //this list of url's will get queried every update
+                dataStore.heartbeat.scriptQueries = ['http://'+dataStore.host+'/?cmd=jcopy&odb0=Experiment&encoding=json-p-nokeys&callback=ODBfetchCallback']
+                heartbeat();
+            });
+
+        </script>
+    </body>

@@ -1,0 +1,286 @@
+<link rel="stylesheet" href="clock-control.css">
+
+<template id='clock-control'>
+    <div class="panel-group" id="accordion{{col}}" role="tablist" aria-multiselectable="true">
+        {{#clocks}}
+            <div class="panel panel-default div-disable" id='{{.}}Wrap'>
+                <div class="panel-heading" role="tab" id="heading{{.}}">
+                    <span class="panel-title">
+                        <h4 class='inline'>
+                            <a role="button" data-toggle="collapse" data-parent="#accordion{{col}}" href="#collapse{{.}}" aria-expanded="false" aria-controls="collapse{{.}}" class='btn btn-info'>{{.}}</a>
+                        </h4>
+                        <span id='host{{.}}'>No Host</span>
+                        <div>
+                            <input type='radio' name='config{{.}}' value='master' id='masterToggle{{.}}' onchange='changeConfig("{{.}}")'></input>
+                            <label for='masterToggle{{.}}' class='inline'>Master</label>
+                            <input type='radio' name='config{{.}}' value='follower' id='followerToggle{{.}}' onchange='changeConfig("{{.}}")'></input>
+                            <label for='followerToggle{{.}}'>Follower</label>
+                        </div>
+                    </span>
+                </div>
+                <div id="collapse{{.}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{.}}">
+                    <div class="panel-body" id='content{{.}}'>
+
+                    </div>
+                </div>
+            </div>
+        {{/clocks}}
+    </div>
+</template>
+
+<script>
+
+    function setupClocks(){
+        // some dom-free config and parameters for the clocks
+        dataStore.clockParameters = {
+            summarySuffixes: [  //element id suffixes for entries in the summary table
+                'Config',
+                'syncSrc',
+                'clockSrc',
+                'refClock',
+                'lemoClock',
+                'lemoSync',
+                'esataClock',
+                'esataSync',
+                'lastEsata'
+            ],
+            csacSuffixes: [    //element id suffixes for entries in the csac table
+                'CSACPower',
+                'CSACStatus',
+                'CSACMode',
+                'CSACAlarm',
+                'CSACUnitPower',
+                'CSACTuningVoltage',
+                'CSACLaserCurrent',
+                'CSACHeaterPower',
+                'CSACTemperature',
+                'CSACSerial',
+                'CSACFirmware'
+            ],
+            hiChan: [11,15,19,23,27,39,31,35],  // indices for cycles high for ESATA0-5, left lemo, right lemo (note weird order...)
+            loChan: [12,16,20,24,28,40,32,36],
+            channelSuffixes: ['ESATA0', 'ESATA1', 'ESATA2', 'ESATA3', 'ESATA4', 'LeftLEMO', 'RightLEMO', 'ESATA5'],
+            masterFreq: 100,    //master steps down from 200MHz in the spec, but seems to be 100 in practice?  TBD.
+            CSACunit: ['','','','','',' VDC',' mA',' mW',' C','','']
+        };
+    }
+
+    function setupDetail(clockName){
+        // set up the named clock's details as a follower or master depending on its toggle
+
+        var mode = document.querySelector('input[name="config'+ clockName +'"]:checked').value; 
+
+        document.getElementById('content' + clockName).innerHTML = Mustache.to_html(
+            dataStore.templates[mode+'-detail'], 
+            {
+                'clockName': clockName,
+                'eSATAindices': [0,1,2,3,4,5]
+            }
+        );
+        
+    }
+
+    function populateInfo(){
+        // write the clock contents sorted into dataStore.clocks onload into the dom.
+
+        var i, j, name, value, isOn, stepdown,
+            isMaster = false,
+            masterOutputFrequency;
+
+        for(i=0; i<dataStore.clocks.length; i++){
+            name = dataStore.clocks[i].title;
+            masterOutputFrequency = dataStore.clockParameters.masterFreq/(parseInt(dataStore.clocks[i].table.Variables.Output[11],10)+1);
+
+            //allow interactions with clocks found in the odb
+            document.getElementById(name + 'Wrap').classList.remove('div-disable');
+
+            //set host
+            document.getElementById('host' + name).innerHTML = dataStore.clocks[i].table.Settings.Devices.SCS2001.Device.split('.')[0];
+
+            //master / follower toggle (must do first, sets up html)
+            if(dataStore.clocks[i].table.Variables.Output[1] == 1){
+                isMaster = true;
+                document.getElementById('masterToggle' + name).checked = true;
+            } else{
+                document.getElementById('followerToggle' + name).checked = true;
+            }
+            setupDetail(name)
+
+            //set summary parameters
+            for(j=1; j<9; j++){
+                value = humanReadableClock(j, parseInt(dataStore.clocks[i].table.Variables.Output[j],10) );
+                if(j == 4 && isMaster){
+                    if (value == 'LEMO'){
+                        document.getElementById(name + 'LEMOref').checked = true;
+                    }
+                } else {
+                    document.getElementById(name + dataStore.clockParameters.summarySuffixes[j-1]).innerHTML = value;
+                }
+            }
+
+            // decode which channels are on / off:
+            for(j=0; j<6; j++){
+                isOn = (0xF << 4*j) & parseInt(dataStore.clocks[i].table.Variables.Output[0], 10);
+                if(isOn){
+                    document.getElementById(name + 'eSATA' + j + 'Active').checked = true;
+                } else{
+                    document.getElementById(name + 'eSATA' + j + 'Active').checked = false;
+                }
+            }
+
+            //report bipass state of each channel (yes, LEMOs got stuck in between the 5th and 6th eSATA channels...)
+            for(j=0; j<5; j++){
+                document.getElementById(name + 'bypassESATA' + j).innerHTML = 'Bypass: ' + humanReadableClock(13 + 4*j, parseInt(dataStore.clocks[i].table.Variables.Output[13+4*j],10) );
+            }
+            document.getElementById(name + 'bypassLeftLEMO').innerHTML = 'Bypass: ' + humanReadableClock(33, parseInt(dataStore.clocks[i].table.Variables.Output[41],10) );
+            document.getElementById(name + 'bypassRightLEMO').innerHTML = 'Bypass: ' + humanReadableClock(37, parseInt(dataStore.clocks[i].table.Variables.Output[33],10) );
+            document.getElementById(name + 'bypassESATA5').innerHTML = 'Bypass: ' + humanReadableClock(41, parseInt(dataStore.clocks[i].table.Variables.Output[37],10) );
+
+            // master / follower specific tasks
+            if(isMaster){
+                // time since sync
+                document.getElementById(name + 'lastNIM').innerHTML = humanReadableClock(10,parseInt(dataStore.clocks[i].table.Variables.Output[10],10));
+
+                document.getElementById(name + 'inputFrequency').innerHTML = '10 MHz';
+
+                //report the frequency after stepdown of each master channel; set slider to stepdown corresponding to first channel:
+                for(j=0; j<8; j++){
+                    stepdown = (parseInt(dataStore.clocks[i].table.Variables.Output[dataStore.clockParameters.hiChan[j]],10) + parseInt(dataStore.clocks[i].table.Variables.Output[dataStore.clockParameters.loChan[j]],10)) / 2
+                    if(document.getElementById(name + 'bypass' + dataStore.clockParameters.channelSuffixes[j]).innerHTML == 'Bypass: No')
+                        document.getElementById(name + 'outputFreq' + dataStore.clockParameters.channelSuffixes[j]).innerHTML = (dataStore.clockParameters.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out';
+                    else
+                        document.getElementById(name + 'outputFreq' + j).innerHTML = '';
+                }
+                document.getElementById(name + 'frequencySlider').value = 11 - parseInt(dataStore.clocks[i].table.Variables.Output[11],10);
+                document.getElementById(name + 'frequencySliderLabel').innerHTML = masterOutputFrequency + ' MHz';
+
+                // csac parameters
+                for(j=43; j<54; j++){
+                    value = humanReadableClock(j, parseFloat(dataStore.clocks[i].table.Variables.Output[j]).toFixed( (dataStore.clockParameters.CSACunit[j-43] == '')? 0 :2 ) );
+                    document.getElementById(name + dataStore.clockParameters.csacSuffixes[j-43]).innerHTML = value + dataStore.clockParameters.CSACunit[j-43];
+                }
+
+            } else {
+                // no ref clock for followers
+                document.getElementById(name + 'refClock').innerHTML = 'N/A';
+
+                // time since last sync
+                document.getElementById(name + 'lastEsata').innerHTML = humanReadableClock(9,parseInt(dataStore.clocks[i].table.Variables.Output[9],10));
+            }
+        }
+    }
+
+    function humanReadableClock(i, v){
+        //translate clock parameter i of value v into something a human can comprehend
+        //i corresponds to index in the ODB's Variables.Output for the clock in question
+
+        if(i == 1)
+            return (parseInt(v,10)) ? 'Master' : 'Follower';
+        else if(i == 2)
+            return (parseInt(v,10)) ? 'LEMO' : 'eSATA';
+        else if(i == 3)
+            return (parseInt(v,10)) ? 'LEMO' : 'eSATA';
+        else if(i == 4)
+            return (parseInt(v,10)) ? 'LEMO' : 'Atomic Clock'
+        else if(i>4 && i<9)
+            return (parseInt(v,10)) ? 'Present' : 'Absent';
+        else if(i==9 || i==10)
+            return Math.floor(v/3600) + ' h: ' + Math.floor((v%3600)/60) + ' m';
+        else if(i==13 || i==17 || i==21 || i==25 || i==29 || i==33 || i==37 || i==41)
+            return (parseInt(v,10)) ? 'Yes' : 'No';
+        else if(i==43)
+            return (parseInt(v,10)) ? 'Up' : 'Down';
+        else
+            return v;
+    }
+
+    function changeConfig(clockName){
+        // change the master / follower setting for the named clock in the ODB, and reload.
+
+        var configSetting = document.querySelector('input[name="config' + clockName + '"]:checked').value == 'master' ? 1 : 0,
+            URL = 'http://' + dataStore.host + '?cmd=jset&odb=/Equipment/' + clockName + '/Variables/Output[1]&value=' + configSetting;
+
+        promiseScript(URL).then(
+            reloadPage
+        );
+
+    }
+
+    function writeOutputs(clockName){
+        // write the output channel info to the odb and reload
+
+        var clockIndex = findClock(clockName),
+            arrayString = dataStore.clocks[clockIndex].table.Variables.Output.join(','),
+            URL = 'http://' + dataStore.host + '?cmd=jset&odb=/Equipment/' + clockName + '/Variables/Output[*]&value=' + arrayString;
+
+            promiseScript(URL).then(
+                reloadPage
+            );
+    }
+
+    function writeRefClock(clockName){
+        // write the ref clock state (atomic or lemo) of a master channel to the odb and reload
+
+        var reference = document.querySelector('input[name="' + clockName + 'refClock"]:checked').value,
+            URL = 'http://' + dataStore.host + '?cmd=jset&odb=/Equipment/' + clockName + '/Variables/Output[4]&value=' + reference;
+
+        promiseScript(URL).then(
+            reloadPage
+        );
+
+    }
+
+    function manageOutputFrequency(clockName){
+        // update the master output frequency in the display and dataStore based on slider position
+
+        var slider = document.getElementById(clockName + 'frequencySlider'),
+            stepdown = -(slider.valueAsNumber - parseInt(slider.max,10)-1),
+            freqOut = dataStore.clockParameters.masterFreq / (1+stepdown), 
+            clockIndex = findClock(clockName), 
+            i;
+
+        //update ui and dataStore
+        document.getElementById(clockName + 'frequencySliderLabel').innerHTML = freqOut.toFixed(1) + ' MHz';
+        for(i=0; i<8; i++){
+            document.getElementById(clockName + 'outputFreq' + dataStore.clockParameters.channelSuffixes[i]).innerHTML = freqOut.toFixed(1) + ' MHz out';
+
+            dataStore.clocks[clockIndex].table.Variables.Output[11+4*i] = stepdown;
+            dataStore.clocks[clockIndex].table.Variables.Output[12+4*i] = stepdown;
+        }
+
+        //enable write out
+        document.getElementById(clockName + 'writeOutputs').classList.remove('disabled');
+
+    }
+
+    function toggleChannels(clockName){
+        // update the status of the on / off switches for the named clock channels
+
+        var i, state,
+            statusCode = 0;
+
+        for(i=0; i<6; i++){
+            state = document.getElementById(clockName + 'eSATA' + i + 'Active').checked ? 0xF : 0;
+            statusCode = statusCode | (state << 4*i);
+        }
+
+        dataStore.clocks[findClock(clockName)].table.Variables.Output[0] = statusCode;
+
+        //enable write out
+        document.getElementById(clockName + 'writeOutputs').classList.remove('disabled');
+    }
+
+    function findClock(name){
+        var i;
+
+        //determine the index this clock is stored at in dataStore.clocks
+        for(i=0; i< dataStore.clocks.length; i++){
+            if(dataStore.clocks[i].title == name){
+                return i
+            }
+        }
+
+        return -1;
+    }
+
+</script>

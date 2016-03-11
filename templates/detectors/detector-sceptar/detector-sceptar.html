@@ -1,0 +1,116 @@
+<link rel="stylesheet" href="../detector.css">
+
+<template id='detector-sceptar'>
+    <div class='nav-row'>
+        <div class="btn-group" role="group" id="view-nav"></div>
+    </div>
+
+    <div id='visualizationcollection'>
+        {{#views}}
+            <div id='{{.}}Wrap' class='visWrap hidden'></div>
+        {{/views}}
+        <form id='scalecontrol' onchange='managePlotScale()'>
+            <label for='linScale'>Linear</label>
+            <input id='linScale' name='plotScale' value='lin' type='radio' checked></input>
+            <label for='logScale' class='uiRow'>Log</label>
+            <input id='logScale' name='plotScale' value='log' type='radio'></input>
+            <label for='scaleMin', class='uiRow'>Min</label>
+            <input id='scaleMin', type='number' min='0' step='1'></input>
+            <label for='scaleMax', class='uiRow'>Max</label>
+            <input id='scaleMax', type='number' min='0' step='1'></input>
+        </form>
+    </div>
+
+    <img id='errorPattern' src='img/static.gif' class='hidden'></img>
+</template>
+
+<script>
+    function parameterizeDetector(){
+        // determine all the parameters needed for SCEPTAR's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
+
+        var i, j, k;
+
+        //build up dataStore.detector.channel names
+        dataStore.detector.channelNames = [];
+        for(i=1; i<21; i++){
+            dataStore.detector.channelNames[i-1] = 'SEP' + ((i<10)?'0'+i : i) + 'XN00X';
+        }
+
+        // view labels
+        dataStore.detector.views = ['main'];
+
+        //subview info
+        dataStore.detector.subviews = ['HV', 'threshold', 'trigger_request', 'trigger_accept'];
+
+        // how many characters are in the summary view channel names?
+        dataStore.detector.summaryDepth = 0;
+
+        // build up raw data structure
+        createDataStructure();
+    }
+
+    function drawDetector(){
+        // once the HTML is in place, finish setting up visualization.
+
+        var i, X, Y;
+
+        //generic setup
+        setupDetector();
+
+        //////////////////////////////////////
+        //SCEPTAR specific drawing parameters
+        //////////////////////////////////////
+        dataStore.detector.upstreamCenterX = 0.25*dataStore.detector.width;
+        dataStore.detector.upstreamCenterY = 0.4*dataStore.detector.height;
+        dataStore.detector.downstreamCenterX = 0.75*dataStore.detector.width;
+        dataStore.detector.downstreamCenterY = 0.4*dataStore.detector.height;
+        dataStore.detector.spokeLength = 0.3*dataStore.detector.height;
+        dataStore.detector.outerVertexX = [0, Math.sin(72/180*Math.PI)*dataStore.detector.spokeLength, Math.sin(144/180*Math.PI)*dataStore.detector.spokeLength, Math.sin(216/180*Math.PI)*dataStore.detector.spokeLength, Math.sin(288/180*Math.PI)*dataStore.detector.spokeLength];
+        dataStore.detector.outerVertexY = [-dataStore.detector.spokeLength, -Math.cos(72/180*Math.PI)*dataStore.detector.spokeLength, -Math.cos(144/180*Math.PI)*dataStore.detector.spokeLength, -Math.cos(216/180*Math.PI)*dataStore.detector.spokeLength, -Math.cos(288/180*Math.PI)*dataStore.detector.spokeLength];
+        dataStore.detector.innerVertexX = [0, Math.sin(72/180*Math.PI)*dataStore.detector.spokeLength/2, Math.sin(144/180*Math.PI)*dataStore.detector.spokeLength/2, Math.sin(216/180*Math.PI)*dataStore.detector.spokeLength/2, Math.sin(288/180*Math.PI)*dataStore.detector.spokeLength/2];
+        dataStore.detector.innerVertexY = [-dataStore.detector.spokeLength/2, -Math.cos(72/180*Math.PI)*dataStore.detector.spokeLength/2, -Math.cos(144/180*Math.PI)*dataStore.detector.spokeLength/2, -Math.cos(216/180*Math.PI)*dataStore.detector.spokeLength/2, -Math.cos(288/180*Math.PI)*dataStore.detector.spokeLength/2];
+
+        //create vertices for plot:
+        dataStore.detector.cellCoords = {}
+        for(i=0; i<dataStore.detector.channelNames.length; i++){
+            if(i<10)
+                X = dataStore.detector.upstreamCenterX;
+            else
+                X = dataStore.detector.downstreamCenterX;
+            Y = dataStore.detector.upstreamCenterY;
+
+            if(i%10<5){
+                points = [  dataStore.detector.outerVertexX[i%10], dataStore.detector.outerVertexY[i%10], 
+                            dataStore.detector.outerVertexX[(i%10 + 1)%5], dataStore.detector.outerVertexY[(i%10 + 1)%5], 
+                            dataStore.detector.innerVertexX[(i%10 + 1)%5], dataStore.detector.innerVertexY[(i%10 + 1)%5], 
+                            dataStore.detector.innerVertexX[i%10], dataStore.detector.innerVertexY[i%10]
+                        ];
+            } else{
+                points = [  dataStore.detector.innerVertexX[i%10 - 5], dataStore.detector.innerVertexY[i%10 - 5], 
+                            dataStore.detector.innerVertexX[(i%10 - 4)%5], dataStore.detector.innerVertexY[(i%10 - 4)%5], 
+                            0, 0
+                        ];
+            }
+
+            dataStore.detector.cellCoords[dataStore.detector.channelNames[i]] = {
+                "vertices": points,
+                "x": X,
+                "y": Y,
+                "internalRotation": 0
+            }
+        }
+
+
+        // only one view, set and forget:
+        dataStore.detector.currentView = 'main';
+        document.getElementById('mainWrap').classList.remove('hidden');
+        // start with summary trigger accepts displayed
+        manageSubview('trigger_accept', true);
+
+        // set up the cells
+        instantiateCells(0);
+        generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
+
+        repaint();
+    }
+</script>

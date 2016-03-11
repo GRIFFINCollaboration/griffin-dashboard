@@ -1,0 +1,434 @@
+<link rel="stylesheet" href="filter-builder.css">
+
+<template id='filter-builder'>
+    <div class='pan top-pan'>
+        <h4 id='currentActiveFilter'></h4>
+
+        <div>
+            <label for='filterName'>Current Displayed Filter:</label>
+            <input type='text' id='filterName' class='wideText'></input>
+            <button class='btn btn-info' onclick='writeNewFilter()'>Save Filter Definition</button>
+            <button class='btn btn-success' onclick='writeNewFilter(true)'>Save & Apply Filter Definition</button>
+        </div>
+
+        <div>
+            <label for='filterMenu'>Load / Delete Filter:</label>
+            <select id='filterMenu'></select>
+            <button class='btn btn-warning' onclick='switchFilter()'>Load</button>
+            <button class='btn btn-danger' onclick='deleteFilter()'>Delete</button>
+        </div>
+    </div>
+
+    <div>
+        <div class='pan' id='allowedDetectors'>
+            <h4>Allowed Detectors</h4>
+            <label for="allowDANTE">DANTE</label>
+            <input value="DA" class="allowed-det-check" id="allowDANTE" type="checkbox" onchange='requestNewFilterName()'></input>
+            <label for="allowDESCANT">DESCANT</label>
+            <input value="DS" class="allowed-det-check" id="allowDESCANT" type="checkbox" onchange='requestNewFilterName()'></input>
+            <label for="allowGRIFFIN">GRIFFIN</label>
+            <input value="GR" class="allowed-det-check" id="allowGRIFFIN" type="checkbox" onchange='requestNewFilterName()'></input>
+            <label for="allowPACES">PACES</label>
+            <input value="PA" class="allowed-det-check" id="allowPACES" type="checkbox" onchange='requestNewFilterName()'></input>
+            <label for="allowSCEPTAR">SCEPTAR</label>
+            <input value="SE" class="allowed-det-check" id="allowSCEPTAR" type="checkbox" onchange='requestNewFilterName()'></input>
+            <label for="allowZDS">ZDS</label>
+            <input value="ZD" class="allowed-det-check" id="allowZDS" type="checkbox" onchange='requestNewFilterName()'></input>
+        </div>
+
+        <div>
+            <h4>Filter Logic</h4>
+            <div id='logic-wrap'></div>
+            <button class='btn btn-info' onclick='addNewOR();'>OR new condition</button>
+        </div>
+    </div>
+</template>
+
+<script>
+    ////////////////
+    // setup
+    ////////////////
+
+    function setupFilter(){
+        // start initial setup
+
+        // get the ODB filters dir:
+        fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/Filter&encoding=json-p-nokeys&callback=processFilter');
+
+    }
+
+    function processFilter(payload){
+        // finish initial setup after active filter has arrived
+
+        dataStore.filter = {};              // place to park filter info on the dataStore
+        dataStore.ODB.Filter = payload;
+        dataStore.filter.orIndex = 0;       // monotonically increasing counter to create unique IDs for new OR blocks
+        dataStore.filter.nRows = [];        // array of monotonic counters for number of rows inserted into OR block; OR block # == array index. 
+
+        setTitle(dataStore.ODB.Filter.Current);
+
+        // populate the current filter
+        loadFilter(dataStore.ODB.Filter.Current);
+        buildFilterMenu();
+    }
+
+    //////////////////////////
+    // DOM manipulations
+    //////////////////////////
+
+    function addNewOR(){
+        // add a new OR block to the current filter
+
+        var wrap = document.createElement('div');
+        wrap.setAttribute('class', 'or-block');
+        wrap.setAttribute('id', 'filterCondition' + dataStore.filter.orIndex);
+        wrap.innerHTML = Mustache.to_html(
+            dataStore.templates['orBlock'], 
+            {  
+                "orNumber": dataStore.filter.orIndex
+            }
+        );
+        document.getElementById('logic-wrap').appendChild(wrap);
+
+        dataStore.filter.nRows[dataStore.filter.orIndex] = 0;
+        dataStore.filter.orIndex++;
+        requestNewFilterName()
+    }
+
+    function deleteOR(orNumber){
+        // delete the indexed OR block
+
+        deleteNode('filterCondition' + orNumber);
+        requestNewFilterName()
+    }
+
+    function addNewAND(orIndex){
+        // add a new AND row to the indexed OR block
+
+        var table = document.getElementById('filterContent'+orIndex),
+            row = document.createElement('div');
+        row.setAttribute('class', 'col-md-12 and-row');
+        row.setAttribute('id', 'ANDrow' + orIndex + dataStore.filter.nRows[orIndex])
+        row.innerHTML = Mustache.to_html(
+            dataStore.templates['andRow'], 
+            {  
+                "orNumber": orIndex,
+                "andNumber": dataStore.filter.nRows[orIndex],
+                "detType": dataStore.detectorTypes
+            }
+        );
+        table.appendChild(row);
+
+        dataStore.filter.nRows[orIndex]++;
+        requestNewFilterName()
+    }
+
+    function deleteAND(orNumber, andNumber){
+        // delete the indexed AND row in the indexed OR block
+
+        deleteNode('ANDrow' + orNumber + andNumber);
+        requestNewFilterName()
+    }
+
+    /////////////////////
+    // data loading
+    /////////////////////
+
+    function changeCounting(orNumber, andNumber){
+        // update the UI to reflect whether the indexed row is for singles, coincidences or prescale
+
+        var counting = selected('filterType' + orNumber + andNumber);
+
+        document.getElementById('subconfig'+counting+'0' + orNumber + andNumber).classList.remove('hidden');
+        document.getElementById('subconfig'+counting+'1' + orNumber + andNumber).classList.remove('hidden');
+
+        if(counting == 'S'){
+            document.getElementById('subconfigC0' + orNumber + andNumber).classList.add('hidden');
+            document.getElementById('subconfigC1' + orNumber + andNumber).classList.add('hidden'); 
+            document.getElementById('subconfigP0' + orNumber + andNumber).classList.add('hidden');
+            document.getElementById('subconfigP1' + orNumber + andNumber).classList.add('hidden');            
+        } else if(counting == 'C'){
+            document.getElementById('subconfigS0' + orNumber + andNumber).classList.add('hidden');
+            document.getElementById('subconfigS1' + orNumber + andNumber).classList.add('hidden'); 
+            document.getElementById('subconfigP0' + orNumber + andNumber).classList.add('hidden');
+            document.getElementById('subconfigP1' + orNumber + andNumber).classList.add('hidden');            
+        } else if(counting == 'P'){
+            document.getElementById('subconfigC0' + orNumber + andNumber).classList.add('hidden');
+            document.getElementById('subconfigC1' + orNumber + andNumber).classList.add('hidden'); 
+            document.getElementById('subconfigS0' + orNumber + andNumber).classList.add('hidden');
+            document.getElementById('subconfigS1' + orNumber + andNumber).classList.add('hidden');            
+        }
+
+        requestNewFilterName()
+    }
+
+    function loadFilter(filterName){
+        // populate the UI with whatever filter definition is requested
+
+        var i=0, j,
+            conditions;
+
+        // dump previous filter:
+        document.getElementById('logic-wrap').innerHTML = '';
+
+        if(filterName == ''){
+            window.alert("There doesn't seem to be a valid filter name set. In the ODB, look in /Filter/Current, and make sure this is set to one of the cycles listed in /Filter/Filters.")
+        }
+
+        while(dataStore.ODB.Filter.Filters[filterName]['orCondition'+i]){
+            addNewOR()
+            
+            conditions = dataStore.ODB.Filter.Filters[filterName]['orCondition'+i];
+            if(Array.isArray(conditions)){
+                for(j=0; j<conditions.length; j++)
+                    loadAndRow(dataStore.filter.orIndex-1, conditions[j])
+            }
+            else
+                loadAndRow(dataStore.filter.orIndex-1, conditions)
+
+            document.getElementById('coincWindow'+(dataStore.filter.orIndex-1)).value = dataStore.ODB.Filter.Filters[filterName]['coincWindow'+i];
+
+            i++;
+
+        }
+
+        document.getElementById('filterName').value = filterName;
+        setAllowedDetectors(dataStore.ODB.Filter.Filters[filterName].EnabledDetTypes)
+    }
+
+    function switchFilter(){
+        // switch the current filter based on the select menu
+
+        var newFilter = selected('filterMenu', true);
+        loadFilter(newFilter);
+    }
+
+    function buildFilterMenu(){
+        // populate the filter dropdown menu with whatever we found in the odb
+
+        var i, option,
+            keys = Object.keys(dataStore.ODB.Filter.Filters),
+            select = document.getElementById('filterMenu');
+
+        for(i=0; i<keys.length; i++){
+            option = document.createElement('option');
+            option.innerHTML = keys[i];
+            select.appendChild(option);
+        }
+    }
+
+    function loadAndRow(orIndex, condition){
+        // parse the string <condition> and add it as an and row to the indexed or block
+
+        var detector, counting, multiplicity, windowSize, prescale,
+            tokens = condition.split('-'),
+            detectorPicker, countingPicker, multiIn, windowIn, prescaleIn;
+
+        detector = tokens[0];
+        counting = tokens[1];
+        if(counting == 'C'){
+            multiplicity = parseInt(tokens[2],10);
+            windowSize = parseInt(tokens[3],10);
+        } else if(counting == 'P'){
+            prescale = parseInt(tokens[2],10);
+        }
+
+        addNewAND(orIndex);
+
+        detectorPicker = document.getElementById('detectorSelect' + orIndex + (dataStore.filter.nRows[orIndex] - 1) );
+        countingPicker = document.getElementById('filterType' + orIndex + (dataStore.filter.nRows[orIndex] - 1) );
+        multiIn = document.getElementById('coincConfigInput0' + orIndex + (dataStore.filter.nRows[orIndex] - 1) );
+        windowIn = document.getElementById('coincConfigInput1' + orIndex + (dataStore.filter.nRows[orIndex] - 1) );
+        prescaleIn = document.getElementById('prescaleConfigInput0' + orIndex + (dataStore.filter.nRows[orIndex] - 1) );
+
+        detectorPicker.value = detector;
+        countingPicker.value = counting;
+        countingPicker.onchange();
+
+        if(counting == 'C'){
+            multiIn.value = multiplicity;
+            windowIn.value = windowSize;
+        } else if(counting == 'P'){
+            prescaleIn.value = prescale;
+        }
+
+    }
+
+    function setTitle(title){
+        // update the title of the current filter from what's been pulled from the odb
+
+        document.getElementById('currentActiveFilter').innerHTML = 'Current Applied Filter: ' + title;
+        document.getElementById('filterName').value = title;
+    }
+
+    function setAllowedDetectors(encoding){
+        // set the checkboxes in the allowed detectors panel based on a string encoding as found in EnabledDetTypes
+
+        if(!encoding) return; // not all filters currently have this attribute...
+
+        var detectors = encoding.split('-'),
+            i, checkbox;
+
+        for(i=0; i<detectors.length; i++){
+            checkbox = document.querySelector('div#allowedDetectors input[value='+detectors[i]+']');
+            checkbox.checked = true;
+        }
+    }
+
+    function requestNewFilterName(){
+        //when something changes in the filter definition, remind the user to change the name of the filter
+
+        var nameField = document.getElementById('filterName'),
+            currentName = nameField.value;
+
+        if(dataStore.ODB.Filter.Filters.hasOwnProperty(currentName))
+            nameField.value = 'my-new-filter';
+    }
+
+    ///////////////////////
+    // ODB writing
+    ///////////////////////
+
+    function writeNewFilter(apply){
+        // write new filter to the odb
+        // note that since we can only write one thing at a time, and must create the variables in a separate operation first,
+        // the synchronous order of operations here is important...
+
+        var filterName = document.getElementById('filterName').value,
+            orBlocks = document.getElementById('logic-wrap').getElementsByClassName('or-block'),
+            orIndex, andIndex,
+            i, andRows, 
+            filterEncoding,
+            detectorType, countingType, multiplicity, windowSize, prescale,
+            multiIn, prescaleIn, windowIn;
+
+        // create request URLs
+        dataStore.filter.createFilterRequest = 'http://' + dataStore.host + '?cmd=jcreate&';
+        for(i=0; i<orBlocks.length; i++){
+            dataStore.filter.createFilterRequest += 'odb' + (2*i) + '=/Filter/Filters/' + filterName + '/orCondition' + i + '&type' + (2*i) + '=12&strlen' + (2*i) + '=32&arraylen'+ (2*i) +'='+orBlocks[i].getElementsByClassName('and-row').length+'&';
+            dataStore.filter.createFilterRequest += 'odb' + (2*i + 1) + '=/Filter/Filters/' + filterName + '/coincWindow' + i + '&type' + (2*i + 1) + '=7&';
+        }
+        dataStore.filter.createFilterRequest += 'odb' + (2*i) + '=/Filter/Filters/' + filterName + '/EnabledDetTypes&type' + (2*i)  + '=12';
+        dataStore.filter.createFilterRequest += '&encoding=json&callback=populateFilter'
+        // then set the values in the array
+        dataStore.filter.setFilterStepRequests = [];
+        for(i=0; i<orBlocks.length; i++){
+            orIndex = parseInt(orBlocks[i].id.slice(15), 10);
+            andRows = orBlocks[i].getElementsByClassName('and-row');
+
+            // filter encodings and coincidence windows
+            filterEncoding = '';
+            for(j=0; j<andRows.length; j++){
+                andIndex = parseInt(andRows[j].id.slice(6 + (''+orIndex).length), 10);
+                multiIn = document.getElementById('coincConfigInput0' + orIndex + andIndex );
+                windowIn = document.getElementById('coincConfigInput1' + orIndex + andIndex );
+                prescaleIn = document.getElementById('prescaleConfigInput0' + orIndex + andIndex );
+
+                detectorType = selected('detectorSelect' + orIndex + andIndex);
+                countingType = selected('filterType' + orIndex + andIndex);
+                multiplicity = multiIn.value;
+                windowSize = windowIn.value;
+                prescale = prescaleIn.value;
+
+                if(j>0)
+                    filterEncoding += ',';
+
+                filterEncoding += detectorType + '-' + countingType + '-';
+                if(countingType == 'S')
+                    filterEncoding += '1';
+                else if(countingType == 'C'){
+                    filterEncoding += multiplicity + '-';
+                    filterEncoding += windowSize
+                } else if(countingType == 'P')
+                    filterEncoding += prescale
+            }
+
+            // different syntax to set one thing versus an array of things...
+            if(andRows.length == 1)
+                dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/orCondition' + i + '&value=' + filterEncoding);
+            else
+                dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/orCondition' + i + '[*]&value=' + filterEncoding);
+
+            //inter-detector coincidence window width:
+            dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/coincWindow' + i + '&value=' + document.getElementById('coincWindow'+orIndex).value);
+        }
+
+        // allowed detectors encoding:
+        dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/EnabledDetTypes&value=' + parseAllowedDetectors());
+
+        // prepare rquest to apply filter
+        if(apply)
+            dataStore.filter.applyFilterRequest = 'http://' + dataStore.host + '?cmd=jset&odb=/Filter/Current&value=' + filterName
+
+        // sets off a chain of callbacks to delete -> recreate -> populate
+        dataStore.filter.applyOnWrite = apply;
+        promiseScript(generateDeletionURL(filterName, 'createODBstructure'))
+    }
+
+    function parseAllowedDetectors(){
+        // return the encoded strung describing the allowed detectors
+
+        var detectors = document.getElementById('allowedDetectors').getElementsByTagName('input'),
+            encoded = '',
+            i;
+
+        for(i=0; i<detectors.length; i++){
+            if(detectors[i].checked){
+                if (encoded!='')
+                    encoded += '-';
+                encoded += detectors[i].value;
+            }
+        }
+
+        return encoded;
+    }
+
+    function generateDeletionURL(filterName, callback){
+        // return a url to delete filterName from the odb
+
+        var url = 'http://' + dataStore.host + '?cmd=jdelete&odb=/Filter/Filters/' + filterName
+
+        if(callback)
+            url += '&encoding=json&callback=' + callback;
+
+        return url
+    }
+
+    function deleteFilter(){
+        // remove a filter from the odb
+
+        var filter = selected('filterMenu', true);
+        promiseScript(generateDeletionURL(filter, 'reloadPage'))
+
+    }
+
+    function createODBstructure(){
+        // callback after deleting old version of the filter being recreated; sends request to recreate filter keys
+        promiseScript(dataStore.filter.createFilterRequest);
+    }
+
+    function populateFilter(){
+        // callback after recreating filter keys; sends request to populate keys
+        Promise.all(dataStore.filter.setFilterStepRequests.map(promiseScript)).then(
+            function(){
+                if(dataStore.filter.applyOnWrite)
+                    promiseScript(dataStore.filter.applyFilterRequest);
+                else
+                    reloadPage();
+            }
+        )      
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+body {
+  counter-reset: step;
+}
+
+div.cycle-step::before {
+  counter-increment: step;
+  content: counter(step);
+  font-size: 200%;
+  background-color: #5CB85C;
+  width: 2em;
+  height: 2em;
+  border-radius: 1em;
+  display: inline-block;
+  margin-bottom: 2px;
+  text-align: center;
+  padding-top: 0.25em;
+}
+
+div.cycle-step{
+    border-radius: 50px;
+    background-color: #444444;
+    padding: 1em;
+    margin: 0em 0em 1em 0em;
+    border: 1em solid #222222;
+}
+
+div.order-control{
+    display: inline;
+}
+
+input[type=checkbox]:checked + label{
+    color: #FF0000;
+}
