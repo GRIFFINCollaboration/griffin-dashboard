@@ -22,18 +22,12 @@
     <div>
         <div class='pan' id='allowedDetectors'>
             <h4>Allowed Detectors</h4>
-            <label for="allowDANTE">DANTE</label>
-            <input value="DA" class="allowed-det-check" id="allowDANTE" type="checkbox" onchange='requestNewFilterName()'></input>
-            <label for="allowDESCANT">DESCANT</label>
-            <input value="DS" class="allowed-det-check" id="allowDESCANT" type="checkbox" onchange='requestNewFilterName()'></input>
-            <label for="allowGRIFFIN">GRIFFIN</label>
-            <input value="GR" class="allowed-det-check" id="allowGRIFFIN" type="checkbox" onchange='requestNewFilterName()'></input>
-            <label for="allowPACES">PACES</label>
-            <input value="PA" class="allowed-det-check" id="allowPACES" type="checkbox" onchange='requestNewFilterName()'></input>
-            <label for="allowSCEPTAR">SCEPTAR</label>
-            <input value="SE" class="allowed-det-check" id="allowSCEPTAR" type="checkbox" onchange='requestNewFilterName()'></input>
-            <label for="allowZDS">ZDS</label>
-            <input value="ZD" class="allowed-det-check" id="allowZDS" type="checkbox" onchange='requestNewFilterName()'></input>
+            {{#detTypes}}
+                <div class='col-md-2 no-pad'>
+                    <label for='allow{{short}}'>{{description}}</label>
+                    <input value='{{short}}' class='allowed-det-check' id='allow{{short}}' type='checkbox' onchange='requestNewFilterName()'></input>
+                </div>
+            {{/detTypes}}
         </div>
 
         <div>

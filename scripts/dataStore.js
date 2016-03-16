@@ -138,13 +138,13 @@ dataStore = {
             "id": '10',
             "short": 'DSCg',
             "full": 'DESCANT (gamma)',
-            "description": 'DSC-gamma pulse shape'
+            "description": 'DSCg pulse shape'
         },
         {
             "id": '11',
             "short": 'DSCn',
             "full": 'DESCANT (neutron)',
-            "description": 'DSC-neutron pulse shape'
+            "description": 'DSCn pulse shape'
         }
 
     ]
