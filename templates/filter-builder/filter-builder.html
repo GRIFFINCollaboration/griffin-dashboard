@@ -264,13 +264,19 @@
     function setAllowedDetectors(encoding){
         // set the checkboxes in the allowed detectors panel based on a string encoding as found in EnabledDetTypes
 
-        if(!encoding) return; // not all filters currently have this attribute...
+        var detectors, i, checkbox;
 
-        var detectors = encoding.split('-'),
-            i, checkbox;
+        // Chris' goodies will interpret 'no value' as 'all' - dashboard should reflect this
+        if(!encoding){
+            checkbox = document.getElementsByClassName('allowed-det-check');
+            for(i=0; i<checkbox.length; i++){
+                checkbox[i].checked = true;
+            }
+            return;
+        }
 
-        for(i=0; i<detectors.length; i++){
-            checkbox = document.querySelector('div#allowedDetectors input[value='+detectors[i]+']');
+        for(i=0; i<encoding.length; i++){
+            checkbox = document.querySelector('div#allowedDetectors input[value='+encoding[i]+']');
             checkbox.checked = true;
         }
     }
@@ -296,6 +302,7 @@
 
         var filterName = document.getElementById('filterName').value,
             orBlocks = document.getElementById('logic-wrap').getElementsByClassName('or-block'),
+            allowedDetectors = document.querySelectorAll('input.allowed-det-check:checked'),
             orIndex, andIndex,
             i, andRows, 
             filterEncoding,
@@ -308,7 +315,8 @@
             dataStore.filter.createFilterRequest += 'odb' + (2*i) + '=/Filter/Filters/' + filterName + '/orCondition' + i + '&type' + (2*i) + '=12&strlen' + (2*i) + '=32&arraylen'+ (2*i) +'='+orBlocks[i].getElementsByClassName('and-row').length+'&';
             dataStore.filter.createFilterRequest += 'odb' + (2*i + 1) + '=/Filter/Filters/' + filterName + '/coincWindow' + i + '&type' + (2*i + 1) + '=7&';
         }
-        dataStore.filter.createFilterRequest += 'odb' + (2*i) + '=/Filter/Filters/' + filterName + '/EnabledDetTypes&type' + (2*i)  + '=12';
+        dataStore.filter.createFilterRequest += 'odb' + (2*i) + '=/Filter/Filters/' + filterName + '/EnabledDetTypes&type' + (2*i)  + '=12&strlen' + (2*i) + '=32&arraylen' + (2*i) + '=' + allowedDetectors.length;
+
         dataStore.filter.createFilterRequest += '&encoding=json&callback=populateFilter'
         // then set the values in the array
         dataStore.filter.setFilterStepRequests = [];
@@ -354,7 +362,7 @@
         }
 
         // allowed detectors encoding:
-        dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/EnabledDetTypes&value=' + parseAllowedDetectors());
+        dataStore.filter.setFilterStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/Filter/Filters/' + filterName + '/EnabledDetTypes[*]&value=' + parseAllowedDetectors());
 
         // prepare rquest to apply filter
         if(apply)
@@ -366,7 +374,7 @@
     }
 
     function parseAllowedDetectors(){
-        // return the encoded strung describing the allowed detectors
+        // return the encoded string describing the allowed detectors
 
         var detectors = document.getElementById('allowedDetectors').getElementsByTagName('input'),
             encoded = '',
@@ -375,7 +383,7 @@
         for(i=0; i<detectors.length; i++){
             if(detectors[i].checked){
                 if (encoded!='')
-                    encoded += '-';
+                    encoded += ',';
                 encoded += detectors[i].value;
             }
         }
