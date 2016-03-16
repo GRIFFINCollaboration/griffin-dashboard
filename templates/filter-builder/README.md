@@ -34,7 +34,7 @@ The filter builider expects the following ODB structure to exist:
  - **`/Filter/Current`**: the string title of the currently active filter; must match the name of a subdirectory of `/Filter/Filters`.
  - **`/Filter/Filters/<filter def>/orConditionN`**: array of strings describing filter conditions to be AND'ed together (see below for condition string encoding spec); if multiple such keys are found, the filter conditions they encode will be ORed together (example below).
  - **`/Filter/Filters/<filter def>/coincWindowN`**: integer representing the length in nanoseconds of the coincidence window enforced on cross-detector coincidences within `orConditionN`.  When `orConditionN` involves only one detector, the value of `coincWindowN` should be disregarded.
- - **`/Filter/Filters/<filter def>/EnabledDetTypes`**: array of strings describing which detectors are enabled; strings correspond to first 2 characters of [standard detector names](https://www.triumf.info/wiki/tigwiki/index.php/Detector_Nomenclature). If this key is absent, all detectors will be enabled.
+ - **`/Filter/Filters/<filter def>/EnabledDetTypes`**: array of strings describing which detectors are enabled; strings correspond to the `XXXX` field in the filter string encoding below. If this key is absent, all detectors will be enabled.
 
  ### Filter String Encoding
 
