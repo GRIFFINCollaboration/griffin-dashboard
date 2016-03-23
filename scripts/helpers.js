@@ -160,6 +160,49 @@ function pokeURL(url){
     req.send();
 }
 
+function CRUDarrays(path, value, type){
+    // delete the arrays at [path] from the odb, recreate them, and populate them with [value]
+
+    var deletionURL, creationURL, updateURLs = [],
+        i, typeIndex;
+
+    //generate deletion URLs:
+    deletionURL = 'http://' + dataStore.host + '?cmd=jdelete';
+    for(i=0; i<path.length; i++){
+        deletionURL += '&odb' + i + '=' + path[i];
+    }
+
+    //generate creation URLs:
+    creationURL = 'http://' + dataStore.host + '?cmd=jcreate';
+    for(i=0; i<path.length; i++){
+
+        if(type[i]=='string')
+            typeIndex = 12;
+        else if(type[i]=='int')
+            typeIndex = 7;
+        else
+            typeIndex = 9; // float, see mhttpd.js
+
+        creationURL += '&odb' + i + '=' + path[i] + '&type' + i + '=' + typeIndex + '&arraylen' + i + '=' + value[i].length;
+        if(typeIndex == 12)
+            creationURL += '&strlen' + i + '=32';
+    }
+
+    //generate update urls:
+    for(i=0; i<path.length; i++){
+        updateURLs.push('http://' + dataStore.host + '?cmd=jset&odb=' + path[i] + '[*]&value=' + value[i].join() );
+    }
+
+    promiseScript(deletionURL).then(function(){
+        promiseScript(creationURL).then(function(){
+            var i;
+            for(i=0; i<updateURLs.length; i++){
+                pokeURL(updateURLs[i]);
+            }
+        })
+    })
+}
+
 ///////////////////////////////
 // daq requests & unpacking
 ///////////////////////////////
