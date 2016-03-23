@@ -48,61 +48,61 @@
             <div class='col-md-8 col-md-offset-2 section'>
                 <h2>Upstream Chamber</h2>
                 <span>
-                    <input id='USCabs' type='radio' name='USC' checked></input>
-                    <label for='USCabs' class='btn btn-info'>Absent</label>
+                    <input id='USCabs' type='radio' name='USC' value='abs' checked></input>
+                    <label id='USCabsLabel' for='USCabs' class='btn btn-info'>Absent</label>
                 </span>
                 <span>
-                    <input id='USCsep' type='radio' name='USC'></input>
-                    <label for='USCsep' class='btn btn-info'>SCEPTAR</label>
+                    <input id='USCsep' type='radio' name='USC' value='sep'></input>
+                    <label id='USCsepLabel' for='USCsep' class='btn btn-info'>SCEPTAR</label>
                 </span>
                 <span>
-                    <input id='USCpac' type='radio' name='USC'></input>
-                    <label for='USCpac' class='btn btn-info'>PACES</label>
+                    <input id='USCpac' type='radio' name='USC' value='pac'></input>
+                    <label id='USCpacLabel' for='USCpac' class='btn btn-info'>PACES</label>
                 </span>
                 <span>
-                    <input id='USCspi' type='radio' name='USC'></input>
-                    <label for='USCspi' class='btn btn-info'>SPICE</label>
+                    <input id='USCspi' type='radio' name='USC' value='spi'></input>
+                    <label id='USCspiLabel' for='USCspi' class='btn btn-info'>SPICE</label>
                 </span>
             </div>
 
             <div class='col-md-8 col-md-offset-2 section'>
                 <h2>Downstream Chamber</h2>
                 <span>
-                    <input id='DSCabs' type='radio' name='DSC' checked></input>
-                    <label for='DSCabs' class='btn btn-info'>Absent</label>
+                    <input id='DSCabs' type='radio' name='DSC' value='abs' checked></input>
+                    <label id='DSCabsLabel' for='DSCabs' class='btn btn-info'>Absent</label>
                 </span>
                 <span>
-                    <input id='DSCsep' type='radio' name='DSC'></input>
-                    <label for='DSCsep' class='btn btn-info'>SCEPTAR</label>
+                    <input id='DSCsep' type='radio' name='DSC' value='sep'></input>
+                    <label id='DSCsepLabel' for='DSCsep' class='btn btn-info'>SCEPTAR</label>
                 </span>
                 <span>
-                    <input id='DSCzds' type='radio' name='DSC'></input>
-                    <label for='DSCzds' class='btn btn-info'>ZDS</label>
+                    <input id='DSCzds' type='radio' name='DSC' value='zds'></input>
+                    <label id='DSCzdsLabel' for='DSCzds' class='btn btn-info'>ZDS</label>
                 </span>
                 <span>
-                    <input id='DSCs2' type='radio' name='DSC'></input>
-                    <label for='DSCs2' class='btn btn-info'>S2</label>
+                    <input id='DSCs2' type='radio' name='DSC' value='s2'></input>
+                    <label id='DSCs2Label' for='DSCs2' class='btn btn-info'>S2</label>
                 </span>
                 <span>
-                    <input id='DSCs3' type='radio' name='DSC'></input>
-                    <label for='DSCs3' class='btn btn-info'>S3</label>
+                    <input id='DSCs3' type='radio' name='DSC' value='s3'></input>
+                    <label id='DSCs3Label' for='DSCs3' class='btn btn-info'>S3</label>
                 </span>
             </div>
 
             <div class='col-md-8 col-md-offset-2 section'>
                 <h2>Corona</h2>
                 <span>
-                    <input id='CORabs' type='radio' name='COR' checked></input>
-                    <label for='CORabs' class='btn btn-info'>Absent</label>
+                    <input id='CORabs' type='radio' name='COR' value='abs'></input>
+                    <label id='CORabsLabel' for='CORabs' class='btn btn-info'>Absent</label>
                 </span>
                 <span>
-                    <input id='CORgrg' type='radio' name='COR'></input>
-                    <label for='CORgrg' class='btn btn-info'>GRIFFIN</label>
+                    <input id='CORgrg' type='radio' name='COR' value='grg' checked></input>
+                    <label id='CORgrgLabel' for='CORgrg' class='btn btn-info'>GRIFFIN</label>
                 </span>
 
-                <table class='table top-gutter'>
+                <table id='CORgriffin' class='table top-gutter'>
                     <tr>
-                        <td></td>
+                        <td>GRIFFIN Detectors</td>
                         <td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
                     </tr>
                     <tr>
@@ -133,21 +133,21 @@
             <div class='col-md-8 col-md-offset-2 section'>
                 <h2>Upstream Lampshade</h2>
                 <span>
-                    <input id='USLabs' type='radio' name='USL' checked></input>
-                    <label for='USLabs' class='btn btn-info'>Absent</label>
+                    <input id='USLabs' type='radio' name='USL' value='abs'></input>
+                    <label id='USLabsLabel' for='USLabs' class='btn btn-info'>Absent</label>
                 </span>
                 <span>
-                    <input id='USLgrg' type='radio' name='USL'></input>
-                    <label for='USLgrg' class='btn btn-info'>GRIFFIN</label>
+                    <input id='USLgrg' type='radio' name='USL' value='grg' checked></input>
+                    <label id='USLgrgLabel' for='USLgrg' class='btn btn-info'>GRIFFIN</label>
                 </span>
                 <span>
-                    <input id='USLgrgdal' type='radio' name='USL'></input>
-                    <label for='USLgrgdal' class='btn btn-info'>GRIFFIN + DANTE</label>
+                    <input id='USLgrgdal' type='radio' name='USL' value='grgdal'></input>
+                    <label id='USLgrgdalLabel' for='USLgrgdal' class='btn btn-info'>GRIFFIN + DANTE</label>
                 </span>
 
-                <table class='table top-gutter'>
+                <table id='USLgriffin' class='table top-gutter'>
                     <tr>
-                        <td></td>
+                        <td>GRIFFIN Detectors</td>
                         <td>1</td><td>2</td><td>3</td><td>4</td>
                     </tr>
                     <tr>
@@ -170,25 +170,25 @@
             <div class='col-md-8 col-md-offset-2 section'>
                 <h2>Downstream Lampshade</h2>
                 <span>
-                    <input id='DSLabs' type='radio' name='DSL' checked></input>
-                    <label for='DSLabs' class='btn btn-info'>Absent</label>
+                    <input id='DSLabs' type='radio' name='DSL' value='abs'></input>
+                    <label id='DSLabsLabel' for='DSLabs' class='btn btn-info'>Absent</label>
                 </span>
                 <span>
-                    <input id='DSLgrg' type='radio' name='DSL'></input>
-                    <label for='DSLgrg' class='btn btn-info'>GRIFFIN</label>
+                    <input id='DSLgrg' type='radio' name='DSL' value='grg' checked></input>
+                    <label id='DSLgrgLabel' for='DSLgrg' class='btn btn-info'>GRIFFIN</label>
                 </span>
                 <span>
-                    <input id='DSLgrgdal' type='radio' name='DSL'></input>
-                    <label for='DSLgrgdal' class='btn btn-info'>GRIFFIN + DANTE</label>
+                    <input id='DSLgrgdal' type='radio' name='DSL' value='grgdal'></input>
+                    <label id='DSLgrgdalLabel' for='DSLgrgdal' class='btn btn-info'>GRIFFIN + DANTE</label>
                 </span>
                 <span>
-                    <input id='DSLdsc' type='radio' name='DSL'></input>
-                    <label for='DSLdsc' class='btn btn-info'>DESCANT</label>
+                    <input id='DSLdsc' type='radio' name='DSL' value='dsc'></input>
+                    <label id='DSLdscLabel' for='DSLdsc' class='btn btn-info'>DESCANT</label>
                 </span>
 
-                <table class='table top-gutter'>
+                <table id='DSLgriffin' class='table top-gutter'>
                     <tr>
-                        <td></td>
+                        <td>GRIFFIN Detectors</td>
                         <td>1</td><td>2</td><td>3</td><td>4</td>
                     </tr>
                     <tr>
@@ -216,6 +216,8 @@
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
 
+                var i, templates, detectorToggles;
+
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
@@ -238,7 +240,85 @@
                     }
                 );
                 setupFooter('footerImage', 2, '#999999');
+
+                //plug in detector toggles
+                detectorToggles = document.querySelectorAll('input[type=radio]');
+                for(i=0; i<detectorToggles.length; i++){
+                    detectorToggles[i].onchange = manageState
+                }
+
+                manageState();
+
             });
+
+            function manageState(){
+                // manage which detectors can be selected with which other detectors etc
+
+                var DSC = document.querySelector('input[name="DSC"]:checked').value,
+                    USC = document.querySelector('input[name="USC"]:checked').value,
+                    COR = document.querySelector('input[name="COR"]:checked').value,
+                    DSL = document.querySelector('input[name="DSL"]:checked').value,
+                    USL = document.querySelector('input[name="USL"]:checked').value,
+                    labels, inactiveLabels, i;
+
+
+                // spice (and ony spice) in the USC pairs with s2 / s3 in the DSC
+                // also spice services occupy the upstream lampshade position
+                if(USC == 'spi'){
+                    document.getElementById('DSCsepLabel').classList.add('disabled');
+                    document.getElementById('DSCzdsLabel').classList.add('disabled');
+                    document.getElementById('DSCs2Label').classList.remove('disabled');
+                    document.getElementById('DSCs3Label').classList.remove('disabled');
+                    if(DSC == 'sep' || DSC == 'zds')
+                        document.getElementById('DSCabs').click();
+
+                    document.getElementById('USLgrgLabel').classList.add('disabled');
+                    document.getElementById('USLgrgdalLabel').classList.add('disabled');
+                    if(USL != 'abs'){
+                        document.getElementById('USLabs').click();
+                        USL = 'abs'
+                    }
+                } else {
+                    document.getElementById('DSCsepLabel').classList.remove('disabled');
+                    document.getElementById('DSCzdsLabel').classList.remove('disabled');
+                    document.getElementById('DSCs2Label').classList.add('disabled');
+                    document.getElementById('DSCs3Label').classList.add('disabled');
+                    if(DSC == 's2' || DSC == 's3')
+                        document.getElementById('DSCabs').click();
+
+                    document.getElementById('USLgrgLabel').classList.remove('disabled');
+                    document.getElementById('USLgrgdalLabel').classList.remove('disabled');
+                }
+
+                // show griffin position options iff griffin is selected
+                if(COR == 'grg')
+                    document.getElementById('CORgriffin').classList.remove('hidden');
+                else
+                    document.getElementById('CORgriffin').classList.add('hidden');
+
+                if(USL == 'grg' || USL =='grgdal')
+                    document.getElementById('USLgriffin').classList.remove('hidden');
+                else
+                    document.getElementById('USLgriffin').classList.add('hidden')
+
+                if(DSL == 'grg' || DSL =='grgdal')
+                    document.getElementById('DSLgriffin').classList.remove('hidden');
+                else
+                    document.getElementById('DSLgriffin').classList.add('hidden')
+
+                // manage clickability of labels
+                labels = document.querySelectorAll('label');
+                for(i=0; i<labels.length; i++)
+                    labels[i].onclick = function(){return true;}
+                inactiveLabels = document.querySelectorAll('label.disabled');
+                for(i=0; i<inactiveLabels.length; i++){
+                    inactiveLabels[i].onclick = function(e){
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+                }
+            }
         </script>
 
     </body>
