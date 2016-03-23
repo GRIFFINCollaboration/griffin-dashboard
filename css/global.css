@@ -103,6 +103,10 @@ div.div-disable:before{
     cursor: not-allowed;
 }
 
+ul.button-list li{
+    margin-bottom: 1em;
+}
+
 /*right sidebar*/
 div#controlsidebar{
     background-color: #333333;
