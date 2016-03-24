@@ -297,6 +297,66 @@ function findHVcrate(channel){
         return -1;
 }
 
+function mungeCal(calibration){
+    // munge GRIFFIN's .cal calibration file format into JSON, and return as a parsed object.
+
+    var munged;
+
+    //remove comment lines
+    munged = calibration.replace(RegExp('//.*', 'g'), '');
+
+    //remove keys with no value
+    munged = munged.replace(RegExp('\\w+:\\s*[\n\f]', 'mg'), '')
+
+    //put quotes around sub-key names:
+    munged = munged.replace(RegExp('^((?!\").)*:', 'mg'), function(match, offset, string){
+        return '"' + match.slice(0,match.length-1) + '":';
+    })
+    
+    //put quotes around top-key names, follow with colon:
+    munged = munged.replace(RegExp('\\w+\\s*{', 'mg'), function(match, offset, string){
+        return '"' + match.replace(RegExp('\\s*{'), '":{');
+    })
+
+    //put [] around arrays
+    munged = munged.replace(RegExp('[\\w.-]+\\s+([\\w.-]+)+(\\s+[\\w.-]+)*', 'mg'), function(match, offset, string){
+        return '[' + match.replace(RegExp('\\s+' ,'g'), ',') + ']'
+    })
+    
+    //quote ALL values
+    munged = munged.replace(RegExp('[\\w.-]+(?=[\\s,\\]])', 'mg'), function(match, offset, string){
+        return '"' + match + '"';
+    })
+    
+    //remove quotes from number values - note JSON doesn't abide 0x hex notation
+    munged = munged.replace(RegExp('\"[\\d.-]+\"', 'mg'), function(match, offset, string){
+        return match.slice(1,match.length-1);
+    })
+
+    //remove blank lines
+    munged = munged.replace(RegExp('^\\s*[\\r\\n]', 'gm'), '');
+    munged = munged.trim();
+
+    //comma at the end of every line...
+    munged = munged.replace(RegExp('$','gm'), ',');
+
+    //...except after {
+    munged = munged.replace(RegExp('{,', 'g'), '{');
+
+    //wrap the whole things as an object:
+    munged = '{' + munged + '}';
+
+    //...or after last key
+    munged = munged.replace(RegExp(',[\\s]*}', 'g'), function(match, offset, string){
+        return match.slice(1);
+    })
+
+    //whitespace after arrays
+    munged = munged.replace(RegExp(']\\s*,', 'g'), '],');
+
+    return JSON.parse(munged);
+}
+
 ////////////////////////////
 // tooltip management
 ////////////////////////////
