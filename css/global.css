@@ -39,7 +39,7 @@ div.top-pan{
 }
 
 .top-gutter{
-    margin-top: 0.5em;
+    margin-top: 1em;
 }
 
 div.pan div{
@@ -101,6 +101,10 @@ div.div-disable:before{
     width: 100%;
     height: 100%;
     cursor: not-allowed;
+}
+
+ul.button-list li{
+    margin-bottom: 1em;
 }
 
 /*right sidebar*/

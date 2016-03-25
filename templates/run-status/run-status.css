@@ -19,3 +19,7 @@ div.paused{
 div.stopped{
     border: 3px solid #e74c3c;
 }
+
+input[type=file]{
+    color: #EEEEEE !important;
+}

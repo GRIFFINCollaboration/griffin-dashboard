@@ -1,0 +1,451 @@
+<html>
+    <head>
+        <title>GRIFFIN MSC Builder</title>
+
+        <!--libraries-->
+        <script src='scripts/HTMLImports.min.js' type="text/javascript"></script>
+        <script src='scripts/mustache.js' type="text/javascript"></script>
+        <script src="scripts/jquery1-11-3.min.js" type="text/javascript"></script>
+        <script src="scripts/kinetic-5.0.1.hackfix.js" type="text/javascript"></script>
+
+        <!--helpers-->
+        <script src='scripts/helpers.js' type="text/javascript"></script>
+        <script src='scripts/dataStore.js' type="text/javascript"></script>
+        <script src='scripts/heartbeat.js' type="text/javascript"></script>
+        <script src='scripts/colorScales.js' type="text/javascript"></script>
+        <script src='scripts/canonicalMSC.js' type="text/javascript"></script>
+
+        <!--style-->
+        <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="scripts/bootstrap3-3-5.min.js" type="text/javascript"></script>
+        <style>
+            input[type=radio]{
+                display:none;
+            }
+
+            div.section{
+                background-color: #333333;
+                padding: 0em 1em 1em 1em;
+                border-radius: 1em;
+                margin-bottom: 1em;
+            }
+
+            input[type=radio]:checked ~ label{
+                background-color: #5cb85c;
+                border-color: #4cae4c;
+            }
+        </style>
+
+        <!--html imports-->
+        <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
+        <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
+    </head>
+
+    <body>
+        <div id='header'></div>
+
+        <div class='section-wrapper'>
+            <div class='col-md-8 col-md-offset-2 section'>
+                <h2>Upstream Chamber</h2>
+                <span>
+                    <input id='USCabs' type='radio' name='USC' value='abs' checked></input>
+                    <label id='USCabsLabel' for='USCabs' class='btn btn-info'>Absent</label>
+                </span>
+                <span>
+                    <input id='USCsep' type='radio' name='USC' value='sep'></input>
+                    <label id='USCsepLabel' for='USCsep' class='btn btn-info'>SCEPTAR</label>
+                </span>
+                <span>
+                    <input id='USCpac' type='radio' name='USC' value='pac'></input>
+                    <label id='USCpacLabel' for='USCpac' class='btn btn-info'>PACES</label>
+                </span>
+                <span>
+                    <input id='USCspi' type='radio' name='USC' value='spi'></input>
+                    <label id='USCspiLabel' for='USCspi' class='btn btn-info'>SPICE</label>
+                </span>
+            </div>
+
+            <div class='col-md-8 col-md-offset-2 section'>
+                <h2>Downstream Chamber</h2>
+                <span>
+                    <input id='DSCabs' type='radio' name='DSC' value='abs' checked></input>
+                    <label id='DSCabsLabel' for='DSCabs' class='btn btn-info'>Absent</label>
+                </span>
+                <span>
+                    <input id='DSCsep' type='radio' name='DSC' value='sep'></input>
+                    <label id='DSCsepLabel' for='DSCsep' class='btn btn-info'>SCEPTAR</label>
+                </span>
+                <span>
+                    <input id='DSCzds' type='radio' name='DSC' value='zds'></input>
+                    <label id='DSCzdsLabel' for='DSCzds' class='btn btn-info'>ZDS</label>
+                </span>
+                <span>
+                    <input id='DSCs2' type='radio' name='DSC' value='s2'></input>
+                    <label id='DSCs2Label' for='DSCs2' class='btn btn-info'>S2</label>
+                </span>
+                <span>
+                    <input id='DSCs3' type='radio' name='DSC' value='s3'></input>
+                    <label id='DSCs3Label' for='DSCs3' class='btn btn-info'>S3</label>
+                </span>
+            </div>
+
+            <div class='col-md-8 col-md-offset-2 section'>
+                <h2>Corona</h2>
+                <span>
+                    <input id='CORabs' type='radio' name='COR' value='abs'></input>
+                    <label id='CORabsLabel' for='CORabs' class='btn btn-info'>Absent</label>
+                </span>
+                <span>
+                    <input id='CORgrg' type='radio' name='COR' value='grg' checked></input>
+                    <label id='CORgrgLabel' for='CORgrg' class='btn btn-info'>GRIFFIN</label>
+                </span>
+
+                <table id='CORgriffin' class='table top-gutter'>
+                    <tr>
+                        <td>GRIFFIN Detectors</td>
+                        <td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
+                    </tr>
+                    <tr>
+                        <td>HPGe</td>
+                        <td><input type='checkbox' id='grg5' value='5' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg6' value='6' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg7' value='7' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg8' value='8' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg9' value='9' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg10' value='10' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg11' value='11' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg12' value='12' class='clover' checked></input></td>
+                    </tr>
+                    <tr>
+                        <td>Suppressors</td>
+                        <td><input type='checkbox' id='grs5' value='5' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs6' value='6' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs7' value='7' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs8' value='8' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs9' value='9' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs10' value='10' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs11' value='11' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs12' value='12' class='suppressor'></input></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class='col-md-8 col-md-offset-2 section'>
+                <h2>Upstream Lampshade</h2>
+                <span>
+                    <input id='USLabs' type='radio' name='USL' value='abs'></input>
+                    <label id='USLabsLabel' for='USLabs' class='btn btn-info'>Absent</label>
+                </span>
+                <span>
+                    <input id='USLgrg' type='radio' name='USL' value='grg' checked></input>
+                    <label id='USLgrgLabel' for='USLgrg' class='btn btn-info'>GRIFFIN</label>
+                </span>
+                <span>
+                    <input id='USLgrgdal' type='radio' name='USL' value='grgdal'></input>
+                    <label id='USLgrgdalLabel' for='USLgrgdal' class='btn btn-info'>GRIFFIN + DANTE</label>
+                </span>
+
+                <table id='USLgriffin' class='table top-gutter'>
+                    <tr>
+                        <td>GRIFFIN Detectors</td>
+                        <td>13</td><td>14</td><td>15</td><td>16</td>
+                    </tr>
+                    <tr>
+                        <td>HPGe</td>
+                        <td><input type='checkbox' id='grg13' value='13' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg14' value='14' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg15' value='15' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg16' value='16' class='clover' checked></input></td>
+                    </tr>
+                    <tr>
+                        <td>Suppressors</td>
+                        <td><input type='checkbox' id='grs13' value='13' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs14' value='14' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs15' value='15' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs16' value='16' class='suppressor'></input></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class='col-md-8 col-md-offset-2 section'>
+                <h2>Downstream Lampshade</h2>
+                <span>
+                    <input id='DSLabs' type='radio' name='DSL' value='abs'></input>
+                    <label id='DSLabsLabel' for='DSLabs' class='btn btn-info'>Absent</label>
+                </span>
+                <span>
+                    <input id='DSLgrg' type='radio' name='DSL' value='grg' checked></input>
+                    <label id='DSLgrgLabel' for='DSLgrg' class='btn btn-info'>GRIFFIN</label>
+                </span>
+                <span>
+                    <input id='DSLgrgdal' type='radio' name='DSL' value='grgdal'></input>
+                    <label id='DSLgrgdalLabel' for='DSLgrgdal' class='btn btn-info'>GRIFFIN + DANTE</label>
+                </span>
+                <span>
+                    <input id='DSLdsc' type='radio' name='DSL' value='dsc'></input>
+                    <label id='DSLdscLabel' for='DSLdsc' class='btn btn-info'>DESCANT</label>
+                </span>
+
+                <table id='DSLgriffin' class='table top-gutter'>
+                    <tr>
+                        <td>GRIFFIN Detectors</td>
+                        <td>1</td><td>2</td><td>3</td><td>4</td>
+                    </tr>
+                    <tr>
+                        <td>HPGe</td>
+                        <td><input type='checkbox' id='grg1' value='1' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg2' value='2' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg3' value='3' class='clover' checked></input></td>
+                        <td><input type='checkbox' id='grg4' value='4' class='clover' checked></input></td>
+                    </tr>
+                    <tr>
+                        <td>Suppressors</td>
+                        <td><input type='checkbox' id='grs1' value='1' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs2' value='2' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs3' value='3' class='suppressor'></input></td>
+                        <td><input type='checkbox' id='grs4' value='4' class='suppressor'></input></td>
+                    </tr>
+                </table>
+            </div>
+  
+            <div class='col-md-8 col-md-offset-2'>          
+                <button class='btn btn-lg btn-warning' onclick='constructArrays()'>Write New MSC Table</button>
+            </div>
+
+        </div>
+
+        <div id='footer'></div>
+
+        <script>
+
+            window.addEventListener('HTMLImportsLoaded', function(e) {
+
+                var i, templates, detectorToggles, griffinPositions;
+
+                ///////////////////////////
+                //handle templates
+                ///////////////////////////
+                templates = ['brand-header', 'brand-footer'];
+                dataStore.templates = prepareTemplates(templates);
+
+                //inject templates
+                //header
+                document.getElementById('header').innerHTML = Mustache.to_html(
+                    dataStore.templates['brand-header'], 
+                    {
+                        'title': 'GRIFFIN MSC Builder',
+                    }
+                );
+                //footer
+                document.getElementById('footer').innerHTML = Mustache.to_html(
+                    dataStore.templates['brand-footer'], 
+                    {
+                        
+                    }
+                );
+                setupFooter('footerImage', 2, '#999999');
+
+                //plug in detector toggles
+                detectorToggles = document.querySelectorAll('input[type=radio]');
+                for(i=0; i<detectorToggles.length; i++){
+                    detectorToggles[i].onchange = manageState;
+                }
+                //plug in griffin position options
+                griffinPositions = document.querySelectorAll('input[type=checkbox]');
+                for(i=0; i<griffinPositions.length; i++){
+                    griffinPositions[i].onchange = manageGRIFFIN;
+                }
+
+                manageState();
+
+            });
+
+            function manageState(){
+                // manage which detectors can be selected with which other detectors etc
+
+                var DSC = document.querySelector('input[name="DSC"]:checked').value,
+                    USC = document.querySelector('input[name="USC"]:checked').value,
+                    COR = document.querySelector('input[name="COR"]:checked').value,
+                    DSL = document.querySelector('input[name="DSL"]:checked').value,
+                    USL = document.querySelector('input[name="USL"]:checked').value,
+                    labels, inactiveLabels, i;
+
+
+                // spice (and ony spice) in the USC pairs with s2 / s3 in the DSC
+                // also spice services occupy the upstream lampshade position
+                if(USC == 'spi'){
+                    document.getElementById('DSCsepLabel').classList.add('disabled');
+                    document.getElementById('DSCzdsLabel').classList.add('disabled');
+                    document.getElementById('DSCs2Label').classList.remove('disabled');
+                    document.getElementById('DSCs3Label').classList.remove('disabled');
+                    if(DSC == 'sep' || DSC == 'zds')
+                        document.getElementById('DSCabs').click();
+
+                    document.getElementById('USLgrgLabel').classList.add('disabled');
+                    document.getElementById('USLgrgdalLabel').classList.add('disabled');
+                    if(USL != 'abs'){
+                        document.getElementById('USLabs').click();
+                        USL = 'abs'
+                    }
+                } else {
+                    document.getElementById('DSCsepLabel').classList.remove('disabled');
+                    document.getElementById('DSCzdsLabel').classList.remove('disabled');
+                    document.getElementById('DSCs2Label').classList.add('disabled');
+                    document.getElementById('DSCs3Label').classList.add('disabled');
+                    if(DSC == 's2' || DSC == 's3')
+                        document.getElementById('DSCabs').click();
+
+                    document.getElementById('USLgrgLabel').classList.remove('disabled');
+                    document.getElementById('USLgrgdalLabel').classList.remove('disabled');
+                }
+
+                // show griffin position options iff griffin is selected
+                if(COR == 'grg')
+                    document.getElementById('CORgriffin').classList.remove('hidden');
+                else
+                    document.getElementById('CORgriffin').classList.add('hidden');
+
+                if(USL == 'grg' || USL =='grgdal')
+                    document.getElementById('USLgriffin').classList.remove('hidden');
+                else
+                    document.getElementById('USLgriffin').classList.add('hidden')
+
+                if(DSL == 'grg' || DSL =='grgdal')
+                    document.getElementById('DSLgriffin').classList.remove('hidden');
+                else
+                    document.getElementById('DSLgriffin').classList.add('hidden');
+
+                // manage clickability of labels
+                labels = document.querySelectorAll('label');
+                for(i=0; i<labels.length; i++)
+                    labels[i].onclick = function(){return true;}
+                inactiveLabels = document.querySelectorAll('label.disabled');
+                for(i=0; i<inactiveLabels.length; i++){
+                    inactiveLabels[i].onclick = function(e){
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+                }
+            }
+
+            function manageGRIFFIN(){
+                // suppressor only allowed if corresponding clover enabled
+                var i;
+
+                for(i=1; i<17; i++){
+                    if(document.getElementById('grg'+i).checked){
+                        document.getElementById('grs'+i).classList.remove('disabled');
+                    } else {
+                        document.getElementById('grs'+i).checked = false;
+                        document.getElementById('grs'+i).classList.add('disabled');
+                    }
+                }
+            }
+
+            function constructArrays(){
+                // construct the arrays to write to `/DAQ/MSC` based on the current UI selections
+
+                var DSC = document.querySelector('input[name="DSC"]:checked').value,
+                    USC = document.querySelector('input[name="USC"]:checked').value,
+                    COR = document.querySelector('input[name="COR"]:checked').value,
+                    DSL = document.querySelector('input[name="DSL"]:checked').value,
+                    USL = document.querySelector('input[name="USL"]:checked').value,
+                    clovers = [], suppressors = [], cloverChecks, suppressorChecks,
+                    MSC = [], chan = [], datatype = [], gain = [], offset = [],
+                    canonical, i;
+
+                    //which griffin clovers and suppressors have been requested?
+                    if(DSL=='grg' || DSL=='grgdal'){
+                        cloverChecks = document.getElementById('DSLgriffin').querySelectorAll('input.clover:checked');
+                        for(i=0; i<cloverChecks.length; i++)
+                            clovers.push(parseInt(cloverChecks[i].value,10));
+
+                        suppressorChecks = document.getElementById('DSLgriffin').querySelectorAll('input.suppressor:checked');
+                        for(i=0; i<suppressorChecks.length; i++)
+                            suppressors.push(parseInt(suppressorChecks[i].value,10));
+                    }
+                    if(COR=='grg'){
+                        cloverChecks = document.getElementById('CORgriffin').querySelectorAll('input.clover:checked');
+                        for(i=0; i<cloverChecks.length; i++)
+                            clovers.push(parseInt(cloverChecks[i].value,10));
+
+                        suppressorChecks = document.getElementById('CORgriffin').querySelectorAll('input.suppressor:checked');
+                        for(i=0; i<suppressorChecks.length; i++)
+                            suppressors.push(parseInt(suppressorChecks[i].value,10));
+                    }
+                    if(USL=='grg' || USL=='grgdal'){
+                        cloverChecks = document.getElementById('USLgriffin').querySelectorAll('input.clover:checked');
+                        for(i=0; i<cloverChecks.length; i++)
+                            clovers.push(parseInt(cloverChecks[i].value,10));
+
+                        suppressorChecks = document.getElementById('USLgriffin').querySelectorAll('input.suppressor:checked');
+                        for(i=0; i<suppressorChecks.length; i++)
+                            suppressors.push(parseInt(suppressorChecks[i].value,10));
+                    }
+
+                    //GRIFFIN
+                    for(i=0; i<clovers.length; i++){
+                        canonical = configGRIFFINclover(clovers[i], suppressors.indexOf(clovers[i]) != -1) // ie the suppressor will only count if the corresponding clover is there
+                        chan = chan.concat(canonical[0]);
+                        MSC = MSC.concat(canonical[1]);
+                    }
+
+                    //SCEPTAR / ZDS
+                    canonical = configSCEPTAR(USC == 'sep', DSC == 'sep', DSC == 'zds')
+                    chan = chan.concat(canonical[0]);
+                    MSC = MSC.concat(canonical[1]);
+
+                    //DANTE
+                    canonical = configDANTE(USL == 'grgdal', DSL == 'grgdal')
+                    chan = chan.concat(canonical[0]);
+                    MSC = MSC.concat(canonical[1]);
+
+                    //PACES
+                    if(USC == 'pac'){
+                        canonical = configPACES();
+                        chan = chan.concat(canonical[0]);
+                        MSC = MSC.concat(canonical[1]);
+                    }
+
+                    //SPICE
+                    if(USC == 'spi'){
+                        canonical = configSPICE();
+                        chan = chan.concat(canonical[0]);
+                        MSC = MSC.concat(canonical[1]);                        
+                    }
+
+                    //S2 S3
+                    if(DSC == 's2' || DSC == 's3'){
+                        canonical = configS2S3( parseInt(DSC.slice(1),10) );
+                        chan = chan.concat(canonical[0]);
+                        MSC = MSC.concat(canonical[1]);     
+                    }
+
+                    //DESCANT
+                    if(DSL == 'dsc'){
+                        canonical = configDESCANT();
+                        chan = chan.concat(canonical[0]);
+                        MSC = MSC.concat(canonical[1]); 
+                    }
+
+                    //default datatype == 0, gain == 1 and offset == 0
+                    for(i=0; i<chan.length; i++){
+                        datatype.push(0);
+                        gain.push(1);
+                        offset.push(0);
+                    }
+
+                    CRUDarrays(
+                        ['/DAQ/MSC/MSC', '/DAQ/MSC/chan', '/DAQ/MSC/datatype', '/DAQ/MSC/gain', '/DAQ/MSC/offset'], 
+                        [MSC, chan, datatype, gain, offset], 
+                        ['int', 'string', 'int', 'float', 'float']
+                    );
+
+                    return [MSC, chan, datatype, gain, offset];
+            }
+        </script>
+
+    </body>
+</html>

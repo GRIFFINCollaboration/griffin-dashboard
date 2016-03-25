@@ -18,7 +18,7 @@
             <button id='statusResume' onclick='runTransition("Resume")' class='btn btn-success status hidden'>Resume</button>
         </div>
 
-        <h3>Trigger stats:</h3>
+        <h4 class='top-gutter'>Trigger stats:</h4>
         <table>
             <tr>
                 <td>Events:</td>
@@ -46,6 +46,10 @@
             </tr>
         </table>
         <input type='text' id='dataDirIn' data-toggle="tooltip" data-placement="bottom" title="Press return to set new dir, or ctrl-z to undo."></input>
+
+        <h4 class='top-gutter'>Upload Calibration</h4>
+        <input type='file' accept='.cal' onchange='processCalibration(this.files)'></input>
+    
 
         <!--h3>Messages</h3>
         <div class='longListWrapper'>
@@ -197,6 +201,47 @@
         // update the data dir in the odb
 
         pokeURL('http://'+dataStore.host+'/?cmd=jset&odb=Logger/Data dir&value='+document.getElementById('dataDirIn').value);
+    }
+
+    function processCalibration(files){
+        // accept the .cal file from the user, munge it, and prepare to update the ODB.
+
+        var reader = new FileReader(),
+            calibration;
+
+        reader.readAsText(files[0]);
+
+        reader.onloadend = function(evt){
+            dataStore.calibration = mungeCal(evt.currentTarget.result);
+
+            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=sortCalibration');
+        }
+    }
+
+    function sortCalibration(DAQ){
+        // once all the info is in hand, assemble the new calibration constants and write to the ODB
+
+        var index,
+            gainURL, offsetURL;
+
+        // update whatever is in the dataStore for the ODB
+        fetchDAQ(DAQ);
+
+        // sort calibration constants
+        for(key in dataStore.calibration){
+            index = dataStore.ODB.DAQ.MSC.chan.indexOf(key)
+            if(index != -1){
+                dataStore.ODB.DAQ.MSC.offset[index] = dataStore.calibration[key].EngCoeff[0];
+                dataStore.ODB.DAQ.MSC.gain[index] = dataStore.calibration[key].EngCoeff[1];
+            }
+        }
+
+        // write em
+        offsetURL = 'http://' + dataStore.host + '?cmd=jset&odb=/DAQ/MSC/offset[*]&value=' + dataStore.ODB.DAQ.MSC.offset.join(',');
+        gainURL = 'http://' + dataStore.host + '?cmd=jset&odb=/DAQ/MSC/gain[*]&value=' + dataStore.ODB.DAQ.MSC.gain.join(',');
+
+        pokeURL(offsetURL);
+        pokeURL(gainURL);
     }
 </script>
 
