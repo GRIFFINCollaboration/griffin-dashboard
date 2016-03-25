@@ -151,9 +151,15 @@ function fetchScript(url, id){
 }
 
 function pokeURL(url){
-    // poke the requested URL, don't care about the response
+    // poke the requested URL
 
     var req = new XMLHttpRequest();
+
+    req.onerror = function(err) {
+        console.log('The request to the following URL returned an error:');
+        console.log(url);
+        console.log(err)
+    };
 
     req.open('GET', url);
     // Make the request

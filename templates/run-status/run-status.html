@@ -204,7 +204,7 @@
     }
 
     function processCalibration(files){
-        // accept the .cal file from the user, munge it, and update the ODB.
+        // accept the .cal file from the user, munge it, and prepare to update the ODB.
 
         var reader = new FileReader(),
             calibration;
@@ -212,9 +212,36 @@
         reader.readAsText(files[0]);
 
         reader.onloadend = function(evt){
-            calibration = mungeCal(evt.currentTarget.result);
-            console.log(calibration)
+            dataStore.calibration = mungeCal(evt.currentTarget.result);
+
+            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=sortCalibration');
         }
+    }
+
+    function sortCalibration(DAQ){
+        // once all the info is in hand, assemble the new calibration constants and write to the ODB
+
+        var index,
+            gainURL, offsetURL;
+
+        // update whatever is in the dataStore for the ODB
+        fetchDAQ(DAQ);
+
+        // sort calibration constants
+        for(key in dataStore.calibration){
+            index = dataStore.ODB.DAQ.MSC.chan.indexOf(key)
+            if(index != -1){
+                dataStore.ODB.DAQ.MSC.offset[index] = dataStore.calibration[key].EngCoeff[0];
+                dataStore.ODB.DAQ.MSC.gain[index] = dataStore.calibration[key].EngCoeff[1];
+            }
+        }
+
+        // write em
+        offsetURL = 'http://' + dataStore.host + '?cmd=jset&odb=/DAQ/MSC/offset[*]&value=' + dataStore.ODB.DAQ.MSC.offset.join(',');
+        gainURL = 'http://' + dataStore.host + '?cmd=jset&odb=/DAQ/MSC/gain[*]&value=' + dataStore.ODB.DAQ.MSC.gain.join(',');
+
+        pokeURL(offsetURL);
+        pokeURL(gainURL);
     }
 </script>
 
