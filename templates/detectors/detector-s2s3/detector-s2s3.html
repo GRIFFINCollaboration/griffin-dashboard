@@ -1,0 +1,145 @@
+<link rel="stylesheet" href="../detector.css">
+
+<template id='detector-s2s3'>
+    <div class='nav-row'>
+        <div class="btn-group" role="group" id="view-nav"></div>
+    </div>
+
+    <div id='visualizationcollection'>
+        {{#views}}
+            <div id='{{.}}Wrap' class='visWrap hidden'></div>
+        {{/views}}
+        <form id='scalecontrol' onchange='managePlotScale()'>
+            <label for='linScale'>Linear</label>
+            <input id='linScale' name='plotScale' value='lin' type='radio' checked></input>
+            <label for='logScale' class='uiRow'>Log</label>
+            <input id='logScale' name='plotScale' value='log' type='radio'></input>
+            <label for='scaleMin', class='uiRow'>Min</label>
+            <input id='scaleMin', type='number' min='0' step='1'></input>
+            <label for='scaleMax', class='uiRow'>Max</label>
+            <input id='scaleMax', type='number' min='0' step='1'></input>
+        </form>
+    </div>
+
+    <img id='errorPattern' src='img/static.gif' class='hidden'></img>
+</template>
+
+<script>
+    function parameterizeDetector(){
+        // determine all the parameters needed for S2/S3's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
+
+        var i;
+
+        //build up dataStore.detector.channel names
+        dataStore.detector.channelNames = [];
+        if(dataStore.detector.config == 'S2'){
+            for(i=0; i<24; i++) // biggest annular cell must come first, since these are drawn as overlapping disks.
+                dataStore.detector.channelNames.push('SPZ00DP' + ((i<10) ? '0'+i : i ) + 'X');
+            for(i=0; i<16; i++)
+                dataStore.detector.channelNames.push('SPZ00DN' + ((i<10) ? '0'+i : i ) + 'X');
+        } else if(dataStore.detector.config == 'S3'){
+            for(i=0; i<24; i++)
+                dataStore.detector.channelNames.push('SPE00DP' + ((i<10) ? '0'+i : i ) + 'X');
+            for(i=0; i<32; i++)
+                dataStore.detector.channelNames.push('SPE00DN' + ((i<10) ? '0'+i : i ) + 'X');
+        }
+
+
+        // view labels
+        dataStore.detector.views = ['main'];
+
+        //subview info
+        dataStore.detector.subviews = ['HV', 'threshold', 'trigger_request', 'trigger_accept'];
+
+        // how many characters are in the summary view channel names?
+        dataStore.detector.summaryDepth = 0;
+
+        // build up raw data structure
+        createDataStructure();
+    }
+
+    function drawDetector(){
+        // once the HTML is in place, finish setting up visualization.
+
+        var i, X, Y;
+
+        //generic setup
+        setupDetector();
+
+        //////////////////////////////////////
+        //S2 / S3 specific drawing parameters
+        //////////////////////////////////////
+
+        dataStore.detector.phiSteps = ((dataStore.detector.config == 'S2') ? 16 : ((dataStore.detector.config == 'S3') ? 32 : 0))
+        dataStore.detector.rad = Math.min(0.39*dataStore.detector.height, 0.23*dataStore.detector.width);
+        dataStore.detector.innerRad = 0.05*dataStore.detector.rad;
+        dataStore.detector.radStep = (dataStore.detector.rad - dataStore.detector.innerRad) / 24;
+        dataStore.detector.phiStep = 360 / Math.max(1, dataStore.detector.phiSteps);
+
+        // only one view, set and forget:
+        dataStore.detector.currentView = 'main';
+        document.getElementById('mainWrap').classList.remove('hidden');
+        // start with summary trigger accepts displayed
+        manageSubview('trigger_accept', true);
+
+        // set up the cells
+        instantiateCells(0);
+        generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
+
+        repaint();
+    }
+
+    function createCell(channel){
+        // reimplemented for s2/s3 - circular cells instead of polygons
+        // stamp out a cell for the given channel and coordinate array key
+        // note that cell still has to be added to an appropriate layer on a per-detector basis.
+
+        var index = parseInt(channel.slice(7,9),10);
+
+        if(channel.slice(6,7) == 'P'){
+            // annular cells
+
+            dataStore.detector.cells[channel] = new Kinetic.Arc({
+                innerRadius: dataStore.detector.rad - (index+1)*dataStore.detector.radStep,
+                outerRadius: dataStore.detector.rad - index*dataStore.detector.radStep,
+                x: 0.25*dataStore.detector.width,
+                y: dataStore.detector.height*0.4,
+                angle: 360,
+                fill: '#000000',
+                fillPatternOffsetX: 100*Math.random(),
+                fillPatternOffsetY: 100*Math.random(),
+                stroke: dataStore.frameColor,
+                strokeWidth: dataStore.frameLineWidth,
+                closed: true,
+                listening: true
+            });
+        } else {
+            // azimuthal cells
+
+            dataStore.detector.cells[channel] = new Kinetic.Arc({
+                innerRadius: dataStore.detector.innerRad,
+                outerRadius: dataStore.detector.rad,
+                x: 0.75*dataStore.detector.width,
+                y: 0.4*dataStore.detector.height,
+                angle: dataStore.detector.phiStep,
+                rotation: -dataStore.detector.phiStep*(index+1),
+                clockwise: false,
+                fill: '#000000',
+                fillPatternOffsetX: 100*Math.random(),
+                fillPatternOffsetY: 100*Math.random(),
+                stroke: dataStore.frameColor,
+                strokeWidth: dataStore.frameLineWidth,
+                closed: true,
+                listening: true
+            }); 
+        }
+
+        //set up the tooltip listeners:
+        dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
+        dataStore.detector.cells[channel].on('mousemove', moveTooltip);
+        dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+
+        //set up onclick listeners:
+        dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+    }
+</script>

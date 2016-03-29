@@ -75,7 +75,7 @@
     function drawDetector(){
         // once the HTML is in place, finish setting up visualization.
 
-        var i, X, Y;
+        var i;
 
         //generic setup + TAC layer
         setupDetector(true);
@@ -150,8 +150,8 @@
                 rotationDeg: -120*(segment+1),
                 fillPatternOffsetX: 100*Math.random(),
                 fillPatternOffsetY: 100*Math.random(),
-                stroke: this.frameColor,
-                strokeWidth: this.frameLineWidth,
+                stroke: dataStore.frameColor,
+                strokeWidth: dataStore.frameLineWidth,
                 closed: true,
                 listening: true
             });
