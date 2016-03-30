@@ -66,12 +66,15 @@ dataStore = {
     "tooltip": {                            // place to park tooltip information
         'currentTooltipTarget': null
     },
-    "detPrefix": {                          // standard two-character prefixes for all detectors
-        'DA': 'DANTE',
-        'DS': 'DESCANT',
-        'GR': 'GRIFFIN',
-        'PA': 'PACES',
-        'SE': 'SCEPTAR'
+    "detPrefix": {                          // standard three-character prefixes for all detectors
+        'DAL': 'DANTE',
+        'DSC': 'DESCANT',
+        'GRG': 'GRIFFIN',
+        'PAC': 'PACES',
+        'SEP': 'SCEPTAR',
+        'SPI': 'SPICE',
+        'SPZ': 'S2',
+        'SPE': 'S3'
     },
     "detectorTypes": [                      // detector types acknowledged by grif16 and grif4g
         {                                   // see table 5.4 in https://rawgit.com/wiki/GriffinCollaboration/GRSISort/technical-docs/GRIFFIN_Event_Format.pdf

@@ -23,7 +23,7 @@
             wrap = document.getElementById('nav-wrap');
 
         for(i=0; i<dataStore.ODB.DAQ.MSC.chan.length; i++){
-            detectors.push(dataStore.ODB.DAQ.MSC.chan[i].slice(0,2));
+            detectors.push(dataStore.ODB.DAQ.MSC.chan[i].slice(0,3));
         }
         detectors = detectors.unique();
 
@@ -31,7 +31,13 @@
             if(dataStore.detPrefix[detectors[i]]){
                 newLink = document.createElement('a');
                 newLink.setAttribute('class', 'btn btn-info btn-fudge');
-                newLink.setAttribute('href', dataStore.detPrefix[detectors[i]].toLowerCase() + '.html');
+                if(detectors[i] == 'SPZ'){
+                    newLink.setAttribute('href', 's2s3.html?config=S2');
+                } else if(detectors[i] == 'SPE'){
+                    newLink.setAttribute('href', 's2s3.html?config=S3');
+                } else {
+                    newLink.setAttribute('href', dataStore.detPrefix[detectors[i]].toLowerCase() + '.html');
+                }
                 newLink.setAttribute('id', dataStore.detPrefix[detectors[i]].toLowerCase() + '-link');
                 newLink.innerHTML = dataStore.detPrefix[detectors[i]];
                 wrap.appendChild(newLink);

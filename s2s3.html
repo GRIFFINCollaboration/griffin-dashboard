@@ -43,7 +43,7 @@
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 setupRequests();
-                deployDetector('detector-s2s3', 's2/s3');
+                deployDetector('detector-s2s3', dataStore.detector.config);
             });
         </script>
 
