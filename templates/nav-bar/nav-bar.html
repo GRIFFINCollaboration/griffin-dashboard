@@ -36,9 +36,9 @@
                 } else if(detectors[i] == 'SPE'){
                     newLink.setAttribute('href', 's2s3.html?config=S3');
                 } else {
-                    newLink.setAttribute('href', dataStore.detPrefix[detectors[i]].toLowerCase() + '.html');
+                    newLink.setAttribute('href', dataStore.detPrefix[detectors[i]].replace(/ /g,'').toLowerCase() + '.html');
                 }
-                newLink.setAttribute('id', dataStore.detPrefix[detectors[i]].toLowerCase() + '-link');
+                newLink.setAttribute('id', dataStore.detPrefix[detectors[i]].replace(/ /g,'').toLowerCase() + '-link');
                 newLink.innerHTML = dataStore.detPrefix[detectors[i]];
                 wrap.appendChild(newLink);
             }

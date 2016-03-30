@@ -1,0 +1,104 @@
+<link rel="stylesheet" href="../detector.css">
+
+<template id='detector-tipwall'>
+    <div class='nav-row'>
+        <div class="btn-group" role="group" id="view-nav"></div>
+    </div>
+
+    <div id='visualizationcollection'>
+        {{#views}}
+            <div id='{{.}}Wrap' class='visWrap hidden'></div>
+        {{/views}}
+        <form id='scalecontrol' onchange='managePlotScale()'>
+            <label for='linScale'>Linear</label>
+            <input id='linScale' name='plotScale' value='lin' type='radio' checked></input>
+            <label for='logScale' class='uiRow'>Log</label>
+            <input id='logScale' name='plotScale' value='log' type='radio'></input>
+            <label for='scaleMin', class='uiRow'>Min</label>
+            <input id='scaleMin', type='number' min='0' step='1'></input>
+            <label for='scaleMax', class='uiRow'>Max</label>
+            <input id='scaleMax', type='number' min='0' step='1'></input>
+        </form>
+    </div>
+
+    <img id='errorPattern' src='img/static.gif' class='hidden'></img>
+</template>
+
+<script>
+    function parameterizeDetector(){
+        // determine all the parameters needed for TIP wall's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
+
+        var i;
+
+        //build up dataStore.detector.channel names
+        dataStore.detector.channelNames = [];
+        for(i=0; i<25; i++){
+            dataStore.detector.channelNames.push('TPW' + ((i<10)?'00':'0') + i + 'P00X');
+        }
+
+        // view labels
+        dataStore.detector.views = ['main'];
+
+        //subview info
+        dataStore.detector.subviews = ['HV', 'threshold', 'trigger_request', 'trigger_accept'];
+
+        // how many characters are in the summary view channel names?
+        dataStore.detector.summaryDepth = 0;
+
+        // build up raw data structure
+        createDataStructure();
+    }
+
+    function drawDetector(){
+        // once the HTML is in place, finish setting up visualization.
+
+        var i, index, channel, X, Y;
+
+        //generic setup
+        setupDetector();
+
+        //////////////////////////////////////
+        //TIP Wall specific drawing parameters
+        //////////////////////////////////////
+        dataStore.detector.cellSide = dataStore.detector.height*0.8/5;                           //length of cell side
+        dataStore.detector.x0 = dataStore.detector.width/2 - 2.5*dataStore.detector.cellSide;    //x coordinate of upper left corner of TIP image
+        dataStore.detector.y0 = 10;                                                              //y ''
+        dataStore.detector.X = [null,1,1,2,3,3,3,2,1,0,0,0,1,2,3,4,4,4,4,4,3,2,1,0,0]            //lattice coordinates of indexed channel
+        dataStore.detector.Y = [null,2,1,1,1,2,3,3,3,2,1,0,0,0,0,0,1,2,3,4,4,4,4,4,3]
+
+        //create vertices for plot:
+        dataStore.detector.cellCoords = {}
+        for(i=0; i<dataStore.detector.channelNames.length; i++){
+            channel = dataStore.detector.channelNames[i];
+            index = parseInt(channel.slice(4,7),10);
+            X = dataStore.detector.x0 + dataStore.detector.cellSide*dataStore.detector.X[index];
+            Y = dataStore.detector.y0 + dataStore.detector.cellSide*dataStore.detector.Y[index];
+
+            points = [
+                0, 0,
+                dataStore.detector.cellSide, 0,
+                dataStore.detector.cellSide, dataStore.detector.cellSide,
+                0, dataStore.detector.cellSide
+            ]
+
+            dataStore.detector.cellCoords[channel] = {
+                "vertices": points,
+                "x": X,
+                "y": Y,
+                "internalRotation": 0
+            }
+        }
+
+        // only one view, set and forget:
+        dataStore.detector.currentView = 'main';
+        document.getElementById('mainWrap').classList.remove('hidden');
+        // start with summary trigger accepts displayed
+        manageSubview('trigger_accept', true);
+
+        // set up the cells
+        instantiateCells(0);
+        generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
+
+        repaint();
+    }
+</script>

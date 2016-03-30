@@ -74,7 +74,9 @@ dataStore = {
         'SEP': 'SCEPTAR',
         'SPI': 'SPICE',
         'SPZ': 'S2',
-        'SPE': 'S3'
+        'SPE': 'S3',
+        'TPW': 'TIP Wall',
+        'TPC': 'TIP Ball'
     },
     "detectorTypes": [                      // detector types acknowledged by grif16 and grif4g
         {                                   // see table 5.4 in https://rawgit.com/wiki/GriffinCollaboration/GRSISort/technical-docs/GRIFFIN_Event_Format.pdf
