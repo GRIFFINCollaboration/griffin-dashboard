@@ -127,6 +127,26 @@ function squishFont(string, maxWidth){
     }
 }
 
+function kineticArrow(fromx, fromy, tox, toy){
+    // returns a kinetic object in the shape of an arrow
+
+    var headlen = 20,
+        angle = Math.atan2(toy-fromy,tox-fromx),
+        line;
+
+    line = new Kinetic.Line({
+        points: [tox,toy, tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6), tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6), tox,toy, fromx,fromy],
+        fill: '#999999',
+        stroke: '#999999',
+        strokeWidth: dataStore.frameLineWidth,
+        closed: true,
+        listening: true
+
+    });
+
+    return line;
+}
+
 //////////////////////////
 // network requests
 //////////////////////////

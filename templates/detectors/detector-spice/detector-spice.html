@@ -1,0 +1,114 @@
+<link rel="stylesheet" href="../detector.css">
+
+<template id='detector-spice'>
+    <div class='nav-row'>
+        <div class="btn-group" role="group" id="view-nav"></div>
+    </div>
+
+    <div id='visualizationcollection'>
+        {{#views}}
+            <div id='{{.}}Wrap' class='visWrap hidden'></div>
+        {{/views}}
+        <form id='scalecontrol' onchange='managePlotScale()'>
+            <label for='linScale'>Linear</label>
+            <input id='linScale' name='plotScale' value='lin' type='radio' checked></input>
+            <label for='logScale' class='uiRow'>Log</label>
+            <input id='logScale' name='plotScale' value='log' type='radio'></input>
+            <label for='scaleMin', class='uiRow'>Min</label>
+            <input id='scaleMin', type='number' min='0' step='1'></input>
+            <label for='scaleMax', class='uiRow'>Max</label>
+            <input id='scaleMax', type='number' min='0' step='1'></input>
+        </form>
+    </div>
+
+    <img id='errorPattern' src='img/static.gif' class='hidden'></img>
+</template>
+
+<script>
+    function parameterizeDetector(){
+        // determine all the parameters needed for SPICE's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
+
+        var i;
+
+        //build up dataStore.detector.channel names
+        dataStore.detector.channelNames = [];
+        for(i=0; i<120; i++){
+            dataStore.detector.channelNames.push('SPI00XN' + ( (i<10)?'00':((i<100)?'0':'') ) + i)
+        }
+
+        // view labels
+        dataStore.detector.views = ['main'];
+
+        //subview info
+        dataStore.detector.subviews = ['HV', 'threshold', 'trigger_request', 'trigger_accept'];
+
+        // how many characters are in the summary view channel names?
+        dataStore.detector.summaryDepth = 0;
+
+        // build up raw data structure
+        createDataStructure();
+    }
+
+    function drawDetector(){
+        // once the HTML is in place, finish setting up visualization.
+
+        //generic setup
+        setupDetector();
+
+        //////////////////////////////////////
+        // SPICE specific drawing parameters
+        //////////////////////////////////////
+        dataStore.detector.outerRad = 0.4*dataStore.detector.height;
+        dataStore.detector.innerRad = 0.02*dataStore.detector.height;
+        dataStore.detector.radStep  = (dataStore.detector.outerRad - dataStore.detector.innerRad) / 10;
+        dataStore.detector.x0 = dataStore.detector.width/2;
+        dataStore.detector.y0 = 0.4*dataStore.detector.height + dataStore.frameLineWidth;
+
+        // only one view, set and forget:
+        dataStore.detector.currentView = 'main';
+        document.getElementById('mainWrap').classList.remove('hidden');
+        // start with summary trigger accepts displayed
+        manageSubview('trigger_accept', true);
+
+        // set up the cells
+        instantiateCells(0);
+        generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
+
+        repaint();
+    }
+
+    function createCell(channel){
+        // reimplemented for s2/s3 - circular cells instead of polygons
+        // stamp out a cell for the given channel and coordinate array key
+        // note that cell still has to be added to an appropriate layer on a per-detector basis.
+
+        var index = parseInt(channel.slice(7),10),
+            azimuthalSection = index%12,
+            radialSection = Math.floor(index/12);
+
+        dataStore.detector.cells[channel] = new Kinetic.Arc({
+            innerRadius: dataStore.detector.innerRad + radialSection*dataStore.detector.radStep,
+            outerRadius: dataStore.detector.innerRad + (radialSection+1)*dataStore.detector.radStep,
+            angle: 30,
+            clockwise: false,
+            rotationDeg: -30*(azimuthalSection+1),
+            x: dataStore.detector.x0,
+            y: dataStore.detector.y0,
+            fill: '#000000',
+            fillPatternOffsetX: 100*Math.random(),
+            fillPatternOffsetY: 100*Math.random(),
+            stroke: dataStore.frameColor,
+            strokeWidth: dataStore.frameLineWidth,
+            closed: true,
+            listening: true
+        });
+
+        //set up the tooltip listeners:
+        dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
+        dataStore.detector.cells[channel].on('mousemove', moveTooltip);
+        dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+
+        //set up onclick listeners:
+        dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+    }
+</script>

@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>S2 / S3</title>
+        <title>SHARC</title>
 
         <!--libraries-->
         <script src='scripts/HTMLImports.min.js' type="text/javascript"></script>
@@ -27,7 +27,7 @@
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
         <link id='detector-structure' rel="import" href="templates/detectors/detector-structure.html">
         <link id='detector-view' rel="import" href="templates/detectors/detector-view.html">
-        <link id='detector-s2s3' rel="import" href="templates/detectors/detector-s2s3/detector-s2s3.html">
+        <link id='detector-sharc' rel="import" href="templates/detectors/detector-sharc/detector-sharc.html">
         <link id='adc-sidebar' rel="import" href="templates/detectors/adc-sidebar/adc-sidebar.html">
         <link id='hv-sidebar' rel="import" href="templates/detectors/hv-sidebar/hv-sidebar.html">
     </head>
@@ -38,12 +38,9 @@
         <div id='footer'></div>
 
         <script>
-            //are we doing S2 or S3? S2 by default.
-            dataStore.detector.config = getParameterByName('config') || 'S2';
-
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 setupRequests();
-                deployDetector('detector-s2s3', dataStore.detector.config);
+                deployDetector('detector-sharc', 'SHARC');
             });
         </script>
 
