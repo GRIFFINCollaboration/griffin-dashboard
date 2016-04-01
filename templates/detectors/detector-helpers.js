@@ -656,7 +656,7 @@ function manageSubview(target, suppressRepaint){
     //maange which variable is being plotted in the detector displays
 
     var i;
-
+    
     //manage button state
     if(dataStore.detector.subview)
         document.getElementById(dataStore.detector.subview + 'Select').classList.remove('active');
@@ -665,7 +665,7 @@ function manageSubview(target, suppressRepaint){
 
     //manage actual image; note first view always shows the HV layer, ie for summaries and detectors with HV channels == scalar channels
     for(i=1; i<dataStore.detector.views.length; i++){
-        if(target == 'HV'){
+        if(target == 'HV' || dataStore.detector.singleSubview){
             dataStore.detector.HVLayer[i].show();
             dataStore.detector.channelLayer[i].hide();
         } else{
