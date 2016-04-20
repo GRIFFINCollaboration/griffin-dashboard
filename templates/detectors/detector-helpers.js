@@ -228,11 +228,11 @@ function generateColorScale(scale){
 
     var colorStops = [],
         i, j,
-        tick, colorScale;
+        tick, colorScale, 
+        gradientFill, gradientPath;
 
     //generate a bunch of color stop points for the gradient
     for(i=0; i<101; i++){
-        colorStops.push(i/100);
         colorStops.push(scalepickr(i/100, dataStore.detector.plotScales[dataStore.detector.subview].color));
     }
 
@@ -240,54 +240,65 @@ function generateColorScale(scale){
     dataStore.detector.scaleTitle = [];
     for(j=0; j<dataStore.detector.views.length; j++){
 
-        //draw the gradient itself
-        colorScale = new Kinetic.Rect({
-            x: 0.1*dataStore.detector.width,
-            y: 0.9*dataStore.detector.height,
-            width: 0.8*dataStore.detector.width,
-            height: 0.05*dataStore.detector.height,
-            fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
-            fillLinearGradientEndPoint: {x: 0.8*dataStore.detector.width, y: 0},
-            fillLinearGradientColorStops: colorStops,
-            stroke: '#999999',
-            strokeWidth: 2                    
+        //create a gradient fill object
+        gradientFill = dataStore.detector.scaleLayer[j].ctx.createLinearGradient(0.1*dataStore.detector.width,0.9*dataStore.detector.height,0.8*dataStore.detector.width,0.05*dataStore.detector.height)
+        for(i=0; i<colorStops.length; i++){
+            gradientFill.addColorStop(i/100, colorStops[i]);
+        }
+        gradientPath = generatePath(
+            [
+                0,0, 
+                0.8*dataStore.detector.width,0, 
+                0.8*dataStore.detector.width,0.05*dataStore.detector.height,
+                0,0.05*dataStore.detector.height
+            ], 
+            0.1*dataStore.detector.width,
+            0.9*dataStore.detector.height
+        );
+
+        colorScale = new qdshape(gradientPath, {
+            id: 'gradient'+j,
+            fillStyle: gradientFill,
+            strokeStyle: '#999999',
+            lineWidth: 2,
+            z: 1
         });
 
         dataStore.detector.scaleLayer[j].add(colorScale);
 
-        //place empty ticks on scale
-        dataStore.detector.tickLabels[j] = [];
-        for(i=0; i<11; i++){
-            //tick line
-            tick = new Kinetic.Line({
-                points: [(0.1+i*0.08)*dataStore.detector.width, 0.95*dataStore.detector.height, (0.1+i*0.08)*dataStore.detector.width, 0.96*dataStore.detector.height],
-                stroke: '#999999',
-                strokeWidth: 2
-            });
-            dataStore.detector.scaleLayer[j].add(tick);
+        // //place empty ticks on scale
+        // dataStore.detector.tickLabels[j] = [];
+        // for(i=0; i<11; i++){
+        //     //tick line
+        //     tick = new Kinetic.Line({
+        //         points: [(0.1+i*0.08)*dataStore.detector.width, 0.95*dataStore.detector.height, (0.1+i*0.08)*dataStore.detector.width, 0.96*dataStore.detector.height],
+        //         stroke: '#999999',
+        //         strokeWidth: 2
+        //     });
+        //     dataStore.detector.scaleLayer[j].add(tick);
 
-            //tick label
-            dataStore.detector.tickLabels[j][i] = new Kinetic.Text({
-                x: (0.1+i*0.08)*dataStore.detector.width,
-                y: 0.96*dataStore.detector.height + 2,
-                text: '',
-                fontSize: 14,
-                fontFamily: 'Arial',
-                fill: '#999999'
-            });
-            dataStore.detector.scaleLayer[j].add(dataStore.detector.tickLabels[j][i]);
-        }
+        //     //tick label
+        //     dataStore.detector.tickLabels[j][i] = new Kinetic.Text({
+        //         x: (0.1+i*0.08)*dataStore.detector.width,
+        //         y: 0.96*dataStore.detector.height + 2,
+        //         text: '',
+        //         fontSize: 14,
+        //         fontFamily: 'Arial',
+        //         fill: '#999999'
+        //     });
+        //     dataStore.detector.scaleLayer[j].add(dataStore.detector.tickLabels[j][i]);
+        // }
 
-        //place empty title on scale
-        dataStore.detector.scaleTitle[j] = new Kinetic.Text({
-            x: dataStore.detector.width/2,
-            y: 0.9*dataStore.detector.height - 22,
-            text: '',
-            fontSize : 20,
-            fontFamily: 'Arial',
-            fill: '#999999'
-        })
-        dataStore.detector.scaleLayer[j].add(dataStore.detector.scaleTitle[j]);
+        // //place empty title on scale
+        // dataStore.detector.scaleTitle[j] = new Kinetic.Text({
+        //     x: dataStore.detector.width/2,
+        //     y: 0.9*dataStore.detector.height - 22,
+        //     text: '',
+        //     fontSize : 20,
+        //     fontFamily: 'Arial',
+        //     fill: '#999999'
+        // })
+        // dataStore.detector.scaleLayer[j].add(dataStore.detector.scaleTitle[j]);
     }
 }
 
@@ -340,18 +351,19 @@ function createCell(channel){
             //fillPatternOffsetX: 100*Math.random(),
             //fillPatternOffsetY: 100*Math.random(),
             strokeStyle: dataStore.frameColor,
-            lineWidth: dataStore.frameLineWidth
+            lineWidth: dataStore.frameLineWidth,
+            z: 1
         });
 
     dataStore.detector.cells[channel] = cell;
 
     //set up the tooltip listeners:
-    //dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
-    //dataStore.detector.cells[channel].on('mousemove', moveTooltip);
-    //dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+    dataStore.detector.cells[channel].mouseover = writeTooltip.bind(null, channel);
+    dataStore.detector.cells[channel].mousemove = moveTooltip;
+    dataStore.detector.cells[channel].mouseout = hideTooltip;
 
     //set up onclick listeners:
-    //dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+    dataStore.detector.cells[channel].click = clickCell.bind(null, channel);
 }
 
 function generatePath(vertices, offsetX, offsetY){

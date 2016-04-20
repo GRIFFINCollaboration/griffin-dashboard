@@ -393,7 +393,7 @@ function hideTooltip(){
     tooltip.setAttribute('style', 'display:none;');   
 }
 
-function moveTooltip(event){
+function moveTooltip(x, y, event){
 
     var tooltip = document.getElementById('tooltip'),
         offset = getPosition(tooltip.parentElement),
@@ -410,13 +410,14 @@ function highlightCell(cell){
     // draw a big red border around the last cell clicked, and remove the previous big red border if it exists.
 
     if(dataStore.lastCellClick){
-        dataStore.lastCellClick.setAttr('stroke', dataStore.frameColor);
-        dataStore.lastCellClick.setAttr('strokeWidth', dataStore.frameLineWidth);
+        dataStore.lastCellClick.strokeStyle = dataStore.frameColor;
+        dataStore.lastCellClick.lineWidth = dataStore.frameLineWidth;
+        dataStore.lastCellClick.z = 1;
     }
     dataStore.lastCellClick = cell;
-    cell.setAttr('stroke', '#FF0000');
-    cell.setAttr('strokeWidth', 6);
-    cell.moveToTop();
+    cell.strokeStyle = '#FF0000';
+    cell.lineWidth = 6;
+    cell.z = 10;
     
     repaint();
 }
