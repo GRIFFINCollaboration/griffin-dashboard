@@ -122,14 +122,12 @@ function setupDetector(){
     dataStore.detector.HVLayer = [];
     dataStore.detector.scaleLayer = [];
     for(i=0; i<dataStore.detector.views.length; i++){
-        dataStore.detector.stage[i] = new Kinetic.Stage({
-            container: dataStore.detector.views[i] + 'Wrap',
-            width: dataStore.detector.width,
-            height: dataStore.detector.height
-        });
-        dataStore.detector.channelLayer[i] = new Kinetic.Layer();
-        dataStore.detector.HVLayer[i] = new Kinetic.Layer();
-        dataStore.detector.scaleLayer[i] = new Kinetic.Layer();
+        dataStore.detector.stage[i] = new quickdraw(dataStore.detector.width, dataStore.detector.height);
+        document.getElementById(dataStore.detector.views[i] + 'Wrap').appendChild(dataStore.detector.stage[i].canvas)
+
+        dataStore.detector.channelLayer[i] = new qdlayer('channelLayer'+i);
+        dataStore.detector.HVLayer[i] = new qdlayer('HVLayer'+i);
+        dataStore.detector.scaleLayer[i] = new qdlayer('scaleLayer'+i);
 
         dataStore.detector.stage[i].add(dataStore.detector.scaleLayer[i]);
         dataStore.detector.stage[i].add(dataStore.detector.channelLayer[i]);
@@ -210,7 +208,7 @@ function setupErrorPattern(){
         var key;
 
         for(key in dataStore.detector.cells){
-            dataStore.detector.cells[key].setAttr('fillPatternImage', dataStore.errorPattern);
+            dataStore.detector.cells[key].fillPatternImage = dataStore.errorPattern;
         }
     }
     if(dataStore.errorPattern.complete){
@@ -330,27 +328,46 @@ function createCell(channel){
     // stamp out a cell for the given channel and coordinate array key
     // note that cell still has to be added to an appropriate layer on a per-detector basis.
 
-    dataStore.detector.cells[channel] = new Kinetic.Line({
-        points: dataStore.detector.cellCoords[channel].vertices,
-        fill: '#000000',
-        x: dataStore.detector.cellCoords[channel].x || 0,
-        y: dataStore.detector.cellCoords[channel].y || 0,
-        rotation: dataStore.detector.cellCoords[channel].internalRotation || 0,
-        fillPatternOffsetX: 100*Math.random(),
-        fillPatternOffsetY: 100*Math.random(),
-        stroke: dataStore.frameColor,
-        strokeWidth: dataStore.frameLineWidth,
-        closed: true,
-        listening: true
-    });
+    var poly = generatePath(
+            dataStore.detector.cellCoords[channel].vertices,
+            dataStore.detector.cellCoords[channel].x,
+            dataStore.detector.cellCoords[channel].y
+        ),
+        cell = new qdshape(poly, {
+            id: channel,
+            fillStyle: '#000000',
+            //rotation: dataStore.detector.cellCoords[channel].internalRotation || 0,
+            //fillPatternOffsetX: 100*Math.random(),
+            //fillPatternOffsetY: 100*Math.random(),
+            strokeStyle: dataStore.frameColor,
+            lineWidth: dataStore.frameLineWidth
+        });
+
+    dataStore.detector.cells[channel] = cell;
 
     //set up the tooltip listeners:
-    dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
-    dataStore.detector.cells[channel].on('mousemove', moveTooltip);
-    dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+    //dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
+    //dataStore.detector.cells[channel].on('mousemove', moveTooltip);
+    //dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
 
     //set up onclick listeners:
-    dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+    //dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+}
+
+function generatePath(vertices, offsetX, offsetY){
+    //given an array of vertices [x0,y0, x1,y1,...] return a Path2D object described by these vertices
+    //offsetX and offsetY translate all coords
+
+    var poly = new Path2D(),
+        i;
+
+        poly.moveTo(vertices[0]+offsetX,vertices[1]+offsetY);
+        for(i=1; i<vertices.length/2; i++){
+            poly.lineTo(vertices[2*i]+offsetX,vertices[2*i+1]+offsetY);
+        }
+        poly.closePath();
+
+        return poly;
 }
 
 function repaint(){
@@ -358,13 +375,13 @@ function repaint(){
 
     var currentViewIndex = dataStore.detector.views.indexOf(dataStore.detector.currentView);
 
-    refreshColorScale(currentViewIndex);
+    //refreshColorScale(currentViewIndex);
     updateCells();
 
     if(dataStore.tooltip.currentTooltipTarget)
         writeTooltip(dataStore.tooltip.currentTooltipTarget);
 
-    dataStore.detector.stage[currentViewIndex].draw();
+    dataStore.detector.stage[currentViewIndex].render();
 }
 
 function managePlotScale(setFromDataStore){
@@ -433,7 +450,7 @@ function updateCells(){
             continue;
 
         // assume data unavailable until proven otherwise
-        dataStore.detector.cells[channel].setFillPriority('pattern');
+        dataStore.detector.cells[channel].fillPriority = 'pattern';
 
         // fetch the most recent raw value from the currentData store:
         if(dataStore.data[channel] && isNumeric(dataStore.data[channel][currentSubview]) ){
@@ -449,9 +466,8 @@ function updateCells(){
             if(colorIndex > 1) colorIndex = 1;
             color = scalepickr(colorIndex, currentColor);
 
-            dataStore.detector.cells[channel].fill(color);
-            dataStore.detector.cells[channel].setFillPriority('color');
-
+            dataStore.detector.cells[channel].fillStyle = color;
+            dataStore.detector.cells[channel].fillPriority = 'color';
         }
     }
 }
