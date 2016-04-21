@@ -232,7 +232,7 @@ function generateColorScale(scale){
         gradientFill, gradientPath;
 
     //generate a bunch of color stop points for the gradient
-    for(i=0; i<101; i++){
+    for(i=0; i<100; i++){
         colorStops.push(scalepickr(i/100, dataStore.detector.plotScales[dataStore.detector.subview].color));
     }
 
@@ -241,7 +241,7 @@ function generateColorScale(scale){
     for(j=0; j<dataStore.detector.views.length; j++){
 
         //create a gradient fill object
-        gradientFill = dataStore.detector.scaleLayer[j].ctx.createLinearGradient(0.1*dataStore.detector.width,0.9*dataStore.detector.height,0.8*dataStore.detector.width,0.05*dataStore.detector.height)
+        gradientFill = dataStore.detector.scaleLayer[j].ctx.createLinearGradient(0.1*dataStore.detector.width,0.9*dataStore.detector.height,0.9*dataStore.detector.width,0.95*dataStore.detector.height)
         for(i=0; i<colorStops.length; i++){
             gradientFill.addColorStop(i/100, colorStops[i]);
         }
@@ -266,39 +266,38 @@ function generateColorScale(scale){
 
         dataStore.detector.scaleLayer[j].add(colorScale);
 
-        // //place empty ticks on scale
-        // dataStore.detector.tickLabels[j] = [];
-        // for(i=0; i<11; i++){
-        //     //tick line
-        //     tick = new Kinetic.Line({
-        //         points: [(0.1+i*0.08)*dataStore.detector.width, 0.95*dataStore.detector.height, (0.1+i*0.08)*dataStore.detector.width, 0.96*dataStore.detector.height],
-        //         stroke: '#999999',
-        //         strokeWidth: 2
-        //     });
-        //     dataStore.detector.scaleLayer[j].add(tick);
+        //place empty ticks on scale
+        dataStore.detector.tickLabels[j] = [];
+        for(i=0; i<11; i++){
+            //tick line
+            tick = generatePath([0,0,0,0.01*dataStore.detector.height], (0.1+i*0.08)*dataStore.detector.width, 0.95*dataStore.detector.height);
+            tick = new qdshape(tick, {
+                id: 'tick'+i,
+                strokeStyle: '#999999',
+                lineWidth: 2
+            });
+            dataStore.detector.scaleLayer[j].add(tick);
 
-        //     //tick label
-        //     dataStore.detector.tickLabels[j][i] = new Kinetic.Text({
-        //         x: (0.1+i*0.08)*dataStore.detector.width,
-        //         y: 0.96*dataStore.detector.height + 2,
-        //         text: '',
-        //         fontSize: 14,
-        //         fontFamily: 'Arial',
-        //         fill: '#999999'
-        //     });
-        //     dataStore.detector.scaleLayer[j].add(dataStore.detector.tickLabels[j][i]);
-        // }
+            //tick label
+            dataStore.detector.tickLabels[j][i] = new qdtext('', {
+                x: (0.1+i*0.08)*dataStore.detector.width,
+                y: 0.98*dataStore.detector.height + 2,
+                fontSize: 14,
+                typeface: 'Arial',
+                fillStyle: '#999999'
+            });
+            dataStore.detector.scaleLayer[j].add(dataStore.detector.tickLabels[j][i]);
+        }
 
-        // //place empty title on scale
-        // dataStore.detector.scaleTitle[j] = new Kinetic.Text({
-        //     x: dataStore.detector.width/2,
-        //     y: 0.9*dataStore.detector.height - 22,
-        //     text: '',
-        //     fontSize : 20,
-        //     fontFamily: 'Arial',
-        //     fill: '#999999'
-        // })
-        // dataStore.detector.scaleLayer[j].add(dataStore.detector.scaleTitle[j]);
+        //place empty title on scale
+        dataStore.detector.scaleTitle[j] = new qdtext('', {
+            x: dataStore.detector.width/2,
+            y: 0.9*dataStore.detector.height - 22,
+            fontSize : 20,
+            typeface: 'Arial',
+            fillStyle: '#999999'
+        })
+        dataStore.detector.scaleLayer[j].add(dataStore.detector.scaleTitle[j]);
     }
 }
 
@@ -322,17 +321,14 @@ function refreshColorScale(index){
     //refresh tick labels
     for(i=0; i<11; i++){
         //update text
-        dataStore.detector.tickLabels[index][i].setText(generateTickLabel(currentMin, currentMax, 11, i));
+        dataStore.detector.tickLabels[index][i].text = (generateTickLabel(currentMin, currentMax, 11, i));
         //update position
-        dataStore.detector.tickLabels[index][i].setAttr('x', (0.1+i*0.08)*dataStore.detector.width - dataStore.detector.tickLabels[index][i].getTextWidth()/2);
+        dataStore.detector.tickLabels[index][i].x = (0.1+i*0.08)*dataStore.detector.width - dataStore.detector.tickLabels[index][i].getTextWidth()/2;
     }
 
     //update title
-    dataStore.detector.scaleTitle[index].setText(logTitle + dataStore.detector.subviewPrettyText[dataStore.detector.subview] + ' [' + dataStore.detector.subviewUnits[dataStore.detector.subview] + ']');
-    dataStore.detector.scaleTitle[index].setAttr('x', dataStore.detector.width/2 - dataStore.detector.scaleTitle[index].getTextWidth()/2);
-
-    dataStore.detector.scaleLayer[index].draw();
-    
+    dataStore.detector.scaleTitle[index].text = logTitle + dataStore.detector.subviewPrettyText[dataStore.detector.subview] + ' [' + dataStore.detector.subviewUnits[dataStore.detector.subview] + ']';
+    dataStore.detector.scaleTitle[index].x = dataStore.detector.width/2 - dataStore.detector.scaleTitle[index].getTextWidth()/2;    
 }
 
 function createCell(channel){
@@ -387,7 +383,7 @@ function repaint(){
 
     var currentViewIndex = dataStore.detector.views.indexOf(dataStore.detector.currentView);
 
-    //refreshColorScale(currentViewIndex);
+    refreshColorScale(currentViewIndex);
     updateCells();
 
     if(dataStore.tooltip.currentTooltipTarget)
