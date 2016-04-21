@@ -343,12 +343,14 @@ function createCell(channel){
         cell = new qdshape(poly, {
             id: channel,
             fillStyle: '#000000',
-            //rotation: dataStore.detector.cellCoords[channel].internalRotation || 0,
             //fillPatternOffsetX: 100*Math.random(),
             //fillPatternOffsetY: 100*Math.random(),
             strokeStyle: dataStore.frameColor,
             lineWidth: dataStore.frameLineWidth,
-            z: 1
+            x: dataStore.detector.cellCoords[channel].x,
+            y: dataStore.detector.cellCoords[channel].y,
+            z: 1,
+            internalRotation: dataStore.detector.cellCoords[channel].internalRotation
         });
 
     dataStore.detector.cells[channel] = cell;
