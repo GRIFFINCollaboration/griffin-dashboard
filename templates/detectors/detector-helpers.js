@@ -323,12 +323,12 @@ function refreshColorScale(index){
         //update text
         dataStore.detector.tickLabels[index][i].text = (generateTickLabel(currentMin, currentMax, 11, i));
         //update position
-        dataStore.detector.tickLabels[index][i].x = (0.1+i*0.08)*dataStore.detector.width - dataStore.detector.tickLabels[index][i].getTextWidth()/2;
+        dataStore.detector.tickLabels[index][i].x = (0.1+i*0.08)*dataStore.detector.width - dataStore.detector.tickLabels[index][i].getTextMetric().width/2;
     }
 
     //update title
     dataStore.detector.scaleTitle[index].text = logTitle + dataStore.detector.subviewPrettyText[dataStore.detector.subview] + ' [' + dataStore.detector.subviewUnits[dataStore.detector.subview] + ']';
-    dataStore.detector.scaleTitle[index].x = dataStore.detector.width/2 - dataStore.detector.scaleTitle[index].getTextWidth()/2;    
+    dataStore.detector.scaleTitle[index].x = dataStore.detector.width/2 - dataStore.detector.scaleTitle[index].getTextMetric().width/2;    
 }
 
 function createCell(channel){
@@ -343,8 +343,6 @@ function createCell(channel){
         cell = new qdshape(poly, {
             id: channel,
             fillStyle: '#000000',
-            //fillPatternOffsetX: 100*Math.random(),
-            //fillPatternOffsetY: 100*Math.random(),
             strokeStyle: dataStore.frameColor,
             lineWidth: dataStore.frameLineWidth,
             x: dataStore.detector.cellCoords[channel].x,
@@ -362,22 +360,6 @@ function createCell(channel){
 
     //set up onclick listeners:
     dataStore.detector.cells[channel].click = clickCell.bind(null, channel);
-}
-
-function generatePath(vertices, offsetX, offsetY){
-    //given an array of vertices [x0,y0, x1,y1,...] return a Path2D object described by these vertices
-    //offsetX and offsetY translate all coords
-
-    var poly = new Path2D(),
-        i;
-
-        poly.moveTo(vertices[0]+offsetX,vertices[1]+offsetY);
-        for(i=1; i<vertices.length/2; i++){
-            poly.lineTo(vertices[2*i]+offsetX,vertices[2*i+1]+offsetY);
-        }
-        poly.closePath();
-
-        return poly;
 }
 
 function repaint(){
@@ -692,11 +674,11 @@ function manageSubview(target, suppressRepaint){
     //manage actual image; note first view always shows the HV layer, ie for summaries and detectors with HV channels == scalar channels
     for(i=1; i<dataStore.detector.views.length; i++){
         if(target == 'HV' || dataStore.detector.singleSubview){
-            dataStore.detector.HVLayer[i].show();
-            dataStore.detector.channelLayer[i].hide();
+            dataStore.detector.HVLayer[i].display = true;
+            dataStore.detector.channelLayer[i].display = false;
         } else{
-            dataStore.detector.HVLayer[i].hide();
-            dataStore.detector.channelLayer[i].show();
+            dataStore.detector.HVLayer[i].display = false;
+            dataStore.detector.channelLayer[i].display = true;
         }
     }
 
