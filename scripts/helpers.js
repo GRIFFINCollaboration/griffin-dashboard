@@ -134,13 +134,26 @@ function generatePath(vertices, offsetX, offsetY){
     var poly = new Path2D(),
         i;
 
-        poly.moveTo(vertices[0]+offsetX,vertices[1]+offsetY);
-        for(i=1; i<vertices.length/2; i++){
-            poly.lineTo(vertices[2*i]+offsetX,vertices[2*i+1]+offsetY);
-        }
-        poly.closePath();
+    poly.moveTo(vertices[0]+offsetX,vertices[1]+offsetY);
+    for(i=1; i<vertices.length/2; i++){
+        poly.lineTo(vertices[2*i]+offsetX,vertices[2*i+1]+offsetY);
+    }
+    poly.closePath();
 
-        return poly;
+    return poly;
+}
+
+function generateArc(startPhi, endPhi, innerRad, outerRad, centerX, centerY){
+    //return a Path2D object in the shape of a rainbow
+
+    var arc = new Path2D();
+
+    arc.arc(centerX, centerY, outerRad, startPhi, endPhi);
+    arc.lineTo(centerX + innerRad*Math.cos(endPhi), centerY + innerRad*Math.sin(endPhi));
+    arc.arc(centerX, centerY, innerRad, endPhi, startPhi, true);
+    arc.closePath();
+
+    return arc;
 }
 
 function drawArrow(fromx, fromy, tox, toy){
