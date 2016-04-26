@@ -154,11 +154,11 @@
     }
 
     function instantiateCells(){
-        // decalre the kinetic cells and plug in interactions.
+        // decalre the detector cells and plug in interactions.
 
         var i, viewIndex, channel
 
-        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a quickdraw object:
         for(i=0; i<dataStore.detector.channelNames.length; i++){
             channel = dataStore.detector.channelNames[i];
 
@@ -179,7 +179,7 @@
         }
 
         setupErrorPattern();
-        drawWindowDressing();
+        //drawWindowDressing();
     }
 
     function generateCoords(){

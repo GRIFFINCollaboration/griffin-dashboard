@@ -6,7 +6,7 @@
         <script src='scripts/HTMLImports.min.js' type="text/javascript"></script>
         <script src='scripts/mustache.js' type="text/javascript"></script>
         <script src="scripts/jquery1-11-3.min.js" type="text/javascript"></script>
-        <script src="scripts/kinetic-5.0.1.hackfix.js" type="text/javascript"></script>
+        <script src="scripts/quickdraw.js" type="text/javascript"></script>
 
         <!--helpers-->
         <script src='scripts/helpers.js' type="text/javascript"></script>
@@ -39,13 +39,13 @@
 
         <script>
             //are we doing S2 or S3? S2 by default.
-            dataStore.detector.config = getParameterByName('config') || 'S2';
+            dataStore.detector.config = (getParameterByName('config') || 'S2').toUpperCase();
             //are we upstream or downstream? Downstream by default
             dataStore.detector.position = getParameterByName('position') || 'downstream'
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 setupRequests();
-                deployDetector('detector-bambino', dataStore.detector.config);
+                deployDetector('detector-bambino', 'BAMBINO ' + dataStore.detector.config);
             });
         </script>
 
