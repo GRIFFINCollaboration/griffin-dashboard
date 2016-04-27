@@ -124,22 +124,22 @@
             'tall': [0,dataStore.detector.short*Math.tan(dataStore.detector.theta), 0,dataStore.detector.long, dataStore.detector.short,dataStore.detector.long - dataStore.detector.short/Math.tan(dataStore.detector.theta), dataStore.detector.short,0],
             'long': [0,dataStore.detector.short, dataStore.detector.short*Math.tan(dataStore.detector.theta),0, dataStore.detector.long,0, dataStore.detector.long - dataStore.detector.short/Math.tan(dataStore.detector.theta),dataStore.detector.short]
         }
-        dataStore.detector.downstreamBoxCenterX = -0.7*dataStore.detector.width;
-        dataStore.detector.downstreamBoxCenterY = -0.8*dataStore.detector.height + 0.2*dataStore.detector.width*Math.tan(dataStore.detector.theta) + dataStore.detector.long/2;
-        dataStore.detector.downstreamSHQfrontCenterX = -dataStore.detector.downstreamBoxCenterX + 2*dataStore.detector.grid;
-        dataStore.detector.downstreamSHQfrontCenterY = -dataStore.detector.downstreamBoxCenterY - 2*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
-        dataStore.detector.downstreamSHQbackCenterX = -dataStore.detector.downstreamBoxCenterX + 3*dataStore.detector.grid;
-        dataStore.detector.downstreamSHQbackCenterY = -dataStore.detector.downstreamBoxCenterY - 3*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
-        dataStore.detector.downstreamSHQpadCenterX = -dataStore.detector.downstreamBoxCenterX + 4*dataStore.detector.grid;
-        dataStore.detector.downstreamSHQpadCenterY = -dataStore.detector.downstreamBoxCenterY - 4*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
-        dataStore.detector.upstreamBoxCenterX = -0.3*dataStore.detector.width;
-        dataStore.detector.upstreamBoxCenterY = -0.2*dataStore.detector.width*Math.tan(dataStore.detector.theta) - dataStore.detector.long/2;
-        dataStore.detector.upstreamSHQfrontCenterX = -dataStore.detector.upstreamBoxCenterX - 2*dataStore.detector.grid;
-        dataStore.detector.upstreamSHQfrontCenterY = -dataStore.detector.upstreamBoxCenterY +2*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
-        dataStore.detector.upstreamSHQbackCenterX = -dataStore.detector.upstreamBoxCenterX - 3*dataStore.detector.grid;
-        dataStore.detector.upstreamSHQbackCenterY = -dataStore.detector.upstreamBoxCenterY +3*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
-        dataStore.detector.upstreamSHQpadCenterX = -dataStore.detector.upstreamBoxCenterX - 4*dataStore.detector.grid;
-        dataStore.detector.upstreamSHQpadCenterY = -dataStore.detector.upstreamBoxCenterY +4*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
+        dataStore.detector.downstreamBoxCenterX = 0.7*dataStore.detector.width;
+        dataStore.detector.downstreamBoxCenterY = 0.8*dataStore.detector.height - 0.2*dataStore.detector.width*Math.tan(dataStore.detector.theta) - dataStore.detector.long/2;
+        dataStore.detector.downstreamSHQfrontCenterX = dataStore.detector.downstreamBoxCenterX + 2*dataStore.detector.grid;
+        dataStore.detector.downstreamSHQfrontCenterY = dataStore.detector.downstreamBoxCenterY - 2*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
+        dataStore.detector.downstreamSHQbackCenterX = dataStore.detector.downstreamBoxCenterX + 3*dataStore.detector.grid;
+        dataStore.detector.downstreamSHQbackCenterY = dataStore.detector.downstreamBoxCenterY - 3*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
+        dataStore.detector.downstreamSHQpadCenterX = dataStore.detector.downstreamBoxCenterX + 4*dataStore.detector.grid;
+        dataStore.detector.downstreamSHQpadCenterY = dataStore.detector.downstreamBoxCenterY - 4*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
+        dataStore.detector.upstreamBoxCenterX = 0.3*dataStore.detector.width;
+        dataStore.detector.upstreamBoxCenterY = 0.2*dataStore.detector.width*Math.tan(dataStore.detector.theta) + dataStore.detector.long/2;
+        dataStore.detector.upstreamSHQfrontCenterX = dataStore.detector.upstreamBoxCenterX - 2*dataStore.detector.grid;
+        dataStore.detector.upstreamSHQfrontCenterY = dataStore.detector.upstreamBoxCenterY +2*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
+        dataStore.detector.upstreamSHQbackCenterX = dataStore.detector.upstreamBoxCenterX - 3*dataStore.detector.grid;
+        dataStore.detector.upstreamSHQbackCenterY = dataStore.detector.upstreamBoxCenterY +3*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
+        dataStore.detector.upstreamSHQpadCenterX = dataStore.detector.upstreamBoxCenterX - 4*dataStore.detector.grid;
+        dataStore.detector.upstreamSHQpadCenterY = dataStore.detector.upstreamBoxCenterY +4*dataStore.detector.grid*Math.tan(dataStore.detector.theta);
 
         // start with summary trigger accepts displayed
         manageView(true);
@@ -179,7 +179,7 @@
         }
 
         setupErrorPattern();
-        //drawWindowDressing();
+        drawWindowDressing();
     }
 
     function generateCoords(){
@@ -188,7 +188,7 @@
         //summary layout
         //cell coords packed as: 
         //SHQ***: [center X, center Y, rotation]
-        //SHB***: [{offsetX, offsetY}, orientation] - note Kinetic offsets 'move the viewport'; ie -100 offset in x moves the shape 100px *right* 
+        //SHB***: [{offsetX, offsetY}, orientation]
         dataStore.detector.cellCoords['SHQ01DN'] = [dataStore.detector.downstreamSHQbackCenterX, dataStore.detector.downstreamSHQbackCenterY, 180];
         dataStore.detector.cellCoords['SHQ02DN'] = [dataStore.detector.downstreamSHQbackCenterX, dataStore.detector.downstreamSHQbackCenterY, -90];
         dataStore.detector.cellCoords['SHQ03DN'] = [dataStore.detector.downstreamSHQbackCenterX, dataStore.detector.downstreamSHQbackCenterY, 0];
@@ -207,23 +207,23 @@
         dataStore.detector.cellCoords['SHQ15DP'] = [dataStore.detector.upstreamSHQfrontCenterX, dataStore.detector.upstreamSHQfrontCenterY, 0];
         dataStore.detector.cellCoords['SHQ16DP'] = [dataStore.detector.upstreamSHQfrontCenterX, dataStore.detector.upstreamSHQfrontCenterY, 90];
 
-        dataStore.detector.cellCoords['SHB05DP'] = [{x: dataStore.detector.downstreamBoxCenterX + dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB06DP'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY + dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
-        dataStore.detector.cellCoords['SHB07DP'] = [{x: dataStore.detector.downstreamBoxCenterX - dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB08DP'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY - dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
-        dataStore.detector.cellCoords['SHB05DN'] = [{x: dataStore.detector.downstreamBoxCenterX + 2*dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB06DN'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY + 2*dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
-        dataStore.detector.cellCoords['SHB07DN'] = [{x: dataStore.detector.downstreamBoxCenterX - 2*dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB08DN'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY - 2*dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB05DP'] = [{x: dataStore.detector.downstreamBoxCenterX - dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB06DP'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY - dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB07DP'] = [{x: dataStore.detector.downstreamBoxCenterX + dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB08DP'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY + dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB05DN'] = [{x: dataStore.detector.downstreamBoxCenterX - 2*dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB06DN'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY - 2*dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB07DN'] = [{x: dataStore.detector.downstreamBoxCenterX + 2*dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB08DN'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY + 2*dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
 
-        dataStore.detector.cellCoords['SHB09DP'] = [{x: dataStore.detector.upstreamBoxCenterX + dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB10DP'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY + dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
-        dataStore.detector.cellCoords['SHB11DP'] = [{x: dataStore.detector.upstreamBoxCenterX - dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB12DP'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY - dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
-        dataStore.detector.cellCoords['SHB09DN'] = [{x: dataStore.detector.upstreamBoxCenterX + 2*dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB10DN'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY + 2*dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
-        dataStore.detector.cellCoords['SHB11DN'] = [{x: dataStore.detector.upstreamBoxCenterX - 2*dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB12DN'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY - 2*dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB09DP'] = [{x: dataStore.detector.upstreamBoxCenterX - dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB10DP'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY - dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB11DP'] = [{x: dataStore.detector.upstreamBoxCenterX + dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB12DP'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY + dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB09DN'] = [{x: dataStore.detector.upstreamBoxCenterX - 2*dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB10DN'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY - 2*dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB11DN'] = [{x: dataStore.detector.upstreamBoxCenterX + 2*dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB12DN'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY + 2*dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
 
         //pads
         dataStore.detector.cellCoords['SHQ01EP00X'] = [dataStore.detector.downstreamSHQpadCenterX, dataStore.detector.downstreamSHQpadCenterY, 180];
@@ -235,144 +235,146 @@
         dataStore.detector.cellCoords['SHQ15EP00X'] = [dataStore.detector.upstreamSHQpadCenterX, dataStore.detector.upstreamSHQpadCenterY, 0];
         dataStore.detector.cellCoords['SHQ16EP00X'] = [dataStore.detector.upstreamSHQpadCenterX, dataStore.detector.upstreamSHQpadCenterY, 90];
 
-        dataStore.detector.cellCoords['SHB05EP00X'] = [{x: dataStore.detector.downstreamBoxCenterX + 3*dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB06EP00X'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY + 3*dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
-        dataStore.detector.cellCoords['SHB07EP00X'] = [{x: dataStore.detector.downstreamBoxCenterX - 3*dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB08EP00X'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY - 3*dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
-        dataStore.detector.cellCoords['SHB09EP00X'] = [{x: dataStore.detector.upstreamBoxCenterX + 3*dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB10EP00X'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY + 3*dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
-        dataStore.detector.cellCoords['SHB11EP00X'] = [{x: dataStore.detector.upstreamBoxCenterX - 3*dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY + dataStore.detector.long/2}, 'tall'];
-        dataStore.detector.cellCoords['SHB12EP00X'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY - 3*dataStore.detector.grid + dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB05EP00X'] = [{x: dataStore.detector.downstreamBoxCenterX - 3*dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB06EP00X'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY - 3*dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB07EP00X'] = [{x: dataStore.detector.downstreamBoxCenterX + 3*dataStore.detector.grid, y: dataStore.detector.downstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB08EP00X'] = [{x: dataStore.detector.downstreamBoxCenterX, y: dataStore.detector.downstreamBoxCenterY + 3*dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB09EP00X'] = [{x: dataStore.detector.upstreamBoxCenterX - 3*dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB10EP00X'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY - 3*dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
+        dataStore.detector.cellCoords['SHB11EP00X'] = [{x: dataStore.detector.upstreamBoxCenterX + 3*dataStore.detector.grid, y: dataStore.detector.upstreamBoxCenterY - dataStore.detector.long/2}, 'tall'];
+        dataStore.detector.cellCoords['SHB12EP00X'] = [{x: dataStore.detector.upstreamBoxCenterX, y: dataStore.detector.upstreamBoxCenterY + 3*dataStore.detector.grid - dataStore.detector.short/2}, 'long'];
     }
 
     function drawWindowDressing(){
-        var beamArrow, upstreamLabel, downstreamLabel, frontLabel, backLabel;
+        var beamArrow, upstreamLabel, downstreamLabel, frontLabel, backLabel,
+            fontSize = 28;
 
         //beam arrow
-        dataStore.detector.channelLayer[0].add(kineticArrow(0.32*dataStore.detector.width, 0.4*dataStore.detector.height + Math.tan(dataStore.detector.theta)*0.2*dataStore.detector.width, 0.72*dataStore.detector.width, 0.4*dataStore.detector.height - Math.tan(dataStore.detector.theta)*0.2*dataStore.detector.width )); 
+        dataStore.detector.channelLayer[0].add(
+            drawArrow(
+                0.32*dataStore.detector.width, 
+                0.4*dataStore.detector.height + Math.tan(dataStore.detector.theta)*0.2*dataStore.detector.width, 
+                0.72*dataStore.detector.width, 
+                0.4*dataStore.detector.height - Math.tan(dataStore.detector.theta)*0.2*dataStore.detector.width
+            )
+        )
 
         //label upstream / downstream halves
-        upstreamLabel = new Kinetic.Text({
+        upstreamLabel = new qdtext('Upstream', {
             x: 0,
             y: 0,
-            text: 'Upstream',
-            fontSize: 28,
-            fontFamily: 'Arial',
-            fill: '#999999'
+            fontSize: fontSize,
+            typeface: 'Arial',
+            fillStyle: '#999999'
         });
         dataStore.detector.channelLayer[0].add(upstreamLabel);
         //center label nicely
-        upstreamLabel.setAttr('x', - dataStore.detector.upstreamBoxCenterX - upstreamLabel.getTextWidth()/2);
-        upstreamLabel.setAttr('y', 0.8*dataStore.detector.height - upstreamLabel.getTextHeight());
+        upstreamLabel.x = dataStore.detector.upstreamBoxCenterX - upstreamLabel.getTextMetric().width/2;
+        upstreamLabel.y = 0.8*dataStore.detector.height - fontSize;
 
-        downstreamLabel = new Kinetic.Text({
+        downstreamLabel = new qdtext('Downstream', {
             x: 0,
             y: 0,
-            text: 'Downstream',
-            fontSize: 28,
-            fontFamily: 'Arial',
-            fill: '#999999'
+            fontSize: fontSize,
+            typeface: 'Arial',
+            fillStyle: '#999999'
         });
         dataStore.detector.channelLayer[0].add(downstreamLabel);
         //center label nicely
-        downstreamLabel.setAttr('x', - dataStore.detector.downstreamBoxCenterX - downstreamLabel.getTextWidth()/2);
-        downstreamLabel.setAttr('y', 0.8*dataStore.detector.height - downstreamLabel.getTextHeight());  
+        downstreamLabel.x = dataStore.detector.downstreamBoxCenterX - downstreamLabel.getTextMetric().width/2;
+        downstreamLabel.y = 0.8*dataStore.detector.height - fontSize;  
 
         //labels for detail views:
         for(i=1; i<16; i++){
-            frontLabel = new Kinetic.Text({
+            frontLabel = new qdtext('Front', {
                 x: 0,
                 y: 0,
-                text: 'Front',
-                fontSize: 28,
-                fontFamily: 'Arial',
-                fill: '#999999'
+                fontSize: fontSize,
+                typeface: 'Arial',
+                fillStyle: '#999999'
             });
             dataStore.detector.HVLayer[i].add(frontLabel);
             //center label nicely
-            frontLabel.setAttr('x', 0.25*dataStore.detector.width - frontLabel.getTextWidth()/2);
-            frontLabel.setAttr('y', 0.8*dataStore.detector.height - frontLabel.getTextHeight());
+            frontLabel.x = 0.25*dataStore.detector.width - frontLabel.getTextMetric().width/2;
+            frontLabel.y = 0.8*dataStore.detector.height;
 
-            backLabel = new Kinetic.Text({
+            backLabel = new qdtext('Back', {
                 x: 0,
                 y: 0,
-                text: 'Back',
-                fontSize: 28,
-                fontFamily: 'Arial',
-                fill: '#999999'
+                fontSize: fontSize,
+                typeface: 'Arial',
+                fillStyle: '#999999'
             });
             dataStore.detector.HVLayer[i].add(backLabel);
             //center label nicely
-            backLabel.setAttr('x', 0.75*dataStore.detector.width - backLabel.getTextWidth()/2);
-            backLabel.setAttr('y', 0.8*dataStore.detector.height - backLabel.getTextHeight());
+            backLabel.x = 0.75*dataStore.detector.width - backLabel.getTextMetric().width/2;
+            backLabel.y = 0.8*dataStore.detector.height;
         }
-
     }
 
     function createCell(channel){
         // stamp out a cell for the given channel and coordinate array key
         // note that cell still has to be added to an appropriate layer on a per-detector basis.
 
-        var index = dataStore.detector.channelNames.indexOf(channel);
+        var index = dataStore.detector.channelNames.indexOf(channel),
+            path, x, y, width, height;
 
         //SHQ summaries
         if(index<16){
-            dataStore.detector.cells[channel] = new Kinetic.Wedge({
-                x: dataStore.detector.cellCoords[channel][0],
-                y: dataStore.detector.cellCoords[channel][1],
-                rotation: dataStore.detector.cellCoords[channel][2],
-                radius: dataStore.detector.rad,
-                angle: 90,
-                fill: '#000000',
-                fillPatternOffsetX: 100*Math.random(),
-                fillPatternOffsetY: 100*Math.random(),
-                stroke: dataStore.frameColor,
-                strokeWidth: dataStore.frameLineWidth,
-                closed: true,
-                listening: true             
-            })
+            path = generateArc(
+                dataStore.detector.cellCoords[channel][2]/180*Math.PI, dataStore.detector.cellCoords[channel][2]/180*Math.PI + Math.PI/2, 
+                0, dataStore.detector.rad, 
+                dataStore.detector.cellCoords[channel][0], dataStore.detector.cellCoords[channel][1]
+            );
+            dataStore.detector.cells[channel] = new qdshape(path, {
+                id: channel,
+                fillStyle: '#000000',
+                strokeStyle: dataStore.frameColor,
+                lineWidth: dataStore.frameLineWidth,
+                z: 1
+            });
         //SHB summaries
         } else if(index<32){
-            dataStore.detector.cells[channel] = new Kinetic.Line({
-                points: dataStore.detector.parallelogramCoords[dataStore.detector.cellCoords[channel][1]],
-                offset: dataStore.detector.cellCoords[channel][0],
-                fill: '#000000',
-                fillPatternOffsetX: 100*Math.random(),
-                fillPatternOffsetY: 100*Math.random(),
-                stroke: dataStore.frameColor,
-                strokeWidth: dataStore.frameLineWidth,
-                closed: true,
-                listening: true                          
-            })
+            poly = generatePath(
+                dataStore.detector.parallelogramCoords[dataStore.detector.cellCoords[channel][1]],
+                dataStore.detector.cellCoords[channel][0].x,
+                dataStore.detector.cellCoords[channel][0].y
+            );
+            dataStore.detector.cells[channel] = new qdshape(poly, {
+                id: channel,
+                fillStyle: '#000000',
+                strokeStyle: dataStore.frameColor,
+                lineWidth: dataStore.frameLineWidth,
+                z: 1
+            });
         //SHQ pads
         } else if(index<40){
-            dataStore.detector.cells[channel] = new Kinetic.Wedge({
-                x: dataStore.detector.cellCoords[channel][0],
-                y: dataStore.detector.cellCoords[channel][1],
-                rotation: dataStore.detector.cellCoords[channel][2],
-                radius: dataStore.detector.rad,
-                angle: 90,
-                fill: '#000000',
-                fillPatternOffsetX: 100*Math.random(),
-                fillPatternOffsetY: 100*Math.random(),
-                stroke: dataStore.frameColor,
-                strokeWidth: dataStore.frameLineWidth,
-                closed: true,
-                listening: true             
-            })
+            path = generateArc(
+                dataStore.detector.cellCoords[channel][2]/180*Math.PI, dataStore.detector.cellCoords[channel][2]/180*Math.PI + Math.PI/2, 
+                0, dataStore.detector.rad, 
+                dataStore.detector.cellCoords[channel][0], dataStore.detector.cellCoords[channel][1]
+            );
+            dataStore.detector.cells[channel] = new qdshape(path, {
+                id: channel,
+                fillStyle: '#000000',
+                strokeStyle: dataStore.frameColor,
+                lineWidth: dataStore.frameLineWidth,
+                z: 1
+            });
         //SHB pads
         } else if(index<48){
-            dataStore.detector.cells[channel] = new Kinetic.Line({
-                points: dataStore.detector.parallelogramCoords[dataStore.detector.cellCoords[channel][1]],
-                offset: dataStore.detector.cellCoords[channel][0],
-                fill: '#000000',
-                fillPatternOffsetX: 100*Math.random(),
-                fillPatternOffsetY: 100*Math.random(),
-                stroke: dataStore.frameColor,
-                strokeWidth: dataStore.frameLineWidth,
-                closed: true,
-                listening: true                          
-            })
+            poly = generatePath(
+                dataStore.detector.parallelogramCoords[dataStore.detector.cellCoords[channel][1]],
+                dataStore.detector.cellCoords[channel][0].x,
+                dataStore.detector.cellCoords[channel][0].y
+            );
+            dataStore.detector.cells[channel] = new qdshape(poly, {
+                id: channel,
+                fillStyle: '#000000',
+                strokeStyle: dataStore.frameColor,
+                lineWidth: dataStore.frameLineWidth,
+                z: 1
+            });
         //detail channels
         } else{
             isBox = (channel.indexOf('B') == 2);
@@ -380,78 +382,73 @@
             cellIndex = parseInt(channel.slice(7,9),10);
 
             if(isBox && isFront){
-                dataStore.detector.cells[channel] = new Kinetic.Rect({
-                    x: (dataStore.detector.width/2 - dataStore.detector.boxWidth)/2,
-                    y: (0.8*dataStore.detector.height - dataStore.detector.boxHeight)/2 + cellIndex*dataStore.detector.boxHeight/24,
-                    width: dataStore.detector.boxWidth,
-                    height: dataStore.detector.boxHeight / 24,
-                    fill: '#000000',
-                    fillPatternImage: dataStore.detector.errorPattern,
-                    fillPatternOffsetX: 100*Math.random(),
-                    fillPatternOffsetY: 100*Math.random(),
-                    stroke: dataStore.frameColor,
-                    strokeWidth: dataStore.frameLineWidth,
-                    closed: true,
-                    listening: true                                 
+                x = (dataStore.detector.width/2 - dataStore.detector.boxWidth)/2;
+                y = (0.8*dataStore.detector.height - dataStore.detector.boxHeight)/2 + cellIndex*dataStore.detector.boxHeight/24;
+                width = dataStore.detector.boxWidth;
+                height = dataStore.detector.boxHeight / 24;
+                poly = generatePath(
+                    [0,0, width,0, width,height, 0,height],
+                    x,y
+                );
+                dataStore.detector.cells[channel] = new qdshape(poly, {
+                    id: channel,
+                    fillStyle: '#000000',
+                    strokeStyle: dataStore.frameColor,
+                    lineWidth: dataStore.frameLineWidth,
+                    z: 1
                 });
             } else if(isBox && !isFront){
-                dataStore.detector.cells[channel] = new Kinetic.Rect({
-                    x: (dataStore.detector.width/2 - dataStore.detector.boxWidth)/2 + dataStore.detector.width/2 + cellIndex*dataStore.detector.boxWidth/48,
-                    y: (0.8*dataStore.detector.height - dataStore.detector.boxHeight)/2,
-                    width: dataStore.detector.boxWidth/48,
-                    height: dataStore.detector.boxHeight,
-                    fill: '#000000',
-                    fillPatternImage: dataStore.detector.errorPattern,
-                    fillPatternOffsetX: 100*Math.random(),
-                    fillPatternOffsetY: 100*Math.random(),
-                    stroke: dataStore.frameColor,
-                    strokeWidth: dataStore.frameLineWidth,
-                    closed: true,
-                    listening: true                                
+                x = (dataStore.detector.width/2 - dataStore.detector.boxWidth)/2 + dataStore.detector.width/2 + cellIndex*dataStore.detector.boxWidth/48;
+                y = (0.8*dataStore.detector.height - dataStore.detector.boxHeight)/2;
+                width = dataStore.detector.boxWidth/48;
+                height = dataStore.detector.boxHeight;
+                poly = generatePath(
+                    [0,0, width,0, width,height, 0,height],
+                    x,y
+                );
+                dataStore.detector.cells[channel] = new qdshape(poly, {
+                    id: channel,
+                    fillStyle: '#000000',
+                    strokeStyle: dataStore.frameColor,
+                    lineWidth: dataStore.frameLineWidth,
+                    z: 1
                 });
             } else if(!isBox && isFront){
-                dataStore.detector.cells[channel] = new Kinetic.Arc({
-                    x: dataStore.detector.quadCenterLeftX,
-                    y: dataStore.detector.quadCenterLeftY,
-                    innerRadius: cellIndex*dataStore.detector.quadRad/16,
-                    outerRadius: (cellIndex+1)*dataStore.detector.quadRad/16,
-                    angle: 90,
-                    rotationDeg: 180,
-                    fill: '#000000',
-                    fillPatternImage: dataStore.detector.errorPattern,
-                    fillPatternOffsetX: 100*Math.random(),
-                    fillPatternOffsetY: 100*Math.random(),
-                    stroke: dataStore.frameColor,
-                    strokeWidth: dataStore.frameLineWidth,
-                    closed: true,
-                    listening: true                                
+                path = generateArc(
+                    Math.PI, 3*Math.PI/2, 
+                    cellIndex*dataStore.detector.quadRad/16, (cellIndex+1)*dataStore.detector.quadRad/16, 
+                    dataStore.detector.quadCenterLeftX, dataStore.detector.quadCenterLeftY
+                );
+                dataStore.detector.cells[channel] = new qdshape(path, {
+                    id: channel,
+                    fillStyle: '#000000',
+                    strokeStyle: dataStore.frameColor,
+                    lineWidth: dataStore.frameLineWidth,
+                    z: 1
                 });
             } else if(!isBox && !isFront){
-                dataStore.detector.cells[channel] = new Kinetic.Wedge({
-                    x: dataStore.detector.quadCenterRightX,
-                    y: dataStore.detector.quadCenterRightY,
-                    radius: dataStore.detector.quadRad,
-                    angle: 90 / 24,
-                    rotation: 180 + cellIndex*90/24,
-                    fill: '#000000',
-                    fillPatternImage: dataStore.detector.errorPattern,
-                    fillPatternOffsetX: 100*Math.random(),
-                    fillPatternOffsetY: 100*Math.random(),
-                    stroke: dataStore.frameColor,
-                    strokeWidth: dataStore.frameLineWidth,
-                    closed: true,
-                    listening: true                                
+                path = generateArc(
+                    (180 + cellIndex*90/24)/180*Math.PI, (180 + cellIndex*90/24 + 90 / 24)/180*Math.PI, 
+                    0, dataStore.detector.quadRad, 
+                    dataStore.detector.quadCenterRightX, dataStore.detector.quadCenterRightY
+                );
+                dataStore.detector.cells[channel] = new qdshape(path, {
+                    id: channel,
+                    fillStyle: '#000000',
+                    strokeStyle: dataStore.frameColor,
+                    lineWidth: dataStore.frameLineWidth,
+                    z: 1
                 });
             }
         }
 
         //set up the tooltip listeners:
-        dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
-        dataStore.detector.cells[channel].on('mousemove', moveTooltip);
-        dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+        dataStore.detector.cells[channel].mouseover = writeTooltip.bind(null, channel);
+        dataStore.detector.cells[channel].mousemove = moveTooltip;
+        dataStore.detector.cells[channel].mouseout = hideTooltip;
 
         //set up onclick listeners:
-        dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+        dataStore.detector.cells[channel].click = clickCell.bind(null, channel);
     }
 
     function inCurrentView(channel){
