@@ -21,7 +21,7 @@ function registerSOHODB(payload){
 }
 
 function drawShack(){
-    // set up the kinetic context and draw the shack for the first time
+    // set up the context and draw the shack for the first time
 
     var width = document.getElementById('shackMonitor').offsetWidth,
         height = 0.8*window.innerHeight,
@@ -29,7 +29,7 @@ function drawShack(){
         label = {},
         leftmargin = (width - 100*grid)/2,
         topmargin = (height - 62*grid)/2,
-        i, VMEtitle,
+        i, VMEtitle, x,y,w,h, path,
         VMELabels = ['A', 'B', 'C'];
 
     dataStore.SOH.rackImage = {};
@@ -116,21 +116,18 @@ function drawShack(){
     };
 
     /////////////////////////////////////////////////////////
-    // Kinetic.js is setup to create the initial environment.
+    // setup drawing stage
     /////////////////////////////////////////////////////////
 
-    dataStore.SOH.rackImage.stage = new Kinetic.Stage({
-        container: 'shackDisplay',
-        width: width,
-        height: height
-    });
+    dataStore.SOH.rackImage.stage = new quickdraw(width, height);
+    document.getElementById('shackDisplay').appendChild(dataStore.SOH.rackImage.stage.canvas)
 
     ////////////////////////////////////////////////////////
     // The main layer is made which will contain all of the
     // fixed racks and crates for the shack.
     ////////////////////////////////////////////////////////
 
-    dataStore.SOH.rackImage.mainLayer = new Kinetic.Layer();
+    dataStore.SOH.rackImage.mainLayer = new qdlayer('mainLayer');
     dataStore.SOH.rackImage.stage.add(dataStore.SOH.rackImage.mainLayer);
 
     ////////////////////////////////////////////
@@ -140,15 +137,18 @@ function drawShack(){
     dataStore.SOH.cells.racks = [];
 
     for (i = 0; i < 5; i++){
-        dataStore.SOH.cells.racks[i] = new Kinetic.Rect({
-            x: leftmargin+20*i*grid,
-            y: topmargin+4*grid,
-            width: 20*grid,
-            height: 56*grid,
-            fill: 'white',
-            stroke: 'black',
-            strokeWidth: 2,
-            opacity: 1
+        x = leftmargin+20*i*grid;
+        y = topmargin+4*grid;
+        w = 20*grid;
+        h = 56*grid;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+
+        dataStore.SOH.cells.racks[i] = new qdshape(path, {
+            id: 'rack'+i,
+            fillStyle: '0xFFFFFF',
+            strokeStyle: '0x000000',
+            lineWidth: 2,
+            z: 1
         });
     }    
 
@@ -160,36 +160,38 @@ function drawShack(){
     dataStore.SOH.cells.sensorsbottom = [];
 
     for (i = 0; i < 5; i++){
+        x = leftmargin+(2+20*i)*grid;
+        y = topmargin + 2*grid;
+        w = dataStore.SOH.parameters.sensors.width;
+        h = dataStore.SOH.parameters.sensors.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
 
-        dataStore.SOH.cells.sensorstop[i] = new Kinetic.Rect({
-            x: leftmargin+(2+20*i)*grid,
-            y: topmargin + 2*grid,
-            width: dataStore.SOH.parameters.sensors.width,
-            height: dataStore.SOH.parameters.sensors.height,
-            fill: dataStore.SOH.parameters.sensors.fill,
-            stroke: dataStore.SOH.parameters.sensors.stroke,
-            strokeWidth: dataStore.SOH.parameters.sensors.strokeW,
-            opacity: dataStore.SOH.parameters.sensors.opacity,
-        })
+        dataStore.SOH.cells.sensorstop[i] = new qdshape(path, {
+            id: 'sensorstop'+i,
+            fillStyle: dataStore.SOH.parameters.sensors.fill,
+            strokeStyle: dataStore.SOH.parameters.sensors.stroke,
+            lineWidth: dataStore.SOH.parameters.sensors.strokeW,
+            z: 1
+        });
 
-        dataStore.SOH.cells.sensorstop[i].on('mouseover', writeTooltip.bind(null, i) );
-        dataStore.SOH.cells.sensorstop[i].on('mousemove', moveTooltip);
-        dataStore.SOH.cells.sensorstop[i].on('mouseout', hideTooltip);
+        dataStore.SOH.cells.sensorstop[i].mouseover = writeTooltip.bind(null, i);
+        dataStore.SOH.cells.sensorstop[i].mousemove = moveTooltip;
+        dataStore.SOH.cells.sensorstop[i].mouseout = hideTooltip;
 
-        dataStore.SOH.cells.sensorsbottom[i] = new Kinetic.Rect({
-            x: leftmargin+(2+20*i)*grid,
-            y: topmargin+60*grid,
-            width: dataStore.SOH.parameters.sensors.width,
-            height: dataStore.SOH.parameters.sensors.height,
-            fill: dataStore.SOH.parameters.sensors.fill,
-            stroke: dataStore.SOH.parameters.sensors.stroke,
-            strokeWidth: dataStore.SOH.parameters.sensors.strokeW,
-            opacity: dataStore.SOH.parameters.sensors.opacity,
-        })
+        y = topmargin + 60*grid;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
 
-        dataStore.SOH.cells.sensorsbottom[i].on('mouseover', writeTooltip.bind(null, i+5) );
-        dataStore.SOH.cells.sensorsbottom[i].on('mousemove', moveTooltip);
-        dataStore.SOH.cells.sensorsbottom[i].on('mouseout', hideTooltip);
+        dataStore.SOH.cells.sensorsbottom[i] = new qdshape(path, {
+            id: 'sensorsbottom'+i,
+            fillStyle: dataStore.SOH.parameters.sensors.fill,
+            strokeStyle: dataStore.SOH.parameters.sensors.stroke,
+            lineWidth: dataStore.SOH.parameters.sensors.strokeW,
+            z: 1
+        });
+
+        dataStore.SOH.cells.sensorsbottom[i].mouseover = writeTooltip.bind(null, i+5);
+        dataStore.SOH.cells.sensorsbottom[i].mousemove = moveTooltip;
+        dataStore.SOH.cells.sensorsbottom[i].mouseout = hideTooltip;
 
     }
 
@@ -200,80 +202,99 @@ function drawShack(){
     dataStore.SOH.cells.cableman = [];
 
     for (i = 0; i < 4; i++){
-        dataStore.SOH.cells.cableman[i] = new Kinetic.Rect({
-            x: leftmargin+20*i*grid,
-            y: topmargin+19*grid,
-            width: dataStore.SOH.parameters.cableman.width,
-            height: dataStore.SOH.parameters.cableman.height,
-            fill: dataStore.SOH.parameters.cableman.fill,
-            stroke: dataStore.SOH.parameters.cableman.strokeW,
-            strokeWidth: dataStore.SOH.parameters.cableman.strokeW,
-            opacity: dataStore.SOH.parameters.cableman.opacity
+        x = leftmargin+20*i*grid;
+        y = topmargin+19*grid;
+        w = dataStore.SOH.parameters.cableman.width;
+        h = dataStore.SOH.parameters.cableman.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+
+        dataStore.SOH.cells.cableman[i] = new qdshape(path, {
+            id: 'cableman'+i,
+            fillStyle: dataStore.SOH.parameters.cableman.fill,
+            strokeStyle: dataStore.SOH.parameters.cableman.stroke,
+            lineWidth: dataStore.SOH.parameters.cableman.strokeW,
+            z: 1
         });
     }   
 
     for (i = 4; i < 8; i++){
-        dataStore.SOH.cells.cableman[i] = new Kinetic.Rect({
-            x: leftmargin+20*(i-4)*grid,
-            y: topmargin+28*grid,
-            width: dataStore.SOH.parameters.cableman.width,
-            height: dataStore.SOH.parameters.cableman.height,
-            fill: dataStore.SOH.parameters.cableman.fill,
-            stroke: dataStore.SOH.parameters.cableman.stroke,
-            strokeWidth: dataStore.SOH.parameters.cableman.strokeW,
-            opacity: dataStore.SOH.parameters.cableman.opacity
+        x = leftmargin+20*(i-4)*grid;
+        y = topmargin+28*grid;
+        w = dataStore.SOH.parameters.cableman.width;
+        h = dataStore.SOH.parameters.cableman.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+
+        dataStore.SOH.cells.cableman[i] = new qdshape(path, {
+            id: 'cableman'+i,
+            fillStyle: dataStore.SOH.parameters.cableman.fill,
+            strokeStyle: dataStore.SOH.parameters.cableman.stroke,
+            lineWidth: dataStore.SOH.parameters.cableman.strokeW,
+            z: 1
         });
     } 
 
     for (i = 8; i < 10; i++){
-        dataStore.SOH.cells.cableman[i] = new Kinetic.Rect({
-            x: leftmargin+(40+20*(i-8))*grid,
-            y: topmargin+32*grid,
-            width: dataStore.SOH.parameters.cableman.width,
-            height: dataStore.SOH.parameters.cableman.height,
-            fill: dataStore.SOH.parameters.cableman.fill,
-            stroke: dataStore.SOH.parameters.cableman.stroke,
-            strokeWidth: dataStore.SOH.parameters.cableman.strokeW,
-            opacity: dataStore.SOH.parameters.cableman.opacity
+        x = leftmargin+(40+20*(i-8))*grid;
+        y = topmargin+32*grid;
+        w = dataStore.SOH.parameters.cableman.width;
+        h = dataStore.SOH.parameters.cableman.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+
+        dataStore.SOH.cells.cableman[i] = new qdshape(path, {
+            id: 'cableman'+i,
+            fillStyle: dataStore.SOH.parameters.cableman.fill,
+            strokeStyle: dataStore.SOH.parameters.cableman.stroke,
+            lineWidth: dataStore.SOH.parameters.cableman.strokeW,
+            z: 1
         });
     } 
 
     for (i = 10; i < 12; i++){
-        dataStore.SOH.cells.cableman[i] = new Kinetic.Rect({
-            x: leftmargin+(40+20*(i-10))*grid,
-            y: topmargin+41*grid,
-            width: dataStore.SOH.parameters.cableman.width,
-            height: dataStore.SOH.parameters.cableman.height,
-            fill: dataStore.SOH.parameters.cableman.fill,
-            stroke: dataStore.SOH.parameters.cableman.stroke,
-            strokeWidth: dataStore.SOH.parameters.cableman.strokeW,
-            opacity: dataStore.SOH.parameters.cableman.opacity
+        x = leftmargin+(40+20*(i-10))*grid;
+        y = topmargin+41*grid;
+        w = dataStore.SOH.parameters.cableman.width;
+        h = dataStore.SOH.parameters.cableman.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+
+        dataStore.SOH.cells.cableman[i] = new qdshape(path, {
+            id: 'cableman'+i,
+            fillStyle: dataStore.SOH.parameters.cableman.fill,
+            strokeStyle: dataStore.SOH.parameters.cableman.stroke,
+            lineWidth: dataStore.SOH.parameters.cableman.strokeW,
+            z: 1
         });
     } 
 
     for (i = 12; i < 14; i++){
-        dataStore.SOH.cells.cableman[i] = new Kinetic.Rect({
-            x: leftmargin+40*grid,
-            y: topmargin+(43+9*(i-12))*grid,
-            width: dataStore.SOH.parameters.cableman.width,
-            height: dataStore.SOH.parameters.cableman.height,
-            fill: dataStore.SOH.parameters.cableman.fill,
-            stroke: dataStore.SOH.parameters.cableman.stroke,
-            strokeWidth: dataStore.SOH.parameters.cableman.strokeW,
-            opacity: dataStore.SOH.parameters.cableman.opacity
+        x = leftmargin+40*grid;
+        y = topmargin+(43+9*(i-12))*grid;
+        w = dataStore.SOH.parameters.cableman.width;
+        h = dataStore.SOH.parameters.cableman.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+
+        dataStore.SOH.cells.cableman[i] = new qdshape(path, {
+            id: 'cableman'+i,
+            fillStyle: dataStore.SOH.parameters.cableman.fill,
+            strokeStyle: dataStore.SOH.parameters.cableman.stroke,
+            lineWidth: dataStore.SOH.parameters.cableman.strokeW,
+            z: 1
         });
     } 
 
-    dataStore.SOH.cells.cableman[14] = new Kinetic.Rect({
-        x: leftmargin+40*grid,
-        y: topmargin+30*grid,
-        width: dataStore.SOH.parameters.cableman.width,
-        height: dataStore.SOH.parameters.cableman.height,
-        fill: dataStore.SOH.parameters.cableman.fill,
-        stroke: dataStore.SOH.parameters.cableman.stroke,
-        strokeWidth: dataStore.SOH.parameters.cableman.strokeW,
-        opacity: dataStore.SOH.parameters.cableman.opacity
+    x = leftmargin+40*grid;
+    y = topmargin+30*grid;
+    w = dataStore.SOH.parameters.cableman.width;
+    h = dataStore.SOH.parameters.cableman.height;
+    path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+
+    dataStore.SOH.cells.cableman[i] = new qdshape(path, {
+        id: 'cableman14',
+        fillStyle: dataStore.SOH.parameters.cableman.fill,
+        strokeStyle: dataStore.SOH.parameters.cableman.stroke,
+        lineWidth: dataStore.SOH.parameters.cableman.strokeW,
+        z: 1
     });
+
 
     //////////////////////////////////////////////////////////////////////////////
     // HV crates are included here.
@@ -284,41 +305,38 @@ function drawShack(){
 
     // create all of the rectangles and text boxes
     for (i = 0; i < 3; i++){
-        dataStore.SOH.cells.hv[i] = new Kinetic.Rect({
-            x: leftmargin+(60+20*(i-1))*grid,
-            y: topmargin+4*grid,
-            width: dataStore.SOH.parameters.hv.width,
-            height: dataStore.SOH.parameters.hv.height,
-            fill: dataStore.SOH.parameters.hv.fill,
-            stroke: dataStore.SOH.parameters.hv.stroke,
-            strokeWidth: dataStore.SOH.parameters.hv.strokeW,
-            opacity: dataStore.SOH.parameters.hv.opacity
-        }),
+        x = leftmargin+(60+20*(i-1))*grid;
+        y = topmargin+4*grid;
+        w = dataStore.SOH.parameters.hv.width;
+        h = dataStore.SOH.parameters.hv.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
 
-        label.hv[i] = new Kinetic.Text({
-            x: leftmargin+(60+20*(i-1))*grid,
-            y: topmargin+4*grid,
-        height: dataStore.SOH.parameters.hv.height,
-            width: dataStore.SOH.parameters.hv.width,
-            text: 'HV-'+(i),
-            fontSize: dataStore.SOH.parameters.label.maxFontSize,
-            fontFamily: dataStore.SOH.parameters.label.font,
-            fill: dataStore.SOH.parameters.label.fontcolour,
-            padding: dataStore.SOH.parameters.hv.height*0.3,
-            align: 'center',
-            listening: false
+        dataStore.SOH.cells.hv[i] = new qdshape(path, {
+            id: 'hv'+i,
+            fillStyle: dataStore.SOH.parameters.hv.fill,
+            strokeStyle: dataStore.SOH.parameters.hv.stroke,
+            lineWidth: dataStore.SOH.parameters.hv.strokeW,
+            z: 1
         });
 
-        squishFont(label.hv[i], 18*grid);
+        label.hv[i] = new new qdtext('HV-'+i, {
+            x: x,
+            y: y,
+            fontSize: dataStore.SOH.parameters.label.maxFontSize,
+            typeface: dataStore.SOH.parameters.label.font,
+            fillStyle: dataStore.SOH.parameters.label.fontcolour
+        });
+
+        //squishFont(label.hv[i], 18*grid);
     }
 
     // ...then modify all the x-positions.
-    dataStore.SOH.cells.hv[0].setX(leftmargin+20*grid);
-    label.hv[0].setX(leftmargin+20*grid);
-    dataStore.SOH.cells.hv[1].setX(leftmargin+80*grid);
-    label.hv[1].setX(leftmargin+80*grid);
-    dataStore.SOH.cells.hv[2].setX(leftmargin+40*grid);
-    label.hv[2].setX(leftmargin+40*grid);
+    // dataStore.SOH.cells.hv[0].setX(leftmargin+20*grid);
+    // label.hv[0].setX(leftmargin+20*grid);
+    // dataStore.SOH.cells.hv[1].setX(leftmargin+80*grid);
+    // label.hv[1].setX(leftmargin+80*grid);
+    // dataStore.SOH.cells.hv[2].setX(leftmargin+40*grid);
+    // label.hv[2].setX(leftmargin+40*grid);
 
     //////////////////////////////////////////////////////////////////////////////
     // NIM crates are included next and numbered in the same way as the HV crates.
@@ -328,59 +346,55 @@ function drawShack(){
     label.nim =[];
 
     for (i = 0; i < 5; i++){
-        dataStore.SOH.cells.nim[i] = new Kinetic.Rect({
-            x: leftmargin+20*i*grid,
-            y: topmargin+13*grid,
-            width: dataStore.SOH.parameters.nim.width,
-            height: dataStore.SOH.parameters.nim.height,
-            fill: dataStore.SOH.parameters.nim.fill,
-            stroke: dataStore.SOH.parameters.nim.stroke,
-            strokeWidth: dataStore.SOH.parameters.nim.strokeW,
-            opacity: dataStore.SOH.parameters.nim.opacity
-        }),
+        x = leftmargin+20*i*grid;
+        y = topmargin+13*grid;
+        w = dataStore.SOH.parameters.nim.width;
+        h = dataStore.SOH.parameters.nim.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
 
-        label.nim[i] = new Kinetic.Text({
-            x: leftmargin+20*i*grid,
-            y: topmargin+13*grid,
-            width: dataStore.SOH.parameters.nim.width,
-            text: 'NIM '+(i+1),
-            fontSize: dataStore.SOH.parameters.label.maxFontSize,
-            fontFamily: dataStore.SOH.parameters.label.font,
-            fill: dataStore.SOH.parameters.label.fontcolour,
-            padding: dataStore.SOH.parameters.nim.height*0.25,
-            align: 'center',
-            listening: false
+        dataStore.SOH.cells.nim[i] = new qdshape(path, {
+            id: 'nim'+i,
+            fillStyle: dataStore.SOH.parameters.nim.fill,
+            strokeStyle: dataStore.SOH.parameters.nim.stroke,
+            lineWidth: dataStore.SOH.parameters.nim.strokeW,
+            z: 1
         });
 
-        squishFont(label.nim[i], 18*grid);
+        label.nim[i] = new new qdtext('NIM '+(i+1), {
+            x: x,
+            y: y,
+            fontSize: dataStore.SOH.parameters.label.maxFontSize,
+            typeface: dataStore.SOH.parameters.label.font,
+            fillStyle: dataStore.SOH.parameters.label.fontcolour
+        });
+
+        //squishFont(label.nim[i], 18*grid);
     } 
 
     for (i = 5; i < 7; i++){
-        dataStore.SOH.cells.nim[i] = new Kinetic.Rect({
-            x: leftmargin+60*grid,
-            y: topmargin+(47+8*(i-5))*grid,
-            width: dataStore.SOH.parameters.nim.width,
-            height: dataStore.SOH.parameters.nim.height,
-            fill: dataStore.SOH.parameters.nim.fill,
-            stroke: dataStore.SOH.parameters.nim.stroke,
-            strokeWidth: dataStore.SOH.parameters.nim.strokeW,
-            opacity: dataStore.SOH.parameters.nim.opacity
-        }),
+        x = leftmargin+60*grid;
+        y = topmargin+(47+8*(i-5))*grid;
+        w = dataStore.SOH.parameters.nim.width;
+        h = dataStore.SOH.parameters.nim.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
 
-        label.nim[i] = new Kinetic.Text({
-            x: leftmargin+60*grid,
-            y: topmargin+(47+8*(i-5))*grid,
-            width: dataStore.SOH.parameters.nim.width,
-            text: 'NIM '+(i+1),
-            fontSize: dataStore.SOH.parameters.label.maxFontSize,
-            fontFamily: dataStore.SOH.parameters.label.font,
-            fill: dataStore.SOH.parameters.label.fontcolour,
-            padding: dataStore.SOH.parameters.nim.height*0.25,
-            align: 'center',
-            listening: false
+        dataStore.SOH.cells.nim[i] = new qdshape(path, {
+            id: 'nim'+i,
+            fillStyle: dataStore.SOH.parameters.nim.fill,
+            strokeStyle: dataStore.SOH.parameters.nim.stroke,
+            lineWidth: dataStore.SOH.parameters.nim.strokeW,
+            z: 1
         });
 
-        squishFont(label.nim[i], 18*grid);
+        label.nim[i] = new new qdtext('NIM '+(i+1), {
+            x: x,
+            y: y,
+            fontSize: dataStore.SOH.parameters.label.maxFontSize,
+            typeface: dataStore.SOH.parameters.label.font,
+            fillStyle: dataStore.SOH.parameters.label.fontcolour
+        });
+
+        //squishFont(label.nim[i], 18*grid);
     }
 
     ////////////////////////////////////////////////////
@@ -394,36 +408,34 @@ function drawShack(){
         for (i = 0; i < 5; i++){
             VMEtitle = 'VME-'+i+VMELabels[j];
 
-            dataStore.SOH.cells.vme[j*5+i] = new Kinetic.Rect({
-                x: leftmargin+20*i*grid,
-                y: topmargin+(j*9+20)*grid,
-                width: dataStore.SOH.parameters.vme.width,
-                height: dataStore.SOH.parameters.vme.height,
-                fill: dataStore.SOH.parameters.vme.fill,
-                stroke: dataStore.SOH.parameters.vme.stroke,
-                strokeWidth: dataStore.SOH.parameters.vme.strokeW,
-                opacity: dataStore.SOH.parameters.vme.opacity
-            }),
+            x = leftmargin+20*i*grid;
+            y = topmargin+(j*9+20)*grid;
+            w = dataStore.SOH.parameters.vme.width;
+            h = dataStore.SOH.parameters.vme.height;
+            path = generatePath([0,0, width,0, width,height, 0,height], x, y);
 
-            label.vme[j*5+i] = new Kinetic.Text({
-                x: leftmargin+20*i*grid,
-                y: topmargin+(j*9+20)*grid,
-                width: dataStore.SOH.parameters.vme.width,
-                text: VMEtitle,
-                fontSize: dataStore.SOH.parameters.label.maxFontSize,
-                fontFamily: dataStore.SOH.parameters.label.font,
-                fill: dataStore.SOH.parameters.label.fontcolour,
-                padding: dataStore.SOH.parameters.vme.height*0.3,
-                align: 'center',
-                listening: false
+            dataStore.SOH.cells.vme[j*5+1] = new qdshape(path, {
+                id: 'vme'+i,
+                fillStyle: dataStore.SOH.parameters.vme.fill,
+                strokeStyle: dataStore.SOH.parameters.vme.stroke,
+                lineWidth: dataStore.SOH.parameters.vme.strokeW,
+                z: 1
             });
 
-            dataStore.SOH.cells.vme[j*5+i].on('mouseover', writeTooltip.bind(null, 'vme') );
-            dataStore.SOH.cells.vme[j*5+i].on('mousemove', moveTooltip);
-            dataStore.SOH.cells.vme[j*5+i].on('mouseout', hideTooltip);
-            squishFont(label.vme[j*5+i], 18*grid);
+            label.vme[i] = new new qdtext(VMEtitle, {
+                x: x,
+                y: y,
+                fontSize: dataStore.SOH.parameters.label.maxFontSize,
+                typeface: dataStore.SOH.parameters.label.font,
+                fillStyle: dataStore.SOH.parameters.label.fontcolour
+            });
 
-            dataStore.SOH.cells.vme[j*5+i].on('click', function(vme){
+            dataStore.SOH.cells.vme[j*5+i].mouseover = writeTooltip.bind(null, 'vme');
+            dataStore.SOH.cells.vme[j*5+i].mousemove = moveTooltip;
+            dataStore.SOH.cells.vme[j*5+i].mouseout = hideTooltip;
+            //squishFont(label.vme[j*5+i], 18*grid);
+
+            dataStore.SOH.cells.vme[j*5+i].click = function(vme){
 
                 document.getElementById('controlsidebar').innerHTML = Mustache.to_html(
                     dataStore.templates['vme-cycle'], 
@@ -444,58 +456,54 @@ function drawShack(){
     dataStore.SOH.cells.dsa = [];
     label.dsa = [];
 
-    dataStore.SOH.cells.dsa[0] = new Kinetic.Rect({
-        x: leftmargin,
-        y: topmargin+47*grid,
-        width: dataStore.SOH.parameters.dsa.width,
-        height: dataStore.SOH.parameters.dsa.height,
-        fill: dataStore.SOH.parameters.dsa.fill,
-        stroke: dataStore.SOH.parameters.dsa.stroke,
-        strokeWidth: dataStore.SOH.parameters.dsa.strokeW,
-        opacity: dataStore.SOH.parameters.dsa.opacity
-    }); 
+    x = leftmargin;
+    y = topmargin+47*grid;
+    w = dataStore.SOH.parameters.dsa.width;
+    h = dataStore.SOH.parameters.dsa.height;
+    path = generatePath([0,0, width,0, width,height, 0,height], x, y);
 
-    label.dsa0 = new Kinetic.Text({
-        x: leftmargin,
-        y: topmargin+47*grid,
-        width: dataStore.SOH.parameters.dsa.width,
-        text: 'Data Storage Array 1',
-        fontSize: dataStore.SOH.parameters.label.maxFontSize,
-        fontFamily: dataStore.SOH.parameters.label.font,
-        fill: dataStore.SOH.parameters.label.fontcolour,
-        padding: dataStore.SOH.parameters.dsa.height*0.25,
-        align: 'center',
-        listening: false
+    dataStore.SOH.cells.dsa[0] = new qdshape(path, {
+        id: 'dsa0',
+        fillStyle: dataStore.SOH.parameters.dsa.fill,
+        strokeStyle: dataStore.SOH.parameters.dsa.stroke,
+        lineWidth: dataStore.SOH.parameters.dsa.strokeW,
+        z: 1
     });
 
-    squishFont(label.dsa0, 18*grid);
+    label.dsa0 = new new qdtext('Data Storage Array 1', {
+        x: x,
+        y: y,
+        fontSize: dataStore.SOH.parameters.label.maxFontSize,
+        typeface: dataStore.SOH.parameters.label.font,
+        fillStyle: dataStore.SOH.parameters.label.fontcolour
+    });
+
+    //squishFont(label.dsa0, 18*grid);
 
     for (i = 1; i < 4; i++){
-        dataStore.SOH.cells.dsa[i] = new Kinetic.Rect({
-            x: leftmargin+20*(i-1)*grid,
-            y: topmargin+54*grid,
-            width: dataStore.SOH.parameters.dsa.width,
-            height: dataStore.SOH.parameters.dsa.height,
-            fill: dataStore.SOH.parameters.dsa.fill,
-            stroke: dataStore.SOH.parameters.dsa.stroke,
-            strokeWidth: dataStore.SOH.parameters.dsa.strokeW,
-            opacity: dataStore.SOH.parameters.dsa.opacity
-        }),
+        x = leftmargin+20*(i-1)*grid;
+        y = topmargin+54*grid;
+        w = dataStore.SOH.parameters.dsa.width;
+        h = dataStore.SOH.parameters.dsa.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
 
-        label.dsa[i] = new Kinetic.Text({
-            x: leftmargin+20*(i-1)*grid,
-            y: topmargin+54*grid,
-            width: dataStore.SOH.parameters.dsa.width,
-            text: 'Data Storage Array ' + (i+1),
-            fontSize: dataStore.SOH.parameters.label.maxFontSize,
-            fontFamily: dataStore.SOH.parameters.label.font,
-            fill: dataStore.SOH.parameters.label.fontcolour,
-            padding: dataStore.SOH.parameters.dsa.height*0.25,
-            align: 'center',
-            listening: false
+        dataStore.SOH.cells.dsa[i] = new qdshape(path, {
+            id: 'dsa'+i,
+            fillStyle: dataStore.SOH.parameters.dsa.fill,
+            strokeStyle: dataStore.SOH.parameters.dsa.stroke,
+            lineWidth: dataStore.SOH.parameters.dsa.strokeW,
+            z: 1
         });
 
-        squishFont(label.dsa[i], 18*grid);
+        label.dsa[i] = new new qdtext('Data Storage Array '+(i+1), {
+            x: x,
+            y: y,
+            fontSize: dataStore.SOH.parameters.label.maxFontSize,
+            typeface: dataStore.SOH.parameters.label.font,
+            fillStyle: dataStore.SOH.parameters.label.fontcolour
+        });
+
+        //squishFont(label.dsa[i], 18*grid);
     }     
 
     //////////////////////////////////////////////////////////////////
@@ -506,30 +514,29 @@ function drawShack(){
     label.net = [];
 
     for (i = 0; i < 4; i++){
-        dataStore.SOH.cells.net[i] = new Kinetic.Rect({
-            x: leftmargin+(20+20*i)*grid,
-            y: topmargin+53*grid,
-            width: dataStore.SOH.parameters.net.width,
-            height: dataStore.SOH.parameters.net.height,
-            fill: dataStore.SOH.parameters.net.fill,
-            stroke: dataStore.SOH.parameters.net.stroke,
-            strokeWidth: dataStore.SOH.parameters.net.strokeW,
-            opacity: dataStore.SOH.parameters.net.opacity
-        }),
+        x = leftmargin+(20+20*i)*grid;
+        y = topmargin+53*grid;
+        w = dataStore.SOH.parameters.net.width;
+        h = dataStore.SOH.parameters.net.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
 
-        label.net[i] = new Kinetic.Text({
-            x: leftmargin+(20+20*i)*grid,
-            y: topmargin+53*grid,
-            width: dataStore.SOH.parameters.net.width,
-            text: 'Network Switch '+(i+1),
-            fontSize: dataStore.SOH.parameters.label.maxFontSize/2,
-            fontFamily: dataStore.SOH.parameters.label.font,
-            fill: dataStore.SOH.parameters.label.fontcolour,
-            align: 'center',
-            listening: false
+        dataStore.SOH.cells.net[i] = new qdshape(path, {
+            id: 'net'+i,
+            fillStyle: dataStore.SOH.parameters.net.fill,
+            strokeStyle: dataStore.SOH.parameters.net.stroke,
+            lineWidth: dataStore.SOH.parameters.net.strokeW,
+            z: 1
         });
 
-        squishFont(label.net[i], 18*grid);
+        label.net[i] = new new qdtext('Network Switch '+(i+1), {
+            x: x,
+            y: y,
+            fontSize: dataStore.SOH.parameters.label.maxFontSize,
+            typeface: dataStore.SOH.parameters.label.font,
+            fillStyle: dataStore.SOH.parameters.label.fontcolour
+        });
+
+        //squishFont(label.net[i], 18*grid);
     }   
 
     /////////////////////////////////////////
@@ -540,31 +547,29 @@ function drawShack(){
     label.comp = [];
 
     for (i = 0; i < 2; i++){
-        dataStore.SOH.cells.comp[i] = new Kinetic.Rect({
-            x: leftmargin,
-            y: topmargin+(40+3*i)*grid,
-            width: dataStore.SOH.parameters.comp.width,
-            height: dataStore.SOH.parameters.comp.height,
-            fill: dataStore.SOH.parameters.comp.fill,
-            stroke: dataStore.SOH.parameters.comp.stroke,
-            strokeWidth: dataStore.SOH.parameters.comp.strokeW,
-            opacity: dataStore.SOH.parameters.comp.opacity
-        }),
+        x = leftmargin;
+        y = topmargin+(40+3*i)*grid;
+        w = dataStore.SOH.parameters.comp.width;
+        h = dataStore.SOH.parameters.comp.height;
+        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
 
-        label.comp[i] = new Kinetic.Text({
-            x: leftmargin,
-            y: topmargin+(40+3.1*i)*grid,
-            width: dataStore.SOH.parameters.comp.width,
-            text: 'Computer '+(i+1),
-            fontSize: dataStore.SOH.parameters.label.maxFontSize,
-            fontFamily: dataStore.SOH.parameters.label.font,
-            fill: dataStore.SOH.parameters.label.fontcolour,
-            padding: dataStore.SOH.parameters.comp.height*0.03,
-            align: 'center',
-            listening: false
+        dataStore.SOH.cells.comp[i] = new qdshape(path, {
+            id: 'comp'+i,
+            fillStyle: dataStore.SOH.parameters.comp.fill,
+            strokeStyle: dataStore.SOH.parameters.comp.stroke,
+            lineWidth: dataStore.SOH.parameters.comp.strokeW,
+            z: 1
         });
 
-        squishFont(label.comp[i], 18*grid);
+        label.comp[i] = new new qdtext('Computer '+(i+1), {
+            x: x,
+            y: y,
+            fontSize: dataStore.SOH.parameters.label.maxFontSize,
+            typeface: dataStore.SOH.parameters.label.font,
+            fillStyle: dataStore.SOH.parameters.label.fontcolour
+        });
+
+        //squishFont(label.comp[i], 18*grid);
     }   
 
     /////////////////////////////////////////////////////////////////////////
@@ -579,18 +584,15 @@ function drawShack(){
 
     for (i = 0; i < 5; i++){
 
-        label.racks[i] = new Kinetic.Text({
-            x: leftmargin+(6+20*i)*grid,
-            y: topmargin,
-            width: dataStore.SOH.parameters.widthlab,
-            text: 'Rack '+(i+1),
+        label.racks[i] = new new qdtext('Rack '+(i+1), {
+            x: x,
+            y: y,
             fontSize: dataStore.SOH.parameters.label.maxFontSize,
-            fontFamily: dataStore.SOH.parameters.label.font,
-            fill: '#EEEEEE',
-            align: 'center'
+            typeface: dataStore.SOH.parameters.label.font,
+            fillStyle: '#EEEEEE'
         });
 
-        squishFont(label.racks[i], 18*grid);
+        //squishFont(label.racks[i], 18*grid);
     }
 
     //////////////////////////////////////////////////////////////////////
