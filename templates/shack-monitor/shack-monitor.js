@@ -2,13 +2,13 @@
 // setup
 ///////////
 
-window.onerror = function(message, source, lineno, colno, error){
-    // need to remind people to log in
+// window.onerror = function(message, source, lineno, colno, error){
+//     // need to remind people to log in
 
-    if(message == 'Script error.'){
-        window.alert("An external script didn't load correctly; a likely cause is that you may need to log into MIDAS if security is enabled. Visit " + dataStore.SOHhost + " (or wherever your MIDAS experiment is), log in, then try coming back here.")
-    }
-}
+//     if(message == 'Script error.'){
+//         window.alert("An external script didn't load correctly; a likely cause is that you may need to log into MIDAS if security is enabled. Visit " + dataStore.SOHhost + " (or wherever your MIDAS experiment is), log in, then try coming back here.")
+//     }
+// }
 
 function registerODB(payload){
     dataStore.ODB.DAQ = payload;
@@ -34,7 +34,8 @@ function drawShack(){
 
     dataStore.SOH.rackImage = {};
     dataStore.SOH.cells = {};
-    dataStore.SOH.parameters = { label:{
+    dataStore.SOH.parameters = { 
+                        label:{
                             font: 'Arial',
                             fontcolour: 'black',
                             maxFontSize: 2*grid
@@ -141,12 +142,12 @@ function drawShack(){
         y = topmargin+4*grid;
         w = 20*grid;
         h = 56*grid;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.racks[i] = new qdshape(path, {
             id: 'rack'+i,
-            fillStyle: '0xFFFFFF',
-            strokeStyle: '0x000000',
+            fillStyle: '#FFFFFF',
+            strokeStyle: '#000000',
             lineWidth: 2,
             z: 1
         });
@@ -164,7 +165,7 @@ function drawShack(){
         y = topmargin + 2*grid;
         w = dataStore.SOH.parameters.sensors.width;
         h = dataStore.SOH.parameters.sensors.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.sensorstop[i] = new qdshape(path, {
             id: 'sensorstop'+i,
@@ -179,7 +180,7 @@ function drawShack(){
         dataStore.SOH.cells.sensorstop[i].mouseout = hideTooltip;
 
         y = topmargin + 60*grid;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.sensorsbottom[i] = new qdshape(path, {
             id: 'sensorsbottom'+i,
@@ -206,7 +207,7 @@ function drawShack(){
         y = topmargin+19*grid;
         w = dataStore.SOH.parameters.cableman.width;
         h = dataStore.SOH.parameters.cableman.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.cableman[i] = new qdshape(path, {
             id: 'cableman'+i,
@@ -222,7 +223,7 @@ function drawShack(){
         y = topmargin+28*grid;
         w = dataStore.SOH.parameters.cableman.width;
         h = dataStore.SOH.parameters.cableman.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.cableman[i] = new qdshape(path, {
             id: 'cableman'+i,
@@ -238,7 +239,7 @@ function drawShack(){
         y = topmargin+32*grid;
         w = dataStore.SOH.parameters.cableman.width;
         h = dataStore.SOH.parameters.cableman.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.cableman[i] = new qdshape(path, {
             id: 'cableman'+i,
@@ -254,7 +255,7 @@ function drawShack(){
         y = topmargin+41*grid;
         w = dataStore.SOH.parameters.cableman.width;
         h = dataStore.SOH.parameters.cableman.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.cableman[i] = new qdshape(path, {
             id: 'cableman'+i,
@@ -270,7 +271,7 @@ function drawShack(){
         y = topmargin+(43+9*(i-12))*grid;
         w = dataStore.SOH.parameters.cableman.width;
         h = dataStore.SOH.parameters.cableman.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.cableman[i] = new qdshape(path, {
             id: 'cableman'+i,
@@ -285,7 +286,7 @@ function drawShack(){
     y = topmargin+30*grid;
     w = dataStore.SOH.parameters.cableman.width;
     h = dataStore.SOH.parameters.cableman.height;
-    path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+    path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
     dataStore.SOH.cells.cableman[i] = new qdshape(path, {
         id: 'cableman14',
@@ -301,15 +302,16 @@ function drawShack(){
     //////////////////////////////////////////////////////////////////////////////
 
     dataStore.SOH.cells.hv = [];
+    dataStore.SOH.cells.hv_x = [leftmargin+20*grid,leftmargin+80*grid,leftmargin+40*grid];
     label.hv = [];
 
     // create all of the rectangles and text boxes
     for (i = 0; i < 3; i++){
-        x = leftmargin+(60+20*(i-1))*grid;
+        x = dataStore.SOH.cells.hv_x[i];
         y = topmargin+4*grid;
         w = dataStore.SOH.parameters.hv.width;
         h = dataStore.SOH.parameters.hv.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.hv[i] = new qdshape(path, {
             id: 'hv'+i,
@@ -319,24 +321,16 @@ function drawShack(){
             z: 1
         });
 
-        label.hv[i] = new new qdtext('HV-'+i, {
-            x: x,
-            y: y,
+        label.hv[i] = new qdtext('HV-'+i, {
+            x: x + dataStore.SOH.parameters.label.maxFontSize,
+            y: y + h/2 + dataStore.SOH.parameters.label.maxFontSize/2,
             fontSize: dataStore.SOH.parameters.label.maxFontSize,
             typeface: dataStore.SOH.parameters.label.font,
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        //squishFont(label.hv[i], 18*grid);
+        squishFont(label.hv[i], 18*grid);
     }
-
-    // ...then modify all the x-positions.
-    // dataStore.SOH.cells.hv[0].setX(leftmargin+20*grid);
-    // label.hv[0].setX(leftmargin+20*grid);
-    // dataStore.SOH.cells.hv[1].setX(leftmargin+80*grid);
-    // label.hv[1].setX(leftmargin+80*grid);
-    // dataStore.SOH.cells.hv[2].setX(leftmargin+40*grid);
-    // label.hv[2].setX(leftmargin+40*grid);
 
     //////////////////////////////////////////////////////////////////////////////
     // NIM crates are included next and numbered in the same way as the HV crates.
@@ -350,7 +344,7 @@ function drawShack(){
         y = topmargin+13*grid;
         w = dataStore.SOH.parameters.nim.width;
         h = dataStore.SOH.parameters.nim.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.nim[i] = new qdshape(path, {
             id: 'nim'+i,
@@ -360,15 +354,15 @@ function drawShack(){
             z: 1
         });
 
-        label.nim[i] = new new qdtext('NIM '+(i+1), {
-            x: x,
-            y: y,
+        label.nim[i] = new qdtext('NIM '+(i+1), {
+            x: x + dataStore.SOH.parameters.label.maxFontSize,
+            y: y + h/2 + dataStore.SOH.parameters.label.maxFontSize/2,
             fontSize: dataStore.SOH.parameters.label.maxFontSize,
             typeface: dataStore.SOH.parameters.label.font,
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        //squishFont(label.nim[i], 18*grid);
+        squishFont(label.nim[i], 18*grid);
     } 
 
     for (i = 5; i < 7; i++){
@@ -376,7 +370,7 @@ function drawShack(){
         y = topmargin+(47+8*(i-5))*grid;
         w = dataStore.SOH.parameters.nim.width;
         h = dataStore.SOH.parameters.nim.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.nim[i] = new qdshape(path, {
             id: 'nim'+i,
@@ -386,15 +380,15 @@ function drawShack(){
             z: 1
         });
 
-        label.nim[i] = new new qdtext('NIM '+(i+1), {
-            x: x,
-            y: y,
+        label.nim[i] = new qdtext('NIM '+(i+1), {
+            x: x + dataStore.SOH.parameters.label.maxFontSize,
+            y: y + h/2 + dataStore.SOH.parameters.label.maxFontSize/2,
             fontSize: dataStore.SOH.parameters.label.maxFontSize,
             typeface: dataStore.SOH.parameters.label.font,
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        //squishFont(label.nim[i], 18*grid);
+        squishFont(label.nim[i], 18*grid);
     }
 
     ////////////////////////////////////////////////////
@@ -412,9 +406,9 @@ function drawShack(){
             y = topmargin+(j*9+20)*grid;
             w = dataStore.SOH.parameters.vme.width;
             h = dataStore.SOH.parameters.vme.height;
-            path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+            path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
-            dataStore.SOH.cells.vme[j*5+1] = new qdshape(path, {
+            dataStore.SOH.cells.vme[j*5+i] = new qdshape(path, {
                 id: 'vme'+i,
                 fillStyle: dataStore.SOH.parameters.vme.fill,
                 strokeStyle: dataStore.SOH.parameters.vme.stroke,
@@ -422,9 +416,9 @@ function drawShack(){
                 z: 1
             });
 
-            label.vme[i] = new new qdtext(VMEtitle, {
-                x: x,
-                y: y,
+            label.vme[j*5+i] = new qdtext(VMEtitle, {
+                x: x + dataStore.SOH.parameters.label.maxFontSize,
+                y: y + h/2 + dataStore.SOH.parameters.label.maxFontSize/2,
                 fontSize: dataStore.SOH.parameters.label.maxFontSize,
                 typeface: dataStore.SOH.parameters.label.font,
                 fillStyle: dataStore.SOH.parameters.label.fontcolour
@@ -433,18 +427,18 @@ function drawShack(){
             dataStore.SOH.cells.vme[j*5+i].mouseover = writeTooltip.bind(null, 'vme');
             dataStore.SOH.cells.vme[j*5+i].mousemove = moveTooltip;
             dataStore.SOH.cells.vme[j*5+i].mouseout = hideTooltip;
-            //squishFont(label.vme[j*5+i], 18*grid);
+            squishFont(label.vme[j*5+i], 18*grid);
 
             dataStore.SOH.cells.vme[j*5+i].click = function(vme){
 
                 document.getElementById('controlsidebar').innerHTML = Mustache.to_html(
                     dataStore.templates['vme-cycle'], 
                     {
-                        'title': vme,
+                        'title': vme
                     }
                 );
 
-            }.bind(null, VMEtitle));
+            }.bind(null, VMEtitle);
             
         }
     }   
@@ -460,7 +454,7 @@ function drawShack(){
     y = topmargin+47*grid;
     w = dataStore.SOH.parameters.dsa.width;
     h = dataStore.SOH.parameters.dsa.height;
-    path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+    path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
     dataStore.SOH.cells.dsa[0] = new qdshape(path, {
         id: 'dsa0',
@@ -470,22 +464,22 @@ function drawShack(){
         z: 1
     });
 
-    label.dsa0 = new new qdtext('Data Storage Array 1', {
-        x: x,
-        y: y,
+    label.dsa0 = new qdtext('Data Storage Array 1', {
+        x: x + dataStore.SOH.parameters.label.maxFontSize/2,
+        y: y + h/2 + dataStore.SOH.parameters.label.maxFontSize/2,
         fontSize: dataStore.SOH.parameters.label.maxFontSize,
         typeface: dataStore.SOH.parameters.label.font,
         fillStyle: dataStore.SOH.parameters.label.fontcolour
     });
 
-    //squishFont(label.dsa0, 18*grid);
+    squishFont(label.dsa0, 18*grid);
 
     for (i = 1; i < 4; i++){
         x = leftmargin+20*(i-1)*grid;
         y = topmargin+54*grid;
         w = dataStore.SOH.parameters.dsa.width;
         h = dataStore.SOH.parameters.dsa.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.dsa[i] = new qdshape(path, {
             id: 'dsa'+i,
@@ -495,15 +489,15 @@ function drawShack(){
             z: 1
         });
 
-        label.dsa[i] = new new qdtext('Data Storage Array '+(i+1), {
-            x: x,
-            y: y,
+        label.dsa[i] = new qdtext('Data Storage Array '+(i+1), {
+            x: x + dataStore.SOH.parameters.label.maxFontSize/2,
+            y: y + h/2 + dataStore.SOH.parameters.label.maxFontSize/2,
             fontSize: dataStore.SOH.parameters.label.maxFontSize,
             typeface: dataStore.SOH.parameters.label.font,
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        //squishFont(label.dsa[i], 18*grid);
+        squishFont(label.dsa[i], 18*grid);
     }     
 
     //////////////////////////////////////////////////////////////////
@@ -518,7 +512,7 @@ function drawShack(){
         y = topmargin+53*grid;
         w = dataStore.SOH.parameters.net.width;
         h = dataStore.SOH.parameters.net.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.net[i] = new qdshape(path, {
             id: 'net'+i,
@@ -528,15 +522,15 @@ function drawShack(){
             z: 1
         });
 
-        label.net[i] = new new qdtext('Network Switch '+(i+1), {
-            x: x,
-            y: y,
+        label.net[i] = new qdtext('Network Switch '+(i+1), {
+            x: x + dataStore.SOH.parameters.label.maxFontSize/2,
+            y: y + 0.9*h,
             fontSize: dataStore.SOH.parameters.label.maxFontSize,
             typeface: dataStore.SOH.parameters.label.font,
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        //squishFont(label.net[i], 18*grid);
+        squishFont(label.net[i], 8*grid);
     }   
 
     /////////////////////////////////////////
@@ -551,7 +545,7 @@ function drawShack(){
         y = topmargin+(40+3*i)*grid;
         w = dataStore.SOH.parameters.comp.width;
         h = dataStore.SOH.parameters.comp.height;
-        path = generatePath([0,0, width,0, width,height, 0,height], x, y);
+        path = generatePath([0,0, w,0, w,h, 0,h], x, y);
 
         dataStore.SOH.cells.comp[i] = new qdshape(path, {
             id: 'comp'+i,
@@ -561,15 +555,15 @@ function drawShack(){
             z: 1
         });
 
-        label.comp[i] = new new qdtext('Computer '+(i+1), {
-            x: x,
-            y: y,
+        label.comp[i] = new qdtext('Computer '+(i+1), {
+            x: x + dataStore.SOH.parameters.label.maxFontSize/2,
+            y: y + h/2 + dataStore.SOH.parameters.label.maxFontSize/2,
             fontSize: dataStore.SOH.parameters.label.maxFontSize,
             typeface: dataStore.SOH.parameters.label.font,
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        //squishFont(label.comp[i], 18*grid);
+        squishFont(label.comp[i], 18*grid);
     }   
 
     /////////////////////////////////////////////////////////////////////////
@@ -584,15 +578,15 @@ function drawShack(){
 
     for (i = 0; i < 5; i++){
 
-        label.racks[i] = new new qdtext('Rack '+(i+1), {
-            x: x,
-            y: y,
+        label.racks[i] = new qdtext('Rack '+(i+1), {
+            x: leftmargin+(6+20*i)*grid,
+            y: topmargin + dataStore.SOH.parameters.label.maxFontSize-2,
             fontSize: dataStore.SOH.parameters.label.maxFontSize,
             typeface: dataStore.SOH.parameters.label.font,
             fillStyle: '#EEEEEE'
         });
 
-        //squishFont(label.racks[i], 18*grid);
+        squishFont(label.racks[i], 18*grid);
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -614,7 +608,7 @@ function drawShack(){
         dataStore.SOH.rackImage.mainLayer.add(dataStore.SOH.cells.cableman[i]);
     }
 
-    //              dataStore.SOH.rackImage.mainLayer.add(dataStore.SOH.cells.cableman[14]);
+    //dataStore.SOH.rackImage.mainLayer.add(dataStore.SOH.cells.cableman[14]);
 
     for (i = 0; i < 3; i++)
         dataStore.SOH.rackImage.mainLayer.add(dataStore.SOH.cells.hv[i]),
@@ -628,7 +622,7 @@ function drawShack(){
     for (i = 0; i < 10; i++)
     {
         if (i==2 || i==5 || i==6) continue;
-        dataStore.SOH.rackImage.mainLayer.add(dataStore.SOH.cells.vme[i]),
+        dataStore.SOH.rackImage.mainLayer.add(dataStore.SOH.cells.vme[i])
         dataStore.SOH.rackImage.mainLayer.add(label.vme[i]);
     }
 
@@ -654,7 +648,7 @@ function drawShack(){
     // The final command draws all of the objects and text onto the main layer.
     ///////////////////////////////////////////////////////////////////////////
 
-    dataStore.SOH.rackImage.mainLayer.draw();
+    dataStore.SOH.rackImage.stage.render();
 }
 
 
@@ -667,7 +661,7 @@ function dataUpdate(payload){
 
     updateRunStatus();
     updateThermometerFlags();
-    dataStore.SOH.rackImage.mainLayer.draw();
+    dataStore.SOH.rackImage.stage.render();
     if(dataStore.tooltip.currentTooltipTarget)
         writeTooltip(dataStore.tooltip.currentTooltipTarget);
 }
@@ -680,14 +674,14 @@ function updateThermometerFlags(){
 
     for(i=0; i<5; i++){
         if(dataStore.SOH.ODB.Equipment[0].Agilent34970A.Variables.DATA[i] > critTemp)
-            dataStore.SOH.cells.sensorstop[i].setAttr('fill', 'red');
+            dataStore.SOH.cells.sensorstop[i].fillStyle = 'red';
         else
-            dataStore.SOH.cells.sensorstop[i].setAttr('fill', 'lightgray');
+            dataStore.SOH.cells.sensorstop[i].fillStyle = 'lightgray';
 
         if(dataStore.SOH.ODB.Equipment[0].Agilent34970A.Variables.DATA[i+5] > critTemp)
-            dataStore.SOH.cells.sensorsbottom[i].setAttr('fill', 'red');
+            dataStore.SOH.cells.sensorsbottom[i].fillStyle = 'red';
         else
-            dataStore.SOH.cells.sensorsbottom[i].setAttr('fill', 'lightgray');
+            dataStore.SOH.cells.sensorsbottom[i].fillStyle = 'lightgray';
     }
 
 }

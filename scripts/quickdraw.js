@@ -90,7 +90,8 @@ function quickdraw(width, height){
 
             // touch targets list
             for(j=this.layers[i].members.length-1; j>=0; j--){
-                this.touchTargets.push(this.layers[i].members[j])
+                if(this.layers[i].members[j]._touchable)
+                    this.touchTargets.push(this.layers[i].members[j])
             }
         }  
     }
@@ -102,7 +103,8 @@ function quickdraw(width, height){
 
         for(i=0; i<this.touchTargets.length; i++){
 
-            if(this.touchTargets[i] instanceof qdtext) continue; //no touching text nodes for now
+            if( this.touchTargets[i] instanceof qdtext) //no touching text nodes for now 
+                continue; 
 
             // are we touching shape i?
             if(this.ctx.isPointInPath(this.touchTargets[i]._path, evt.clientX - bounds.left, evt.clientY - bounds.top)){
@@ -114,7 +116,7 @@ function quickdraw(width, height){
                     if(!this.previousTouch){
                         //move from empty space to shape
                         this.currentTouch._mouseover(evt.clientX - bounds.left, evt.clientY - bounds.top, evt);
-                    } else if(this.previousTouch.id !== this.currentTouch.id){
+                    } else if(this.previousTouch._id !== this.currentTouch._id){
                         //left one shape and entered another
                         this.previousTouch._mouseout(evt.clientX - bounds.left, evt.clientY - bounds.top, evt);
                         this.currentTouch._mouseover(evt.clientX - bounds.left, evt.clientY - bounds.top, evt);
@@ -149,15 +151,19 @@ function quickdraw(width, height){
 function qdshape(path, parameters){
     // constructor for a generic shape; path == Path2D object that defines the shape
 
-    var propertySetter, interactionSetter;
+    var propertySetter, interactionSetter, i;
+        genricProperties = [
+            'path', 'lineWidth', 'strokeStyle', 'fillStyle', 'touchable', 'x', 'y', 
+            'internalRotation', 'fillPriority', 'fillPatternImage'
+        ];
 
     // default parameters
-    this.id = parameters.id;
+    this._id = parameters.id;
     this._path = path;
     this._lineWidth = parameters.lineWidth || 1;
     this._strokeStyle = parameters.strokeStyle || '#000000';
     this._fillStyle = parameters.fillStyle || '#000000';
-    this.touchable = parameters.hasOwnProperty('touchable') ? parameters.touchable : true;
+    this._touchable = parameters.hasOwnProperty('touchable') ? parameters.touchable : true;
     this._x = parameters.x || 0;
     this._y = parameters.y || 0;
     this._z = parameters.z || 1;
@@ -179,30 +185,14 @@ function qdshape(path, parameters){
             this.parentLayer.needsUpdate = true;
     };
 
-    Object.defineProperty(this, 'path', {
-        set: propertySetter.bind(this, '_path')
-    });
+    // generic setters
+    for(i=0; i<genricProperties.length; i++){
+        Object.defineProperty(this, genricProperties[i], {
+            set: propertySetter.bind(this, '_'+genricProperties[i])
+        });
+    }
 
-    Object.defineProperty(this, 'lineWidth', {
-        set: propertySetter.bind(this, '_lineWidth')
-    });
-
-    Object.defineProperty(this, 'strokeStyle', {
-        set: propertySetter.bind(this, '_strokeStyle')
-    });
-
-    Object.defineProperty(this, 'fillStyle', {
-        set: propertySetter.bind(this, '_fillStyle')
-    });
-
-    Object.defineProperty(this, 'x', {
-        set: propertySetter.bind(this, '_x')
-    });
-
-    Object.defineProperty(this, 'y', {
-        set: propertySetter.bind(this, '_y')
-    });
-
+    // special setter behavior
     Object.defineProperty(this, 'z', 
         {
             set:function(variableName, setValue){
@@ -217,18 +207,6 @@ function qdshape(path, parameters){
                         }) 
                     }               
                 }.bind(this, '_z')
-    });
-
-    Object.defineProperty(this, 'internalRotation', {
-        set: propertySetter.bind(this, '_internalRotation')
-    });
-
-    Object.defineProperty(this, 'fillPriority', {
-        set: propertySetter.bind(this, '_fillPriority')
-    });
-
-    Object.defineProperty(this, 'fillPatternImage', {
-        set: propertySetter.bind(this, '_fillPatternImage')
     });
 
     // mouse interaction setters
@@ -350,15 +328,11 @@ function qdtext(text, parameters){
 
     this.getTextMetric = function(){
         
-        var textsize;
+        var dummyCanvas = document.createElement('canvas'),
+            dummyContext = dummyCanvas.getContext('2d');
 
-        if(this.parentLayer){
-            this.parentLayer.ctx.font = this._fontSize + 'px ' + this._typeface;
-            textsize = this.parentLayer.ctx.measureText(this._text);
-            return textsize;
-        } else {
-            return null;
-        }
+        dummyContext.font = this._fontSize + 'px ' + this._typeface;
+        return dummyContext.measureText(this._text);
     }
 
 }

@@ -122,8 +122,8 @@ function generateTickLabel(min, max, nTicks, n){
 
 function squishFont(string, maxWidth){
     // given a kinetic string, keep reducing its font until it fits in maxWidth
-    while(string.getTextWidth() > maxWidth){
-        string.setAttr('fontSize', string.getAttr('fontSize') - 1);
+    while(string.getTextMetric().width > maxWidth){
+        string.fontSize = string._fontSize - 1;
     }
 }
 
