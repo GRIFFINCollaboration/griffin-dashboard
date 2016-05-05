@@ -84,31 +84,31 @@
 
         var index = parseInt(channel.slice(7),10),
             azimuthalSection = index%12,
-            radialSection = Math.floor(index/12);
+            radialSection = Math.floor(index/12),
+            path;
 
-        dataStore.detector.cells[channel] = new Kinetic.Arc({
-            innerRadius: dataStore.detector.innerRad + radialSection*dataStore.detector.radStep,
-            outerRadius: dataStore.detector.innerRad + (radialSection+1)*dataStore.detector.radStep,
-            angle: 30,
-            clockwise: false,
-            rotationDeg: -30*(azimuthalSection+1),
-            x: dataStore.detector.x0,
-            y: dataStore.detector.y0,
-            fill: '#000000',
-            fillPatternOffsetX: 100*Math.random(),
-            fillPatternOffsetY: 100*Math.random(),
-            stroke: dataStore.frameColor,
-            strokeWidth: dataStore.frameLineWidth,
-            closed: true,
-            listening: true
+        path = generateArc(
+            -30*(azimuthalSection+2)/180*Math.PI,
+            -30*(azimuthalSection+1)/180*Math.PI, 
+            dataStore.detector.innerRad + radialSection*dataStore.detector.radStep, 
+            dataStore.detector.innerRad + (radialSection+1)*dataStore.detector.radStep, 
+            dataStore.detector.x0, 
+            dataStore.detector.y0
+        );
+        dataStore.detector.cells[channel] = new qdshape(path, {
+            id: channel,
+            fillStyle: '#000000',
+            strokeStyle: dataStore.frameColor,
+            lineWidth: dataStore.frameLineWidth,
+            z: 1
         });
 
         //set up the tooltip listeners:
-        dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
-        dataStore.detector.cells[channel].on('mousemove', moveTooltip);
-        dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+        dataStore.detector.cells[channel].mouseover = writeTooltip.bind(null, channel);
+        dataStore.detector.cells[channel].mousemove = moveTooltip;
+        dataStore.detector.cells[channel].mouseout = hideTooltip;
 
         //set up onclick listeners:
-        dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+        dataStore.detector.cells[channel].click = clickCell.bind(null, channel);
     }
 </script>

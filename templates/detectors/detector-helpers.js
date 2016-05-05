@@ -116,20 +116,18 @@ function setupDetector(){
     dataStore.detector.width = document.getElementById('visualizationcollection').offsetWidth;
     dataStore.detector.height = 2/3*dataStore.detector.width;
 
-    // set up kinetic framework
+    // set up quickdraw framework
     dataStore.detector.stage = [];
     dataStore.detector.channelLayer = [];
     dataStore.detector.HVLayer = [];
     dataStore.detector.scaleLayer = [];
     for(i=0; i<dataStore.detector.views.length; i++){
-        dataStore.detector.stage[i] = new Kinetic.Stage({
-            container: dataStore.detector.views[i] + 'Wrap',
-            width: dataStore.detector.width,
-            height: dataStore.detector.height
-        });
-        dataStore.detector.channelLayer[i] = new Kinetic.Layer();
-        dataStore.detector.HVLayer[i] = new Kinetic.Layer();
-        dataStore.detector.scaleLayer[i] = new Kinetic.Layer();
+        dataStore.detector.stage[i] = new quickdraw(dataStore.detector.width, dataStore.detector.height);
+        document.getElementById(dataStore.detector.views[i] + 'Wrap').appendChild(dataStore.detector.stage[i].canvas)
+
+        dataStore.detector.channelLayer[i] = new qdlayer('channelLayer'+i);
+        dataStore.detector.HVLayer[i] = new qdlayer('HVLayer'+i);
+        dataStore.detector.scaleLayer[i] = new qdlayer('scaleLayer'+i);
 
         dataStore.detector.stage[i].add(dataStore.detector.scaleLayer[i]);
         dataStore.detector.stage[i].add(dataStore.detector.channelLayer[i]);
@@ -178,14 +176,14 @@ function createDataStructure(){
 }
 
 function instantiateCells(view){
-    // decalre the kinetic cells for detectors with only a single view
+    // decalre the qdshape cells for detectors with only a single view
     // view == 0 for detectors where hv cells == scalar cells
     // view == 1 ow
 
     var i, channel, cellKey,
         cellCoords = {};
 
-    //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+    //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a qdshape object:
     dataStore.detector.cells = {};
     for(i=0; i<dataStore.detector.channelNames.length; i++){
         channel = dataStore.detector.channelNames[i];
@@ -210,7 +208,7 @@ function setupErrorPattern(){
         var key;
 
         for(key in dataStore.detector.cells){
-            dataStore.detector.cells[key].setAttr('fillPatternImage', dataStore.errorPattern);
+            dataStore.detector.cells[key].fillPatternImage = dataStore.errorPattern;
         }
     }
     if(dataStore.errorPattern.complete){
@@ -230,11 +228,11 @@ function generateColorScale(scale){
 
     var colorStops = [],
         i, j,
-        tick, colorScale;
+        tick, colorScale, 
+        gradientFill, gradientPath;
 
     //generate a bunch of color stop points for the gradient
-    for(i=0; i<101; i++){
-        colorStops.push(i/100);
+    for(i=0; i<100; i++){
         colorStops.push(scalepickr(i/100, dataStore.detector.plotScales[dataStore.detector.subview].color));
     }
 
@@ -242,17 +240,28 @@ function generateColorScale(scale){
     dataStore.detector.scaleTitle = [];
     for(j=0; j<dataStore.detector.views.length; j++){
 
-        //draw the gradient itself
-        colorScale = new Kinetic.Rect({
-            x: 0.1*dataStore.detector.width,
-            y: 0.9*dataStore.detector.height,
-            width: 0.8*dataStore.detector.width,
-            height: 0.05*dataStore.detector.height,
-            fillLinearGradientStartPoint: {x: 0, y: 0}, //TIL: gradient coords are relative to the shape, not the layer
-            fillLinearGradientEndPoint: {x: 0.8*dataStore.detector.width, y: 0},
-            fillLinearGradientColorStops: colorStops,
-            stroke: '#999999',
-            strokeWidth: 2                    
+        //create a gradient fill object
+        gradientFill = dataStore.detector.scaleLayer[j].ctx.createLinearGradient(0.1*dataStore.detector.width,0.9*dataStore.detector.height,0.9*dataStore.detector.width,0.95*dataStore.detector.height)
+        for(i=0; i<colorStops.length; i++){
+            gradientFill.addColorStop(i/100, colorStops[i]);
+        }
+        gradientPath = generatePath(
+            [
+                0,0, 
+                0.8*dataStore.detector.width,0, 
+                0.8*dataStore.detector.width,0.05*dataStore.detector.height,
+                0,0.05*dataStore.detector.height
+            ], 
+            0.1*dataStore.detector.width,
+            0.9*dataStore.detector.height
+        );
+
+        colorScale = new qdshape(gradientPath, {
+            id: 'gradient'+j,
+            fillStyle: gradientFill,
+            strokeStyle: '#999999',
+            lineWidth: 2,
+            z: 1
         });
 
         dataStore.detector.scaleLayer[j].add(colorScale);
@@ -261,33 +270,32 @@ function generateColorScale(scale){
         dataStore.detector.tickLabels[j] = [];
         for(i=0; i<11; i++){
             //tick line
-            tick = new Kinetic.Line({
-                points: [(0.1+i*0.08)*dataStore.detector.width, 0.95*dataStore.detector.height, (0.1+i*0.08)*dataStore.detector.width, 0.96*dataStore.detector.height],
-                stroke: '#999999',
-                strokeWidth: 2
+            tick = generatePath([0,0,0,0.01*dataStore.detector.height], (0.1+i*0.08)*dataStore.detector.width, 0.95*dataStore.detector.height);
+            tick = new qdshape(tick, {
+                id: 'tick'+i,
+                strokeStyle: '#999999',
+                lineWidth: 2
             });
             dataStore.detector.scaleLayer[j].add(tick);
 
             //tick label
-            dataStore.detector.tickLabels[j][i] = new Kinetic.Text({
+            dataStore.detector.tickLabels[j][i] = new qdtext('', {
                 x: (0.1+i*0.08)*dataStore.detector.width,
-                y: 0.96*dataStore.detector.height + 2,
-                text: '',
+                y: 0.98*dataStore.detector.height + 2,
                 fontSize: 14,
-                fontFamily: 'Arial',
-                fill: '#999999'
+                typeface: 'Arial',
+                fillStyle: '#999999'
             });
             dataStore.detector.scaleLayer[j].add(dataStore.detector.tickLabels[j][i]);
         }
 
         //place empty title on scale
-        dataStore.detector.scaleTitle[j] = new Kinetic.Text({
+        dataStore.detector.scaleTitle[j] = new qdtext('', {
             x: dataStore.detector.width/2,
             y: 0.9*dataStore.detector.height - 22,
-            text: '',
             fontSize : 20,
-            fontFamily: 'Arial',
-            fill: '#999999'
+            typeface: 'Arial',
+            fillStyle: '#999999'
         })
         dataStore.detector.scaleLayer[j].add(dataStore.detector.scaleTitle[j]);
     }
@@ -313,44 +321,45 @@ function refreshColorScale(index){
     //refresh tick labels
     for(i=0; i<11; i++){
         //update text
-        dataStore.detector.tickLabels[index][i].setText(generateTickLabel(currentMin, currentMax, 11, i));
+        dataStore.detector.tickLabels[index][i].text = (generateTickLabel(currentMin, currentMax, 11, i));
         //update position
-        dataStore.detector.tickLabels[index][i].setAttr('x', (0.1+i*0.08)*dataStore.detector.width - dataStore.detector.tickLabels[index][i].getTextWidth()/2);
+        dataStore.detector.tickLabels[index][i].x = (0.1+i*0.08)*dataStore.detector.width - dataStore.detector.tickLabels[index][i].getTextMetric().width/2;
     }
 
     //update title
-    dataStore.detector.scaleTitle[index].setText(logTitle + dataStore.detector.subviewPrettyText[dataStore.detector.subview] + ' [' + dataStore.detector.subviewUnits[dataStore.detector.subview] + ']');
-    dataStore.detector.scaleTitle[index].setAttr('x', dataStore.detector.width/2 - dataStore.detector.scaleTitle[index].getTextWidth()/2);
-
-    dataStore.detector.scaleLayer[index].draw();
-    
+    dataStore.detector.scaleTitle[index].text = logTitle + dataStore.detector.subviewPrettyText[dataStore.detector.subview] + ' [' + dataStore.detector.subviewUnits[dataStore.detector.subview] + ']';
+    dataStore.detector.scaleTitle[index].x = dataStore.detector.width/2 - dataStore.detector.scaleTitle[index].getTextMetric().width/2;    
 }
 
 function createCell(channel){
     // stamp out a cell for the given channel and coordinate array key
     // note that cell still has to be added to an appropriate layer on a per-detector basis.
 
-    dataStore.detector.cells[channel] = new Kinetic.Line({
-        points: dataStore.detector.cellCoords[channel].vertices,
-        fill: '#000000',
-        x: dataStore.detector.cellCoords[channel].x || 0,
-        y: dataStore.detector.cellCoords[channel].y || 0,
-        rotation: dataStore.detector.cellCoords[channel].internalRotation || 0,
-        fillPatternOffsetX: 100*Math.random(),
-        fillPatternOffsetY: 100*Math.random(),
-        stroke: dataStore.frameColor,
-        strokeWidth: dataStore.frameLineWidth,
-        closed: true,
-        listening: true
-    });
+    var poly = generatePath(
+            dataStore.detector.cellCoords[channel].vertices,
+            dataStore.detector.cellCoords[channel].x,
+            dataStore.detector.cellCoords[channel].y
+        ),
+        cell = new qdshape(poly, {
+            id: channel,
+            fillStyle: '#000000',
+            strokeStyle: dataStore.frameColor,
+            lineWidth: dataStore.frameLineWidth,
+            x: dataStore.detector.cellCoords[channel].x,
+            y: dataStore.detector.cellCoords[channel].y,
+            z: 1,
+            internalRotation: dataStore.detector.cellCoords[channel].internalRotation
+        });
+
+    dataStore.detector.cells[channel] = cell;
 
     //set up the tooltip listeners:
-    dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
-    dataStore.detector.cells[channel].on('mousemove', moveTooltip);
-    dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+    dataStore.detector.cells[channel].mouseover = writeTooltip.bind(null, channel);
+    dataStore.detector.cells[channel].mousemove = moveTooltip;
+    dataStore.detector.cells[channel].mouseout = hideTooltip;
 
     //set up onclick listeners:
-    dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+    dataStore.detector.cells[channel].click = clickCell.bind(null, channel);
 }
 
 function repaint(){
@@ -364,7 +373,7 @@ function repaint(){
     if(dataStore.tooltip.currentTooltipTarget)
         writeTooltip(dataStore.tooltip.currentTooltipTarget);
 
-    dataStore.detector.stage[currentViewIndex].draw();
+    dataStore.detector.stage[currentViewIndex].render();
 }
 
 function managePlotScale(setFromDataStore){
@@ -433,7 +442,7 @@ function updateCells(){
             continue;
 
         // assume data unavailable until proven otherwise
-        dataStore.detector.cells[channel].setFillPriority('pattern');
+        dataStore.detector.cells[channel].fillPriority = 'pattern';
 
         // fetch the most recent raw value from the currentData store:
         if(dataStore.data[channel] && isNumeric(dataStore.data[channel][currentSubview]) ){
@@ -449,9 +458,8 @@ function updateCells(){
             if(colorIndex > 1) colorIndex = 1;
             color = scalepickr(colorIndex, currentColor);
 
-            dataStore.detector.cells[channel].fill(color);
-            dataStore.detector.cells[channel].setFillPriority('color');
-
+            dataStore.detector.cells[channel].fillStyle = color;
+            dataStore.detector.cells[channel].fillPriority = 'color';
         }
     }
 }
@@ -666,11 +674,11 @@ function manageSubview(target, suppressRepaint){
     //manage actual image; note first view always shows the HV layer, ie for summaries and detectors with HV channels == scalar channels
     for(i=1; i<dataStore.detector.views.length; i++){
         if(target == 'HV' || dataStore.detector.singleSubview){
-            dataStore.detector.HVLayer[i].show();
-            dataStore.detector.channelLayer[i].hide();
+            dataStore.detector.HVLayer[i].display = true;
+            dataStore.detector.channelLayer[i].display = false;
         } else{
-            dataStore.detector.HVLayer[i].hide();
-            dataStore.detector.channelLayer[i].show();
+            dataStore.detector.HVLayer[i].display = false;
+            dataStore.detector.channelLayer[i].display = true;
         }
     }
 

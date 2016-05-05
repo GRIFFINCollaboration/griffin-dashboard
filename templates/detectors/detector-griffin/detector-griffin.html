@@ -119,11 +119,11 @@
     }
 
     function instantiateCells(){
-        // decalre the kinetic cells for the detail views of each clover, and plug in interactions.
+        // decalre the qdshape cells for the detail views of each clover, and plug in interactions.
 
         var i, viewIndex, channel, cellKey
 
-        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a qdshape object:
         for(i=0; i<dataStore.detector.channelNames.length; i++){
             channel = dataStore.detector.channelNames[i];
 
@@ -248,7 +248,7 @@
     function instantiateSummaryCells(){
         var i, viewIndex, channel;
 
-        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a qdshape object:
         for(i=0; i<dataStore.detector.channelNames.length; i++){
             channel = dataStore.detector.channelNames[i];
 
@@ -342,70 +342,65 @@
 
     function drawWindowDressing(){
         //set up the window dressing for the summary view (beam arrow, hemisphere labels...)
-        var westLabel, eastLabel, beamArrow
+        var westLabel, eastLabel,
+            fontSize = 28;
 
         //label hemispheres and beam direction
-        westLabel = new Kinetic.Text({
+        westLabel = new qdtext('West Hemisphere', {
             x: 0,
             y: 0,
-            text: 'West Hemisphere',
-            fontSize: 28,
-            fontFamily: 'Arial',
-            fill: '#999999'
+            fontSize: fontSize,
+            typeface: 'Arial',
+            fillStyle: '#999999'
         });
         dataStore.detector.channelLayer[0].add(westLabel);
         //center label nicely
-        westLabel.setAttr('x', 43.5*dataStore.detector.summaryGrid - westLabel.getTextWidth()/2);
-        westLabel.setAttr('y', 0.8*dataStore.detector.height - westLabel.getTextHeight());
+        westLabel.x = 43.5*dataStore.detector.summaryGrid - westLabel.getTextMetric().width/2;
+        westLabel.y = 0.8*dataStore.detector.height - fontSize/2;
 
-        eastLabel = new Kinetic.Text({
+        eastLabel = new qdtext('East Hemisphere', {
             x: 0,
             y: 0,
-            text: 'East Hemisphere',
             fontSize: 28,
-            fontFamily: 'Arial',
-            fill: '#999999'
+            typeface: 'Arial',
+            fillStyle: '#999999'
         });
         dataStore.detector.channelLayer[0].add(eastLabel);
         //center label nicely
-        eastLabel.setAttr('x', 13.5*dataStore.detector.summaryGrid - eastLabel.getTextWidth()/2);
-        eastLabel.setAttr('y', 0.8*dataStore.detector.height - eastLabel.getTextHeight());      
+        eastLabel.x = 13.5*dataStore.detector.summaryGrid - eastLabel.getTextMetric().width/2;
+        eastLabel.y = 0.8*dataStore.detector.height - fontSize/2;      
 
-        beamArrow = new Kinetic.Line({
-            points: [28.5*dataStore.detector.summaryGrid, 2*dataStore.detector.summaryGrid, 29*dataStore.detector.summaryGrid,2*dataStore.detector.summaryGrid, 28.5*dataStore.detector.summaryGrid,1*dataStore.detector.summaryGrid, 28*dataStore.detector.summaryGrid,2*dataStore.detector.summaryGrid, 28.5*dataStore.detector.summaryGrid,2*dataStore.detector.summaryGrid, 28.5*dataStore.detector.summaryGrid,dataStore.detector.height*0.8],
-            fill: '#999999',
-            stroke: '#999999',
-            strokeWidth: dataStore.frameLineWidth,
-            closed: true,
-            listening: true
-        });      
-        dataStore.detector.channelLayer[0].add(beamArrow); 
-
+        //beam arrow
+        dataStore.detector.channelLayer[0].add(
+            drawArrow(
+                28.5*dataStore.detector.summaryGrid, dataStore.detector.height*0.8, 
+                28.5*dataStore.detector.summaryGrid, 2*dataStore.detector.summaryGrid
+            )
+        )
     }
 
     function createCell(channel, cellKey){
-        // reimplemented for griffin to accommodate highly redundant geometry between views
+        // reimplemented for griffin to accommodate highly redundant geometry between views (ie many cells have the same coords, keyed by cellKey)
         // stamp out a cell for the given channel and coordinate array key
         // note that cell still has to be added to an appropriate layer on a per-detector basis.
 
-        dataStore.detector.cells[channel] = new Kinetic.Line({
-            points: dataStore.detector.cellCoords[cellKey],
-            fill: '#000000',
-            fillPatternOffsetX: 100*Math.random(),
-            fillPatternOffsetY: 100*Math.random(),
-            stroke: dataStore.frameColor,
-            strokeWidth: dataStore.frameLineWidth,
-            closed: true,
-            listening: true
+        var poly = generatePath(dataStore.detector.cellCoords[cellKey], 0, 0),
+        cell = new qdshape(poly, {
+            id: channel,
+            fillStyle: '#000000',
+            strokeStyle: dataStore.frameColor,
+            lineWidth: dataStore.frameLineWidth,
+            z: 1
         });
+        dataStore.detector.cells[channel] = cell;
 
         //set up the tooltip listeners:
-        dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
-        dataStore.detector.cells[channel].on('mousemove', moveTooltip);
-        dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+        dataStore.detector.cells[channel].mouseover = writeTooltip.bind(null, channel);
+        dataStore.detector.cells[channel].mousemove = moveTooltip;
+        dataStore.detector.cells[channel].mouseout = hideTooltip;
 
         //set up onclick listeners:
-        dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+        dataStore.detector.cells[channel].click = clickCell.bind(null, channel);
     }
 
     function isHV(cellName){

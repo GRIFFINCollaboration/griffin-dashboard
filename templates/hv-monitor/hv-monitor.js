@@ -37,7 +37,7 @@ function exploreCrates(){
 }
 
 function setupDisplay(){
-    // set up the kinetic context for drawing, and ui to manipulate it.
+    // set up the context for drawing, and ui to manipulate it.
 
     var i, option,
         keys = Object.keys(dataStore.HV.crates),
@@ -57,12 +57,10 @@ function setupDisplay(){
         'ramping': '#F0AD4E'
     };
 
-    // set up a kinetic stage
-    dataStore.HV.stage = new Kinetic.Stage({
-        container: 'HVDisplay',
-        width: wrap.offsetWidth,
-        height: dataStore.HV.marginTop + 16*dataStore.HV.scale
-    });
+    // set up a drawing stage
+    dataStore.HV.stage = new quickdraw(wrap.offsetWidth, dataStore.HV.marginTop + 16*dataStore.HV.scale);
+    document.getElementById('HVDisplay').appendChild(dataStore.HV.stage.canvas);
+
     dataStore.HV.crateLayers = {};
     dataStore.HV.cells = {'all': []};
 
@@ -74,9 +72,9 @@ function setupDisplay(){
         picker.appendChild(option);
 
         // add a layer to the display stage for each crate; start out invisible
-        dataStore.HV.crateLayers[keys[i]] = new Kinetic.Layer();
+        dataStore.HV.crateLayers[keys[i]] = new qdlayer('HVLayer'+i);
         dataStore.HV.stage.add(dataStore.HV.crateLayers[keys[i]]);
-        dataStore.HV.crateLayers[keys[i]].visible(false);
+        dataStore.HV.crateLayers[keys[i]].display = false;
 
         // generate the cells for this layer, and add them
         setupGridLayer(keys[i], dataStore.HV.crates[keys[i]].content);  
@@ -91,8 +89,8 @@ function setupDisplay(){
         var i;
 
         for(i=0; i<dataStore.HV.cells.all.length; i++){
-            dataStore.HV.cells.all[i].setAttr('fillPatternImage', dataStore.errorPattern);
-            dataStore.HV.cells.all[i].setFillPriority('pattern');
+            dataStore.HV.cells.all[i].fillPatternImage = dataStore.errorPattern;
+            dataStore.HV.cells.all[i].fillPriority = 'pattern';
         }
     }
     if(dataStore.errorPattern.complete){
@@ -107,7 +105,7 @@ function setupDisplay(){
 //////////////////
 
 function setupGridLayer(crateName, crateContent){
-    // set up the kinetic objects to represent an HV crate
+    // set up the objects to represent an HV crate
 
     var i, j, x, y, cells, cardSize, ODBindexes,
         channelCount = 0;
@@ -143,7 +141,7 @@ function setupGridLayer(crateName, crateContent){
             dataStore.HV.crateLayers[crateName].add(cells[j]);
         }
 
-        //keep track of kinetic cells for reporting channels on the dataStore for future updates
+        //keep track of image cells for reporting channels on the dataStore for future updates
         if(crateContent[i] != 0)
             dataStore.HV.cells[crateName] = dataStore.HV.cells[crateName].concat(cells);
 
@@ -156,25 +154,28 @@ function setupGridLayer(crateName, crateContent){
 }
 
 function setupCard(cardSize, x0, y0, scale, ODBindexes){
-    // create the kinetic objects representing a card with <cardSize> channels, top left corner at (x0,y0).
+    // create the objects representing a card with <cardSize> channels, top left corner at (x0,y0).
     // return an array of these objects.
 
-    var i, primary, cell,
+    var i, primary, cell, poly, width, height,
         x = x0,
         y = y0,
         cells = [];
 
     // primary
     if(cardSize == 48){
-        primary = new Kinetic.Rect({
-            x: x,
-            y: y,
-            width: dataStore.HV.scale*(cardSize/12),
-            height: dataStore.HV.scale,
-            stroke: dataStore.frameColor,
-            fillPatternOffsetX: 100*Math.random(),
-            fillPatternOffsetY: 100*Math.random(),
-            strokeWidth: dataStore.frameLineWidth
+        width = dataStore.HV.scale*(cardSize/12);
+        height = dataStore.HV.scale
+        poly = generatePath(
+            [0,0, width,0, width,height, 0,height],
+            x, y
+        ),
+        primary = new qdshape(poly, {
+            id: '',
+            fillStyle: '#000000',
+            strokeStyle: dataStore.frameColor,
+            lineWidth: dataStore.frameLineWidth,
+            z: 1,
         });
         cells.push(primary);
     }
@@ -183,26 +184,28 @@ function setupCard(cardSize, x0, y0, scale, ODBindexes){
         //columns of 12 below primary
         x = x0 + dataStore.HV.scale*(Math.floor(i/12));
         y = y0 + dataStore.HV.scale*(1 + i%12);
-
-        cell = new Kinetic.Rect({
-            x: x,
-            y: y,
-            width: dataStore.HV.scale,
-            height: dataStore.HV.scale,
-            stroke: dataStore.frameColor,
-            fillPatternOffsetX: 100*Math.random(),
-            fillPatternOffsetY: 100*Math.random(),
-            strokeWidth: dataStore.frameLineWidth
+        width = dataStore.HV.scale;
+        height = dataStore.HV.scale;
+        poly = generatePath(
+            [0,0, width,0, width,height, 0,height],
+            x, y
+        ),
+        cell = new qdshape(poly, {
+            id: '',
+            fillStyle: '#000000',
+            strokeStyle: dataStore.frameColor,
+            lineWidth: dataStore.frameLineWidth,
+            z: 1,
         });
         cells.push(cell);
     }
 
     //set up the tooltip listeners & onclick listeners:
     for(i=0; i<cells.length; i++){
-        cells[i].on('mouseover', writeTooltip.bind(null, ODBindexes[i]));
-        cells[i].on('mousemove', moveTooltip);
-        cells[i].on('mouseout',  hideTooltip);
-        cells[i].on('click', clickCell.bind(cells[i], ODBindexes[i]) );
+        cells[i].mouseover = writeTooltip.bind(null, ODBindexes[i]);
+        cells[i].mousemove = moveTooltip;
+        cells[i].mouseout = hideTooltip;
+        cells[i].click = clickCell.bind(cells[i], ODBindexes[i]);
     }
 
     return cells;
@@ -227,8 +230,8 @@ function recolorCells(){
         else
             color = dataStore.HV.colors.alarm;
 
-        dataStore.HV.cells[dataStore.HV.currentCrate][i].setFillPriority('color');
-        dataStore.HV.cells[dataStore.HV.currentCrate][i].setAttr('fill', color);
+        dataStore.HV.cells[dataStore.HV.currentCrate][i].fillPriority = 'color';
+        dataStore.HV.cells[dataStore.HV.currentCrate][i].fillStyle = color;
     }
 }
 
@@ -236,13 +239,13 @@ function repaint(){
     // redraw the display
 
     recolorCells();
-    dataStore.HV.crateLayers[dataStore.HV.currentCrate].draw();
+    dataStore.HV.stage.render();
 }
 
 function windowDressing(layer, crateContent){
     // draw all the window dressing on the provided layer: labels, legend, annotations etc.
 
-    var i, text, cell,
+    var i, text, cell, poly, x, y, width, height,
         baseFontSize = 14,
         rowLabels = ['Primary', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
         columnLabels,
@@ -261,69 +264,71 @@ function windowDressing(layer, crateContent){
 
     // row labels
     for(i=0; i<rowLabels.length; i++){
-        text = new Kinetic.Text({
+        text = new qdtext(rowLabels[i], {
             x: 0,
-            y: dataStore.HV.marginTop + (i+0.5)*dataStore.HV.scale - baseFontSize/2,
-            text: rowLabels[i],
+            y: dataStore.HV.marginTop + (i+0.75)*dataStore.HV.scale - baseFontSize/2,
             fontSize: baseFontSize,
-            fontFamily: 'Arial',
-            fill: dataStore.frameTextColor
+            typeface: 'Arial',
+            fillStyle: dataStore.frameTextColor
         });
         layer.add(text);
-        text.setAttr('x', dataStore.HV.marginLeft - baseFontSize - text.getTextWidth());
+        text.x = dataStore.HV.marginLeft - baseFontSize - text.getTextMetric().width;
     }
 
     // slot labels
     for(i=0; i<crateContent.length; i+=Math.max(1,crateContent[i]/12)){
         currentCardWidth = Math.max(1, crateContent[i]/12)*dataStore.HV.scale;
-        text = new Kinetic.Text({
+        text = new qdtext(i, {
             x: 0,
-            y: dataStore.HV.marginTop-baseFontSize,
-            text: i,
+            y: dataStore.HV.marginTop-baseFontSize/2,
             fontSize: baseFontSize,
-            fontFamily: 'Arial',
-            fill: dataStore.frameTextColor
-        }) 
+            typeface: 'Arial',
+            fillStyle: dataStore.frameTextColor
+        });
         layer.add(text);
-        text.setAttr('x', currentCardLeft + currentCardWidth/2 - text.getTextWidth()/2);   
+        text.x = currentCardLeft + currentCardWidth/2 - text.getTextMetric().width/2;   
         currentCardLeft += currentCardWidth + dataStore.HV.cardGutter;
     }
 
-    text = new Kinetic.Text({
+    text = new qdtext('Slot', {
         x: 0,
-        y: baseFontSize,
-        text: 'Slot',
+        y: 1.5*baseFontSize,
         fontSize: 1.5*baseFontSize,
-        fontFamily: 'Arial',
-        fill: dataStore.frameTextColor
-    })
+        typeface: 'Arial',
+        fillStyle: dataStore.frameTextColor
+    });
     layer.add(text)
-    text.setAttr('x', dataStore.HV.marginLeft + totalColumns*dataStore.HV.scale/2 - text.getTextWidth()/2);
+    text.x = dataStore.HV.marginLeft + totalColumns*dataStore.HV.scale/2 - text.getTextMetric().width/2;
 
     // legend
     for(state in dataStore.HV.colors){
-        cell = new Kinetic.Rect({
-            x: legendLeft,
-            y: dataStore.HV.marginTop + 14*dataStore.HV.scale,
-            width: dataStore.HV.scale,
-            height: dataStore.HV.scale,
-            stroke: dataStore.frameColor,
-            strokeWidth: dataStore.frameLineWidth,
-            fill: dataStore.HV.colors[state]
+        x = legendLeft;
+        y = dataStore.HV.marginTop + 14*dataStore.HV.scale;
+        width = dataStore.HV.scale;
+        height = dataStore.HV.scale;
+        poly = generatePath(
+            [0,0, width,0, width,height, 0,height],
+            x,y
+        ),
+        cell = new qdshape(poly, {
+            id: state+'Legend',
+            fillStyle: dataStore.HV.colors[state],
+            strokeStyle: dataStore.frameColor,
+            lineWidth: dataStore.frameLineWidth,
+            z: 1
         });
         layer.add(cell);
         legendLeft += dataStore.HV.scale + baseFontSize/2;
 
-        text = new Kinetic.Text({
+        text = new qdtext(legendLabels[state], {
             x: legendLeft,
-            y: dataStore.HV.marginTop + 14*dataStore.HV.scale + 1.25*baseFontSize,
-            text: legendLabels[state],
+            y: dataStore.HV.marginTop + 14*dataStore.HV.scale + 2*baseFontSize,
             fontSize: baseFontSize,
-            fontFamily: 'Arial',
-            fill: dataStore.frameTextColor
-        })
+            typeface: 'Arial',
+            fillStyle: dataStore.frameTextColor
+        });
         layer.add(text)
-        legendLeft += text.getTextWidth() + 3*baseFontSize;
+        legendLeft += text.getTextMetric().width + 3*baseFontSize;
 
     }
 
@@ -412,9 +417,9 @@ function unpackHVCrateMap(crateMap){
 function updateView(){
     // change the crate on display via the crate picker
 
-    dataStore.HV.crateLayers[dataStore.HV.currentCrate].visible(false);
+    dataStore.HV.crateLayers[dataStore.HV.currentCrate].display = false;
     dataStore.HV.currentCrate = selected('HVCratePicker');
-    dataStore.HV.crateLayers[dataStore.HV.currentCrate].visible(true);
+    dataStore.HV.crateLayers[dataStore.HV.currentCrate].display = true;
     repaint()
 }
 

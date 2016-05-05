@@ -119,47 +119,43 @@
         var thetaLabel, ringLabel,
             i, Y;
 
-        thetaLabel = new Kinetic.Text({
+        thetaLabel = new qdtext('Mean Theta', {
             x: 0,
-            y: dataStore.detector.cellSide/2 - 10,
-            text: 'Mean Theta',
+            y: dataStore.detector.cellSide - 10,
             fontSize: 20,
-            fontFamily: 'Arial',
-            fill: '#999999'
+            typeface: 'Arial',
+            fillStyle: '#999999'
         });
-        ringLabel = new Kinetic.Text({
+        ringLabel = new qdtext('Ring Number', {
             x: 0,
-            y: dataStore.detector.cellSide/2 - 10,
-            text: 'Ring Number',
+            y: dataStore.detector.cellSide - 10,
             fontSize: 20,
-            fontFamily: 'Arial',
-            fill: '#999999'
+            typeface: 'Arial',
+            fillStyle: '#999999'
         });
         dataStore.detector.scaleLayer[0].add(thetaLabel);
         dataStore.detector.scaleLayer[0].add(ringLabel);
-        ringLabel.setAttr('x', dataStore.detector.width - ringLabel.getTextWidth());
+        ringLabel.x = dataStore.detector.width - ringLabel.getTextMetric().width;
 
         Y = dataStore.detector.gutter + 2*dataStore.detector.cellSide;
         for(i=0; i<10; i++){
-            thetaLabel = new Kinetic.Text({
+            thetaLabel = new qdtext(dataStore.detector.theta[i] + '\u00B0', {
                 x: 0,
-                y: Y - dataStore.detector.cellSide/2 - 10,
-                text: dataStore.detector.theta[i] + '\u00B0',
+                y: Y - dataStore.detector.cellSide/4,
                 fontSize: 20,
-                fontFamily: 'Arial',
-                fill: '#999999'
-            });
-            ringLabel = new Kinetic.Text({
+                typeface: 'Arial',
+                fillStyle: '#999999'
+            }); 
+            ringLabel = new qdtext(i, {
                 x: 0,
-                y: Y - dataStore.detector.cellSide/2 - 10,
-                text: i,
+                y: Y - dataStore.detector.cellSide/4,
                 fontSize: 20,
-                fontFamily: 'Arial',
-                fill: '#999999'
-            });
+                typeface: 'Arial',
+                fillStyle: '#999999'
+            }); 
             dataStore.detector.scaleLayer[0].add(thetaLabel);
             dataStore.detector.scaleLayer[0].add(ringLabel);
-            ringLabel.setAttr('x', dataStore.detector.width - ringLabel.getTextWidth());
+            ringLabel.x = dataStore.detector.width - ringLabel.getTextMetric().width;
             Y += dataStore.detector.cellSide;
             if(i==0)
                 Y+= dataStore.detector.gutter;

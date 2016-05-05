@@ -92,52 +92,45 @@
         // stamp out a cell for the given channel and coordinate array key
         // note that cell still has to be added to an appropriate layer on a per-detector basis.
 
-        var index = parseInt(channel.slice(7,9),10);
+        var index = parseInt(channel.slice(7,9),10),
+            path;
 
         if(channel.slice(6,7) == 'P'){
             // annular cells
-
-            dataStore.detector.cells[channel] = new Kinetic.Arc({
-                innerRadius: dataStore.detector.rad - (index+1)*dataStore.detector.radStep,
-                outerRadius: dataStore.detector.rad - index*dataStore.detector.radStep,
-                x: 0.25*dataStore.detector.width,
-                y: dataStore.detector.height*0.4,
-                angle: 360,
-                fill: '#000000',
-                fillPatternOffsetX: 100*Math.random(),
-                fillPatternOffsetY: 100*Math.random(),
-                stroke: dataStore.frameColor,
-                strokeWidth: dataStore.frameLineWidth,
-                closed: true,
-                listening: true
-            });
+            path = generateArc(
+                0,
+                2*Math.PI, 
+                dataStore.detector.rad - (index+1)*dataStore.detector.radStep, 
+                dataStore.detector.rad - index*dataStore.detector.radStep, 
+                0.25*dataStore.detector.width, 
+                dataStore.detector.height*0.4
+            );
         } else {
             // azimuthal cells
+            path = generateArc(
+                -dataStore.detector.phiStep*(index+1)/180*Math.PI,
+                -dataStore.detector.phiStep*(index)/180*Math.PI,
+                dataStore.detector.innerRad, 
+                dataStore.detector.rad, 
+                0.75*dataStore.detector.width, 
+                dataStore.detector.height*0.4
+            );
 
-            dataStore.detector.cells[channel] = new Kinetic.Arc({
-                innerRadius: dataStore.detector.innerRad,
-                outerRadius: dataStore.detector.rad,
-                x: 0.75*dataStore.detector.width,
-                y: 0.4*dataStore.detector.height,
-                angle: dataStore.detector.phiStep,
-                rotation: -dataStore.detector.phiStep*(index+1),
-                clockwise: false,
-                fill: '#000000',
-                fillPatternOffsetX: 100*Math.random(),
-                fillPatternOffsetY: 100*Math.random(),
-                stroke: dataStore.frameColor,
-                strokeWidth: dataStore.frameLineWidth,
-                closed: true,
-                listening: true
-            }); 
         }
+        dataStore.detector.cells[channel] = new qdshape(path, {
+            id: channel,
+            fillStyle: '#000000',
+            strokeStyle: dataStore.frameColor,
+            lineWidth: dataStore.frameLineWidth,
+            z: 1
+        })
 
         //set up the tooltip listeners:
-        dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
-        dataStore.detector.cells[channel].on('mousemove', moveTooltip);
-        dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+        dataStore.detector.cells[channel].mouseover = writeTooltip.bind(null, channel);
+        dataStore.detector.cells[channel].mousemove = moveTooltip;
+        dataStore.detector.cells[channel].mouseout = hideTooltip;
 
         //set up onclick listeners:
-        dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+        dataStore.detector.cells[channel].click = clickCell.bind(null, channel);
     }
 </script>

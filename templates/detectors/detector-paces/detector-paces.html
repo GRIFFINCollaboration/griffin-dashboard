@@ -82,48 +82,49 @@
         // note that cell still has to be added to an appropriate layer on a per-detector basis.
 
         var SiLiIndex = parseInt(channel.slice(3,5), 10) - 1,
-            i = dataStore.detector.channelNames.indexOf(channel);
+            i = dataStore.detector.channelNames.indexOf(channel),
+            path;
 
         if(isADCChannel(channel)){
-            dataStore.detector.cells[channel] = new Kinetic.Wedge({
-                x: dataStore.detector.arrayVertexX[SiLiIndex],
-                y: dataStore.detector.arrayVertexY[SiLiIndex],
-                radius: dataStore.detector.SiLiRad,
-                angle: 180,
-                rotation: SiLiIndex*72,
-                fill: '#000000',
-                clockwise: (i%2)==1,
-                fillPatternOffsetX: 100*Math.random(),
-                fillPatternOffsetY: 100*Math.random(),
-                stroke: dataStore.frameColor,
-                strokeWidth: dataStore.frameLineWidth,
-                closed: true,
-                listening: true
-            });
+            path = generateArc(
+                SiLiIndex*72/180*Math.PI + (i%2)*Math.PI,
+                SiLiIndex*72/180*Math.PI + (i%2)*Math.PI + Math.PI, 
+                0, dataStore.detector.SiLiRad, 
+                dataStore.detector.arrayVertexX[SiLiIndex], 
+                dataStore.detector.arrayVertexY[SiLiIndex]
+            );
+            dataStore.detector.cells[channel] = new qdshape(path, {
+                id: channel,
+                fillStyle: '#000000',
+                strokeStyle: dataStore.frameColor,
+                lineWidth: dataStore.frameLineWidth,
+                z: 1
+            })
         } else if(isHV(channel)){
-            dataStore.detector.cells[channel] = new Kinetic.Circle({
-                x: dataStore.detector.arrayVertexX[SiLiIndex],
-                y: dataStore.detector.arrayVertexY[SiLiIndex],
-                radius: dataStore.detector.SiLiRad,
-                rotation: SiLiIndex*72,
-                fill: '#000000',
-                clockwise: (i%2)==1,
-                fillPatternOffsetX: 100*Math.random(),
-                fillPatternOffsetY: 100*Math.random(),
-                stroke: dataStore.frameColor,
-                strokeWidth: dataStore.frameLineWidth,
-                closed: true,
-                listening: true
-            });
+            path = new Path2D();
+            path.arc(
+                dataStore.detector.arrayVertexX[SiLiIndex],
+                dataStore.detector.arrayVertexY[SiLiIndex], 
+                dataStore.detector.SiLiRad, 
+                0, 2*Math.PI
+            );
+            path.closePath();
+            dataStore.detector.cells[channel] = new qdshape(path, {
+                id: channel,
+                fillStyle: '#000000',
+                strokeStyle: dataStore.frameColor,
+                lineWidth: dataStore.frameLineWidth,
+                z: 1   
+            })
         }
 
         //set up the tooltip listeners:
-        dataStore.detector.cells[channel].on('mouseover', writeTooltip.bind(null, channel));
-        dataStore.detector.cells[channel].on('mousemove', moveTooltip);
-        dataStore.detector.cells[channel].on('mouseout',  hideTooltip);
+        dataStore.detector.cells[channel].mouseover = writeTooltip.bind(null, channel);
+        dataStore.detector.cells[channel].mousemove = moveTooltip;
+        dataStore.detector.cells[channel].mouseout =  hideTooltip;
 
         //set up onclick listeners:
-        dataStore.detector.cells[channel].on('click', clickCell.bind(null, channel) );
+        dataStore.detector.cells[channel].click = clickCell.bind(null, channel);
     }
 
     function isHV(cellName){

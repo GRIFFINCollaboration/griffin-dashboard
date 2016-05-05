@@ -121,30 +121,66 @@ function generateTickLabel(min, max, nTicks, n){
 }
 
 function squishFont(string, maxWidth){
-    // given a kinetic string, keep reducing its font until it fits in maxWidth
-    while(string.getTextWidth() > maxWidth){
-        string.setAttr('fontSize', string.getAttr('fontSize') - 1);
+    // given a qdtext object, keep reducing its font until it fits in maxWidth
+    while(string.getTextMetric().width > maxWidth){
+        string.fontSize = string._fontSize - 1;
     }
 }
 
-function kineticArrow(fromx, fromy, tox, toy){
-    // returns a kinetic object in the shape of an arrow
+function generatePath(vertices, offsetX, offsetY){
+    //given an array of vertices [x0,y0, x1,y1,...] return a Path2D object described by these vertices
+    //offsetX and offsetY translate all coords
+
+    var poly = new Path2D(),
+        i;
+
+    poly.moveTo(vertices[0]+offsetX,vertices[1]+offsetY);
+    for(i=1; i<vertices.length/2; i++){
+        poly.lineTo(vertices[2*i]+offsetX,vertices[2*i+1]+offsetY);
+    }
+    poly.closePath();
+
+    return poly;
+}
+
+function generateArc(startPhi, endPhi, innerRad, outerRad, centerX, centerY){
+    //return a Path2D object in the shape of a rainbow
+
+    var arc = new Path2D();
+
+    arc.arc(centerX, centerY, outerRad, startPhi, endPhi);
+    arc.lineTo(centerX + innerRad*Math.cos(endPhi), centerY + innerRad*Math.sin(endPhi));
+    arc.arc(centerX, centerY, innerRad, endPhi, startPhi, true);
+    arc.closePath();
+
+    return arc;
+}
+
+function drawArrow(fromx, fromy, tox, toy){
+    // returns a qd object in the shape of an arrow
 
     var headlen = 20,
         angle = Math.atan2(toy-fromy,tox-fromx),
-        line;
-
-    line = new Kinetic.Line({
-        points: [tox,toy, tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6), tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6), tox,toy, fromx,fromy],
-        fill: '#999999',
-        stroke: '#999999',
-        strokeWidth: dataStore.frameLineWidth,
-        closed: true,
-        listening: true
-
-    });
-
-    return line;
+        points = [
+            fromx,fromy, 
+            tox-headlen*Math.cos(angle),toy-headlen*Math.sin(angle), 
+            tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6), 
+            tox,toy,
+            tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6), 
+            tox-headlen*Math.cos(angle),toy-headlen*Math.sin(angle)
+        ],
+        path = generatePath(points,0,0),
+        arrow = new qdshape(
+            path, 
+            {
+                id: 'arrow',
+                fillStyle: '#999999',
+                strokeStyle: '#999999',
+                lineWidth: dataStore.frameLineWidth,
+                z: 1
+            }
+        );
+    return arrow;
 }
 
 //////////////////////////
@@ -393,7 +429,7 @@ function hideTooltip(){
     tooltip.setAttribute('style', 'display:none;');   
 }
 
-function moveTooltip(event){
+function moveTooltip(x, y, event){
 
     var tooltip = document.getElementById('tooltip'),
         offset = getPosition(tooltip.parentElement),
@@ -410,13 +446,14 @@ function highlightCell(cell){
     // draw a big red border around the last cell clicked, and remove the previous big red border if it exists.
 
     if(dataStore.lastCellClick){
-        dataStore.lastCellClick.setAttr('stroke', dataStore.frameColor);
-        dataStore.lastCellClick.setAttr('strokeWidth', dataStore.frameLineWidth);
+        dataStore.lastCellClick.strokeStyle = dataStore.frameColor;
+        dataStore.lastCellClick.lineWidth = dataStore.frameLineWidth;
+        dataStore.lastCellClick.z = 1;
     }
     dataStore.lastCellClick = cell;
-    cell.setAttr('stroke', '#FF0000');
-    cell.setAttr('strokeWidth', 6);
-    cell.moveToTop();
+    cell.strokeStyle = '#FF0000';
+    cell.lineWidth = 6;
+    cell.z = 10;
     
     repaint();
 }
