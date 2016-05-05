@@ -116,7 +116,7 @@ function setupDetector(){
     dataStore.detector.width = document.getElementById('visualizationcollection').offsetWidth;
     dataStore.detector.height = 2/3*dataStore.detector.width;
 
-    // set up kinetic framework
+    // set up quickdraw framework
     dataStore.detector.stage = [];
     dataStore.detector.channelLayer = [];
     dataStore.detector.HVLayer = [];
@@ -176,14 +176,14 @@ function createDataStructure(){
 }
 
 function instantiateCells(view){
-    // decalre the kinetic cells for detectors with only a single view
+    // decalre the qdshape cells for detectors with only a single view
     // view == 0 for detectors where hv cells == scalar cells
     // view == 1 ow
 
     var i, channel, cellKey,
         cellCoords = {};
 
-    //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+    //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a qdshape object:
     dataStore.detector.cells = {};
     for(i=0; i<dataStore.detector.channelNames.length; i++){
         channel = dataStore.detector.channelNames[i];

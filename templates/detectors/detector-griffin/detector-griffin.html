@@ -119,11 +119,11 @@
     }
 
     function instantiateCells(){
-        // decalre the kinetic cells for the detail views of each clover, and plug in interactions.
+        // decalre the qdshape cells for the detail views of each clover, and plug in interactions.
 
         var i, viewIndex, channel, cellKey
 
-        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a qdshape object:
         for(i=0; i<dataStore.detector.channelNames.length; i++){
             channel = dataStore.detector.channelNames[i];
 
@@ -248,7 +248,7 @@
     function instantiateSummaryCells(){
         var i, viewIndex, channel;
 
-        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a Kinetic object:
+        //each channel listed in dataStore.detector.channelNames gets an entry in dataStore.detector.cells as a qdshape object:
         for(i=0; i<dataStore.detector.channelNames.length; i++){
             channel = dataStore.detector.channelNames[i];
 

@@ -67,7 +67,7 @@ Basic fluency with these dependencies will help in understanding and extending t
 
  - [mustache.js](https://github.com/janl/mustache.js/) assembles templates into completed HTML.
 
- - [kinetic.js](https://github.com/ericdrowell/KineticJS/) (for freeform drawing like the detector views) and [plotly.js](https://plot.ly/javascript/) (for more traditional histograms and other charts) are responsible for drawing and visualization in the Dashboard.
+ - [quickdraw.js](https://github.com/BillMills/quickdraw) (for freeform drawing like the detector views) and [plotly.js](https://plot.ly/javascript/) (for more traditional histograms and other charts) are responsible for drawing and visualization in the Dashboard.
 
  - [Twitter Bootstrap](http://getbootstrap.com/) governs CSS and layout. Bootstrap also requires us to pull in [jQuery](https://jquery.com/), but explicit use of that framework is avoided in the Dashboard.
 

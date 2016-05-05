@@ -48,7 +48,7 @@ dataStore = {
             },
         },
         "cellCoords": {},                   //object with keys == cell names, values == arrays of vertex coordinates for that cell [x0, y0, x1, y1, ....] 
-        "cells": {}                         //object keyed by nomenclature code, values == corresponding Kinetic objects
+        "cells": {}                         //object keyed by nomenclature code, values == corresponding qdshape objects
     },     
     "heartbeat": {                          // queries and callbacks for the periodic data poll
         "URLqueries": [],                   // elements == ['url string', 'response type string', callback]; response type can be 'arraybuffer' or 'json'
