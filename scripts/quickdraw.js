@@ -151,11 +151,13 @@ function quickdraw(width, height){
 function qdshape(path, parameters){
     // constructor for a generic shape; path == Path2D object that defines the shape
 
-    var propertySetter, interactionSetter, i;
-        genricProperties = [
+    var propertySetter, interactionSetter, i,
+        genericProperties = [
             'path', 'lineWidth', 'strokeStyle', 'fillStyle', 'touchable', 'x', 'y', 
             'internalRotation', 'fillPriority', 'fillPatternImage'
-        ];
+        ],
+        genericInteractions = ['click', 'mouseover', 'mousemove', 'mouseout'];
+
 
     // default parameters
     this._id = parameters.id;
@@ -186,9 +188,9 @@ function qdshape(path, parameters){
     };
 
     // generic setters
-    for(i=0; i<genricProperties.length; i++){
-        Object.defineProperty(this, genricProperties[i], {
-            set: propertySetter.bind(this, '_'+genricProperties[i])
+    for(i=0; i<genericProperties.length; i++){
+        Object.defineProperty(this, genericProperties[i], {
+            set: propertySetter.bind(this, '_'+genericProperties[i])
         });
     }
 
@@ -214,30 +216,22 @@ function qdshape(path, parameters){
         this[interactionName] = callback.bind(this);
     }
 
-    Object.defineProperty(this, 'click', {
-        set: interactionSetter.bind(this, '_click')
-    });
-
-    Object.defineProperty(this, 'mouseover', {
-        set: interactionSetter.bind(this, '_mouseover')
-    });
-
-    Object.defineProperty(this, 'mousemove', {
-        set: interactionSetter.bind(this, '_mousemove')
-    });
-
-    Object.defineProperty(this, 'mouseout', {
-        set: interactionSetter.bind(this, '_mouseout')
-    });
+    // generic interactions
+    for(i=0; i<genericInteractions.length; i++){
+        Object.defineProperty(this, genericInteractions[i], {
+            set: interactionSetter.bind(this, '_'+genericInteractions[i])
+        });
+    }
 }
 
 function qdtext(text, parameters){
     // constructor for a text object; name == string name of text
 
-    var propertySetter, interactionSetter;
+    var propertySetter, i,
+        genericProperties = ['text', 'fontSize', 'typeface', 'strokeStyle', 'fillStyle', 'x', 'y'];
 
     // default parameters
-    this.id = parameters.id;
+    this._id = parameters.id;
     this._text = text;
     this._fontSize = parameters.fontSize || 12;
     this._typeface = parameters.typeface || 'sans-serif';
@@ -248,12 +242,6 @@ function qdtext(text, parameters){
     this._z = parameters.z || 1;
     this.parentLayer = null;
 
-    // dummy interaction callbacks
-    this._click = function(){return 0};
-    this._mouseover = function(){return 0};
-    this._mousemove = function(){return 0};
-    this._mouseout = function(){return 0};
-
     // setters flag layers for redraw
     propertySetter = function(variableName, setValue){
         this[variableName] = setValue;
@@ -261,33 +249,12 @@ function qdtext(text, parameters){
             this.parentLayer.needsUpdate = true;
     };
 
-    Object.defineProperty(this, 'text', {
-        set: propertySetter.bind(this, '_text')
-    });
-
-    Object.defineProperty(this, 'fontSize', {
-        set: propertySetter.bind(this, '_fontSize')
-    });
-
-    Object.defineProperty(this, 'typeface', {
-        set: propertySetter.bind(this, '_typeface')
-    });
-
-    Object.defineProperty(this, 'strokeStyle', {
-        set: propertySetter.bind(this, '_strokeStyle')
-    });
-
-    Object.defineProperty(this, 'fillStyle', {
-        set: propertySetter.bind(this, '_fillStyle')
-    });
-
-    Object.defineProperty(this, 'x', {
-        set: propertySetter.bind(this, '_x')
-    });
-
-    Object.defineProperty(this, 'y', {
-        set: propertySetter.bind(this, '_y')
-    });
+    // generic setters
+    for(i=0; i<genericProperties.length; i++){
+        Object.defineProperty(this, genericProperties[i], {
+            set: propertySetter.bind(this, '_'+genericProperties[i])
+        });
+    };
 
     Object.defineProperty(this, 'z', 
         {
@@ -303,27 +270,6 @@ function qdtext(text, parameters){
                         }) 
                     }               
                 }.bind(this, '_z')
-    });
-
-    // mouse interaction setters
-    interactionSetter = function(interactionName, callback){
-        this[interactionName] = callback.bind(this);
-    }
-
-    Object.defineProperty(this, 'click', {
-        set: interactionSetter.bind(this, '_click')
-    });
-
-    Object.defineProperty(this, 'mouseover', {
-        set: interactionSetter.bind(this, '_mouseover')
-    });
-
-    Object.defineProperty(this, 'mousemove', {
-        set: interactionSetter.bind(this, '_mousemove')
-    });
-
-    Object.defineProperty(this, 'mouseout', {
-        set: interactionSetter.bind(this, '_mouseout')
     });
 
     this.getTextMetric = function(){
