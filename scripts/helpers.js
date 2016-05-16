@@ -43,10 +43,10 @@ function prettyNumber(val){
 
     var pretty
 
-    if(val>1000000){
+    if(val>=1000000){
         pretty = (val / 1000000).toFixed(3) + ' M'
-    } else if(val>1000){
-        pretty = (val / 1000000).toFixed(3) + ' k'
+    } else if(val>=1000){
+        pretty = (val / 1000).toFixed(3) + ' k'
     }
 
     return pretty;
@@ -82,7 +82,7 @@ function reloadPage(){
 ///////////////
 
 function prepareTemplates(templates){
-    //take an array of template names, and load their inner html into a simmilarly keyed object.
+    //take an array of template ids, and load their inner html into a simmilarly keyed object.
 
     var i, guts = {};
 

@@ -4,18 +4,39 @@
         <meta charset="utf-8">
         <title>GRIFFIN Dashboard Testing</title>
 
-        <link rel="stylesheet" href="../css/qunit.css">
+        <!--libraries-->
         <script src="../scripts/qunit.js"></script>
 
+        <!--style-->
+        <link rel="stylesheet" href="../css/qunit.css">
+        
         <script src='../scripts/helpers.js' type="text/javascript"></script>
         <script src='../templates/daq-monitor/daq-monitor.js' type="text/javascript"></script>
         <script src='../templates/hv-monitor/hv-monitor.js' type="text/javascript"></script>
+
     </head>
     <body>
         <div id="qunit"></div>
-        <div id="qunit-fixture"></div>
+        <div id="qunit-fixture">
+
+            <div id='deletion-target'></div>
+
+            <div id='position-test' style='margin:50px; padding:100px'></div>
+
+            <select id='read-select'>
+                <option value='0'>Lemon</option>
+                <option value='1'>Strawberry</option>
+                <option value='2'>Chocolate</option>
+            </select>
+        </div>
 
         <script>
+            // bump to a well-defined query string
+            var query = '?test=xyz';
+            if(location.search !== query)
+                location.search = query;
+
+
             QUnit.module('DAQ', {
                 beforeEach: function(){
                     dataStore = {
@@ -131,6 +152,55 @@
                 assert.deepEqual(cratemap, [24,0,24,0,24,0]);
 
             });
+
+            /////////////////////////////////////////////
+
+            QUnit.module('helpers',{})
+
+            QUnit.test('delete a node', function(assert){
+                assert.notEqual(document.getElementById('deletion-target'), null);
+                deleteNode('deletion-target');
+                assert.strictEqual(document.getElementById('deletion-target'), null);
+            });
+
+            QUnit.test('base 10 log', function(assert){
+                assert.strictEqual(Math.log10(1), 0);
+                assert.strictEqual(Math.log10(10), 1);
+                assert.strictEqual(Math.log10(0), -Infinity);
+            });
+
+            QUnit.test('dom element postioning', function(assert){
+                assert.deepEqual(getPosition(window.body), {x:0,y:0});
+                assert.deepEqual(getPosition(document.getElementById('position-test')), {x:-9950,y:-9950}); //note this is contingent on qunit pushing #qunit-fixture out to -10000, -10000 - if that css changes, this test will break
+            });
+
+            QUnit.test('is numeric', function(assert){
+
+                assert.strictEqual(isNumeric(0), true);
+                assert.strictEqual(isNumeric('0'), false);
+                assert.strictEqual(isNumeric(0.0), true);
+                assert.strictEqual(isNumeric(null), false);
+                assert.strictEqual(isNumeric(NaN), false);
+                assert.strictEqual(isNumeric(undefined), false);
+                assert.strictEqual(isNumeric(Infinity), false);
+            });
+
+            QUnit.test('number style', function(assert){
+
+                assert.strictEqual(prettyNumber(1000000), '1.000 M');
+                assert.strictEqual(prettyNumber(999999), '999.999 k');
+            });
+
+            QUnit.test('select value reader', function(assert){
+                assert.strictEqual(selected('read-select'), '0');
+                assert.strictEqual(selected('read-select', true), 'Lemon');
+            });
+
+            QUnit.test('query string extraction', function(assert){
+                assert.strictEqual(getParameterByName('test'), 'xyz');
+                assert.strictEqual(getParameterByName('nope'), '');
+            });
+
 
         </script>
       </body>
