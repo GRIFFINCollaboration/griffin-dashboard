@@ -98,10 +98,8 @@ function prepareTemplates(templates){
 //////////////////////////
 
 function generateTickLabel(min, max, nTicks, n){
-    //function to make a reasonable decision on how many decimal places to show, whether to to use 
-    //sci. notation on an axis tick mark, where <min> and <max> are the axis minimum and maximum,
-    //<nTicks> is the number of tickmarks on the axis, and we are returning the label for the <n>th
-    //tick mark
+    //function to make a reasonable decision on how many decimal places to show, where <min> and <max> are the axis minimum and maximum,
+    //<nTicks> is the number of tickmarks on the axis, and we are returning the label for the <n>th tick mark
 
     var range = max - min,
         smallestPrecision = range / (nTicks-1),
@@ -118,13 +116,6 @@ function generateTickLabel(min, max, nTicks, n){
 
     return tickValue+'';
 
-}
-
-function squishFont(string, maxWidth){
-    // given a qdtext object, keep reducing its font until it fits in maxWidth
-    while(string.getTextMetric().width > maxWidth){
-        string.fontSize = string._fontSize - 1;
-    }
 }
 
 function generatePath(vertices, offsetX, offsetY){
@@ -187,27 +178,9 @@ function drawArrow(fromx, fromy, tox, toy){
 // network requests
 //////////////////////////
 
-function fetchScript(url, id){
-    // simple script hack fetch
-
-    var script = document.createElement('script');
-
-    script.setAttribute('src', url);
-    script.onload = function(){
-        deleteNode(id); 
-    }
-    script.id = id;
-
-    try{
-        document.head.appendChild(script);
-    } catch(err){
-        console.log('script fetch fail')
-    }
-    
-}
-
 function pokeURL(url){
-    // poke the requested URL
+    // send a GET request to a given URL
+    // to be used for poking MIDAS API endpoints (mostly jset) that expect a GET and don't have a CORS header (so the response can't be meaningfully validated)
 
     var req = new XMLHttpRequest();
 
@@ -464,13 +437,25 @@ function highlightCell(cell){
 
 Array.prototype.unique = function(){
     // thanks http://jszen.com/best-way-to-get-unique-values-of-an-array-in-javascript.7.html
-    var n = {},r=[];
-    for(var i = 0; i < this.length; i++) 
-    {
-        if (!n[this[i]]) 
-        {
-            n[this[i]] = true; 
+    var i, j, include, n = {},r=[];
+
+    for(i = 0; i < this.length; i++){
+        if (!n[this[i]]){
+            n[this[i]] = [this[i]]; 
             r.push(this[i]); 
+        } else {
+            include = true;
+            for(j=0; j<n[this[i]].length; j++){
+                if(n[this[i]][j] === this[i] || Object.is(this[i], n[this[i]][j])){
+                    include = false;
+                    break;
+                }
+            }
+
+            if(include){
+                n[this[i]].push(this[i]); 
+                r.push(this[i]);     
+            }
         }
     }
     return r;

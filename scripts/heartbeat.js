@@ -37,7 +37,7 @@ function heartbeat(){
 }
 
 function promiseURL(query){
-    // promise to get array buffer response from <query> == ['url', 'request type', callback],
+    // promise to get response from <query> == ['url', 'request type', callback],
     // where request type can be 'arraybuffer' or 'json' 
     // thanks http://www.html5rocks.com/en/tutorials/es6/promises/
 
@@ -102,6 +102,10 @@ function promiseScript(url){
             resolve(null); 
         }
         script.id = 'promiseScript';
-        document.head.appendChild(script);
+        try{
+            document.head.appendChild(script);
+        } catch(err){
+            console.log('script fetch fail')
+        }
     });
 }

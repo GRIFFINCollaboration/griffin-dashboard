@@ -329,7 +329,7 @@ function drawShack(){
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        squishFont(label.hv[i], 18*grid);
+        label.hv[i].squishFont(18*grid);
     }
 
     //////////////////////////////////////////////////////////////////////////////
@@ -362,7 +362,7 @@ function drawShack(){
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        squishFont(label.nim[i], 18*grid);
+        label.nim[i].squishFont(18*grid);
     } 
 
     for (i = 5; i < 7; i++){
@@ -388,7 +388,7 @@ function drawShack(){
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        squishFont(label.nim[i], 18*grid);
+        label.nim[i].squishFont(18*grid);
     }
 
     ////////////////////////////////////////////////////
@@ -427,7 +427,7 @@ function drawShack(){
             dataStore.SOH.cells.vme[j*5+i].mouseover = writeTooltip.bind(null, 'vme');
             dataStore.SOH.cells.vme[j*5+i].mousemove = moveTooltip;
             dataStore.SOH.cells.vme[j*5+i].mouseout = hideTooltip;
-            squishFont(label.vme[j*5+i], 18*grid);
+            label.vme[j*5+i].squishFont(18*grid);
 
             dataStore.SOH.cells.vme[j*5+i].click = function(vme){
 
@@ -472,7 +472,7 @@ function drawShack(){
         fillStyle: dataStore.SOH.parameters.label.fontcolour
     });
 
-    squishFont(label.dsa0, 18*grid);
+    label.dsa0.squishFont(18*grid);
 
     for (i = 1; i < 4; i++){
         x = leftmargin+20*(i-1)*grid;
@@ -497,7 +497,7 @@ function drawShack(){
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        squishFont(label.dsa[i], 18*grid);
+        label.dsa[i].squishFont(18*grid);
     }     
 
     //////////////////////////////////////////////////////////////////
@@ -530,7 +530,7 @@ function drawShack(){
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        squishFont(label.net[i], 8*grid);
+        label.net[i].squishFont(8*grid);
     }   
 
     /////////////////////////////////////////
@@ -563,7 +563,7 @@ function drawShack(){
             fillStyle: dataStore.SOH.parameters.label.fontcolour
         });
 
-        squishFont(label.comp[i], 18*grid);
+        label.comp[i].squishFont(18*grid);
     }   
 
     /////////////////////////////////////////////////////////////////////////
@@ -586,7 +586,7 @@ function drawShack(){
             fillStyle: '#EEEEEE'
         });
 
-        squishFont(label.racks[i], 18*grid);
+        label.racks[i].squishFont(18*grid);
     }
 
     //////////////////////////////////////////////////////////////////////

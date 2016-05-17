@@ -50,7 +50,7 @@
                 // setup
                 /////////////
                 //get the ODB DAQ directory for the nav bar
-                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+                promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
 
                 ///////////////////////////
                 //handle templates
