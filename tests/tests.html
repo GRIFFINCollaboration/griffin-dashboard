@@ -14,6 +14,7 @@
         <script src='../scripts/helpers.js' type="text/javascript"></script>
         <script src='../templates/daq-monitor/daq-monitor.js' type="text/javascript"></script>
         <script src='../templates/hv-monitor/hv-monitor.js' type="text/javascript"></script>
+        <script src='../templates/detectors/detector-helpers.js' type="text/javascript"></script>
 
     </head>
     <body>
@@ -324,6 +325,80 @@
                 assert.deepEqual(a.unique(), [1, '1', 'strawberry', NaN]);
 
             });
+
+            QUnit.module('detector-helpers', {
+                beforeEach: function(){
+                    dataStore = {
+                        detector: {
+                            channelNames: ['A', 'B', 'AAxxxxxxxx', 'ABxxxxxxxx', 'ACxxxxxxxx', 'BAxxxxxxxx', 'BBxxxxxxxx', 'BCxxxxxxxx', 'BDxxxxxxxx', 'BExxxxxxxx'],
+                            summaryDepth: 1,
+                            subviews: ['X', 'Y', 'Z']
+                        },
+
+                        ODB: {
+                            DAQ: {
+                                MSC: {
+                                    chan: ['AAxxxxxxxx', 'ABxxxxxxxx', 'ACxxxxxxxx', 'BAxxxxxxxx', 'BBxxxxxxxx', 'BDxxxxxxxx', 'BExxxxxxxx'] // channel BC missing from MSC
+                                }
+                            },
+                            Equipment: {
+                                'HV-0': {
+                                    Settings: {
+                                        Names: ['ABxxxxxxxx', 'ACxxxxxxxx', 'BAxxxxxxxx', 'BBxxxxxxxx', 'BDxxxxxxxx', 'BExxxxxxxx'] // channel AA missing from HV
+                                    }
+                                }
+                            }
+                        }
+                    };
+                },
+
+                afterEach: function(){
+                    delete dataStore;
+                }
+
+            });
+
+            // overwrite the trivial global version of this function that came along with detector-helpers.js
+            function channelInSubview(channel, subview){
+                return subview!=='Z'
+            }
+
+            QUnit.test('data structure creation', function(assert){
+
+                createDataStructure();
+
+                assert.deepEqual(Object.keys(dataStore.data), dataStore.detector.channelNames);
+                assert.deepEqual(Object.keys(dataStore.data.A), dataStore.detector.subviews);
+                assert.deepEqual(Object.keys(dataStore.data.AAxxxxxxxx), ['X', 'Y']);
+
+            });
+
+            QUnit.test('summary data sorting', function(assert){
+
+                // some fake data for individual channels:
+                dataStore.data = {
+                    'A': {'X': null, 'Y': null},
+                    'B': {'X': null, 'Y': null},
+
+                    'AAxxxxxxxx': {'Y': 2},             //X not reported for AA             
+                    'ABxxxxxxxx': {'X': 4, 'Y': 6},
+                    'ACxxxxxxxx': {'X': 8, 'Y': 10},
+                    'BAxxxxxxxx': {'X': 12, 'Y': 14},
+                    'BBxxxxxxxx': {'X': 16, 'Y': 18},
+                    'BCxxxxxxxx': {'X': 20, 'Y': 22},
+                    'BDxxxxxxxx': {'X': 24},            //Y not reported for BD
+                    'BExxxxxxxx': {'X': 28, 'Y': 30}
+                }
+
+                summarizeData();
+
+                assert.equal(dataStore.data.A.Y, 8) // (6+10)/2, since AA missing from HV table
+                assert.equal(dataStore.data.A.X, 6) // (4+8)/2; X missing from AA doesn't prevent the summary, since AA is missing from HV table
+                assert.equal(dataStore.data.B.X, 20) // (12+16+24+28)/4, since BC missing from MSC table
+                assert.strictEqual(dataStore.data.B.Y, null) // since BD.Y failed to report
+
+            });
+
 
         </script>
       </body>
