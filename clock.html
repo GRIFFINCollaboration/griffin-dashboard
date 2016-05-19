@@ -123,10 +123,10 @@
                 // setup
                 //////////////
                 //get the ODB DAQ directory for the nav bar
-                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+                promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
 
                 //get the ODB Equipment dir and set up clock host requests:
-                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/Equipment&encoding=json-p-nokeys&callback=processEquipment');
+                promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/Equipment&encoding=json-p-nokeys&callback=processEquipment');
 
                 ///////////////////////////
                 //handle templates

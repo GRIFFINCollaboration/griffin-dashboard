@@ -214,7 +214,7 @@
         reader.onloadend = function(evt){
             dataStore.calibration = mungeCal(evt.currentTarget.result);
 
-            fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=sortCalibration');
+            promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=sortCalibration');
         }
     }
 

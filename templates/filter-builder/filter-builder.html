@@ -47,7 +47,7 @@
         // start initial setup
 
         // get the ODB filters dir:
-        fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/Filter&encoding=json-p-nokeys&callback=processFilter');
+        promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/Filter&encoding=json-p-nokeys&callback=processFilter');
 
     }
 

@@ -147,7 +147,7 @@
         }
 
         // get the ODB PPG dir:
-        fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/PPG&encoding=json-p-nokeys&callback=processCycle');
+        promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/PPG&encoding=json-p-nokeys&callback=processCycle');
 
     }
 

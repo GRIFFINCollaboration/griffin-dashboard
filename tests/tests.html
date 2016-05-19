@@ -4,18 +4,40 @@
         <meta charset="utf-8">
         <title>GRIFFIN Dashboard Testing</title>
 
-        <link rel="stylesheet" href="../css/qunit.css">
+        <!--libraries-->
         <script src="../scripts/qunit.js"></script>
+        <script src="../scripts/jquery1-11-3.min.js" type="text/javascript"></script>
 
+        <!--style-->
+        <link rel="stylesheet" href="../css/qunit.css">
+        
         <script src='../scripts/helpers.js' type="text/javascript"></script>
         <script src='../templates/daq-monitor/daq-monitor.js' type="text/javascript"></script>
         <script src='../templates/hv-monitor/hv-monitor.js' type="text/javascript"></script>
+        <script src='../templates/detectors/detector-helpers.js' type="text/javascript"></script>
+
     </head>
     <body>
         <div id="qunit"></div>
-        <div id="qunit-fixture"></div>
+        <div id="qunit-fixture">
+
+            <div id='deletion-target'></div>
+
+            <div id='position-test' style='margin:50px; padding:100px'></div>
+
+            <select id='read-select'>
+                <option value='0'>Lemon</option>
+                <option value='1'>Strawberry</option>
+                <option value='2'>Chocolate</option>
+            </select>
+        </div>
 
         <script>
+            // bump to a well-defined query string
+            var query = '?test=xyz';
+            if(location.search !== query)
+                location.search = query;
+
             QUnit.module('DAQ', {
                 beforeEach: function(){
                     dataStore = {
@@ -131,6 +153,252 @@
                 assert.deepEqual(cratemap, [24,0,24,0,24,0]);
 
             });
+
+            /////////////////////////////////////////////
+
+            QUnit.module('helpers',{
+                beforeEach: function(){
+                    dataStore = {
+                        ODB: {
+                            Equipment: {
+                                'HV-0': {
+                                    Settings: {
+                                        Names: ['CHAN1', 'CHAN2']
+                                    }       
+                                },
+
+                                'HV-1': {
+                                    Settings: {
+                                        Names: ['CHAN1', 'CHAN3']
+                                    }
+                                }
+                            }
+                        }
+                    };
+                },
+
+                afterEach: function(){
+                    delete dataStore;
+                }
+
+            })
+
+            QUnit.test('delete a node', function(assert){
+                assert.notEqual(document.getElementById('deletion-target'), null);
+                deleteNode('deletion-target');
+                assert.strictEqual(document.getElementById('deletion-target'), null);
+            });
+
+            QUnit.test('base 10 log', function(assert){
+                assert.strictEqual(Math.log10(1), 0);
+                assert.strictEqual(Math.log10(10), 1);
+                assert.strictEqual(Math.log10(0), -Infinity);
+            });
+
+            QUnit.test('dom element postioning', function(assert){
+                assert.deepEqual(getPosition(window.body), {x:0,y:0});
+                assert.deepEqual(getPosition(document.getElementById('position-test')), {x:-9950,y:-9950}); //note this is contingent on qunit pushing #qunit-fixture out to -10000, -10000 - if that css changes, this test will break
+            });
+
+            QUnit.test('is numeric', function(assert){
+
+                assert.strictEqual(isNumeric(0), true);
+                assert.strictEqual(isNumeric('0'), false);
+                assert.strictEqual(isNumeric(0.0), true);
+                assert.strictEqual(isNumeric(null), false);
+                assert.strictEqual(isNumeric(NaN), false);
+                assert.strictEqual(isNumeric(undefined), false);
+                assert.strictEqual(isNumeric(Infinity), false);
+            });
+
+            QUnit.test('number style', function(assert){
+
+                assert.strictEqual(prettyNumber(1000000), '1.000 M');
+                assert.strictEqual(prettyNumber(999999), '999.999 k');
+            });
+
+            QUnit.test('select value reader', function(assert){
+                assert.strictEqual(selected('read-select'), '0');
+                assert.strictEqual(selected('read-select', true), 'Lemon');
+            });
+
+            QUnit.test('query string extraction', function(assert){
+                assert.strictEqual(getParameterByName('test'), 'xyz');
+                assert.strictEqual(getParameterByName('nope'), '');
+            });
+
+            QUnit.test('axis labler', function(assert){
+                assert.strictEqual(generateTickLabel(0,100,11,0), '0');
+                assert.strictEqual(generateTickLabel(0,100,11,5), '50');
+                assert.strictEqual(generateTickLabel(0,100,11,10), '100');
+
+                assert.strictEqual(generateTickLabel(0,1,11,0), '0.0');
+                assert.strictEqual(generateTickLabel(0,1,11,5), '0.5');
+                assert.strictEqual(generateTickLabel(0,1,11,10), '1.0');
+
+                assert.strictEqual(generateTickLabel(0,0.3,11,0), '0.00');
+                assert.strictEqual(generateTickLabel(0,0.3,11,5), '0.15');
+                assert.strictEqual(generateTickLabel(0,0.3,11,10), '0.30');
+            });
+
+            QUnit.test('polygon generator', function(assert){
+                var shape = new Path2D(),
+                    polygon, canvasA, canvasB;
+
+                shape.moveTo(50,50);
+                shape.lineTo(70,100);
+                shape.lineTo(20,100);
+                shape.closePath();
+
+                polygon = generatePath([50,50, 70,100, 20,100],0,0);
+                canvasA = document.createElement('canvas');
+                canvasB = document.createElement('canvas');
+                canvasA.getContext('2d').stroke(shape);
+                canvasB.getContext('2d').stroke(polygon);
+                assert.equal(canvasA.toDataURL(), canvasB.toDataURL());
+
+                polygon = generatePath([30,30, 50,80, 0,80],20,20);
+                canvasB = document.createElement('canvas');
+                canvasB.getContext('2d').stroke(polygon);
+                assert.equal(canvasA.toDataURL(), canvasB.toDataURL());
+            });
+
+            QUnit.test('arc generator', function(assert){
+                var shape = new Path2D(),
+                    arc, canvasA, canvasB;
+
+                shape.moveTo(100,100);
+                shape.lineTo(100,200);
+                shape.arc(100, 100, 100, Math.PI/2, 3*Math.PI/2, false); // left half of circle
+                shape.closePath();
+
+                arc = generateArc(Math.PI/2, 3*Math.PI/2, 0, 100, 100, 100);
+                canvasA = document.createElement('canvas');
+                canvasB = document.createElement('canvas');
+                canvasA.getContext('2d').stroke(shape);
+                canvasB.getContext('2d').stroke(arc);
+                assert.equal(canvasA.toDataURL(), canvasB.toDataURL());
+            });
+
+            QUnit.test('DAQ dataview unpacking', function(assert){
+                var ab = new ArrayBuffer(28),
+                    dv = new DataView(ab),
+                    unpacked;
+
+                dv.setUint16(14, 0, true); // MSC
+                dv.setFloat32(16, 1, true); // trigger accept
+                dv.setFloat32(20, 2, true); // trigger request
+                dv.setUint32(24, 3, true); // threshold
+
+                unpacked = unpackDAQ(1, dv)
+
+                assert.deepEqual(unpacked, {'MSC': 0, 'trigAcpt': 1, 'trigReq': 2, 'threshold': 3});
+            });
+
+            QUnit.test('unpack MSC code', function(assert){
+                var MSC = 0x1337,
+                    unpacked = parseMSCindex(MSC);
+
+                assert.deepEqual(unpacked, [0x1, 0x3, 0x37]);
+            });
+
+            QUnit.test('find HV crate', function(assert){
+
+                assert.equal(findHVcrate('CHAN1'), 0);
+                assert.equal(findHVcrate('CHAN3'), 1);
+                assert.equal(findHVcrate('CHAN4'), -1);
+
+            });
+
+            QUnit.test('decode calibration file', function(assert){
+                var rawCalibration = "GRG01BN00A    {\nName:      GRG01BN00A\nNumber:    1\nAddress:   0x00000000\nDigitizer: \nEngCoeff:  -0.743423    1.419230    \nIntegration: 0\nENGChi2:     0.000000\nEffCoeff:  \nEFFChi2:   0.000000\nTIMECoeff:  0.000000    271.279000  -0.739159   \n}\n//====================================//\n\n\nGRG01GN00A  {\nName:      GRG01GN00A\nNumber:    2\nAddress:   0x00000001\nDigitizer: \nEngCoeff:  -1.051850    1.244240    \nIntegration: 0\nENGChi2:     0.000000\nEffCoeff:  \nEFFChi2:   0.000000\nTIMECoeff:  0.000000    271.279000  -0.739159   \n}\n//====================================//",
+                    unpacked = {};
+
+                assert.deepEqual(mungeCal(rawCalibration).GRG01BN00A.EngCoeff[1], 1.419230);
+            });
+
+            QUnit.test('generate unique array', function(assert){
+                // note: does not currently eliminate duplicated objects, like [{test:0}, {test:0}]
+
+                var a = [1, '1', 1, 'strawberry', NaN, NaN];
+
+                assert.deepEqual(a.unique(), [1, '1', 'strawberry', NaN]);
+
+            });
+
+            QUnit.module('detector-helpers', {
+                beforeEach: function(){
+                    dataStore = {
+                        detector: {
+                            channelNames: ['A', 'B', 'AAxxxxxxxx', 'ABxxxxxxxx', 'ACxxxxxxxx', 'BAxxxxxxxx', 'BBxxxxxxxx', 'BCxxxxxxxx', 'BDxxxxxxxx', 'BExxxxxxxx'],
+                            summaryDepth: 1,
+                            subviews: ['X', 'Y', 'Z']
+                        },
+
+                        ODB: {
+                            DAQ: {
+                                MSC: {
+                                    chan: ['AAxxxxxxxx', 'ABxxxxxxxx', 'ACxxxxxxxx', 'BAxxxxxxxx', 'BBxxxxxxxx', 'BDxxxxxxxx', 'BExxxxxxxx'] // channel BC missing from MSC
+                                }
+                            },
+                            Equipment: {
+                                'HV-0': {
+                                    Settings: {
+                                        Names: ['ABxxxxxxxx', 'ACxxxxxxxx', 'BAxxxxxxxx', 'BBxxxxxxxx', 'BDxxxxxxxx', 'BExxxxxxxx'] // channel AA missing from HV
+                                    }
+                                }
+                            }
+                        }
+                    };
+                },
+
+                afterEach: function(){
+                    delete dataStore;
+                }
+
+            });
+
+            // overwrite the trivial global version of this function that came along with detector-helpers.js
+            function channelInSubview(channel, subview){
+                return subview!=='Z'
+            }
+
+            QUnit.test('data structure creation', function(assert){
+
+                createDataStructure();
+
+                assert.deepEqual(Object.keys(dataStore.data), dataStore.detector.channelNames);
+                assert.deepEqual(Object.keys(dataStore.data.A), dataStore.detector.subviews);
+                assert.deepEqual(Object.keys(dataStore.data.AAxxxxxxxx), ['X', 'Y']);
+
+            });
+
+            QUnit.test('summary data sorting', function(assert){
+
+                // some fake data for individual channels:
+                dataStore.data = {
+                    'A': {'X': null, 'Y': null},
+                    'B': {'X': null, 'Y': null},
+
+                    'AAxxxxxxxx': {'Y': 2},             //X not reported for AA             
+                    'ABxxxxxxxx': {'X': 4, 'Y': 6},
+                    'ACxxxxxxxx': {'X': 8, 'Y': 10},
+                    'BAxxxxxxxx': {'X': 12, 'Y': 14},
+                    'BBxxxxxxxx': {'X': 16, 'Y': 18},
+                    'BCxxxxxxxx': {'X': 20, 'Y': 22},
+                    'BDxxxxxxxx': {'X': 24},            //Y not reported for BD
+                    'BExxxxxxxx': {'X': 28, 'Y': 30}
+                }
+
+                summarizeData();
+
+                assert.equal(dataStore.data.A.Y, 8) // (6+10)/2, since AA missing from HV table
+                assert.equal(dataStore.data.A.X, 6) // (4+8)/2; X missing from AA doesn't prevent the summary, since AA is missing from HV table
+                assert.equal(dataStore.data.B.X, 20) // (12+16+24+28)/4, since BC missing from MSC table
+                assert.strictEqual(dataStore.data.B.Y, null) // since BD.Y failed to report
+
+            });
+
 
         </script>
       </body>

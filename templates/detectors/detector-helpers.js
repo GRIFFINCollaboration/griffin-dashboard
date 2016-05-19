@@ -22,7 +22,7 @@ function deployDetector(template, title){
 function setupRequests(){
 
     //get the ODB DAQ dir and set up adc requests:
-    fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+    promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
 
     //set up HV requests
     dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
@@ -487,12 +487,12 @@ function summarizeData(){
     for(i=0; i<dataStore.detector.channelNames.length; i++){
         channel = dataStore.detector.channelNames[i];
 
+        // only summarize the base channels (don't make summaries of summaries):
+        if(channel.length != 10) continue;
+
         // channel intentionally not plugged in, abort
         if(isADCChannel(channel) && dataStore.ODB.DAQ.MSC.chan.indexOf(channel) == -1) continue;
         if(isHV(channel) && findHVcrate(channel) == -1) continue;
-
-        // only summarize the base channels (don't make summaries of summaries):
-        if(channel.length != 10) continue;
 
         summaryKey = channel.slice(0,dataStore.detector.summaryDepth);
 

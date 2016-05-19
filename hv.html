@@ -54,7 +54,7 @@
                 // setup
                 ///////////////////
                 //get the ODB DAQ and Equipment dirs:
-                fetchScript('http://' + dataStore.host + '/?cmd=jcopy&odb0=/DAQ&odb1=/Equipment&encoding=json-p-nokeys&callback=registerODB');
+                promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb0=/DAQ&odb1=/Equipment&encoding=json-p-nokeys&callback=registerODB');
 
                 //set up HV requests
                 dataStore.equipmentQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Equipment&encoding=json-p-nokeys&callback=sortODBEquipment';
