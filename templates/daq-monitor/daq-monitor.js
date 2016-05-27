@@ -58,7 +58,7 @@ function regenerateDatastructure(suppressDOMconfig){
     // }
     // also does some on-load dom config
 
-    var i, address, M,S,C, detPrefix, collectorOption, detectorOption;
+    var i, address, M,S,C, detPrefix, collectorOption, digiCollectorOption, detectorOption, first;
 
     if(dataStore.ODB.DAQ.summaryJSON){
         dataStore.ODB.DAQ.summary = JSON.parse(dataStore.ODB.DAQ.summaryJSON);
@@ -120,19 +120,58 @@ function regenerateDatastructure(suppressDOMconfig){
 
     // dom setup
     if(!suppressDOMconfig){
+        first = true;
         for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
             if(dataStore.ODB.DAQ.summary.collectors.titles[i]){
-                collectorOption = document.createElement('option');
+                collectorOption = document.createElement('button');
+                collectorOption.setAttribute('type', 'button');
+                collectorOption.setAttribute('class', 'btn btn-default');
                 collectorOption.setAttribute('value', dataStore.ODB.DAQ.summary.collectors.titles[i].slice(2,3));
+                collectorOption.onclick = function(){
+                    activeButton('collectorPicker', this);
+                    dataStore.collectorValue = this.value
+                    repaint();
+                }.bind(collectorOption);
                 collectorOption.innerHTML = dataStore.ODB.DAQ.summary.collectors.titles[i];
                 document.getElementById('collectorPicker').appendChild(collectorOption);
-                document.getElementById('digiCollectorPicker').appendChild(collectorOption.cloneNode(true));
+
+                digiCollectorOption = collectorOption.cloneNode(true);
+                digiCollectorOption.onclick = function(){
+                    activeButton('digiCollectorPicker', this);
+                    dataStore.digiCollectorValue = this.value;
+                    updateDigitizerList("digiCollectorPicker"); 
+                    repaint();
+                }.bind(digiCollectorOption);
+                document.getElementById('digiCollectorPicker').appendChild(digiCollectorOption);
+
+                //start with the first collector selected on both collector and digitizer plots
+                if(first){
+                    dataStore.collectorValue = collectorOption.value;
+                    dataStore.digiCollectorValue = collectorOption.value;
+                    updateDigitizerList("digiCollectorPicker"); 
+                    activeButton('collectorPicker', collectorOption);
+                    activeButton('digiCollectorPicker', digiCollectorOption);
+                    first = false;
+                }
             }
         }
-        document.getElementById('digiCollectorPicker').onchange();
+        updateDigitizerList("digiCollectorPicker"); 
+        repaint();
     }
 
     dataStore.ODB.DAQ.summaryJSON = JSON.stringify(dataStore.ODB.DAQ.summary);
+}
+
+function activeButton(groupID, targetButton){
+    // make the target button be the only .active button in its group
+
+    var buttons = document.getElementById(groupID).getElementsByTagName('button'),
+        i;
+
+    for(i=0; i<buttons.length; i++){
+        buttons[i].classList.remove('active');
+    }
+    targetButton.classList.add('active');
 }
 
 function sortDAQitem(detector, block){
@@ -185,9 +224,9 @@ function preFetch(){
 
 function repaint(){
 
-    var collectorFigureIndex = parseInt(selected('collectorPicker'), 16),
-        digiCollectorIndex = parseInt(selected('digiCollectorPicker'), 16),
-        digitizerFigureIndex = parseInt(selected('digitizerPicker'), 16);
+    var collectorFigureIndex = parseInt(dataStore.collectorValue, 16),
+        digiCollectorIndex = parseInt(dataStore.digiCollectorValue, 16),
+        digitizerFigureIndex = parseInt(dataStore.digitizerValue, 16);
 
     //master summary
     createBarchart(
@@ -266,17 +305,31 @@ function updateDigitizerList(digiSelectID){
     //update the options in the select element digiSelectID with the digitizer addresses in the collector on masterChannel
 
     var digiSelect = document.getElementById('digitizerPicker'),
-        masterChannel = selected('digiCollectorPicker'),
-        i, option;
+        masterChannel = dataStore.digiCollectorValue,
+        i, option, first;
 
     digiSelect.innerHTML = '';
-
+    first = true;
     for(i=0; i<dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel].length; i++){
         if(dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel][i]){
-            option = document.createElement('option')
+            option = document.createElement('button');
+            option.setAttribute('type', 'button');
+            option.setAttribute('class', 'btn btn-default');
             option.setAttribute('value', dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel][i].slice(3,4));
+            option.onclick = function(){
+                activeButton('digitizerPicker', this);
+                dataStore.digitizerValue = this.value;
+                repaint();
+            }.bind(option);
             option.innerHTML = dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel][i];
-            digiSelect.appendChild(option);           
+            digiSelect.appendChild(option);   
+
+            // default to the first digitizer:
+            if(first){
+                activeButton('digitizerPicker', option);
+                dataStore.digitizerValue = option.value;
+                first = false;
+            }        
         }
     }
 }
