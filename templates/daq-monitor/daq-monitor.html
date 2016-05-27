@@ -13,7 +13,7 @@
         <div class='col-md-12 pan' id='collectorsWrap'>
             <h2>Collectors</h2>
             <label for='collectorPicker'>Collector: </label>
-            <select id='collectorPicker' onchange='repaint()'></select>
+            <div id='collectorPicker' class="btn-group" role="group"></div>
             <div id='digitizersHisto'></div>
         </div>
     </div>
@@ -22,9 +22,9 @@
         <div class='col-md-12 pan'>
             <h2>Digitizers</h2>
             <label for='digiCollectorPicker'>Collector: </label>
-            <select id='digiCollectorPicker' onchange='updateDigitizerList("digiCollectorPicker"); repaint()'></select>
+            <div id='digiCollectorPicker' class="btn-group" role="group"></div><br>
             <label for='digitizerPicker'>Digitizer: </label>
-            <select id='digitizerPicker' onchange='repaint()'></select>
+            <div id='digitizerPicker' class="btn-group" role="group"></div>
             <div id='channelsHisto'></div>
         </div>
     </div>
