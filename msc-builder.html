@@ -208,8 +208,12 @@
                 </table>
             </div>
   
-            <div class='col-md-8 col-md-offset-2'>          
+            <div class='col-md-2 col-md-offset-2'>          
                 <button class='btn btn-lg btn-warning' onclick='constructArrays()'>Write New MSC Table</button>
+            </div>
+            <div class='col-md-6'>
+                <div id='write-ok' class="alert alert-success hidden" role="alert">MSC table written successfully to ODB.</div>
+                <div id='write-fail' class="alert alert-danger hidden" role="alert">MSC table write failed.</div>
             </div>
 
         </div>
@@ -342,6 +346,18 @@
                         document.getElementById('grs'+i).checked = false;
                         document.getElementById('grs'+i).classList.add('disabled');
                     }
+                }
+            }
+
+            function CRUDintegrity(noDataLoss){
+                // display an appropriate message based on whether msc table was correctly written to the odb
+
+                if(noDataLoss){
+                    document.getElementById('write-ok').classList.remove('hidden');
+                    document.getElementById('write-fail').classList.add('hidden');
+                } else {
+                    document.getElementById('write-ok').classList.add('hidden');
+                    document.getElementById('write-fail').classList.remove('hidden');
                 }
             }
 
