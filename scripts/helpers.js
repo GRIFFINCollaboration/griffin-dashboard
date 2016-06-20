@@ -228,6 +228,10 @@ function CRUDarrays(path, value, type){
         updateURLs.push('http://' + dataStore.host + '?cmd=jset&odb=' + path[i] + '[*]&value=' + value[i].join() );
     }
 
+    console.log(deletionURL)
+    console.log(creationURL)
+    console.log(updateURLs)
+
     promiseScript(deletionURL).then(function(){
         promiseScript(creationURL).then(function(){
             var i;
