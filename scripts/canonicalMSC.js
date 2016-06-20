@@ -107,7 +107,7 @@ function configSCEPTAR(US, DS, ZDS){
     return [names, MSC];
 }
 
-function configLabr3(US, DS){
+function configLaBr3(US, DS){
     var names = [],
         MSC = [],
         i, j, min, max, suppressorMSC;
