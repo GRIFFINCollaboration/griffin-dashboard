@@ -230,8 +230,9 @@ function pokeURL(url){
 
 function CRUDarrays(path, value, type){
     // delete the arrays at [path] from the odb, recreate them, and populate them with [value]
+    // then check for integrity.
 
-    var deletionURL, creationURL, updateURLs = [],
+    var deletionURL, creationURL, updateURLs = [], fetchURL,
         i, typeIndex;
 
     //generate deletion URLs:
@@ -261,15 +262,42 @@ function CRUDarrays(path, value, type){
         updateURLs.push('http://' + dataStore.host + '?cmd=jset&odb=' + path[i] + '[*]&value=' + value[i].join() );
     }
 
+    //generate fetch/validation url
+    fetchURL = 'http://' + dataStore.host + '?cmd=jcopy';
+    for(i=0; i<path.length; i++){
+        fetchURL += '&odb' + i + '=' + path[i];
+    }
+    fetchURL += '&encoding=json-p-nokeys&callback=validateCRUD';
+
     promiseScript(deletionURL).then(function(){
         promiseScript(creationURL).then(function(){
             var i;
             for(i=0; i<updateURLs.length; i++){
                 pokeURL(updateURLs[i]);
             }
+        }).then(function(){
+            console.log(fetchURL)
+            validateCRUD = function(path, value, payload){
+                var i, key, tokenPath,
+                    valid = true;
+
+                for(i=0; i<path.length; i++){
+                    tokenPath = path[i].split('/');
+                    key = tokenPath[tokenPath.length-1];
+                    valid = valid && value[i].equals(payload[i][key]);
+                }
+
+                if(typeof CRUDintegrity == 'function'){
+                    CRUDintegrity(valid)
+                }
+            }.bind(null, path, value)
+
+            promiseScript(fetchURL);
         })
     })
 }
+
+
 
 ///////////////////////////////
 // daq requests & unpacking
@@ -468,6 +496,10 @@ function highlightCell(cell){
 // prototype modifications
 //////////////////////////////////
 
+// return unique subset of array containing only unique elements
+// Warn if overriding existing method
+if(Array.prototype.unique)
+    console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
 Array.prototype.unique = function(){
     // thanks http://jszen.com/best-way-to-get-unique-values-of-an-array-in-javascript.7.html
     var i, j, include, n = {},r=[];
@@ -493,3 +525,37 @@ Array.prototype.unique = function(){
     }
     return r;
 }
+// Hide method from for-in loops
+Object.defineProperty(Array.prototype, "unique", {enumerable: false});
+
+
+// equality method for arrays, thanks http://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
+// Warn if overriding existing method
+if(Array.prototype.equals)
+    console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+// attach the .equals method to Array's prototype to call it on any array
+Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time 
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].equals(array[i]))
+                return false;       
+        }           
+        else if (this[i] != array[i]) { 
+            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+            return false;   
+        }           
+    }       
+    return true;
+}
+// Hide method from for-in loops
+Object.defineProperty(Array.prototype, "equals", {enumerable: false});
