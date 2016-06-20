@@ -223,7 +223,7 @@ function preFetch(){
 ////////////////////////////////////////
 
 function repaint(){
-
+console.log('repaint')
     var collectorFigureIndex = parseInt(dataStore.collectorValue, 16),
         digiCollectorIndex = parseInt(dataStore.digiCollectorValue, 16),
         digitizerFigureIndex = parseInt(dataStore.digitizerValue, 16);
