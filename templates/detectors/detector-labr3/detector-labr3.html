@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="../detector.css">
 
-<template id='detector-dante'>
+<template id='detector-labr3'>
     <div class='nav-row'>
         {{#energyButton}}
             <a class='btn btn-success' href='?channel=energy'>Switch to Energy</a>
@@ -32,7 +32,7 @@
 
 <script>
     function parameterizeDetector(){
-        // determine all the parameters needed for DANTE's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
+        // determine all the parameters needed for LaBr3's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
 
         var suppressors = [
             'DAS01XN00X', 'DAS01XN01X', 'DAS01XN02X',
@@ -81,7 +81,7 @@
         setupDetector(true);
 
         //////////////////////////////////////
-        //DANTE specific drawing parameters
+        //LaBr3 specific drawing parameters
         //////////////////////////////////////
         dataStore.detector.outerBGOrad = 0.1*0.8*dataStore.detector.height;
         dataStore.detector.innerBGOrad = 0.08*0.8*dataStore.detector.height;
@@ -128,7 +128,7 @@
     }
 
     function createCell(channel){
-        // reimplemented for dante - circular cells instead of polygons
+        // reimplemented for labr3 - circular cells instead of polygons
         // stamp out a cell for the given channel and coordinate array key
         // note that cell still has to be added to an appropriate layer on a per-detector basis.
 

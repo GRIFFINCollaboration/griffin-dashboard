@@ -67,7 +67,7 @@ dataStore = {
         'currentTooltipTarget': null
     },
     "detPrefix": {                          // standard three-character prefixes for all detectors
-        'DAL': 'DANTE',
+        'DAL': 'LaBr3',
         'DSC': 'DESCANT',
         'GRG': 'GRIFFIN',
         'PAC': 'PACES',
@@ -100,14 +100,14 @@ dataStore = {
         {
             "id": '03',
             "short": 'DAN',
-            "full": 'DANTE',
-            "description": 'DANTE (Energy)'
+            "full": 'LaBr3',
+            "description": 'LaBr3 (Energy)'
         },
         {
             "id": '04',
             "short": 'DAT',
-            "full": 'DANTE',
-            "description": 'DANTE (Time)'
+            "full": 'LaBr3',
+            "description": 'LaBr3 (Time)'
         },
         {
             "id": '05',
@@ -131,7 +131,7 @@ dataStore = {
             "id": '08',
             "short": 'DAS',
             "full": 'Suppressors',
-            "description": 'DANTE Suppressors'
+            "description": 'LaBr3 Suppressors'
         },
         {
             "id": '09',

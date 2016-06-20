@@ -22,12 +22,12 @@ Detector index | Detector Type
 0 | GRIFFIN Low Gain
 1 | GRIFFIN High Gain
 2 | SCEPTAR
-3 | DANTE (Energy)
-4 | DANTE (Time)
+3 | LaBr3 (Energy)
+4 | LaBr3 (Time)
 5 | PACES
 6 | DESCANT
 7 | GRIFFIN Suppressors
-8 | DANTE Suppressors
+8 | LaBr3 Suppressors
 9 | ZDS
 
 Beneath these sit key / values (see list of [ADC keys below](https://github.com/GRIFFINCollaboration/griffin-dashboard/tree/gh-pages/templates/detectors/adc-sidebar#adc-level-keys)) with the default values for each key, for the given detector type; this default will be applied to all matching ADC channels in the absence of a custom parameter.

@@ -107,7 +107,7 @@ function configSCEPTAR(US, DS, ZDS){
     return [names, MSC];
 }
 
-function configDANTE(US, DS){
+function configLabr3(US, DS){
     var names = [],
         MSC = [],
         i, j, min, max, suppressorMSC;
