@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>MSC regression testing</title>
+
+        <!--libraries-->
+        <script src="../scripts/qunit.js"></script>
+        <script src="../scripts/jquery1-11-3.min.js" type="text/javascript"></script>
+
+        <!--style-->
+        <link rel="stylesheet" href="../css/qunit.css">
+        
+        <script src='../scripts/helpers.js' type="text/javascript"></script>
+        <script src='../scripts/canonicalMSC.js' type="text/javascript"></script>
+
+    </head>
+    <body>
+        <div id="qunit"></div>
+
+        <div id="qunit-fixture">
+
+            <div id='deletion-target'></div>
+
+            <div id='position-test' style='margin:50px; padding:100px'></div>
+
+            <select id='read-select'>
+                <option value='0'>Lemon</option>
+                <option value='1'>Strawberry</option>
+                <option value='2'>Chocolate</option>
+            </select>
+        </div>
+
+        <script>
+
+            QUnit.module('MSC-regression', {
+                beforeEach: function(){},
+
+                afterEach: function(){}
+            })
+
+            QUnit.test('griffin', function(assert){
+                
+                hackMode = false // actual canonical config
+                assert.deepEqual(configGRIFFINclover_old_canonical(1, false), configGRIFFINclover(1, false));
+                assert.deepEqual(configGRIFFINclover_old_canonical(7, true), configGRIFFINclover(7, true));
+                hackMode = true // hack for only having 4 digitizers 
+                assert.deepEqual(configGRIFFINclover_old_hacked(16, false), configGRIFFINclover(16, false));
+            });
+
+
+            function configGRIFFINclover_old_canonical(index, suppressors){
+                var names = [],
+                    MSC = [],
+                    masterChan = (index<9) ? 0 : 1,
+
+                    firstCollectorChan = ((index-1)%8)*2, //ie, collector channel is first of 2 GRIF-16s for this position
+
+                    collectorChan,  
+                    ADC,
+                    name, address,
+                    crystalPrefix = 'GRG' + ((index<10) ? '0'+index : index),
+                    color = ['B', 'G', 'R', 'W'],
+                    crystalSuffix = ['N00A', 'N00B'],
+                    vetoPrefix = 'GRS' + ((index<10) ? '0'+index : index),
+                    i,j,k;
+
+                if(suppressors){
+                    //HPGe
+                    for(i=0; i<crystalSuffix.length; i++){
+                        for(j=0; j<color.length; j++){
+                            name = crystalPrefix + color[j] + crystalSuffix[i];
+
+                            collectorChan = firstCollectorChan + i;
+                            ADC = j;
+                            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+
+                            names.push(name);
+                            MSC.push(address);
+                        }
+                    }
+
+                    //BGO
+                    for(j=0; j<color.length; j++){
+                        for(i=0; i<5; i++){
+                            name = vetoPrefix + color[j] + 'N0' + i + 'X';
+
+                            collectorChan = firstCollectorChan + ((j<2) ? 0 : 1);
+                            ADC = 5 + (j%2)*5+i;
+                            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+
+                            names.push(name);
+                            MSC.push(address);
+                        }
+                    }
+
+                } else{
+                    
+                    // This commented out version is for when there are sufficient digitizers for two modules per GRIFFIN HPGe position
+                    for(i=0; i<crystalSuffix.length; i++){
+                        for(j=0; j<color.length; j++){
+                            name = crystalPrefix + color[j] + crystalSuffix[i];
+
+                            collectorChan = firstCollectorChan;
+                            ADC = j + 4*i;
+                            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+
+                            names.push(name);
+                            MSC.push(address);
+                        }
+                    }        
+                }
+
+                return [names, MSC];
+            }
+
+            function configGRIFFINclover_old_hacked(index, suppressors){
+                var names = [],
+                    MSC = [],
+                    masterChan = (index<9) ? 0 : 1,
+
+                    firstCollectorChan = Math.floor((index-1)/4), //ie, collector channel
+
+                    collectorChan,  
+                    ADC,
+                    name, address,
+                    crystalPrefix = 'GRG' + ((index<10) ? '0'+index : index),
+                    color = ['B', 'G', 'R', 'W'],
+                    crystalSuffix = ['N00A', 'N00B'],
+                    vetoPrefix = 'GRS' + ((index<10) ? '0'+index : index),
+                    i,j,k;
+
+                if(suppressors){
+                    //HPGe
+                    for(i=0; i<crystalSuffix.length; i++){
+                        for(j=0; j<color.length; j++){
+                            name = crystalPrefix + color[j] + crystalSuffix[i];
+
+                            collectorChan = firstCollectorChan + i;
+                            ADC = j;
+                            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+
+                            names.push(name);
+                            MSC.push(address);
+                        }
+                    }
+
+                    //BGO
+                    for(j=0; j<color.length; j++){
+                        for(i=0; i<5; i++){
+                            name = vetoPrefix + color[j] + 'N0' + i + 'X';
+
+                            collectorChan = firstCollectorChan + ((j<2) ? 0 : 1);
+                            ADC = 5 + (j%2)*5+i;
+                            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+
+                            names.push(name);
+                            MSC.push(address);
+                        }
+                    }
+
+                } else{
+                                         
+                    // Temporary version while we do not have enough digitizers, see above
+                    i=0; // only enough digitizers for one contact
+                    for(j=0; j<color.length; j++){
+                        name = crystalPrefix + color[j] + crystalSuffix[i];
+
+                        collectorChan = firstCollectorChan;
+                        ADC = j + 4*((index-1)%4);
+                        masterChan=0;
+                        address = (masterChan << 12) | (collectorChan << 8) | ADC;
+                        names.push(name);
+                        MSC.push(address);
+                    }
+                            
+                }
+
+                return [names, MSC];
+            }
+
+        </script>
+      </body>
+</html>

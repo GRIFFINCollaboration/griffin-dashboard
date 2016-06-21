@@ -1,80 +1,95 @@
+hackMode = true  // hackMode = true rearranges GRIFFIN cabling to fit in 4 digitizers, while we wait for the others to arrive.
+
+canonicalMSC = {
+    GRIFFIN: {
+        unsuppressed: {
+            M: [null, 0, 0, 0, 0, 0, 0,  0,  0,  1, 1, 1, 1, 1, 1,  1,  1],
+            S: [null, 0, 2, 4, 6, 8, 10, 12, 14, 0, 2, 4, 6, 8, 10, 12, 14]
+        },
+        suppressed: {
+            crystals: {
+                //A-channel
+                A: {
+                    M: [null, 0, 0, 0, 0, 0, 0,  0,  0,  1, 1, 1, 1, 1, 1,  1,  1],
+                    S: [null, 0, 2, 4, 6, 8, 10, 12, 14, 0, 2, 4, 6, 8, 10, 12, 14]
+                },
+                //B-channel
+                B: {
+                    M: [null, 0, 0, 0, 0, 0, 0,  0,  0,  1, 1, 1, 1, 1, 1,  1,  1],
+                    S: [null, 1, 3, 5, 7, 9, 11, 13, 15, 1, 3, 5, 7, 9, 11, 13, 15]
+                }
+            },
+            suppressors: {
+                //blue and green quads
+                BG: {
+                    M: [null, 0, 0, 0, 0, 0, 0,  0,  0,  1, 1, 1, 1, 1, 1,  1,  1],
+                    S: [null, 0, 2, 4, 6, 8, 10, 12, 14, 0, 2, 4, 6, 8, 10, 12, 14]
+                },
+                //red and white quads
+                RW: {
+                    M: [null, 0, 0, 0, 0, 0, 0,  0,  0,  1, 1, 1, 1, 1, 1,  1,  1],
+                    S: [null, 1, 3, 5, 7, 9, 11, 13, 15, 1, 3, 5, 7, 9, 11, 13, 15]
+                }
+            }
+        }
+    }
+}
+
+if(hackMode)
+    canonicalMSC.GRIFFIN.unsuppressed = {
+            M: [null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            S: [null, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3] 
+        }
 
 function configGRIFFINclover(index, suppressors){
-    var names = [],
-        MSC = [],
-        masterChan = (index<9) ? 0 : 1,
 
-        // This commented out version is for when there are sufficient digitizers for two modules per GRIFFIN HPGe position
-        //  firstCollectorChan = ((index-1)%8)*2, //ie, collector channel is first of 2 GRIF-16s for this position
-        firstCollectorChan = Math.floor((index-1)/4), //ie, collector channel
-
-        collectorChan,  
-        ADC,
-        name, address,
+    var crystals = hackMode ? ['A'] : ['A', 'B'],
+        quads = ['B', 'G', 'R', 'W'],
+        names = [], MSC = [],
         crystalPrefix = 'GRG' + ((index<10) ? '0'+index : index),
-        color = ['B', 'G', 'R', 'W'],
-        crystalSuffix = ['N00A', 'N00B'],
         vetoPrefix = 'GRS' + ((index<10) ? '0'+index : index),
-        i,j,k;
+        name, quadKey, ADC, masterChan, collectorChan, address, i, j;
 
     if(suppressors){
-        //HPGe
-        for(i=0; i<crystalSuffix.length; i++){
-            for(j=0; j<color.length; j++){
-                name = crystalPrefix + color[j] + crystalSuffix[i];
-
-                collectorChan = firstCollectorChan + i;
+        // HPGe
+        for(i=0; i<crystals.length; i++){
+            for(j=0; j<quads.length; j++){
+                name = crystalPrefix + quads[j] + 'N00' + crystals[i];
+                masterChan = canonicalMSC.GRIFFIN.suppressed.crystals[crystals[i]].M[index];
+                collectorChan = canonicalMSC.GRIFFIN.suppressed.crystals[crystals[i]].S[index];
                 ADC = j;
                 address = (masterChan << 12) | (collectorChan << 8) | ADC;
-
                 names.push(name);
                 MSC.push(address);
             }
         }
 
-        //BGO
-        for(j=0; j<color.length; j++){
+        // BGO
+        for(j=0; j<quads.length; j++){
             for(i=0; i<5; i++){
-                name = vetoPrefix + color[j] + 'N0' + i + 'X';
-
-                collectorChan = firstCollectorChan + ((j<2) ? 0 : 1);
+                name = vetoPrefix + quads[j] + 'N0' + i + 'X';
+                quadKey = (j<2) ? 'BG' : 'RW';
+                masterChan = canonicalMSC.GRIFFIN.suppressed.suppressors[quadKey].M[index];
+                collectorChan = canonicalMSC.GRIFFIN.suppressed.suppressors[quadKey].S[index];
                 ADC = 5 + (j%2)*5+i;
                 address = (masterChan << 12) | (collectorChan << 8) | ADC;
-
                 names.push(name);
                 MSC.push(address);
             }
         }
-
-    } else{
-        /*
-        // This commented out version is for when there are sufficient digitizers for two modules per GRIFFIN HPGe position
-        for(i=0; i<crystalSuffix.length; i++){
-            for(j=0; j<color.length; j++){
-                name = crystalPrefix + color[j] + crystalSuffix[i];
-
-                collectorChan = firstCollectorChan;
-                ADC = j + 4*i;
+    } else {
+        // HPGe
+        for(i=0; i<crystals.length; i++){
+            for(j=0; j<quads.length; j++){
+                name = crystalPrefix + quads[j] + 'N00' + crystals[i];
+                masterChan = canonicalMSC.GRIFFIN.unsuppressed.M[index];
+                collectorChan = canonicalMSC.GRIFFIN.unsuppressed.S[index];
+                ADC = hackMode ? j + 4*((index-1)%4) : j + 4*i;
                 address = (masterChan << 12) | (collectorChan << 8) | ADC;
-
                 names.push(name);
                 MSC.push(address);
             }
         }
-        */  
-        // Temporary version while we do not have enough digitizers, see above
-        i=0; // only enough digitizers for one contact
-        for(j=0; j<color.length; j++){
-            name = crystalPrefix + color[j] + crystalSuffix[i];
-
-            collectorChan = firstCollectorChan;
-            ADC = j + 4*((index-1)%4);
-            masterChan=0;
-            address = (masterChan << 12) | (collectorChan << 8) | ADC;
-            names.push(name);
-            MSC.push(address);
-        }
-                
     }
 
     return [names, MSC];
