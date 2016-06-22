@@ -222,16 +222,21 @@ function configLaBr3(US, DS){
 
 function configPACES(){
     var names = ['PAC01XN00X', 'PAC02XN00X', 'PAC03XN00X', 'PAC04XN00X', 'PAC05XN00X'],
-        MSC = [], masterChan, collectorChan, address, i;
+        MSC = [], masterChan, collectorChan, ADC, i;
 
     for(i=0; i<5; i++){
         masterChan = canonicalMSC.PACES.M;
         collectorChan = canonicalMSC.PACES.S;
-        address = (masterChan << 12) | (collectorChan << 8) | i;
-        MSC.push(address);
+        ADC = i;
+        MSC.push({
+            chan: names[i], 
+            M:masterChan, 
+            S:collectorChan, 
+            C:ADC
+        });
     }
 
-    return [names, MSC];
+    return MSC;
 }
 
 function configSPICE(){

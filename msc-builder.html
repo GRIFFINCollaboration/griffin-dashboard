@@ -38,6 +38,8 @@
 
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
+        <link id='paces-custom' rel="import" href="templates/msc-builder/paces-custom.html">
+        <link id='paces-row' rel="import" href="templates/msc-builder/paces-row.html">
         <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
     </head>
 
@@ -208,8 +210,24 @@
                 </table>
             </div>
   
-            <div class='col-md-8 col-md-offset-2'>          
+            <div class='col-md-8 col-md-offset-2'>
+                <button class='btn btn-lg btn-info' onclick='prepareArrays()'>Prepare New MSC Table</button>          
                 <button class='btn btn-lg btn-warning' onclick='constructArrays()'>Write New MSC Table</button>
+            </div>
+
+        </div>
+
+        <div class='section-wrapper'>
+            <div id='reviewWrap' class='col-md-8 col-md-offset-2 section hidden'>
+                <h2>Review & Customize</h2>
+
+                <div id='griffinTable'></div>
+                <div id='sceptarTable'></div>
+                <div id='LaBr3Table'></div>
+                <div id='pacesTable'></div>
+                <div id='spiceTable'></div>
+                <div id='s2s3Table'></div>
+                <div id='descantTable'></div>
             </div>
 
         </div>
@@ -227,7 +245,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer'];
+                templates = ['brand-header', 'brand-footer', 'paces-custom', 'paces-row'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -342,6 +360,41 @@
                         document.getElementById('grs'+i).checked = false;
                         document.getElementById('grs'+i).classList.add('disabled');
                     }
+                }
+            }
+
+            function prepareArrays(){
+                // prepare the canonical MSC tables for the selected systems, and display and populate the corresponding customization UI.
+
+                var DSC = document.querySelector('input[name="DSC"]:checked').value,
+                    USC = document.querySelector('input[name="USC"]:checked').value,
+                    COR = document.querySelector('input[name="COR"]:checked').value,
+                    DSL = document.querySelector('input[name="DSL"]:checked').value,
+                    USL = document.querySelector('input[name="USL"]:checked').value,
+                    canonical;
+
+                document.getElementById('reviewWrap').classList.remove('hidden');
+
+                //paces
+                if(USC='pac'){
+                    canonical = configPACES();
+
+                    //inject table wrap
+                    document.getElementById('pacesTable').innerHTML = Mustache.to_html(
+                        dataStore.templates['paces-custom'], 
+                        {
+                            'M': canonicalMSC.PACES.M,
+                            'S': canonicalMSC.PACES.S
+                        }
+                    );
+
+                    //insert per-channel rows
+                    document.getElementById('paces-MSC').innerHTML += Mustache.to_html(
+                        dataStore.templates['paces-row'], 
+                        {
+                            'paces': canonical
+                        }
+                    );
                 }
             }
 
