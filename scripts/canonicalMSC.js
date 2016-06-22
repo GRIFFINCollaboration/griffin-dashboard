@@ -32,14 +32,17 @@ canonicalMSC = {
                 }
             }
         }
+    },
+
+    SCEPTAR: {
+        ZDS: {
+            energy: 0x2601,
+            time:   0x2208
+        },
+        M: 2,
+        S: [4,5,6,7,8] // channels divided into 5 groups of 4: 1-4, 5-8, 9-12, 13-16, 17-20
     }
 }
-
-if(hackMode)
-    canonicalMSC.GRIFFIN.unsuppressed = {
-            M: [null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            S: [null, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3] 
-        }
 
 function configGRIFFINclover(index, suppressors){
 
@@ -49,6 +52,12 @@ function configGRIFFINclover(index, suppressors){
         crystalPrefix = 'GRG' + ((index<10) ? '0'+index : index),
         vetoPrefix = 'GRS' + ((index<10) ? '0'+index : index),
         name, quadKey, ADC, masterChan, collectorChan, address, i, j;
+
+    if(hackMode)
+        canonicalMSC.GRIFFIN.unsuppressed = {
+                M: [null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                S: [null, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3] 
+            }
 
     if(suppressors){
         // HPGe
@@ -96,26 +105,35 @@ function configGRIFFINclover(index, suppressors){
 }
 
 function configSCEPTAR(US, DS, ZDS){
-    var names = [],
-        MSC = [],
-        i;
 
-    if(DS){
+    var names = [], MSC = [], masterChan, collectorChan, ADC, address, i;
+
+    if(ZDS){
+        names.push('ZDS01XN00X');
+        MSC.push(canonicalMSC.SCEPTAR.ZDS.energy);
+        names.push('ZDS01XT00X');
+        MSC.push(canonicalMSC.SCEPTAR.ZDS.time);
+    } else if(DS){
         for(i=1; i<11; i++){
             names.push('SEP' + ((i<10) ? '0'+i : i) + 'XN00X');
-            MSC.push((2 << 12) | ( (4+Math.floor((i-1)/4)) << 8) | (i-1)%4);
+
+            masterChan = canonicalMSC.SCEPTAR.M;
+            collectorChan = canonicalMSC.SCEPTAR.S[Math.floor((i-1)/4)];
+            ADC = (i-1)%4
+            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+            MSC.push(address);
         }
-    } else if(ZDS){
-        names.push('ZDS01XN00X');
-        MSC.push(0x2601);
-        names.push('ZDS01XT00X');
-        MSC.push(0x2208);
     }
 
     if(US){
         for(i=11; i<21; i++){
             names.push('SEP' + i + 'XN00X');
-            MSC.push((2 << 12) | ( ( 6 + Math.floor((i - 11 + 2)/4) ) << 8) | (i+3)%4);
+
+            masterChan = canonicalMSC.SCEPTAR.M;
+            collectorChan = canonicalMSC.SCEPTAR.S[Math.floor((i-1)/4)];
+            ADC = (i-1)%4
+            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+            MSC.push(address);
         }
     }
 
