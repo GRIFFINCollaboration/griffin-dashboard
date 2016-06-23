@@ -1,0 +1,16 @@
+<template id='channel-row'>
+    {{#channels}}
+        <tr>
+            <td>{{chan}}</td>
+            <td>
+                <input type='number' id='{{chan}}-M' min=0 max=15 step=1 value={{M}}></input>
+            </td>
+            <td>
+                <input type='number' id='{{chan}}-S' min=0 max=15 step=1 value={{S}}></input>
+            </td>
+            <td>
+                <input type='number' id='{{chan}}-C' min=0 max=63 step=1 value={{C}}></input>
+            </td>
+        </tr>
+    {{/channels}}
+</template>

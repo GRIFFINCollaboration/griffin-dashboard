@@ -1,4 +1,4 @@
-hackMode = true  // hackMode = true rearranges GRIFFIN cabling to fit in 4 digitizers, while we wait for the others to arrive.
+hackMode = false  // hackMode = true rearranges GRIFFIN cabling to fit in 4 digitizers, while we wait for the others to arrive.
 
 canonicalMSC = {
     // GRIFFIN arrays of positions indexed by array position
@@ -82,7 +82,7 @@ function configGRIFFINclover(index, suppressors){
         names = [], MSC = [],
         crystalPrefix = 'GRG' + ((index<10) ? '0'+index : index),
         vetoPrefix = 'GRS' + ((index<10) ? '0'+index : index),
-        name, quadKey, ADC, masterChan, collectorChan, address, i, j;
+        name, quadKey, ADC, masterChan, collectorChan, i, j;
 
     if(hackMode){
         canonicalMSC.GRIFFIN.M = [null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -99,9 +99,12 @@ function configGRIFFINclover(index, suppressors){
                 masterChan = canonicalMSC.GRIFFIN.M[index];
                 collectorChan = canonicalMSC.GRIFFIN.suppressed.crystals[crystals[i]].S[index];
                 ADC = j;
-                address = (masterChan << 12) | (collectorChan << 8) | ADC;
-                names.push(name);
-                MSC.push(address);
+                MSC.push({
+                    chan: name, 
+                    M:masterChan, 
+                    S:collectorChan, 
+                    C:ADC
+                });
             }
         }
 
@@ -113,9 +116,12 @@ function configGRIFFINclover(index, suppressors){
                 masterChan = canonicalMSC.GRIFFIN.M[index];
                 collectorChan = canonicalMSC.GRIFFIN.suppressed.suppressors[quadKey].S[index];
                 ADC = 5 + (j%2)*5+i;
-                address = (masterChan << 12) | (collectorChan << 8) | ADC;
-                names.push(name);
-                MSC.push(address);
+                MSC.push({
+                    chan: name, 
+                    M:masterChan, 
+                    S:collectorChan, 
+                    C:ADC
+                });
             }
         }
     } else {
@@ -126,14 +132,17 @@ function configGRIFFINclover(index, suppressors){
                 masterChan = canonicalMSC.GRIFFIN.M[index];
                 collectorChan = canonicalMSC.GRIFFIN.unsuppressed.S[index];
                 ADC = hackMode ? j + 4*((index-1)%4) : j + 4*i;
-                address = (masterChan << 12) | (collectorChan << 8) | ADC;
-                names.push(name);
-                MSC.push(address);
+                MSC.push({
+                    chan: name, 
+                    M:masterChan, 
+                    S:collectorChan, 
+                    C:ADC
+                });
             }
         }
     }
 
-    return [names, MSC];
+    return MSC;
 }
 
 function configSCEPTAR(US, DS, ZDS){

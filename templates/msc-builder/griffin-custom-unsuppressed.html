@@ -1,7 +1,7 @@
-<template id='paces-custom'>
-    <h3>PACES</h3>
+<template id='griffin-custom-unsuppressed'>
+    <h3>GRIFFIN Position {{position}}</h3>
 
-    <table id='paces-MSC' class='table'>
+    <table id='griffin-{{position}}-MSC' class='table'>
         <tbody>
             <tr>
                 <td>Channel</td>
@@ -12,10 +12,10 @@
             <tr>
                 <td>Apply to all:</td>
                 <td>
-                    <input type='number' id='paces-global-M' min=0 max=15 step=1 value={{M}}></input>
+                    <input type='number' id='griffin-{{position}}-global-M' min=0 max=16 step=1 value={{M}}></input>
                 </td>
                 <td>
-                    <input type='number' id='paces-global-S' min=0 max=15 step=1 value={{S}}></input>
+                    <input type='number' id='paces-{{position}}-global-S' min=0 max=16 step=1 value={{S}}></input>
                 </td>
                 <td>-</td>
             </tr>

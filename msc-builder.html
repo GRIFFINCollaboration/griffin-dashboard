@@ -39,7 +39,9 @@
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
         <link id='paces-custom' rel="import" href="templates/msc-builder/paces-custom.html">
-        <link id='paces-row' rel="import" href="templates/msc-builder/paces-row.html">
+        <link id='griffin-custom-unsuppressed' rel="import" href="templates/msc-builder/griffin-custom-unsuppressed.html">
+        <link id='griffin-custom-suppressed' rel="import" href="templates/msc-builder/griffin-custom-suppressed.html">
+        <link id='channel-row' rel="import" href="templates/msc-builder/channel-row.html">
         <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
     </head>
 
@@ -245,7 +247,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'paces-custom', 'paces-row'];
+                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'paces-custom', 'channel-row'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -371,9 +373,88 @@
                     COR = document.querySelector('input[name="COR"]:checked').value,
                     DSL = document.querySelector('input[name="DSL"]:checked').value,
                     USL = document.querySelector('input[name="USL"]:checked').value,
-                    canonical;
+                    canonical, griffinElements, position, clovers, suppressors, isSuppressed, i;
 
                 document.getElementById('reviewWrap').classList.remove('hidden');
+
+                //griffin
+                griffinElements = identifyGRIFFIN(DSL, COR, USL);
+                clovers = griffinElements[0];
+                suppressors = griffinElements[1];
+
+                for(i=0; i<clovers.length; i++){
+                    position = clovers[i];
+
+                    isSuppressed = suppressors.indexOf(position) != -1 // ie the suppressor will only count if the corresponding clover is there
+                    canonical = configGRIFFINclover(position, isSuppressed); 
+
+                
+                    if(isSuppressed){
+                        console.log(canonical)
+                        //inject table wrap
+                        document.getElementById('griffinTable').innerHTML += Mustache.to_html(
+                            dataStore.templates['griffin-custom-suppressed'], 
+                            {
+                                'position': position,
+                                'M': canonicalMSC.GRIFFIN.M[position],
+                                'S-A': canonicalMSC.GRIFFIN.suppressed.crystals.A.S[position],      //A-side HPGe
+                                'S-B': canonicalMSC.GRIFFIN.suppressed.crystals.B.S[position],      //B-side HPGe
+                                'S-BG': canonicalMSC.GRIFFIN.suppressed.suppressors.BG.S[position], //blue+green suppressors
+                                'S-RW': canonicalMSC.GRIFFIN.suppressed.suppressors.RW.S[position]  //red+white suppressors
+                            }
+                        );
+
+                        //insert per-channel rows
+                        document.getElementById(`griffin-${position}-A-MSC`).innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': canonical.slice(0,4)
+                            }
+                        );
+                        document.getElementById(`griffin-${position}-B-MSC`).innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': canonical.slice(4,8)
+                            }
+                        );
+                        document.getElementById(`griffin-${position}-BG-MSC`).innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': canonical.slice(8,18)
+                            }
+                        );
+                        document.getElementById(`griffin-${position}-RW-MSC`).innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': canonical.slice(18,28)
+                            }
+                        );
+                    } else {
+                        //inject table wrap
+                        document.getElementById('griffinTable').innerHTML += Mustache.to_html(
+                            dataStore.templates['griffin-custom-unsuppressed'], 
+                            {
+                                'position': position,
+                                'M': canonicalMSC.GRIFFIN.M[position],
+                                'S': canonicalMSC.GRIFFIN.unsuppressed.S[position]
+                            }
+                        );
+
+                        //insert per-channel rows
+                        document.getElementById(`griffin-${position}-MSC`).innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': canonical
+                            }
+                        );
+                    }
+
+
+
+                }
+
+
+
 
                 //paces
                 if(USC='pac'){
@@ -390,13 +471,55 @@
 
                     //insert per-channel rows
                     document.getElementById('paces-MSC').innerHTML += Mustache.to_html(
-                        dataStore.templates['paces-row'], 
+                        dataStore.templates['channel-row'], 
                         {
-                            'paces': canonical
+                            'channels': canonical
                         }
                     );
                 }
             }
+
+            function identifyGRIFFIN(DSL, COR, USL){
+                //which griffin clovers and suppressors have been requested?
+
+                var cloverChecks, clovers = [], suppressors = [], i;
+
+                if(DSL=='grg' || DSL=='grgdal'){
+                    cloverChecks = document.getElementById('DSLgriffin').querySelectorAll('input.clover:checked');
+                    for(i=0; i<cloverChecks.length; i++)
+                        clovers.push(parseInt(cloverChecks[i].value,10));
+
+                    suppressorChecks = document.getElementById('DSLgriffin').querySelectorAll('input.suppressor:checked');
+                    for(i=0; i<suppressorChecks.length; i++)
+                        suppressors.push(parseInt(suppressorChecks[i].value,10));
+                }
+                if(COR=='grg'){
+                    cloverChecks = document.getElementById('CORgriffin').querySelectorAll('input.clover:checked');
+                    for(i=0; i<cloverChecks.length; i++)
+                        clovers.push(parseInt(cloverChecks[i].value,10));
+
+                    suppressorChecks = document.getElementById('CORgriffin').querySelectorAll('input.suppressor:checked');
+                    for(i=0; i<suppressorChecks.length; i++)
+                        suppressors.push(parseInt(suppressorChecks[i].value,10));
+                }
+                if(USL=='grg' || USL=='grgdal'){
+                    cloverChecks = document.getElementById('USLgriffin').querySelectorAll('input.clover:checked');
+                    for(i=0; i<cloverChecks.length; i++)
+                        clovers.push(parseInt(cloverChecks[i].value,10));
+
+                    suppressorChecks = document.getElementById('USLgriffin').querySelectorAll('input.suppressor:checked');
+                    for(i=0; i<suppressorChecks.length; i++)
+                        suppressors.push(parseInt(suppressorChecks[i].value,10));
+                } 
+
+                return [clovers, suppressors];
+            }
+
+
+
+
+
+
 
             function constructArrays(){
                 // construct the arrays to write to `/DAQ/MSC` based on the current UI selections
@@ -410,34 +533,7 @@
                     MSC = [], chan = [], datatype = [], gain = [], offset = [],
                     canonical, i;
 
-                    //which griffin clovers and suppressors have been requested?
-                    if(DSL=='grg' || DSL=='grgdal'){
-                        cloverChecks = document.getElementById('DSLgriffin').querySelectorAll('input.clover:checked');
-                        for(i=0; i<cloverChecks.length; i++)
-                            clovers.push(parseInt(cloverChecks[i].value,10));
 
-                        suppressorChecks = document.getElementById('DSLgriffin').querySelectorAll('input.suppressor:checked');
-                        for(i=0; i<suppressorChecks.length; i++)
-                            suppressors.push(parseInt(suppressorChecks[i].value,10));
-                    }
-                    if(COR=='grg'){
-                        cloverChecks = document.getElementById('CORgriffin').querySelectorAll('input.clover:checked');
-                        for(i=0; i<cloverChecks.length; i++)
-                            clovers.push(parseInt(cloverChecks[i].value,10));
-
-                        suppressorChecks = document.getElementById('CORgriffin').querySelectorAll('input.suppressor:checked');
-                        for(i=0; i<suppressorChecks.length; i++)
-                            suppressors.push(parseInt(suppressorChecks[i].value,10));
-                    }
-                    if(USL=='grg' || USL=='grgdal'){
-                        cloverChecks = document.getElementById('USLgriffin').querySelectorAll('input.clover:checked');
-                        for(i=0; i<cloverChecks.length; i++)
-                            clovers.push(parseInt(cloverChecks[i].value,10));
-
-                        suppressorChecks = document.getElementById('USLgriffin').querySelectorAll('input.suppressor:checked');
-                        for(i=0; i<suppressorChecks.length; i++)
-                            suppressors.push(parseInt(suppressorChecks[i].value,10));
-                    }
 
                     //GRIFFIN
                     for(i=0; i<clovers.length; i++){
