@@ -33,8 +33,16 @@ canonicalMSC = {
 
     SCEPTAR: {
         ZDS: {
-            energy: 0x2601,
-            time:   0x2208
+            energy: {
+                M: 2,
+                S: 6,
+                C: 1
+            },
+            time: {
+                M: 2,
+                S: 2,
+                C: 8
+            }
         },
         M: 2,
         S: [4,5,6,7,8] // channels divided into 5 groups of 4: 1-4, 5-8, 9-12, 13-16, 17-20
@@ -49,7 +57,7 @@ canonicalMSC = {
             S: 2
         },
         suppressors: {
-            S: [1,3]  // first 12 in 0x-1--, last 12 in 0x-3--
+            S: [1,3]  // first 8 in 0x-1--, last 16 in 0x-3--
         }
     },
 
@@ -70,6 +78,27 @@ canonicalMSC = {
 
     //DESCANT arrays of positions indexed by cable bundle
     DESCANT: { 
+        cableBundles: [
+            [46, 65, 66, 67],
+            [13, 27, 26, 45],
+            [28, 47, 48, 68],
+            [5, 14, 15, 29],
+            [0, 49, 69],
+            [1, 6, 30],
+            [16, 31, 50, 51],
+            [7, 17, 18, 32],
+            [33, 52, 53, 54],
+            [43, 44, 63, 64],
+            [25, 42, 62],
+            [4, 11, 12, 24],
+            [23, 41, 40, 61],
+            [10, 22, 39, 60],
+            [2, 3, 8, 9],
+            [21, 38, 59],
+            [20, 37, 57, 58],
+            [19, 36, 56],
+            [34, 35, 55]
+        ],
         M: [2, 2,  2,  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,  3,  3,  3,  3,  3],
         S: [9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     }
@@ -147,43 +176,56 @@ function configGRIFFINclover(index, suppressors){
 
 function configSCEPTAR(US, DS, ZDS){
 
-    var names = [], MSC = [], masterChan, collectorChan, ADC, address, i;
+    var name, MSC = [], masterChan, collectorChan, ADC, i;
 
     if(ZDS){
-        names.push('ZDS01XN00X');
-        MSC.push(canonicalMSC.SCEPTAR.ZDS.energy);
-        names.push('ZDS01XT00X');
-        MSC.push(canonicalMSC.SCEPTAR.ZDS.time);
+        MSC.push({
+            chan: 'ZDS01XN00X', 
+            M: canonicalMSC.SCEPTAR.ZDS.energy.M, 
+            S: canonicalMSC.SCEPTAR.ZDS.energy.S, 
+            C: canonicalMSC.SCEPTAR.ZDS.energy.C
+        });
+        MSC.push({
+            chan: 'ZDS01XT00X', 
+            M: canonicalMSC.SCEPTAR.ZDS.time.M, 
+            S: canonicalMSC.SCEPTAR.ZDS.time.S, 
+            C: canonicalMSC.SCEPTAR.ZDS.time.C
+        });
     } else if(DS){
         for(i=1; i<11; i++){
-            names.push('SEP' + ((i<10) ? '0'+i : i) + 'XN00X');
-
+            name = 'SEP' + ((i<10) ? '0'+i : i) + 'XN00X';
             masterChan = canonicalMSC.SCEPTAR.M;
             collectorChan = canonicalMSC.SCEPTAR.S[Math.floor((i-1)/4)];
             ADC = (i-1)%4
-            address = (masterChan << 12) | (collectorChan << 8) | ADC;
-            MSC.push(address);
+            MSC.push({
+                chan: name, 
+                M: masterChan, 
+                S: collectorChan, 
+                C: ADC
+            });
         }
     }
-
     if(US){
         for(i=11; i<21; i++){
-            names.push('SEP' + i + 'XN00X');
-
+            name = 'SEP' + i + 'XN00X';
             masterChan = canonicalMSC.SCEPTAR.M;
             collectorChan = canonicalMSC.SCEPTAR.S[Math.floor((i-1)/4)];
             ADC = (i-1)%4
-            address = (masterChan << 12) | (collectorChan << 8) | ADC;
-            MSC.push(address);
+            MSC.push({
+                chan: name, 
+                M: masterChan, 
+                S: collectorChan, 
+                C: ADC
+            });
         }
     }
 
-    return [names, MSC];
+    return MSC;
 }
 
 function configLaBr3(US, DS){
 
-    var names = [], MSC = [], masterChan, collectorChan, ADC, address, min, max, i;
+    var name, MSC = [], masterChan, collectorChan, ADC, min, max, i;
 
     if(!US && !DS) return [names, MSC]; //do nothing
 
@@ -199,34 +241,52 @@ function configLaBr3(US, DS){
 
     //LaBr - energy
     for(i=min; i<max; i++){
-        names.push('DAL0'+(1+i)+'XN00X');
+        name = 'DAL0'+(1+i)+'XN00X';
         masterChan = canonicalMSC.LaBr3.M;
         collectorChan = canonicalMSC.LaBr3.energy.S
-        MSC.push((masterChan << 12) | ( collectorChan << 8) | i);
+        ADC = i;
+        MSC.push({
+            chan: name, 
+            M: masterChan, 
+            S: collectorChan, 
+            C: ADC
+        });
     }
     //LaBr - TAC
     for(i=min; i<max; i++){
-        names.push('DAL0'+(1+i)+'XT00X');
+        name = 'DAL0'+(1+i)+'XT00X';
         masterChan = canonicalMSC.LaBr3.M;
         collectorChan = canonicalMSC.LaBr3.time.S
-        MSC.push((masterChan << 12) | ( collectorChan << 8) | i);
+        ADC = i;
+        MSC.push({
+            chan: name, 
+            M: masterChan, 
+            S: collectorChan, 
+            C: ADC
+        });
     }
     //Suppressors
     for(i=min; i<max; i++){
         for(j=0; j<3; j++){
-            names.push('DAS0'+(1+i)+'XN0'+j+'X');
+            name = 'DAS0'+(1+i)+'XN0'+j+'X';
             masterChan = canonicalMSC.LaBr3.M;
-            if(i<2 || (i==2 && j<2)){ // first 12
+            if(i<2 || (i==2 && j<2)){ // first 8
                 collectorChan = canonicalMSC.LaBr3.suppressors.S[0];
-                MSC.push((masterChan << 12) | ( collectorChan << 8) | (3*i+j + 8));
-            }else{ // last 12
+                ADC = 3*i+j + 8
+            }else{ // last 16
                 collectorChan = canonicalMSC.LaBr3.suppressors.S[1];
-                MSC.push((masterChan << 12) | ( collectorChan << 8) | (3*i+j - 8));
+                ADC = 3*i+j - 8
             }
+            MSC.push({
+                chan: name, 
+                M: masterChan, 
+                S: collectorChan, 
+                C: ADC
+            });  
         }
     }   
 
-    return [names, MSC];
+    return MSC;
 }
 
 function configPACES(){
@@ -249,25 +309,28 @@ function configPACES(){
 }
 
 function configSPICE(){
-    var names = [], MSC = [], masterChan, collectorChan, ADC, address, i;
+    var name, MSC = [], masterChan, collectorChan, ADC, i;
 
     for(i=0; i<120; i++){
-        names.push('SPI00XN' + ((i>=100) ? i : ((i>=10) ? '0'+i : '00'+i)) );
+        name = 'SPI00XN' + ((i>=100) ? i : ((i>=10) ? '0'+i : '00'+i));
         masterChan = canonicalMSC.SPICE.M;
         collectorChan = canonicalMSC.SPICE.S[Math.floor(i/16)];
         ADC = i%16;
-        address = (masterChan << 12) | (collectorChan << 8) | ADC;
-        MSC.push(address);     
+        MSC.push({
+            chan: name, 
+            M:masterChan, 
+            S:collectorChan, 
+            C:ADC
+        });     
     }
 
-    return [names, MSC];
+    return MSC;
 }
 
 function configS2S3(type){
-    var names = [],
-        MSC = [],
+    var MSC = [],
         radial = 24, 
-        azimuthal, typeCode, masterChan, collectorChan, ADC, address, i;
+        name, azimuthal, typeCode, masterChan, collectorChan, ADC, address, i;
 
     if(type == 2){
         typeCode = 'E';
@@ -278,7 +341,7 @@ function configS2S3(type){
     }
     //radial first: first 8 finishes off last digitizer, other 16 fill the next; then azimuthal channels fill 1 or 2 more grif16s
     for(i=0; i<radial; i++){
-        names.push('SP'+typeCode+'00DP'+((i<10)? '0'+i : i)+'X');
+        name = 'SP'+typeCode+'00DP'+((i<10)? '0'+i : i)+'X';
         masterChan = canonicalMSC.S2S3.M;
         if(i<8){
             collectorChan = canonicalMSC.S2S3.S[0];
@@ -287,62 +350,50 @@ function configS2S3(type){
             collectorChan = canonicalMSC.S2S3.S[1];
             ADC = i-8;
         }
-        address = (masterChan << 12) | (collectorChan << 8) | ADC;
-        MSC.push(address);
+        MSC.push({
+            chan: name, 
+            M:masterChan, 
+            S:collectorChan, 
+            C:ADC
+        }); 
     }
 
     for(i=0; i<azimuthal; i++){
-        names.push('SP'+typeCode+'00DN'+((i<10)? '0'+i : i)+'X');
+        name = 'SP'+typeCode+'00DN'+((i<10)? '0'+i : i)+'X';
         masterChan = canonicalMSC.S2S3.M;
         collectorChan = canonicalMSC.S2S3.S[2 + Math.floor(i/16)];
         ADC = i%16;
-        address = (masterChan << 12) | (collectorChan << 8) | ADC;
-        MSC.push(address);
+        MSC.push({
+            chan: name, 
+            M:masterChan, 
+            S:collectorChan, 
+            C:ADC
+        }); 
     }
 
-    return [names, MSC];
+    return MSC;
 }
 
 function configDESCANT(){
-    var names = [],
-        MSC = [],
+    var MSC = [],
         cableBundles = [],
-        masterChan, collectorChan, address,
+        name, masterChan, collectorChan,
+        cableBundles = canonicalMSC.DESCANT.cableBundles,
         i, j;
-
-    //weird ordering thanks to cable bundling constraints:
-    cableBundles = [
-        [46, 65, 66, 67],
-        [13, 27, 26, 45],
-        [28, 47, 48, 68],
-        [5, 14, 15, 29],
-        [0, 49, 69],
-        [1, 6, 30],
-        [16, 31, 50, 51],
-        [7, 17, 18, 32],
-        [33, 52, 53, 54],
-
-        [43, 44, 63, 64],
-        [25, 42, 62],
-        [4, 11, 12, 24],
-        [23, 41, 40, 61],
-        [10, 22, 39, 60],
-        [2, 3, 8, 9],
-        [21, 38, 59],
-        [20, 37, 57, 58],
-        [19, 36, 56],
-        [34, 35, 55]
-    ]
 
     for(i=0; i<cableBundles.length; i++){
         for(j=0; j<cableBundles[i].length; j++){
-            names.push('DSC' + ((cableBundles[i][j] < 10) ? '0'+cableBundles[i][j] : cableBundles[i][j]) + 'XN00X');
+            name = 'DSC' + ((cableBundles[i][j] < 10) ? '0'+cableBundles[i][j] : cableBundles[i][j]) + 'XN00X';
             masterChan = canonicalMSC.DESCANT.M[i];
             collectorChan = canonicalMSC.DESCANT.S[i];
-            address = (masterChan << 12) | (collectorChan << 8) | j;
-            MSC.push(address);
+            MSC.push({
+                chan: name, 
+                M:masterChan, 
+                S:collectorChan, 
+                C:j
+            }); 
         }
     }
 
-    return [names, MSC];
+    return MSC;
 }

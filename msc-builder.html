@@ -38,9 +38,15 @@
 
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
-        <link id='paces-custom' rel="import" href="templates/msc-builder/paces-custom.html">
         <link id='griffin-custom-unsuppressed' rel="import" href="templates/msc-builder/griffin-custom-unsuppressed.html">
         <link id='griffin-custom-suppressed' rel="import" href="templates/msc-builder/griffin-custom-suppressed.html">
+        <link id='zds-custom' rel="import" href="templates/msc-builder/zds-custom.html">
+        <link id='sceptar-custom' rel="import" href="templates/msc-builder/sceptar-custom.html">
+        <link id='labr3-custom' rel="import" href="templates/msc-builder/labr3-custom.html">
+        <link id='paces-custom' rel="import" href="templates/msc-builder/paces-custom.html">
+        <link id='spice-custom' rel="import" href="templates/msc-builder/spice-custom.html">
+        <link id='s2s3-custom' rel="import" href="templates/msc-builder/s2s3-custom.html">
+        <link id='descant-custom' rel="import" href="templates/msc-builder/descant-custom.html">
         <link id='channel-row' rel="import" href="templates/msc-builder/channel-row.html">
         <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
     </head>
@@ -247,7 +253,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'paces-custom', 'channel-row'];
+                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'zds-custom', 'sceptar-custom', 'labr3-custom', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -373,7 +379,7 @@
                     COR = document.querySelector('input[name="COR"]:checked').value,
                     DSL = document.querySelector('input[name="DSL"]:checked').value,
                     USL = document.querySelector('input[name="USL"]:checked').value,
-                    canonical, griffinElements, position, clovers, suppressors, isSuppressed, i;
+                    canonical, griffinElements, position, clovers, suppressors, isSuppressed, group, energy, time, suppressor_group1, suppressor_group2, channelsComplete, i;
 
                 document.getElementById('reviewWrap').classList.remove('hidden');
 
@@ -453,11 +459,122 @@
 
                 }
 
+                //sceptar / zds                
+                canonical = configSCEPTAR(USC == 'sep', DSC == 'sep', DSC == 'zds');
+                //inject table wrap
+                // deal with zds if present
+                if(DSC == 'zds'){
+                    document.getElementById('sceptarTable').innerHTML = Mustache.to_html(
+                        dataStore.templates['zds-custom'], 
+                        {
+                            'M-E': canonicalMSC.SCEPTAR.ZDS.energy.M,
+                            'S-E': canonicalMSC.SCEPTAR.ZDS.energy.S,
+                            'C-E': canonicalMSC.SCEPTAR.ZDS.energy.C,
+                            'M-T': canonicalMSC.SCEPTAR.ZDS.time.M,
+                            'S-T': canonicalMSC.SCEPTAR.ZDS.time.S,
+                            'C-T': canonicalMSC.SCEPTAR.ZDS.time.C
+                        }
+                    );
+                    canonical = canonical.slice(2);                    
+                }
+                // one table for each group of 4 sceptar channels;
+                // groups 1 and 2 are downstream; 4 and 5 are upstream; and 3 is split between the two.
+                if(DSC == 'sep' || USC == 'sep'){
+                    for(i=(DSC=='sep' ? 0:2); i<(USC=='sep' ? 5:3); i++){
+                        document.getElementById('sceptarTable').innerHTML += Mustache.to_html(
+                            dataStore.templates['sceptar-custom'], 
+                            {
+                                'group': i+1, 
+                                'M': canonicalMSC.SCEPTAR.M,
+                                'S': canonicalMSC.SCEPTAR.S[i]
+                            }
+                        );
 
+                        //insert per-channel rows
+                        if(DSC!='sep' && i==2){
+                            group = canonical.slice(0,2);
+                            canonical = canonical.slice(2);
+                        } else{
+                            group = canonical.slice(0,4);
+                            canonical = canonical.slice(4);
+                        }
+                        document.getElementById(`sceptar-${i+1}-MSC`).innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': group
+                            }
+                        );
+                    }
+                }
+                
+                //labr3
+                if(USL == 'grgdal' || DSL == 'grgdal'){
+                    canonical = configLaBr3(USL == 'grgdal', DSL == 'grgdal');
 
+                    //inject table wrap
+                    document.getElementById('LaBr3Table').innerHTML = Mustache.to_html(
+                        dataStore.templates['labr3-custom'], 
+                        {
+                            'M': canonicalMSC.LaBr3.M,
+                            'S-E': canonicalMSC.LaBr3.energy.S,
+                            'S-T': canonicalMSC.LaBr3.time.S,
+                            'S-S1': canonicalMSC.LaBr3.suppressors.S[0],
+                            'S-S2': canonicalMSC.LaBr3.suppressors.S[1],
+                            'downstream': DSL=='grgdal' ? [true] : []
+                        }
+                    );
+                
+
+                    if(DSL == 'grgdal' && USL=='grgdal'){                
+                        energy = canonical.slice(0,8);
+                        time = canonical.slice(8,16);
+                        suppressor_group1 = canonical.slice(16,24);
+                        suppressor_group2 = canonical.slice(24);
+                    } else if (DSL == 'grgdal' || USL == 'grgdal'){
+                        energy = canonical.slice(0,4);
+                        time = canonical.slice(4,8);
+                        if(DSL == 'grgdal'){
+                            suppressor_group1 = canonical.slice(8,16);
+                            suppressor_group2 = canonical.slice(16);
+                        } else if (USL == 'grgdal'){
+                            suppressor_group1 = [];
+                            suppressor_group2 = canonical.slice(8)
+                        }
+                    }
+
+                    //insert per-channel rows
+                    document.getElementById('labr3-energy-MSC').innerHTML += Mustache.to_html(
+                        dataStore.templates['channel-row'], 
+                        {
+                            'channels': energy
+                        }
+                    );                
+                    document.getElementById('labr3-time-MSC').innerHTML += Mustache.to_html(
+                        dataStore.templates['channel-row'], 
+                        {
+                            'channels': time
+                        }
+                    );
+                    if(suppressor_group1.length > 0){
+                        document.getElementById('labr3-suppressors-1-MSC').innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': suppressor_group1
+                            }
+                        );   
+                    }
+                    if(suppressor_group2.length > 0){
+                        document.getElementById('labr3-suppressors-2-MSC').innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': suppressor_group2
+                            }
+                        );   
+                    }
+                }
 
                 //paces
-                if(USC='pac'){
+                if(USC=='pac'){
                     canonical = configPACES();
 
                     //inject table wrap
@@ -476,6 +593,85 @@
                             'channels': canonical
                         }
                     );
+                }
+
+                //spice
+                if(USC == 'spi'){
+                    canonical = configSPICE();
+                    for(i=0; i<8; i++){
+                        document.getElementById('spiceTable').innerHTML += Mustache.to_html(
+                            dataStore.templates['spice-custom'], 
+                            {
+                                'group': i+1, 
+                                'M': canonicalMSC.SPICE.M,
+                                'S': canonicalMSC.SPICE.S[i]
+                            }
+                        );
+
+                        //insert per-channel rows
+                        document.getElementById(`spice-${i+1}-MSC`).innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': canonical.slice(16*i, 16*(i+1))
+                            }
+                        );
+                    }
+                }
+
+                //s2/s3
+                if(DSC == 's2' || DSC == 's3'){
+                    canonical = configS2S3(DSC == 's2' ? 2 : 3);
+
+                    for(i=0; i<((DSC=='s3')?4:3); i++){
+                        document.getElementById('s2s3Table').innerHTML += Mustache.to_html(
+                            dataStore.templates['s2s3-custom'], 
+                            {
+                                'type': (DSC == 's2' ? 'S2' : 'S3'),
+                                'group': i+1, 
+                                'M': canonicalMSC.S2S3.M,
+                                'S': canonicalMSC.S2S3.S[i]
+                            }
+                        );
+
+                        //insert per-channel rows
+                        if(i == 0)
+                            group = canonical.slice(0,8);
+                        else
+                            group = canonical.slice(8+(i-1)*16, 8+i*16);
+                        document.getElementById(`s2s3-${i+1}-MSC`).innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': group
+                            }
+                        );
+                    }
+                }
+
+                //descant
+                if(DSL == 'dsc'){
+                    canonical = configDESCANT();
+
+                    channelsComplete = 0;
+                    for(i=0; i<canonicalMSC.DESCANT.cableBundles.length; i++){
+                        document.getElementById('descantTable').innerHTML += Mustache.to_html(
+                            dataStore.templates['descant-custom'], 
+                            {
+                                'bundle': i+1, 
+                                'M': canonicalMSC.DESCANT.M[i],
+                                'S': canonicalMSC.DESCANT.S[i]
+                            }
+                        );
+
+                        //insert per-channel rows
+                        group = canonical.slice(channelsComplete, channelsComplete + canonicalMSC.DESCANT.cableBundles[i].length);
+                        channelsComplete += canonicalMSC.DESCANT.cableBundles[i].length;
+                        document.getElementById(`descant-${i+1}-MSC`).innerHTML += Mustache.to_html(
+                            dataStore.templates['channel-row'], 
+                            {
+                                'channels': group
+                            }
+                        );
+                    }
                 }
             }
 

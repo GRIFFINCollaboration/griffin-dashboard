@@ -1,7 +1,6 @@
-<template id='griffin-custom-unsuppressed'>
-    <h3>GRIFFIN Position {{position}}</h3>
-
-    <table id='griffin-{{position}}-MSC' class='table'>
+<template id='spice-custom'>
+    <h3>SPICE Group {{group}}</h3>
+    <table id='spice-{{group}}-MSC' class='table'>
         <tbody>
             <tr>
                 <td>Channel</td>
@@ -12,13 +11,14 @@
             <tr>
                 <td>Apply to all:</td>
                 <td>
-                    <input type='number' id='griffin-{{position}}-global-M' min=0 max=16 step=1 value={{M}}></input>
+                    <input type='number' id='spice-{{group}}-global-M' min=0 max=16 step=1 value={{M}}></input>
                 </td>
                 <td>
-                    <input type='number' id='griffin-{{position}}-global-S' min=0 max=16 step=1 value={{S}}></input>
+                    <input type='number' id='spice-{{group}}-global-S' min=0 max=16 step=1 value={{S}}></input>
                 </td>
                 <td>-</td>
             </tr>
         </tbody>
     </table>
+
 </template>

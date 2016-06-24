@@ -1,0 +1,91 @@
+<template id='labr3-custom'>
+    <h3>LaBr3 Energy</h3>
+    <table id='labr3-energy-MSC' class='table'>
+        <tbody>
+            <tr>
+                <td>Channel</td>
+                <td>M</td>
+                <td>S</td>
+                <td>C</td>
+            </tr>
+            <tr>
+                <td>Apply to all:</td>
+                <td>
+                    <input type='number' id='labr3-energy-global-M' min=0 max=16 step=1 value={{M}}></input>
+                </td>
+                <td>
+                    <input type='number' id='labr3-energy-global-S' min=0 max=16 step=1 value={{S-E}}></input>
+                </td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>LaBr3 Time</h3>
+    <table id='labr3-time-MSC' class='table'>
+        <tbody>
+            <tr>
+                <td>Channel</td>
+                <td>M</td>
+                <td>S</td>
+                <td>C</td>
+            </tr>
+            <tr>
+                <td>Apply to all:</td>
+                <td>
+                    <input type='number' id='labr3-time-global-M' min=0 max=16 step=1 value={{M}}></input>
+                </td>
+                <td>
+                    <input type='number' id='labr3-time-global-S' min=0 max=16 step=1 value={{S-T}}></input>
+                </td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{#downstream}}
+        <h3>LaBr3 Suppressors Group 1</h3>
+        <table id='labr3-suppressors-1-MSC' class='table'>
+            <tbody>
+                <tr>
+                    <td>Channel</td>
+                    <td>M</td>
+                    <td>S</td>
+                    <td>C</td>
+                </tr>
+                <tr>
+                    <td>Apply to all:</td>
+                    <td>
+                        <input type='number' id='labr3-suppressors-1-global-M' min=0 max=16 step=1 value={{M}}></input>
+                    </td>
+                    <td>
+                        <input type='number' id='labr3-suppressors-1-global-S' min=0 max=16 step=1 value={{S-S1}}></input>
+                    </td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    {{/downstream}}
+
+    <h3>LaBr3 Suppressors Group 2</h3>
+    <table id='labr3-suppressors-2-MSC' class='table'>
+        <tbody>
+            <tr>
+                <td>Channel</td>
+                <td>M</td>
+                <td>S</td>
+                <td>C</td>
+            </tr>
+            <tr>
+                <td>Apply to all:</td>
+                <td>
+                    <input type='number' id='labr3-suppressors-2-global-M' min=0 max=16 step=1 value={{M}}></input>
+                </td>
+                <td>
+                    <input type='number' id='labr3-suppressors-2-global-S' min=0 max=16 step=1 value={{S-S2}}></input>
+                </td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+</template>

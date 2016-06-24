@@ -1,0 +1,38 @@
+<template id='zds-custom'>
+    <h3>ZDS</h3>
+
+    <table id='zds-MSC' class='table'>
+        <tbody>
+            <tr>
+                <td>Channel</td>
+                <td>M</td>
+                <td>S</td>
+                <td>C</td>
+            </tr>
+            <tr>
+                <td>Energy:</td>
+                <td>
+                    <input type='number' id='zds-energy-M' min=0 max=15 step=1 value={{M-E}}></input>
+                </td>
+                <td>
+                    <input type='number' id='zds-energy-S' min=0 max=15 step=1 value={{S-E}}></input>
+                </td>
+                <td>
+                    <input type='number' id='zds-energy-C' min=0 max=63 step=1 value={{C-E}}></input>
+                </td>
+            </tr>
+            <tr>
+                <td>Time:</td>
+                <td>
+                    <input type='number' id='zds-time-M' min=0 max=15 step=1 value={{M-T}}></input>
+                </td>
+                <td>
+                    <input type='number' id='zds-time-S' min=0 max=15 step=1 value={{S-T}}></input>
+                </td>
+                <td>
+                    <input type='number' id='zds-time-C' min=0 max=63 step=1 value={{C-T}}></input>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</template>
