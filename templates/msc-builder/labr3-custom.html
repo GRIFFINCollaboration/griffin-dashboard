@@ -1,5 +1,5 @@
 <template id='labr3-custom'>
-    <h3>LaBr3 Energy</h3>
+    <h4>LaBr3 Energy</h4>
     <table id='labr3-energy-MSC' class='table'>
         <tbody>
             <tr>
@@ -11,17 +11,17 @@
             <tr>
                 <td>Apply to all:</td>
                 <td>
-                    <input type='number' id='labr3-energy-global-M' min=0 max=16 step=1 value={{M}}></input>
+                    <input type='number' id='labr3-energy-global-M' key={{key-E}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
                 </td>
                 <td>
-                    <input type='number' id='labr3-energy-global-S' min=0 max=16 step=1 value={{S-E}}></input>
+                    <input type='number' id='labr3-energy-global-S' key={{key-E}} min=0 max=16 step=1 value={{S-E}} onchange="updateAddr.call(this, 'S')"></input>
                 </td>
                 <td>-</td>
             </tr>
         </tbody>
     </table>
 
-    <h3>LaBr3 Time</h3>
+    <h4>LaBr3 Time</h4>
     <table id='labr3-time-MSC' class='table'>
         <tbody>
             <tr>
@@ -33,10 +33,10 @@
             <tr>
                 <td>Apply to all:</td>
                 <td>
-                    <input type='number' id='labr3-time-global-M' min=0 max=16 step=1 value={{M}}></input>
+                    <input type='number' id='labr3-time-global-M' key={{key-T}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
                 </td>
                 <td>
-                    <input type='number' id='labr3-time-global-S' min=0 max=16 step=1 value={{S-T}}></input>
+                    <input type='number' id='labr3-time-global-S' key={{key-T}} min=0 max=16 step=1 value={{S-T}} onchange="updateAddr.call(this, 'S')"></input>
                 </td>
                 <td>-</td>
             </tr>
@@ -44,7 +44,7 @@
     </table>
 
     {{#downstream}}
-        <h3>LaBr3 Suppressors Group 1</h3>
+        <h4>LaBr3 Suppressors Group 1</h4>
         <table id='labr3-suppressors-1-MSC' class='table'>
             <tbody>
                 <tr>
@@ -56,10 +56,10 @@
                 <tr>
                     <td>Apply to all:</td>
                     <td>
-                        <input type='number' id='labr3-suppressors-1-global-M' min=0 max=16 step=1 value={{M}}></input>
+                        <input type='number' id='labr3-suppressors-1-global-M' key={{key-S1}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
                     </td>
                     <td>
-                        <input type='number' id='labr3-suppressors-1-global-S' min=0 max=16 step=1 value={{S-S1}}></input>
+                        <input type='number' id='labr3-suppressors-1-global-S' key={{key-S1}} min=0 max=16 step=1 value={{S-S1}} onchange="updateAddr.call(this, 'S')"></input>
                     </td>
                     <td>-</td>
                 </tr>
@@ -67,7 +67,7 @@
         </table>
     {{/downstream}}
 
-    <h3>LaBr3 Suppressors Group 2</h3>
+    <h4>LaBr3 Suppressors Group 2</h4>
     <table id='labr3-suppressors-2-MSC' class='table'>
         <tbody>
             <tr>
@@ -79,10 +79,10 @@
             <tr>
                 <td>Apply to all:</td>
                 <td>
-                    <input type='number' id='labr3-suppressors-2-global-M' min=0 max=16 step=1 value={{M}}></input>
+                    <input type='number' id='labr3-suppressors-2-global-M' key={{key-S2}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
                 </td>
                 <td>
-                    <input type='number' id='labr3-suppressors-2-global-S' min=0 max=16 step=1 value={{S-S2}}></input>
+                    <input type='number' id='labr3-suppressors-2-global-S' key={{key-S2}} min=0 max=16 step=1 value={{S-S2}} onchange="updateAddr.call(this, 'S')"></input>
                 </td>
                 <td>-</td>
             </tr>

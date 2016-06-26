@@ -1,6 +1,4 @@
 <template id='griffin-custom-unsuppressed'>
-    <h3>GRIFFIN Position {{position}}</h3>
-
     <table id='griffin-{{position}}-MSC' class='table'>
         <tbody>
             <tr>
@@ -12,10 +10,10 @@
             <tr>
                 <td>Apply to all:</td>
                 <td>
-                    <input type='number' id='griffin-{{position}}-global-M' min=0 max=16 step=1 value={{M}}></input>
+                    <input type='number' id='griffin-{{position}}-global-M' key={{key}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
                 </td>
                 <td>
-                    <input type='number' id='griffin-{{position}}-global-S' min=0 max=16 step=1 value={{S}}></input>
+                    <input type='number' id='griffin-{{position}}-global-S' key={{key}} min=0 max=16 step=1 value={{S}} onchange="updateAddr.call(this, 'S')"></input>
                 </td>
                 <td>-</td>
             </tr>

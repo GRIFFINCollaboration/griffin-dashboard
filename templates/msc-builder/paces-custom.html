@@ -1,6 +1,4 @@
 <template id='paces-custom'>
-    <h3>PACES</h3>
-
     <table id='paces-MSC' class='table'>
         <tbody>
             <tr>
@@ -12,10 +10,10 @@
             <tr>
                 <td>Apply to all:</td>
                 <td>
-                    <input type='number' id='paces-global-M' min=0 max=15 step=1 value={{M}}></input>
+                    <input type='number' id='paces-global-M' key={{key}} min=0 max=15 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
                 </td>
                 <td>
-                    <input type='number' id='paces-global-S' min=0 max=15 step=1 value={{S}}></input>
+                    <input type='number' id='paces-global-S' key={{key}} min=0 max=15 step=1 value={{S}} onchange="updateAddr.call(this, 'S')"></input>
                 </td>
                 <td>-</td>
             </tr>

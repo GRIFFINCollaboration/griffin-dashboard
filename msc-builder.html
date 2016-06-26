@@ -34,6 +34,16 @@
                 background-color: #5cb85c;
                 border-color: #4cae4c;
             }
+
+            a.collapse-title{
+                display:block;
+                margin-bottom: 2px;
+            }
+
+            div#review-and-write{
+                margin-top: 1em;
+            }
+
         </style>
 
         <!--html imports-->
@@ -48,6 +58,7 @@
         <link id='s2s3-custom' rel="import" href="templates/msc-builder/s2s3-custom.html">
         <link id='descant-custom' rel="import" href="templates/msc-builder/descant-custom.html">
         <link id='channel-row' rel="import" href="templates/msc-builder/channel-row.html">
+        <link id='collapse-section' rel="import" href="templates/msc-builder/collapse-section.html">
         <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
     </head>
 
@@ -220,24 +231,44 @@
   
             <div class='col-md-8 col-md-offset-2'>
                 <button class='btn btn-lg btn-info' onclick='prepareArrays()'>Prepare New MSC Table</button>          
-                <button class='btn btn-lg btn-warning' onclick='constructArrays()'>Write New MSC Table</button>
             </div>
 
         </div>
 
-        <div class='section-wrapper'>
-            <div id='reviewWrap' class='col-md-8 col-md-offset-2 section hidden'>
+        <div id='review-and-write' class='section-wrapper hidden'>
+            <div id='reviewWrap' class='col-md-8 col-md-offset-2 section'>
                 <h2>Review & Customize</h2>
-
-                <div id='griffinTable'></div>
-                <div id='sceptarTable'></div>
-                <div id='LaBr3Table'></div>
-                <div id='pacesTable'></div>
-                <div id='spiceTable'></div>
-                <div id='s2s3Table'></div>
-                <div id='descantTable'></div>
             </div>
+            <div id='writeWrap' class='col-md-8 col-md-offset-2'>
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Write MSC Table to ODB
+                </button>
+            </div>
+        </div>
 
+        <!--are you sure modal-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Overwrite MSC table in ODB?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to overwrite the MSC table in /DAQ/MSC in the ODB? There is no undo.</p>
+                        <input type='checkbox' id='yesDefinitelyWriteODB'></input>
+                        <label for='yesDefinitelyWriteODB'>I'm very sure.</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id='dismissODBmodal'>
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Abort
+                        </button>
+                        <button type="button" class="btn btn-default" id='writeToODB' disabled>
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Write
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id='footer'></div>
@@ -253,7 +284,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'zds-custom', 'sceptar-custom', 'labr3-custom', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row'];
+                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'zds-custom', 'sceptar-custom', 'labr3-custom', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -283,6 +314,9 @@
                 for(i=0; i<griffinPositions.length; i++){
                     griffinPositions[i].onchange = manageGRIFFIN;
                 }
+
+                //plug in the allow ODB write switch
+                document.getElementById('yesDefinitelyWriteODB').onchange = this.toggleODBwrite.bind(this);
 
                 manageState();
 
@@ -379,14 +413,27 @@
                     COR = document.querySelector('input[name="COR"]:checked').value,
                     DSL = document.querySelector('input[name="DSL"]:checked').value,
                     USL = document.querySelector('input[name="USL"]:checked').value,
-                    canonical, griffinElements, position, clovers, suppressors, isSuppressed, group, energy, time, suppressor_group1, suppressor_group2, channelsComplete, i;
+                    canonical, griffinElements, position, clovers, suppressors, isSuppressed, group, energy, time, suppressor_group1, suppressor_group2, channelsComplete, title, type, i;
 
-                document.getElementById('reviewWrap').classList.remove('hidden');
+                document.getElementById('review-and-write').classList.remove('hidden');
+                document.getElementById('reviewWrap').innerHTML = '<h2>Review & Customize</h2>'
 
                 //griffin
                 griffinElements = identifyGRIFFIN(DSL, COR, USL);
                 clovers = griffinElements[0];
                 suppressors = griffinElements[1];
+
+                if(clovers.length>0){
+                    //top level detector collapsible
+                    document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
+                            dataStore.templates['collapse-section'], 
+                            {
+                                'title': 'GRIFFIN', 
+                                'targetID': 'griffinWrap',
+                                'buttonClass': 'btn-primary'
+                            }
+                        );
+                }
 
                 for(i=0; i<clovers.length; i++){
                     position = clovers[i];
@@ -394,14 +441,27 @@
                     isSuppressed = suppressors.indexOf(position) != -1 // ie the suppressor will only count if the corresponding clover is there
                     canonical = configGRIFFINclover(position, isSuppressed); 
 
-                
                     if(isSuppressed){
-                        console.log(canonical)
+                        //set up collapsible element
+                        document.getElementById('griffinWrap').innerHTML += Mustache.to_html(
+                                dataStore.templates['collapse-section'], 
+                                {
+                                    'title': 'GRIFFIN Position ' + position, 
+                                    'targetID': 'griffinTable' + (i+1),
+                                    'buttonClass': 'btn-success'
+                                }
+                            );
+
+
                         //inject table wrap
-                        document.getElementById('griffinTable').innerHTML += Mustache.to_html(
+                        document.getElementById('griffinTable'+(i+1)).innerHTML += Mustache.to_html(
                             dataStore.templates['griffin-custom-suppressed'], 
                             {
                                 'position': position,
+                                'key-A': 'griffin-group-' + i + '-A',
+                                'key-B': 'griffin-group-' + i + '-B',
+                                'key-BG': 'griffin-group-' + i + '-BG',
+                                'key-RW': 'griffin-group-' + i + '-RW',
                                 'M': canonicalMSC.GRIFFIN.M[position],
                                 'S-A': canonicalMSC.GRIFFIN.suppressed.crystals.A.S[position],      //A-side HPGe
                                 'S-B': canonicalMSC.GRIFFIN.suppressed.crystals.B.S[position],      //B-side HPGe
@@ -414,33 +474,48 @@
                         document.getElementById(`griffin-${position}-A-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
-                                'channels': canonical.slice(0,4)
+                                'channels': canonical.slice(0,4),
+                                'key': 'griffin-group-' + i + '-A'
                             }
                         );
                         document.getElementById(`griffin-${position}-B-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
-                                'channels': canonical.slice(4,8)
+                                'channels': canonical.slice(4,8),
+                                'key': 'griffin-group-' + i + '-B'
                             }
                         );
                         document.getElementById(`griffin-${position}-BG-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
-                                'channels': canonical.slice(8,18)
+                                'channels': canonical.slice(8,18),
+                                'key': 'griffin-group-' + i + '-BG'
                             }
                         );
                         document.getElementById(`griffin-${position}-RW-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
-                                'channels': canonical.slice(18,28)
+                                'channels': canonical.slice(18,28),
+                                'key': 'griffin-group-' + i + '-RW'
                             }
                         );
                     } else {
+                        //set up collapsible element
+                        document.getElementById('griffinWrap').innerHTML += Mustache.to_html(
+                                dataStore.templates['collapse-section'], 
+                                {
+                                    'title': 'GRIFFIN Position ' + position, 
+                                    'targetID': 'griffinTable' + (i+1),
+                                    'buttonClass': 'btn-success'
+                                }
+                            );
+
                         //inject table wrap
-                        document.getElementById('griffinTable').innerHTML += Mustache.to_html(
+                        document.getElementById('griffinTable'+(i+1)).innerHTML += Mustache.to_html(
                             dataStore.templates['griffin-custom-unsuppressed'], 
                             {
                                 'position': position,
+                                'key': 'griffin-group-' + i,
                                 'M': canonicalMSC.GRIFFIN.M[position],
                                 'S': canonicalMSC.GRIFFIN.unsuppressed.S[position]
                             }
@@ -450,13 +525,11 @@
                         document.getElementById(`griffin-${position}-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
-                                'channels': canonical
+                                'channels': canonical,
+                                'key': 'griffin-group-' + i
                             }
                         );
                     }
-
-
-
                 }
 
                 //sceptar / zds                
@@ -464,7 +537,17 @@
                 //inject table wrap
                 // deal with zds if present
                 if(DSC == 'zds'){
-                    document.getElementById('sceptarTable').innerHTML = Mustache.to_html(
+                    //set up collapsible element
+                    document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
+                            dataStore.templates['collapse-section'], 
+                            {
+                                'title': 'ZDS', 
+                                'targetID': 'zdsTable',
+                                'buttonClass': 'btn-primary'
+                            }
+                        );
+
+                    document.getElementById('zdsTable').innerHTML = Mustache.to_html(
                         dataStore.templates['zds-custom'], 
                         {
                             'M-E': canonicalMSC.SCEPTAR.ZDS.energy.M,
@@ -480,11 +563,38 @@
                 // one table for each group of 4 sceptar channels;
                 // groups 1 and 2 are downstream; 4 and 5 are upstream; and 3 is split between the two.
                 if(DSC == 'sep' || USC == 'sep'){
+                    //top level detector collapsible
+                    document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
+                            dataStore.templates['collapse-section'], 
+                            {
+                                'title': 'SCEPTAR', 
+                                'targetID': 'sceptarWrap',
+                                'buttonClass': 'btn-primary'
+                            }
+                        );
+
                     for(i=(DSC=='sep' ? 0:2); i<(USC=='sep' ? 5:3); i++){
-                        document.getElementById('sceptarTable').innerHTML += Mustache.to_html(
+                        //set up collapsible element
+                        if( (DSC == 'sep' && USC == 'sep') || i!=2 )
+                            title = 'SCEPTAR Channels ' + (i*4+1) + ' to ' + (i+1)*4;
+                        else if(DSC == 'sep')
+                            title = 'SCEPTAR Channels 9 and 10';
+                        else if(USC == 'sep')
+                            title = 'SCEPTAR Channels 11 and 12';
+                        document.getElementById('sceptarWrap').innerHTML += Mustache.to_html(
+                                dataStore.templates['collapse-section'], 
+                                {
+                                    'title': title, 
+                                    'targetID': 'sceptarTable' + (i+1),
+                                    'buttonClass': 'btn-success'
+                                }
+                            );
+
+                        document.getElementById('sceptarTable'+(i+1)).innerHTML += Mustache.to_html(
                             dataStore.templates['sceptar-custom'], 
                             {
                                 'group': i+1, 
+                                'key': 'sceptar-group-'+(i+1),
                                 'M': canonicalMSC.SCEPTAR.M,
                                 'S': canonicalMSC.SCEPTAR.S[i]
                             }
@@ -501,7 +611,8 @@
                         document.getElementById(`sceptar-${i+1}-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
-                                'channels': group
+                                'channels': group,
+                                'key': 'sceptar-group-'+(i+1)
                             }
                         );
                     }
@@ -510,6 +621,16 @@
                 //labr3
                 if(USL == 'grgdal' || DSL == 'grgdal'){
                     canonical = configLaBr3(USL == 'grgdal', DSL == 'grgdal');
+
+                    //set up collapsible element
+                    document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
+                            dataStore.templates['collapse-section'], 
+                            {
+                                'title': 'LaBr3', 
+                                'targetID': 'LaBr3Table',
+                                'buttonClass': 'btn-primary'
+                            }
+                        );
 
                     //inject table wrap
                     document.getElementById('LaBr3Table').innerHTML = Mustache.to_html(
@@ -520,6 +641,10 @@
                             'S-T': canonicalMSC.LaBr3.time.S,
                             'S-S1': canonicalMSC.LaBr3.suppressors.S[0],
                             'S-S2': canonicalMSC.LaBr3.suppressors.S[1],
+                            'key-E': 'labr3-group-E',
+                            'key-T': 'labr3-group-T',
+                            'key-S1': 'labr3-group-S1',
+                            'key-S2': 'labr3-group-S2',
                             'downstream': DSL=='grgdal' ? [true] : []
                         }
                     );
@@ -546,20 +671,23 @@
                     document.getElementById('labr3-energy-MSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
-                            'channels': energy
+                            'channels': energy,
+                            'key': 'labr3-group-E'
                         }
                     );                
                     document.getElementById('labr3-time-MSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
-                            'channels': time
+                            'channels': time,
+                            'key': 'labr3-group-T'
                         }
                     );
                     if(suppressor_group1.length > 0){
                         document.getElementById('labr3-suppressors-1-MSC').innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
-                                'channels': suppressor_group1
+                                'channels': suppressor_group1,
+                                'key': 'labr3-group-S1'
                             }
                         );   
                     }
@@ -567,7 +695,8 @@
                         document.getElementById('labr3-suppressors-2-MSC').innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
-                                'channels': suppressor_group2
+                                'channels': suppressor_group2,
+                                'key': 'labr3-group-S2'
                             }
                         );   
                     }
@@ -577,10 +706,21 @@
                 if(USC=='pac'){
                     canonical = configPACES();
 
+                    //set up collapsible element
+                    document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
+                            dataStore.templates['collapse-section'], 
+                            {
+                                'title': 'PACES', 
+                                'targetID': 'pacesTable',
+                                'buttonClass': 'btn-primary'
+                            }
+                        );
+
                     //inject table wrap
                     document.getElementById('pacesTable').innerHTML = Mustache.to_html(
                         dataStore.templates['paces-custom'], 
                         {
+                            'key': 'paces-group',
                             'M': canonicalMSC.PACES.M,
                             'S': canonicalMSC.PACES.S
                         }
@@ -590,6 +730,7 @@
                     document.getElementById('paces-MSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
+                            'key': 'paces-group',
                             'channels': canonical
                         }
                     );
@@ -598,11 +739,37 @@
                 //spice
                 if(USC == 'spi'){
                     canonical = configSPICE();
+
+                    //top level detector collapsible
+                    document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
+                            dataStore.templates['collapse-section'], 
+                            {
+                                'title': 'SPICE', 
+                                'targetID': 'spiceWrap',
+                                'buttonClass': 'btn-primary'
+                            }
+                        );
+
                     for(i=0; i<8; i++){
-                        document.getElementById('spiceTable').innerHTML += Mustache.to_html(
+                        //set up collapsible element
+                        if(i == 7)
+                            title = 'SPICE Channels 112 to 119'
+                        else
+                            title = 'SPICE Channels ' + i*16 + ' to ' + ((i+1)*16-1)
+                        document.getElementById('spiceWrap').innerHTML += Mustache.to_html(
+                                dataStore.templates['collapse-section'], 
+                                {
+                                    'title': title, 
+                                    'targetID': 'spiceTable' + (i+1),
+                                    'buttonClass': 'btn-success'
+                                }
+                            );
+
+                        document.getElementById('spiceTable'+(i+1)).innerHTML += Mustache.to_html(
                             dataStore.templates['spice-custom'], 
                             {
                                 'group': i+1, 
+                                'key': 'spice-group-'+(i+1),
                                 'M': canonicalMSC.SPICE.M,
                                 'S': canonicalMSC.SPICE.S[i]
                             }
@@ -612,7 +779,8 @@
                         document.getElementById(`spice-${i+1}-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
-                                'channels': canonical.slice(16*i, 16*(i+1))
+                                'channels': canonical.slice(16*i, 16*(i+1)),
+                                'key': 'spice-group-'+(i+1)
                             }
                         );
                     }
@@ -621,13 +789,43 @@
                 //s2/s3
                 if(DSC == 's2' || DSC == 's3'){
                     canonical = configS2S3(DSC == 's2' ? 2 : 3);
+                    type = (DSC == 's2' ? 'S2' : 'S3');
+
+                    //top level detector collapsible
+                    document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
+                            dataStore.templates['collapse-section'], 
+                            {
+                                'title': type, 
+                                'targetID': 's2s3Wrap',
+                                'buttonClass': 'btn-primary'
+                            }
+                        );
 
                     for(i=0; i<((DSC=='s3')?4:3); i++){
-                        document.getElementById('s2s3Table').innerHTML += Mustache.to_html(
+                        //set up collapsible element
+                        if(i == 0)
+                            title = type + ' Radial Channels 0-7';
+                        else if(i == 1)
+                            title = type + ' Radial Channels 8-23';
+                        else if(i == 2)
+                            title = type + ' Azimuthal Channels 0-15';
+                        else if(i == 3)
+                            title = type + ' Azimuthal Channels 16-31';
+                        document.getElementById('s2s3Wrap').innerHTML += Mustache.to_html(
+                                dataStore.templates['collapse-section'], 
+                                {
+                                    'title': title, 
+                                    'targetID': 's2s3Table' + (i+1),
+                                    'buttonClass': 'btn-success'
+                                }
+                            );
+
+                        document.getElementById('s2s3Table'+(i+1)).innerHTML += Mustache.to_html(
                             dataStore.templates['s2s3-custom'], 
                             {
                                 'type': (DSC == 's2' ? 'S2' : 'S3'),
                                 'group': i+1, 
+                                'key': 's2s3-group-'+(i+1),
                                 'M': canonicalMSC.S2S3.M,
                                 'S': canonicalMSC.S2S3.S[i]
                             }
@@ -641,7 +839,8 @@
                         document.getElementById(`s2s3-${i+1}-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
-                                'channels': group
+                                'channels': group,
+                                'key': 's2s3-group-'+(i+1)
                             }
                         );
                     }
@@ -651,12 +850,38 @@
                 if(DSL == 'dsc'){
                     canonical = configDESCANT();
 
+                    //top level detector collapsible
+                    document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
+                            dataStore.templates['collapse-section'], 
+                            {
+                                'title': 'DESCANT', 
+                                'targetID': 'descantWrap',
+                                'buttonClass': 'btn-primary'
+                            }
+                        );
+
                     channelsComplete = 0;
                     for(i=0; i<canonicalMSC.DESCANT.cableBundles.length; i++){
-                        document.getElementById('descantTable').innerHTML += Mustache.to_html(
+                        //set up collapsible element
+                        title = 'DESCANT Cable Bundle ' + (i+1) + ' (Channels ';
+                        for(j=0; j<canonicalMSC.DESCANT.cableBundles[i].length;j++){
+                            title += canonicalMSC.DESCANT.cableBundles[i][j] + ', '
+                        }
+                        title = title.slice(0,title.length-2) + ')'
+                        document.getElementById('descantWrap').innerHTML += Mustache.to_html(
+                                dataStore.templates['collapse-section'], 
+                                {
+                                    'title': title, 
+                                    'targetID': 'descantTable' + (i+1),
+                                    'buttonClass': 'btn-success'
+                                }
+                            );
+
+                        document.getElementById('descantTable' + (i+1)).innerHTML += Mustache.to_html(
                             dataStore.templates['descant-custom'], 
                             {
                                 'bundle': i+1, 
+                                'key': 'descant-group-'+(i+1),
                                 'M': canonicalMSC.DESCANT.M[i],
                                 'S': canonicalMSC.DESCANT.S[i]
                             }
@@ -668,6 +893,7 @@
                         document.getElementById(`descant-${i+1}-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
+                                'key': 'descant-group-'+(i+1),
                                 'channels': group
                             }
                         );
@@ -711,9 +937,28 @@
                 return [clovers, suppressors];
             }
 
+            function updateAddr(level){
+                // level == 'M' or 'S'
+                // onchange callback for per-group M and S inputs, sets entire group on change.
 
+                var targets = document.getElementsByClassName(level + '-' + this.getAttribute('key')),
+                    i;
 
+                for(i=0; i<targets.length; i++){
+                    targets[i].value = this.value;
+                }
+            }
 
+            function toggleODBwrite(){
+                //toggle odb writing permission.
+
+                var allowed = document.getElementById('yesDefinitelyWriteODB').checked
+
+                if(allowed)
+                    document.getElementById('writeToODB').removeAttribute('disabled');
+                else
+                    document.getElementById('writeToODB').setAttribute('disabled', true);
+            }
 
 
 
