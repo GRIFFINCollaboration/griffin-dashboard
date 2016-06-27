@@ -101,6 +101,19 @@ canonicalMSC = {
         ],
         M: [2, 2,  2,  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,  3,  3,  3,  3,  3],
         S: [9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    },
+
+    datatypes: {
+        griffin_low_gain: 0,
+        griffin_high_gain: 1,
+        sceptar: 2,
+        labr3_energy: 3,
+        labr3_time: 4,
+        paces: 5,
+        descant: 6,
+        griffin_suppressors: 7,
+        labr3_suppressors: 8,
+        zds: 9
     }
 }
 
@@ -132,7 +145,9 @@ function configGRIFFINclover(index, suppressors){
                     chan: name, 
                     M:masterChan, 
                     S:collectorChan, 
-                    C:ADC
+                    C:ADC,
+                    addr: stringAddress(masterChan,collectorChan,ADC),
+                    datatype: canonicalMSC.datatypes.griffin_low_gain
                 });
             }
         }
@@ -149,7 +164,9 @@ function configGRIFFINclover(index, suppressors){
                     chan: name, 
                     M:masterChan, 
                     S:collectorChan, 
-                    C:ADC
+                    C:ADC,
+                    addr: stringAddress(masterChan,collectorChan,ADC),
+                    datatype: canonicalMSC.datatypes.griffin_suppressors
                 });
             }
         }
@@ -165,7 +182,9 @@ function configGRIFFINclover(index, suppressors){
                     chan: name, 
                     M:masterChan, 
                     S:collectorChan, 
-                    C:ADC
+                    C:ADC,
+                    addr: stringAddress(masterChan,collectorChan,ADC),
+                    datatype:canonicalMSC.datatypes.griffin_low_gain
                 });
             }
         }
@@ -183,13 +202,17 @@ function configSCEPTAR(US, DS, ZDS){
             chan: 'ZDS01XN00X', 
             M: canonicalMSC.SCEPTAR.ZDS.energy.M, 
             S: canonicalMSC.SCEPTAR.ZDS.energy.S, 
-            C: canonicalMSC.SCEPTAR.ZDS.energy.C
+            C: canonicalMSC.SCEPTAR.ZDS.energy.C,
+            addr: stringAddress(canonicalMSC.SCEPTAR.ZDS.energy.M,canonicalMSC.SCEPTAR.ZDS.energy.S,canonicalMSC.SCEPTAR.ZDS.energy.C),
+            datatype: canonicalMSC.datatypes.zds
         });
         MSC.push({
             chan: 'ZDS01XT00X', 
             M: canonicalMSC.SCEPTAR.ZDS.time.M, 
             S: canonicalMSC.SCEPTAR.ZDS.time.S, 
-            C: canonicalMSC.SCEPTAR.ZDS.time.C
+            C: canonicalMSC.SCEPTAR.ZDS.time.C,
+            addr: stringAddress(canonicalMSC.SCEPTAR.ZDS.time.M,canonicalMSC.SCEPTAR.ZDS.time.S,canonicalMSC.SCEPTAR.ZDS.time.C),
+            datatype: canonicalMSC.datatypes.zds
         });
     } else if(DS){
         for(i=1; i<11; i++){
@@ -201,7 +224,9 @@ function configSCEPTAR(US, DS, ZDS){
                 chan: name, 
                 M: masterChan, 
                 S: collectorChan, 
-                C: ADC
+                C: ADC,
+                addr: stringAddress(masterChan,collectorChan,ADC),
+                datatype: canonicalMSC.datatypes.sceptar
             });
         }
     }
@@ -215,7 +240,9 @@ function configSCEPTAR(US, DS, ZDS){
                 chan: name, 
                 M: masterChan, 
                 S: collectorChan, 
-                C: ADC
+                C: ADC,
+                addr: stringAddress(masterChan,collectorChan,ADC),
+                datatype: canonicalMSC.datatypes.sceptar
             });
         }
     }
@@ -249,7 +276,9 @@ function configLaBr3(US, DS){
             chan: name, 
             M: masterChan, 
             S: collectorChan, 
-            C: ADC
+            C: ADC,
+            addr: stringAddress(masterChan,collectorChan,ADC),
+            datatype: canonicalMSC.datatypes.labr3_energy
         });
     }
     //LaBr - TAC
@@ -262,7 +291,9 @@ function configLaBr3(US, DS){
             chan: name, 
             M: masterChan, 
             S: collectorChan, 
-            C: ADC
+            C: ADC,
+            addr: stringAddress(masterChan,collectorChan,ADC),
+            datatype: canonicalMSC.datatypes.labr3_time
         });
     }
     //Suppressors
@@ -281,7 +312,9 @@ function configLaBr3(US, DS){
                 chan: name, 
                 M: masterChan, 
                 S: collectorChan, 
-                C: ADC
+                C: ADC,
+                addr: stringAddress(masterChan,collectorChan,ADC),
+                datatype: canonicalMSC.datatypes.labr3_suppressors
             });  
         }
     }   
@@ -301,7 +334,9 @@ function configPACES(){
             chan: names[i], 
             M:masterChan, 
             S:collectorChan, 
-            C:ADC
+            C:ADC,
+            addr: stringAddress(masterChan,collectorChan,ADC),
+            datatype: canonicalMSC.datatypes.paces
         });
     }
 
@@ -320,7 +355,9 @@ function configSPICE(){
             chan: name, 
             M:masterChan, 
             S:collectorChan, 
-            C:ADC
+            C:ADC,
+            addr: stringAddress(masterChan,collectorChan,ADC),
+            datatype: 99
         });     
     }
 
@@ -354,7 +391,9 @@ function configS2S3(type){
             chan: name, 
             M:masterChan, 
             S:collectorChan, 
-            C:ADC
+            C:ADC,
+            addr: stringAddress(masterChan,collectorChan,ADC),
+            datatype: 99
         }); 
     }
 
@@ -367,7 +406,9 @@ function configS2S3(type){
             chan: name, 
             M:masterChan, 
             S:collectorChan, 
-            C:ADC
+            C:ADC,
+            addr: stringAddress(masterChan,collectorChan,ADC),
+            datatype: 99
         }); 
     }
 
@@ -390,10 +431,18 @@ function configDESCANT(){
                 chan: name, 
                 M:masterChan, 
                 S:collectorChan, 
-                C:j
+                C:j,
+                addr: stringAddress(masterChan,collectorChan,j),
+                datatype: canonicalMSC.datatypes.descant
             }); 
         }
     }
 
     return MSC;
+}
+
+function stringAddress(M,S,C){
+    // return a string representation of the address described by numerical M, S and C
+
+    return '0x' + (M==0?'0':'') + ((M << 12) | (S << 8) | C).toString(16);  
 }
