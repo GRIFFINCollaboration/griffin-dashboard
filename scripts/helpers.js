@@ -249,6 +249,8 @@ function CRUDarrays(path, value, type){
             typeIndex = 12;
         else if(type[i]=='int')
             typeIndex = 7;
+        else if(type[i]=='short')
+            typeIndex = 5;
         else
             typeIndex = 9; // float, see mhttpd.js
 
