@@ -48,6 +48,10 @@
                 width:4em;
             }
 
+            .alert{
+                margin-top: 1em;
+            }
+
         </style>
 
         <!--html imports-->
@@ -419,13 +423,24 @@
                     USC = document.querySelector('input[name="USC"]:checked').value,
                     COR = document.querySelector('input[name="COR"]:checked').value,
                     DSL = document.querySelector('input[name="DSL"]:checked').value,
-                    USL = document.querySelector('input[name="USL"]:checked').value,
-                    canonical, griffinElements, position, clovers, suppressors, isSuppressed, group, energy, time, suppressor_group1, suppressor_group2, channelsComplete, title, type, inputs, i;
+                    USL = document.querySelector('input[name="USL"]:checked').value;
 
                 document.getElementById('review-and-write').classList.remove('hidden');
                 document.getElementById('reviewWrap').innerHTML = '<h2>Review & Customize</h2>'
 
-                //griffin
+                prepareGRIFFIN(DSL, COR, USL);
+                prepareSCEPTAR(DSC, USC);
+                prepareLaBr3(USL, DSL);
+                preparePACES(USC);
+                prepareSPICE(USC);                
+                prepareS2S3(DSC);
+                prepareDESCANT(DSL);
+            }
+
+            function prepareGRIFFIN(DSL, COR, USL){
+                
+                var griffinElements, clovers, suppressors, position, isSuppressed, canonical, i;
+
                 griffinElements = identifyGRIFFIN(DSL, COR, USL);
                 clovers = griffinElements[0];
                 suppressors = griffinElements[1];
@@ -538,8 +553,13 @@
                         );
                     }
                 }
+            }
 
-                //sceptar / zds                
+            function prepareSCEPTAR(DSC, USC){
+
+                var canonical, group, i;
+
+
                 canonical = configSCEPTAR(USC == 'sep', DSC == 'sep', DSC == 'zds');
                 //inject table wrap
                 // deal with zds if present
@@ -628,9 +648,13 @@
                             }
                         );
                     }
-                }
+                }                
+            }
+
+            function prepareLaBr3(USL, DSL){
+
+                var canonical, energy, time, suppressor_group1, suppressor_group2;
                 
-                //labr3
                 if(USL == 'grgdal' || DSL == 'grgdal'){
                     canonical = configLaBr3(USL == 'grgdal', DSL == 'grgdal');
 
@@ -713,8 +737,12 @@
                         );   
                     }
                 }
+            }
 
-                //paces
+            function preparePACES(USC){
+
+                var canonical;
+
                 if(USC=='pac'){
                     canonical = configPACES();
 
@@ -748,8 +776,12 @@
                     );
 
                 }
+            }
 
-                //spice
+            function prepareSPICE(USC){
+
+                var canonical, title, i;
+
                 if(USC == 'spi'){
                     canonical = configSPICE();
 
@@ -798,8 +830,12 @@
                         );
                     }
                 }
+            }
 
-                //s2/s3
+            function prepareS2S3(DSC){
+
+                var canonical, type, title, group, i;
+
                 if(DSC == 's2' || DSC == 's3'){
                     canonical = configS2S3(DSC == 's2' ? 2 : 3);
                     type = (DSC == 's2' ? 'S2' : 'S3');
@@ -858,6 +894,11 @@
                         );
                     }
                 }
+            }
+
+            function prepareDESCANT(DSL){
+
+                var canonical, channelsComplete, title, group, i
 
                 //descant
                 if(DSL == 'dsc'){
@@ -1017,7 +1058,7 @@
                 }
 
                 CRUDarrays(
-                    ['/demo/MSC', '/demo/chan', '/demo/datatype', '/demo/gain', '/demo/offset'], 
+                    ['/DAQ/MSC/MSC', '/DAQ/MSC/chan', '/DAQ/MSC/datatype', '/DAQ/MSC/gain', '/DAQ/MSC/offset'], 
                     [MSC, chan, datatype, gain, offset], 
                     ['int', 'string', 'int', 'float', 'float']
                 );
