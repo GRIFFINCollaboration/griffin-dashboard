@@ -237,7 +237,6 @@
         }
 
         for(i=0; i<dataStore.ODB.PPG.Cycles[cycleName].PPGcodes.length; i++){
-        
             addNewCycleStep();
             loadCycleStep(dataStore.cycle.stepIndex-1, dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i], dataStore.ODB.PPG.Cycles[cycleName].durations[i]);
         }
@@ -272,14 +271,15 @@
         var i, j, keys, dur, durationUnit;
 
         //decide on a sensible unit for the duration
-        if(duration % 60000 == 0){
+
+        if(duration > 60000){
             dur = duration / 60000;
             durationUnit = 60000;
-        } else if(duration % 1000 == 0){
+        } else if(duration > 1000){
             dur = duration / 1000;
             durationUnit = 1000;
         } else {
-            dur = 1;
+            dur = duration;
             durationUnit = 1;
         }
 
@@ -415,16 +415,3 @@
         )      
     }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
