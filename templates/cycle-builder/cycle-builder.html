@@ -8,6 +8,7 @@
             <label for='cycleName'>Current Displayed Cycle:</label>
             <input type='text' id='cycleName' class='wideText'></input>
             <button class='btn btn-info' onclick='writeNewCycle()'>Save Cycle Definition</button>
+            <button class='btn btn-success' onclick='writeNewCycle(true)'>Save & Apply Cycle Definition</button>
         </div>
 
         <div>
@@ -236,7 +237,6 @@
         }
 
         for(i=0; i<dataStore.ODB.PPG.Cycles[cycleName].PPGcodes.length; i++){
-        
             addNewCycleStep();
             loadCycleStep(dataStore.cycle.stepIndex-1, dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i], dataStore.ODB.PPG.Cycles[cycleName].durations[i]);
         }
@@ -271,14 +271,15 @@
         var i, j, keys, dur, durationUnit;
 
         //decide on a sensible unit for the duration
-        if(duration % 60000 == 0){
+
+        if(duration > 60000){
             dur = duration / 60000;
             durationUnit = 60000;
-        } else if(duration % 1000 == 0){
+        } else if(duration > 1000){
             dur = duration / 1000;
             durationUnit = 1000;
         } else {
-            dur = 1;
+            dur = duration;
             durationUnit = 1;
         }
 
@@ -331,7 +332,7 @@
         // create requests to generate empty structure in odb to hold cycle definition
         dataStore.cycle.createCycleRequest = 'http://' + dataStore.host + '?cmd=jcreate&';
         for(i=0; i<cycleSteps.length; i++){
-            dataStore.cycle.createCycleRequest += 'odb' + (2*i) + '=/PPG/Cycles/' + cycleName + '/PPGCodes&type' + (2*i) + '=7&arraylen'+ (2*i) +'='+cycleSteps.length+'&';
+            dataStore.cycle.createCycleRequest += 'odb' + (2*i) + '=/PPG/Cycles/' + cycleName + '/PPGcodes&type' + (2*i) + '=7&arraylen'+ (2*i) +'='+cycleSteps.length+'&';
             dataStore.cycle.createCycleRequest += 'odb' + (2*i + 1) + '=/PPG/Cycles/' + cycleName + '/durations&type' + (2*i + 1) + '=7&arraylen' + (2*i + 1) + '=' + cycleSteps.length +'&';
         }
         dataStore.cycle.createCycleRequest += 'encoding=json&callback=populateCycle';
@@ -346,7 +347,7 @@
 
             //or together all actions in this cycle step
             stepCode = 0
-            cycleActions = document.querySelectorAll('input.cycleOption[type="checkbox"]:checked');
+            cycleActions = cycleSteps[i].querySelectorAll('input.cycleOption[type="checkbox"]:checked');
             for(j=0; j<cycleActions.length; j++){
                 stepCode = stepCode | cycleActions[j].value;
             }
@@ -357,16 +358,16 @@
                 cycleDurations += ',';
             }
             cycleStepCodes += stepCode;
-            cycleDurations += parseInt(document.getElementById(stepIndex+'Duration').value, 10) * parseInt(selected(stepIndex+'DurationUnit') , 10)
+            cycleDurations += Math.floor(parseFloat(document.getElementById(stepIndex+'Duration').value, 10) * parseInt(selected(stepIndex+'DurationUnit') , 10))
         }
 
         // create the requests
         // different syntax to set one thing versus an array of things...
         if(cycleSteps.length == 1){
-            dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/PPGCodes&value=' + cycleStepCodes);
+            dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/PPGcodes&value=' + cycleStepCodes);
             dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/durations&value=' + cycleDurations);
         } else {
-            dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/PPGCodes[*]&value=' + cycleStepCodes);
+            dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/PPGcodes[*]&value=' + cycleStepCodes);
             dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/durations[*]&value=' + cycleDurations);
         }
 
@@ -414,16 +415,3 @@
         )      
     }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-

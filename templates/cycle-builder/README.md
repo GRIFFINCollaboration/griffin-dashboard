@@ -41,6 +41,7 @@ The cycle builider expects the following ODB structure to exist:
  0x04000400 | LaBr3 Trigger
  0x08000800 | DESCANT Trigger
  0xC002C002 | Collect Background
+ 0xC001C001 | Collect Data with Beam on
  0xC004C004 | Collect Data with Beam off
  0xC010C010 | Collect Source Data
  0x00020002 | Unassigned Output 2
