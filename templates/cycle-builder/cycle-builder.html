@@ -8,6 +8,7 @@
             <label for='cycleName'>Current Displayed Cycle:</label>
             <input type='text' id='cycleName' class='wideText'></input>
             <button class='btn btn-info' onclick='writeNewCycle()'>Save Cycle Definition</button>
+            <button class='btn btn-success' onclick='writeNewCycle(true)'>Save & Apply Cycle Definition</button>
         </div>
 
         <div>
@@ -346,7 +347,7 @@
 
             //or together all actions in this cycle step
             stepCode = 0
-            cycleActions = document.querySelectorAll('input.cycleOption[type="checkbox"]:checked');
+            cycleActions = cycleSteps[i].querySelectorAll('input.cycleOption[type="checkbox"]:checked');
             for(j=0; j<cycleActions.length; j++){
                 stepCode = stepCode | cycleActions[j].value;
             }
@@ -357,8 +358,11 @@
                 cycleDurations += ',';
             }
             cycleStepCodes += stepCode;
-            cycleDurations += parseInt(document.getElementById(stepIndex+'Duration').value, 10) * parseInt(selected(stepIndex+'DurationUnit') , 10)
+            cycleDurations += Math.floor(parseFloat(document.getElementById(stepIndex+'Duration').value, 10) * parseInt(selected(stepIndex+'DurationUnit') , 10))
         }
+
+        console.log(cycleDurations)
+        console.log(cycleStepCodes)
 
         // create the requests
         // different syntax to set one thing versus an array of things...
