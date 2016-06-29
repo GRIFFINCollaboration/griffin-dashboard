@@ -236,10 +236,10 @@
             window.alert("There doesn't seem to be a valid cycle name set. In the ODB, look in /PPG/Current, and make sure this is set to one of the cycles listed in /PPG/Cycles.")
         }
 
-        for(i=0; i<dataStore.ODB.PPG.Cycles[cycleName].PPGcodes.length; i++){
+        for(i=0; i<dataStore.ODB.PPG.Cycles[cycleName].PPGCodes.length; i++){
         
             addNewCycleStep();
-            loadCycleStep(dataStore.cycle.stepIndex-1, dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i], dataStore.ODB.PPG.Cycles[cycleName].durations[i]);
+            loadCycleStep(dataStore.cycle.stepIndex-1, dataStore.ODB.PPG.Cycles[cycleName].PPGCodes[i], dataStore.ODB.PPG.Cycles[cycleName].durations[i]);
         }
 
         document.getElementById('cycleName').value = cycleName;
