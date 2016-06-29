@@ -361,9 +361,6 @@
             cycleDurations += Math.floor(parseFloat(document.getElementById(stepIndex+'Duration').value, 10) * parseInt(selected(stepIndex+'DurationUnit') , 10))
         }
 
-        console.log(cycleDurations)
-        console.log(cycleStepCodes)
-
         // create the requests
         // different syntax to set one thing versus an array of things...
         if(cycleSteps.length == 1){
