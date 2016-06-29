@@ -236,10 +236,10 @@
             window.alert("There doesn't seem to be a valid cycle name set. In the ODB, look in /PPG/Current, and make sure this is set to one of the cycles listed in /PPG/Cycles.")
         }
 
-        for(i=0; i<dataStore.ODB.PPG.Cycles[cycleName].PPGCodes.length; i++){
+        for(i=0; i<dataStore.ODB.PPG.Cycles[cycleName].PPGcodes.length; i++){
         
             addNewCycleStep();
-            loadCycleStep(dataStore.cycle.stepIndex-1, dataStore.ODB.PPG.Cycles[cycleName].PPGCodes[i], dataStore.ODB.PPG.Cycles[cycleName].durations[i]);
+            loadCycleStep(dataStore.cycle.stepIndex-1, dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i], dataStore.ODB.PPG.Cycles[cycleName].durations[i]);
         }
 
         document.getElementById('cycleName').value = cycleName;
@@ -332,7 +332,7 @@
         // create requests to generate empty structure in odb to hold cycle definition
         dataStore.cycle.createCycleRequest = 'http://' + dataStore.host + '?cmd=jcreate&';
         for(i=0; i<cycleSteps.length; i++){
-            dataStore.cycle.createCycleRequest += 'odb' + (2*i) + '=/PPG/Cycles/' + cycleName + '/PPGCodes&type' + (2*i) + '=7&arraylen'+ (2*i) +'='+cycleSteps.length+'&';
+            dataStore.cycle.createCycleRequest += 'odb' + (2*i) + '=/PPG/Cycles/' + cycleName + '/PPGcodes&type' + (2*i) + '=7&arraylen'+ (2*i) +'='+cycleSteps.length+'&';
             dataStore.cycle.createCycleRequest += 'odb' + (2*i + 1) + '=/PPG/Cycles/' + cycleName + '/durations&type' + (2*i + 1) + '=7&arraylen' + (2*i + 1) + '=' + cycleSteps.length +'&';
         }
         dataStore.cycle.createCycleRequest += 'encoding=json&callback=populateCycle';
@@ -364,10 +364,10 @@
         // create the requests
         // different syntax to set one thing versus an array of things...
         if(cycleSteps.length == 1){
-            dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/PPGCodes&value=' + cycleStepCodes);
+            dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/PPGcodes&value=' + cycleStepCodes);
             dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/durations&value=' + cycleDurations);
         } else {
-            dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/PPGCodes[*]&value=' + cycleStepCodes);
+            dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/PPGcodes[*]&value=' + cycleStepCodes);
             dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/durations[*]&value=' + cycleDurations);
         }
 
