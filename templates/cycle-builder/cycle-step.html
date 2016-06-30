@@ -10,9 +10,9 @@
         <label for='{{index}}Duration'>Duration:</label>
         <input id='{{index}}Duration' type='number' min='0' step='any' value='1' class='small-number' onchange='requestNewCycleName()'></input>
         <select id='{{index}}DurationUnit' value='1' onchange='requestNewCycleName()'>
-            <option value='1'>ms</option>
-            <option value='1000'>s</option>
-            <option value='60000'>min</option>
+            <option value='1000'>ms</option>
+            <option value='1000000'>s</option>
+            <option value='60000000'>min</option>
         </select>
     </div>
 
