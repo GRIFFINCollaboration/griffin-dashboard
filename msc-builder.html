@@ -19,8 +19,13 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="scripts/bootstrap3-3-5.min.js" type="text/javascript"></script>
         <style>
-            input[type=radio]{
+            input[type=radio].subsystem{
                 display:none;
+            }
+
+            input[type=radio].subsystem:checked ~ label{
+                background-color: #5cb85c;
+                border-color: #4cae4c;
             }
 
             div.section{
@@ -28,11 +33,6 @@
                 padding: 0em 1em 1em 1em;
                 border-radius: 1em;
                 margin-bottom: 1em;
-            }
-
-            input[type=radio]:checked ~ label{
-                background-color: #5cb85c;
-                border-color: #4cae4c;
             }
 
             a.collapse-title{
@@ -52,12 +52,22 @@
                 margin-top: 1em;
             }
 
+            div.grg-custom{
+                padding: 1em 0 1em 0;
+            }
+
+            div.grg-custom input[type="radio"]{
+                margin-right: 1em;
+                margin-left: 0.25em;
+            }
+
         </style>
 
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
         <link id='griffin-custom-unsuppressed' rel="import" href="templates/msc-builder/griffin-custom-unsuppressed.html">
         <link id='griffin-custom-suppressed' rel="import" href="templates/msc-builder/griffin-custom-suppressed.html">
+        <link id='griffin-channel-row' rel="import" href="templates/msc-builder/griffin-channel-row.html">
         <link id='zds-custom' rel="import" href="templates/msc-builder/zds-custom.html">
         <link id='sceptar-custom' rel="import" href="templates/msc-builder/sceptar-custom.html">
         <link id='labr3-custom' rel="import" href="templates/msc-builder/labr3-custom.html">
@@ -77,19 +87,19 @@
             <div class='col-md-8 col-md-offset-2 section'>
                 <h2>Upstream Chamber</h2>
                 <span>
-                    <input id='USCabs' type='radio' name='USC' value='abs' checked></input>
+                    <input id='USCabs' type='radio' class='subsystem' name='USC' value='abs' checked></input>
                     <label id='USCabsLabel' for='USCabs' class='btn btn-info'>Absent</label>
                 </span>
                 <span>
-                    <input id='USCsep' type='radio' name='USC' value='sep'></input>
+                    <input id='USCsep' type='radio' class='subsystem' name='USC' value='sep'></input>
                     <label id='USCsepLabel' for='USCsep' class='btn btn-info'>SCEPTAR</label>
                 </span>
                 <span>
-                    <input id='USCpac' type='radio' name='USC' value='pac'></input>
+                    <input id='USCpac' type='radio' class='subsystem' name='USC' value='pac'></input>
                     <label id='USCpacLabel' for='USCpac' class='btn btn-info'>PACES</label>
                 </span>
                 <span>
-                    <input id='USCspi' type='radio' name='USC' value='spi'></input>
+                    <input id='USCspi' type='radio' class='subsystem' name='USC' value='spi'></input>
                     <label id='USCspiLabel' for='USCspi' class='btn btn-info'>SPICE</label>
                 </span>
             </div>
@@ -97,23 +107,23 @@
             <div class='col-md-8 col-md-offset-2 section'>
                 <h2>Downstream Chamber</h2>
                 <span>
-                    <input id='DSCabs' type='radio' name='DSC' value='abs' checked></input>
+                    <input id='DSCabs' type='radio' class='subsystem' name='DSC' value='abs' checked></input>
                     <label id='DSCabsLabel' for='DSCabs' class='btn btn-info'>Absent</label>
                 </span>
                 <span>
-                    <input id='DSCsep' type='radio' name='DSC' value='sep'></input>
+                    <input id='DSCsep' type='radio' class='subsystem' name='DSC' value='sep'></input>
                     <label id='DSCsepLabel' for='DSCsep' class='btn btn-info'>SCEPTAR</label>
                 </span>
                 <span>
-                    <input id='DSCzds' type='radio' name='DSC' value='zds'></input>
+                    <input id='DSCzds' type='radio' class='subsystem' name='DSC' value='zds'></input>
                     <label id='DSCzdsLabel' for='DSCzds' class='btn btn-info'>ZDS</label>
                 </span>
                 <span>
-                    <input id='DSCs2' type='radio' name='DSC' value='s2'></input>
+                    <input id='DSCs2' type='radio' class='subsystem' name='DSC' value='s2'></input>
                     <label id='DSCs2Label' for='DSCs2' class='btn btn-info'>S2</label>
                 </span>
                 <span>
-                    <input id='DSCs3' type='radio' name='DSC' value='s3'></input>
+                    <input id='DSCs3' type='radio' class='subsystem' name='DSC' value='s3'></input>
                     <label id='DSCs3Label' for='DSCs3' class='btn btn-info'>S3</label>
                 </span>
             </div>
@@ -121,17 +131,17 @@
             <div class='col-md-8 col-md-offset-2 section'>
                 <h2>Corona</h2>
                 <span>
-                    <input id='CORabs' type='radio' name='COR' value='abs'></input>
+                    <input id='CORabs' type='radio' class='subsystem' name='COR' value='abs'></input>
                     <label id='CORabsLabel' for='CORabs' class='btn btn-info'>Absent</label>
                 </span>
                 <span>
-                    <input id='CORgrg' type='radio' name='COR' value='grg' checked></input>
+                    <input id='CORgrg' type='radio' class='subsystem' name='COR' value='grg' checked></input>
                     <label id='CORgrgLabel' for='CORgrg' class='btn btn-info'>GRIFFIN</label>
                 </span>
 
                 <table id='CORgriffin' class='table top-gutter'>
                     <tr>
-                        <td>GRIFFIN Detectors</td>
+                        <td>Position</td>
                         <td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
                     </tr>
                     <tr>
@@ -156,27 +166,28 @@
                         <td><input type='checkbox' id='grs11' value='11' class='suppressor'></input></td>
                         <td><input type='checkbox' id='grs12' value='12' class='suppressor'></input></td>
                     </tr>
+                    <tr id='corona-gains'></tr>
                 </table>
             </div>
 
             <div class='col-md-8 col-md-offset-2 section'>
                 <h2>Upstream Lampshade</h2>
                 <span>
-                    <input id='USLabs' type='radio' name='USL' value='abs'></input>
+                    <input id='USLabs' type='radio' class='subsystem' name='USL' value='abs'></input>
                     <label id='USLabsLabel' for='USLabs' class='btn btn-info'>Absent</label>
                 </span>
                 <span>
-                    <input id='USLgrg' type='radio' name='USL' value='grg' checked></input>
+                    <input id='USLgrg' type='radio' class='subsystem' name='USL' value='grg' checked></input>
                     <label id='USLgrgLabel' for='USLgrg' class='btn btn-info'>GRIFFIN</label>
                 </span>
                 <span>
-                    <input id='USLgrgdal' type='radio' name='USL' value='grgdal'></input>
+                    <input id='USLgrgdal' type='radio' class='subsystem' name='USL' value='grgdal'></input>
                     <label id='USLgrgdalLabel' for='USLgrgdal' class='btn btn-info'>GRIFFIN + LaBr3</label>
                 </span>
 
                 <table id='USLgriffin' class='table top-gutter'>
                     <tr>
-                        <td>GRIFFIN Detectors</td>
+                        <td>Position</td>
                         <td>13</td><td>14</td><td>15</td><td>16</td>
                     </tr>
                     <tr>
@@ -193,31 +204,32 @@
                         <td><input type='checkbox' id='grs15' value='15' class='suppressor'></input></td>
                         <td><input type='checkbox' id='grs16' value='16' class='suppressor'></input></td>
                     </tr>
+                    <tr id='usl-gains'></tr>
                 </table>
             </div>
 
             <div class='col-md-8 col-md-offset-2 section'>
                 <h2>Downstream Lampshade</h2>
                 <span>
-                    <input id='DSLabs' type='radio' name='DSL' value='abs'></input>
+                    <input id='DSLabs' type='radio' class='subsystem' name='DSL' value='abs'></input>
                     <label id='DSLabsLabel' for='DSLabs' class='btn btn-info'>Absent</label>
                 </span>
                 <span>
-                    <input id='DSLgrg' type='radio' name='DSL' value='grg' checked></input>
+                    <input id='DSLgrg' type='radio' class='subsystem' name='DSL' value='grg' checked></input>
                     <label id='DSLgrgLabel' for='DSLgrg' class='btn btn-info'>GRIFFIN</label>
                 </span>
                 <span>
-                    <input id='DSLgrgdal' type='radio' name='DSL' value='grgdal'></input>
+                    <input id='DSLgrgdal' type='radio' class='subsystem' name='DSL' value='grgdal'></input>
                     <label id='DSLgrgdalLabel' for='DSLgrgdal' class='btn btn-info'>GRIFFIN + LaBr3</label>
                 </span>
                 <span>
-                    <input id='DSLdsc' type='radio' name='DSL' value='dsc'></input>
+                    <input id='DSLdsc' type='radio' class='subsystem' name='DSL' value='dsc'></input>
                     <label id='DSLdscLabel' for='DSLdsc' class='btn btn-info'>DESCANT</label>
                 </span>
 
                 <table id='DSLgriffin' class='table top-gutter'>
                     <tr>
-                        <td>GRIFFIN Detectors</td>
+                        <td>Position</td>
                         <td>1</td><td>2</td><td>3</td><td>4</td>
                     </tr>
                     <tr>
@@ -234,6 +246,7 @@
                         <td><input type='checkbox' id='grs3' value='3' class='suppressor'></input></td>
                         <td><input type='checkbox' id='grs4' value='4' class='suppressor'></input></td>
                     </tr>
+                    <tr id='dsl-gains'></tr>
                 </table>
             </div>
   
@@ -295,7 +308,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'zds-custom', 'sceptar-custom', 'labr3-custom', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
+                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'griffin-channel-row', 'zds-custom', 'sceptar-custom', 'labr3-custom', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -439,7 +452,7 @@
 
             function prepareGRIFFIN(DSL, COR, USL){
                 
-                var griffinElements, clovers, suppressors, position, isSuppressed, canonical, i;
+                var griffinElements, clovers, suppressors, position, isSuppressed, canonical, globalGain, i;
 
                 griffinElements = identifyGRIFFIN(DSL, COR, USL);
                 clovers = griffinElements[0];
@@ -456,6 +469,14 @@
                             }
                         );
                 }
+
+                // global gain switch
+                globalGain = '<div class="grg-custom"> <span id="grg-custom"><span>Global Gain Setting: </span>';
+                globalGain += '<label for="griffin-global-gain-lo">Low: </label>'
+                globalGain += '<input type="radio" name="griffin-global-gain" value="lo" onclick="manageGRGgain.call(this, \'all\')" checked></input>'
+                globalGain += '<label for="griffin-global-gain-hi">High: </label>'
+                globalGain += '<input type="radio" name="griffin-global-gain" value="hi" onclick="manageGRGgain.call(this, \'all\')"></input></div>'
+                document.getElementById('griffinWrap').innerHTML += globalGain;
 
                 for(i=0; i<clovers.length; i++){
                     position = clovers[i];
@@ -494,31 +515,35 @@
 
                         //insert per-channel rows
                         document.getElementById(`griffin-${position}-A-MSC`).innerHTML += Mustache.to_html(
-                            dataStore.templates['channel-row'], 
+                            dataStore.templates['griffin-channel-row'], 
                             {
                                 'channels': canonical.slice(0,4),
-                                'key': 'griffin-group-' + i + '-A'
+                                'key': 'griffin-group-' + i + '-A',
+                                'position': position
                             }
                         );
                         document.getElementById(`griffin-${position}-B-MSC`).innerHTML += Mustache.to_html(
-                            dataStore.templates['channel-row'], 
+                            dataStore.templates['griffin-channel-row'], 
                             {
                                 'channels': canonical.slice(4,8),
-                                'key': 'griffin-group-' + i + '-B'
+                                'key': 'griffin-group-' + i + '-B',
+                                'position': position
                             }
                         );
                         document.getElementById(`griffin-${position}-BG-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
                                 'channels': canonical.slice(8,18),
-                                'key': 'griffin-group-' + i + '-BG'
+                                'key': 'griffin-group-' + i + '-BG',
+                                'position': position
                             }
                         );
                         document.getElementById(`griffin-${position}-RW-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
                                 'channels': canonical.slice(18,28),
-                                'key': 'griffin-group-' + i + '-RW'
+                                'key': 'griffin-group-' + i + '-RW',
+                                'position': position
                             }
                         );
                     } else {
@@ -545,10 +570,11 @@
 
                         //insert per-channel rows
                         document.getElementById(`griffin-${position}-MSC`).innerHTML += Mustache.to_html(
-                            dataStore.templates['channel-row'], 
+                            dataStore.templates['griffin-channel-row'], 
                             {
                                 'channels': canonical,
-                                'key': 'griffin-group-' + i
+                                'key': 'griffin-group-' + i,
+                                'position': position
                             }
                         );
                     }
@@ -1066,6 +1092,33 @@
                 document.getElementById('dismissODBmodal').click();
 
                 return [MSC, chan, datatype, gain, offset];
+            }
+
+            function manageGRGgain(group, subgroup){
+                //make master-level gain switches cascade properly
+
+                var targets, i,
+                    state = this.value;
+
+                if(group == 'all'){
+                    // global master switch
+                    targets = document.getElementsByClassName('grg-gain-'+state);
+                } else if(subgroup == 'all'){
+                    // per position master switch - unsuppressed
+                    targets = document.getElementsByClassName('grg-gain-'+state+'-'+group)
+                } else{
+                    // per position master switch - suppressed
+                    targets = document.getElementById('griffin-'+group+'-'+subgroup+'-MSC').getElementsByClassName('grg-gain-'+state+'-'+group)
+                }
+
+                for(i=0; i<targets.length; i++)
+                    targets[i].click();
+            }
+
+            function updateDatatype(targetChannel, newDatatype){
+                // update the hi/lo gain datatype for griffin channels
+
+                document.getElementById(targetChannel + '-address').setAttribute('datatype', newDatatype);
             }
         </script>
 

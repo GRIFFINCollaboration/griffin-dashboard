@@ -8,6 +8,7 @@
                 <td>S</td>
                 <td>C</td>
                 <td>Address</td>
+                <td>Gain</td>
             </tr>
             <tr>
                 <td>Apply to all:</td>
@@ -19,6 +20,13 @@
                 </td>
                 <td>-</td>
                 <td>-</td>
+                <td>
+                    <label for='grg-{{position}}-lo-gain-A'>Low </label>
+                    <input type='radio' id='grg-{{position}}-lo-gain-A' class='grg-gain-lo' value='lo' name='grg-{{position}}-gain-A' onclick="manageGRGgain.call(this, {{position}}, 'A')" checked></input>
+                    <br>
+                    <label for='grg-{{position}}-hi-gain-A'>High </label>
+                    <input type='radio' id='grg-{{position}}-hi-gain-A' class='grg-gain-hi' value='hi' name='grg-{{position}}-gain-A' onclick="manageGRGgain.call(this, {{position}}, 'A')"></input>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -32,6 +40,7 @@
                 <td>S</td>
                 <td>C</td>
                 <td>Address</td>
+                <td>Gain</td>
             </tr>
             <tr>
                 <td>Apply to all:</td>
@@ -43,6 +52,13 @@
                 </td>
                 <td>-</td>
                 <td>-</td>
+                <td>
+                    <label for='grg-{{position}}-hi-gain-B'>Low </label>
+                    <input type='radio' id='grg-{{position}}-hi-gain-B' class='grg-gain-lo' value='lo' name='grg-{{position}}-gain-B' onclick="manageGRGgain.call(this, {{position}}, 'B')" checked></input>
+                    <br>
+                    <label for='grg-{{position}}-hi-gain-A'>High </label>
+                    <input type='radio' id='grg-{{position}}-hi-gain-B' class='grg-gain-hi' value='hi' name='grg-{{position}}-gain-B' onclick="manageGRGgain.call(this, {{position}}, 'B')"></input>
+                </td>
             </tr>
         </tbody>
     </table>
