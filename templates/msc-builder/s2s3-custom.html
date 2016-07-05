@@ -1,0 +1,25 @@
+<template id='s2s3-custom'>
+    <table id='s2s3-{{group}}-MSC' class='table'>
+        <tbody>
+            <tr>
+                <td>Channel</td>
+                <td>M</td>
+                <td>S</td>
+                <td>C</td>
+                <td>Address</td>
+            </tr>
+            <tr>
+                <td>Apply to all:</td>
+                <td>
+                    <input type='number' id='s2s3-{{group}}-global-M' key={{key}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
+                </td>
+                <td>
+                    <input type='number' id='s2s3-{{group}}-global-S' key={{key}} min=0 max=16 step=1 value={{S}} onchange="updateAddr.call(this, 'S')"></input>
+                </td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+
+</template>

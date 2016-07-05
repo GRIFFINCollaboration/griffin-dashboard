@@ -1,0 +1,113 @@
+<template id='griffin-custom-suppressed'>
+    <h4>A-Side HPGe</h4>
+    <table id='griffin-{{position}}-A-MSC' class='table'>
+        <tbody>
+            <tr>
+                <td>Channel</td>
+                <td>M</td>
+                <td>S</td>
+                <td>C</td>
+                <td>Address</td>
+                <td>Gain</td>
+            </tr>
+            <tr>
+                <td>Apply to all:</td>
+                <td>
+                    <input type='number' id='griffin-{{position}}-A-global-M' key={{key-A}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
+                </td>
+                <td>
+                    <input type='number' id='griffin-{{position}}-A-global-S' key={{key-A}} min=0 max=16 step=1 value={{S-A}} onchange="updateAddr.call(this, 'S')"></input>
+                </td>
+                <td>-</td>
+                <td>-</td>
+                <td>
+                    <label for='grg-{{position}}-lo-gain-A'>Low </label>
+                    <input type='radio' id='grg-{{position}}-lo-gain-A' class='grg-gain-lo' value='lo' name='grg-{{position}}-gain-A' onclick="manageGRGgain.call(this, {{position}}, 'A')" checked></input>
+                    <br>
+                    <label for='grg-{{position}}-hi-gain-A'>High </label>
+                    <input type='radio' id='grg-{{position}}-hi-gain-A' class='grg-gain-hi' value='hi' name='grg-{{position}}-gain-A' onclick="manageGRGgain.call(this, {{position}}, 'A')"></input>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>B-Side HPGe</h4>
+    <table id='griffin-{{position}}-B-MSC' class='table'>
+        <tbody>
+            <tr>
+                <td>Channel</td>
+                <td>M</td>
+                <td>S</td>
+                <td>C</td>
+                <td>Address</td>
+                <td>Gain</td>
+            </tr>
+            <tr>
+                <td>Apply to all:</td>
+                <td>
+                    <input type='number' id='griffin-{{position}}-B-global-M' key={{key-B}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
+                </td>
+                <td>
+                    <input type='number' id='griffin-{{position}}-B-global-S' key={{key-B}} min=0 max=16 step=1 value={{S-B}} onchange="updateAddr.call(this, 'S')"></input>
+                </td>
+                <td>-</td>
+                <td>-</td>
+                <td>
+                    <label for='grg-{{position}}-hi-gain-B'>Low </label>
+                    <input type='radio' id='grg-{{position}}-hi-gain-B' class='grg-gain-lo' value='lo' name='grg-{{position}}-gain-B' onclick="manageGRGgain.call(this, {{position}}, 'B')" checked></input>
+                    <br>
+                    <label for='grg-{{position}}-hi-gain-A'>High </label>
+                    <input type='radio' id='grg-{{position}}-hi-gain-B' class='grg-gain-hi' value='hi' name='grg-{{position}}-gain-B' onclick="manageGRGgain.call(this, {{position}}, 'B')"></input>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>Blue + Green Suppressors</h4>
+    <table id='griffin-{{position}}-BG-MSC' class='table'>
+        <tbody>
+            <tr>
+                <td>Channel</td>
+                <td>M</td>
+                <td>S</td>
+                <td>C</td>
+                <td>Address</td>
+            </tr>
+            <tr>
+                <td>Apply to all:</td>
+                <td>
+                    <input type='number' id='griffin-{{position}}-BG-global-M' key={{key-BG}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
+                </td>
+                <td>
+                    <input type='number' id='griffin-{{position}}-BG-global-S' key={{key-BG}} min=0 max=16 step=1 value={{S-BG}} onchange="updateAddr.call(this, 'S')"></input>
+                </td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>Red + White Suppressors</h4>
+    <table id='griffin-{{position}}-RW-MSC' class='table'>
+        <tbody>
+            <tr>
+                <td>Channel</td>
+                <td>M</td>
+                <td>S</td>
+                <td>C</td>
+                <td>Address</td>
+            </tr>
+            <tr>
+                <td>Apply to all:</td>
+                <td>
+                    <input type='number' id='griffin-{{position}}-RW-global-M' key={{key-RW}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
+                </td>
+                <td>
+                    <input type='number' id='griffin-{{position}}-RW-global-S' key={{key-RW}} min=0 max=16 step=1 value={{S-RW}} onchange="updateAddr.call(this, 'S')"></input>
+                </td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+</template>

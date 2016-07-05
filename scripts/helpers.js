@@ -249,6 +249,8 @@ function CRUDarrays(path, value, type){
             typeIndex = 12;
         else if(type[i]=='int')
             typeIndex = 7;
+        else if(type[i]=='short')
+            typeIndex = 5;
         else
             typeIndex = 9; // float, see mhttpd.js
 
@@ -259,7 +261,7 @@ function CRUDarrays(path, value, type){
 
     //generate update urls:
     for(i=0; i<path.length; i++){
-        updateURLs.push('http://' + dataStore.host + '?cmd=jset&odb=' + path[i] + '[*]&value=' + value[i].join() );
+        updateURLs.push(['http://' + dataStore.host + '?cmd=jset&odb=' + path[i] + '[*]&value=' + value[i].join(), 'json'] );
     }
 
     //generate fetch/validation url
@@ -269,35 +271,31 @@ function CRUDarrays(path, value, type){
     }
     fetchURL += '&encoding=json-p-nokeys&callback=validateCRUD';
 
-    promiseScript(deletionURL).then(function(){
+
+    promiseScript(deletionURL).then(function(){ 
         promiseScript(creationURL).then(function(){
-            var i;
-            for(i=0; i<updateURLs.length; i++){
-                pokeURL(updateURLs[i]);
-            }
-        }).then(function(){
-            console.log(fetchURL)
-            validateCRUD = function(path, value, payload){
-                var i, key, tokenPath,
-                    valid = true;
+            Promise.all(updateURLs.map(promiseURL)).then(function(){
+                validateCRUD = function(path, value, payload){
+                    var i, key, tokenPath,
+                        valid = true;
 
-                for(i=0; i<path.length; i++){
-                    tokenPath = path[i].split('/');
-                    key = tokenPath[tokenPath.length-1];
-                    valid = valid && value[i].equals(payload[i][key]);
-                }
+                    for(i=0; i<path.length; i++){
+                        tokenPath = path[i].split('/');
+                        key = tokenPath[tokenPath.length-1];
+                        valid = valid && value[i].equals(payload[i][key]);
+                    }
 
-                if(typeof CRUDintegrity == 'function'){
-                    CRUDintegrity(valid)
-                }
-            }.bind(null, path, value)
+                    if(typeof CRUDintegrity == 'function'){
+                        CRUDintegrity(valid)
+                    }
+                }.bind(null, path, value)
 
-            promiseScript(fetchURL);
+                promiseScript(fetchURL);
+            })
+
         })
     })
 }
-
-
 
 ///////////////////////////////
 // daq requests & unpacking

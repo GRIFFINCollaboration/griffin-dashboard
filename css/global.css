@@ -67,6 +67,10 @@ select, input, option, .dark-text{
     color: #000000;
 }
 
+:invalid{
+    background-color: #FF9999;
+}
+
 div.warning{
     padding: 1em;
     background-color: #F2DEDE;
