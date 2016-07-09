@@ -191,12 +191,14 @@ function instantiateCells(view){
         createCell(channel);
 
         //add the cell to the appropriate layer; we'll use the HV layer for everything in the case where HV cells == scalar cells
-        if(isHV(channel))
+        if(isHV(channel)){
             dataStore.detector.HVLayer[view].add(dataStore.detector.cells[channel])
-        else if(isADCChannel(channel))
+        } else if(isADCChannel(channel))
             dataStore.detector.channelLayer[view].add(dataStore.detector.cells[channel]);
     }
 
+    if(typeof(drawWindowDressing) == 'function')
+        drawWindowDressing();
     setupErrorPattern();
 }
 
