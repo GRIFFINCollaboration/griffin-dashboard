@@ -42,6 +42,8 @@
             dataStore.detector.config = (getParameterByName('config') || 'S2').toUpperCase();
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
+                validate_browser();
+                
                 setupRequests();
                 deployDetector('detector-s2s3', dataStore.detector.config);
             });
