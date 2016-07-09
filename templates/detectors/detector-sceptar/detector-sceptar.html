@@ -74,9 +74,9 @@
         dataStore.detector.cellCoords = {}
         for(i=0; i<dataStore.detector.channelNames.length; i++){
             if(i<10)
-                X = dataStore.detector.upstreamCenterX;
-            else
                 X = dataStore.detector.downstreamCenterX;
+            else
+                X = dataStore.detector.upstreamCenterX;
             Y = dataStore.detector.upstreamCenterY;
 
             if(i%10<5){
@@ -112,5 +112,34 @@
         generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
 
         repaint();
+    }
+
+    function drawWindowDressing(){
+        //label the time and energy cells
+        var downLabel, upLabel,
+            fontSize = 28;
+
+        //label hemispheres
+        downLabel = new qdtext('Downstream', {
+            x: 0,
+            y: dataStore.detector.downstreamCenterY + dataStore.detector.spokeLength,
+            fontSize: fontSize,
+            typeface: 'Arial',
+            fillStyle: '#999999'
+        });
+        dataStore.detector.channelLayer[0].add(downLabel);
+        //center label nicely
+        downLabel.x = dataStore.detector.downstreamCenterX - downLabel.getTextMetric().width/2;
+
+        upLabel = new qdtext('Upstream', {
+            x: 0,
+            y: dataStore.detector.upstreamCenterY + dataStore.detector.spokeLength,
+            fontSize: fontSize,
+            typeface: 'Arial',
+            fillStyle: '#999999'
+        });
+        dataStore.detector.channelLayer[0].add(upLabel);
+        //center label nicely
+        upLabel.x = dataStore.detector.upstreamCenterX - upLabel.getTextMetric().width/2;   
     }
 </script>

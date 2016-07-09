@@ -1,0 +1,134 @@
+<link rel="stylesheet" href="../detector.css">
+
+<template id='detector-zds'>
+    <div class='nav-row'>
+        <div class="btn-group" role="group" id="view-nav"></div>
+    </div>
+
+    <div id='visualizationcollection'>
+        {{#views}}
+            <div id='{{.}}Wrap' class='visWrap hidden'></div>
+        {{/views}}
+        <form id='scalecontrol' onchange='managePlotScale()'>
+            <label for='linScale'>Linear</label>
+            <input id='linScale' name='plotScale' value='lin' type='radio' checked></input>
+            <label for='logScale' class='uiRow'>Log</label>
+            <input id='logScale' name='plotScale' value='log' type='radio'></input>
+            <label for='scaleMin', class='uiRow'>Min</label>
+            <input id='scaleMin', type='number' min='0' step='1'></input>
+            <label for='scaleMax', class='uiRow'>Max</label>
+            <input id='scaleMax', type='number' min='0' step='1'></input>
+        </form>
+    </div>
+
+    <img id='errorPattern' src='img/static.gif' class='hidden'></img>
+</template>
+
+<script>
+    function parameterizeDetector(){
+        // determine all the parameters needed for ZDS's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
+
+        //build up dataStore.detector.channel names
+        dataStore.detector.channelNames = ['ZDS01XN00X', 'ZDS01XT00X']
+
+        // view labels
+        dataStore.detector.views = ['main'];
+
+        //subview info
+        dataStore.detector.subviews = ['HV', 'threshold', 'trigger_request', 'trigger_accept'];
+
+        // how many characters are in the summary view channel names?
+        dataStore.detector.summaryDepth = 0;
+
+        // build up raw data structure
+        createDataStructure();
+    }
+
+    function drawDetector(){
+        // once the HTML is in place, finish setting up visualization.
+
+        //generic setup
+        setupDetector();
+
+        //////////////////////////////////////
+        //ZDS specific drawing parameters
+        //////////////////////////////////////
+        dataStore.verticalCenter = dataStore.detector.height*0.4;
+        dataStore.leftCenter = dataStore.detector.width*0.25;
+        dataStore.rightCenter = dataStore.detector.width*0.75;
+        dataStore.radius = dataStore.detector.width*0.15;
+
+        // only one view, set and forget:
+        dataStore.detector.currentView = 'main';
+        document.getElementById('mainWrap').classList.remove('hidden');
+        // start with summary trigger accepts displayed
+        manageSubview('trigger_accept', true);
+
+        // set up the cells
+        instantiateCells(0);
+        generateColorScale(dataStore.detector.plotScales['trigger_accept'].color);
+
+        repaint();
+    }
+
+    function createCell(channel){
+        // reimplemented for zds - circular cells instead of polygons
+        // stamp out a cell for the given channel and coordinate array key
+        // note that cell still has to be added to an appropriate layer on a per-detector basis.
+
+        var centerX = (channel.slice(6) == 'N00X') ? dataStore.leftCenter : dataStore.rightCenter,
+            path = new Path2D();
+
+        path.arc(
+            centerX,
+            dataStore.verticalCenter, 
+            dataStore.radius, 
+            0, 2*Math.PI
+        );
+        path.closePath();
+        dataStore.detector.cells[channel] = new qdshape(path, {
+            id: channel,
+            fillStyle: '#FFFFFF',
+            strokeStyle: dataStore.frameColor,
+            lineWidth: dataStore.frameLineWidth,
+            z: 1   
+        });
+        
+        //set up the tooltip listeners:
+        dataStore.detector.cells[channel].mouseover = writeTooltip.bind(null, channel);
+        dataStore.detector.cells[channel].mousemove = moveTooltip;
+        dataStore.detector.cells[channel].mouseout =  hideTooltip;
+
+        //set up onclick listeners:
+        dataStore.detector.cells[channel].click = clickCell.bind(null, channel);
+    }
+
+    function drawWindowDressing(){
+        //label the time and energy cells
+        var energyLabel, timeLabel,
+            fontSize = 28;
+
+        energyLabel = new qdtext('Energy', {
+            x: 0,
+            y: dataStore.verticalCenter + dataStore.radius + 1.5*fontSize,
+            fontSize: fontSize,
+            typeface: 'Arial',
+            fillStyle: '#999999'
+        });
+        dataStore.detector.channelLayer[0].add(energyLabel);
+        //center label nicely
+        energyLabel.x = dataStore.leftCenter - energyLabel.getTextMetric().width/2;
+
+        timeLabel = new qdtext('Time', {
+            x: 0,
+            y: dataStore.verticalCenter + dataStore.radius + 1.5*fontSize,
+            fontSize: fontSize,
+            typeface: 'Arial',
+            fillStyle: '#999999'
+        });
+        dataStore.detector.channelLayer[0].add(timeLabel);
+        //center label nicely
+        timeLabel.x = dataStore.rightCenter - timeLabel.getTextMetric().width/2;    
+    }
+
+</script>
