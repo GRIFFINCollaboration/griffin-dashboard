@@ -42,6 +42,8 @@
             dataStore.detector.channelType = getParameterByName('channel') || 'energy';
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
+                validate_browser();
+                
                 setupRequests();
                 deployDetector('detector-labr3', dataStore.detector.channelType == 'energy' ? 'LaBr3 (Energy)' : 'LaBr3 (Time)');
             });

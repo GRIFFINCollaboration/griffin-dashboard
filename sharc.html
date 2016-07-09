@@ -39,6 +39,8 @@
 
         <script>
             window.addEventListener('HTMLImportsLoaded', function(e) {
+                validate_browser();
+                
                 setupRequests();
                 deployDetector('detector-sharc', 'SHARC');
             });

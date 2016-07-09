@@ -44,6 +44,8 @@
             dataStore.detector.position = getParameterByName('position') || 'downstream'
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
+                validate_browser();
+                
                 setupRequests();
                 deployDetector('detector-bambino', 'BAMBINO ' + dataStore.detector.config);
             });
