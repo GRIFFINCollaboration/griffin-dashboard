@@ -42,6 +42,10 @@ div.top-pan{
     margin-top: 1em;
 }
 
+.left-gutter{
+    margin-left: 1em;
+}
+
 div.pan div{
     margin-bottom: 1em;
 }

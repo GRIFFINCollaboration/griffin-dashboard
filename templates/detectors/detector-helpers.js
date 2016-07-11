@@ -36,7 +36,7 @@ function initializeDetector(){
     setupHVSidebar('controlsidebar');
 
     // initiate heartbeat
-    dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery, dataStore.equipmentQuery]
+    dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery, dataStore.equipmentQuery, 'http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ/params&encoding=json-p-nokeys&callback=sortADCparams']
     dataStore.heartbeat.callback = dataUpdate
     heartbeat();
 }
@@ -93,7 +93,7 @@ function injectBoilerplateTemplates(template, detectorName){
     document.getElementById('view-nav').innerHTML = Mustache.to_html(
         dataStore.templates['detector-view'], 
         {
-
+            parameters: dataStore.ADCparameters
         }
     );
 
@@ -105,6 +105,58 @@ function processDAQ(payload){
     fetchDAQ(payload);              // sort the data into useful places
     determineADCrequests();         // decide which ADCs will need to be queried for rates and thresholds
     detectDetectors();              // decide which detectors to link to in the nav bar based on MSC table
+}
+
+function sortADCparams(payload){
+    // sort the json representation of the ODB's /DAQ/params into the datastore for future visualization:
+    // dataStore.data[<channel name>][<parameter name>]
+
+    var channels = Object.keys(dataStore.data),
+        dataType, ADC, parameters, i, j;
+
+    if(!dataStore.ODB.DAQ)
+        dataStore.ODB.DAQ = {}
+
+    dataStore.ODB.DAQ.params = payload;
+
+    if(dataStore.ODB.DAQ && dataStore.ODB.DAQ.MSC){
+        // only unpack for channels in current view
+        for(i=0; i<channels.length; i++){
+            // only interested in real channels here, not summaries
+            if(channels[i].length != 10)
+                continue;
+            // determine dataType
+            dataType = dataStore.ODB.DAQ.MSC.chan.indexOf(channels[i]);
+            dataType = dataStore.ODB.DAQ.MSC.datatype[dataType];
+
+            // no dataType -> channel not present in MSC table, bail. 
+            if(!isNumeric(dataType))
+                continue;
+
+            // what kind of ADC is this? currently all grif16s, but will need more logic once 4gs are in service...
+            ADC = 'grif16';
+
+            parameters = Object.keys(dataStore.ODB.DAQ.params[ADC].template[dataType]);
+
+            for(j=0; j<parameters.length; j++){
+                dataStore.data[channels[i]][parameters[j]] = dataStore.ODB.DAQ.params[ADC].template[dataType][parameters[j]];
+
+                // is there a custom override of the template value?
+                if(dataStore.ODB.DAQ.params[ADC].custom[channels[i]] && dataStore.ODB.DAQ.params[ADC].custom[channels[i]][parameters[j]])
+                    dataStore.data[channels[i]][parameters[j]] = dataStore.ODB.DAQ.params[ADC].custom[channels[i]][parameters[j]];
+
+                // force ODB strings to numeric
+                if(dataStore.data[channels[i]][parameters[j]] == false)
+                    dataStore.data[channels[i]][parameters[j]] = 0;
+                else if(dataStore.data[channels[i]][parameters[j]] == true)
+                    dataStore.data[channels[i]][parameters[j]] = 1;
+                else if(!isNumeric(dataStore.data[channels[i]][parameters[j]]) && typeof(dataStore.data[channels[i]][parameters[j]])!='boolean' ) // hex string
+                    dataStore.data[channels[i]][parameters[j]] = parseFloat(dataStore.data[channels[i]][parameters[j]].slice(2)); 
+         
+            }
+            
+        }
+    }
 }
 
 function setupDetector(){
@@ -305,14 +357,29 @@ function generateColorScale(scale){
 
 function refreshColorScale(index){
 
-    var i, isLog, currentMin, currentMax, logTitle;
+    var i, isLog, currentMin, currentMax, logTitle, parameterIndex, title, units;
 
-    //are we in log mode?
-    isLog = dataStore.detector.plotScales[dataStore.detector.subview].scale == 'log';
+    //where is this parameter in the array of ADC parameters
+    for(i=0; i<dataStore.ADCparameters.length; i++){
+        if(dataStore.ADCparameters[i].key == dataStore.detector.displayParameter)
+            parameterIndex = i;
+    }
 
-    //what minima and maxima are we using?
-    currentMin = dataStore.detector.plotScales[dataStore.detector.subview].min;
-    currentMax = dataStore.detector.plotScales[dataStore.detector.subview].max;
+    //are we in log mode? what minima and maxima are we using?
+    if(dataStore.detector.subview == 'adc_settings'){
+        isLog = dataStore.ADCparameters[parameterIndex].scale == 'log';
+        currentMin = dataStore.ADCparameters[parameterIndex].min; 
+        currentMax = dataStore.ADCparameters[parameterIndex].max;
+        title = dataStore.ADCparameters[parameterIndex].label;
+        units = dataStore.ADCparameters[parameterIndex].unit || '';
+    } else{
+        isLog = dataStore.detector.plotScales[dataStore.detector.subview].scale == 'log';
+        currentMin = dataStore.detector.plotScales[dataStore.detector.subview].min;
+        currentMax = dataStore.detector.plotScales[dataStore.detector.subview].max;
+        title = dataStore.detector.subviewPrettyText[dataStore.detector.subview];
+        units = dataStore.detector.subviewUnits[dataStore.detector.subview]
+    }
+
     if(isLog){
         currentMin = Math.log10(currentMin);
         currentMax = Math.log10(currentMax);
@@ -329,7 +396,7 @@ function refreshColorScale(index){
     }
 
     //update title
-    dataStore.detector.scaleTitle[index].text = logTitle + dataStore.detector.subviewPrettyText[dataStore.detector.subview] + ' [' + dataStore.detector.subviewUnits[dataStore.detector.subview] + ']';
+    dataStore.detector.scaleTitle[index].text = logTitle + title + (units.length>0 ? (' ['+units+']') : '' );
     dataStore.detector.scaleTitle[index].x = dataStore.detector.width/2 - dataStore.detector.scaleTitle[index].getTextMetric().width/2;    
 }
 
@@ -387,16 +454,30 @@ function managePlotScale(setFromDataStore){
         log = document.getElementById('logScale'),
         min = document.getElementById('scaleMin'),
         max = document.getElementById('scaleMax'),
-        scale, minValue;
+        scale, minValue, parameterIndex, i;
+
+    //where is this parameter in the array of ADC parameters
+    for(i=0; i<dataStore.ADCparameters.length; i++){
+        if(dataStore.ADCparameters[i].key == dataStore.detector.displayParameter)
+            parameterIndex = i;
+    }
 
     if(setFromDataStore){
-        if(dataStore.detector.plotScales[currentSubview].scale == 'lin')
+        if(currentSubview == 'adc_settings'){
+            scale = dataStore.ADCparameters[parameterIndex].scale;
+            min.value = dataStore.ADCparameters[parameterIndex].min;
+            max.value = dataStore.ADCparameters[parameterIndex].max;
+        } else{
+            scale = dataStore.detector.plotScales[currentSubview].scale;
+            min.value = dataStore.detector.plotScales[currentSubview].min;
+            max.value = dataStore.detector.plotScales[currentSubview].max;
+        }
+
+        if(scale == 'lin')
             lin.click();
         else
             log.click();
 
-        min.value = dataStore.detector.plotScales[currentSubview].min;
-        max.value = dataStore.detector.plotScales[currentSubview].max;
     } else {
         scale = document.querySelector('input[name="plotScale"]:checked').value;
         minValue = parseInt(min.value, 10);
@@ -405,9 +486,15 @@ function managePlotScale(setFromDataStore){
             min.value = 1;
         }
 
-        dataStore.detector.plotScales[currentSubview].scale = scale;
-        dataStore.detector.plotScales[currentSubview].min = minValue;
-        dataStore.detector.plotScales[currentSubview].max = parseInt(max.value,10);
+        if(currentSubview == 'adc_settings'){
+            dataStore.ADCparameters[parameterIndex].scale = scale;
+            dataStore.ADCparameters[parameterIndex].min = minValue;
+            dataStore.ADCparameters[parameterIndex].max = parseInt(max.value,10);            
+        } else {
+            dataStore.detector.plotScales[currentSubview].scale = scale;
+            dataStore.detector.plotScales[currentSubview].min = minValue;
+            dataStore.detector.plotScales[currentSubview].max = parseInt(max.value,10);
+        }
 
         repaint();
     }
@@ -422,12 +509,30 @@ function updateCells(){
     //update the color / fill pattern of cells currently on display.
 
     var i, color, rawValue, colorIndex, channel,
-        currentSubview = dataStore.detector.subview,
+        currentSubview,
         currentView = dataStore.detector.currentView,
-        currentMin = dataStore.detector.plotScales[currentSubview].min, 
-        currentMax = dataStore.detector.plotScales[currentSubview].max,
-        currentColor = dataStore.detector.plotScales[currentSubview].color,
-        isLog = dataStore.detector.plotScales[currentSubview].scale == 'log';
+        currentMin, currentMax, currentColor, isLog;
+
+    //where is this parameter in the array of ADC parameters
+    for(i=0; i<dataStore.ADCparameters.length; i++){
+        if(dataStore.ADCparameters[i].key == dataStore.detector.displayParameter)
+            parameterIndex = i;
+    }
+
+    //are we in log mode? what minima and maxima are we using?
+    if(dataStore.detector.subview == 'adc_settings'){
+        isLog = dataStore.ADCparameters[parameterIndex].scale == 'log';
+        currentMin = dataStore.ADCparameters[parameterIndex].min; 
+        currentMax = dataStore.ADCparameters[parameterIndex].max;
+        currentSubview = dataStore.detector.displayParameter;
+        currentColor = dataStore.ADCparameters[parameterIndex].color;
+    } else{
+        isLog = dataStore.detector.plotScales[dataStore.detector.subview].scale == 'log';
+        currentMin = dataStore.detector.plotScales[dataStore.detector.subview].min;
+        currentMax = dataStore.detector.plotScales[dataStore.detector.subview].max;
+        currentSubview = dataStore.detector.subview;
+        currentColor = dataStore.detector.plotScales[currentSubview].color
+    }
 
     // get the scale limits right
     if(isLog){
@@ -635,6 +740,8 @@ function writeTooltip(channel){
     dataStore.tooltip.currentTooltipTarget = channel;
 
     for(i=0; i<dataKeys.length; i++){
+        if(!dataStore.detector.subviewPrettyText[dataKeys[i]])
+            continue;
         key = dataKeys[i];
         val = dataStore.data[channel][dataKeys[i]];
         text += dataStore.detector.subviewPrettyText[dataKeys[i]] + ': ';
@@ -672,6 +779,7 @@ function manageSubview(target, suppressRepaint){
         document.getElementById(dataStore.detector.subview + 'Select').classList.remove('active');
     document.getElementById(target + 'Select').classList.add('active');
     dataStore.detector.subview = target;
+    dataStore.detector.displayParameter = selected('adc_parameter');
 
     //manage actual image; note first view always shows the HV layer, ie for summaries and detectors with HV channels == scalar channels
     for(i=1; i<dataStore.detector.views.length; i++){
@@ -683,6 +791,12 @@ function manageSubview(target, suppressRepaint){
             dataStore.detector.channelLayer[i].display = true;
         }
     }
+
+    // hide or show adc parameter control
+    if(dataStore.detector.subview == 'adc_settings')
+        document.getElementById('adc_parameter').classList.remove('hidden');
+    else
+        document.getElementById('adc_parameter').classList.add('hidden');
 
     //repopulate scale control
     managePlotScale(true);
