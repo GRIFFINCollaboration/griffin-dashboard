@@ -574,23 +574,29 @@ function updateCells(){
 function summarizeData(){
     // add up totals for aggregate cells in summary view
 
-    var i, j, summaryKey, newValue, channel, subview;
+    var i, j, summaryKey, newValue, channel, subviews = [], subview;
 
     // don't bother if the MSC table hasn't arrived yet:
     if(!dataStore.ODB.DAQ)
         return 0;
 
+    // what subviews need be considered?
+    for(i=0; i<dataStore.ADCparameters.length; i++){
+        subviews.push(dataStore.ADCparameters[i].key);
+    }
+    subviews = dataStore.detector.subviews.concat(subviews);
+
     //zero out old summaries at this depth
     for(i=0; i<dataStore.detector.channelNames.length; i++){
         if(dataStore.detector.channelNames[i].length == dataStore.detector.summaryDepth){
-            for(j=0; j<dataStore.detector.subviews.length; j++){
-                dataStore.data[dataStore.detector.channelNames[i]][dataStore.detector.subviews[j]] = [0,0];                 
+            for(j=0; j<subviews.length; j++){
+                dataStore.data[dataStore.detector.channelNames[i]][subviews[j]] = [0,0];                 
             }
         }
     }
 
     //now repopulate all summaries; if a constituent is not reporting, the whole summary is 
-    //flagged as not reporting - but only consider rate channels in the MSC table, and HV channels in the ODB.Equipment list
+    //flagged as not reporting - but only consider adc channels in the MSC table, and HV channels in the ODB.Equipment list
     for(i=0; i<dataStore.detector.channelNames.length; i++){
         channel = dataStore.detector.channelNames[i];
 
@@ -603,9 +609,9 @@ function summarizeData(){
 
         summaryKey = channel.slice(0,dataStore.detector.summaryDepth);
 
-        for(j=0; j<dataStore.detector.subviews.length; j++){
-            subview = dataStore.detector.subviews[j];
-
+        for(j=0; j<subviews.length; j++){
+            subview = subviews[j];
+            
             //abort if the channel in question doesn't have data appropriate for this subview
             if( !channelInSubview(channel, subview) ) continue;
 
@@ -625,8 +631,8 @@ function summarizeData(){
 
         if(summaryKey.length != dataStore.detector.summaryDepth) continue;
 
-        for(j=0; j<dataStore.detector.subviews.length; j++){
-            subview = dataStore.detector.subviews[j];
+        for(j=0; j<subviews.length; j++){
+            subview = subviews[j];
 
             if(dataStore.data[summaryKey][subview][0] != 0xDEADBEEF){
                 dataStore.data[summaryKey][subview] = dataStore.data[summaryKey][subview][0] / dataStore.data[summaryKey][subview][1];
