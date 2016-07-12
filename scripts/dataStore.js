@@ -153,6 +153,528 @@ dataStore = {
             "description": 'DSCn pulse shape'
         }
 
+    ],
+
+    "ADCparameters": [
+        {
+            "key": "a_enable", 
+            "label": "ADC enabled",
+            "scale": "lin",
+            "min":0,
+            "max":1,
+            "color": "blue",
+            "unit": "bool"
+        },
+        {
+            "key": "a_pol", 
+            "label": "Polarity",
+            "scale": "lin",
+            "min":0,
+            "max":1,
+            "color": "blue",
+            "unit": "+-"
+        },
+        {
+            "key": "a_fgain", 
+            "label": "ADC gain",
+            "scale": "lin",
+            "min":1,
+            "max":10,
+            "color": "blue",
+            "unit": "V p-p"
+        },
+        // deprecated?
+        // {
+        //     "key": "a_trim",
+        //     "label": "a_trim",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        {
+            "key": "a_dcofst", 
+            "label": "DC offset",
+            "scale": "lin",
+            "min":0,
+            "max":1000,
+            "color": "blue",
+            "unit": "mV"
+        },
+        {
+            "key": "t_on", 
+            "label": "Triggering enabled",
+            "scale": "lin",
+            "min":0,
+            "max":1,
+            "color": "blue",
+            "unit": "bool"
+        },
+        {
+            "key": "t_thres", 
+            "label": "Trigger threshold",
+            "scale": "lin",
+            "min":0,
+            "max":100,
+            "color": "blue",
+            "unit": "mV"
+        },
+        {
+            "key": "t_diff", 
+            "label": "Trigger differentiation",
+            "scale": "lin",
+            "min":0,
+            "max":100,
+            "color": "blue",
+            "unit": "ns"
+        },
+        {
+            "key": "t_int", 
+            "label": "Trigger integration",
+            "scale": "lin",
+            "min":0,
+            "max":100,
+            "color": "blue",
+            "unit": "ns"
+        },
+        {
+            "key": "p_int", 
+            "label": "Pulse height integration",
+            "scale": "lin",
+            "min":0,
+            "max":1000,
+            "color": "blue",
+            "unit": "ns"
+        },
+        {
+            "key": "p_diff", 
+            "label": "Pulse height differentiation",
+            "scale": "lin",
+            "min":0,
+            "max":1000,
+            "color": "blue",
+            "unit": "ns"
+        },
+        {
+            "key": "p_delay", 
+            "label": "Pulse height delay",
+            "scale": "lin",
+            "min":0,
+            "max":100,
+            "color": "blue",
+            "unit": "ns"
+        },
+        {
+            "key": "p_polec1", 
+            "label": "Pulse height pole correction",
+            "scale": "lin",
+            "min":0,
+            "max":100,
+            "color": "blue"
+        },
+        {
+            "key": "wfr_smpl", 
+            "label": "Waveform samples",
+            "scale": "lin",
+            "min":0,
+            "max":10000,
+            "color": "blue"
+        },
+        {
+            "key": "wfr_pret", 
+            "label": "Waveform pretrigger",
+            "scale": "lin",
+            "min":0,
+            "max":10000,
+            "color": "blue"
+        },
+        {
+            "key": "wfr_mode", 
+            "label": "Waveform mode",
+            "scale": "lin",
+            "min":0,
+            "max":2,
+            "color": "blue",
+            "unit": "categorical, click on cell for details"
+        },
+        {
+            "key": "sim_ena", 
+            "label": "Simulation enabled",
+            "scale": "lin",
+            "min":0,
+            "max":1,
+            "color": "blue",
+            "unit": "bool"
+        },
+        {
+            "key": "sim_enat", 
+            "label": "Simulation trigger enabled",
+            "scale": "lin",
+            "min":0,
+            "max":1,
+            "color": "blue",
+            "unit": "bool"
+        },
+        {
+            "key": "sim_enar", 
+            "label": "Simulation random enabled",
+            "scale": "lin",
+            "min":0,
+            "max":1,
+            "color": "blue",
+            "unit": "bool"
+        },
+        {
+            "key": "sim_pol", 
+            "label": "Simulation polarity",
+            "scale": "lin",
+            "min":0,
+            "max":1,
+            "color": "blue",
+            "unit": "+-"
+        },
+        {
+            "key": "sim_rise", 
+            "label": "Simulation rise time",
+            "scale": "lin",
+            "min":0,
+            "max":100,
+            "color": "blue",
+            "unit": "ns"
+        },
+        {
+            "key": "sim_amp", 
+            "label": "Simulation amplitude",
+            "scale": "lin",
+            "min":0,
+            "max":20000,
+            "color": "blue",
+            "unit": "mV"
+        },
+        {
+            "key": "sim_rate", 
+            "label": "Simulation rate",
+            "scale": "lin",
+            "min":0,
+            "max":2000,
+            "color": "blue",
+            "unit": "Hz"
+        },
+        {
+            "key": "sim_cyc", 
+            "label": "Simulation cycle waveform",
+            "scale": "lin",
+            "min":0,
+            "max":1,
+            "color": "blue",
+            "unit": "bool"
+        },
+        {
+            "key": "sim_dly0", 
+            "label": "Simulation delay 0",
+            "scale": "lin",
+            "min":0,
+            "max":1000,
+            "color": "blue",
+            "unit": "ns"
+        },
+        {
+            "key":"sim_dly1", 
+            "label": "Simulation delay 1",
+            "scale": "lin",
+            "min":0,
+            "max":1000,
+            "color": "blue",
+            "unit": "ns"
+        },
+        {
+            "key": "sim_dly2", 
+            "label": "Simulation delay 2",
+            "scale": "lin",
+            "min":0,
+            "max":1000,
+            "color": "blue",
+            "unit": "ns"
+        },
+        {
+            "key": "sim_dly3", 
+            "label": "Simulation delay 3",
+            "scale": "lin",
+            "min":0,
+            "max":1000,
+            "color": "blue",
+            "unit": "ns"
+        },
+        {
+            "key": "sim_amp0", 
+            "label": "Simulation amplitude 0",
+            "scale": "lin",
+            "min":0,
+            "max":20000,
+            "color": "blue",
+            "unit": "mV"
+        },
+        {
+            "key": "sim_amp1", 
+            "label": "Simulation amplitude 1",
+            "scale": "lin",
+            "min":0,
+            "max":20000,
+            "color": "blue",
+            "unit": "mV"
+        },
+        {
+            "key": "sim_amp2", 
+            "label": "Simulation amplitude 2",
+            "scale": "lin",
+            "min":0,
+            "max":20000,
+            "color": "blue",
+            "unit": "mV"
+        },
+        {
+            "key": "sim_amp3", 
+            "label": "Simulation amplitude 3",
+            "scale": "lin",
+            "min":0,
+            "max":20000,
+            "color": "blue",
+            "unit": "mV"
+        },
+        // looks like timestamps / walltimes
+        // {
+        //     "key": "dtsclr_b", 
+        //     "label": "Deadtime readout",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "trsclr_b", 
+        //     "label": "Trigger readout",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        {
+            "key": "cfd_dly", 
+            "label": "CFD delay",
+            "scale": "lin",
+            "min":0,
+            "max":100,
+            "color": "blue",
+            "unit": "ns"
+        },
+        // deprecated
+        // {
+        //     "key": "rt_d0",
+        //     "label": "rt_d0",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "rt_d1",
+        //     "label": "rt_d1",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "rt_d10",
+        //     "label": "rt_d10",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "rt_d100",
+        //     "label": "rt_d100",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // not settings
+        // {
+        //     "key": "rt_acpt", 
+        //     "label": "Trigger accept rate",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "rt_rqst", 
+        //     "label": "Trigger request rate",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "rt_dwav", 
+        //     "label": "Dropped waveform",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1000,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "rt_dbsy", 
+        //     "label": "Dropped busy",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1000,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "rt_dqt", 
+        //     "label": "Dropped QT",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1000,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "rt_dtrg", 
+        //     "label": "Dropped trigger",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1000,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "rt_dded", 
+        //     "label": "Dropped deadtime",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1000,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "st_trig", 
+        //     "label": "Trigger count",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":10000000000,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "st_trigr", 
+        //     "label": "Trigger request count",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":10000000000,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "st_btrig", 
+        //     "label": "Trigger buffer fill level",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":255,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "st_bwv", 
+        //     "label": "Waveform buffer fill level",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":4095,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "st_bqt", 
+        //     "label": "QT buffer fill level",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":255,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "st_bevr", 
+        //     "label": "Event buffer read",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":4095,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "st_bevw", 
+        //     "label": "Event buffer write",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":4095,
+        //     "color": "blue"
+        // },
+        {
+            "key": "prg_ddtm", 
+            "label": "Prog deadtime",
+            "scale": "lin",
+            "min":0,
+            "max":1000,
+            "color": "blue",
+            "unit": "ns"
+        }//,
+        // not set in templates / custom
+        // {
+        //     "key": "det_type", 
+        //     "label": "Detector type",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":15,
+        //     "color": "blue",
+        //     "unit": "categorical, click on cellfor details"
+        // },
+        // timestamps / real time
+        // {
+        //     "key": "syn_lvtm", 
+        //     "label": "Sync livetime",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "syn_ddtm", 
+        //     "label": "Sync deadtime",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // deprecated
+        // {
+        //     "key": "daq_chnm",
+        //     "label": "daq_chnm",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "daq_wrTp",
+        //     "label": "daq_wrTp",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // },
+        // {
+        //     "key": "daq_clrC",
+        //     "label": "daq_clrC",
+        //     "scale": "lin",
+        //     "min":0,
+        //     "max":1,
+        //     "color": "blue"
+        // }
+
     ]
 
 }

@@ -7,11 +7,11 @@ The Dashboard communicates with GRIF-16 digitizers via their API described below
 
 ### Communication Logic
 
-The Dashboard, ODB and electronics can read and write ADC control parameters to each other. To avoid control chaos, we follow the following flow; arrow direction indicates information flowing from one place to another:
+The Dashboard, ODB and electronics can read and write ADC control parameters to each other. To avoid control chaos, we nominally follow the following flow; arrow direction indicates information flowing from one place to another:
 
 ![ADC data flow](https://github.com/GRIFFINCollaboration/griffin-dashboard/blob/gh-pages/img/adc-flow.png)
 
-Note that this means the Dashboard may pull a stale parameter from the ADC after writing a fresh one to the ODB, but before the ODB has pushed to the ADC; wait a couple seconds and the round trip should complete itself.
+Note that this means the Dashboard may pull a stale parameter from the ADC after writing a fresh one to the ODB, but before the ODB has pushed to the ADC; wait a couple seconds and the round trip should complete itself. The only exception to this is that the Dashboard will read from the ODB when reporting ADC and HV *settings*.
 
 ### ADC ODB Hierarchy
 

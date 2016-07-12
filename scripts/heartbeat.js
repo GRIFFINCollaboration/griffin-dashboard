@@ -10,7 +10,7 @@ function heartbeat(){
     if (typeof preFetch === "function"){ 
         preFetch();
     }
-
+    
     Promise.all(URLqueries.map(promiseURL)).then(
         function(responses){
             var i;

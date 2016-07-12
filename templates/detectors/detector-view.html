@@ -3,4 +3,10 @@
     <button type="button" class="btn btn-default" id='thresholdSelect' onclick='manageSubview("threshold")'>Thresholds</button>
     <button type="button" class="btn btn-default" id='trigger_requestSelect' onclick='manageSubview("trigger_request")'>Trigger Requests</button>
     <button type="button" class="btn btn-default" id='trigger_acceptSelect' onclick='manageSubview("trigger_accept")'>Trigger Accepts</button>
+    <button type="button" class="btn btn-default" id='adc_settingsSelect' onclick='manageSubview("adc_settings")'>ADC Settings</button>
+    <select id="adc_parameter" onchange='manageSubview("adc_settings")' class='left-gutter hidden'>
+        {{# parameters}}
+            <option value="{{key}}">{{label}}</option>
+        {{/ parameters}}
+    </select>
 </template>
