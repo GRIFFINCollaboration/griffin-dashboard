@@ -359,11 +359,7 @@ function refreshColorScale(index){
 
     var i, isLog, currentMin, currentMax, logTitle, parameterIndex, title, units;
 
-    //where is this parameter in the array of ADC parameters
-    for(i=0; i<dataStore.ADCparameters.length; i++){
-        if(dataStore.ADCparameters[i].key == dataStore.detector.displayParameter)
-            parameterIndex = i;
-    }
+    parameterIndex = findADCparameterIndex();
 
     //are we in log mode? what minima and maxima are we using?
     if(dataStore.detector.subview == 'adc_settings'){
@@ -456,11 +452,7 @@ function managePlotScale(setFromDataStore){
         max = document.getElementById('scaleMax'),
         scale, minValue, parameterIndex, i;
 
-    //where is this parameter in the array of ADC parameters
-    for(i=0; i<dataStore.ADCparameters.length; i++){
-        if(dataStore.ADCparameters[i].key == dataStore.detector.displayParameter)
-            parameterIndex = i;
-    }
+    parameterIndex = findADCparameterIndex();
 
     if(setFromDataStore){
         if(currentSubview == 'adc_settings'){
@@ -509,15 +501,11 @@ function updateCells(){
     //update the color / fill pattern of cells currently on display.
 
     var i, color, rawValue, colorIndex, channel,
-        currentSubview,
+        currentSubview, parameterIndex,
         currentView = dataStore.detector.currentView,
         currentMin, currentMax, currentColor, isLog;
 
-    //where is this parameter in the array of ADC parameters
-    for(i=0; i<dataStore.ADCparameters.length; i++){
-        if(dataStore.ADCparameters[i].key == dataStore.detector.displayParameter)
-            parameterIndex = i;
-    }
+    parameterIndex = findADCparameterIndex();
 
     //are we in log mode? what minima and maxima are we using?
     if(dataStore.detector.subview == 'adc_settings'){
@@ -677,6 +665,18 @@ function findChannel(channel){
     return (MSC & 0x00FF)
 }
 
+function findADCparameterIndex(){
+    //where is the current adc display parameter in the array of ADC parameters
+    var i;
+
+    for(i=0; i<dataStore.ADCparameters.length; i++){
+        if(dataStore.ADCparameters[i].key == dataStore.detector.displayParameter)
+            return i;
+    }
+
+    return -1;
+}
+
 function sortODBEquipment(payload){
     // take the ODB equipment directory and populate the HV info with it.
 
@@ -740,11 +740,13 @@ function writeTooltip(channel){
 
     var tooltip = document.getElementById('tooltip'),
         text = '<span class="highlightText">' + channel + '</span><br>', 
-        i, key, val,
-        dataKeys = Object.keys(dataStore.data[channel]);
+        i, key, val, unit,
+        dataKeys = Object.keys(dataStore.data[channel]),
+        parameterIndex = findADCparameterIndex();
 
     dataStore.tooltip.currentTooltipTarget = channel;
 
+    // main values (rates, HV, thresholds)
     for(i=0; i<dataKeys.length; i++){
         if(!dataStore.detector.subviewPrettyText[dataKeys[i]])
             continue;
@@ -752,6 +754,17 @@ function writeTooltip(channel){
         val = dataStore.data[channel][dataKeys[i]];
         text += dataStore.detector.subviewPrettyText[dataKeys[i]] + ': ';
         text += (isNumeric(val) ? val.toFixed() + ' ' + dataStore.detector.subviewUnits[key] : 'Not Reporting') + '<br>';
+    }
+
+    // current ADC parameter
+    if(isADCChannel(channel)){
+        val = dataStore.data[channel][dataStore.detector.displayParameter];
+        unit = dataStore.ADCparameters[parameterIndex].unit;
+        text += dataStore.ADCparameters[parameterIndex].label + ': ';
+        if(unit == 'bool')
+            text += isNumeric(val) ? ( ((val == 1) ? 'True' : 'False')) : 'Not Reporting'
+        else
+            text += (isNumeric(val) ? val.toFixed() + ' ' + unit : 'Not Reporting');
     }
 
     tooltip.innerHTML = text;
