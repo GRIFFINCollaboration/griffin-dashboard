@@ -79,15 +79,15 @@
                 X = dataStore.detector.upstreamCenterX;
             Y = dataStore.detector.upstreamCenterY;
 
-            if(i%10<5){
-                points = [  dataStore.detector.outerVertexX[i%10], dataStore.detector.outerVertexY[i%10], 
-                            dataStore.detector.outerVertexX[(i%10 + 1)%5], dataStore.detector.outerVertexY[(i%10 + 1)%5], 
-                            dataStore.detector.innerVertexX[(i%10 + 1)%5], dataStore.detector.innerVertexY[(i%10 + 1)%5], 
-                            dataStore.detector.innerVertexX[i%10], dataStore.detector.innerVertexY[i%10]
+            if(i>4 && i<15){
+                points = [  dataStore.detector.outerVertexX[i%5], dataStore.detector.outerVertexY[i%5], 
+                            dataStore.detector.outerVertexX[(i%5 + 1)%5], dataStore.detector.outerVertexY[(i%5 + 1)%5], 
+                            dataStore.detector.innerVertexX[(i%5 + 1)%5], dataStore.detector.innerVertexY[(i%5 + 1)%5], 
+                            dataStore.detector.innerVertexX[i%5], dataStore.detector.innerVertexY[i%5]
                         ];
             } else{
-                points = [  dataStore.detector.innerVertexX[i%10 - 5], dataStore.detector.innerVertexY[i%10 - 5], 
-                            dataStore.detector.innerVertexX[(i%10 - 4)%5], dataStore.detector.innerVertexY[(i%10 - 4)%5], 
+                points = [  dataStore.detector.innerVertexX[i%5], dataStore.detector.innerVertexY[i%5], 
+                            dataStore.detector.innerVertexX[(i%5 + 1)%5], dataStore.detector.innerVertexY[(i%5 + 1)%5], 
                             0, 0
                         ];
             }
