@@ -35,35 +35,37 @@ canonicalMSC = {
         ZDS: {
             energy: {
                 M: 2,
-                S: 6,
-                C: 1
-            },
-            time: {
-                M: 2,
-                S: 2,
-                C: 8
-            }
+                S: 0, // ZDS in same GRIF-16 as downstream sceptar
+                C: 15
+            }//,
+           // time: {
+           //     M: 2,
+            //    S: 2,
+            //    C: 8
+           // }
         },
         M: 2,
-        S: [4,5,6,7,8] // channels divided into 5 groups of 4: 1-4, 5-8, 9-12, 13-16, 17-20
+       // S: [4,5,6,7,8] // If using GRIF-4G: channels divided into 5 groups of 4: 1-4, 5-8, 9-12, 13-16, 17-20
+        S: [0,1] // If using GRIF-16:  channels divided into 2 groups of 10: 1-10, 11-20
+    },
+
+    PACES: {
+        M: 2,
+        S: 1, // PACES in same GRIF-16 as Upstream sceptar
+	C: 11
     },
 
     LaBr3: {
         M: 2,
         energy: {
-            S: 1
+            S: [2,3] // energies split in two groups of 4
         },
         time: {
-            S: 2
+            S: 4
         },
         suppressors: {
-            S: [1,3]  // first 8 in 0x-1--, last 16 in 0x-3--
+            S: [2,3]  // first 12 in 0x-3--, last 12 in 0x-4--
         }
-    },
-
-    PACES: {
-        M: 2,
-        S: 0
     },
 
     SPICE: {
@@ -206,19 +208,19 @@ function configSCEPTAR(US, DS, ZDS){
             addr: stringAddress(canonicalMSC.SCEPTAR.ZDS.energy.M,canonicalMSC.SCEPTAR.ZDS.energy.S,canonicalMSC.SCEPTAR.ZDS.energy.C),
             datatype: canonicalMSC.datatypes.zds
         });
-        MSC.push({
-            chan: 'ZDS01XT00X', 
-            M: canonicalMSC.SCEPTAR.ZDS.time.M, 
-            S: canonicalMSC.SCEPTAR.ZDS.time.S, 
-            C: canonicalMSC.SCEPTAR.ZDS.time.C,
-            addr: stringAddress(canonicalMSC.SCEPTAR.ZDS.time.M,canonicalMSC.SCEPTAR.ZDS.time.S,canonicalMSC.SCEPTAR.ZDS.time.C),
-            datatype: canonicalMSC.datatypes.zds
-        });
+      //  MSC.push({
+      //      chan: 'ZDS01XT00X', 
+      //      M: canonicalMSC.SCEPTAR.ZDS.time.M, 
+      //      S: canonicalMSC.SCEPTAR.ZDS.time.S, 
+      //      C: canonicalMSC.SCEPTAR.ZDS.time.C,
+      //      addr: stringAddress(canonicalMSC.SCEPTAR.ZDS.time.M,canonicalMSC.SCEPTAR.ZDS.time.S,canonicalMSC.SCEPTAR.ZDS.time.C),
+      //      datatype: canonicalMSC.datatypes.zds
+      //  });
     } else if(DS){
         for(i=1; i<11; i++){
             name = 'SEP' + ((i<10) ? '0'+i : i) + 'XN00X';
             masterChan = canonicalMSC.SCEPTAR.M;
-            collectorChan = canonicalMSC.SCEPTAR.S[Math.floor((i-1)/4)];
+            collectorChan = canonicalMSC.SCEPTAR.S[0];
             ADC = (i-1)%4
             MSC.push({
                 chan: name, 
@@ -234,7 +236,7 @@ function configSCEPTAR(US, DS, ZDS){
         for(i=11; i<21; i++){
             name = 'SEP' + i + 'XN00X';
             masterChan = canonicalMSC.SCEPTAR.M;
-            collectorChan = canonicalMSC.SCEPTAR.S[Math.floor((i-1)/4)];
+            collectorChan = canonicalMSC.SCEPTAR.S[1];
             ADC = (i-1)%4
             MSC.push({
                 chan: name, 
@@ -250,28 +252,50 @@ function configSCEPTAR(US, DS, ZDS){
     return MSC;
 }
 
+function configPACES(){
+    var names = ['PAC01XN00X', 'PAC02XN00X', 'PAC03XN00X', 'PAC04XN00X', 'PAC05XN00X'],
+        MSC = [], masterChan, collectorChan, ADC, i;
+
+    for(i=0; i<5; i++){
+        masterChan = canonicalMSC.PACES.M;
+        collectorChan = canonicalMSC.PACES.S;
+        ADC = canonicalMSC.PACES.C+i;
+        MSC.push({
+            chan: names[i], 
+            M:masterChan, 
+            S:collectorChan, 
+            C:ADC,
+            addr: stringAddress(masterChan,collectorChan,ADC),
+            datatype: canonicalMSC.datatypes.paces
+        });
+    }
+
+    return MSC;
+}
+
 function configLaBr3(US, DS){
 
     var name, MSC = [], masterChan, collectorChan, ADC, min, max, i;
 
     if(!US && !DS) return [names, MSC]; //do nothing
 
-    if(DS)
+    if(DS){
         min = 0;
-    else
-        min = 4;
-
-    if(US)
-        max = 8;
-    else
         max = 4;
-
+        slave=0;
+    }
+    if(US){
+	min = 4;
+        max = 8;
+        slave=1;
+    }
+	
     //LaBr - energy
     for(i=min; i<max; i++){
         name = 'DAL0'+(1+i)+'XN00X';
         masterChan = canonicalMSC.LaBr3.M;
-        collectorChan = canonicalMSC.LaBr3.energy.S
-        ADC = i;
+        collectorChan = canonicalMSC.LaBr3.energy.S[slave]
+        ADC = i-min;
         MSC.push({
             chan: name, 
             M: masterChan, 
@@ -286,7 +310,7 @@ function configLaBr3(US, DS){
         name = 'DAL0'+(1+i)+'XT00X';
         masterChan = canonicalMSC.LaBr3.M;
         collectorChan = canonicalMSC.LaBr3.time.S
-        ADC = i;
+        ADC = i*2;
         MSC.push({
             chan: name, 
             M: masterChan, 
@@ -303,10 +327,10 @@ function configLaBr3(US, DS){
             masterChan = canonicalMSC.LaBr3.M;
             if(i<2 || (i==2 && j<2)){ // first 8
                 collectorChan = canonicalMSC.LaBr3.suppressors.S[0];
-                ADC = 3*i+j + 8
+                ADC = 3*i+j
             }else{ // last 16
                 collectorChan = canonicalMSC.LaBr3.suppressors.S[1];
-                ADC = 3*i+j - 8
+                ADC = 3*(i-min)+j
             }
             MSC.push({
                 chan: name, 
@@ -318,27 +342,6 @@ function configLaBr3(US, DS){
             });  
         }
     }   
-
-    return MSC;
-}
-
-function configPACES(){
-    var names = ['PAC01XN00X', 'PAC02XN00X', 'PAC03XN00X', 'PAC04XN00X', 'PAC05XN00X'],
-        MSC = [], masterChan, collectorChan, ADC, i;
-
-    for(i=0; i<5; i++){
-        masterChan = canonicalMSC.PACES.M;
-        collectorChan = canonicalMSC.PACES.S;
-        ADC = i;
-        MSC.push({
-            chan: names[i], 
-            M:masterChan, 
-            S:collectorChan, 
-            C:ADC,
-            addr: stringAddress(masterChan,collectorChan,ADC),
-            datatype: canonicalMSC.datatypes.paces
-        });
-    }
 
     return MSC;
 }
