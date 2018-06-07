@@ -154,7 +154,7 @@ function configGRIFFINclover(index, suppressors){
 
         // BGO
         for(j=0; j<quads.length; j++){
-            for(i=0; i<5; i++){
+            for(i=1; i<6; i++){
                 name = vetoPrefix + quads[j] + 'N0' + i + 'X';
                 quadKey = (j<2) ? 'BG' : 'RW';
                 masterChan = canonicalMSC.GRIFFIN.M[index];
