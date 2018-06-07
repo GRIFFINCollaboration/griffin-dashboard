@@ -221,7 +221,7 @@ function configSCEPTAR(US, DS, ZDS){
             name = 'SEP' + ((i<10) ? '0'+i : i) + 'XN00X';
             masterChan = canonicalMSC.SCEPTAR.M;
             collectorChan = canonicalMSC.SCEPTAR.S[0];
-            ADC = (i-1)%4
+            ADC = (i-1)%4;
             MSC.push({
                 chan: name, 
                 M: masterChan, 
@@ -275,7 +275,7 @@ function configPACES(){
 
 function configLaBr3(US, DS){
 
-    var name, MSC = [], masterChan, collectorChan, ADC, min, max, i;
+    var name, MSC = [], masterChan, collectorChan, ADC, min, max, i, slave;
 
     if(!US && !DS) return [names, MSC]; //do nothing
 
@@ -294,7 +294,7 @@ function configLaBr3(US, DS){
     for(i=min; i<max; i++){
         name = 'DAL0'+(1+i)+'XN00X';
         masterChan = canonicalMSC.LaBr3.M;
-        collectorChan = canonicalMSC.LaBr3.energy.S[slave]
+        collectorChan = canonicalMSC.LaBr3.energy.S[slave];
         ADC = i-min;
         MSC.push({
             chan: name, 
@@ -325,13 +325,8 @@ function configLaBr3(US, DS){
         for(j=0; j<3; j++){
             name = 'DAS0'+(1+i)+'XN0'+j+'X';
             masterChan = canonicalMSC.LaBr3.M;
-            if(i<2 || (i==2 && j<2)){ // first 8
-                collectorChan = canonicalMSC.LaBr3.suppressors.S[0];
-                ADC = 3*i+j
-            }else{ // last 16
-                collectorChan = canonicalMSC.LaBr3.suppressors.S[1];
-                ADC = 3*(i-min)+j
-            }
+            collectorChan = canonicalMSC.LaBr3.energy.S[slave];
+            ADC = 3*(i-min)+j;
             MSC.push({
                 chan: name, 
                 M: masterChan, 
