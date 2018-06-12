@@ -660,8 +660,8 @@
 
                         //insert per-channel rows
                         if(DSC!='sep' && i==1){
-                            group = canonical.slice(6,10);
-                            canonical = canonical.slice(10);
+                            group = canonical.slice(0,5);
+                            canonical = canonical.slice(5);
                         } else{
                             group = canonical.slice(0,10);
                             canonical = canonical.slice(10);
