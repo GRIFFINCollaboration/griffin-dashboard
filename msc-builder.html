@@ -618,9 +618,8 @@
                     );
 
                     canonical = canonical.slice(2);                    
-                }
-                // one table for each group of 4 sceptar channels;
-                // groups 1 and 2 are downstream; 4 and 5 are upstream; and 3 is split between the two.
+                } // end ZDS
+
                 // one table for each group of 10 sceptar channels;
 		// group 1 is downstream, and group 2 is upstream.
 		if(DSC == 'sep' || USC == 'sep'){
@@ -665,11 +664,11 @@
 
                         //insert per-channel rows
                         if(DSC!='sep' && i==2){
-                            group = canonical.slice(0,2);
-                            canonical = canonical.slice(2);
+                            group = canonical.slice(6,10);
+                            canonical = canonical.slice(10);
                         } else{
-                            group = canonical.slice(0,4);
-                            canonical = canonical.slice(4);
+                            group = canonical.slice(0,10);
+                            canonical = canonical.slice(10);
                         }
                         document.getElementById(`sceptar-${i+1}-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
