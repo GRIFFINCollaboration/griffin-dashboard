@@ -1,0 +1,56 @@
+<template id='labr3-custom-g2'>
+    <table id='labr3-{{group}}-MSC' class='table'>
+    	<tbody>
+    		<tr>
+    			<h4>LaBr3 Energy</h4>
+    			<table id='labr3-energy-2-MSC' class='table'>
+        			<tbody>
+            				<tr>
+                				<td>Channel</td>
+                				<td>M</td>
+                				<td>S</td>
+                				<td>C</td>
+                				<td>Address</td>
+            				</tr>
+            				<tr>
+                				<td>Apply to all:</td>
+                				<td>
+                    					<input type='number' id='labr3-energy-global-M' key={{key-E2}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
+                				</td>
+                				<td>
+                 				   	<input type='number' id='labr3-energy-global-S' key={{key-E2}} min=0 max=16 step=1 value={{S-E2}} onchange="updateAddr.call(this, 'S')"></input>
+                				</td>
+                				<td>-</td>
+                				<td>-</td>
+            				</tr>
+        			</tbody>
+    			</table>
+    		</tr>
+		<tr>
+			<h4>LaBr3 Suppressors</h4>
+			<table id='labr3-suppressors-2-MSC' class='table'>
+				<tbody>
+					<tr>
+			         		<td>Channel</td>
+                				<td>M</td>
+                				<td>S</td>
+                				<td>C</td>
+                				<td>Address</td>
+            				</tr>
+            				<tr>
+                				<td>Apply to all:</td>
+                				<td>
+                    					<input type='number' id='labr3-suppressors-2-global-M' key={{key-S2}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
+                				</td>
+                				<td>
+                 				   	<input type='number' id='labr3-suppressors-2-global-S' key={{key-S2}} min=0 max=16 step=1 value={{S-S2}} onchange="updateAddr.call(this, 'S')"></input>
+                				</td>
+                				<td>-</td>
+                				<td>-</td>
+            				</tr>
+        			</tbody>
+    			</table>
+		</tr>
+    	</tbody>
+    </table>
+</template>

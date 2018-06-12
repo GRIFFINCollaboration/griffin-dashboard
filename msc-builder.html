@@ -71,7 +71,8 @@
         <link id='griffin-channel-row-b' rel="import" href="templates/msc-builder/griffin-channel-row-b.html">
         <link id='zds-custom' rel="import" href="templates/msc-builder/zds-custom.html">
         <link id='sceptar-custom' rel="import" href="templates/msc-builder/sceptar-custom.html">
-        <link id='labr3-custom' rel="import" href="templates/msc-builder/labr3-custom.html">
+        <link id='labr3-custom-g1' rel="import" href="templates/msc-builder/labr3-custom-g1.html">
+        <link id='labr3-custom-g2' rel="import" href="templates/msc-builder/labr3-custom-g2.html">
         <link id='paces-custom' rel="import" href="templates/msc-builder/paces-custom.html">
         <link id='spice-custom' rel="import" href="templates/msc-builder/spice-custom.html">
         <link id='s2s3-custom' rel="import" href="templates/msc-builder/s2s3-custom.html">
@@ -309,7 +310,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'griffin-channel-row-a', 'griffin-channel-row-b', 'zds-custom', 'sceptar-custom', 'labr3-custom', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
+                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'griffin-channel-row-a', 'griffin-channel-row-b', 'zds-custom', 'sceptar-custom', 'labr3-custom-g1', 'labr3-custom-g2', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -613,11 +614,11 @@
                         dataStore.templates['channel-row'], 
                         {
                             'key': 'zds-group',
-                            'channels': canonical.slice(0,2)
+                            'channels': canonical.slice(0,1)
                         }
                     );
 
-                    canonical = canonical.slice(2);                    
+                    canonical = canonical.slice(1);                    
                 } // end ZDS
 
                 // one table for each group of 10 sceptar channels;
@@ -679,71 +680,101 @@
 
             function prepareLaBr3(USL, DSL){
 
-                var canonical, energy, time, suppressor_group1, suppressor_group2;
+                var canonical, energy1, energy2, time, suppressor_group1, suppressor_group2;
                 
-                if(USL == 'grgdal' || DSL == 'grgdal'){
-                    canonical = configLaBr3(USL == 'grgdal', DSL == 'grgdal');
-
-                    //set up collapsible element
-                    document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
-                            dataStore.templates['collapse-section'], 
-                            {
-                                'title': 'LaBr3', 
-                                'targetID': 'LaBr3Table',
-                                'buttonClass': 'btn-primary'
-                            }
-                        );
-
-                    //inject table wrap
-                    document.getElementById('LaBr3Table').innerHTML = Mustache.to_html(
-                        dataStore.templates['labr3-custom'], 
+                document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
+                        dataStore.templates['collapse-section'], 
                         {
-                            'M': canonicalMSC.LaBr3.M,
-                            'S-E': canonicalMSC.LaBr3.energy.S,
-                            'S-T': canonicalMSC.LaBr3.time.S,
-                            'S-S1': canonicalMSC.LaBr3.suppressors.S[0],
-                            'S-S2': canonicalMSC.LaBr3.suppressors.S[1],
-                            'key-E': 'labr3-group-E',
-                            'key-T': 'labr3-group-T',
-                            'key-S1': 'labr3-group-S1',
-                            'key-S2': 'labr3-group-S2',
-                            'downstream': DSL=='grgdal' ? [true] : []
+                            'title': 'LaBr3', 
+                            'targetID': 'labr3Wrap',
+                            'buttonClass': 'btn-primary'
                         }
                     );
+
+                if(USL == 'grgdal' || DSL == 'grgdal'){
+                    canonical = configLaBr3(USL == 'grgdal', DSL == 'grgdal');
+		
+		
+			if (DSL == 'grgdal') {
+                    		//set up collapsible element
+                    		document.getElementById('labr3Wrap').innerHTML += Mustache.to_html(
+                        		    dataStore.templates['collapse-section'], 
+                            		    {
+                                		'title': 'LaBr3 Group 1', 
+                               			'targetID': 'LaBr3Table1',
+                                		'buttonClass': 'btn-success'
+                            		    }
+                        		);
+
+                    		//inject table wrap
+                    		document.getElementById('LaBr3Table1').innerHTML = Mustache.to_html(
+                    		    dataStore.templates['labr3-custom-g1'], 
+                       		    {
+                        		'M': canonicalMSC.LaBr3.M,
+                        		'S-E1': canonicalMSC.LaBr3.energy.S[0],
+                       		      	'S-S1': canonicalMSC.LaBr3.suppressors.S[0],
+                       		     	'key-E1': 'labr3-group-E1',
+                        		'key-S1': 'labr3-group-S1',
+                            		'downstream': DSL=='grgdal' ? [true] : []
+                        	     }
+                    	         );
+
+			}
+
+			if (USL == "grgdal") {
+
+                    		//set up collapsible element
+                    		document.getElementById('labr3Wrap').innerHTML += Mustache.to_html(
+                        		    dataStore.templates['collapse-section'], 
+                            		    {
+                                		'title': 'LaBr3 Group 2', 
+                               			'targetID': 'LaBr3Table2',
+                                		'buttonClass': 'btn-success'
+                            		    }
+                        		);
+
+                    		document.getElementById('LaBr3Table2').innerHTML = Mustache.to_html(
+                        		dataStore.templates['labr3-custom-g2'], 
+                        		{
+                            			'M': canonicalMSC.LaBr3.M,
+                            			'S-E2': canonicalMSC.LaBr3.energy.S[1],
+                            			'S-S2': canonicalMSC.LaBr3.suppressors.S[1],
+                            			'key-E1': 'labr3-group-E1',
+                            			'key-S2': 'labr3-group-S2',
+                            			'downstream': DSL=='grgdal' ? [true] : []
+                        		}
+                    		);
+			}
                 
 
                     if(DSL == 'grgdal' && USL=='grgdal'){                
-                        energy = canonical.slice(0,8);
-                        time = canonical.slice(8,16);
-                        suppressor_group1 = canonical.slice(16,24);
-                        suppressor_group2 = canonical.slice(24);
+                        energy1 = canonical.slice(0,4);
+			energy2 = canonical.slice(4,8);
+                        suppressor_group1 = canonical.slice(8,20);
+                        suppressor_group2 = canonical.slice(20);
                     } else if (DSL == 'grgdal' || USL == 'grgdal'){
-                        energy = canonical.slice(0,4);
-                        time = canonical.slice(4,8);
                         if(DSL == 'grgdal'){
-                            suppressor_group1 = canonical.slice(8,16);
-                            suppressor_group2 = canonical.slice(16);
+			    energy1 = canonical.slice(0,4);
+			    energy2 = [];
+                            suppressor_group1 = canonical.slice(4);
+			    suppressor_group2 = [];
                         } else if (USL == 'grgdal'){
+			    energy1 = [];
+                            energy2 = canonical.slice(0,4);
                             suppressor_group1 = [];
-                            suppressor_group2 = canonical.slice(8)
+                            suppressor_group2 = canonical.slice(4)
                         }
                     }
 
                     //insert per-channel rows
-                    document.getElementById('labr3-energy-MSC').innerHTML += Mustache.to_html(
+                    document.getElementById('labr3-energy-1-MSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
-                            'channels': energy,
+                            'channels': energy1,
                             'key': 'labr3-group-E'
                         }
                     );                
-                    document.getElementById('labr3-time-MSC').innerHTML += Mustache.to_html(
-                        dataStore.templates['channel-row'], 
-                        {
-                            'channels': time,
-                            'key': 'labr3-group-T'
-                        }
-                    );
+
                     if(suppressor_group1.length > 0){
                         document.getElementById('labr3-suppressors-1-MSC').innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
@@ -753,6 +784,15 @@
                             }
                         );   
                     }
+
+                    document.getElementById('labr3-energy-2-MSC').innerHTML += Mustache.to_html(
+                        dataStore.templates['channel-row'], 
+                        {
+                            'channels': energy2,
+                            'key': 'labr3-group-E'
+                        }
+                    );    
+            
                     if(suppressor_group2.length > 0){
                         document.getElementById('labr3-suppressors-2-MSC').innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
