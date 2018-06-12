@@ -161,7 +161,7 @@ function configGRIFFINclover(index, suppressors){
                 quadKey = (j<2) ? 'BG' : 'RW';
                 masterChan = canonicalMSC.GRIFFIN.M[index];
                 collectorChan = canonicalMSC.GRIFFIN.suppressed.suppressors[quadKey].S[index];
-                ADC = 5 + (j%2)*5+i;
+                ADC = 4 + (j%2)*5+i;
                 MSC.push({
                     chan: name, 
                     M:masterChan, 
@@ -323,7 +323,7 @@ function configLaBr3(US, DS){
     //Suppressors
     for(i=min; i<max; i++){
         for(j=0; j<3; j++){
-            name = 'DAS0'+(1+i)+'XN0'+j+'X';
+            name = 'DAS0'+(1+i)+'XN0'+(j+1)+'X';
             masterChan = canonicalMSC.LaBr3.M;
             collectorChan = canonicalMSC.LaBr3.energy.S[slave];
             ADC = 3*(i-min)+j;
