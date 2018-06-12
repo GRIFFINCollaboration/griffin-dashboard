@@ -279,21 +279,28 @@ function configLaBr3(US, DS){
 
     if(!US && !DS) return [names, MSC]; //do nothing
 
-    if(DS){
+    if(DS && !US){
         min = 0;
         max = 4;
         slave=0;
     }
-    else if(US){
+    else if(US && !DS){
 	min = 4;
         max = 8;
         slave=1;
+    } 
+    else {
+	min = 0;
+	max = 8;
+        slave = 0;
     }
 	
     //LaBr - energy
     for(i=min; i<max; i++){
-        name = 'LBL'+((i < 10)? '0'+i : i)+'XN00X';
+        name = 'LBL'+((i < 10)? '0'+(i+1) : i+1)+'XN00X';
         masterChan = canonicalMSC.LaBr3.M;
+	if (i < 4) { slave = 0; }
+	else { slave = 1; }
         collectorChan = canonicalMSC.LaBr3.energy.S[slave];
         ADC = i-min;
         MSC.push({
@@ -309,11 +316,11 @@ function configLaBr3(US, DS){
     for(i=min; i<max; i++){
         for(j=0; j<3; j++){
 	    if (j == 0) {
-            	name = 'LBS'+((i < 10)? '0'+i : i)+'A'+'N00X';
+            	name = 'LBS'+((i < 10)? '0'+(i+1) : (i+1))+'A'+'N00X';
 	    } else if (j == 1) {
-		name = 'LBS'+((i < 10)? '0'+i : i)+'B'+'N00X';
+		name = 'LBS'+((i < 10)? '0'+(i+1) : (i+1))+'B'+'N00X';
 	    } else {
-		name = 'LBS'+((i < 10)? '0'+i : i)+'C'+'N00X';
+		name = 'LBS'+((i < 10)? '0'+(i+1) : (i+1))+'C'+'N00X';
 	    }
             masterChan = canonicalMSC.LaBr3.M;
             collectorChan = canonicalMSC.LaBr3.energy.S[slave];
