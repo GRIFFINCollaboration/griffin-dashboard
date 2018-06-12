@@ -67,7 +67,8 @@
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
         <link id='griffin-custom-unsuppressed' rel="import" href="templates/msc-builder/griffin-custom-unsuppressed.html">
         <link id='griffin-custom-suppressed' rel="import" href="templates/msc-builder/griffin-custom-suppressed.html">
-        <link id='griffin-channel-row' rel="import" href="templates/msc-builder/griffin-channel-row.html">
+        <link id='griffin-channel-row-a' rel="import" href="templates/msc-builder/griffin-channel-row-a.html">
+        <link id='griffin-channel-row-b' rel="import" href="templates/msc-builder/griffin-channel-row-b.html">
         <link id='zds-custom' rel="import" href="templates/msc-builder/zds-custom.html">
         <link id='sceptar-custom' rel="import" href="templates/msc-builder/sceptar-custom.html">
         <link id='labr3-custom' rel="import" href="templates/msc-builder/labr3-custom.html">
@@ -308,7 +309,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'griffin-channel-row', 'zds-custom', 'sceptar-custom', 'labr3-custom', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
+                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'griffin-channel-row-a', 'griffin-channel-row-b', 'zds-custom', 'sceptar-custom', 'labr3-custom', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -515,7 +516,7 @@
 
                         //insert per-channel rows
                         document.getElementById(`griffin-${position}-A-MSC`).innerHTML += Mustache.to_html(
-                            dataStore.templates['griffin-channel-row'], 
+                            dataStore.templates['griffin-channel-row-a'], 
                             {
                                 'channels': canonical.slice(0,4),
                                 'key': 'griffin-group-' + i + '-A',
@@ -523,7 +524,7 @@
                             }
                         );
                         document.getElementById(`griffin-${position}-B-MSC`).innerHTML += Mustache.to_html(
-                            dataStore.templates['griffin-channel-row'], 
+                            dataStore.templates['griffin-channel-row-b'], 
                             {
                                 'channels': canonical.slice(4,8),
                                 'key': 'griffin-group-' + i + '-B',
@@ -570,7 +571,7 @@
 
                         //insert per-channel rows
                         document.getElementById(`griffin-${position}-MSC`).innerHTML += Mustache.to_html(
-                            dataStore.templates['griffin-channel-row'], 
+                            dataStore.templates['griffin-channel-row-a'], 
                             {
                                 'channels': canonical,
                                 'key': 'griffin-group-' + i,
