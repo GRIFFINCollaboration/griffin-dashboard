@@ -621,7 +621,9 @@
                 }
                 // one table for each group of 4 sceptar channels;
                 // groups 1 and 2 are downstream; 4 and 5 are upstream; and 3 is split between the two.
-                if(DSC == 'sep' || USC == 'sep'){
+                // one table for each group of 10 sceptar channels;
+		// group 1 is downstream, and group 2 is upstream.
+		if(DSC == 'sep' || USC == 'sep'){
                     //top level detector collapsible
                     document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
                             dataStore.templates['collapse-section'], 
@@ -634,10 +636,10 @@
 
 
 
-                    for(i=(DSC=='sep' ? 0:2); i<(USC=='sep' ? 5:3); i++){
+                    for(i=(DSC=='sep' ? 0:2); i<(USC=='sep' ? 2:3); i++){
                         //set up collapsible element
                         if( (DSC == 'sep' && USC == 'sep') || i!=2 )
-                            title = 'SCEPTAR Channels ' + (i*4+1) + ' to ' + (i+1)*4;
+                            title = 'SCEPTAR Channels ' + (i*10+1) + ' to ' + (i*10);
                         else if(DSC == 'sep')
                             title = 'SCEPTAR Channels 9 and 10';
                         else if(USC == 'sep')
