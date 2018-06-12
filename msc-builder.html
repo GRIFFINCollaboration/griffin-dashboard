@@ -67,7 +67,8 @@
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
         <link id='griffin-custom-unsuppressed' rel="import" href="templates/msc-builder/griffin-custom-unsuppressed.html">
         <link id='griffin-custom-suppressed' rel="import" href="templates/msc-builder/griffin-custom-suppressed.html">
-        <link id='griffin-channel-row' rel="import" href="templates/msc-builder/griffin-channel-row.html">
+        <link id='griffin-channel-row-a' rel="import" href="templates/msc-builder/griffin-channel-row-a.html">
+        <link id='griffin-channel-row-b' rel="import" href="templates/msc-builder/griffin-channel-row-b.html">
         <link id='zds-custom' rel="import" href="templates/msc-builder/zds-custom.html">
         <link id='sceptar-custom' rel="import" href="templates/msc-builder/sceptar-custom.html">
         <link id='labr3-custom' rel="import" href="templates/msc-builder/labr3-custom.html">
@@ -308,7 +309,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'griffin-channel-row', 'zds-custom', 'sceptar-custom', 'labr3-custom', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
+                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'griffin-channel-row-a', 'griffin-channel-row-b', 'zds-custom', 'sceptar-custom', 'labr3-custom', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -515,7 +516,7 @@
 
                         //insert per-channel rows
                         document.getElementById(`griffin-${position}-A-MSC`).innerHTML += Mustache.to_html(
-                            dataStore.templates['griffin-channel-row'], 
+                            dataStore.templates['griffin-channel-row-a'], 
                             {
                                 'channels': canonical.slice(0,4),
                                 'key': 'griffin-group-' + i + '-A',
@@ -523,7 +524,7 @@
                             }
                         );
                         document.getElementById(`griffin-${position}-B-MSC`).innerHTML += Mustache.to_html(
-                            dataStore.templates['griffin-channel-row'], 
+                            dataStore.templates['griffin-channel-row-b'], 
                             {
                                 'channels': canonical.slice(4,8),
                                 'key': 'griffin-group-' + i + '-B',
@@ -570,7 +571,7 @@
 
                         //insert per-channel rows
                         document.getElementById(`griffin-${position}-MSC`).innerHTML += Mustache.to_html(
-                            dataStore.templates['griffin-channel-row'], 
+                            dataStore.templates['griffin-channel-row-a'], 
                             {
                                 'channels': canonical,
                                 'key': 'griffin-group-' + i,
@@ -617,10 +618,11 @@
                     );
 
                     canonical = canonical.slice(2);                    
-                }
-                // one table for each group of 4 sceptar channels;
-                // groups 1 and 2 are downstream; 4 and 5 are upstream; and 3 is split between the two.
-                if(DSC == 'sep' || USC == 'sep'){
+                } // end ZDS
+
+                // one table for each group of 10 sceptar channels;
+		// group 1 is downstream, and group 2 is upstream.
+		if(DSC == 'sep' || USC == 'sep'){
                     //top level detector collapsible
                     document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
                             dataStore.templates['collapse-section'], 
@@ -633,14 +635,10 @@
 
 
 
-                    for(i=(DSC=='sep' ? 0:2); i<(USC=='sep' ? 5:3); i++){
+                    for(i=(DSC=='sep' ? 0:1); i<(USC=='sep' ? 2:1); i++){
                         //set up collapsible element
-                        if( (DSC == 'sep' && USC == 'sep') || i!=2 )
-                            title = 'SCEPTAR Channels ' + (i*4+1) + ' to ' + (i+1)*4;
-                        else if(DSC == 'sep')
-                            title = 'SCEPTAR Channels 9 and 10';
-                        else if(USC == 'sep')
-                            title = 'SCEPTAR Channels 11 and 12';
+                        if( (DSC == 'sep' || USC == 'sep') )
+                            title = 'SCEPTAR Channels ' + (i*10+1) + ' to ' + (i+1)*10;
                         document.getElementById('sceptarWrap').innerHTML += Mustache.to_html(
                                 dataStore.templates['collapse-section'], 
                                 {
@@ -661,12 +659,12 @@
                         );
 
                         //insert per-channel rows
-                        if(DSC!='sep' && i==2){
-                            group = canonical.slice(0,2);
-                            canonical = canonical.slice(2);
+                        if(DSC!='sep' && i==1){
+                            group = canonical.slice(0,10);
+                            canonical = canonical.slice(10);
                         } else{
-                            group = canonical.slice(0,4);
-                            canonical = canonical.slice(4);
+                            group = canonical.slice(0,10);
+                            canonical = canonical.slice(10);
                         }
                         document.getElementById(`sceptar-${i+1}-MSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
