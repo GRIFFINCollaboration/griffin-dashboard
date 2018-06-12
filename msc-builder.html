@@ -680,7 +680,7 @@
 
             function prepareLaBr3(USL, DSL){
 
-                var canonical, energy, time, suppressor_group1, suppressor_group2;
+                var canonical, energy1, energy2, time, suppressor_group1, suppressor_group2;
                 
                 document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
                         dataStore.templates['collapse-section'], 
@@ -711,9 +711,9 @@
                     		    dataStore.templates['labr3-custom-g1'], 
                        		    {
                         		'M': canonicalMSC.LaBr3.M,
-                        		'S-E': canonicalMSC.LaBr3.energy.S,
+                        		'S-E1': canonicalMSC.LaBr3.energy.S[0],
                        		      	'S-S1': canonicalMSC.LaBr3.suppressors.S[0],
-                       		     	'key-E': 'labr3-group-E',
+                       		     	'key-E1': 'labr3-group-E1',
                         		'key-S1': 'labr3-group-S1',
                             		'downstream': DSL=='grgdal' ? [true] : []
                         	     }
@@ -737,9 +737,9 @@
                         		dataStore.templates['labr3-custom-g2'], 
                         		{
                             			'M': canonicalMSC.LaBr3.M,
-                            			'S-E': canonicalMSC.LaBr3.energy.S,
+                            			'S-E2': canonicalMSC.LaBr3.energy.S[1],
                             			'S-S2': canonicalMSC.LaBr3.suppressors.S[1],
-                            			'key-E': 'labr3-group-E',
+                            			'key-E1': 'labr3-group-E1',
                             			'key-S2': 'labr3-group-S2',
                             			'downstream': DSL=='grgdal' ? [true] : []
                         		}
@@ -748,25 +748,29 @@
                 
 
                     if(DSL == 'grgdal' && USL=='grgdal'){                
-                        energy = canonical.slice(0,8);
+                        energy1 = canonical.slice(0,4);
+			energy2 = canonical.slice(4,8);
                         suppressor_group1 = canonical.slice(8,20);
                         suppressor_group2 = canonical.slice(20);
                     } else if (DSL == 'grgdal' || USL == 'grgdal'){
-                        energy = canonical.slice(0,4);
                         if(DSL == 'grgdal'){
+			    energy1 = canonical.slice(0,4);
+			    energy2 = [];
                             suppressor_group1 = canonical.slice(4);
 			    suppressor_group2 = [];
                         } else if (USL == 'grgdal'){
+			    energy1 = [];
+                            energy2 = canonical.slice(0,4);
                             suppressor_group1 = [];
                             suppressor_group2 = canonical.slice(4)
                         }
                     }
 
                     //insert per-channel rows
-                    document.getElementById('labr3-energy-MSC').innerHTML += Mustache.to_html(
+                    document.getElementById('labr3-energy-1-MSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
-                            'channels': energy,
+                            'channels': energy1,
                             'key': 'labr3-group-E'
                         }
                     );                
@@ -780,6 +784,15 @@
                             }
                         );   
                     }
+
+                    document.getElementById('labr3-energy-2-MSC').innerHTML += Mustache.to_html(
+                        dataStore.templates['channel-row'], 
+                        {
+                            'channels': energy2,
+                            'key': 'labr3-group-E'
+                        }
+                    );    
+            
                     if(suppressor_group2.length > 0){
                         document.getElementById('labr3-suppressors-2-MSC').innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
