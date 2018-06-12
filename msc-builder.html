@@ -635,9 +635,9 @@
 
 
 
-                    for(i=(DSC=='sep' ? 0:2); i<(USC=='sep' ? 2:1); i++){
+                    for(i=(DSC=='sep' ? 0:1); i<(USC=='sep' ? 2:1); i++){
                         //set up collapsible element
-                        if( (DSC == 'sep' && USC == 'sep') || i!=2 )
+                        if( (DSC == 'sep' && USC == 'sep') || i!=1 )
                             title = 'SCEPTAR Channels ' + (i*10+1) + ' to ' + (i+1)*10;
                         else if(DSC == 'sep')
                             title = 'SCEPTAR Channels 9 and 10';
@@ -663,7 +663,7 @@
                         );
 
                         //insert per-channel rows
-                        if(DSC!='sep' && i==2){
+                        if(DSC!='sep' && i==1){
                             group = canonical.slice(6,10);
                             canonical = canonical.slice(10);
                         } else{
