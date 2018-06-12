@@ -323,6 +323,8 @@ function configLaBr3(US, DS){
 		name = 'LBS'+((i < 10)? '0'+(i+1) : (i+1))+'C'+'N00X';
 	    }
             masterChan = canonicalMSC.LaBr3.M;
+	    if (i < 4) { slave = 0; }
+	    else { slave = 1; }
             collectorChan = canonicalMSC.LaBr3.energy.S[slave];
             ADC = 3*(i-min)+j;
             MSC.push({

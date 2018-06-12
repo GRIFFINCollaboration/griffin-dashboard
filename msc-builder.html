@@ -693,52 +693,69 @@
 
                 if(USL == 'grgdal' || DSL == 'grgdal'){
                     canonical = configLaBr3(USL == 'grgdal', DSL == 'grgdal');
+		
+		
+			if (DSL == 'grgdal') {
+                    		//set up collapsible element
+                    		document.getElementById('labr3Wrap').innerHTML += Mustache.to_html(
+                        		    dataStore.templates['collapse-section'], 
+                            		    {
+                                		'title': 'LaBr3 Group 1', 
+                               			'targetID': 'LaBr3Table1',
+                                		'buttonClass': 'btn-success'
+                            		    }
+                        		);
 
-                    //set up collapsible element
-                    document.getElementById('labr3Wrap').innerHTML += Mustache.to_html(
-                            dataStore.templates['collapse-section'], 
-                            {
-                                'title': 'LaBr3 Group 1', 
-                                'targetID': 'LaBr3Table1',
-                                'buttonClass': 'btn-success'
-                            }
-                        );
+                    		//inject table wrap
+                    		document.getElementById('LaBr3Table1').innerHTML = Mustache.to_html(
+                    		    dataStore.templates['labr3-custom-g1'], 
+                       		    {
+                        		'M': canonicalMSC.LaBr3.M,
+                        		'S-E': canonicalMSC.LaBr3.energy.S,
+                       		      	'S-S1': canonicalMSC.LaBr3.suppressors.S[0],
+                       		     	'key-E': 'labr3-group-E',
+                        		'key-S1': 'labr3-group-S1',
+                            		'downstream': DSL=='grgdal' ? [true] : []
+                        	     }
+                    	         );
 
-                    //inject table wrap
-                    document.getElementById('LaBr3Table1').innerHTML = Mustache.to_html(
-                        dataStore.templates['labr3-custom-g1'], 
-                        {
-                            'M': canonicalMSC.LaBr3.M,
-                            'S-E': canonicalMSC.LaBr3.energy.S,
-                            'S-S1': canonicalMSC.LaBr3.suppressors.S[0],
-                            'key-E': 'labr3-group-E',
-                            'key-S1': 'labr3-group-S1',
-                            'downstream': DSL=='grgdal' ? [true] : []
-                        }
-                    );
+			}
 
-                    document.getElementById('LaBr3Table1').innerHTML = Mustache.to_html(
-                        dataStore.templates['labr3-custom-g2'], 
-                        {
-                            'M': canonicalMSC.LaBr3.M,
-                            'S-E': canonicalMSC.LaBr3.energy.S,
-                            'S-S2': canonicalMSC.LaBr3.suppressors.S[1],
-                            'key-E': 'labr3-group-E',
-                            'key-S2': 'labr3-group-S2',
-                            'downstream': DSL=='grgdal' ? [true] : []
-                        }
-                    );
+			if (USL == "grgdal") {
+
+                    		//set up collapsible element
+                    		document.getElementById('labr3Wrap').innerHTML += Mustache.to_html(
+                        		    dataStore.templates['collapse-section'], 
+                            		    {
+                                		'title': 'LaBr3 Group 2', 
+                               			'targetID': 'LaBr3Table2',
+                                		'buttonClass': 'btn-success'
+                            		    }
+                        		);
+
+                    		document.getElementById('LaBr3Table2').innerHTML = Mustache.to_html(
+                        		dataStore.templates['labr3-custom-g2'], 
+                        		{
+                            			'M': canonicalMSC.LaBr3.M,
+                            			'S-E': canonicalMSC.LaBr3.energy.S,
+                            			'S-S2': canonicalMSC.LaBr3.suppressors.S[1],
+                            			'key-E': 'labr3-group-E',
+                            			'key-S2': 'labr3-group-S2',
+                            			'downstream': DSL=='grgdal' ? [true] : []
+                        		}
+                    		);
+			}
                 
 
                     if(DSL == 'grgdal' && USL=='grgdal'){                
-                        energy = canonical.slice(0,4);
-                        suppressor_group1 = canonical.slice(8,12);
+                        energy = canonical.slice(0,8);
+                        suppressor_group1 = canonical.slice(12,16);
                         suppressor_group2 = canonical.slice(16);
                     } else if (DSL == 'grgdal' || USL == 'grgdal'){
                         energy = canonical.slice(0,4);
                         if(DSL == 'grgdal'){
-                            suppressor_group1 = canonical.slice(4,8);
-                            suppressor_group2 = canonical.slice(8);
+                            suppressor_group1 = canonical.slice(4);
+			    suppressor_group2 = [];
                         } else if (USL == 'grgdal'){
                             suppressor_group1 = [];
                             suppressor_group2 = canonical.slice(4)
