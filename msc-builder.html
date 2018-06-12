@@ -637,12 +637,8 @@
 
                     for(i=(DSC=='sep' ? 0:1); i<(USC=='sep' ? 2:1); i++){
                         //set up collapsible element
-                        if( (DSC == 'sep' && USC == 'sep') || i!=1 )
+                        if( (DSC == 'sep' || USC == 'sep') )
                             title = 'SCEPTAR Channels ' + (i*10+1) + ' to ' + (i+1)*10;
-                        else if(DSC == 'sep')
-                            title = 'SCEPTAR Channels 9 and 10';
-                        else if(USC == 'sep')
-                            title = 'SCEPTAR Channels 11 and 12';
                         document.getElementById('sceptarWrap').innerHTML += Mustache.to_html(
                                 dataStore.templates['collapse-section'], 
                                 {
