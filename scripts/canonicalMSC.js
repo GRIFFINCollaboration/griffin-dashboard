@@ -284,7 +284,7 @@ function configLaBr3(US, DS){
         max = 4;
         slave=0;
     }
-    if(US){
+    else if(US){
 	min = 4;
         max = 8;
         slave=1;
