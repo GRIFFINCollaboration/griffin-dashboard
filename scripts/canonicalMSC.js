@@ -237,7 +237,7 @@ function configSCEPTAR(US, DS, ZDS){
             name = 'SEP' + i + 'XN00X';
             masterChan = canonicalMSC.SCEPTAR.M;
             collectorChan = canonicalMSC.SCEPTAR.S[1];
-            ADC = (i-1)%10
+            ADC = (i-1)%10;
             MSC.push({
                 chan: name, 
                 M: masterChan, 
