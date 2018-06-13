@@ -831,16 +831,17 @@
                             }
                         );   
                     }
+
+		   document.getElementById('labr3-tac-MSC').innerHTML += Mustache.to_html(
+			dataStore.templates['channel-row'], 
+			{
+                	      'channels': time,
+                	      'key': 'labr3-group-T'
+                	}
+	   	   );
                 }
             }
 
-	   document.getElementById('labr3-tac-MSC').innerHTML += Mustache.to_html(
-		dataStore.templates['channel-row'], 
-		{
-                      'channels': time,
-                      'key': 'labr3-group-T'
-                }
-	   );
 
           function preparePACES(USC){
 
