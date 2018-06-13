@@ -683,16 +683,18 @@
 
                 var canonical, energy1, energy2, time, suppressor_group1, suppressor_group2;
                 
-                document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
-                        dataStore.templates['collapse-section'], 
-                        {
-                            'title': 'LaBr3', 
-                            'targetID': 'labr3Wrap',
-                            'buttonClass': 'btn-primary'
-                        }
-                    );
 
                 if(USL == 'grgdal' || DSL == 'grgdal'){
+
+                	document.getElementById('reviewWrap').innerHTML += Mustache.to_html(
+                        	dataStore.templates['collapse-section'], 
+                        	{
+                        	    'title': 'LaBr3', 
+                        	    'targetID': 'labr3Wrap',
+                        	    'buttonClass': 'btn-primary'
+                        	}
+                    	);
+
                     canonical = configLaBr3(USL == 'grgdal', DSL == 'grgdal');
 		
 		
@@ -752,7 +754,7 @@
                     	document.getElementById('labr3Wrap').innerHTML += Mustache.to_html(
                         	    dataStore.templates['collapse-section'], 
                           	    {
-                                	'title': 'LaBr3 Time', 
+                                	'title': 'LaBr3 TAC', 
                                		'targetID': 'LaBr3TAC',
                                 	'buttonClass': 'btn-success'
                             	    }
@@ -832,15 +834,15 @@
                 }
             }
 
-		   document.getElementById('labr3-tac-MSC').innerHTML += Mustache.to_html(
-			dataStore.templates['channel-row'], 
-			{
-                            'channels': time,
-                            'key': 'labr3-group-T'
-                        }
-		   );
+	   document.getElementById('labr3-tac-MSC').innerHTML += Mustache.to_html(
+		dataStore.templates['channel-row'], 
+		{
+                      'channels': time,
+                      'key': 'labr3-group-T'
+                }
+	   );
 
-            function preparePACES(USC){
+          function preparePACES(USC){
 
                 var canonical;
 
