@@ -71,8 +71,9 @@
         <link id='griffin-channel-row-b' rel="import" href="templates/msc-builder/griffin-channel-row-b.html">
         <link id='zds-custom' rel="import" href="templates/msc-builder/zds-custom.html">
         <link id='sceptar-custom' rel="import" href="templates/msc-builder/sceptar-custom.html">
-        <link id='labr3-custom-g1' rel="import" href="templates/msc-builder/labr3-custom-g1.html">
-        <link id='labr3-custom-g2' rel="import" href="templates/msc-builder/labr3-custom-g2.html">
+        <link id='labr3-custom-ds' rel="import" href="templates/msc-builder/labr3-custom-ds.html">
+        <link id='labr3-custom-us' rel="import" href="templates/msc-builder/labr3-custom-us.html">
+        <link id='labr3-custom-tac' rel="import" href="templates/msc-builder/labr3-custom-tac.html">
         <link id='paces-custom' rel="import" href="templates/msc-builder/paces-custom.html">
         <link id='spice-custom' rel="import" href="templates/msc-builder/spice-custom.html">
         <link id='s2s3-custom' rel="import" href="templates/msc-builder/s2s3-custom.html">
@@ -310,7 +311,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'griffin-channel-row-a', 'griffin-channel-row-b', 'zds-custom', 'sceptar-custom', 'labr3-custom-g1', 'labr3-custom-g2', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
+                templates = ['brand-header', 'brand-footer', 'griffin-custom-unsuppressed', 'griffin-custom-suppressed', 'griffin-channel-row-a', 'griffin-channel-row-b', 'zds-custom', 'sceptar-custom', 'labr3-custom-ds', 'labr3-custom-us', 'labr3-custom-tac', 'paces-custom', 'spice-custom', 's2s3-custom', 'descant-custom', 'channel-row', 'collapse-section'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates
@@ -701,14 +702,14 @@
                         		    dataStore.templates['collapse-section'], 
                             		    {
                                 		'title': 'LaBr3 Downstream', 
-                               			'targetID': 'LaBr3Table1',
+                               			'targetID': 'LaBr3DS',
                                 		'buttonClass': 'btn-success'
                             		    }
                         		);
 
                     		//inject table wrap
-                    		document.getElementById('LaBr3Table1').innerHTML = Mustache.to_html(
-                    		    dataStore.templates['labr3-custom-g1'], 
+                    		document.getElementById('LaBr3DS').innerHTML = Mustache.to_html(
+                    		    dataStore.templates['labr3-custom-ds'], 
                        		    {
                         		'M': canonicalMSC.LaBr3.M,
                         		'S-E1': canonicalMSC.LaBr3.energy.S[0],
@@ -728,41 +729,55 @@
                         		    dataStore.templates['collapse-section'], 
                             		    {
                                 		'title': 'LaBr3 Upstream', 
-                               			'targetID': 'LaBr3Table2',
+                               			'targetID': 'LaBr3US',
                                 		'buttonClass': 'btn-success'
                             		    }
                         		);
 
-                    		document.getElementById('LaBr3Table2').innerHTML = Mustache.to_html(
-                        		dataStore.templates['labr3-custom-g2'], 
+                    		document.getElementById('LaBr3US').innerHTML = Mustache.to_html(
+                        		dataStore.templates['labr3-custom-us'], 
                         		{
                             			'M': canonicalMSC.LaBr3.M,
                             			'S-E2': canonicalMSC.LaBr3.energy.S[1],
                             			'S-S2': canonicalMSC.LaBr3.suppressors.S[1],
                             			'key-E1': 'labr3-group-E1',
                             			'key-S2': 'labr3-group-S2',
-                            			'downstream': DSL=='grgdal' ? [true] : []
+                            			'upstream': USL=='grgdal' ? [true] : []
                         		}
                     		);
 			}
+
+			
+                    	//inject table wrap
+                    	document.getElementById('LaBr3TAC').innerHTML = Mustache.to_html(
+                    	    dataStore.templates['labr3-custom-tac'], 
+                       	    {
+                        	'M': canonicalMSC.LaBr3.M,
+                        	'S-T': canonicalMSC.LaBr3.time.S,
+                        	'key-T': 'labr3-group-T'
+                            }
+                    	);
                 
 
                     if(DSL == 'grgdal' && USL=='grgdal'){                
                         energy1 = canonical.slice(0,4);
 			energy2 = canonical.slice(4,8);
-                        suppressor_group1 = canonical.slice(8,20);
-                        suppressor_group2 = canonical.slice(20);
+			time = canonical.slice(8,16);
+                        suppressor_group1 = canonical.slice(16,28);
+                        suppressor_group2 = canonical.slice(28);
                     } else if (DSL == 'grgdal' || USL == 'grgdal'){
                         if(DSL == 'grgdal'){
 			    energy1 = canonical.slice(0,4);
 			    energy2 = [];
-                            suppressor_group1 = canonical.slice(4);
+			    time = canonical.slice(4,8);
+                            suppressor_group1 = canonical.slice(8);
 			    suppressor_group2 = [];
                         } else if (USL == 'grgdal'){
 			    energy1 = [];
                             energy2 = canonical.slice(0,4);
+			    time = canonical.slice(4,8);
                             suppressor_group1 = [];
-                            suppressor_group2 = canonical.slice(4)
+                            suppressor_group2 = canonical.slice(8)
                         }
                     }
 
@@ -806,6 +821,14 @@
                     }
                 }
             }
+
+		   document.getElementById('labr3-tac-MSC').innerHTML += Mustache.to_html(
+			dataStore.templates['channel-row'], 
+			{
+                            'channels': time,
+                            'key': 'labr3-group-T'
+                        }
+		   );
 
             function preparePACES(USC){
 
