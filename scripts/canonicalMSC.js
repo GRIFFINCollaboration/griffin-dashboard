@@ -326,7 +326,7 @@ function configLaBr3(US, DS){
 	    if (i < 4) { slave = 0; }
 	    else { slave = 1; }
             collectorChan = canonicalMSC.LaBr3.energy.S[slave];
-            ADC = ((i - min) + 1) * 3 + j + 1;
+            ADC = (((i - min) + 1) * 3 + j + 1) % 12;
             MSC.push({
                 chan: name, 
                 M: masterChan, 
