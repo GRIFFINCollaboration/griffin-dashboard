@@ -700,7 +700,7 @@
                     		document.getElementById('labr3Wrap').innerHTML += Mustache.to_html(
                         		    dataStore.templates['collapse-section'], 
                             		    {
-                                		'title': 'LaBr3 Group 1', 
+                                		'title': 'LaBr3 Downstream', 
                                			'targetID': 'LaBr3Table1',
                                 		'buttonClass': 'btn-success'
                             		    }
@@ -727,7 +727,7 @@
                     		document.getElementById('labr3Wrap').innerHTML += Mustache.to_html(
                         		    dataStore.templates['collapse-section'], 
                             		    {
-                                		'title': 'LaBr3 Group 2', 
+                                		'title': 'LaBr3 Upstream', 
                                			'targetID': 'LaBr3Table2',
                                 		'buttonClass': 'btn-success'
                             		    }
@@ -767,13 +767,14 @@
                     }
 
                     //insert per-channel rows
+		    if(energy1.length > 0) {
                     document.getElementById('labr3-energy-1-MSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
                             'channels': energy1,
                             'key': 'labr3-group-E'
                         }
-                    );                
+                    );}                
 
                     if(suppressor_group1.length > 0){
                         document.getElementById('labr3-suppressors-1-MSC').innerHTML += Mustache.to_html(
@@ -785,13 +786,14 @@
                         );   
                     }
 
+		    if(energy2.length > 0) {
                     document.getElementById('labr3-energy-2-MSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
                             'channels': energy2,
                             'key': 'labr3-group-E'
                         }
-                    );    
+                    );    }
             
                     if(suppressor_group2.length > 0){
                         document.getElementById('labr3-suppressors-2-MSC').innerHTML += Mustache.to_html(
