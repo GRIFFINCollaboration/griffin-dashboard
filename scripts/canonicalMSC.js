@@ -302,7 +302,7 @@ function configLaBr3(US, DS){
 	if (i < 4) { slave = 0; }
 	else { slave = 1; }
         collectorChan = canonicalMSC.LaBr3.energy.S[slave];
-        ADC = i-min;
+        ADC = (i-min) % 4;
         MSC.push({
             chan: name, 
             M: masterChan, 
@@ -312,6 +312,23 @@ function configLaBr3(US, DS){
             datatype: canonicalMSC.datatypes.labr3_energy
         });
     }
+	
+    //LaBr - TAC
+    for(i=min; i<max; i++){
+        name = 'LBT0'+(1+i)+'XT00X';
+        masterChan = canonicalMSC.LaBr3.M;
+        collectorChan = canonicalMSC.LaBr3.time.S
+        ADC = i*2;
+        MSC.push({
+            chan: name, 
+            M: masterChan, 
+            S: collectorChan, 
+            C: ADC,
+            addr: stringAddress(masterChan,collectorChan,ADC),
+            datatype: canonicalMSC.datatypes.labr3_time
+        });
+    }
+
     //Suppressors
     for(i=min; i<max; i++){
         for(j=0; j<3; j++){
@@ -326,7 +343,7 @@ function configLaBr3(US, DS){
 	    if (i < 4) { slave = 0; }
 	    else { slave = 1; }
             collectorChan = canonicalMSC.LaBr3.energy.S[slave];
-            ADC = 3*(i-min)+j;
+            ADC = ((((i - min) % 4) + 1) * 3 + (j + 1)) % 16;
             MSC.push({
                 chan: name, 
                 M: masterChan, 
