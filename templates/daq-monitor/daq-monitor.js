@@ -218,6 +218,53 @@ function preFetch(){
         regenerateDatastructure();
 }
 
+// Rishita ----------------------------------------------------------------------------
+
+function findChannelName(address) {
+	// address is 0xMSCC
+	var MSC, length, channelIndex, M, S, C, current_address;
+
+	length = dataStore.ODB.DAQ.MSC.MSC.length;
+	for(i=0; i < length; i++) {
+		MSC = dataStore.ODB.DAQ.MSC.MSC[i];
+    		
+		M = (MSC & 0xF000) >>> 12;
+    		S = (MSC & 0x0F00) >>> 8;
+    		C = (MSC & 0x00FF) >>> 0;
+
+		current_address = '0x' + M.toString(16) + S.toString(16) + '--' ;
+
+		if(current_address == address) {
+			channelIndex = i;
+			break;
+		}
+	}
+	return dataStore.ODB.DAQ.MSC.chan[channelIndex];
+}
+
+function findADC(channel){
+    //given a channel name, use the ODB's DAQ table to identify which ADC it belongs to.
+
+    var MSC, channelIndex, M, S, C,
+        collectorKey;
+
+    channelIndex = dataStore.ODB.DAQ.MSC.chan.indexOf(channel);
+    if(channelIndex == -1)
+        return null;
+
+    MSC = dataStore.ODB.DAQ.MSC.MSC[channelIndex];
+
+    M = (MSC & 0xF000) >>> 12;
+    S = (MSC & 0x0F00) >>> 8;
+    C = (MSC & 0x00FF) >>> 0;
+
+    collectorKey = 'collector0x' + M.toString(16);
+
+    return dataStore.ODB.DAQ.hosts[collectorKey].digitizers[S];
+}
+
+// ------------------------------------------------------------------------------------
+
 ////////////////////////////////////////
 // histogram painting and updating
 ////////////////////////////////////////
@@ -226,7 +273,8 @@ function repaint(){
 console.log('repaint')
     var collectorFigureIndex = parseInt(dataStore.collectorValue, 16),
         digiCollectorIndex = parseInt(dataStore.digiCollectorValue, 16),
-        digitizerFigureIndex = parseInt(dataStore.digitizerValue, 16);
+        digitizerFigureIndex = parseInt(dataStore.digitizerValue, 16),
+	address, channelName;
 
     //master summary
     createBarchart(
@@ -246,13 +294,19 @@ console.log('repaint')
         'Collector ' + dataStore.ODB.DAQ.summary.collectors.titles[collectorFigureIndex] + ' Channels', 'Digitizer', 'Hz'
     );
 
+	// Rishita -------------------------------------------------------------------
+		address = dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex];
+		channelName = findChannelName(address);	
+	// ---------------------------------------------------------------------------
+	
+
     //Digitizers plot
     createBarchart(
         'channelsHisto', 
         dataStore.ODB.DAQ.summary.channels.titles[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.requests[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.accepts[digiCollectorIndex][digitizerFigureIndex], 
-        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels', 'Channel', 'Hz'
+        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels: Host ' + findADC(channelName), 'Channel', 'Hz'
     );    
 
     //Detectors plot   
