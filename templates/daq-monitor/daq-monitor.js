@@ -274,7 +274,7 @@ console.log('repaint')
     var collectorFigureIndex = parseInt(dataStore.collectorValue, 16),
         digiCollectorIndex = parseInt(dataStore.digiCollectorValue, 16),
         digitizerFigureIndex = parseInt(dataStore.digitizerValue, 16),
-	address, channelName;
+	address, channelName, ADC;
 
     //master summary
     createBarchart(
@@ -296,7 +296,8 @@ console.log('repaint')
 
 	// Rishita -------------------------------------------------------------------
 		address = dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex];
-		channelName = findChannelName(address);	
+		channelName = findChannelName(address);
+		ADC = findADC(channelName);	
 	// ---------------------------------------------------------------------------
 	
 
@@ -306,7 +307,7 @@ console.log('repaint')
         dataStore.ODB.DAQ.summary.channels.titles[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.requests[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.accepts[digiCollectorIndex][digitizerFigureIndex], 
-        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels: Host ' + findADC(channelName), 'Channel', 'Hz'
+        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels<br><b>Host: </b> ' + <a href=ADC>ADC</a>, 'Channel', 'Hz'
     );    
 
     //Detectors plot   
