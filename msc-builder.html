@@ -748,6 +748,16 @@
 			}
 
 			
+                    	//set up collapsible element
+                    	document.getElementById('labr3Wrap').innerHTML += Mustache.to_html(
+                        	    dataStore.templates['collapse-section'], 
+                          	    {
+                                	'title': 'LaBr3 Time', 
+                               		'targetID': 'LaBr3TAC',
+                                	'buttonClass': 'btn-success'
+                            	    }
+                        );
+
                     	//inject table wrap
                     	document.getElementById('LaBr3TAC').innerHTML = Mustache.to_html(
                     	    dataStore.templates['labr3-custom-tac'], 
