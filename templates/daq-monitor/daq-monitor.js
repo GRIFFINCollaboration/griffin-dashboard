@@ -263,10 +263,6 @@ function findADC(channel){
     return dataStore.ODB.DAQ.hosts[collectorKey].digitizers[S];
 }
 
-function RedirectURL(ADC) {
-	window.location=ADC;
-}
-
 // ------------------------------------------------------------------------------------
 
 ////////////////////////////////////////
@@ -311,7 +307,7 @@ console.log('repaint')
         dataStore.ODB.DAQ.summary.channels.titles[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.requests[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.accepts[digiCollectorIndex][digitizerFigureIndex], 
-        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels<br><b>Host: </b>' + '<a href="RedirectURL(ADC)">'+ADC+'</a>', 'Channel', 'Hz'
+        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels<br><b>Host: </b>' + '<a href="javascript:window.location=ADC;">'+ADC+'</a>', 'Channel', 'Hz'
     );    
 
     //Detectors plot   
