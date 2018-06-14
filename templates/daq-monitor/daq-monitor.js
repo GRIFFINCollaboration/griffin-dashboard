@@ -263,11 +263,6 @@ function findADC(channel){
     return dataStore.ODB.DAQ.hosts[collectorKey].digitizers[S];
 }
 
-function redirect(ADC) {
-	window.location.href = "https://google.ca";
-	return false;
-}
-
 // ------------------------------------------------------------------------------------
 
 ////////////////////////////////////////
@@ -303,10 +298,6 @@ console.log('repaint')
 		address = dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex];
 		channelName = findChannelName(address);
 		ADC = findADC(channelName);	
-		url = function(event) {
-		   window.location = ADC;
-		   return false;
-		}
 	// ---------------------------------------------------------------------------
 	
 
@@ -316,7 +307,7 @@ console.log('repaint')
         dataStore.ODB.DAQ.summary.channels.titles[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.requests[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.accepts[digiCollectorIndex][digitizerFigureIndex], 
-        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels<br><b>Host: </b>' + '<a href="#" onclick="window.location=ADC; return false;">'+ADC+'</a>', 'Channel', 'Hz'
+        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels<br><b>Host: </b>' + ADC, 'Channel', 'Hz'
     );    
 
     //Detectors plot   
