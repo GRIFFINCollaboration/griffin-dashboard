@@ -264,7 +264,7 @@ function findADC(channel){
 }
 
 function redirect(ADC) {
-	window.location.href = "http://" + ADC;
+	window.location.href = "https://google.ca";
 	return false;
 }
 
