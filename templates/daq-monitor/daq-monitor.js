@@ -264,7 +264,7 @@ function findADC(channel){
 }
 
 function redirectTo(ADC) {
-	var add = $ADC;
+	var add = ADC;
 	window.location.href="http://" + add;
 }
 
