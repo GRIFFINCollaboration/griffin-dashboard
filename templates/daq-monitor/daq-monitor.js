@@ -266,7 +266,6 @@ function findADC(channel){
 function redirectTo(ADC) {
 	var add = $ADC;
 	window.location.href="http://" + add;
-	return false;
 }
 
 // ------------------------------------------------------------------------------------
@@ -313,7 +312,7 @@ console.log('repaint')
         dataStore.ODB.DAQ.summary.channels.titles[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.requests[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.accepts[digiCollectorIndex][digitizerFigureIndex], 
-        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels<br>' + '<a onclick="return redirectTo(ADC);">'+ADC+'</a>', 'Channel', 'Hz'
+        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels<br>' + '<a onclick="redirectTo(ADC);">'+ADC+'</a>', 'Channel', 'Hz'
     );  
 
     //Detectors plot   
