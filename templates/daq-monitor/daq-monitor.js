@@ -264,7 +264,7 @@ function findADC(channel){
 }
 
 function redirect(ADC) {
-	window.location.href = ADC;
+	window.location.href = "http://" + ADC;
 	return false;
 }
 
