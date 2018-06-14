@@ -316,7 +316,7 @@ console.log('repaint')
         dataStore.ODB.DAQ.summary.channels.titles[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.requests[digiCollectorIndex][digitizerFigureIndex], 
         dataStore.ODB.DAQ.summary.channels.accepts[digiCollectorIndex][digitizerFigureIndex], 
-        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels<br><b>Host: </b>' + '<a href="#" onclick="return url();">'+ADC+'</a>', 'Channel', 'Hz'
+        'Digitizer ' + dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex] + ' Channels<br><b>Host: </b>' + '<a href="#" onclick="window.location=ADC; return false;">'+ADC+'</a>', 'Channel', 'Hz'
     );    
 
     //Detectors plot   
