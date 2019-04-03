@@ -17,14 +17,13 @@
 <script>
 
     // Add the hostname to the nav-bar buttons
-    console.log(document.getElementById('nav-wrap'))
-    button = getElementById('hv-link'); button.setAttribute("href",'hv.html?='+dataStore.host); 
-    button = getElementById('daq-link'); button.setAttribute("href",'daq.html?='+dataStore.host); 
-    button = getElementById('cycle-link'); button.setAttribute("href",'cycle.html?='+dataStore.host); 
-    button = getElementById('clock-link'); button.setAttribute("href",'clock.html?='+dataStore.host); 
-    button = getElementById('filter-link'); button.setAttribute("href",'filter.html?='+dataStore.host); 
-    button = getElementById('shack-link'); button.setAttribute("href",'shack.html?='+dataStore.host); 
-    button = getElementById('msc-link'); button.setAttribute("href",'msc.html?='+dataStore.host);
+   // button = getElementById('hv-link'); button.setAttribute("href",'hv.html?='+dataStore.host); 
+  //  button = getElementById('daq-link'); button.setAttribute("href",'daq.html?='+dataStore.host); 
+   // button = getElementById('cycle-link'); button.setAttribute("href",'cycle.html?='+dataStore.host); 
+   // button = getElementById('clock-link'); button.setAttribute("href",'clock.html?='+dataStore.host); 
+  //  button = getElementById('filter-link'); button.setAttribute("href",'filter.html?='+dataStore.host); 
+   // button = getElementById('shack-link'); button.setAttribute("href",'shack.html?='+dataStore.host); 
+   // button = getElementById('msc-link'); button.setAttribute("href",'msc.html?='+dataStore.host);
 
     
     function detectDetectors(){
@@ -34,6 +33,8 @@
             detectors = [],
             wrap = document.getElementById('nav-wrap');
 
+    console.log(wrap);
+    
         for(i=0; i<dataStore.ODB.DAQ.MSC.chan.length; i++){
             detectors.push(dataStore.ODB.DAQ.MSC.chan[i].slice(0,3));
         }
