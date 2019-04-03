@@ -110,6 +110,23 @@ function validate_browser(){
     }
 }
 
+function parseQuery(){
+	//return an object with keys/values as per query string
+	//note all values will be strings.
+
+	var elts = {};
+	var queryString = window.location.search.substring(1)
+	var value, i;
+
+	queryString = queryString.split('&');
+	for(i=0; i<queryString.length; i++){
+		value = queryString[i].split('=');
+		elts[value[0]] = value[1];
+	}
+
+	return elts;
+}
+
 ///////////////
 // templating
 ///////////////
