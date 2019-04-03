@@ -4,7 +4,7 @@
     
     <div id='nav-wrap'>
         <a class='btn btn-info' id='hv-link' href='hv.html'>HV</a> 
-        <a class='btn btn-info' id='daq-link' href='daq.html?='+dataStore.host; >DAQ</a>
+        <a class='btn btn-info' id='daq-link' href='daq.html' >DAQ</a>
         <a class='btn btn-info' id='cycle-link' href='cycle.html'>Cycle</a>    
         <a class='btn btn-info' id='clock-link' href='clock.html'>Clock</a>    
         <a class='btn btn-info' id='filter-link' href='filter.html'>Filter</a>
@@ -16,6 +16,17 @@
 
 <script>
 
+
+    // Add the hostname to the nav-bar buttons
+    document.getElementById("hv-link").setAttribute("href",'hv.html?='+dataStore.host); 
+    document.getElementById("daq-link").setAttribute("href",'daq.html?='+dataStore.host); 
+    document.getElementById("cycle-link").setAttribute("href",'cycle.html?='+dataStore.host); 
+    document.getElementById("clock-link").setAttribute("href",'clock.html?='+dataStore.host); 
+    document.getElementById("filter-link").setAttribute("href",'filter.html?='+dataStore.host); 
+    document.getElementById("shack-link").setAttribute("href",'shack.html?='+dataStore.host); 
+    document.getElementById("msc-link").setAttribute("href",'msc.html?='+dataStore.host);
+
+    
     function detectDetectors(){
         // decide which detectors need to be linked to, based on the MSC table in the ODB, pre-registered on dataStore.ODB.DAQ
 
