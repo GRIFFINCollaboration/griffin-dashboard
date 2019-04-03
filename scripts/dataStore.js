@@ -680,13 +680,15 @@ dataStore = {
 }
 
 // Grab the hostname from the URL
+function setHostname(backend){
 if(backend=="griffin")
 {
     dataStore.host = 'grsmid00.triumf.ca:8081';
 }else if(backend=="tigress"){
     dataStore.host = 'grsmid02.triumf.ca:8081';
-}else{
+}else
     dataStore.host = 'missing-hostname';
+
 }
 
 dataStore.runSummaryQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&odb3=Logger/&encoding=json-p-nokeys&callback=runSummaryCB';
