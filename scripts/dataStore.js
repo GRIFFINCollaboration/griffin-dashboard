@@ -5,7 +5,7 @@ dataStore = {
     "SOHhost": 'grifsoh00.triumf.ca:8081',
     "ODB": {},                              // place to park info pulled from ODB
     "data": {},                             // place to park raw data from non-ODB sources; note this gets dumped at the start of every heartbeat!
-    "detector": {                           // place to park deector-specific data 
+    "detector": {                           // place to park detector-specific data 
         "subview": null,                    // current subview on display
         "subviewUnits": {
             'HV': 'V', 
