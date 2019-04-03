@@ -680,7 +680,7 @@ dataStore = {
 }
 
 // Grab the hostname from the URL
-function setHostname(backend){
+function setHostname(parseQuery){
 if(backend=="griffin")
 {
     dataStore.host = 'grsmid00.triumf.ca:8081';

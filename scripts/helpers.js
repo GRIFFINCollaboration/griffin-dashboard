@@ -124,8 +124,7 @@ function parseQuery(){
 		elts[value[0]] = value[1];
 	}
 
-    
-    console.log(elts);
+    console.log(elts)
     
 	return elts;
 }
