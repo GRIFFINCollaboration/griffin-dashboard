@@ -682,9 +682,8 @@ dataStore = {
 // Grab the hostname from the URL
    var urlData = parseQuery();
     
-    console.log(urlData.backend)
-    
-if(urlData.backend=="griffin")
+//if(urlData.backend=="griffin")
+if(parseQuery.backend=="griffin")
 {
     dataStore.host = 'grsmid00.triumf.ca:8081';
 }else if(urlData.backend=="tigress"){
