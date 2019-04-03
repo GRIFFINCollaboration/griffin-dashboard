@@ -680,7 +680,7 @@ dataStore = {
 }
 
 // Grab the hostname from the URL
-if(dataStore.host=="missing-hotname"){
+if(dataStore.host=="missing-hostname"){
     
    var urlData = parseQuery();
     
