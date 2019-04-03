@@ -680,10 +680,10 @@ dataStore = {
 }
 
 // Grab the hostname from the URL
-if(backend="griffin")
+if(backend=="griffin")
 {
     dataStore.host = 'grsmid00.triumf.ca:8081';
-}else if(backend="tigress"){
+}else if(backend=="tigress"){
     dataStore.host = 'grsmid02.triumf.ca:8081';
 }else{
     dataStore.host = 'missing-hostname';
