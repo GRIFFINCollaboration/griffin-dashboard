@@ -81,7 +81,6 @@ function promiseURL(query){
             }   
         }
 
-	console.log(query[0]);
         req.open('GET', query[0]);
         req.timeout = 500;
         // Make the request
