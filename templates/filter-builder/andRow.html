@@ -15,31 +15,30 @@
         </select>
     </div>
 
-    <div class='col-md-3' id='subconfigS0{{orNumber}}{{andNumber}}'></div>
-    <div id='subconfigC0{{orNumber}}{{andNumber}}' class='col-md-3 hidden'>
+    <div class='col-md-1' id='subconfigS0{{orNumber}}{{andNumber}}'></div>
+    <div id='subconfigC0{{orNumber}}{{andNumber}}' class='col-md-1 hidden'>
         <div id="coincConfigWrap0{{orNumber}}{{andNumber}}">
             <label id="coincConfigLabel0{{orNumber}}{{andNumber}}">Multiplicity: </label>
             <input value="2" min="0" step="1" id="coincConfigInput0{{orNumber}}{{andNumber}}" type="number" class='small-number' onchange='requestNewFilterName()'></input>
         </div>
     </div>
-    <div id='subconfigP0{{orNumber}}{{andNumber}}' class='col-md-3 hidden'>
+    <div id='subconfigP0{{orNumber}}{{andNumber}}' class='col-md-1 hidden'>
         <div id="prescaleConfigWrap0{{orNumber}}{{andNumber}}">
             <label id="prescaleConfigLabel0{{orNumber}}{{andNumber}}">Factor: </label>
             <input value="10" min="0" step="1" id="prescaleConfigInput0{{orNumber}}{{andNumber}}" type="number" class='small-number' onchange='requestNewFilterName()'></input>
         </div>
     </div>
 
-    <div id='subconfigS1{{orNumber}}{{andNumber}}' class='col-md-3'></div>
-    <div id='subconfigC1{{orNumber}}{{andNumber}}' class='col-md-3 hidden'>
+    <div id='subconfigS1{{orNumber}}{{andNumber}}' class='col-md-1'></div>
+    <div id='subconfigC1{{orNumber}}{{andNumber}}' class='col-md-1 hidden'>
         <div id="coincConfigWrap1{{orNumber}}{{andNumber}}">
             <label id="coincConfigLabel1{{orNumber}}{{andNumber}}">Coinc. Window [ns]:</label>
             <input min="0" step="1" id="coincConfigInput1{{orNumber}}{{andNumber}}" type="number" class='small-number' onchange='requestNewFilterName()'></input>
         </div>
     </div>
-    <div id='subconfigP1{{orNumber}}{{andNumber}}' class='col-md-3 hidden'></div>
+    <div id='subconfigP1{{orNumber}}{{andNumber}}' class='col-md-1 hidden'></div>
 
     <div class='col-md-1'>
-        <button class='btn btn-danger'
-        onclick='deleteAND({{orNumber}}, {{andNumber}})'>Remove this OR condition block</button>
+        <button class='btn btn-danger' onclick='deleteAND({{orNumber}}, {{andNumber}})'>Remove this OR condition block</button>
     </div>
 </template>
