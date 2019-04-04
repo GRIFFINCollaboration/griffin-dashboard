@@ -40,8 +40,6 @@ function promiseURL(query){
     // promise to get response from <query> == ['url', 'request type', callback],
     // where request type can be 'arraybuffer' or 'json' 
     // thanks http://www.html5rocks.com/en/tutorials/es6/promises/
-
-    console.log('PromiseURL query: '+query);
     
     // Return a new promise.
     return new Promise(function(resolve, reject) {
@@ -98,7 +96,6 @@ function promiseScript(url){
 
         var script = document.createElement('script');
 
-	console.log('PromiseScript url: '+url);
         script.setAttribute('src', url);
         script.onload = function(){
             deleteNode('promiseScript');

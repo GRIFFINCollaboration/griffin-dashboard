@@ -330,6 +330,10 @@ function fetchDAQ(payload){
     //extract hosts list
     dataStore.hosts = [];
 
+    // Hack for TIGRESS
+    // GRIF-16 modules registered on the general Network for TIGRESS or GRIF-WAGON need a 'b' in their url
+    console.log(dataStore.hosts);
+    
     //master
     //dataStore.hosts.push(dataStore.ODB.DAQ.hosts.master);
     for(key in dataStore.ODB.DAQ.hosts){
