@@ -3,7 +3,6 @@ function heartbeat(){
     //note the dataStore.heartbeat object needs to be defined first.
 
     var URLqueries = dataStore.heartbeat.URLqueries.slice();
-    console.log(URLqueries);
 
     if(dataStore.heartbeat.ADCrequest.length > 0)
         URLqueries = URLqueries.concat(dataStore.heartbeat.ADCrequest);
@@ -97,6 +96,7 @@ function promiseScript(url){
 
         var script = document.createElement('script');
 
+	console.log('PromiseScript url: '+url);
         script.setAttribute('src', url);
         script.onload = function(){
             deleteNode('promiseScript');
