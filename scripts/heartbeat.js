@@ -41,6 +41,8 @@ function promiseURL(query){
     // where request type can be 'arraybuffer' or 'json' 
     // thanks http://www.html5rocks.com/en/tutorials/es6/promises/
 
+    console.log('PromiseURL query: '+query);
+    
     // Return a new promise.
     return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
