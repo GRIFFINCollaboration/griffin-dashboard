@@ -359,7 +359,7 @@ function determineADCrequests(){
 	console.log('found this adc: '+dataStore.hosts[i]+' and '+thisHost);
 	console.log('test: '+parseInt(thisHost.match(/\d+/)));
 	if(parseInt(thisHost.match(/\d+/))>69){
-	thisHost.replace(/.triumf.ca/, "b.triumf.ca");
+	thisHost = thisHost.replace(/.triumf.ca/, "b.triumf.ca");
 	}
 	console.log('changed adc: '+thisHost);
 	
