@@ -356,13 +356,16 @@ function determineADCrequests(){
 	// Hack for TIGRESS
 	// GRIF-16 modules registered on the general Network for TIGRESS or GRIF-WAGON need a 'b' in their url
 	console.log('found adc: '+dataStore.hosts[i]);
+	thisHost = dataStore.hosts[i];
 	var d = /\d+/;
-	var num = dataStore.hosts[i].match(d);
+	var num = thisHost.match(d);
 	if(parseInt(num)>69){
-	dataStore.hosts[i].replace(".triumf.ca", "b.triumf.ca");
+	thisHost.replace(".triumf.ca", "b.triumf.ca");
 	}
-	console.log('revised adc: '+dataStore.hosts[i]);
-        dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
+	console.log('revised adc: '+thisHost);
+	
+        dataStore.heartbeat.URLqueries.push(['http://' + thisHost + '/report', 'arraybuffer', unpackDAQdv])
+       // dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
     }
 
     //bump the heartbeat
