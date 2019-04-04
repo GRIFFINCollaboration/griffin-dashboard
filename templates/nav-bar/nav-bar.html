@@ -42,7 +42,7 @@
                 newLink = document.createElement('a');
                 newLink.setAttribute('class', 'btn btn-info'); 
                 newLink.setAttribute('id', buttonNames[i] + '-link'); 
-                newLink.setAttribute('href', buttonNames[i] + '.html?=' + dataStore.hostname);
+                newLink.setAttribute('href', buttonNames[i] + '.html?backend=' + dataStore.hostname);
                 newLink.innerHTML = buttonNames[i];
                 wrap.appendChild(newLink);
       }
@@ -64,7 +64,7 @@
                     newLink.setAttribute('href', 's2s3.html?config=S3');
                 } else {
                     newLink.setAttribute('href',
-                dataStore.detPrefix[detectors[i]].replace(/ /g,'').toLowerCase() + '.html?=' + dataStore.hostname);
+                dataStore.detPrefix[detectors[i]].replace(/ /g,'').toLowerCase() + '.html?backend=' + dataStore.hostname);
                 }
                 newLink.setAttribute('id', dataStore.detPrefix[detectors[i]].replace(/ /g,'').toLowerCase() + '-link');
                 newLink.innerHTML = dataStore.detPrefix[detectors[i]];
