@@ -334,9 +334,12 @@ function fetchDAQ(payload){
     // GRIF-16 modules registered on the general Network for TIGRESS or GRIF-WAGON need a 'b' in their url
     console.log(dataStore.hosts);
     for(i=0; i<dataStore.hosts.length; i++){
-	if(dataStore.hosts[i].match(/\d+/)>69)
+	var d = /\d+/;
+	var num = dataStore.hosts[i].match(d);
+	if(num>69){
 	    console.log('found adc: '+dataStore.hosts[i]);	    
-//	    str.replace(".triumf.ca/report", "b.triumf.ca/report");
+	    //	    str.replace(".triumf.ca/report", "b.triumf.ca/report");
+	}
     }
     
     //master
