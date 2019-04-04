@@ -336,9 +336,10 @@ function fetchDAQ(payload){
     for(i=0; i<dataStore.hosts.length; i++){
 	var d = /\d+/;
 	var num = dataStore.hosts[i].match(d);
+	console.log(dataStore.hosts[i].match(d)+' and '+parseInt(num));
 	if(parseInt(num)>69){
 	    console.log('found adc: '+dataStore.hosts[i]);	    
-	    //	    str.replace(".triumf.ca", "b.triumf.ca");
+	    // dataStore.hosts[i].replace(".triumf.ca", "b.triumf.ca");
 	}
     }
     
