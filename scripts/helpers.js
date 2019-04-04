@@ -357,6 +357,7 @@ function determineADCrequests(){
 	// GRIF-16 modules registered on the general Network for TIGRESS or GRIF-WAGON need a 'b' in their url
 	thisHost = dataStore.hosts[i];
 	console.log('found this adc: '+dataStore.hosts[i]+' and '+thisHost);
+	console.log('test: '+parseInt(thisHost.match(/\d+/)));
 	if(parseInt(thisHost.match(/\d+/))>69){
 	thisHost.replace(/.triumf.ca/, "b.triumf.ca");
 	}
