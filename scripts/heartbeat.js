@@ -3,6 +3,7 @@ function heartbeat(){
     //note the dataStore.heartbeat object needs to be defined first.
 
     var URLqueries = dataStore.heartbeat.URLqueries.slice();
+    console.log(URLqueries);
 
     if(dataStore.heartbeat.ADCrequest.length > 0)
         URLqueries = URLqueries.concat(dataStore.heartbeat.ADCrequest);
