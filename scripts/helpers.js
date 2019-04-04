@@ -333,6 +333,11 @@ function fetchDAQ(payload){
     // Hack for TIGRESS
     // GRIF-16 modules registered on the general Network for TIGRESS or GRIF-WAGON need a 'b' in their url
     console.log(dataStore.hosts);
+    for(i=0; i<dataStore.hosts.length; i++){
+	if(dataStore.hosts[i].match(/\d+/)>69)
+	    console.log('found adc: '+dataStore.hosts[i]);	    
+//	    str.replace(".triumf.ca/report", "b.triumf.ca/report");
+    }
     
     //master
     //dataStore.hosts.push(dataStore.ODB.DAQ.hosts.master);
