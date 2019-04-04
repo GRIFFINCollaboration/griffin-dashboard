@@ -358,6 +358,9 @@ function determineADCrequests(){
 	if(parseInt(dataStore.hosts[i].match(/\d+/))>69){
 	dataStore.hosts[i] = dataStore.hosts[i].replace(/.triumf.ca/, "b.triumf.ca");
 	}
+	if(parseInt(dataStore.hosts[i].match(/\d+/))==42){
+	dataStore.hosts[i] = dataStore.hosts[i].replace(/42/, "22");
+	}
 	
         dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
     }
