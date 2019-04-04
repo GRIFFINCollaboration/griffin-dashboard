@@ -21,7 +21,7 @@
 
     <div>
         <div class='pan' id='allowedDetectors'>
-            <h4>Allowed Detectors</h4>
+            <h4>Allowed Detectors (Only checked Detector Types are presented to the Filter logic, others are discarded)</h4>
             {{#detTypes}}
                 <div class='col-md-2 no-pad'>
                     <label for='allow{{short}}'>{{description}}</label>
@@ -33,7 +33,7 @@
         <div>
             <h4>Filter Logic</h4>
             <div id='logic-wrap'></div>
-            <button class='btn btn-info' onclick='addNewOR();'>OR new condition</button>
+            <button class='btn btn-info' onclick='addNewOR();'>Add new OR condition block</button>
         </div>
     </div>
 </template>
