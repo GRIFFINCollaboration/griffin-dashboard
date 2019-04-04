@@ -30,7 +30,9 @@
     function addButtons(){
     var buttonNames = ["hv","daq","cycle","clock","filter","shack","msc"];
     var i, newLink,
-    wrap = document.getElementById('nav-wrap');
+    wrap = document.getElementById('nav-wrap'); 
+    console.log(wrap); 
+    console.log(buttonNames);
     
     for(i=0; i<buttonNames.length; i++){
                 newLink = document.createElement('a');
@@ -49,8 +51,6 @@
         var i, newLink, current
             detectors = [],
             wrap = document.getElementById('nav-wrap');
-
-    console.log(wrap);
     
         for(i=0; i<dataStore.ODB.DAQ.MSC.chan.length; i++){
             detectors.push(dataStore.ODB.DAQ.MSC.chan[i].slice(0,3));
