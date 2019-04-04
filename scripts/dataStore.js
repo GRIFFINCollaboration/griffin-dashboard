@@ -686,10 +686,16 @@ if(dataStore.host=="missing-hostname"){
     
     if(urlData.backend=="griffin")
     {
+	dataStore.hostname = 'griffin';
 	dataStore.host = 'grsmid00.triumf.ca:8081';
     }else if(urlData.backend=="tigress"){
+	dataStore.hostname = 'tigress';
 	dataStore.host = 'grsmid02.triumf.ca:8081';
+    }else if(urlData.backend=="grif-wagon"){
+	dataStore.hostname = 'annikal';
+	dataStore.host = 'annikal.triumf.ca:8081';
     }else{
+	dataStore.hostname = 'missing-hostname';
 	dataStore.host = 'missing-hostname';
     }
 }

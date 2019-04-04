@@ -2,14 +2,16 @@
 
 <template id='nav-bar'>
     
-    <div id='nav-wrap'>
+<div id='nav-wrap'>
+  <!--
         <a class='btn btn-info' id='hv-link' href='hv.html'>HV</a> 
         <a class='btn btn-info' id='daq-link' href='daq.html' >DAQ</a>
         <a class='btn btn-info' id='cycle-link' href='cycle.html'>Cycle</a>    
         <a class='btn btn-info' id='clock-link' href='clock.html'>Clock</a>    
         <a class='btn btn-info' id='filter-link' href='filter.html'>Filter</a>
         <a class='btn btn-info' id='shack-link' href='shack.html'>Shack</a> 
-        <a class='btn btn-info' id='msc-link' href='msc-builder.html'>MSC Builder</a>    
+        <a class='btn btn-info' id='msc-link' href='msc-builder.html'>MSC Builder</a>
+  -->
     </div>
 
 </template>
@@ -25,6 +27,21 @@
    // button = getElementById('shack-link'); button.setAttribute("href",'shack.html?='+dataStore.host); 
    // button = getElementById('msc-link'); button.setAttribute("href",'msc.html?='+dataStore.host);
 
+    function addButtons(){
+    var buttonNames = {"hv","daq","cycle","clock","filter","shack","msc"};
+    var i, newLink,
+    wrap = document.getElementById('nav-wrap');
+    
+    for(i=0; i<buttonNames.length; i++){
+                newLink = document.createElement('a');
+                newLink.setAttribute('class', 'btn btn-info'); 
+                newLink.setAttribute('id', buttonNames[i] + '-link'); 
+                newLink.setAttribute('href', buttonNames[i] + '.html?=' + dataStore.hostname);
+                newLink.innerHTML = buttonNames[i];
+                wrap.appendChild(newLink);
+      }
+    }
+    
     
     function detectDetectors(){
         // decide which detectors need to be linked to, based on the MSC table in the ODB, pre-registered on dataStore.ODB.DAQ
@@ -50,7 +67,7 @@
                     newLink.setAttribute('href', 's2s3.html?config=S3');
                 } else {
                     newLink.setAttribute('href',
-            dataStore.detPrefix[detectors[i]].replace(/ /g,'').toLowerCase() + '.html?=' + dataStore.host);
+                dataStore.detPrefix[detectors[i]].replace(/ /g,'').toLowerCase() + '.html?=' + dataStore.hostname);
                 }
                 newLink.setAttribute('id', dataStore.detPrefix[detectors[i]].replace(/ /g,'').toLowerCase() + '-link');
                 newLink.innerHTML = dataStore.detPrefix[detectors[i]];
