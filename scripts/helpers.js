@@ -332,17 +332,15 @@ function fetchDAQ(payload){
 
     // Hack for TIGRESS
     // GRIF-16 modules registered on the general Network for TIGRESS or GRIF-WAGON need a 'b' in their url
-    console.log(dataStore.ODB.DAQ.hosts);
-    console.log(dataStore.ODB.DAQ.hosts[0]);
-    for(key in dataStore.ODB.DAQ.hosts){
-	var d = /\d+/;
-	var num = dataStore.ODB.DAQ.hosts[key].match(d);
-	console.log(dataStore.ODB.DAQ.hosts[key].match(d)+' and '+parseInt(num));
-	if(parseInt(num)>69){
-	    console.log('found adc: '+dataStore.ODB.DAQ.hosts[key]);	    
+   // for(key in dataStore.ODB.DAQ.hosts){
+//	var d = /\d+/;
+//	var num = dataStore.ODB.DAQ.hosts[key].match(d);
+//	console.log(dataStore.ODB.DAQ.hosts[key].match(d)+' and '+parseInt(num));
+//	if(parseInt(num)>69){
+//	    console.log('found adc: '+dataStore.ODB.DAQ.hosts[key]);	    
 	    // dataStore.hosts[key].replace(".triumf.ca", "b.triumf.ca");
-	}
-    }
+//	}
+ //   }
     
     //master
     //dataStore.hosts.push(dataStore.ODB.DAQ.hosts.master);
@@ -352,8 +350,10 @@ function fetchDAQ(payload){
             //dataStore.hosts.push(dataStore.ODB.DAQ.hosts[key].host);
             //digitizers
             for(i=0; i<dataStore.ODB.DAQ.hosts[key].digitizers.length; i++){
-                if(dataStore.ODB.DAQ.hosts[key].digitizers[i])
+                if(dataStore.ODB.DAQ.hosts[key].digitizers[i]){
+		    console.log('found adc: '+dataStore.ODB.DAQ.hosts[key].digitizers[i]);
                     dataStore.hosts.push(dataStore.ODB.DAQ.hosts[key].digitizers[i])
+		}
             }
         }
     }
