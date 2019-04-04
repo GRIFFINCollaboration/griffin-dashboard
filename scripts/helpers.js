@@ -362,7 +362,7 @@ function determineADCrequests(){
 	if(parseInt(num)>69){
 	thisHost.replace(".triumf.ca", "b.triumf.ca");
 	}
-	console.log('revised adc: '+thisHost);
+	console.log('changed adc: '+thisHost);
 	
         dataStore.heartbeat.URLqueries.push(['http://' + thisHost + '/report', 'arraybuffer', unpackDAQdv])
        // dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
