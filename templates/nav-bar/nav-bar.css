@@ -2,6 +2,11 @@ div#nav-wrap{
     margin-bottom: 1em;
 }
 
+a.btn-info{
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
 a.btn-fudge{
     margin-right: 4px;
 }
