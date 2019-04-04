@@ -358,9 +358,10 @@ function determineADCrequests(){
 	console.log('found adc: '+dataStore.hosts[i]);
 	var d = /\d+/;
 	var num = dataStore.hosts[i].match(d);
-	console.log(dataStore.hosts[i].match(d)+' and '+parseInt(num));	    
-	//dataStore.hosts[i].replace(".triumf.ca", "b.triumf.ca");
-	
+	if(parseInt(num)>69){
+	dataStore.hosts[i].replace(".triumf.ca", "b.triumf.ca");
+	}
+	console.log('revised adc: '+dataStore.hosts[i]);
         dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
     }
 
