@@ -28,30 +28,27 @@
    // button = getElementById('msc-link'); button.setAttribute("href",'msc.html?='+dataStore.host);
 
     
-    var buttonNames = ["hv","daq","cycle","clock","filter","shack","msc"];
-    var i, newLink,
-    wrap = document.getElementById('nav-wrap'); 
-    console.log(wrap); 
-    console.log(buttonNames);
-    
+    function detectDetectors(){
+        // decide which detectors need to be linked to, based on the MSC table in the ODB, pre-registered on dataStore.ODB.DAQ
+
+        var buttonNames = ["hv","daq","cycle","clock","filter","shack","msc"];
+
+        var i, newLink, current
+            detectors = [],
+            wrap = document.getElementById('nav-wrap');
+
+    // Add the standard buttons first
     for(i=0; i<buttonNames.length; i++){
                 newLink = document.createElement('a');
-                newLink.setAttribute('class', 'btn btn-info btn-fudge'); 
+                newLink.setAttribute('class', 'btn btn-info'); 
                 newLink.setAttribute('id', buttonNames[i] + '-link'); 
                 newLink.setAttribute('href', buttonNames[i] + '.html?=' + dataStore.hostname);
                 newLink.innerHTML = buttonNames[i];
                 wrap.appendChild(newLink);
       }
 
-    
-    
-    function detectDetectors(){
-        // decide which detectors need to be linked to, based on the MSC table in the ODB, pre-registered on dataStore.ODB.DAQ
 
-        var i, newLink, current
-            detectors = [],
-            wrap = document.getElementById('nav-wrap');
-    
+        // Add the appropriate Detector buttons
         for(i=0; i<dataStore.ODB.DAQ.MSC.chan.length; i++){
             detectors.push(dataStore.ODB.DAQ.MSC.chan[i].slice(0,3));
         }
