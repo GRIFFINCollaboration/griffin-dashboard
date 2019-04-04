@@ -330,18 +330,6 @@ function fetchDAQ(payload){
     //extract hosts list
     dataStore.hosts = [];
 
-    // Hack for TIGRESS
-    // GRIF-16 modules registered on the general Network for TIGRESS or GRIF-WAGON need a 'b' in their url
-   // for(key in dataStore.ODB.DAQ.hosts){
-//	var d = /\d+/;
-//	var num = dataStore.ODB.DAQ.hosts[key].match(d);
-//	console.log(dataStore.ODB.DAQ.hosts[key].match(d)+' and '+parseInt(num));
-//	if(parseInt(num)>69){
-//	    console.log('found adc: '+dataStore.ODB.DAQ.hosts[key]);	    
-	    // dataStore.hosts[key].replace(".triumf.ca", "b.triumf.ca");
-//	}
- //   }
-    
     //master
     //dataStore.hosts.push(dataStore.ODB.DAQ.hosts.master);
     for(key in dataStore.ODB.DAQ.hosts){
@@ -351,7 +339,6 @@ function fetchDAQ(payload){
             //digitizers
             for(i=0; i<dataStore.ODB.DAQ.hosts[key].digitizers.length; i++){
                 if(dataStore.ODB.DAQ.hosts[key].digitizers[i]){
-		    console.log('found adc: '+dataStore.ODB.DAQ.hosts[key].digitizers[i]);
                     dataStore.hosts.push(dataStore.ODB.DAQ.hosts[key].digitizers[i])
 		}
             }
@@ -365,6 +352,15 @@ function determineADCrequests(){
     var i;
     //insert url queries into heartbeat polls:
     for(i=0; i<dataStore.hosts.length; i++){
+
+	// Hack for TIGRESS
+	// GRIF-16 modules registered on the general Network for TIGRESS or GRIF-WAGON need a 'b' in their url
+	console.log('found adc: '+dataStore.hosts[i]);
+	var d = /\d+/;
+	var num = dataStore.hosts[i].match(d);
+	console.log(dataStore.hosts[i].match(d)+' and '+parseInt(num));	    
+	//dataStore.hosts[i].replace(".triumf.ca", "b.triumf.ca");
+	
         dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
     }
 
