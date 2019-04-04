@@ -357,14 +357,14 @@ function determineADCrequests(){
 	// GRIF-16 modules registered on the general Network for TIGRESS or GRIF-WAGON need a 'b' in their url
 	thisHost = dataStore.hosts[i];
 	console.log('found this adc: '+dataStore.hosts[i]+' and '+thisHost);
-	console.log('test: '+parseInt(thisHost.match(/\d+/)));
-	if(parseInt(thisHost.match(/\d+/))>69){
-	thisHost = thisHost.replace(/.triumf.ca/, "b.triumf.ca");
+	console.log('test: '+parseInt(dataStore.hosts[i].match(/\d+/)));
+	if(parseInt(dataStore.hosts[i].match(/\d+/))>69){
+	dataStore.hosts[i] = dataStore.hosts[i].replace(/.triumf.ca/, "b.triumf.ca");
 	}
-	console.log('changed adc: '+thisHost);
+	console.log('changed adc: '+dataStore.hosts[i]);
 	
-        dataStore.heartbeat.URLqueries.push(['http://' + thisHost + '/report', 'arraybuffer', unpackDAQdv])
-       // dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
+       // dataStore.heartbeat.URLqueries.push(['http://' + thisHost + '/report', 'arraybuffer', unpackDAQdv])
+        dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
     }
 
     //bump the heartbeat
