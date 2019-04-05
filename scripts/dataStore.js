@@ -69,7 +69,7 @@ dataStore = {
     "detPrefix": {                          // standard three-character prefixes for all detectors
         'CSI': 'CsI',
         'DSC': 'DESCANT',
-        'LBL': 'LaBr3',
+        'LBL': 'LaBr3 Energy',
         'LBS': 'LaBr3 Shield',
         'LBT': 'TAC',
         'Gas': 'Gas Detector',
