@@ -4,7 +4,7 @@
     <div class='or-control'>
         <div>
             <label for='coincWindow{{orNumber}}'>Inter-detector coincidence window width [ns]:</label>
-            <input type='number' min='0' value='0' step='1' id='coincWindow{{orNumber}}' class='small-number' onchange='requestNewFilterName()'></input>
+            <input type='number' min='0' value='250' step='1' id='coincWindow{{orNumber}}' class='small-number' onchange='requestNewFilterName()'></input>
         </div>
         <button class='btn btn-info' id='andNewRow{{orNumber}}' onclick='addNewAND({{orNumber}});'>Add a new AND condition line</button>
         <button id='deleteCondition{{orNumber}}' class='btn btn-danger' onclick='deleteOR({{orNumber}})'>Remove this whole OR condition block</button>
