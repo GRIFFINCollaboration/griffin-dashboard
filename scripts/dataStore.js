@@ -90,7 +90,7 @@ dataStore = {
         'TPC': 'TIP Ball',
         'ZDS': 'ZDS'
     },
-    "detectorTypes": [                      // detector types acknowledged by grif16 and grif4g
+    "detectorTypes": {"griffin": [                      // detector types acknowledged by grif16 and grif4g
         {                                   // see table 5.4 in https://rawgit.com/wiki/GriffinCollaboration/GRSISort/technical-docs/GRIFFIN_Event_Format.pdf
             "id": '00',
             "short": 'GRGa',
@@ -163,7 +163,79 @@ dataStore = {
             "full": 'DESCANT (neutron)',
             "description": 'DSCn pulse shape'
         }
-
+    ]},{"tigress": [
+	{                                  
+            "id": '00',
+            "short": 'TIGa',
+            "full": 'Ge',
+            "description": 'TIGRESS (Low Gain)'   
+        },
+        {
+            "id": '01',
+            "short": 'TIGb',
+            "full": 'Ge',
+            "description": 'TIGRESS (High Gain)'
+        },
+        {
+            "id": '02',
+            "short": 'SEP',
+            "full": 'Beta',
+            "description": 'SCEPTAR'
+        },
+        {
+            "id": '03',
+            "short": 'DAN',
+            "full": 'LaBr3',
+            "description": 'LaBr3 (Energy)'
+        },
+        {
+            "id": '04',
+            "short": 'DAT',
+            "full": 'LaBr3',
+            "description": 'LaBr3 (Time)'
+        },
+        {
+            "id": '05',
+            "short": 'PAC',
+            "full": 'PACES',
+            "description": 'PACES'
+        },
+        {
+            "id": '06',
+            "short": 'DSC',
+            "full": 'DESCANT',
+            "description": 'DESCANT'
+        },
+        {
+            "id": '07',
+            "short": 'GRS',
+            "full": 'Suppressors',
+            "description": 'GRIFFIN Suppressors'
+        },
+        {
+            "id": '08',
+            "short": 'DAS',
+            "full": 'Suppressors',
+            "description": 'LaBr3 Suppressors'
+        },
+        {
+            "id": '09',
+            "short": 'SET',
+            "full": 'Beta',
+            "description": 'ZDS'
+        },
+        {
+            "id": '10',
+            "short": 'DSCg',
+            "full": 'DESCANT (gamma)',
+            "description": 'DSCg pulse shape'
+        },
+        {
+            "id": '11',
+            "short": 'DSCn',
+            "full": 'DESCANT (neutron)',
+            "description": 'DSCn pulse shape'
+        }
     ],
 
     "ADCparameters": [

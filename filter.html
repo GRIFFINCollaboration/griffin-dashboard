@@ -94,7 +94,7 @@
                 document.getElementById('filterWrap').innerHTML = Mustache.to_html(
                     dataStore.templates['filter-builder'], 
                     {
-                        "detTypes": dataStore.detectorTypes
+                        "detTypes": dataStore.detectorTypes[dataStore.hostname]
                     }
                 );
                 setupFilter();
