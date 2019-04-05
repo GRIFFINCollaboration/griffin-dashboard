@@ -96,13 +96,13 @@ dataStore = {
             "id": '00',
             "short": 'GRGa',
             "full": 'Ge',
-            "description": 'GRIFFIN (Low Gain)'   
+            "description": 'GRIFFIN Core A'   
         },
         {
             "id": '01',
             "short": 'GRGb',
             "full": 'Ge',
-            "description": 'GRIFFIN (High Gain)'
+            "description": 'GRIFFIN Core B'
         },
         {
             "id": '02',
@@ -170,44 +170,86 @@ dataStore = {
             "id": '00',
             "short": 'TIGa',
             "full": 'Ge',
-            "description": 'TIGRESS (Low Gain)'   
+            "description": 'TIGRESS Core A'   
         },
         {
             "id": '01',
             "short": 'TIGb',
             "full": 'Ge',
-            "description": 'TIGRESS (High Gain)'
+            "description": 'TIGRESS Core B'
         },
         {
             "id": '02',
-            "short": 'SEP',
-            "full": 'Beta',
-            "description": 'SCEPTAR'
+            "short": 'TIGs',
+            "full": 'Segs',
+            "description": 'TIGRESS HPGe segment'
         },
         {
             "id": '03',
-            "short": 'DAN',
-            "full": 'LaBr3',
-            "description": 'LaBr3 (Energy)'
+            "short": 'TIS',
+            "full": 'Shield',
+            "description": 'TIGRESS BGO'
         },
         {
             "id": '04',
-            "short": 'DAT',
-            "full": 'LaBr3',
-            "description": 'LaBr3 (Time)'
-        },
+            "short": 'SI1p',
+            "full": 'Silicon',
+            "description": 'Silicon 1, positive (SWAN preamp)'
+	},
         {
             "id": '05',
-            "short": 'PAC',
-            "full": 'PACES',
-            "description": 'PACES'
-        },
+            "short": 'SI1n',
+            "full": 'Silicon',
+            "description": 'Silicon 1, negative (SWAN preamp)'
+	},
         {
             "id": '06',
-            "short": 'DSC',
-            "full": 'DESCANT',
-            "description": 'DESCANT'
-        }
+            "short": 'SI2p',
+            "full": 'Silicon',
+            "description": 'Silicon 2, positive (ATSD preamp)'
+	},
+        {
+            "id": '07',
+            "short": 'SI2n',
+            "full": 'Silicon',
+            "description": 'Silicon 2, negative (ATSD preamp)'
+	},
+        {
+            "id": '08',
+            "short": 'CSI',
+            "full": 'CsI',
+            "description": 'Caesium Iodide'
+	},
+        {
+            "id": '09',
+            "short": 'SPI',
+            "full": 'SPICE',
+            "description": 'SPICE Si(Li)'
+	},
+        {
+            "id": '10',
+            "short": 'Gasp',
+            "full": 'Gasp',
+            "description": 'Gas detector, positive (TRIFIC or TBRAGG)'
+	},
+        {
+            "id": '11',
+            "short": 'Gasn',
+            "full": 'Gasn',
+            "description": 'Gas detector, negative (TRIFIC or TBRAGG)'
+	},
+        {
+            "id": '12',
+            "short": 'TRI',
+            "full": 'TRIFOIL',
+            "description": 'TRI-Foil or Scintillator'
+	},
+        {
+            "id": '13',
+            "short": 'SSB',
+            "full": 'Silicon',
+            "description": 'Single-sided Silicon (EMMA Surface Barrier, SHARC Pads, PIN diodes)'
+	}
     ]},
 
     "ADCparameters": [
