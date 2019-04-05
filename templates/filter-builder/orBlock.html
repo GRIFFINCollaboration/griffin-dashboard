@@ -6,8 +6,8 @@
             <label for='coincWindow{{orNumber}}'>Inter-detector coincidence window width [ns]:</label>
             <input type='number' min='0' value='0' step='1' id='coincWindow{{orNumber}}' class='small-number' onchange='requestNewFilterName()'></input>
         </div>
-        <button id='andNewRow{{orNumber}}' class='btn btn-info' onclick='addNewAND({{orNumber}});'>Add new AND condition block</button>
+        <button id='andNewRow{{orNumber}}' class='btn btn-info' onclick='addNewAND({{orNumber}});'>Add new AND condition line</button>
         <button id='deleteCondition{{orNumber}}' class='btn
-    btn-danger' onclick='deleteOR({{orNumber}})'>Remove this OR condition block</button>
+    btn-danger' onclick='deleteOR({{orNumber}})'>Remove whole OR condition block</button>
     </div>
 </template>
