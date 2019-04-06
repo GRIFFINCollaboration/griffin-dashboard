@@ -14,7 +14,7 @@
 <script>
     
     temp = document.getElementsByTagName("template")[0];
-    var LogoImg = temp.getElementById('Logo'); 
+    LogoImg = temp.content.querySelector("img");
     if(dataStore.hostname=="griffin")
      {
       LogoImg.setAttribute('src', 'img/GRIFFIN_Logo_White_small.png'); 
