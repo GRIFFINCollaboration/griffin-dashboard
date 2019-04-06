@@ -3,8 +3,11 @@
 <template id='brand-header'>
     <div class='branding header'>
         <div class='col-md-1'>
-            <img src='img/GRIFFIN_Logo_White_small.png'></img>
-        </div>
+	  <script>
+	  if(dataStore.hostname=="griffin"){document.write("<img src='img/GRIFFIN_Logo_White_small.png'></img>");}
+	  if(dataStore.hostname=="tigress"){document.write("<img src='img/TIGRESS-logo.png'></img>");}
+	  </script>
+	</div>
         <div class='col-md-11'>
             <h1>{{title}}</h1>
         </div>
