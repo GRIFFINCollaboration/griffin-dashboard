@@ -87,6 +87,7 @@
         dataStore.filter.nRows[dataStore.filter.orIndex] = 0;
         dataStore.filter.orIndex++;
         requestNewFilterName()
+        addNewAND({{dataStore.filter.orIndex}});
     }
 
     function deleteOR(orNumber){
