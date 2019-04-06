@@ -3,25 +3,10 @@
 <template id='brand-header'>
     <div class='branding header'>
         <div class='col-md-1'>
-           <img id="Logo"></img>
+           <img id="Logo" src='img/GRIFFIN_Logo_White_small.png'></img>
 	</div>
         <div class='col-md-11'>
             <h1>{{title}}</h1>
         </div>
     </div>
 </template>
-
-<script>
-    
-    temp = document.getElementsByTagName("template")[0];
-    LogoImg = temp.content.querySelector("img");
-    if(dataStore.hostname=="griffin")
-     {
-      LogoImg.setAttribute('src', 'img/GRIFFIN_Logo_White_small.png'); 
-     }
-    if(dataStore.hostname=="tigress")
-     {
-      LogoImg.setAttribute('src', 'img/TIGRESS-logo.png'); 
-    }
-
-</script>
