@@ -13,8 +13,8 @@
 
 <script>
     
-        window.onload = (function () {
-    var LogoImg = getElementById('Logo'); 
+    temp = document.getElementsByTagName("template")[0];
+    var LogoImg = temp.getElementById('Logo'); 
     if(dataStore.hostname=="griffin")
      {
       LogoImg.setAttribute('src', 'img/GRIFFIN_Logo_White_small.png'); 
