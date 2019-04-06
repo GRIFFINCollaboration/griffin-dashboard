@@ -13,6 +13,7 @@
 
 <script>
     
+        window.onload = (function () {
     var LogoImg = getElementById('Logo'); 
     if(dataStore.hostname=="griffin")
      {
@@ -21,5 +22,6 @@
     if(dataStore.hostname=="tigress")
      {
       LogoImg.setAttribute('src', 'img/TIGRESS-logo.png'); 
-     }
+    }
+    }
 </script>
