@@ -19,6 +19,7 @@
 
     // Add the standard buttons first
     for(i=0; i<buttonNames.length; i++){
+                if(dataStore.hostname=="tigress" && buttonNames[i]=="cycle"){continue;}
                 newLink = document.createElement('a');
                 newLink.setAttribute('class', 'btn btn-info'); 
                 newLink.setAttribute('id', buttonNames[i] + '-link'); 
