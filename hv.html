@@ -52,8 +52,6 @@
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 validate_browser();
 
-	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
-	
                 ///////////////////
                 // setup
                 ///////////////////
@@ -116,7 +114,10 @@
                 dataStore.heartbeat.callback = dataUpdate
                 heartbeat();
             });
-        </script>
+
+       if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
+	
+      </script>
 
     </body>
 </html>

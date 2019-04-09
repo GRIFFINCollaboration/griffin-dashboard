@@ -308,8 +308,6 @@
 
                 validate_browser();
                 
-	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
-
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
@@ -350,6 +348,8 @@
                 manageState();
 
             });
+
+	    if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
 
             function manageState(){
                 // manage which detectors can be selected with which other detectors etc
