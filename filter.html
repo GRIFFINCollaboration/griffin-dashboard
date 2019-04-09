@@ -48,8 +48,6 @@
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 validate_browser();
                 
-	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
-
 	        /////////////
                 // setup
                 /////////////
@@ -101,6 +99,7 @@
                 );
                 setupFilter();
 
+                if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
 
                 ////////////////////////////
                 //initiate heartbeat
