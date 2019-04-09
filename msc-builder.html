@@ -319,7 +319,7 @@
                 document.getElementById('header').innerHTML = Mustache.to_html(
                     dataStore.templates['brand-header'], 
                     {
-                        'title': 'GRIFFIN MSC Builder',
+                        'title': dataStore.hostname.toUpperCase()+' MSC Builder',
                     }
                 );
                 //footer
