@@ -188,7 +188,9 @@
                         'clocks': clocks.slice(17)
                     }
                 );
-                
+                 
+   	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
+
                 ////////////////////////////
                 //set up heartbeat
                 ////////////////////////////
@@ -196,9 +198,7 @@
                 dataStore.heartbeat.callback = updateRunStatus;
                 heartbeat();
             });
-                
-	 if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
-
+               
          </script>
 
     </body>

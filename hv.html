@@ -107,6 +107,8 @@
                 //HV sidebar
                 setupHVSidebar('controlsidebar');
 
+                if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
+	
                 ////////////////////////////
                 //initiate heartbeat
                 ////////////////////////////
@@ -115,8 +117,6 @@
                 heartbeat();
             });
 
-       if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
-	
       </script>
 
     </body>

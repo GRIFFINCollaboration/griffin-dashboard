@@ -331,6 +331,8 @@
                 );
                 setupFooter('footerImage', 2, '#999999');
 
+	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
+
                 //plug in detector toggles
                 detectorToggles = document.querySelectorAll('input[type=radio]');
                 for(i=0; i<detectorToggles.length; i++){
@@ -348,8 +350,6 @@
                 manageState();
 
             });
-
-	    if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
 
             function manageState(){
                 // manage which detectors can be selected with which other detectors etc

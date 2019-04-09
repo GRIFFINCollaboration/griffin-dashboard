@@ -42,10 +42,10 @@
                 validate_browser();
                                 
                 setupRequests();
-                deployDetector('detector-tipwall', 'TIP Wall');
+                deployDetector('detector-tipwall', 'TIP Wall'); 
+	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
             }); 
 
-	    if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
         </script>
 
     </body>

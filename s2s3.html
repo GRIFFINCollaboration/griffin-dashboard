@@ -45,10 +45,10 @@
                 validate_browser();
 
                 setupRequests();
-                deployDetector('detector-s2s3', dataStore.detector.config);
+                deployDetector('detector-s2s3', dataStore.detector.config); 
+	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
             });
 
-	    if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
 	</script>
 
     </body>
