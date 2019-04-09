@@ -321,7 +321,8 @@
                     {
                         'title': dataStore.hostname.toUpperCase()+' MSC Builder',
                     }
-                );
+                ); 
+	       if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
                 //footer
                 document.getElementById('footer').innerHTML = Mustache.to_html(
                     dataStore.templates['brand-footer'], 

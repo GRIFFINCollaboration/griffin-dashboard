@@ -76,7 +76,8 @@
                     {
                         'title': dataStore.hostname.toUpperCase()+' DAQ',
                     }
-                );
+                ); 
+	       if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
                 //footer
                 document.getElementById('footer').innerHTML = Mustache.to_html(
                     dataStore.templates['brand-footer'], 
