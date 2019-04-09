@@ -2,7 +2,7 @@
 dataStore = {
     "heartbeatInterval": 3000,              // ms between data updates
     "host": 'missing-hostname',
-    "SOHhost": 'grifsoh00.triumf.ca:8081',
+    "SOHhost": 'missing-hostname',
     "ODB": {},                              // place to park info pulled from ODB
     "data": {},                             // place to park raw data from non-ODB sources; note this gets dumped at the start of every heartbeat!
     "detector": {                           // place to park detector-specific data 
@@ -785,15 +785,19 @@ if(dataStore.host=="missing-hostname"){
     {
 	dataStore.hostname = 'griffin';
 	dataStore.host = 'grsmid00.triumf.ca:8081';
+	dataStore.SOHhost = 'grifsoh00.triumf.ca:8081';
     }else if(urlData.backend=="tigress"){
 	dataStore.hostname = 'tigress';
 	dataStore.host = 'grsmid02.triumf.ca:8081';
+	dataStore.SOHhost = 'tigsoh01.triumf.ca:8081';
     }else if(urlData.backend=="grif-wagon"){
 	dataStore.hostname = 'annikal';
 	dataStore.host = 'annikal.triumf.ca:8081';
+	dataStore.SOHhost = 'tigsoh01.triumf.ca:8081';
     }else{
 	dataStore.hostname = 'missing-hostname';
 	dataStore.host = 'missing-hostname';
+	dataStore.SOHhost = 'missing-hostname';
     }
 }
 
