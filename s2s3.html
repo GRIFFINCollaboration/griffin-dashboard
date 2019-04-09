@@ -44,12 +44,12 @@
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 validate_browser();
 
-	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
-                
                 setupRequests();
                 deployDetector('detector-s2s3', dataStore.detector.config);
             });
-        </script>
+
+	    if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
+	</script>
 
     </body>
 </html>

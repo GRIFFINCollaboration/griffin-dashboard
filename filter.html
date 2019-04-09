@@ -48,7 +48,9 @@
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 validate_browser();
                 
-                /////////////
+	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
+
+	        /////////////
                 // setup
                 /////////////
                 //get the ODB DAQ directory for the nav bar
@@ -68,7 +70,6 @@
                         'title': dataStore.hostname.toUpperCase()+' Filter',
                     }
                 ); 
-	      // if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
                 //footer
                 document.getElementById('footer').innerHTML = Mustache.to_html(
                     dataStore.templates['brand-footer'], 

@@ -51,7 +51,9 @@
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 validate_browser();
-                
+
+	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
+	
                 ///////////////////
                 // setup
                 ///////////////////
@@ -75,7 +77,6 @@
                         'title': dataStore.hostname.toUpperCase()+' HV', 
                     }
                 );
-	       if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
 	        //footer
                 document.getElementById('footer').innerHTML = Mustache.to_html(
                     dataStore.templates['brand-footer'], 
