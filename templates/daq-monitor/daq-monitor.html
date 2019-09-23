@@ -3,6 +3,13 @@
 
 <template id='daq-monitor'>
     <div class='section-wrapper'>
+        <div class='col-md-12 pan'>
+            <h2>Detector Types</h2>
+            <div id='detectorsHisto'></div>
+        </div>
+    </div>
+
+    <div class='section-wrapper'>
         <div class='col-md-12 pan' id='masterStats'>
             <h2>Master Stats</h2>
             <div id='collectorsHisto'></div>
@@ -26,13 +33,6 @@
             <label for='digitizerPicker'>Digitizer: </label>
             <div id='digitizerPicker' class="btn-group" role="group"></div>
             <div id='channelsHisto'></div>
-        </div>
-    </div>
-
-    <div class='section-wrapper'>
-        <div class='col-md-12 pan'>
-            <h2>Detectors</h2>
-            <div id='detectorsHisto'></div>
         </div>
     </div>
 </template>
