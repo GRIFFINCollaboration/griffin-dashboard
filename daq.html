@@ -43,12 +43,15 @@
                 fetchDAQ(payload);
                 dataStore.ODB.DAQ.summary = {};
                 dataStore.ODB.DAQ.detectorNames = {
-                    'GR': 'GRIFFIN',
-                    'ZD': 'Zero-Degree Scintillator',
-                    'SE': 'SCEPTAR',
-                    'DS': 'DESCANT',
-                    'PA': 'PACES',
-                    'LB': 'LaBr3'
+                    'GRG': 'GRIFFIN HPGe', 
+                    'GRS': 'GRIFFIN BGO',
+                    'ZDS': 'Zero-Degree Scintillator',
+                    'SEP': 'SCEPTAR',
+                    'DSC': 'DESCANT',
+                    'PAC': 'PACES', 
+                    'LBL': 'LaBr3', 
+                    'LBS': 'LaBr3 BGO',
+                    'LBT': 'LaBr3 TAC'
                 };
                 determineADCrequests();
                 detectDetectors();
