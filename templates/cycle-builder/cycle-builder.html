@@ -71,96 +71,6 @@
                     'code': 0xC0F0C0F0,
                     'prettyName': 'Collect Source Data'
                 }
-            ],
-
-            'Triggers': [
-                {
-                    'id': 'hpgeTrig',
-                    'code': 0x00800080,
-                    'prettyName': 'HPGe Trigger'
-                },
-
-                {
-                    'id': 'scpTrig',
-                    'code': 0x01000100,
-                    'prettyName': 'SCEPTAR Trigger'
-                },
-
-                {
-                    'id': 'siliTrig',
-                    'code': 0x02000200,
-                    'prettyName': 'Si(Li) Trigger'
-                },
-
-                {
-                    'id': 'labr3Trig',
-                    'code': 0x04000400,
-                    'prettyName': 'LaBr3 Trigger'
-                },
-
-                {
-                    'id': 'dscTrig',
-                    'code': 0x08000800,
-                    'prettyName': 'DESCANT Trigger'
-                }
-            ],
-
-            'DataCollection': [
-                {
-                    'id': 'DCbkg',
-                    'code': 0xC002C002,
-                    'prettyName': 'Collect Background'
-                },
-
-                {
-                    'id': 'DCcollectDataWithBeamOn',
-                    'code': 0xC001C001,
-                    'prettyName': 'Collect Data with Beam on'
-                },
-
-                {
-                    'id': 'DCcollectDataWithBeamOff',
-                    'code': 0xC004C004,
-                    'prettyName': 'Collect Data with Beam off'
-                },
-
-                {
-                    'id': 'DCcollectSourceData',
-                    'code': 0xC010C010,
-                    'prettyName': 'Collect Source Data'
-                }
-            ],
-
-            'Unassigned': [
-                {
-                    'id': 'output2',
-                    'code': 0x00020002,
-                    'prettyName': 'Output 2'
-                },
-
-                {
-                    'id': 'output3',
-                    'code': 0x00040004,
-                    'prettyName': 'Output 3'
-                },
-
-                {
-                    'id': 'output5',
-                    'code': 0x00100010,
-                    'prettyName': 'Output 5'
-                },
-
-                {
-                    'id': 'output6',
-                    'code': 0x00200020,
-                    'prettyName': 'Output 6'
-                },
-
-                {
-                    'id': 'output7',
-                    'code': 0x00400040,
-                    'prettyName': 'Output 7'
-                }
             ]
 
         }
@@ -195,10 +105,7 @@
             dataStore.templates['cycle-step'], 
             {  
                 "index": dataStore.cycle.stepIndex,
-                "RunControl": dataStore.cycle.actions.RunControl,
-                "Triggers": dataStore.cycle.actions.Triggers,
-                "DataCollection": dataStore.cycle.actions.DataCollection,
-                "Unassigned": dataStore.cycle.actions.Unassigned
+                "RunControl": dataStore.cycle.actions.RunControl
             }
         );
         document.getElementById('logic-wrap').appendChild(wrap);
