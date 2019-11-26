@@ -43,15 +43,33 @@
 
             'RunControl': [
                 {
-                    'id': 'beamOn',
-                    'code': 0x00010001,
-                    'prettyName': 'Beam On'
-                },
-
-                {
                     'id': 'moveTape',
                     'code': 0xC008C008,
                     'prettyName': 'Move Tape'
+                },
+
+                {
+                    'id': 'bkg',
+                    'code': 0xC002C002,
+                    'prettyName': 'Collect Background'
+                },
+
+                {
+                    'id': 'collectDataWithBeamOn',
+                    'code': 0xC001C001,
+                    'prettyName': 'Collect Data with Beam on'
+                },
+
+                {
+                    'id': 'collectDataWithBeamOff',
+                    'code': 0xC004C004,
+                    'prettyName': 'Collect Data with Beam off'
+                },
+
+                {
+                    'id': 'collectSourceData',
+                    'code': 0xC0F0C0F0,
+                    'prettyName': 'Collect Source Data'
                 }
             ],
 
@@ -89,25 +107,25 @@
 
             'DataCollection': [
                 {
-                    'id': 'bkg',
+                    'id': 'DCbkg',
                     'code': 0xC002C002,
                     'prettyName': 'Collect Background'
                 },
 
                 {
-                    'id': 'collectDataWithBeamOn',
+                    'id': 'DCcollectDataWithBeamOn',
                     'code': 0xC001C001,
                     'prettyName': 'Collect Data with Beam on'
                 },
 
                 {
-                    'id': 'collectDataWithBeamOff',
+                    'id': 'DCcollectDataWithBeamOff',
                     'code': 0xC004C004,
                     'prettyName': 'Collect Data with Beam off'
                 },
 
                 {
-                    'id': 'collectSourceData',
+                    'id': 'DCcollectSourceData',
                     'code': 0xC010C010,
                     'prettyName': 'Collect Source Data'
                 }
