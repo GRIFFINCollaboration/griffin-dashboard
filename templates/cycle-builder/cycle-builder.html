@@ -201,10 +201,13 @@
             durationUnit = 60000000;
         } else if(duration >= 1000000){
             dur = duration / 1000000;
-            durationUnit = 1000000;
-        } else {
+            durationUnit = 1000000; 
+        } else if(duration >= 0){
             dur = duration;
             durationUnit = 1000;
+        } else {
+            dur = 0xFFFFFFFF;
+            durationUnit = -1;
         }
 
         //set duration and unit
