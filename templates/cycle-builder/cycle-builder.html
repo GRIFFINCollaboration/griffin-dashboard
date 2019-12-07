@@ -207,7 +207,7 @@
             durationUnit = 1000;
         } else {
             dur = 0xFFFFFFFF;
-            durationUnit = -1;
+            durationUnit = 0xFFFFFFFF;
         }
 
         //set duration and unit
@@ -285,7 +285,9 @@
                 cycleDurations += ',';
             }
             cycleStepCodes += stepCode;
-            cycleDurations += Math.floor(parseFloat(document.getElementById(stepIndex+'Duration').value, 10) * parseInt(selected(stepIndex+'DurationUnit') , 10))
+            if(parseInt(selected(stepIndex+'DurationUnit') , 10)) == 0xFFFFFFFF){cycleDurations += 0xFFFFFFFF}
+            else{
+            cycleDurations += Math.floor(parseFloat(document.getElementById(stepIndex+'Duration').value, 10) * parseInt(selected(stepIndex+'DurationUnit') , 10))}
         }
 
         // create the requests
@@ -298,7 +300,7 @@
             dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/durations[*]&value=' + cycleDurations);
         }
 
-        // prepare rquest to apply cycle
+        // prepare request to apply cycle
         if(apply)
             dataStore.cycle.applyCycleRequest = 'http://' + dataStore.host + '?cmd=jset&odb=/PPG/Current&value=' + cycleName
 
