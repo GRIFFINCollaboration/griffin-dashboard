@@ -285,7 +285,9 @@
                 cycleDurations += ',';
             }
             cycleStepCodes += stepCode;
-            if(parseInt(selected(stepIndex+'DurationUnit') , 10)) = 0xFFFFFFFF){cycleDurations += 0xFFFFFFFF}
+            thisUnit = parseInt(selected(stepIndex+'DurationUnit') ,10));
+            console(thisUnit);
+            if(thisUnit = 0xFFFFFFFF){cycleDurations += 0xFFFFFFFF}
             else{
             cycleDurations += Math.floor(parseFloat(document.getElementById(stepIndex+'Duration').value, 10) * parseInt(selected(stepIndex+'DurationUnit') , 10))}
         }
