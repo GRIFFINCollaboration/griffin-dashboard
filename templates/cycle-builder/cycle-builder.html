@@ -196,18 +196,18 @@
         var i, j, keys, dur, durationUnit;
 
         //decide on a sensible unit for the duration
-        if(duration == 0xFFFFFFFF){
-            dur = 0xFFFFFFFF;
-            durationUnit = 0xFFFFFFFF;
-        }else if(duration >= 60000000){
+        if(duration >= 60000000){
             dur = duration / 60000000;
             durationUnit = 60000000;
         } else if(duration >= 1000000){
             dur = duration / 1000000;
             durationUnit = 1000000; 
-        } else {
+        } else if(duration >= 0){
             dur = duration;
             durationUnit = 1000;
+        } else {
+            dur = 0xFFFFFFFF;
+            durationUnit = 0xFFFFFFFF;
         }
 
         //set duration and unit
