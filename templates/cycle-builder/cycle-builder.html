@@ -196,18 +196,18 @@
         var i, j, keys, dur, durationUnit;
 
         //decide on a sensible unit for the duration
-        if(duration >= 60000000){
+        if(duration == 0xFFFFFFFF){
+            dur = 0xFFFFFFFF;
+            durationUnit = 0xFFFFFFFF;
+        }else if(duration >= 60000000){
             dur = duration / 60000000;
             durationUnit = 60000000;
         } else if(duration >= 1000000){
             dur = duration / 1000000;
             durationUnit = 1000000; 
-        } else if(duration >= 0){
+        } else {
             dur = duration;
             durationUnit = 1000;
-        } else {
-            dur = 0xFFFFFFFF;
-            durationUnit = 0xFFFFFFFF;
         }
 
         //set duration and unit
@@ -298,7 +298,7 @@
             dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/durations[*]&value=' + cycleDurations);
         }
 
-        // prepare request to apply cycle
+        // prepare rquest to apply cycle
         if(apply)
             dataStore.cycle.applyCycleRequest = 'http://' + dataStore.host + '?cmd=jset&odb=/PPG/Current&value=' + cycleName
 
