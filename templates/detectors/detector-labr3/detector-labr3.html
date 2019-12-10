@@ -35,26 +35,26 @@
         // determine all the parameters needed for LaBr3's visualization widget that can be calculated before HTML injection, and park them on dataStore.detector
 
         var suppressors = [
-            'DAS01XN00X', 'DAS01XN01X', 'DAS01XN02X',
-            'DAS02XN00X', 'DAS02XN01X', 'DAS02XN02X',
-            'DAS03XN00X', 'DAS03XN01X', 'DAS03XN02X',
-            'DAS04XN00X', 'DAS04XN01X', 'DAS04XN02X', 
-            'DAS05XN00X', 'DAS05XN01X', 'DAS05XN02X',
-            'DAS06XN00X', 'DAS06XN01X', 'DAS06XN02X',
-            'DAS07XN00X', 'DAS07XN01X', 'DAS07XN02X',
-            'DAS08XN00X', 'DAS08XN01X', 'DAS08XN02X'
+            'LBS01AN00X', 'LBS01BN00X', 'LBS01CN00X',
+            'LBS02AN00X', 'LBS02BN00X', 'LBS02CN00X',
+            'LBS03AN00X', 'LBS03BN00X', 'LBS03CN00X',
+            'LBS04AN00X', 'LBS04BN00X', 'LBS04CN00X', 
+            'LBS05AN00X', 'LBS05BN00X', 'LBS05CN00X',
+            'LBS06AN00X', 'LBS06BN00X', 'LBS06CN00X',
+            'LBS07AN00X', 'LBS07BN00X', 'LBS07CN00X',
+            'LBS08AN00X', 'LBS08BN00X', 'LBS08CN00X'
         ];
 
         //build up dataStore.detector.channel names
         if(dataStore.detector.channelType == 'energy'){
             dataStore.detector.channelNames = [ 
-                'DAL01XN00X', 'DAL02XN00X', 'DAL03XN00X', 'DAL04XN00X',
-                'DAL05XN00X', 'DAL06XN00X', 'DAL07XN00X', 'DAL08XN00X'
+                'LBL01XN00X', 'LBL02XN00X', 'LBL03XN00X', 'LBL04XN00X',
+                'LBL05XN00X', 'LBL06XN00X', 'LBL07XN00X', 'LBL08XN00X'
             ];            
         } else {
             dataStore.detector.channelNames = [ 
-                'DAL01TN00X', 'DAL02XT00X', 'DAL03XT00X', 'DAL04XT00X',
-                'DAL05TN00X', 'DAL06XT00X', 'DAL07XT00X', 'DAL08XT00X'
+                'LBT01XT00X', 'LBT02XT00X', 'LBT03XT00X', 'LBT04XT00X',
+                'LBT05XT00X', 'LBT06XT00X', 'LBT07XT00X', 'LBT08XT00X'
             ]; 
         }
         dataStore.detector.channelNames = suppressors.concat(dataStore.detector.channelNames);
