@@ -40,7 +40,11 @@
                 newLink = document.createElement('a');
                 newLink.setAttribute('class', 'btn btn-info btn-fudge'); 
                 if(detectors[i] == 'GRS'){ continue; }
+                if(detectors[i] == 'LBS'){ continue; }
                 if(detectors[i] == 'TIS'){ continue; }
+                if(detectors[i] == 'LBL'){
+                    newLink.setAttribute('href', 'labr3.html');
+                } else
                 if(detectors[i] == 'SPZ'){
                     newLink.setAttribute('href', 's2s3.html?config=S2');
                 } else if(detectors[i] == 'SPE'){
