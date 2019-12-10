@@ -76,7 +76,7 @@
         // stamp out a cell for the given channel and coordinate array key
         // note that cell still has to be added to an appropriate layer on a per-detector basis.
 
-        var centerX = (channel.slice(6) == 'N00X') ? dataStore.leftCenter : dataStore.rightCenter,
+        var centerX = (channel.slice(6) == 'N00A') ? dataStore.leftCenter : dataStore.rightCenter,
             path = new Path2D();
 
         path.arc(
