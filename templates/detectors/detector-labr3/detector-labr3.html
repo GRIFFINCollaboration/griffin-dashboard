@@ -133,15 +133,16 @@
         // note that cell still has to be added to an appropriate layer on a per-detector basis.
 
         var detector = parseInt(channel.slice(3,5), 10) - 1,
+            segment=0,
             X = dataStore.detector.detCenterX[detector],
             Y = dataStore.detector.detCenterY[detector],
             mask, path;
 
         if(channel.slice(2,3) == 'S'){
 
-            if(parseInt(channel.slice(5,6), 10)=='A'){ segment=0; }
-            if(parseInt(channel.slice(5,6), 10)=='B'){ segment=1; }
-            if(parseInt(channel.slice(5,6), 10)=='C'){ segment=2; }
+            if(channel.slice(5,6) =='A'){ segment=0; }
+            if(channel.slice(5,6) =='B'){ segment=1; }
+            if(channel.slice(5,6) =='C'){ segment=2; }
 
             path = generateArc(-2/3*(segment+1)*Math.PI, -2/3*segment*Math.PI, dataStore.detector.innerBGOrad, dataStore.detector.outerBGOrad, X, Y);
             dataStore.detector.cells[channel] = new qdshape(path, {
