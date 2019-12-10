@@ -112,13 +112,13 @@ dataStore = {
         },
         {
             "id": '03',
-            "short": 'DAN',
+            "short": 'LBL',
             "full": 'LaBr3',
             "description": 'LaBr3 (Energy)'
         },
         {
             "id": '04',
-            "short": 'DAT',
+            "short": 'LBT',
             "full": 'LaBr3',
             "description": 'LaBr3 (Time)'
         },
@@ -142,7 +142,7 @@ dataStore = {
         },
         {
             "id": '08',
-            "short": 'DAS',
+            "short": 'LBS',
             "full": 'Suppressors',
             "description": 'LaBr3 Suppressors'
         },
