@@ -298,8 +298,9 @@ console.log('repaint')
 		address = dataStore.ODB.DAQ.summary.digitizers.titles[digiCollectorIndex][digitizerFigureIndex];
 		channelName = findChannelName(address);
 		ADC = findADC(channelName);	
-	// ---------------------------------------------------------------------------
-    document.getElementById("digitizerLink").innerHTML = ADC;
+    // ---------------------------------------------------------------------------
+    LinkString = "<a href=\"https://" + ADC + "\" target=\"_blank\">" + ADC + "</a>";
+    document.getElementById("digitizerLink").innerHTML = LinkString;
 
     //Digitizers plot
     createBarchart(
