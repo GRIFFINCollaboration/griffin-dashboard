@@ -299,7 +299,7 @@ console.log('repaint')
 		channelName = findChannelName(address);
 		ADC = findADC(channelName);	
 	// ---------------------------------------------------------------------------
-	
+    document.getElementById("digitizerLink").innerHTML = ADC;
 
     //Digitizers plot
     createBarchart(
