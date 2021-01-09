@@ -144,6 +144,12 @@ function regenerateDatastructure(suppressDOMconfig){
                 }.bind(digiCollectorOption);
                 document.getElementById('digiCollectorPicker').appendChild(digiCollectorOption);
 
+		//Test of ODB readback
+		console.log("Master Collector chanmask is: "+dataStore.ODB.DAQ.params.ChanMask[0]); 
+		console.log("Slave0 Collector chanmask is: "+dataStore.ODB.DAQ.params.ChanMask[1]); 
+		console.log("Slave1 Collector chanmask is: "+dataStore.ODB.DAQ.params.ChanMask[2]); 
+		console.log("Slave2 Collector chanmask is: "+dataStore.ODB.DAQ.params.ChanMask[3]);
+		
                 //start with the first collector selected on both collector and digitizer plots
                 if(first){
                     dataStore.collectorValue = collectorOption.value;
