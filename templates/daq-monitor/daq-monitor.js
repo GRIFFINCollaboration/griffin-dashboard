@@ -129,6 +129,7 @@ function regenerateDatastructure(suppressDOMconfig){
             ChanMaskButton.setAttribute('id', string);
             ChanMaskButton.setAttribute('type', 'button');
             ChanMaskButton.setAttribute('class', 'btn btn-default');
+            ChanMaskButton.style = 'font-size:10px';
             ChanMaskButton.onclick = function(){
                 WriteChanMask(this.id);
             }.bind(ChanMaskButton);
@@ -179,6 +180,7 @@ function regenerateDatastructure(suppressDOMconfig){
                 ChanMaskButton.setAttribute('id', string);
                 ChanMaskButton.setAttribute('type', 'button');
                 ChanMaskButton.setAttribute('class', 'btn btn-default');
+                ChanMaskButton.style = 'font-size:10px';
                 ChanMaskButton.onclick = function(){
                     WriteChanMask(this.id);
                 }.bind(ChanMaskButton);
