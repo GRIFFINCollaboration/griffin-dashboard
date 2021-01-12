@@ -126,7 +126,6 @@ function regenerateDatastructure(suppressDOMconfig){
 	for(j=0; j<16; j++){
             ChanMaskButton = document.createElement('button');
 	    string = 'ChanMaskButton0-'+j;
-	    console.log('Create button: '+string);
             ChanMaskButton.setAttribute('id', string);
             ChanMaskButton.setAttribute('type', 'button');
             ChanMaskButton.setAttribute('class', 'btn btn-default');
@@ -135,7 +134,7 @@ function regenerateDatastructure(suppressDOMconfig){
             }.bind(ChanMaskButton);
             document.getElementById('MasterChanMaskPicker').appendChild(ChanMaskButton);
 	}
-//	SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
+	SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
 	
 	
         first = true;
@@ -215,7 +214,8 @@ function WriteChanMask(id){
     currentChanmask ^= (1 << thisIdNumber);
     
     //Set the new chanmask in the ODB
-    pokeURL('http://'+dataStore.host+'/?cmd=jset&odb=DAQ/params/ChanMask['+thisCollector+']&value='+currentChanmask);
+    console.log('Write ChanMask to ODB: '+currentChanmask);
+   // pokeURL('http://'+dataStore.host+'/?cmd=jset&odb=DAQ/params/ChanMask['+thisCollector+']&value='+currentChanmask);
     
     //Change the displayed chanmask to the new value
    // document.getElementById('chanmaskDisplay').innerHTML = '0x'+currentChanmask.toString(16);
