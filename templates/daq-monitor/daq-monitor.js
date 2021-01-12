@@ -122,7 +122,7 @@ function regenerateDatastructure(suppressDOMconfig){
     if(!suppressDOMconfig){
 
 	
-	// The Master collector channel mask buttons
+	// Create the Master collector channel mask buttons
 	for(j=0; j<16; j++){
             ChanMaskButton = document.createElement('button');
 	    string = 'ChanMaskButton0-'+j;
@@ -174,7 +174,7 @@ function regenerateDatastructure(suppressDOMconfig){
                 }
 
 		
-		// The Collector channel mask buttons
+		// Create the Collector channel mask buttons
 		if(i<8){
                 CollectorChanMaskRow = document.createElement('div');
 		name = 'CollectorChanMaskRow'+i;
@@ -205,7 +205,6 @@ function regenerateDatastructure(suppressDOMconfig){
     dataStore.ODB.DAQ.summaryJSON = JSON.stringify(dataStore.ODB.DAQ.summary);
 }
 
-
 function WriteChanMask(id){
     //This function is called when a button representing a specific bit is toggled. The behaviour is as follows:
     //Get the chanmask from the ODB because it may be different to the status of the buttons (page may not have been refreshed recently etc)
@@ -229,6 +228,7 @@ function WriteChanMask(id){
     dataStore.ODB.DAQ.params.ChanMask[thisCollector] = currentChanmask;
     
     //Change the displayed chanmask to the new value
+    //Note that the div for this display has not been created (ie code not added for that)
    // document.getElementById('chanmaskDisplay').innerHTML = '0x'+currentChanmask.toString(16);
     
     //Set all the buttons to match the current chanmask
@@ -262,7 +262,6 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
     }
     return;
 }
-
 
 function activeButton(groupID, targetButton){
     // make the target button be the only .active button in its group
