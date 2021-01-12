@@ -121,7 +121,7 @@ function regenerateDatastructure(suppressDOMconfig){
     // dom setup
     if(!suppressDOMconfig){
 
-	/*
+	
 	// The Master collector channel mask buttons
 	for(j=0; j<16; j++){
             chanmaskButtons = document.createElement('button');
@@ -133,7 +133,7 @@ function regenerateDatastructure(suppressDOMconfig){
             document.getElementById('MasterChanMaskPicker').appendChild(ChanMaskButtons);
 	}
 	SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
-	*/
+	
 	
         first = true;
         for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
@@ -169,7 +169,7 @@ function regenerateDatastructure(suppressDOMconfig){
                     first = false;
                 }
 
-		/*
+		
 		// The Collector channel mask buttons
 		for(j=0; j<16; j++){
                 chanmaskButtons = document.createElement('button');
@@ -181,7 +181,7 @@ function regenerateDatastructure(suppressDOMconfig){
                 document.getElementById('CollectorChanMaskPicker').appendChild(ChanMaskButtons);
 		}
 		SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
-		*/
+		
             }
         }
         updateDigitizerList("digiCollectorPicker"); 
@@ -191,7 +191,7 @@ function regenerateDatastructure(suppressDOMconfig){
     dataStore.ODB.DAQ.summaryJSON = JSON.stringify(dataStore.ODB.DAQ.summary);
 }
 
-/*
+
 function WriteChanMask(id){
     //This function is called when a button representing a specific bit is toggled. The behaviour is as follows:
     //Get the chanmask from the ODB because it may be different to the status of the buttons (page may not have been refreshed recently etc)
@@ -246,7 +246,7 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
     }
     return;
 }
-*/
+
 
 function activeButton(groupID, targetButton){
     // make the target button be the only .active button in its group
