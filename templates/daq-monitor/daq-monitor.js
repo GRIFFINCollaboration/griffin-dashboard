@@ -131,7 +131,7 @@ function regenerateDatastructure(suppressDOMconfig){
             ChanMaskButton.setAttribute('type', 'button');
             ChanMaskButton.setAttribute('class', 'btn btn-default');
             ChanMaskButton.onclick = function(){
-                WriteChanMask(string);
+                WriteChanMask(this.id);
             }.bind(ChanMaskButton);
             document.getElementById('MasterChanMaskPicker').appendChild(ChanMaskButton);
 	}
@@ -181,7 +181,7 @@ function regenerateDatastructure(suppressDOMconfig){
                 ChanMaskButton.setAttribute('type', 'button');
                 ChanMaskButton.setAttribute('class', 'btn btn-default');
                 ChanMaskButton.onclick = function(){
-                    WriteChanMask(string);
+                    WriteChanMask(this.id);
                 }.bind(ChanMaskButton);
                 document.getElementById('CollectorChanMaskPicker').appendChild(ChanMaskButton);
 		}
