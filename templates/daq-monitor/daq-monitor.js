@@ -213,9 +213,10 @@ function WriteChanMask(id){
     //Change the bit in the chanmask which has been toggled
     currentChanmask ^= (1 << thisIdNumber);
     
-    //Set the new chanmask in the ODB
+    //Set the new chanmask in the ODB and dataStore
     console.log('Write ChanMask to ODB: '+currentChanmask);
     pokeURL('http://'+dataStore.host+'/?cmd=jset&odb=DAQ/params/ChanMask['+thisCollector+']&value='+currentChanmask);
+    dataStore.ODB.DAQ.params.ChanMask[thisCollector] = currentChanmask;
     
     //Change the displayed chanmask to the new value
    // document.getElementById('chanmaskDisplay').innerHTML = '0x'+currentChanmask.toString(16);
