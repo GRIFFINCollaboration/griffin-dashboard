@@ -126,6 +126,7 @@ function regenerateDatastructure(suppressDOMconfig){
 	for(j=0; j<16; j++){
             ChanMaskButton = document.createElement('button');
 	    string = 'ChanMaskButton0-'+j;
+	    console.log('Create button: '+string);
             ChanMaskButton.setAttribute('id', string);
             ChanMaskButton.setAttribute('type', 'button');
             ChanMaskButton.setAttribute('class', 'btn btn-default');
