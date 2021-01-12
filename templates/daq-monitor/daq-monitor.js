@@ -217,7 +217,7 @@ function WriteChanMask(id){
    // document.getElementById('chanmaskDisplay').innerHTML = '0x'+currentChanmask.toString(16);
     
     //Set all the buttons to match the current chanmask
-    SetAllChanMaskButtons(thisCollector,currentChanmask);
+    //SetAllChanMaskButtons(thisCollector,currentChanmask);
     
     return;    
 }
