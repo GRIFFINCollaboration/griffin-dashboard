@@ -178,6 +178,7 @@ function regenerateDatastructure(suppressDOMconfig){
                 CollectorChanMaskRow = document.createElement('div');
 		name = 'CollectorChanMaskRow'+i;
                 CollectorChanMaskRow.setAttribute('id', name);
+		CollectorChanMaskRow.innerHTML = 'Collector'+(i+1);
                 document.getElementById('CollectorChanMaskPicker').appendChild(CollectorChanMaskRow);
 		for(j=0; j<16; j++){
                 ChanMaskButton = document.createElement('button');
@@ -192,7 +193,7 @@ function regenerateDatastructure(suppressDOMconfig){
                 }.bind(ChanMaskButton);
                 document.getElementById(name).appendChild(ChanMaskButton);
 		}
-	//	SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
+		SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
 		
             }
         }
