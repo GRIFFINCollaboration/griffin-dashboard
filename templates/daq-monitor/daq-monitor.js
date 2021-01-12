@@ -169,7 +169,7 @@ function regenerateDatastructure(suppressDOMconfig){
                     first = false;
                 }
 
-		
+		/*
 		// The Collector channel mask buttons
 		for(j=0; j<16; j++){
                 chanmaskButtons = document.createElement('button');
@@ -181,7 +181,7 @@ function regenerateDatastructure(suppressDOMconfig){
                 document.getElementById('CollectorChanMaskPicker').appendChild(ChanMaskButtons);
 		}
 		SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
-		
+		*/
             }
         }
         updateDigitizerList("digiCollectorPicker"); 
