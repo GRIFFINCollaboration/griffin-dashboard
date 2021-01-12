@@ -215,13 +215,13 @@ function WriteChanMask(id){
     
     //Set the new chanmask in the ODB
     console.log('Write ChanMask to ODB: '+currentChanmask);
-   // pokeURL('http://'+dataStore.host+'/?cmd=jset&odb=DAQ/params/ChanMask['+thisCollector+']&value='+currentChanmask);
+    pokeURL('http://'+dataStore.host+'/?cmd=jset&odb=DAQ/params/ChanMask['+thisCollector+']&value='+currentChanmask);
     
     //Change the displayed chanmask to the new value
    // document.getElementById('chanmaskDisplay').innerHTML = '0x'+currentChanmask.toString(16);
     
     //Set all the buttons to match the current chanmask
-    //SetAllChanMaskButtons(thisCollector,currentChanmask);
+    SetAllChanMaskButtons(thisCollector,currentChanmask);
     
     return;    
 }
