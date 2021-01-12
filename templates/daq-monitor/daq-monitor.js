@@ -130,6 +130,7 @@ function regenerateDatastructure(suppressDOMconfig){
             ChanMaskButton.setAttribute('type', 'button');
             ChanMaskButton.setAttribute('class', 'btn btn-default');
             ChanMaskButton.style = 'font-size:10px';
+            ChanMaskButton.style.padding = '4px';
             ChanMaskButton.onclick = function(){
                 WriteChanMask(this.id);
             }.bind(ChanMaskButton);
@@ -174,6 +175,10 @@ function regenerateDatastructure(suppressDOMconfig){
 
 		
 		// The Collector channel mask buttons
+                CollectorChanMaskRow = document.createElement('div');
+		name = 'CollectorChanMaskRow'+i;
+                CollectorChanMaskRow.setAttribute('id', name);
+                document.getElementById('CollectorChanMaskPicker').appendChild(CollectorChanMaskRow);
 		for(j=0; j<16; j++){
                 ChanMaskButton = document.createElement('button');
 		string = 'ChanMaskButton'+(i+1)+'-'+j;
@@ -181,10 +186,11 @@ function regenerateDatastructure(suppressDOMconfig){
                 ChanMaskButton.setAttribute('type', 'button');
                 ChanMaskButton.setAttribute('class', 'btn btn-default');
                 ChanMaskButton.style = 'font-size:10px';
+		ChanMaskButton.style.padding = '4px';
                 ChanMaskButton.onclick = function(){
                     WriteChanMask(this.id);
                 }.bind(ChanMaskButton);
-                document.getElementById('CollectorChanMaskPicker').appendChild(ChanMaskButton);
+                document.getElementById(name).appendChild(ChanMaskButton);
 		}
 	//	SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
 		
