@@ -222,6 +222,7 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
     // Set all 16 buttons appropriately based on the current value of the chanmask
     for(i=0; i<16; i++){
 	name='ChanMaskButton'+thisCollector+'-'+(i);
+	console.log('Working on:'name);
 	
 	// Determine if this bit is set in the chanmask
 	if((currentNumber & (1 << i))!=0){ thisBit=1; }else{ thisBit=0;}
