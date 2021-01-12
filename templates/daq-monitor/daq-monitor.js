@@ -124,13 +124,13 @@ function regenerateDatastructure(suppressDOMconfig){
 	
 	// The Master collector channel mask buttons
 	for(j=0; j<16; j++){
-            chanmaskButtons = document.createElement('button');
+            ChanMaskButton = document.createElement('button');
 	    string = 'ChanMaskButton0-'+j;
-            chanmaskButtons.setAttribute('id', string);
-            chanmaskButtons.setAttribute('type', 'button');
-            chanmaskButtons.setAttribute('class', 'btn btn-default');
-            chanmaskButtons.onclick = WriteChanMask(string);
-            document.getElementById('MasterChanMaskPicker').appendChild(ChanMaskButtons);
+            ChanMaskButton.setAttribute('id', string);
+            ChanMaskButton.setAttribute('type', 'button');
+            ChanMaskButton.setAttribute('class', 'btn btn-default');
+            ChanMaskButton.onclick = WriteChanMask(string);
+            document.getElementById('MasterChanMaskPicker').appendChild(ChanMaskButton);
 	}
 	SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
 	
@@ -169,19 +169,19 @@ function regenerateDatastructure(suppressDOMconfig){
                     first = false;
                 }
 
-		/*
+		
 		// The Collector channel mask buttons
 		for(j=0; j<16; j++){
-                chanmaskButtons = document.createElement('button');
+                ChanMaskButton = document.createElement('button');
 		string = 'ChanMaskButton'+(i+1)+'-'+j;
-                chanmaskButtons.setAttribute('id', string);
-                chanmaskButtons.setAttribute('type', 'button');
-                chanmaskButtons.setAttribute('class', 'btn btn-default');
-                chanmaskButtons.onclick = WriteChanMask(string);
-                document.getElementById('CollectorChanMaskPicker').appendChild(ChanMaskButtons);
+                ChanMaskButton.setAttribute('id', string);
+                ChanMaskButton.setAttribute('type', 'button');
+                ChanMaskButton.setAttribute('class', 'btn btn-default');
+                ChanMaskButton.onclick = WriteChanMask(string);
+                document.getElementById('CollectorChanMaskPicker').appendChild(ChanMaskButton);
 		}
 		SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
-		*/
+		
             }
         }
         updateDigitizerList("digiCollectorPicker"); 
