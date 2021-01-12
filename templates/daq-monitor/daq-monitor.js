@@ -130,7 +130,9 @@ function regenerateDatastructure(suppressDOMconfig){
             ChanMaskButton.setAttribute('id', string);
             ChanMaskButton.setAttribute('type', 'button');
             ChanMaskButton.setAttribute('class', 'btn btn-default');
-            ChanMaskButton.onclick = WriteChanMask(string);
+            ChanMaskButton.onclick = function(){
+                WriteChanMask(string);
+            }.bind(ChanMaskButton);
             document.getElementById('MasterChanMaskPicker').appendChild(ChanMaskButton);
 	}
 //	SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
@@ -178,7 +180,9 @@ function regenerateDatastructure(suppressDOMconfig){
                 ChanMaskButton.setAttribute('id', string);
                 ChanMaskButton.setAttribute('type', 'button');
                 ChanMaskButton.setAttribute('class', 'btn btn-default');
-                ChanMaskButton.onclick = WriteChanMask(string);
+                ChanMaskButton.onclick = function(){
+                    WriteChanMask(string);
+                }.bind(ChanMaskButton);
                 document.getElementById('CollectorChanMaskPicker').appendChild(ChanMaskButton);
 		}
 	//	SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
