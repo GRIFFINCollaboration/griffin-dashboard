@@ -133,7 +133,7 @@ function regenerateDatastructure(suppressDOMconfig){
             ChanMaskButton.onclick = WriteChanMask(string);
             document.getElementById('MasterChanMaskPicker').appendChild(ChanMaskButton);
 	}
-	SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
+//	SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
 	
 	
         first = true;
@@ -181,7 +181,7 @@ function regenerateDatastructure(suppressDOMconfig){
                 ChanMaskButton.onclick = WriteChanMask(string);
                 document.getElementById('CollectorChanMaskPicker').appendChild(ChanMaskButton);
 		}
-		SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
+	//	SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
 		
             }
         }
