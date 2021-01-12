@@ -124,12 +124,12 @@ function regenerateDatastructure(suppressDOMconfig){
 	// The Master collector channel mask buttons
 	for(j=0; j<16; j++){
             chanmaskButtons = document.createElement('button');
-	    string = 'chanmaskButton0-'+j;
+	    string = 'ChanMaskButton0-'+j;
             chanmaskButtons.setAttribute('id', string);
             chanmaskButtons.setAttribute('type', 'button');
             chanmaskButtons.setAttribute('class', 'btn btn-default');
-            chanmaskButtons.onclick = writeChanmask(this.id);
-            document.getElementById('MasterChanmaskPicker').appendChild(chanmaskButtons);
+            chanmaskButtons.onclick = WriteChanMask(this.id);
+            document.getElementById('MasterChanMaskPicker').appendChild(ChanMaskButtons);
 	}
 	SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
 
@@ -171,12 +171,12 @@ function regenerateDatastructure(suppressDOMconfig){
 		// The Collector channel mask buttons
 		for(j=0; j<16; j++){
                 chanmaskButtons = document.createElement('button');
-		string = 'chanmaskButton'+(i+1)+'-'+j;
+		string = 'ChanMaskButton'+(i+1)+'-'+j;
                 chanmaskButtons.setAttribute('id', string);
                 chanmaskButtons.setAttribute('type', 'button');
                 chanmaskButtons.setAttribute('class', 'btn btn-default');
-                chanmaskButtons.onclick = writeChanmask(this.id);
-                document.getElementById('CollectorChanmaskPicker').appendChild(chanmaskButtons);
+                chanmaskButtons.onclick = WriteChanMask(this.id);
+                document.getElementById('CollectorChanmaskPicker').appendChild(ChanMaskButtons);
 		}
 		SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
             }
@@ -188,7 +188,7 @@ function regenerateDatastructure(suppressDOMconfig){
     dataStore.ODB.DAQ.summaryJSON = JSON.stringify(dataStore.ODB.DAQ.summary);
 }
 
-function writeChanmask(id){
+function WriteChanMask(id){
     //This function is called when a button representing a specific bit is toggled. The behaviour is as follows:
     //Get the chanmask from the ODB because it may be different to the status of the buttons (page may not have been refreshed recently etc)
     //Change the bit in the chanmask which has been toggled
@@ -221,7 +221,7 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
     //This function sets the initial values of the buttons used for the channel mask
     // Set all 16 buttons appropriately based on the current value of the chanmask
     for(i=0; i<16; i++){
-	name='button'+thisCollector+'-'+(i);
+	name='ChanMaskButton'+thisCollector+'-'+(i);
 	
 	// Determine if this bit is set in the chanmask
 	if((currentNumber & (1 << i))!=0){ thisBit=1; }else{ thisBit=0;}
