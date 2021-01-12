@@ -120,6 +120,20 @@ function regenerateDatastructure(suppressDOMconfig){
 
     // dom setup
     if(!suppressDOMconfig){
+
+	// The Master collector channel mask buttons
+	for(j=0; j<16; j++){
+            chanmaskButtons = document.createElement('button');
+	    string = 'chanmaskButton0-'+j;
+            chanmaskButtons.setAttribute('id', string);
+            chanmaskButtons.setAttribute('type', 'button');
+            chanmaskButtons.setAttribute('class', 'btn btn-default');
+            chanmaskButtons.onclick = writeChanmask(this.id);
+            document.getElementById('MasterChanmaskPicker').appendChild(chanmaskButtons);
+	}
+	SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
+
+	
         first = true;
         for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
             if(dataStore.ODB.DAQ.summary.collectors.titles[i]){
@@ -153,6 +167,18 @@ function regenerateDatastructure(suppressDOMconfig){
                     activeButton('digiCollectorPicker', digiCollectorOption);
                     first = false;
                 }
+		
+		// The Collector channel mask buttons
+		for(j=0; j<16; j++){
+                chanmaskButtons = document.createElement('button');
+		string = 'chanmaskButton'+(i+1)+'-'+j;
+                chanmaskButtons.setAttribute('id', string);
+                chanmaskButtons.setAttribute('type', 'button');
+                chanmaskButtons.setAttribute('class', 'btn btn-default');
+                chanmaskButtons.onclick = writeChanmask(this.id);
+                document.getElementById('CollectorChanmaskPicker').appendChild(chanmaskButtons);
+		}
+		SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
             }
         }
         updateDigitizerList("digiCollectorPicker"); 
@@ -160,6 +186,60 @@ function regenerateDatastructure(suppressDOMconfig){
     }
 
     dataStore.ODB.DAQ.summaryJSON = JSON.stringify(dataStore.ODB.DAQ.summary);
+}
+
+function writeChanmask(id){
+    //This function is called when a button representing a specific bit is toggled. The behaviour is as follows:
+    //Get the chanmask from the ODB because it may be different to the status of the buttons (page may not have been refreshed recently etc)
+    //Change the bit in the chanmask which has been toggled
+    //Set the new chanmask value in the ODB
+    //Set all the buttons to match the current chanmask
+    
+    // Determine which button was toggled
+    thisCollector = id.match(/\d+/)[0]; 
+    thisIdNumber = id.substring(id.indexOf('-'),id.length).match(/\d+/)[0]; 
+    
+    //Get the chanmask from the ODB
+    currentChanmask = dataStore.ODB.DAQ.params.ChanMask[thisCollector];
+    
+    //Change the bit in the chanmask which has been toggled
+    currentChanmask ^= (1 << thisIdNumber);
+    
+    //Set the new chanmask in the ODB
+    pokeURL('http://'+dataStore.host+'/?cmd=jset&odb=DAQ/params/ChanMask['+thisCollector+']&value='+currentChanmask);
+    
+    //Change the displayed chanmask to the new value
+   // document.getElementById('chanmaskDisplay').innerHTML = '0x'+currentChanmask.toString(16);
+    
+    //Set all the buttons to match the current chanmask
+    SetAllChanMaskButtons(thisCollector,currentChanmask);
+    
+    return;    
+}
+
+function SetAllChanMaskButtons(thisCollector,currentNumber){
+    //This function sets the initial values of the buttons used for the channel mask
+    // Set all 16 buttons appropriately based on the current value of the chanmask
+    for(i=0; i<16; i++){
+	name='button'+thisCollector+'-'+(i);
+	
+	// Determine if this bit is set in the chanmask
+	if((currentNumber & (1 << i))!=0){ thisBit=1; }else{ thisBit=0;}
+	
+	// Set the button attributes appropriately
+	if(thisBit){
+	    string='0x'+i.toString(16)+'<br>Enabled'
+	    document.getElementById(name).innerHTML = string;
+	    document.getElementById(name).status = 'true'; 
+	    document.getElementById(name).style.background='#5cb85c';
+	}else{
+	    string='0x'+i.toString(16)+'<br>Disabled'
+	    document.getElementById(name).innerHTML = string;
+	    document.getElementById(name).status = 'false';
+	    document.getElementById(name).style.background='#e74c3c';
+	}
+    }
+    return;
 }
 
 function activeButton(groupID, targetButton){
