@@ -176,7 +176,7 @@ function regenerateDatastructure(suppressDOMconfig){
                 chanmaskButtons.setAttribute('type', 'button');
                 chanmaskButtons.setAttribute('class', 'btn btn-default');
                 chanmaskButtons.onclick = WriteChanMask(this.id);
-                document.getElementById('CollectorChanmaskPicker').appendChild(ChanMaskButtons);
+                document.getElementById('CollectorChanMaskPicker').appendChild(ChanMaskButtons);
 		}
 		SetAllChanMaskButtons(i+1,dataStore.ODB.DAQ.params.ChanMask[i+1]);
             }
