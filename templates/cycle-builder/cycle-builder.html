@@ -164,6 +164,7 @@
         for(i=0; i<dataStore.ODB.PPG.Cycles[cycleName].PPGcodes.length; i++){
             addNewCycleStep();
             // Only load the step if it is non zero (Relevant for Infinite times)
+            console.log('Cycle step load: '+i+','+dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i] +','+ dataStore.ODB.PPG.Cycles[cycleName].durations[i]);
             if(i>0 && dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i]!=0 && dataStore.ODB.PPG.Cycles[cycleName].durations[i]!=0){
             loadCycleStep(dataStore.cycle.stepIndex-1, dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i], dataStore.ODB.PPG.Cycles[cycleName].durations[i]);
             }
