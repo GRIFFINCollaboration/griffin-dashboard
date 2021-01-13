@@ -7,7 +7,11 @@
     </div>
 
     <div id='{{index}}DurationControl'>
-        <label for='{{index}}Duration'>Duration:</label>
+        <label for='{{index}}DurationType'>Duration:</label>
+        <select id='{{index}}DurationType' value='1' onchange='CycleDurationTypeSelect(this.id,this.value)'>
+	  <option value='1'>Fixed Period</option>
+	  <option value='0'>Perpertual</option>
+	</select>
         <input id='{{index}}Duration' type='number' min='0' step='any' value='1' class='small-number' onchange='requestNewCycleName()'></input>
         <select id='{{index}}DurationUnit' value='1' onchange='requestNewCycleName()'>
             <option value='1000'>ms</option>
@@ -17,7 +21,7 @@
         </select>
     </div>
 
-    <h3>Output</h3>
+    <h3>PPG Output</h3>
     <ul id='cycle{{index}}RunControl'>
         {{#RunControl}}
             <li>

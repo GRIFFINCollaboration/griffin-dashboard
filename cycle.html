@@ -43,7 +43,28 @@
             function processDAQ(payload){
                 fetchDAQ(payload);
                 detectDetectors();
-            }
+	}
+
+	
+	function CycleDurationTypeSelect(id,value){
+	 index = id.match(/\d+/)[0];
+	 InputName = index+'Duration';
+	 SelectName = index+'DurationUnit';
+	
+	 console.log(id+','+value+', '+InputName+', '+SelectName);
+	 if(value==0){ //Perpetual setting, hide other input options
+	   document.getElementById(InputName).value = 4294967295; 
+	   document.getElementById(InputName).style.display = "none";
+	   document.getElementById(SelectName).value = 4294967295;
+	   document.getElementById(SelectName).style.display = "none";
+	 }else{ //Finite setting, show other input options 
+	   document.getElementById(InputName).value = 1; 
+	   document.getElementById(InputName).style.display = "inline"; 
+	   document.getElementById(SelectName).value = 1000000;
+	   document.getElementById(SelectName).style.display = "inline";
+	 }
+	}
+
 
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 validate_browser();
