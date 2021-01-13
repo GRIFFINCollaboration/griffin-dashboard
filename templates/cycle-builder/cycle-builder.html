@@ -163,10 +163,12 @@
 
         for(i=0; i<dataStore.ODB.PPG.Cycles[cycleName].PPGcodes.length; i++){
             // Only add and load the step if it is non zero (Relevant for Infinite times)
-            if(dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i]!=0 && dataStore.ODB.PPG.Cycles[cycleName].durations[i]!=0){
+            // This should only be enacted if additional code is added to ensure that an array of
+            // four entries is written to the ODB for patterns and durations.
+         //   if(dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i]!=0 && dataStore.ODB.PPG.Cycles[cycleName].durations[i]!=0){
             addNewCycleStep();
             loadCycleStep(dataStore.cycle.stepIndex-1, dataStore.ODB.PPG.Cycles[cycleName].PPGcodes[i], dataStore.ODB.PPG.Cycles[cycleName].durations[i]);
-            }
+          //  }
         }
 
         document.getElementById('cycleName').value = cycleName;
@@ -308,7 +310,7 @@
             dataStore.cycle.setCycleStepRequests.push('http://' + dataStore.host + '?cmd=jset&odb=/PPG/Cycles/' + cycleName + '/durations[*]&value=' + cycleDurations);
         }
 
-        // prepare rquest to apply cycle
+        // prepare request to apply cycle
         if(apply)
             dataStore.cycle.applyCycleRequest = 'http://' + dataStore.host + '?cmd=jset&odb=/PPG/Current&value=' + cycleName
 
