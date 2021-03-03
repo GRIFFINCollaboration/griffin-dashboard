@@ -223,7 +223,6 @@ function WriteChanMask(id){
     currentChanmask ^= (1 << thisIdNumber);
     
     //Set the new chanmask in the ODB and dataStore
-    console.log('Write ChanMask to ODB: '+currentChanmask);
     pokeURL('http://'+dataStore.host+'/?cmd=jset&odb=DAQ/params/ChanMask['+thisCollector+']&value='+currentChanmask);
     dataStore.ODB.DAQ.params.ChanMask[thisCollector] = currentChanmask;
     
@@ -242,7 +241,6 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
     // Set all 16 buttons appropriately based on the current value of the chanmask
     for(i=0; i<16; i++){
 	name='ChanMaskButton'+thisCollector+'-'+(i);
-	console.log('Working on:'+name);
 	
 	// Determine if this bit is set in the chanmask
 	if((currentNumber & (1 << i))!=0){ thisBit=1; }else{ thisBit=0;}
@@ -371,7 +369,6 @@ function findADC(channel){
 ////////////////////////////////////////
 
 function repaint(){
-console.log('repaint')
     var collectorFigureIndex = parseInt(dataStore.collectorValue, 16),
         digiCollectorIndex = parseInt(dataStore.digiCollectorValue, 16),
         digitizerFigureIndex = parseInt(dataStore.digitizerValue, 16),
