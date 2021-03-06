@@ -397,7 +397,7 @@ function repaint(){
 		channelName = findChannelName(address);
 		ADC = findADC(channelName);	
     // ---------------------------------------------------------------------------
-    LinkString = "<a href=\"https://" + ADC + "\" target=\"_blank\">" + ADC + "</a>";
+    LinkString = "<a href=\"http://" + ADC + "\" target=\"_blank\">" + ADC + "</a>";
     document.getElementById("digitizerLink").innerHTML = LinkString;
 
     //Digitizers plot
