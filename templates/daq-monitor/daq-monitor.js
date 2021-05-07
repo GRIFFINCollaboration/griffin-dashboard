@@ -380,7 +380,7 @@ function repaint(){
         dataStore.ODB.DAQ.summary.collectors.titles, 
         dataStore.ODB.DAQ.summary.collectors.requests, 
         dataStore.ODB.DAQ.summary.collectors.accepts, 
-        'Master Channel', 'Collector', 'Hz'
+        'Primary Channel', 'Collector', 'Hz'
     );
 
     //Collectors plot
