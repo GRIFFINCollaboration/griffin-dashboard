@@ -275,33 +275,33 @@ function configPACES(){
 
 function configLaBr3(US, DS){
 
-    var name, MSC = [], masterChan, collectorChan, ADC, min, max, i, slave;
+    var name, MSC = [], masterChan, collectorChan, ADC, min, max, i, secondary;
 
     if(!US && !DS) return [names, MSC]; //do nothing
 
     if(DS && !US){
         min = 0;
         max = 4;
-        slave=0;
+        secondary=0;
     }
     else if(US && !DS){
 	min = 4;
         max = 8;
-        slave=1;
+        secondary=1;
     } 
     else {
 	min = 0;
 	max = 8;
-        slave = 0;
+        secondary = 0;
     }
 	
     //LaBr - energy
     for(i=min; i<max; i++){
         name = 'LBL'+((i < 10)? '0'+(i+1) : i+1)+'XN00X';
         masterChan = canonicalMSC.LaBr3.M;
-	if (i < 4) { slave = 0; }
-	else { slave = 1; }
-        collectorChan = canonicalMSC.LaBr3.energy.S[slave];
+	if (i < 4) { secondary = 0; }
+	else { secondary = 1; }
+        collectorChan = canonicalMSC.LaBr3.energy.S[secondary];
         ADC = (i-min) % 4;
         MSC.push({
             chan: name, 
@@ -340,9 +340,9 @@ function configLaBr3(US, DS){
 		name = 'LBS'+((i < 10)? '0'+(i+1) : (i+1))+'C'+'N00X';
 	    }
             masterChan = canonicalMSC.LaBr3.M;
-	    if (i < 4) { slave = 0; }
-	    else { slave = 1; }
-            collectorChan = canonicalMSC.LaBr3.energy.S[slave];
+	    if (i < 4) { secondary = 0; }
+	    else { secondary = 1; }
+            collectorChan = canonicalMSC.LaBr3.energy.S[secondary];
             ADC = ((((i - min) % 4) + 1) * 3 + (j + 1)) % 16;
             MSC.push({
                 chan: name, 
