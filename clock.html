@@ -25,8 +25,8 @@
         <link id='nav-bar' rel="import" href="templates/nav-bar/nav-bar.html">
         <link id='run-status' rel="import" href="templates/run-status/run-status.html">
         <link id='clock-control' rel="import" href="templates/clock-control/clock-control.html">
-        <link id='follower-detail' rel="import" href="templates/clock-control/follower-detail.html">
-        <link id='master-detail' rel="import" href="templates/clock-control/master-detail.html">
+        <link id='secondary-detail' rel="import" href="templates/clock-control/secondary-detail.html">
+        <link id='primary-detail' rel="import" href="templates/clock-control/primary-detail.html">
     </head>
 
     <body>
@@ -81,7 +81,7 @@
                     hiChan: [11,15,19,23,27,39,31,35],  // indices for cycles high for ESATA0-5, left lemo, right lemo (note weird order...)
                     loChan: [12,16,20,24,28,40,32,36],
                     channelSuffixes: ['ESATA0', 'ESATA1', 'ESATA2', 'ESATA3', 'ESATA4', 'LeftLEMO', 'RightLEMO', 'ESATA5'],
-                    masterFreq: 100,    //master steps down from 200MHz in the spec, but seems to be 100 in practice?  TBD.
+                    primaryFreq: 100,    //primary steps down from 200MHz in the spec, but seems to be 100 in practice?  TBD.
                     CSACunit: ['','','','','',' VDC',' mA',' mW',' C','','']
                 };
             }
@@ -133,7 +133,7 @@
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
-                templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'clock-control', 'follower-detail', 'master-detail'];
+                templates = ['brand-header', 'brand-footer', 'nav-bar', 'run-status', 'clock-control', 'secondary-detail', 'primary-detail'];
                 dataStore.templates = prepareTemplates(templates);
 
                 //inject templates

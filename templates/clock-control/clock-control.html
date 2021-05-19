@@ -11,10 +11,10 @@
                         </h4>
                         <span id='host{{.}}'>No Host</span>
                         <div>
-                            <input type='radio' name='config{{.}}' value='master' id='masterToggle{{.}}' onchange='changeConfig("{{.}}")'></input>
-                            <label for='masterToggle{{.}}' class='inline'>Master</label>
-                            <input type='radio' name='config{{.}}' value='follower' id='followerToggle{{.}}' onchange='changeConfig("{{.}}")'></input>
-                            <label for='followerToggle{{.}}'>Follower</label>
+                            <input type='radio' name='config{{.}}' value='primary' id='primaryToggle{{.}}' onchange='changeConfig("{{.}}")'></input>
+                            <label for='primaryToggle{{.}}' class='inline'>Primary</label>
+                            <input type='radio' name='config{{.}}' value='secondary' id='secondaryToggle{{.}}' onchange='changeConfig("{{.}}")'></input>
+                            <label for='secondaryToggle{{.}}'>Secondary</label>
                         </div>
                     </span>
                 </div>
@@ -30,7 +30,7 @@
 
 <script>
     function setupDetail(clockName){
-        // set up the named clock's details as a follower or master depending on its toggle
+        // set up the named clock's details as a secondary or primary depending on its toggle
 
         var mode = document.querySelector('input[name="config'+ clockName +'"]:checked').value; 
 
@@ -48,12 +48,12 @@
         // write the clock contents sorted into dataStore.clocks onload into the dom.
 
         var i, j, name, value, isOn, stepdown,
-            isMaster = false,
-            masterOutputFrequency;
+            isPrimary = false,
+            primaryOutputFrequency;
 
         for(i=0; i<dataStore.clocks.length; i++){
             name = dataStore.clocks[i].title;
-            masterOutputFrequency = dataStore.clockParameters.masterFreq/(parseInt(dataStore.clocks[i].table.Variables.Output[11],10)+1);
+            primaryOutputFrequency = dataStore.clockParameters.primaryFreq/(parseInt(dataStore.clocks[i].table.Variables.Output[11],10)+1);
 
             //allow interactions with clocks found in the odb
             document.getElementById(name + 'Wrap').classList.remove('div-disable');
@@ -61,19 +61,19 @@
             //set host
             document.getElementById('host' + name).innerHTML = dataStore.clocks[i].table.Settings.Devices.SCS2001.Device.split('.')[0];
 
-            //master / follower toggle (must do first, sets up html)
+            //primary / secondary toggle (must do first, sets up html)
             if(dataStore.clocks[i].table.Variables.Output[1] == 1){
-                isMaster = true;
-                document.getElementById('masterToggle' + name).checked = true;
+                isPrimary = true;
+                document.getElementById('primaryToggle' + name).checked = true;
             } else{
-                document.getElementById('followerToggle' + name).checked = true;
+                document.getElementById('secondaryToggle' + name).checked = true;
             }
             setupDetail(name)
 
             //set summary parameters
             for(j=1; j<9; j++){
                 value = humanReadableClock(j, parseInt(dataStore.clocks[i].table.Variables.Output[j],10) );
-                if(j == 4 && isMaster){
+                if(j == 4 && isPrimary){
                     if (value == 'LEMO'){
                         document.getElementById(name + 'LEMOref').checked = true;
                     }
@@ -100,23 +100,23 @@
             document.getElementById(name + 'bypassRightLEMO').innerHTML = 'Bypass: ' + humanReadableClock(37, parseInt(dataStore.clocks[i].table.Variables.Output[33],10) );
             document.getElementById(name + 'bypassESATA5').innerHTML = 'Bypass: ' + humanReadableClock(41, parseInt(dataStore.clocks[i].table.Variables.Output[37],10) );
 
-            // master / follower specific tasks
-            if(isMaster){
+            // primary / secondary specific tasks
+            if(isPrimary){
                 // time since sync
                 document.getElementById(name + 'lastNIM').innerHTML = humanReadableClock(10,parseInt(dataStore.clocks[i].table.Variables.Output[10],10));
 
                 document.getElementById(name + 'inputFrequency').innerHTML = '10 MHz';
 
-                //report the frequency after stepdown of each master channel; set slider to stepdown corresponding to first channel:
+                //report the frequency after stepdown of each primary channel; set slider to stepdown corresponding to first channel:
                 for(j=0; j<8; j++){
                     stepdown = (parseInt(dataStore.clocks[i].table.Variables.Output[dataStore.clockParameters.hiChan[j]],10) + parseInt(dataStore.clocks[i].table.Variables.Output[dataStore.clockParameters.loChan[j]],10)) / 2
                     if(document.getElementById(name + 'bypass' + dataStore.clockParameters.channelSuffixes[j]).innerHTML == 'Bypass: No')
-                        document.getElementById(name + 'outputFreq' + dataStore.clockParameters.channelSuffixes[j]).innerHTML = (dataStore.clockParameters.masterFreq / (1 + stepdown)).toFixed(1) + ' MHz out';
+                        document.getElementById(name + 'outputFreq' + dataStore.clockParameters.channelSuffixes[j]).innerHTML = (dataStore.clockParameters.primaryFreq / (1 + stepdown)).toFixed(1) + ' MHz out';
                     else
                         document.getElementById(name + 'outputFreq' + j).innerHTML = '';
                 }
                 document.getElementById(name + 'frequencySlider').value = 11 - parseInt(dataStore.clocks[i].table.Variables.Output[11],10);
-                document.getElementById(name + 'frequencySliderLabel').innerHTML = masterOutputFrequency + ' MHz';
+                document.getElementById(name + 'frequencySliderLabel').innerHTML = primaryOutputFrequency + ' MHz';
 
                 // csac parameters
                 for(j=43; j<54; j++){
@@ -125,7 +125,7 @@
                 }
 
             } else {
-                // no ref clock for followers
+                // no ref clock for secondarys
                 document.getElementById(name + 'refClock').innerHTML = 'N/A';
 
                 // time since last sync
@@ -139,7 +139,7 @@
         //i corresponds to index in the ODB's Variables.Output for the clock in question
 
         if(i == 1)
-            return (parseInt(v,10)) ? 'Master' : 'Follower';
+            return (parseInt(v,10)) ? 'Primary' : 'Secondary';
         else if(i == 2)
             return (parseInt(v,10)) ? 'LEMO' : 'eSATA';
         else if(i == 3)
@@ -159,9 +159,9 @@
     }
 
     function changeConfig(clockName){
-        // change the master / follower setting for the named clock in the ODB, and reload.
+        // change the primary / secondary setting for the named clock in the ODB, and reload.
 
-        var configSetting = document.querySelector('input[name="config' + clockName + '"]:checked').value == 'master' ? 1 : 0,
+        var configSetting = document.querySelector('input[name="config' + clockName + '"]:checked').value == 'primary' ? 1 : 0,
             URL = 'http://' + dataStore.host + '?cmd=jset&odb=/Equipment/' + clockName + '/Variables/Output[1]&value=' + configSetting;
 
         promiseScript(URL).then(
@@ -183,7 +183,7 @@
     }
 
     function writeRefClock(clockName){
-        // write the ref clock state (atomic or lemo) of a master channel to the odb and reload
+        // write the ref clock state (atomic or lemo) of a primary channel to the odb and reload
 
         var reference = document.querySelector('input[name="' + clockName + 'refClock"]:checked').value,
             URL = 'http://' + dataStore.host + '?cmd=jset&odb=/Equipment/' + clockName + '/Variables/Output[4]&value=' + reference;
@@ -195,11 +195,11 @@
     }
 
     function manageOutputFrequency(clockName){
-        // update the master output frequency in the display and dataStore based on slider position
+        // update the primary output frequency in the display and dataStore based on slider position
 
         var slider = document.getElementById(clockName + 'frequencySlider'),
             stepdown = -(slider.valueAsNumber - parseInt(slider.max,10)-1),
-            freqOut = dataStore.clockParameters.masterFreq / (1+stepdown), 
+            freqOut = dataStore.clockParameters.primaryFreq / (1+stepdown), 
             clockIndex = findClock(clockName), 
             i;
 

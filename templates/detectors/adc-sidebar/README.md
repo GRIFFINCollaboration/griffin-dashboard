@@ -62,7 +62,7 @@ In what follows, `host` refers to the digitizer host, ie `http://grifadc02.trium
 
 The `/report` endpoint provides an [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) response that packs threshold, trigger request rate, and trigger accept rate information into a condensed format appropriate for large or frequent requests. For every channel at `host`, the response ArrayBuffer contains a 14-byte block of information:
 
- - bytes 0 through 1: MSC address of channel
+ - bytes 0 through 1: PSC address of channel
  - bytes 2 through 5: trigger accepts
  - bytes 6 through 9: trigger requests
  - bytes 10 through 13: threshold
@@ -73,7 +73,7 @@ Channels are packed into the complete ArrayBuffer in no particular order.
 
 **Found at**: `host/mscb?node=n`
 
-The `/mscb` endpoint provides a JSON response containing the current settings and status of the digitizer at `?node=1`, and settings for the nth ADC at `?node=2+n` - in other words, an ADC with MSC address `0x??00` would be reported at `?node=2`, `0x??01` at `?node=3`, etc. Below we list the keys reported by each.
+The `/mscb` endpoint provides a JSON response containing the current settings and status of the digitizer at `?node=1`, and settings for the nth ADC at `?node=2+n` - in other words, an ADC with PSC address `0x??00` would be reported at `?node=2`, `0x??01` at `?node=3`, etc. Below we list the keys reported by each.
 
 ##### Digitizer-level keys
 

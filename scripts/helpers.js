@@ -330,8 +330,8 @@ function fetchDAQ(payload){
     //extract hosts list
     dataStore.hosts = [];
 
-    //master
-    //dataStore.hosts.push(dataStore.ODB.DAQ.hosts.master);
+    //primary
+    //dataStore.hosts.push(dataStore.ODB.DAQ.hosts.primary);
     for(key in dataStore.ODB.DAQ.hosts){
         if(dataStore.ODB.DAQ.hosts[key].host){
             //collectors
@@ -376,27 +376,27 @@ function unpackDAQ(i, dv){
         thresholdPos = 10,
         trigAcptPos = 2,
         trigReqPos = 6,
-        MSCPos = 0,
+        PSCPos = 0,
         unpacked = {};
 
     unpacked.threshold  = dv.getUint32(i*blockLength + thresholdPos, true);
     unpacked.trigAcpt   = dv.getFloat32(i*blockLength + trigAcptPos, true);
     unpacked.trigReq    = dv.getFloat32(i*blockLength + trigReqPos, true);
-    unpacked.MSC        = dv.getUint16(i*blockLength + MSCPos, true);
+    unpacked.PSC        = dv.getUint16(i*blockLength + PSCPos, true);
 
     return unpacked;
 }
 
-function parseMSCindex(MSC){
-    //decode an MSC index into [master channel, collector channel, digitizer channel]
+function parsePSCindex(PSC){
+    //decode an PSC index into [primary channel, collector channel, digitizer channel]
 
-    var masterChannel, collectorChannel, digitizerChannel;
+    var primaryChannel, collectorChannel, digitizerChannel;
 
-    masterChannel = (MSC & 0xF000) >> 12;
-    collectorChannel = (MSC & 0xF00) >> 8;
-    digitizerChannel = (MSC & 0xFF);
+    primaryChannel = (PSC & 0xF000) >> 12;
+    collectorChannel = (PSC & 0xF00) >> 8;
+    digitizerChannel = (PSC & 0xFF);
     
-    return [masterChannel, collectorChannel, digitizerChannel]
+    return [primaryChannel, collectorChannel, digitizerChannel]
 }
 
 function findHVcrate(channel){

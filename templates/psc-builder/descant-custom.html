@@ -1,9 +1,9 @@
 <template id='descant-custom'>
-    <table id='descant-{{bundle}}-MSC' class='table'>
+    <table id='descant-{{bundle}}-PSC' class='table'>
         <tbody>
             <tr>
                 <td>Channel</td>
-                <td>M</td>
+                <td>P</td>
                 <td>S</td>
                 <td>C</td>
                 <td>Address</td>
@@ -11,7 +11,7 @@
             <tr>
                 <td>Apply to all:</td>
                 <td>
-                    <input type='number' id='descant-{{bundle}}-global-M' key={{key}} min=0 max=16 step=1 value={{M}} onchange="updateAddr.call(this, 'M')"></input>
+                    <input type='number' id='descant-{{bundle}}-global-P' key={{key}} min=0 max=16 step=1 value={{P}} onchange="updateAddr.call(this, 'P')"></input>
                 </td>
                 <td>
                     <input type='number' id='descant-{{bundle}}-global-S' key={{key}} min=0 max=16 step=1 value={{S}} onchange="updateAddr.call(this, 'S')"></input>

@@ -5,26 +5,26 @@
 function unpackDAQdv(dv){
     //parse DAQ dataviews into dataStore.data variables - DAQ monitor style
     //information for an individual channel is packed in a 14 byte word:
-    //[MSC 2 bytes][trig request 4 bytes][trig accept 4 bytes][threshold 4 bytes] <--lowest bit
+    //[PSC 2 bytes][trig request 4 bytes][trig accept 4 bytes][threshold 4 bytes] <--lowest bit
     var channelIndex, channelName, DAQblock,
         i;
 
-    // @TODO: make grif16 send appropriate mscs and lookup grifadc info based on sent MSC
+    // @TODO: make grif16 send appropriate pscs and lookup grifadc info based on sent PSC
     for(i=0; i<dv.byteLength/14; i++){
         DAQblock = unpackDAQ(i, dv);
 
-        channelIndex = dataStore.ODB.DAQ.MSC.MSC.indexOf(DAQblock.MSC);
-        channelName = dataStore.ODB.DAQ.MSC.chan[channelIndex];
+        channelIndex = dataStore.ODB.DAQ.PSC.PSC.indexOf(DAQblock.PSC);
+        channelName = dataStore.ODB.DAQ.PSC.chan[channelIndex];
 
-        if(channelName) // ie channel *must* be in the ODB MSC table
+        if(channelName) // ie channel *must* be in the ODB PSC table
             sortDAQitem(channelName, DAQblock);
     }
 }
 
 function regenerateDatastructure(suppressDOMconfig){
-    // rebuild an empty data structure to hold sorted DAQ data, based on the MSC table:
+    // rebuild an empty data structure to hold sorted DAQ data, based on the PSC table:
     // dataStore.ODB.DAQ.summary = {
-    //      master: {
+    //      primary: {
     //          requests: int; total requests
     //          accepts:  int; total accepts
     //      },
@@ -58,7 +58,7 @@ function regenerateDatastructure(suppressDOMconfig){
     // }
     // also does some on-load dom config
 
-    var i, address, M,S,C, detPrefix, collectorOption, digiCollectorOption, detectorOption, first;
+    var i, address, P,S,C, detPrefix, collectorOption, digiCollectorOption, detectorOption, first;
 
     if(dataStore.ODB.DAQ.summaryJSON){
         dataStore.ODB.DAQ.summary = JSON.parse(dataStore.ODB.DAQ.summaryJSON);
@@ -66,7 +66,7 @@ function regenerateDatastructure(suppressDOMconfig){
     }
 
     dataStore.ODB.DAQ.summary = {
-        master: {requests: 0, accepts: 0},
+        primary: {requests: 0, accepts: 0},
         collectors: {requests: [], accepts: [], titles: []},
         digitizers: {requests:[], accepts:[], titles: []},
         channels: {requests:[], accepts:[], titles:[]},
@@ -74,40 +74,40 @@ function regenerateDatastructure(suppressDOMconfig){
     }
 
     // initialize 0s in appropriate places
-    // msc addresses
+    // psc addresses
 
-    for(i=0; i<dataStore.ODB.DAQ.MSC.MSC.length; i++){
-        address = parseMSCindex(dataStore.ODB.DAQ.MSC.MSC[i]);
+    for(i=0; i<dataStore.ODB.DAQ.PSC.PSC.length; i++){
+        address = parsePSCindex(dataStore.ODB.DAQ.PSC.PSC[i]);
 
-        M = address[0];
+        P = address[0];
         S = address[1];
         C = address[2];
 
-        dataStore.ODB.DAQ.summary.collectors.requests[M] = 0;
-        dataStore.ODB.DAQ.summary.collectors.accepts[M] = 0;
-        dataStore.ODB.DAQ.summary.collectors.titles[M] = '0x' + M.toString(16) + '---';
+        dataStore.ODB.DAQ.summary.collectors.requests[P] = 0;
+        dataStore.ODB.DAQ.summary.collectors.accepts[P] = 0;
+        dataStore.ODB.DAQ.summary.collectors.titles[P] = '0x' + P.toString(16) + '---';
 
-        dataStore.ODB.DAQ.summary.digitizers.requests[M] = dataStore.ODB.DAQ.summary.digitizers.requests[M] || [];
-        dataStore.ODB.DAQ.summary.digitizers.accepts[M] = dataStore.ODB.DAQ.summary.digitizers.accepts[M] || [];
-        dataStore.ODB.DAQ.summary.digitizers.titles[M] = dataStore.ODB.DAQ.summary.digitizers.titles[M] || [];
-        dataStore.ODB.DAQ.summary.digitizers.requests[M][S] = 0;
-        dataStore.ODB.DAQ.summary.digitizers.accepts[M][S] = 0;
-        dataStore.ODB.DAQ.summary.digitizers.titles[M][S] = '0x' + M.toString(16) + S.toString(16) + '--';
+        dataStore.ODB.DAQ.summary.digitizers.requests[P] = dataStore.ODB.DAQ.summary.digitizers.requests[P] || [];
+        dataStore.ODB.DAQ.summary.digitizers.accepts[P] = dataStore.ODB.DAQ.summary.digitizers.accepts[P] || [];
+        dataStore.ODB.DAQ.summary.digitizers.titles[P] = dataStore.ODB.DAQ.summary.digitizers.titles[P] || [];
+        dataStore.ODB.DAQ.summary.digitizers.requests[P][S] = 0;
+        dataStore.ODB.DAQ.summary.digitizers.accepts[P][S] = 0;
+        dataStore.ODB.DAQ.summary.digitizers.titles[P][S] = '0x' + P.toString(16) + S.toString(16) + '--';
 
-        dataStore.ODB.DAQ.summary.channels.requests[M] = dataStore.ODB.DAQ.summary.channels.requests[M] || [];
-        dataStore.ODB.DAQ.summary.channels.requests[M][S] = dataStore.ODB.DAQ.summary.channels.requests[M][S] || [];
-        dataStore.ODB.DAQ.summary.channels.accepts[M] = dataStore.ODB.DAQ.summary.channels.accepts[M] || [];
-        dataStore.ODB.DAQ.summary.channels.accepts[M][S] = dataStore.ODB.DAQ.summary.channels.accepts[M][S] || [];
-        dataStore.ODB.DAQ.summary.channels.titles[M] = dataStore.ODB.DAQ.summary.channels.titles[M] || [];
-        dataStore.ODB.DAQ.summary.channels.titles[M][S] = dataStore.ODB.DAQ.summary.channels.titles[M][S] || [];
-        dataStore.ODB.DAQ.summary.channels.requests[M][S][C] = 0;
-        dataStore.ODB.DAQ.summary.channels.accepts[M][S][C] = 0;
-        dataStore.ODB.DAQ.summary.channels.titles[M][S][C] = '.0x' + M.toString(16) + S.toString(16) + (C<16 ? '0' : '') + C.toString(16); // terrible, shameful hack to prevent plotly from turning the hex labels into decimal numbers :/ BM
+        dataStore.ODB.DAQ.summary.channels.requests[P] = dataStore.ODB.DAQ.summary.channels.requests[P] || [];
+        dataStore.ODB.DAQ.summary.channels.requests[P][S] = dataStore.ODB.DAQ.summary.channels.requests[P][S] || [];
+        dataStore.ODB.DAQ.summary.channels.accepts[P] = dataStore.ODB.DAQ.summary.channels.accepts[P] || [];
+        dataStore.ODB.DAQ.summary.channels.accepts[P][S] = dataStore.ODB.DAQ.summary.channels.accepts[P][S] || [];
+        dataStore.ODB.DAQ.summary.channels.titles[P] = dataStore.ODB.DAQ.summary.channels.titles[P] || [];
+        dataStore.ODB.DAQ.summary.channels.titles[P][S] = dataStore.ODB.DAQ.summary.channels.titles[P][S] || [];
+        dataStore.ODB.DAQ.summary.channels.requests[P][S][C] = 0;
+        dataStore.ODB.DAQ.summary.channels.accepts[P][S][C] = 0;
+        dataStore.ODB.DAQ.summary.channels.titles[P][S][C] = '.0x' + P.toString(16) + S.toString(16) + (C<16 ? '0' : '') + C.toString(16); // terrible, shameful hack to prevent plotly from turning the hex labels into decimal numbers :/ BM
     }
 
     //detectors
-    for(i=0; i<dataStore.ODB.DAQ.MSC.chan.length; i++){
-        detPrefix = dataStore.ODB.DAQ.MSC.chan[i].slice(0,2);
+    for(i=0; i<dataStore.ODB.DAQ.PSC.chan.length; i++){
+        detPrefix = dataStore.ODB.DAQ.PSC.chan[i].slice(0,2);
 
         if(dataStore.ODB.DAQ.summary.detectors.titles.indexOf(detPrefix) == -1){
             dataStore.ODB.DAQ.summary.detectors.titles.push(detPrefix);
@@ -122,7 +122,7 @@ function regenerateDatastructure(suppressDOMconfig){
     if(!suppressDOMconfig){
 
 	
-	// Create the Master collector channel mask buttons
+	// Create the Primary collector channel mask buttons
 	for(j=0; j<16; j++){
             ChanMaskButton = document.createElement('button');
 	    string = 'ChanMaskButton0-'+j;
@@ -134,7 +134,7 @@ function regenerateDatastructure(suppressDOMconfig){
             ChanMaskButton.onclick = function(){
                 WriteChanMask(this.id);
             }.bind(ChanMaskButton);
-            document.getElementById('MasterChanMaskPicker').appendChild(ChanMaskButton);
+            document.getElementById('PrimaryChanMaskPicker').appendChild(ChanMaskButton);
 	}
 	SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
 	
@@ -276,26 +276,26 @@ function activeButton(groupID, targetButton){
 function sortDAQitem(detector, block){
     // sort the <block> unpacked by unpackDAQ for <channel> into the dataStore summary of the DAQ:
 
-    var address = parseMSCindex(block.MSC),
-        M = address[0],
+    var address = parsePSCindex(block.PSC),
+        P = address[0],
         S = address[1],
         C = address[2],
         detectorCode = detector.slice(0,2),
         detectorIndex = dataStore.ODB.DAQ.summary.detectors.titles.indexOf(detectorCode);
 
     // sort data into summary:
-    // master
-    dataStore.ODB.DAQ.summary.master.requests += block.trigReq;
-    dataStore.ODB.DAQ.summary.master.accepts += block.trigAcpt;
+    // primary
+    dataStore.ODB.DAQ.summary.primary.requests += block.trigReq;
+    dataStore.ODB.DAQ.summary.primary.accepts += block.trigAcpt;
     // collectors
-    dataStore.ODB.DAQ.summary.collectors.requests[M] += block.trigReq;
-    dataStore.ODB.DAQ.summary.collectors.accepts[M] += block.trigAcpt;
+    dataStore.ODB.DAQ.summary.collectors.requests[P] += block.trigReq;
+    dataStore.ODB.DAQ.summary.collectors.accepts[P] += block.trigAcpt;
     // digitizers
-    dataStore.ODB.DAQ.summary.digitizers.requests[M][S] += block.trigReq;
-    dataStore.ODB.DAQ.summary.digitizers.accepts[M][S] += block.trigAcpt;
+    dataStore.ODB.DAQ.summary.digitizers.requests[P][S] += block.trigReq;
+    dataStore.ODB.DAQ.summary.digitizers.accepts[P][S] += block.trigAcpt;
     // digi channels
-    dataStore.ODB.DAQ.summary.channels.requests[M][S][C] += block.trigReq;
-    dataStore.ODB.DAQ.summary.channels.accepts[M][S][C] += block.trigAcpt;
+    dataStore.ODB.DAQ.summary.channels.requests[P][S][C] += block.trigReq;
+    dataStore.ODB.DAQ.summary.channels.accepts[P][S][C] += block.trigAcpt;
     // detector
     dataStore.ODB.DAQ.summary.detectors.requests[detectorIndex] += block.trigReq;
     dataStore.ODB.DAQ.summary.detectors.accepts[detectorIndex]  += block.trigAcpt;     
@@ -320,44 +320,44 @@ function preFetch(){
 // Rishita ----------------------------------------------------------------------------
 
 function findChannelName(address) {
-	// address is 0xMSCC
-	var MSC, length, channelIndex, M, S, C, current_address;
+	// address is 0xPSCC
+	var PSC, length, channelIndex, P, S, C, current_address;
 
-	length = dataStore.ODB.DAQ.MSC.MSC.length;
+	length = dataStore.ODB.DAQ.PSC.PSC.length;
 	for(i=0; i < length; i++) {
-		MSC = dataStore.ODB.DAQ.MSC.MSC[i];
+		PSC = dataStore.ODB.DAQ.PSC.PSC[i];
     		
-		M = (MSC & 0xF000) >>> 12;
-    		S = (MSC & 0x0F00) >>> 8;
-    		C = (MSC & 0x00FF) >>> 0;
+		P = (PSC & 0xF000) >>> 12;
+    		S = (PSC & 0x0F00) >>> 8;
+    		C = (PSC & 0x00FF) >>> 0;
 
-		current_address = '0x' + M.toString(16) + S.toString(16) + '--' ;
+		current_address = '0x' + P.toString(16) + S.toString(16) + '--' ;
 
 		if(current_address == address) {
 			channelIndex = i;
 			break;
 		}
 	}
-	return dataStore.ODB.DAQ.MSC.chan[channelIndex];
+	return dataStore.ODB.DAQ.PSC.chan[channelIndex];
 }
 
 function findADC(channel){
     //given a channel name, use the ODB's DAQ table to identify which ADC it belongs to.
 
-    var MSC, channelIndex, M, S, C,
+    var PSC, channelIndex, P, S, C,
         collectorKey;
 
-    channelIndex = dataStore.ODB.DAQ.MSC.chan.indexOf(channel);
+    channelIndex = dataStore.ODB.DAQ.PSC.chan.indexOf(channel);
     if(channelIndex == -1)
         return null;
 
-    MSC = dataStore.ODB.DAQ.MSC.MSC[channelIndex];
+    PSC = dataStore.ODB.DAQ.PSC.PSC[channelIndex];
 
-    M = (MSC & 0xF000) >>> 12;
-    S = (MSC & 0x0F00) >>> 8;
-    C = (MSC & 0x00FF) >>> 0;
+    P = (PSC & 0xF000) >>> 12;
+    S = (PSC & 0x0F00) >>> 8;
+    C = (PSC & 0x00FF) >>> 0;
 
-    collectorKey = 'collector0x' + M.toString(16);
+    collectorKey = 'collector0x' + P.toString(16);
 
     return dataStore.ODB.DAQ.hosts[collectorKey].digitizers[S];
 }
@@ -374,7 +374,7 @@ function repaint(){
         digitizerFigureIndex = parseInt(dataStore.digitizerValue, 16),
 	address, channelName, ADC, url;
 
-    //master summary
+    //primary summary
     createBarchart(
         'collectorsHisto', 
         dataStore.ODB.DAQ.summary.collectors.titles, 
@@ -419,7 +419,7 @@ function repaint(){
     );    
 }
 
-function createBarchart(targetDiv, MSClabels, requests, accepts, plotTitle, xTitle, yTitle){
+function createBarchart(targetDiv, PSClabels, requests, accepts, plotTitle, xTitle, yTitle){
     // re-create the specified histogram
 
     var layout = {
@@ -427,21 +427,21 @@ function createBarchart(targetDiv, MSClabels, requests, accepts, plotTitle, xTit
             title: plotTitle,
             xaxis: {
                 title: xTitle,
-                ticktext: MSClabels
+                ticktext: PSClabels
             },
             yaxis: {
                 title: yTitle
             }
         },
         req = {
-          x: MSClabels,
+          x: PSClabels,
           y: requests,
           name: 'Requests',
           type: 'bar',
 
         },
         acpt = {
-          x: MSClabels,
+          x: PSClabels,
           y: accepts,
           name: 'Accepts',
           type: 'bar'
@@ -456,26 +456,26 @@ function createBarchart(targetDiv, MSClabels, requests, accepts, plotTitle, xTit
 /////////////////////
 
 function updateDigitizerList(digiSelectID){
-    //update the options in the select element digiSelectID with the digitizer addresses in the collector on masterChannel
+    //update the options in the select element digiSelectID with the digitizer addresses in the collector on primaryChannel
 
     var digiSelect = document.getElementById('digitizerPicker'),
-        masterChannel = dataStore.digiCollectorValue,
+        primaryChannel = dataStore.digiCollectorValue,
         i, option, first;
 
     digiSelect.innerHTML = '';
     first = true;
-    for(i=0; i<dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel].length; i++){
-        if(dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel][i]){
+    for(i=0; i<dataStore.ODB.DAQ.summary.digitizers.titles[primaryChannel].length; i++){
+        if(dataStore.ODB.DAQ.summary.digitizers.titles[primaryChannel][i]){
             option = document.createElement('button');
             option.setAttribute('type', 'button');
             option.setAttribute('class', 'btn btn-default');
-            option.setAttribute('value', dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel][i].slice(3,4));
+            option.setAttribute('value', dataStore.ODB.DAQ.summary.digitizers.titles[primaryChannel][i].slice(3,4));
             option.onclick = function(){
                 activeButton('digitizerPicker', this);
                 dataStore.digitizerValue = this.value;
                 repaint();
             }.bind(option);
-            option.innerHTML = dataStore.ODB.DAQ.summary.digitizers.titles[masterChannel][i];
+            option.innerHTML = dataStore.ODB.DAQ.summary.digitizers.titles[primaryChannel][i];
             digiSelect.appendChild(option);   
 
             // default to the first digitizer:

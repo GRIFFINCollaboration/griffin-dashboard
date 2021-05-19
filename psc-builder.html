@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>MSC Builder</title>
+        <title>PSC Builder</title>
 
         <!--libraries-->
         <script src='scripts/HTMLImports.min.js' type="text/javascript"></script>
@@ -12,7 +12,7 @@
         <script src='scripts/dataStore.js' type="text/javascript"></script>
         <script src='scripts/heartbeat.js' type="text/javascript"></script>
         <script src='scripts/colorScales.js' type="text/javascript"></script>
-        <script src='scripts/canonicalMSC.js' type="text/javascript"></script>
+        <script src='scripts/canonicalPSC.js' type="text/javascript"></script>
 
         <!--style-->
         <link rel="stylesheet" href="css/global.css">
@@ -65,21 +65,21 @@
 
         <!--html imports-->
         <link id='brand-header' rel="import" href="templates/brand-header/brand-header.html">
-        <link id='griffin-custom-unsuppressed' rel="import" href="templates/msc-builder/griffin-custom-unsuppressed.html">
-        <link id='griffin-custom-suppressed' rel="import" href="templates/msc-builder/griffin-custom-suppressed.html">
-        <link id='griffin-channel-row-a' rel="import" href="templates/msc-builder/griffin-channel-row-a.html">
-        <link id='griffin-channel-row-b' rel="import" href="templates/msc-builder/griffin-channel-row-b.html">
-        <link id='zds-custom' rel="import" href="templates/msc-builder/zds-custom.html">
-        <link id='sceptar-custom' rel="import" href="templates/msc-builder/sceptar-custom.html">
-        <link id='labr3-custom-ds' rel="import" href="templates/msc-builder/labr3-custom-ds.html">
-        <link id='labr3-custom-us' rel="import" href="templates/msc-builder/labr3-custom-us.html">
-        <link id='labr3-custom-tac' rel="import" href="templates/msc-builder/labr3-custom-tac.html">
-        <link id='paces-custom' rel="import" href="templates/msc-builder/paces-custom.html">
-        <link id='spice-custom' rel="import" href="templates/msc-builder/spice-custom.html">
-        <link id='s2s3-custom' rel="import" href="templates/msc-builder/s2s3-custom.html">
-        <link id='descant-custom' rel="import" href="templates/msc-builder/descant-custom.html">
-        <link id='channel-row' rel="import" href="templates/msc-builder/channel-row.html">
-        <link id='collapse-section' rel="import" href="templates/msc-builder/collapse-section.html">
+        <link id='griffin-custom-unsuppressed' rel="import" href="templates/psc-builder/griffin-custom-unsuppressed.html">
+        <link id='griffin-custom-suppressed' rel="import" href="templates/psc-builder/griffin-custom-suppressed.html">
+        <link id='griffin-channel-row-a' rel="import" href="templates/psc-builder/griffin-channel-row-a.html">
+        <link id='griffin-channel-row-b' rel="import" href="templates/psc-builder/griffin-channel-row-b.html">
+        <link id='zds-custom' rel="import" href="templates/psc-builder/zds-custom.html">
+        <link id='sceptar-custom' rel="import" href="templates/psc-builder/sceptar-custom.html">
+        <link id='labr3-custom-ds' rel="import" href="templates/psc-builder/labr3-custom-ds.html">
+        <link id='labr3-custom-us' rel="import" href="templates/psc-builder/labr3-custom-us.html">
+        <link id='labr3-custom-tac' rel="import" href="templates/psc-builder/labr3-custom-tac.html">
+        <link id='paces-custom' rel="import" href="templates/psc-builder/paces-custom.html">
+        <link id='spice-custom' rel="import" href="templates/psc-builder/spice-custom.html">
+        <link id='s2s3-custom' rel="import" href="templates/psc-builder/s2s3-custom.html">
+        <link id='descant-custom' rel="import" href="templates/psc-builder/descant-custom.html">
+        <link id='channel-row' rel="import" href="templates/psc-builder/channel-row.html">
+        <link id='collapse-section' rel="import" href="templates/psc-builder/collapse-section.html">
         <link id='brand-footer' rel="import" href="templates/brand-footer/brand-footer.html">
     </head>
 
@@ -254,7 +254,7 @@
             </div>
   
             <div class='col-md-8 col-md-offset-2'>
-                <button class='btn btn-lg btn-info' onclick='prepareArrays()'>Prepare New MSC Table</button>          
+                <button class='btn btn-lg btn-info' onclick='prepareArrays()'>Prepare New PSC Table</button>          
             </div>
 
         </div>
@@ -266,10 +266,10 @@
 
             <div id='writeWrap' class='col-md-8 col-md-offset-2'>
                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Write MSC Table to ODB
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Write PSC Table to ODB
                 </button>
-                <div id='write-ok' class="alert alert-success hidden" role="alert">MSC table written successfully to ODB.</div>
-                <div id='write-fail' class="alert alert-danger hidden" role="alert">MSC table write failed.</div>
+                <div id='write-ok' class="alert alert-success hidden" role="alert">PSC table written successfully to ODB.</div>
+                <div id='write-fail' class="alert alert-danger hidden" role="alert">PSC table write failed.</div>
             </div>
         </div>
 
@@ -279,10 +279,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Overwrite MSC table in ODB?</h4>
+                        <h4 class="modal-title" id="myModalLabel">Overwrite PSC table in ODB?</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to overwrite the MSC table in /DAQ/MSC in the ODB? There is no undo.</p>
+                        <p>Are you sure you want to overwrite the PSC table in /DAQ/PSC in the ODB? There is no undo.</p>
                         <input type='checkbox' id='yesDefinitelyWriteODB' autocomplete='off'></input>
                         <label for='yesDefinitelyWriteODB'>I'm very sure.</label>
                     </div>
@@ -319,7 +319,7 @@
                 document.getElementById('header').innerHTML = Mustache.to_html(
                     dataStore.templates['brand-header'], 
                     {
-                        'title': dataStore.hostname.toUpperCase()+' MSC Builder',
+                        'title': dataStore.hostname.toUpperCase()+' PSC Builder',
                     }
                 ); 
                 //footer
@@ -435,7 +435,7 @@
             }
 
             function prepareArrays(){
-                // prepare the canonical MSC tables for the selected systems, and display and populate the corresponding customization UI.
+                // prepare the canonical PSC tables for the selected systems, and display and populate the corresponding customization UI.
 
                 var DSC = document.querySelector('input[name="DSC"]:checked').value,
                     USC = document.querySelector('input[name="USC"]:checked').value,
@@ -510,16 +510,16 @@
                                 'key-B': 'griffin-group-' + i + '-B',
                                 'key-BG': 'griffin-group-' + i + '-BG',
                                 'key-RW': 'griffin-group-' + i + '-RW',
-                                'M': canonicalMSC.GRIFFIN.M[position],
-                                'S-A': canonicalMSC.GRIFFIN.suppressed.crystals.A.S[position],      //A-side HPGe
-                                'S-B': canonicalMSC.GRIFFIN.suppressed.crystals.B.S[position],      //B-side HPGe
-                                'S-BG': canonicalMSC.GRIFFIN.suppressed.suppressors.BG.S[position], //blue+green suppressors
-                                'S-RW': canonicalMSC.GRIFFIN.suppressed.suppressors.RW.S[position]  //red+white suppressors
+                                'M': canonicalPSC.GRIFFIN.P[position],
+                                'S-A': canonicalPSC.GRIFFIN.suppressed.crystals.A.S[position],      //A-side HPGe
+                                'S-B': canonicalPSC.GRIFFIN.suppressed.crystals.B.S[position],      //B-side HPGe
+                                'S-BG': canonicalPSC.GRIFFIN.suppressed.suppressors.BG.S[position], //blue+green suppressors
+                                'S-RW': canonicalPSC.GRIFFIN.suppressed.suppressors.RW.S[position]  //red+white suppressors
                             }
                         );
 
                         //insert per-channel rows
-                        document.getElementById(`griffin-${position}-A-MSC`).innerHTML += Mustache.to_html(
+                        document.getElementById(`griffin-${position}-A-PSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['griffin-channel-row-a'], 
                             {
                                 'channels': canonical.slice(0,4),
@@ -527,7 +527,7 @@
                                 'position': position
                             }
                         );
-                        document.getElementById(`griffin-${position}-B-MSC`).innerHTML += Mustache.to_html(
+                        document.getElementById(`griffin-${position}-B-PSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['griffin-channel-row-b'], 
                             {
                                 'channels': canonical.slice(4,8),
@@ -535,7 +535,7 @@
                                 'position': position
                             }
                         );
-                        document.getElementById(`griffin-${position}-BG-MSC`).innerHTML += Mustache.to_html(
+                        document.getElementById(`griffin-${position}-BG-PSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
                                 'channels': canonical.slice(8,18),
@@ -543,7 +543,7 @@
                                 'position': position
                             }
                         );
-                        document.getElementById(`griffin-${position}-RW-MSC`).innerHTML += Mustache.to_html(
+                        document.getElementById(`griffin-${position}-RW-PSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
                                 'channels': canonical.slice(18,28),
@@ -568,13 +568,13 @@
                             {
                                 'position': position,
                                 'key': 'griffin-group-' + i,
-                                'M': canonicalMSC.GRIFFIN.M[position],
-                                'S': canonicalMSC.GRIFFIN.unsuppressed.S[position]
+                                'M': canonicalPSC.GRIFFIN.P[position],
+                                'S': canonicalPSC.GRIFFIN.unsuppressed.S[position]
                             }
                         );
 
                         //insert per-channel rows
-                        document.getElementById(`griffin-${position}-MSC`).innerHTML += Mustache.to_html(
+                        document.getElementById(`griffin-${position}-PSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['griffin-channel-row-a'], 
                             {
                                 'channels': canonical,
@@ -613,7 +613,7 @@
                     );
 
                     //insert per-channel rows
-                    document.getElementById('zds-MSC').innerHTML += Mustache.to_html(
+                    document.getElementById('zds-PSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
                             'key': 'zds-group',
@@ -657,8 +657,8 @@
                             {
                                 'group': i+1, 
                                 'key': 'sceptar-group-'+(i+1),
-                                'M': canonicalMSC.SCEPTAR.M,
-                                'S': canonicalMSC.SCEPTAR.S[i]
+                                'P': canonicalPSC.SCEPTAR.P,
+                                'S': canonicalPSC.SCEPTAR.S[i]
                             }
                         );
 
@@ -670,7 +670,7 @@
                             group = canonical.slice(0,10);
                             canonical = canonical.slice(10);
                         }
-                        document.getElementById(`sceptar-${i+1}-MSC`).innerHTML += Mustache.to_html(
+                        document.getElementById(`sceptar-${i+1}-PSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
                                 'channels': group,
@@ -715,9 +715,9 @@
                     		document.getElementById('LaBr3DS').innerHTML = Mustache.to_html(
                     		    dataStore.templates['labr3-custom-ds'], 
                        		    {
-                        		'M': canonicalMSC.LaBr3.M,
-                        		'S-E1': canonicalMSC.LaBr3.energy.S[0],
-                       		      	'S-S1': canonicalMSC.LaBr3.suppressors.S[0],
+                        		'P': canonicalPSC.LaBr3.P,
+                        		'S-E1': canonicalPSC.LaBr3.energy.S[0],
+                       		      	'S-S1': canonicalPSC.LaBr3.suppressors.S[0],
                        		     	'key-E1': 'labr3-group-E1',
                         		'key-S1': 'labr3-group-S1',
                             		'downstream': DSL=='grgdal' ? [true] : []
@@ -741,9 +741,9 @@
                     		document.getElementById('LaBr3US').innerHTML = Mustache.to_html(
                         		dataStore.templates['labr3-custom-us'], 
                         		{
-                            			'M': canonicalMSC.LaBr3.M,
-                            			'S-E2': canonicalMSC.LaBr3.energy.S[1],
-                            			'S-S2': canonicalMSC.LaBr3.suppressors.S[1],
+                            			'P': canonicalPSC.LaBr3.P,
+                            			'S-E2': canonicalPSC.LaBr3.energy.S[1],
+                            			'S-S2': canonicalPSC.LaBr3.suppressors.S[1],
                             			'key-E1': 'labr3-group-E1',
                             			'key-S2': 'labr3-group-S2',
                             			'upstream': USL=='grgdal' ? [true] : []
@@ -766,8 +766,8 @@
                     	document.getElementById('LaBr3TAC').innerHTML = Mustache.to_html(
                     	    dataStore.templates['labr3-custom-tac'], 
                        	    {
-                        	'M': canonicalMSC.LaBr3.M,
-                        	'S-T': canonicalMSC.LaBr3.time.S,
+                        	'P': canonicalPSC.LaBr3.P,
+                        	'S-T': canonicalPSC.LaBr3.time.S,
                         	'key-T': 'labr3-group-T'
                             }
                     	);
@@ -797,7 +797,7 @@
 
                     //insert per-channel rows
 		    if(energy1.length > 0) {
-                    document.getElementById('labr3-energy-1-MSC').innerHTML += Mustache.to_html(
+                    document.getElementById('labr3-energy-1-PSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
                             'channels': energy1,
@@ -806,7 +806,7 @@
                     );}                
 
                     if(suppressor_group1.length > 0){
-                        document.getElementById('labr3-suppressors-1-MSC').innerHTML += Mustache.to_html(
+                        document.getElementById('labr3-suppressors-1-PSC').innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
                                 'channels': suppressor_group1,
@@ -816,7 +816,7 @@
                     }
 
 		    if(energy2.length > 0) {
-                    document.getElementById('labr3-energy-2-MSC').innerHTML += Mustache.to_html(
+                    document.getElementById('labr3-energy-2-PSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
                             'channels': energy2,
@@ -825,7 +825,7 @@
                     );    }
             
                     if(suppressor_group2.length > 0){
-                        document.getElementById('labr3-suppressors-2-MSC').innerHTML += Mustache.to_html(
+                        document.getElementById('labr3-suppressors-2-PSC').innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
                                 'channels': suppressor_group2,
@@ -834,7 +834,7 @@
                         );   
                     }
 
-		   document.getElementById('labr3-tac-MSC').innerHTML += Mustache.to_html(
+		   document.getElementById('labr3-tac-PSC').innerHTML += Mustache.to_html(
 			dataStore.templates['channel-row'], 
 			{
                 	      'channels': time,
@@ -867,13 +867,13 @@
                         dataStore.templates['paces-custom'], 
                         {
                             'key': 'paces-group',
-                            'M': canonicalMSC.PACES.M,
-                            'S': canonicalMSC.PACES.S
+                            'P': canonicalPSC.PACES.P,
+                            'S': canonicalPSC.PACES.S
                         }
                     );
 
                     //insert per-channel rows
-                    document.getElementById('paces-MSC').innerHTML += Mustache.to_html(
+                    document.getElementById('paces-PSC').innerHTML += Mustache.to_html(
                         dataStore.templates['channel-row'], 
                         {
                             'key': 'paces-group',
@@ -921,13 +921,13 @@
                             {
                                 'group': i+1, 
                                 'key': 'spice-group-'+(i+1),
-                                'M': canonicalMSC.SPICE.M,
-                                'S': canonicalMSC.SPICE.S[i]
+                                'P': canonicalPSC.SPICE.P,
+                                'S': canonicalPSC.SPICE.S[i]
                             }
                         );
 
                         //insert per-channel rows
-                        document.getElementById(`spice-${i+1}-MSC`).innerHTML += Mustache.to_html(
+                        document.getElementById(`spice-${i+1}-PSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
                                 'channels': canonical.slice(16*i, 16*(i+1)),
@@ -981,8 +981,8 @@
                                 'type': (DSC == 's2' ? 'S2' : 'S3'),
                                 'group': i+1, 
                                 'key': 's2s3-group-'+(i+1),
-                                'M': canonicalMSC.S2S3.M,
-                                'S': canonicalMSC.S2S3.S[i]
+                                'P': canonicalPSC.S2S3.P,
+                                'S': canonicalPSC.S2S3.S[i]
                             }
                         );
 
@@ -991,7 +991,7 @@
                             group = canonical.slice(0,8);
                         else
                             group = canonical.slice(8+(i-1)*16, 8+i*16);
-                        document.getElementById(`s2s3-${i+1}-MSC`).innerHTML += Mustache.to_html(
+                        document.getElementById(`s2s3-${i+1}-PSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
                                 'channels': group,
@@ -1021,11 +1021,11 @@
                         );
 
                     channelsComplete = 0;
-                    for(i=0; i<canonicalMSC.DESCANT.cableBundles.length; i++){
+                    for(i=0; i<canonicalPSC.DESCANT.cableBundles.length; i++){
                         //set up collapsible element
                         title = 'DESCANT Cable Bundle ' + (i+1) + ' (Channels ';
-                        for(j=0; j<canonicalMSC.DESCANT.cableBundles[i].length;j++){
-                            title += canonicalMSC.DESCANT.cableBundles[i][j] + ', '
+                        for(j=0; j<canonicalPSC.DESCANT.cableBundles[i].length;j++){
+                            title += canonicalPSC.DESCANT.cableBundles[i][j] + ', '
                         }
                         title = title.slice(0,title.length-2) + ')'
                         document.getElementById('descantWrap').innerHTML += Mustache.to_html(
@@ -1042,15 +1042,15 @@
                             {
                                 'bundle': i+1, 
                                 'key': 'descant-group-'+(i+1),
-                                'M': canonicalMSC.DESCANT.M[i],
-                                'S': canonicalMSC.DESCANT.S[i]
+                                'P': canonicalPSC.DESCANT.P[i],
+                                'S': canonicalPSC.DESCANT.S[i]
                             }
                         );
 
                         //insert per-channel rows
-                        group = canonical.slice(channelsComplete, channelsComplete + canonicalMSC.DESCANT.cableBundles[i].length);
-                        channelsComplete += canonicalMSC.DESCANT.cableBundles[i].length;
-                        document.getElementById(`descant-${i+1}-MSC`).innerHTML += Mustache.to_html(
+                        group = canonical.slice(channelsComplete, channelsComplete + canonicalPSC.DESCANT.cableBundles[i].length);
+                        channelsComplete += canonicalPSC.DESCANT.cableBundles[i].length;
+                        document.getElementById(`descant-${i+1}-PSC`).innerHTML += Mustache.to_html(
                             dataStore.templates['channel-row'], 
                             {
                                 'key': 'descant-group-'+(i+1),
@@ -1062,7 +1062,7 @@
             }
 
             function CRUDintegrity(noDataLoss){
-                // display an appropriate message based on whether msc table was correctly written to the odb
+                // display an appropriate message based on whether psc table was correctly written to the odb
 
                 if(noDataLoss){
                     document.getElementById('write-ok').classList.remove('hidden');
@@ -1110,8 +1110,8 @@
             }
 
             function updateAddr(level){
-                // level == 'M' or 'S'
-                // onchange callback for per-group M and S inputs, sets entire group on change.
+                // level == 'P' or 'S'
+                // onchange callback for per-group P and S inputs, sets entire group on change.
 
                 var targets = document.getElementsByClassName(level + '-' + this.getAttribute('key')),
                     i;
@@ -1136,27 +1136,27 @@
             }
 
             function composeAddress(){
-                //callback for changing an M, S or C input
+                //callback for changing an P, S or C input
                 //this == input element
 
                 var channel = this.id.slice(0,10),
-                    M = document.getElementById(channel+'-M').value,
+                    P = document.getElementById(channel+'-P').value,
                     S = document.getElementById(channel+'-S').value,
                     C = document.getElementById(channel+'-C').value,
                     addressReport = document.getElementById(channel+'-address')
-                addressReport.innerHTML = stringAddress(M,S,C);
+                addressReport.innerHTML = stringAddress(P,S,C);
             }
 
 
             function constructArrays(){
-                // construct the arrays to write to `/DAQ/MSC` based on the current customization table
+                // construct the arrays to write to `/DAQ/PSC` based on the current customization table
 
-                var MSC = [], chan = [], datatype = [], gain = [], offset = [],
-                    table = document.querySelectorAll('td.final-msc'),
+                var PSC = [], chan = [], datatype = [], gain = [], offset = [],
+                    table = document.querySelectorAll('td.final-psc'),
                     i;
 
                 for(i=0; i<table.length; i++){
-                    MSC.push(parseInt(table[i].innerHTML.slice(2),16));
+                    PSC.push(parseInt(table[i].innerHTML.slice(2),16));
                     chan.push(table[i].id.slice(0,10));
                     datatype.push(parseInt(table[i].getAttribute('datatype'),10));
                     gain.push(1);
@@ -1164,31 +1164,31 @@
                 }
 
                 CRUDarrays(
-                    ['/DAQ/MSC/MSC', '/DAQ/MSC/chan', '/DAQ/MSC/datatype', '/DAQ/MSC/gain', '/DAQ/MSC/offset'], 
-                    [MSC, chan, datatype, gain, offset], 
+                    ['/DAQ/PSC/PSC', '/DAQ/PSC/chan', '/DAQ/PSC/datatype', '/DAQ/PSC/gain', '/DAQ/PSC/offset'], 
+                    [PSC, chan, datatype, gain, offset], 
                     ['short', 'string', 'int', 'float', 'float']
                 );
 
                 document.getElementById('dismissODBmodal').click();
 
-                return [MSC, chan, datatype, gain, offset];
+                return [PSC, chan, datatype, gain, offset];
             }
 
             function manageGRGgain(group, subgroup){
-                //make master-level gain switches cascade properly
+                //make primary-level gain switches cascade properly
 
                 var targets, i,
                     state = this.value;
 
                 if(group == 'all'){
-                    // global master switch
+                    // global primary switch
                     targets = document.getElementsByClassName('grg-gain-'+state);
                 } else if(subgroup == 'all'){
-                    // per position master switch - unsuppressed
+                    // per position primary switch - unsuppressed
                     targets = document.getElementsByClassName('grg-gain-'+state+'-'+group)
                 } else{
-                    // per position master switch - suppressed
-                    targets = document.getElementById('griffin-'+group+'-'+subgroup+'-MSC').getElementsByClassName('grg-gain-'+state+'-'+group)
+                    // per position primary switch - suppressed
+                    targets = document.getElementById('griffin-'+group+'-'+subgroup+'-PSC').getElementsByClassName('grg-gain-'+state+'-'+group)
                 }
 
                 for(i=0; i<targets.length; i++)

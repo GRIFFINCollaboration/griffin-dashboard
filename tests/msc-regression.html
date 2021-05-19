@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>MSC regression testing</title>
+        <title>PSC regression testing</title>
 
         <!--libraries-->
         <script src="../scripts/qunit.js"></script>
@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="../css/qunit.css">
         
         <script src='../scripts/helpers.js' type="text/javascript"></script>
-        <script src='../scripts/canonicalMSC.js' type="text/javascript"></script>
+        <script src='../scripts/canonicalPSC.js' type="text/javascript"></script>
 
     </head>
     <body>
@@ -33,7 +33,7 @@
 
         <script>
 
-            QUnit.module('MSC-regression', {
+            QUnit.module('PSC-regression', {
                 beforeEach: function(){},
 
                 afterEach: function(){}
@@ -41,10 +41,10 @@
 
             QUnit.test('griffin', function(assert){
                 
-                hackMode = false // actual canonical config
+	hackMode = false // actual canonical config
                 assert.deepEqual(configGRIFFINclover_old_canonical(1, false), configGRIFFINclover(1, false));
                 assert.deepEqual(configGRIFFINclover_old_canonical(7, true), configGRIFFINclover(7, true));
-                hackMode = true // hack for only having 4 digitizers 
+	hackMode = true // hack for only having 4 digitizers 
                 assert.deepEqual(configGRIFFINclover_old_hacked(16, false), configGRIFFINclover(16, false));
             });
 
@@ -82,8 +82,8 @@
 
             function configGRIFFINclover_old_canonical(index, suppressors){
                 var names = [],
-                    MSC = [],
-                    masterChan = (index<9) ? 0 : 1,
+                    PSC = [],
+                    primaryChan = (index<9) ? 0 : 1,
 
                     firstCollectorChan = ((index-1)%8)*2, //ie, collector channel is first of 2 GRIF-16s for this position
 
@@ -104,10 +104,10 @@
 
                             collectorChan = firstCollectorChan + i;
                             ADC = j;
-                            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+                            address = (primaryChan << 12) | (collectorChan << 8) | ADC;
 
                             names.push(name);
-                            MSC.push(address);
+                            PSC.push(address);
                         }
                     }
 
@@ -118,10 +118,10 @@
 
                             collectorChan = firstCollectorChan + ((j<2) ? 0 : 1);
                             ADC = 5 + (j%2)*5+i;
-                            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+                            address = (primaryChan << 12) | (collectorChan << 8) | ADC;
 
                             names.push(name);
-                            MSC.push(address);
+                            PSC.push(address);
                         }
                     }
 
@@ -134,21 +134,21 @@
 
                             collectorChan = firstCollectorChan;
                             ADC = j + 4*i;
-                            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+                            address = (primaryChan << 12) | (collectorChan << 8) | ADC;
 
                             names.push(name);
-                            MSC.push(address);
+                            PSC.push(address);
                         }
                     }        
                 }
 
-                return [names, MSC];
+                return [names, PSC];
             }
 
             function configGRIFFINclover_old_hacked(index, suppressors){
                 var names = [],
-                    MSC = [],
-                    masterChan = (index<9) ? 0 : 1,
+                    PSC = [],
+                    primaryChan = (index<9) ? 0 : 1,
 
                     firstCollectorChan = Math.floor((index-1)/4), //ie, collector channel
 
@@ -169,10 +169,10 @@
 
                             collectorChan = firstCollectorChan + i;
                             ADC = j;
-                            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+                            address = (primaryChan << 12) | (collectorChan << 8) | ADC;
 
                             names.push(name);
-                            MSC.push(address);
+                            PSC.push(address);
                         }
                     }
 
@@ -183,10 +183,10 @@
 
                             collectorChan = firstCollectorChan + ((j<2) ? 0 : 1);
                             ADC = 5 + (j%2)*5+i;
-                            address = (masterChan << 12) | (collectorChan << 8) | ADC;
+                            address = (primaryChan << 12) | (collectorChan << 8) | ADC;
 
                             names.push(name);
-                            MSC.push(address);
+                            PSC.push(address);
                         }
                     }
 
@@ -199,50 +199,50 @@
 
                         collectorChan = firstCollectorChan;
                         ADC = j + 4*((index-1)%4);
-                        masterChan=0;
-                        address = (masterChan << 12) | (collectorChan << 8) | ADC;
+                        primaryChan=0;
+                        address = (primaryChan << 12) | (collectorChan << 8) | ADC;
                         names.push(name);
-                        MSC.push(address);
+                        PSC.push(address);
                     }
                             
                 }
 
-                return [names, MSC];
+                return [names, PSC];
             }
 
             function configSCEPTAR_old(US, DS, ZDS){
                 var names = [],
-                    MSC = [],
+                    PSC = [],
                     i;
 
                 if(DS){
                     for(i=1; i<11; i++){
                         names.push('SEP' + ((i<10) ? '0'+i : i) + 'XN00X');
-                        MSC.push((2 << 12) | ( (4+Math.floor((i-1)/4)) << 8) | (i-1)%4);
+                        PSC.push((2 << 12) | ( (4+Math.floor((i-1)/4)) << 8) | (i-1)%4);
                     }
                 } else if(ZDS){
                     names.push('ZDS01XN00X');
-                    MSC.push(0x2601);
+                    PSC.push(0x2601);
                     names.push('ZDS01XT00X');
-                    MSC.push(0x2208);
+                    PSC.push(0x2208);
                 }
 
                 if(US){
                     for(i=11; i<21; i++){
                         names.push('SEP' + i + 'XN00X');
-                        MSC.push((2 << 12) | ( ( 6 + Math.floor((i - 11 + 2)/4) ) << 8) | (i+3)%4);
+                        PSC.push((2 << 12) | ( ( 6 + Math.floor((i - 11 + 2)/4) ) << 8) | (i+3)%4);
                     }
                 }
 
-                return [names, MSC];
+                return [names, PSC];
             }
 
             function configLaBr3_old(US, DS){
                 var names = [],
-                    MSC = [],
-                    i, j, min, max, suppressorMSC;
+                    PSC = [],
+                    i, j, min, max, suppressorPSC;
 
-                if(!US && !DS) return [names, MSC]; //do nothing
+                if(!US && !DS) return [names, PSC]; //do nothing
 
                 if(DS)
                     min = 0;
@@ -257,12 +257,12 @@
                 //LaBr - energy
                 for(i=min; i<max; i++){
                     names.push('DAL0'+(1+i)+'XN00X');
-                    MSC.push((2 << 12) | ( 1 << 8) | i);
+                    PSC.push((2 << 12) | ( 1 << 8) | i);
                 }
                 //LaBr - TAC
                 for(i=min; i<max; i++){
                     names.push('DAL0'+(1+i)+'XT00X');
-                    MSC.push((2 << 12) | ( 2 << 8) | i);
+                    PSC.push((2 << 12) | ( 2 << 8) | i);
                 }
                 //Suppressors
                 for(i=min; i<max; i++){
@@ -270,27 +270,27 @@
                         names.push('DAS0'+(1+i)+'XN0'+j+'X');
                         //first 8 go in the bottom of 0x2100
                         if(i<2 || (i==2 && j<2))
-                            MSC.push((2 << 12) | ( 1 << 8) | (3*i+j + 8) );
+                            PSC.push((2 << 12) | ( 1 << 8) | (3*i+j + 8) );
                         //rest stack up in 0x2300
                         else
-                            MSC.push((2 << 12) | ( 3 << 8) | (3*i+j - 8) );
+                            PSC.push((2 << 12) | ( 3 << 8) | (3*i+j - 8) );
                     }
                 }   
 
-                return [names, MSC];
+                return [names, PSC];
 
             }
 
             function configPACES_old(){
                 var names = ['PAC01XN00X', 'PAC02XN00X', 'PAC03XN00X', 'PAC04XN00X', 'PAC05XN00X'],
-                    MSC = [0x2000, 0x2001, 0x2002, 0x2003, 0x2004];
+                    PSC = [0x2000, 0x2001, 0x2002, 0x2003, 0x2004];
 
-                    return [names, MSC];
+                    return [names, PSC];
             }
 
             function configSPICE_old(){
                 var names = [],
-                    MSC = [],
+                    PSC = [],
                     i, index;
 
                 for(i=0; i<120; i++){
@@ -299,15 +299,15 @@
                     else if(index < 100) index = '0'+index;
 
                     names.push('SPI00XN'+index);
-                    MSC.push(0x4000 + 256*Math.floor(i/16) + (i%16) );
+                    PSC.push(0x4000 + 256*Math.floor(i/16) + (i%16) );
                 }
 
-                return [names, MSC];
+                return [names, PSC];
             }
 
             function configS2S3_old(type){
                 var names = [],
-                    MSC = [],
+                    PSC = [],
                     radial = 24, azimuthal, typeCode,
                     i;
 
@@ -323,24 +323,24 @@
                     names.push('SP'+typeCode+'00DP'+((i<10)? '0'+i : i)+'X');
 
                     if(i<8){
-                        MSC.push(0x4708 + i);
+                        PSC.push(0x4708 + i);
                     } else{
-                        MSC.push(0x4800 + i-8);
+                        PSC.push(0x4800 + i-8);
                     }
                 }
 
                 for(i=0; i<azimuthal; i++){
                     names.push('SP'+typeCode+'00DN'+((i<10)? '0'+i : i)+'X');
 
-                    MSC.push(0x4900 + Math.floor(i/16)*0x100 + (i%16) );
+                    PSC.push(0x4900 + Math.floor(i/16)*0x100 + (i%16) );
                 }
 
-                return [names, MSC];
+                return [names, PSC];
             }
 
             function configDESCANT_old(){
                 var names = [],
-                    MSC = [],
+                    PSC = [],
                     cableBundles = [],
                     i, j;
 
@@ -374,14 +374,14 @@
 
                         //first three cable bundles are on collector 0x2, rest are on 0x3
                         if(i<3){
-                            MSC.push(0x2000 | ((9+i)<<8) | j )
+                            PSC.push(0x2000 | ((9+i)<<8) | j )
                         } else{
-                            MSC.push(0x3000 | ((i-3)<<8) | j )
+                            PSC.push(0x3000 | ((i-3)<<8) | j )
                         }
                     }
                 }
 
-                return [names, MSC];
+                return [names, PSC];
             }
         </script>
     </body>

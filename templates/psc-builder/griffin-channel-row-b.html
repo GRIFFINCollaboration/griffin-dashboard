@@ -1,9 +1,9 @@
-<template id='griffin-channel-row-a'>
+<template id='griffin-channel-row-b'>
     {{#channels}}
         <tr>
             <td>{{chan}}</td>
             <td>
-                <input type='number' id='{{chan}}-M' class='M-{{key}}' min=0 max=15 step=1 value={{M}} onchange="composeAddress.call(this)"></input>
+                <input type='number' id='{{chan}}-P' class='P-{{key}}' min=0 max=15 step=1 value={{P}} onchange="composeAddress.call(this)"></input>
             </td>
             <td>
                 <input type='number' id='{{chan}}-S' class='S-{{key}}' min=0 max=15 step=1 value={{S}} onchange="composeAddress.call(this)"></input>
@@ -11,16 +11,16 @@
             <td>
                 <input type='number' id='{{chan}}-C' class='C-{{key}}' min=0 max=63 step=1 value={{C}} onchange="composeAddress.call(this)"></input>
             </td>
-            <td id='{{chan}}-address' datatype={{datatype}} class='final-msc'>
+            <td id='{{chan}}-address' datatype={{datatype}} class='final-psc'>
                 {{addr}}
             </td>
 
             <td>
                 <label for='grg-lo-gain-{{chan}}'>Low </label>
-                <input type='radio' id='grg-lo-gain-{{chan}}' class='grg-gain-lo-{{position}}' value='lo' name='grg-gain-{{chan}}' onclick='updateDatatype("{{chan}}", 0)' checked></input>
+                <input type='radio' id='grg-lo-gain-{{chan}}' class='grg-gain-lo-{{position}}' value='lo' name='grg-gain-{{chan}}' onclick='updateDatatype("{{chan}}", 0)'></input>
                 <br>
                 <label for='grg-hi-gain-{{chan}}'>High </label>
-                <input type='radio' id='grg-hi-gain-{{chan}}' class='grg-gain-hi-{{position}}' value='hi' name='grg-gain-{{chan}}' onclick='updateDatatype("{{chan}}", 1)'></input>
+                <input type='radio' id='grg-hi-gain-{{chan}}' class='grg-gain-hi-{{position}}' value='hi' name='grg-gain-{{chan}}' onclick='updateDatatype("{{chan}}", 1)' checked></input>
             </td>
         </tr>
     {{/channels}}

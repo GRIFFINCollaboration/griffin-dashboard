@@ -43,8 +43,8 @@
                     dataStore = {
                         ODB: {
                             DAQ: {
-                                MSC: {
-                                    MSC: [0x230A, 0x230B],
+                                PSC: {
+                                    PSC: [0x230A, 0x230B],
                                     chan: ['GRG--', 'XXX--']
                                 },
 
@@ -72,14 +72,14 @@
                 //check that individual objects returned by unpackDAQ get sorted into the summary correctly
 
                 sortDAQitem('GRG06BN00A', {
-                    MSC: 0x230A,
+                    PSC: 0x230A,
                     threshold: 100,
                     trigReq: 1000,
                     trigAcpt: 732
                 });
 
-                assert.equal(1000, dataStore.ODB.DAQ.summary.master.requests)
-                assert.equal(732, dataStore.ODB.DAQ.summary.master.accepts)
+                assert.equal(1000, dataStore.ODB.DAQ.summary.primary.requests)
+                assert.equal(732, dataStore.ODB.DAQ.summary.primary.accepts)
                 assert.equal(1000, dataStore.ODB.DAQ.summary.collectors.requests[2])
                 assert.equal(732, dataStore.ODB.DAQ.summary.collectors.accepts[2])
                 assert.equal(1000, dataStore.ODB.DAQ.summary.digitizers.requests[2][3])
@@ -94,21 +94,21 @@
                 //check that multiple objects returned by unpackDAQ get sorted into the summary correctly
 
                 sortDAQitem('GRG06BN00A', {
-                    MSC: 0x230A,
+                    PSC: 0x230A,
                     threshold: 100,
                     trigReq: 1000,
                     trigAcpt: 732
                 });
 
                 sortDAQitem('XXX06BN00A', {
-                    MSC: 0x230B,
+                    PSC: 0x230B,
                     threshold: 101,
                     trigReq: 500,
                     trigAcpt: 200
                 });
 
-                assert.equal(1500, dataStore.ODB.DAQ.summary.master.requests)
-                assert.equal(932, dataStore.ODB.DAQ.summary.master.accepts)
+                assert.equal(1500, dataStore.ODB.DAQ.summary.primary.requests)
+                assert.equal(932, dataStore.ODB.DAQ.summary.primary.accepts)
                 assert.equal(1500, dataStore.ODB.DAQ.summary.collectors.requests[2])
                 assert.equal(932, dataStore.ODB.DAQ.summary.collectors.accepts[2])
                 assert.equal(1500, dataStore.ODB.DAQ.summary.digitizers.requests[2][3])
@@ -285,19 +285,19 @@
                     dv = new DataView(ab),
                     unpacked;
 
-                dv.setUint16(14, 0, true); // MSC
+                dv.setUint16(14, 0, true); // PSC
                 dv.setFloat32(16, 1, true); // trigger accept
                 dv.setFloat32(20, 2, true); // trigger request
                 dv.setUint32(24, 3, true); // threshold
 
                 unpacked = unpackDAQ(1, dv)
 
-                assert.deepEqual(unpacked, {'MSC': 0, 'trigAcpt': 1, 'trigReq': 2, 'threshold': 3});
+                assert.deepEqual(unpacked, {'PSC': 0, 'trigAcpt': 1, 'trigReq': 2, 'threshold': 3});
             });
 
-            QUnit.test('unpack MSC code', function(assert){
-                var MSC = 0x1337,
-                    unpacked = parseMSCindex(MSC);
+            QUnit.test('unpack PSC code', function(assert){
+                var PSC = 0x1337,
+                    unpacked = parsePSCindex(PSC);
 
                 assert.deepEqual(unpacked, [0x1, 0x3, 0x37]);
             });
@@ -337,8 +337,8 @@
 
                         ODB: {
                             DAQ: {
-                                MSC: {
-                                    chan: ['AAxxxxxxxx', 'ABxxxxxxxx', 'ACxxxxxxxx', 'BAxxxxxxxx', 'BBxxxxxxxx', 'BDxxxxxxxx', 'BExxxxxxxx'] // channel BC missing from MSC
+                                PSC: {
+                                    chan: ['AAxxxxxxxx', 'ABxxxxxxxx', 'ACxxxxxxxx', 'BAxxxxxxxx', 'BBxxxxxxxx', 'BDxxxxxxxx', 'BExxxxxxxx'] // channel BC missing from PSC
                                 }
                             },
                             Equipment: {
@@ -394,7 +394,7 @@
 
                 assert.equal(dataStore.data.A.Y, 8) // (6+10)/2, since AA missing from HV table
                 assert.equal(dataStore.data.A.X, 6) // (4+8)/2; X missing from AA doesn't prevent the summary, since AA is missing from HV table
-                assert.equal(dataStore.data.B.X, 20) // (12+16+24+28)/4, since BC missing from MSC table
+                assert.equal(dataStore.data.B.X, 20) // (12+16+24+28)/4, since BC missing from PSC table
                 assert.strictEqual(dataStore.data.B.Y, null) // since BD.Y failed to report
 
             });

@@ -104,7 +104,7 @@ function processDAQ(payload){
 
     fetchDAQ(payload);              // sort the data into useful places
     determineADCrequests();         // decide which ADCs will need to be queried for rates and thresholds
-    detectDetectors();              // decide which detectors to link to in the nav bar based on MSC table
+    detectDetectors();              // decide which detectors to link to in the nav bar based on PSC table
 }
 
 function sortADCparams(payload){
@@ -119,17 +119,17 @@ function sortADCparams(payload){
 
     dataStore.ODB.DAQ.params = payload;
 
-    if(dataStore.ODB.DAQ && dataStore.ODB.DAQ.MSC){
+    if(dataStore.ODB.DAQ && dataStore.ODB.DAQ.PSC){
         // only unpack for channels in current view
         for(i=0; i<channels.length; i++){
             // only interested in real channels here, not summaries
             if(channels[i].length != 10)
                 continue;
             // determine dataType
-            dataType = dataStore.ODB.DAQ.MSC.chan.indexOf(channels[i]);
-            dataType = dataStore.ODB.DAQ.MSC.datatype[dataType];
+            dataType = dataStore.ODB.DAQ.PSC.chan.indexOf(channels[i]);
+            dataType = dataStore.ODB.DAQ.PSC.datatype[dataType];
 
-            // no dataType -> channel not present in MSC table, bail. 
+            // no dataType -> channel not present in PSC table, bail. 
             if(!isNumeric(dataType))
                 continue;
 
@@ -564,7 +564,7 @@ function summarizeData(){
 
     var i, j, summaryKey, newValue, channel, subviews = [], subview;
 
-    // don't bother if the MSC table hasn't arrived yet:
+    // don't bother if the PSC table hasn't arrived yet:
     if(!dataStore.ODB.DAQ)
         return 0;
 
@@ -584,7 +584,7 @@ function summarizeData(){
     }
 
     //now repopulate all summaries; if a constituent is not reporting, the whole summary is 
-    //flagged as not reporting - but only consider adc channels in the MSC table, and HV channels in the ODB.Equipment list
+    //flagged as not reporting - but only consider adc channels in the PSC table, and HV channels in the ODB.Equipment list
     for(i=0; i<dataStore.detector.channelNames.length; i++){
         channel = dataStore.detector.channelNames[i];
 
@@ -592,7 +592,7 @@ function summarizeData(){
         if(channel.length != 10) continue;
 
         // channel intentionally not plugged in, abort
-        if(isADCChannel(channel) && dataStore.ODB.DAQ.MSC.chan.indexOf(channel) == -1) continue;
+        if(isADCChannel(channel) && dataStore.ODB.DAQ.PSC.chan.indexOf(channel) == -1) continue;
         if(isHV(channel) && findHVcrate(channel) == -1) continue;
 
         summaryKey = channel.slice(0,dataStore.detector.summaryDepth);
@@ -633,20 +633,20 @@ function summarizeData(){
 function findADC(channel){
     //given a channel name, use the ODB's DAQ table to identify which ADC it belongs to.
 
-    var MSC, channelIndex, M, S, C,
+    var PSC, channelIndex, P, S, C,
         collectorKey;
 
-    channelIndex = dataStore.ODB.DAQ.MSC.chan.indexOf(channel);
+    channelIndex = dataStore.ODB.DAQ.PSC.chan.indexOf(channel);
     if(channelIndex == -1)
         return null;
 
-    MSC = dataStore.ODB.DAQ.MSC.MSC[channelIndex];
+    PSC = dataStore.ODB.DAQ.PSC.PSC[channelIndex];
 
-    M = (MSC & 0xF000) >>> 12;
-    S = (MSC & 0x0F00) >>> 8;
-    C = (MSC & 0x00FF) >>> 0;
+    P = (PSC & 0xF000) >>> 12;
+    S = (PSC & 0x0F00) >>> 8;
+    C = (PSC & 0x00FF) >>> 0;
 
-    collectorKey = 'collector0x' + M.toString(16);
+    collectorKey = 'collector0x' + P.toString(16);
 
     return dataStore.ODB.DAQ.hosts[collectorKey].digitizers[S];
 }
@@ -654,15 +654,15 @@ function findADC(channel){
 function findChannel(channel){
     //given a channel name, use the ODB's DAQ table to identify which ADC channel it is on.
 
-    var MSC, channelIndex
+    var PSC, channelIndex
 
-    channelIndex = dataStore.ODB.DAQ.MSC.chan.indexOf(channel);
+    channelIndex = dataStore.ODB.DAQ.PSC.chan.indexOf(channel);
     if(channelIndex == -1)
         return null;
 
-    MSC = dataStore.ODB.DAQ.MSC.MSC[channelIndex];
+    PSC = dataStore.ODB.DAQ.PSC.PSC[channelIndex];
 
-    return (MSC & 0x00FF)
+    return (PSC & 0x00FF)
 }
 
 function findADCparameterIndex(){
@@ -712,16 +712,16 @@ function sortODBEquipment(payload){
 function unpackDAQdv(dv){
     //parse DAQ dataviews into dataStore.data variables - detector style
     //information for an individual channel is packed in a 14 byte word:
-    //[MSC 2 bytes][trig request 4 bytes][trig accept 4 bytes][threshold 4 bytes] <--lowest bit
+    //[PSC 2 bytes][trig request 4 bytes][trig accept 4 bytes][threshold 4 bytes] <--lowest bit
     var channelIndex, channelName, DAQblock,
         i;
 
-    // @TODO: make grif16 send appropriate mscs and lookup grifadc info based on sent MSC
+    // @TODO: make grif16 send appropriate pscs and lookup grifadc info based on sent PSC
     for(i=0; i<dv.byteLength/14; i++){
         DAQblock = unpackDAQ(i, dv);
 
-        channelIndex = dataStore.ODB.DAQ.MSC.MSC.indexOf(DAQblock.MSC);
-        channelName = dataStore.ODB.DAQ.MSC.chan[channelIndex];
+        channelIndex = dataStore.ODB.DAQ.PSC.PSC.indexOf(DAQblock.PSC);
+        channelName = dataStore.ODB.DAQ.PSC.chan[channelIndex];
 
         if(dataStore.data[channelName]){
             dataStore.data[channelName]['trigger_request'] = DAQblock.trigReq;

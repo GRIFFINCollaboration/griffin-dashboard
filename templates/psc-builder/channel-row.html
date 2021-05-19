@@ -3,7 +3,7 @@
         <tr>
             <td>{{chan}}</td>
             <td>
-                <input type='number' id='{{chan}}-M' class='M-{{key}}' min=0 max=15 step=1 value={{M}} onchange="composeAddress.call(this)"></input>
+                <input type='number' id='{{chan}}-P' class='P-{{key}}' min=0 max=15 step=1 value={{P}} onchange="composeAddress.call(this)"></input>
             </td>
             <td>
                 <input type='number' id='{{chan}}-S' class='S-{{key}}' min=0 max=15 step=1 value={{S}} onchange="composeAddress.call(this)"></input>
@@ -11,7 +11,7 @@
             <td>
                 <input type='number' id='{{chan}}-C' class='C-{{key}}' min=0 max=63 step=1 value={{C}} onchange="composeAddress.call(this)"></input>
             </td>
-            <td id='{{chan}}-address' datatype={{datatype}} class='final-msc'>
+            <td id='{{chan}}-address' datatype={{datatype}} class='final-psc'>
                 {{addr}}
             </td>
         </tr>

@@ -9,9 +9,9 @@
 <script>
 
     function detectDetectors(){
-        // decide which detectors need to be linked to, based on the MSC table in the ODB, pre-registered on dataStore.ODB.DAQ
+        // decide which detectors need to be linked to, based on the PSC table in the ODB, pre-registered on dataStore.ODB.DAQ
 
-        var buttonNames = ["hv","daq","cycle","clock","filter","shack","msc"];
+        var buttonNames = ["hv","daq","cycle","clock","filter","shack","psc"];
 
         var i, newLink, current
             detectors = [],
@@ -30,8 +30,8 @@
 
 
         // Add the appropriate Detector buttons
-        for(i=0; i<dataStore.ODB.DAQ.MSC.chan.length; i++){
-            detectors.push(dataStore.ODB.DAQ.MSC.chan[i].slice(0,3));
+        for(i=0; i<dataStore.ODB.DAQ.PSC.chan.length; i++){
+            detectors.push(dataStore.ODB.DAQ.PSC.chan[i].slice(0,3));
         }
         detectors = detectors.unique();
 
