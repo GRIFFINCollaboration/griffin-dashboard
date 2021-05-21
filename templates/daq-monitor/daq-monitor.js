@@ -286,7 +286,7 @@ function regenerateDatastructure(suppressDOMconfig){
 	
 	// Create the Links from the Collector modules into the Master
 	// These are inserted into the container on the left of the Filter
-	for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
+	for(i=1; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
 	    string = 'FilterInputLink'+(i);
             FilterInputLink = document.createElement('button'); 
             FilterInputLink.setAttribute('id', string);
@@ -730,8 +730,8 @@ function repaint(){
     // Format of ODB: /DAQ/GRIFC/Filter-stats is
     // First 16 indexes are for Input Buffer, Last 16 indexes are for Output Buffer
     // The 16 indexes for each Buffer are the rates for each Det Type (including CLOV, SUPN, SCLR)
-	for(i=0; i<dataStore.ODB.DAQ.GRIFC.Filter-stats.length; i++){
-	    FilterReportValues[i] = dataStore.ODB.DAQ.GRIFC.Filter-stats[i];	    
+	for(i=0; i<dataStore.ODB.DAQ.GRIFC.FilterStats.length; i++){
+	    FilterReportValues[i] = dataStore.ODB.DAQ.GRIFC.FilterStats[i];	    
 	}
     
     // Put the rates numbers into the Filter DataStore
@@ -782,7 +782,7 @@ function repaint(){
     }
 
     // Color the Input Links from the Secondary level based on the volume of data
-	for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
+	for(i=1; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
 	    LinkID = 'FilterInputLink'+(i);
 	    var TotalRate = (dataStore.ODB.DAQ.summary.collectors.accepts[i]) / (MaxInputLinkValue);
 	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
