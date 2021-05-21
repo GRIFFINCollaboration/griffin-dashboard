@@ -286,20 +286,18 @@ function regenerateDatastructure(suppressDOMconfig){
 	
 	// Create the Links from the Collector modules into the Master
 	// These are inserted into the container on the left of the Filter
-	for(i=1; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
+	for(i=0; i<dataStore.ODB.DAQ.hosts.length; i++){
 	    string = 'FilterInputLink'+(i);
-            FilterInputLink = document.createElement('button'); 
-            FilterInputLink.setAttribute('id', string);
-            FilterInputLink.setAttribute('type', 'button'); 
-            FilterInputLink.setAttribute('value', (100+i)); 
-            FilterInputLink.setAttribute('class', 'FilterInputLink');
-           // FilterInputLink.innerHTML = dataStore.ODB.DAQ.summary.collectors.titles[i];
-           // FilterInputLink.innerHTML = dataStore.ODB.DAQ.summary.collectors.titles[i].slice(0,3);
-            FilterInputLink.innerHTML = 'Col'+i; 
-            FilterInputLink.onclick = function(){
+	    FilterInputLink = document.createElement('button'); 
+	    FilterInputLink.setAttribute('id', string);
+	    FilterInputLink.setAttribute('type', 'button'); 
+	    FilterInputLink.setAttribute('value', (100+i)); 
+	    FilterInputLink.setAttribute('class', 'FilterInputLink');
+	    FilterInputLink.innerHTML = 'Col'+i; 
+	    FilterInputLink.onclick = function(){
                 FilterElementSelection(this.id);
-            }.bind(FilterInputLink);
-            document.getElementById('FilterLinkInputContainer').appendChild(FilterInputLink);
+	    }.bind(FilterInputLink);
+	    document.getElementById('FilterLinkInputContainer').appendChild(FilterInputLink);
         }
 	
 	// Create the Divs for reporting values in the Filter Elements themselves
@@ -783,9 +781,9 @@ function repaint(){
     }
 
     // Color the Input Links from the Secondary level based on the volume of data
-	for(i=1; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
+	for(i=1; i<dataStore.ODB.DAQ.hosts.length; i++){
 	    LinkID = 'FilterInputLink'+(i);
-	    var TotalRate = (dataStore.ODB.DAQ.summary.collectors.accepts[i]) / (MaxInputLinkValue);
+	    var TotalRate = (dataStore.ODB.DAQ.summary.collectors.accepts[0][i]) / (MaxInputLinkValue);
 	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
 	    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
 	    else if(TotalRate >= 0.4 ){ LinkColor = 'Orange';  }
