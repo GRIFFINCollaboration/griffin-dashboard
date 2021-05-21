@@ -293,8 +293,9 @@ function regenerateDatastructure(suppressDOMconfig){
             FilterInputLink.setAttribute('type', 'button'); 
             FilterInputLink.setAttribute('value', (100+i)); 
             FilterInputLink.setAttribute('class', 'FilterInputLink');
-            FilterInputLink.innerHTML = dataStore.ODB.DAQ.summary.collectors.titles[i].slice(0,3);
-            // FilterInputLink.innerHTML = 'Col'+i; 
+           // FilterInputLink.innerHTML = dataStore.ODB.DAQ.summary.collectors.titles[i];
+           // FilterInputLink.innerHTML = dataStore.ODB.DAQ.summary.collectors.titles[i].slice(0,3);
+            FilterInputLink.innerHTML = 'Col'+i; 
             FilterInputLink.onclick = function(){
                 FilterElementSelection(this.id);
             }.bind(FilterInputLink);
