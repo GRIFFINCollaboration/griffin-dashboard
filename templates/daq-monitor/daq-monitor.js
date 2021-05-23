@@ -152,7 +152,9 @@ function regenerateDatastructure(suppressDOMconfig){
         }
         dataStore.ODB.DAQ.summary.detectors[detPrefix] = {requests: 0, accepts: 0};
     }
-    
+
+    // Populate this before setting up the dom
+    dataStore.ODB.DAQ.summaryJSON = JSON.stringify(dataStore.ODB.DAQ.summary);
 
     // dom setup
     if(!suppressDOMconfig){
@@ -460,7 +462,7 @@ function regenerateDatastructure(suppressDOMconfig){
 	// repaint();
     }
     
-    dataStore.ODB.DAQ.summaryJSON = JSON.stringify(dataStore.ODB.DAQ.summary);
+   // dataStore.ODB.DAQ.summaryJSON = JSON.stringify(dataStore.ODB.DAQ.summary);
 }
 
 function WriteChanMask(id){
