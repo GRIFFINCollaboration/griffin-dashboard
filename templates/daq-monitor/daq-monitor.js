@@ -768,7 +768,7 @@ function repaint(){
 	}else if(FilterObjectID[i] == 'FilterObjectBGOSupp'){
 	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,3);
 	}else if(FilterObjectID[i] == 'FilterObjectDetTypes' || FilterObjectID[i] == 'FilterObjectCoincDS'){
-	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,8);
+	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,9);
             FilterObjectName = 'FilterObjectIDReportValuesB['+i+']';
 	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,8,dataStore.ODB.DAQ.params.DetTypes.length);
 	}else{
