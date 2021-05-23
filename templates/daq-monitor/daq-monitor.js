@@ -766,7 +766,7 @@ function repaint(){
 	if(FilterObjectID[i] == 'FilterBufferInput'){
 	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],'Rate',0,dataStore.ODB.DAQ.params.DetTypes.length);
 	}else if(FilterObjectID[i] == 'FilterObjectBGOSupp'){
-	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,4);
+	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,3);
 	}else if(FilterObjectID[i] == 'FilterObjectDetTypes' || FilterObjectID[i] == 'FilterObjectCoincDS'){
 	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,8);
             FilterObjectName = 'FilterObjectIDReportValuesB['+i+']';
