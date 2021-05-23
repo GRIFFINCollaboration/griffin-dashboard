@@ -959,11 +959,11 @@ function BuildFilterRatesValuesString(ElementID,DisplayType,FirstReportValue,Las
 
     // Check the requested values are within the bounds
     if(FirstReportValue>OutgoingReportValues.length){
-	console.log('Error in BuildFilterRatesValuesString(): First and Last requested values are out of bounds!');
+	console.log('Error in BuildFilterRatesValuesString(): First ('+FirstReportValue+') and Last ('+LastReportValue+') requested values are out of bounds for '+ElementID+'!');
 	return 'Err';
     }
     if(LastReportValue>OutgoingReportValues.length){
-	console.log('Error in BuildFilterRatesValuesString(): Last requested value is out of bounds!');
+	console.log('Error in BuildFilterRatesValuesString(): Last ('+LastReportValue+') requested value is out of bounds for '+ElementID+'!');
 	return 'Err';
     }
     
