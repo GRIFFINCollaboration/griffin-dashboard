@@ -634,15 +634,6 @@ function repaint(){
     // Variables used for Filter Display    
     var ID = FilterSelectedElementID;
     var string = "Click on a Filter element to display details here.";
-
-    // Here add in the extra Det Types to the datastore
-    // These top 3 Det Types are hard coded in the GRIFC firmware and cannot be modified in the ODB by the user
-   // console.log(dataStore.ODB.DAQ);
-    if(dataStore.ODB.DAQ.params.DetTypes.length == 14)
-    {
-	dataStore.ODB.DAQ.params.DetTypes[14] = 'CLOV';
-	dataStore.ODB.DAQ.params.DetTypes[15] = 'SCLR';
-    }
     
     //primary summary
     createBarchart(
@@ -690,6 +681,15 @@ function repaint(){
 
     
     // Filter Display
+    // Here add in the extra Det Types to the datastore
+    // These top 3 Det Types are hard coded in the GRIFC firmware and cannot be modified in the ODB by the user
+   // console.log(dataStore.ODB.DAQ);
+    if(dataStore.ODB.DAQ.params.DetTypes.length == 14)
+    {
+	dataStore.ODB.DAQ.params.DetTypes[14] = 'CLOV';
+	dataStore.ODB.DAQ.params.DetTypes[15] = 'SCLR';
+    }
+    
     // Grab the current rates through the Filter from the ODB
     // Format of ODB: /DAQ/GRIFC/Filter-stats is
     // First 16 indexes are for Input Buffer, Last 16 indexes are for Output Buffer
