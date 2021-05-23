@@ -1,3 +1,313 @@
 div.pan{
     border: 2px solid #222222 !important;
 }
+
+/* css for Filter Display */
+.FilterFrame {
+  width:80%;
+  margin: auto;
+  height: 460px;
+  position:relative;
+  background-color: #EEEEEE;
+  padding: 1em;
+  border-radius: 1em;
+  display: inline-block; 
+  vertical-align:middle;
+  text-align: center;
+  overflow: hidden;
+  color: black;
+}
+.FilterBufferObject {
+  width: 100px;
+  height: 390px;
+  position: relative;  
+  left: 0px; 
+  top: 0px; 
+  margin: 5px 0px; 
+  padding: 1em;
+  background-color: #EEEEEE;
+  border-color: black;
+  border-width: 3px;
+  border-radius: 1em; 
+  display: inline-block;
+  text-align: center;
+  word-wrap: break-word; 
+  vertical-align:top;
+  color: black;
+}
+.FilterBufferObject p {
+  margin: 0;
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -5%);
+  color: black;
+}
+.FilterObject {
+  width: 100px; 
+  height: 390px;
+  position: relative; 
+  left: 0px;
+  top: 0px;
+  margin: 0px 0px;
+  padding: 1em;
+  background-color: #EEEEEE;
+  border-color: black;
+  border-width: 3px;
+  padding: 1em;
+  border-radius: 1em;
+  display: inline-block;
+  text-align: center;
+  word-wrap: break-word; 
+  vertical-align:top;
+  color: black;
+}
+.FilterObject p {
+  margin: 0;
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -5%);
+  color: black;
+}
+.FilterObjectContainer {
+  width: 260px;
+  height: 390px; 
+  position: relative;
+  padding: 0px;
+  left: 0px; 
+  top: 0px;
+  margin: 0px 0px;
+  background-color: #EEEEEE;
+  border-style: none; 
+  display: inline-block; 
+  vertical-align:middle;
+  color: black;
+}
+.FilterObjectShort {
+  width: 200px; 
+  height: 150px;
+  position: relative; 
+  left: 0px;
+  top: 2px;
+  margin: 5px 0px 0px;
+  background-color: #EEEEEE;
+  border-color: black;
+  border-width: 3px;
+  padding: 1em;
+  border-radius: 1em;
+  display: inline-block; 
+  vertical-align:middle;
+  color: black;
+}
+.FilterObjectShort p {
+    margin: 0;
+    width: 100%;
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translate(-50%, -5%);
+  color: black;
+}
+#FilterObjectBGOSupp {
+    height: 65px;
+}
+.FilterReportTitleDiv {
+  width: 100%;
+  height: 35%; 
+  position: absolute;
+  left: 5px;
+  top: 0px;
+  margin: 1px;
+  padding: 0;
+  border-style: none; 
+  text-align: justify;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 12px "Courier New", monospace;
+  color: black;
+}
+.FilterReportDivTitles {
+  width: 35px;
+  height: 70%; 
+  position: absolute;
+  left: 2px;
+  bottom: 0px;
+  margin: 1px; 
+  border-style: none; 
+  text-align: right;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: red;
+}
+.FilterReportDivValues {
+  width: 50px;
+  height: 70%; 
+  position: absolute;
+  left: 40px;
+  bottom: 0px;
+  margin: 1px; 
+  border-style: none; 
+  text-align: right;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: red;
+}
+.FilterReportDivTitlesB {
+  width: 35px;
+  height: 70%; 
+  position: absolute;
+  left: 95px;
+  bottom: 0px;
+  margin: 1px; 
+  border-style: none; 
+  text-align: right;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: red;
+}
+.FilterReportDivValuesB {
+  width: 50px;
+  height: 70%; 
+  position: absolute;
+  left: 130px;
+  bottom: 0px;
+  margin: 1px; 
+  border-style: none; 
+  text-align: right;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: red;
+}
+.FilterIOLinkContainer {
+  width: 55px;
+  height: 280px; 
+  position: relative; 
+  left: 0px; 
+  top: 0px;
+  margin: 5px 0px;
+  background-color: #EEEEEE;
+  border-style: none; 
+  display: inline-block; 
+  vertical-align:middle;
+  color: black;
+}
+.FilterInputLink {
+  width: 40px;
+  height: 30px;
+  position: relative; 
+  left: 0px; 
+  top: 50px;
+  margin: 1px 15px 1px 0px; 
+  border-style: none;
+  background: green; 
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: black;
+}
+.FilterInputLink:before {
+  content: "";
+  position: absolute;
+  right: -15px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 15px solid green;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  color: black;
+}
+.FilterLink {
+  width: 60px;
+  height: 40px; 
+  position: relative;
+  padding: 0px;
+  left: 0px; 
+  top: 20px;
+  margin: 0px;
+  border-style: none;
+  background: green; 
+  text-align: left;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: black;
+}
+.FilterMultiLinkContainer {
+  width: 30px;
+  height: 390px; 
+  position: relative; 
+  left: 0px; 
+  top: 0px;
+  margin: 0px 0px;
+  background-color: #EEEEEE;
+  border-style: none; 
+  display: inline-block; 
+  vertical-align:top;
+  color: black;
+}
+.FilterMultiLink {
+  position: absolute;
+  padding: 0px;
+  left: -10px; 
+  margin: 0px;
+  border-style: none;
+  background: green; 
+  text-align: left;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: black;
+}
+/* Filter Table */
+#FilterTable {
+  width: 20%; 
+  height: 250px;
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 5px 5px;
+  background-color: #EEEEEE;
+  border-style: solid;
+  border-color: black;
+  border-width: 3px;
+  padding: 1em;
+  border-radius: 1em;
+  display: inline-block; 
+  vertical-align:top;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: black;
+}
+#FilterTable p {
+  margin: 0;
+  width: 100%;
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -5%);
+  color: black;
+}
+.FilterTableReportDivTitles {
+  width: 40px;
+  height: 70%; 
+  position: absolute;
+  left: 5px;
+  bottom: 0px;
+  margin: 1px; 
+  border-style: none; 
+  text-align: right;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: red;
+}
+.FilterTableReportDivValues {
+  width: 50px;
+  height: 70%; 
+  position: absolute;
+  left: 40px;
+  bottom: 0px;
+  margin: 1px; 
+  border-style: none; 
+  text-align: right;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: red;
+}
