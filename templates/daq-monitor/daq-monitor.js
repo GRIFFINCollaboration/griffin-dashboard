@@ -907,8 +907,8 @@ function ReportBuffer(){
 	string = string + dataStore.ODB.DAQ.params.DetTypes[i] + ':<br>';
     }
     document.getElementById('FilterTableReportTitles').innerHTML = string;
-    document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',1,dataStore.ODB.DAQ.params.DetTypes.length);
-    document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',1,dataStore.ODB.DAQ.params.DetTypes.length);
+    document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',0,dataStore.ODB.DAQ.params.DetTypes.length);
+    document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',0,dataStore.ODB.DAQ.params.DetTypes.length);
 }
 
 function ReportObject(){
@@ -920,16 +920,16 @@ function ReportObject(){
     
     if(FilterSelectedElementID == 'FilterObjectBGOSupp'){
 	document.getElementById('FilterTableReportTitles').innerHTML = 'GRGa:<br>GRGb:<br>GRS:<br>'; 
-	document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',1,3);        // This is horribly wrong - needs fixing.
-	document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',1,3);  // This is horribly wrong - needs fixing.
+	document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',0,3);        // This is horribly wrong - needs fixing.
+	document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',0,3);  // This is horribly wrong - needs fixing.
     }else{
 	var string = '';
 	for(i=0; i<dataStore.ODB.DAQ.params.DetTypes.length; i++){
 	    string = string + dataStore.ODB.DAQ.params.DetTypes[i] + ':<br>';
 	}
 	document.getElementById('FilterTableReportTitles').innerHTML = string;
-	document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',1,dataStore.ODB.DAQ.params.DetTypes.length);
-	document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',1,dataStore.ODB.DAQ.params.DetTypes.length);
+	document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',0,dataStore.ODB.DAQ.params.DetTypes.length);
+	document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',0,dataStore.ODB.DAQ.params.DetTypes.length);
     }
 }
 
