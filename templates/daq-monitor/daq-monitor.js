@@ -458,7 +458,6 @@ function regenerateDatastructure(suppressDOMconfig){
 	// Repaint everything for the first time after creation
 	// NOTE: This is causing problems because the ODB structure has not been grabbed yet.
 	// repaint();
-	dataUpdate();
     }
     
     dataStore.ODB.DAQ.summaryJSON = JSON.stringify(dataStore.ODB.DAQ.summary);
