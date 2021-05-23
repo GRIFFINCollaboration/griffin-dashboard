@@ -738,20 +738,20 @@ function repaint(){
 	    document.getElementById('FilterTableReportTitles').innerHTML = 'GRGa:<br>GRGb:<br>GRS:<br>'; 
         }else if(FilterObjectID[i] == 'FilterObjectDetTypes' || FilterObjectID[i] == 'FilterObjectCoincDS'){
 	    var Namesstring = '';
-	    for(i=0; i<9; i++){
-		Namesstring = Namesstring + dataStore.ODB.DAQ.params.DetTypes[i] + ':<br>';
+	    for(j=0; j<9; j++){
+		Namesstring = Namesstring + dataStore.ODB.DAQ.params.DetTypes[j] + ':<br>';
 	    }
 	    FilterReportdocument.getElementById(FilterObjectName).innerHTML = Namesstring; 
 	    FilterObjectName = 'FilterObjectIDReportTitlesB['+i+']';
 	    Namesstring = '';
-	    for(i=8; i<dataStore.ODB.DAQ.params.DetTypes.length; i++){
-		Namesstring = Namesstring + dataStore.ODB.DAQ.params.DetTypes[i] + ':<br>';
+	    for(j=8; j<dataStore.ODB.DAQ.params.DetTypes.length; j++){
+		Namesstring = Namesstring + dataStore.ODB.DAQ.params.DetTypes[j] + ':<br>';
 	    }
 	    FilterReportdocument.getElementById(FilterObjectName).innerHTML = Namesstring; 
         }else{
 	    var Namesstring = '';
-	    for(i=0; i<dataStore.ODB.DAQ.params.DetTypes.length; i++){
-		Namesstring = Namesstring + dataStore.ODB.DAQ.params.DetTypes[i] + ':<br>';
+	    for(j=0; j<dataStore.ODB.DAQ.params.DetTypes.length; j++){
+		Namesstring = Namesstring + dataStore.ODB.DAQ.params.DetTypes[j] + ':<br>';
 	    }
 	    document.getElementById(FilterObjectName).innerHTML = Namesstring; 
         }
