@@ -15,7 +15,7 @@ var text = '{ "FilterElementInfo": [' +
     '{"ID":"FilterLink3",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
     '{"ID":"FilterObjectDetTypes",      "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterObjectHouse", "HTML":"<p>Filter by Detector Types</p>" },' +
     '{"ID":"FilterLink4",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
-    '{"ID":"FilterObjectCoincDS",       "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterObjectHouse", "HTML":"<p>Coincidence conditions and Downscaling</p>" },' +
+    '{"ID":"FilterObjectCoincDS",       "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterObjectHouse", "HTML":"<p>Coinc. and Downscaling</p>" },' +
     '{"ID":"FilterLink5",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
     '{"ID":"FilterBufferOutput",        "Type":"button", "Rate":[], "Class":"FilterBufferObject",      "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterDisplay",     "HTML":"<p>Output Buffer</p>" },' +
     '{"ID":"FilterLinkOutputContainer", "Type":"Div",    "Rate":[], "Class":"FilterIOLinkContainer",   "Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null }' +
@@ -770,7 +770,6 @@ function repaint(){
             FilterObjectName = 'FilterObjectIDReportValuesB['+i+']';
 	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,8,dataStore.ODB.DAQ.params.DetTypes.length);
 	}else{
-	    console.log(FilterObjectName);
             document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,dataStore.ODB.DAQ.params.DetTypes.length);
 	}
     }
@@ -948,7 +947,6 @@ function getFilterObjectHTMLByID(ElementID) {
 function BuildFilterRatesValuesString(ElementID,DisplayType,FirstReportValue,LastReportValue){
     // ElementID is the Div that the rates will be displayed in.
     // DisplayType is the choice of reporting; Evts/s, Percentage of incoming or Percentage of capacity.
-    console.log('Try First ('+FirstReportValue+') and Last ('+LastReportValue+') requested values for '+ElementID);
     var OutgoingReportValues = [];
     
     for (var i = 0; i < FilterObjectdataStore.FilterElementInfo.length; i++){
