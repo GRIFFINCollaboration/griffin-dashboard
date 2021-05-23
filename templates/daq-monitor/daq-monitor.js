@@ -767,6 +767,7 @@ function repaint(){
             FilterObjectName = 'FilterObjectIDReportValuesB['+i+']';
 	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,8,dataStore.ODB.DAQ.params.DetTypes.length);
 	}else{
+	    console.log(FilterObjectName);
             document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,dataStore.ODB.DAQ.params.DetTypes.length);
 	}
     }
