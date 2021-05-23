@@ -15,6 +15,7 @@ div.pan{
   vertical-align:middle;
   text-align: center;
   overflow: hidden;
+  color: black;
 }
 .FilterBufferObject {
   width: 100px;
@@ -32,6 +33,7 @@ div.pan{
   text-align: center;
   word-wrap: break-word; 
   vertical-align:top;
+  color: black;
 }
 .FilterBufferObject p {
   margin: 0;
@@ -39,6 +41,7 @@ div.pan{
   top: 5%;
   left: 50%;
   transform: translate(-50%, -5%);
+  color: black;
 }
 .FilterObject {
   width: 100px; 
@@ -57,6 +60,7 @@ div.pan{
   text-align: center;
   word-wrap: break-word; 
   vertical-align:top;
+  color: black;
 }
 .FilterObject p {
   margin: 0;
@@ -64,6 +68,7 @@ div.pan{
   top: 5%;
   left: 50%;
   transform: translate(-50%, -5%);
+  color: black;
 }
 .FilterObjectContainer {
   width: 260px;
@@ -77,6 +82,7 @@ div.pan{
   border-style: none; 
   display: inline-block; 
   vertical-align:middle;
+  color: black;
 }
 .FilterObjectShort {
   width: 200px; 
@@ -92,6 +98,7 @@ div.pan{
   border-radius: 1em;
   display: inline-block; 
   vertical-align:middle;
+  color: black;
 }
 .FilterObjectShort p {
     margin: 0;
@@ -100,6 +107,7 @@ div.pan{
   top: 2%;
   left: 50%;
   transform: translate(-50%, -5%);
+  color: black;
 }
 #FilterObjectBGOSupp {
     height: 65px;
@@ -181,6 +189,7 @@ div.pan{
   border-style: none; 
   display: inline-block; 
   vertical-align:middle;
+  color: black;
 }
 .FilterInputLink {
   width: 40px;
@@ -193,6 +202,7 @@ div.pan{
   background: green; 
   font-family: "Lucida Console", "Courier New", monospace;
   font: 11px "Courier New", monospace;
+  color: black;
 }
 .FilterInputLink:before {
   content: "";
@@ -204,6 +214,7 @@ div.pan{
   border-left: 15px solid green;
   border-top: 15px solid transparent;
   border-bottom: 15px solid transparent;
+  color: black;
 }
 .FilterLink {
   width: 60px;
@@ -218,6 +229,7 @@ div.pan{
   text-align: left;
   font-family: "Lucida Console", "Courier New", monospace;
   font: 11px "Courier New", monospace;
+  color: black;
 }
 .FilterMultiLinkContainer {
   width: 30px;
@@ -230,6 +242,7 @@ div.pan{
   border-style: none; 
   display: inline-block; 
   vertical-align:top;
+  color: black;
 }
 .FilterMultiLink {
   position: absolute;
@@ -241,6 +254,7 @@ div.pan{
   text-align: left;
   font-family: "Lucida Console", "Courier New", monospace;
   font: 11px "Courier New", monospace;
+  color: black;
 }
 /* Filter Table */
 #FilterTable {
@@ -260,6 +274,7 @@ div.pan{
   vertical-align:top;
   font-family: "Lucida Console", "Courier New", monospace;
   font: 11px "Courier New", monospace;
+  color: black;
 }
 #FilterTable p {
   margin: 0;
@@ -268,6 +283,7 @@ div.pan{
   top: 5%;
   left: 50%;
   transform: translate(-50%, -5%);
+  color: black;
 }
 .FilterTableReportDivTitles {
   width: 40px;
