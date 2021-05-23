@@ -945,7 +945,7 @@ function getFilterObjectHTMLByID(ElementID) {
 function BuildFilterRatesValuesString(ElementID,DisplayType,FirstReportValue,LastReportValue){
     // ElementID is the Div that the rates will be displayed in.
     // DisplayType is the choice of reporting; Evts/s, Percentage of incoming or Percentage of capacity.
-    
+    console.log('Try First ('+FirstReportValue+') and Last ('+LastReportValue+') requested values for '+ElementID);
     var OutgoingReportValues = [];
     
     for (var i = 0; i < FilterObjectdataStore.FilterElementInfo.length; i++){
