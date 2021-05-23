@@ -706,9 +706,11 @@ function repaint(){
 	    if (FilterObjectdataStore.FilterElementInfo[k].ID == FilterObjectIDRates[i]){
 		if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterBufferOutput'){
 		    // The last 16 entries are for the Output buffer
+		    var jj=0;
 		    for(var j=(FilterReportValues.length - 16); j<FilterReportValues.length; j++){
-			FilterObjectdataStore.FilterElementInfo[k].Rate[j] = FilterReportValues[j];
-			FilterObjectdataStore.FilterElementInfo[k+1].Rate[j] = FilterReportValues[j];
+			FilterObjectdataStore.FilterElementInfo[k].Rate[jj] = FilterReportValues[j];
+			FilterObjectdataStore.FilterElementInfo[k+1].Rate[jj] = FilterReportValues[j];
+			jj++;
 		    }
 		}else if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterObjectBGOSupp'){
 		        // Hack to get Ge and BGO rates only - relies on these Det Types not changing
