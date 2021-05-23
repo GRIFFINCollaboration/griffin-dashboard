@@ -766,7 +766,7 @@ function repaint(){
 	if(FilterObjectID[i] == 'FilterBufferInput'){
 	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],'Rate',0,dataStore.ODB.DAQ.params.DetTypes.length);
 	}else if(FilterObjectID[i] == 'FilterObjectBGOSupp'){
-	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,3);
+	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,4);
 	}else if(FilterObjectID[i] == 'FilterObjectDetTypes' || FilterObjectID[i] == 'FilterObjectCoincDS'){
 	    document.getElementById(FilterObjectName).innerHTML = BuildFilterRatesValuesString(FilterObjectID[i],FilterSelectedDisplayType,0,8);
             FilterObjectName = 'FilterObjectIDReportValuesB['+i+']';
@@ -920,8 +920,8 @@ function ReportObject(){
     
     if(FilterSelectedElementID == 'FilterObjectBGOSupp'){
 	document.getElementById('FilterTableReportTitles').innerHTML = 'GRGa:<br>GRGb:<br>GRS:<br>'; 
-	document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',1,4);        // This is horribly wrong - needs fixing.
-	document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',1,4);  // This is horribly wrong - needs fixing.
+	document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',1,3);        // This is horribly wrong - needs fixing.
+	document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',1,3);  // This is horribly wrong - needs fixing.
     }else{
 	var string = '';
 	for(i=0; i<dataStore.ODB.DAQ.params.DetTypes.length; i++){
