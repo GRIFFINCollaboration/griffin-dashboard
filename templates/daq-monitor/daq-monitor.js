@@ -715,8 +715,8 @@ function repaint(){
 			FilterObjectdataStore.FilterElementInfo[k+1].Rate[0] = FilterReportValues[0];
 			FilterObjectdataStore.FilterElementInfo[k].Rate[1] = FilterReportValues[1];
 			FilterObjectdataStore.FilterElementInfo[k+1].Rate[1] = FilterReportValues[1];
-			FilterObjectdataStore.FilterElementInfo[k].Rate[7] = FilterReportValues[7];
-			FilterObjectdataStore.FilterElementInfo[k+1].Rate[7] = FilterReportValues[7];
+			FilterObjectdataStore.FilterElementInfo[k].Rate[2] = FilterReportValues[7];
+			FilterObjectdataStore.FilterElementInfo[k+1].Rate[2] = FilterReportValues[7];
 		}else{
 		    // The first 16 entries are for the Input buffer
 		    for(var j=0; j<dataStore.ODB.DAQ.params.DetTypes.length; j++){
