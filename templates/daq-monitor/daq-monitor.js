@@ -742,13 +742,13 @@ function repaint(){
 	    for(j=0; j<9; j++){
 		Namesstring = Namesstring + dataStore.ODB.DAQ.params.DetTypes[j] + ':<br>';
 	    }
-	    FilterReportdocument.getElementById(FilterObjectName).innerHTML = Namesstring; 
+	    document.getElementById(FilterObjectName).innerHTML = Namesstring; 
 	    FilterObjectName = 'FilterObjectIDReportTitlesB['+i+']';
 	    Namesstring = '';
 	    for(j=8; j<dataStore.ODB.DAQ.params.DetTypes.length; j++){
 		Namesstring = Namesstring + dataStore.ODB.DAQ.params.DetTypes[j] + ':<br>';
 	    }
-	    FilterReportdocument.getElementById(FilterObjectName).innerHTML = Namesstring; 
+	    document.getElementById(FilterObjectName).innerHTML = Namesstring; 
         }else{
 	    var Namesstring = '';
 	    for(j=0; j<dataStore.ODB.DAQ.params.DetTypes.length; j++){
