@@ -637,7 +637,6 @@ function repaint(){
     var ID = FilterSelectedElementID;
     var string = "Click on a Filter element to display details here.";
 
-    console.log(dataStore.ODB.DAQ);
     //primary summary
     createBarchart(
         'collectorsHisto', 
