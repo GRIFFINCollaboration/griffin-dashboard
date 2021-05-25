@@ -51,7 +51,8 @@
 	            'LB': 'LaBr3',
 	            'TI': 'TIGRESS',
 	            'SI': 'Silicon', 
-	            'CS': 'CsI',
+	            'CS': 'CsI',  
+	            'TP': 'TIP CsI',
 	            'SP': 'SPICE',
             	    'Ga': 'Gas Detector',  
 	            'TR': 'TRIFoil',  
@@ -72,7 +73,7 @@
                 ///////////////
                 //get the ODB DAQ dir and set up adc requests:
                 promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
-
+	
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
