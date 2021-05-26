@@ -919,8 +919,8 @@ function ReportObject(){
     
     if(FilterSelectedElementID == 'FilterObjectBGOSupp'){
 	document.getElementById('FilterTableReportTitles').innerHTML = 'GRGa:<br>GRGb:<br>GRS:<br>'; 
-	document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',0,3);        // This is horribly wrong - needs fixing.
-	document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',0,3);  // This is horribly wrong - needs fixing.
+	document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',0,3);
+	document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',0,3);
     }else{
 	var string = '';
 	for(i=0; i<dataStore.ODB.DAQ.params.DetTypes.length; i++){
