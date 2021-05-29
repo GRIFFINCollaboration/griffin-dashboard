@@ -633,6 +633,8 @@ function repaint(){
         digitizerFigureIndex = parseInt(dataStore.digitizerValue, 16),
 	address, channelName, ADC, url;
 
+    console.log(dataStore.ODB.DAQ);
+
     // Variables used for Filter Display    
     var ID = FilterSelectedElementID;
     var string = "Click on a Filter element to display details here.";
