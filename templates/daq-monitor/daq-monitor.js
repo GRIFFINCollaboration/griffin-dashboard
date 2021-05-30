@@ -319,7 +319,8 @@ function regenerateDatastructure(suppressDOMconfig){
             FilterReport.innerHTML = '';
             document.getElementById(FilterObjectID[i]).appendChild(FilterReport);
 	}
-	
+
+	/*
         // Create extra Divs in the short Filter Elements
 	// This is because not all 16 fit in a single column.
         FilterReport = document.createElement('div'); 
@@ -349,7 +350,7 @@ function regenerateDatastructure(suppressDOMconfig){
         FilterReport.setAttribute('class', 'FilterReportDivValuesB'); 
         FilterReport.innerHTML = '';
         document.getElementById(FilterObjectID[4]).appendChild(FilterReport);
-	
+	*/
 	
 	// Create the final output link object
         string = 'FilterOutputLink0';
