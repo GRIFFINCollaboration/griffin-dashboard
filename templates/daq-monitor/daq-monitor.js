@@ -4,21 +4,21 @@
 
 // Text for a JSON Object containing Filter Element information
 var text = '{ "FilterElementInfo": [' +
-    '{"ID":"FilterLinkInputContainer",  "Type":"Div",    "Rate":[], "Class":"FilterIOLinkContainer",   "Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
-    '{"ID":"FilterBufferInput",         "Type":"button", "Rate":[], "Class":"FilterBufferObject",      "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterDisplay",     "HTML":"<p>Input Buffer</p>" },' +
-    '{"ID":"FilterLink1",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
-    '{"ID":"FilterObjectTimeOrdering",  "Type":"button", "Rate":[], "Class":"FilterObject",            "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterDisplay",     "HTML":"<p>Time ordering of all fragments</p>" },' +
-    '{"ID":"FilterLink2",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
-    '{"ID":"FilterMultiLinkHouse",      "Type":"button", "Rate":[], "Class":"FilterMultiLinkContainer","Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
-    '{"ID":"FilterObjectHouse",         "Type":"button", "Rate":[], "Class":"FilterObjectContainer",   "Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
-    '{"ID":"FilterObjectBGOSupp",       "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"False",  "Parent":"FilterObjectHouse", "HTML":"<p>BGO suppression</p>" },' +
-    '{"ID":"FilterLink3",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
-    '{"ID":"FilterObjectDetTypes",      "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"False",  "Parent":"FilterObjectHouse", "HTML":"<p>Filter by Detector Types</p>" },' +
-    '{"ID":"FilterLink4",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
-    '{"ID":"FilterObjectCoincDS",       "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"False",  "Parent":"FilterObjectHouse", "HTML":"<p>Coinc. and Downscaling</p>" },' +
-    '{"ID":"FilterLink5",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
-    '{"ID":"FilterBufferOutput",        "Type":"button", "Rate":[], "Class":"FilterBufferObject",      "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterDisplay",     "HTML":"<p>Output Buffer</p>" },' +
-    '{"ID":"FilterLinkOutputContainer", "Type":"Div",    "Rate":[], "Class":"FilterIOLinkContainer",   "Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null }' +
+    '{"ID":"FilterLinkInputContainer",  "Type":"Div",    "Rate":[], "HistoUsage":[], "Class":"FilterIOLinkContainer",   "Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
+    '{"ID":"FilterBufferInput",         "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterBufferObject",      "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterDisplay",     "HTML":"<p>Input Buffer</p>" },' +
+    '{"ID":"FilterLink1",               "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
+    '{"ID":"FilterObjectTimeOrdering",  "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterObject",            "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterDisplay",     "HTML":"<p>Time ordering of all fragments</p>" },' +
+    '{"ID":"FilterLink2",               "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
+    '{"ID":"FilterMultiLinkHouse",      "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterMultiLinkContainer","Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
+    '{"ID":"FilterObjectHouse",         "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterObjectContainer",   "Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
+    '{"ID":"FilterObjectBGOSupp",       "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"False",  "Parent":"FilterObjectHouse", "HTML":"<p>BGO suppression</p>" },' +
+    '{"ID":"FilterLink3",               "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
+    '{"ID":"FilterObjectDetTypes",      "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"False",  "Parent":"FilterObjectHouse", "HTML":"<p>Filter by Detector Types</p>" },' +
+    '{"ID":"FilterLink4",               "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
+    '{"ID":"FilterObjectCoincDS",       "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"False",  "Parent":"FilterObjectHouse", "HTML":"<p>Coinc. and Downscaling</p>" },' +
+    '{"ID":"FilterLink5",               "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
+    '{"ID":"FilterBufferOutput",        "Type":"button", "Rate":[], "HistoUsage":[], "Class":"FilterBufferObject",      "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterDisplay",     "HTML":"<p>Output Buffer</p>" },' +
+    '{"ID":"FilterLinkOutputContainer", "Type":"Div",    "Rate":[], "HistoUsage":[], "Class":"FilterIOLinkContainer",   "Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null }' +
 ']}';
 
 // Convert the text to JSON Object
@@ -30,6 +30,7 @@ var FilterSelectedDisplayType = 'Rate';
 var FilterObjectID = [];
 //var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterObjectBGOSupp',  'FilterLink3',  'FilterObjectDetTypes',  'FilterLink4',  'FilterObjectCoincDS',  'FilterLink5',  'FilterBufferOutput'];
 var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterBufferOutput'];
+var HistoUsageTitles = ["0-25% full", "25-50% full", "50-75% full", "75-100% full"];
 var MaxValue = 500000000000; // Equal to maximum number of events per second for the link
 var MaxInputLinkValue = 500000000000; // Equal to maximum number of events per second for the input link. However, is this dependent on the size of events being transmitted?
 
@@ -699,7 +700,7 @@ function repaint(){
 //   1 block of 4 * 32bits for two 4bin*16bit histograms for the time-order buffer usage, followed by filter input buffer usage. i.e. each word is two 16bit histogram bins, and each pair of words is:
 //   bin2bin1 bin4bin3
 //   the 4 bins are bin1:0-25% full, bin2:25-50%, bin3:50-75%, bin4:75-100% 
-    // The 16 indexes for each Buffer are the rates for each Det Type (including CLOV, SUPN, SCLR)
+    // The 16 32bits for each Buffer are the rates for each Det Type (including CLOV, SUPN, SCLR)
     //
     // Put the rates numbers into the Filter DataStore
     // The way the elements are accessed here is a bit convoluted (a relic from initial development) and should be tidied up (just need to search FilterObjectdataStore for the ID to get the index).
@@ -721,12 +722,22 @@ function repaint(){
 			FilterObjectdataStore.FilterElementInfo[k+1].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
 			jj++;
 		    }
+		    // The next to last two words are the Histrogram of Buffer Usage for the Time-Ordering buffer
+		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[0] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-4] & 0x0000FFFF);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[1] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-4] & 0xFFFF0000) >> 16);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[2] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-3] & 0x0000FFFF);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[3] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-3]) & 0xFFFF0000) >> 16);
 		}else if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterBufferInput'){
-		    // The first 16 entries are for the Input buffer
+		    // The first 16 entries are for the rates for the Input buffer
 		    for(var j=0; j<dataStore.ODB.DAQ.params.DetTypes.length; j++){
 			FilterObjectdataStore.FilterElementInfo[k].Rate[j] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
 			FilterObjectdataStore.FilterElementInfo[k+1].Rate[j] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
 		    }
+		    // The last two words are the Histrogram of Buffer Usage for the Input buffer
+		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[0] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-2] & 0x0000FFFF);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[1] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-2] & 0xFFFF0000) >> 16);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[2] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-1] & 0x0000FFFF);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[3] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-1]) & 0xFFFF0000) >> 16);
 		}
 		else{
 		    // Rates for other Filter components are not yet reported in the ODB
@@ -829,7 +840,22 @@ function repaint(){
     if (FilterSelectedElementID.indexOf("FilterLink") >= 0)  { ReportLink();       }
     if (FilterSelectedElementID.indexOf("FilterBuffer") >= 0){ ReportBuffer();     }
     if (FilterSelectedElementID.indexOf("FilterObject") >= 0){ ReportObject();     }
+
+
+if(FilterSelectedElementID == 'FilterBufferInput'){
     
+    //Filter Input Buffer Usage plot   
+    createBarchart(
+        'FilterHisto', 
+        HistoUsageTitles, 
+        FilterObjectdataStore.FilterElementInfo[1].HistoUsage,
+	// Second series is not supplied
+        'Input Buffer Memory Usage', 'Usage', 'Hz'
+    );
+}
+
+
+
 }
 
 function createBarchart(targetDiv, PSClabels, requests, accepts, plotTitle, xTitle, yTitle){
