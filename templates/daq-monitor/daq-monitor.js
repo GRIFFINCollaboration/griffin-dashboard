@@ -29,7 +29,6 @@ var FilterSelectedElementID = '';
 var FilterSelectedDisplayType = 'Rate';
 var FilterObjectID = [];
 var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterObjectBGOSupp',  'FilterLink3',  'FilterObjectDetTypes',  'FilterLink4',  'FilterObjectCoincDS',  'FilterLink5',  'FilterBufferOutput'];
-var FilterReportValues = [];
 var MaxValue = 500000000000; // Equal to maximum number of events per second for the link
 var MaxInputLinkValue = 500000000000; // Equal to maximum number of events per second for the input link. However, is this dependent on the size of events being transmitted?
 
@@ -633,8 +632,6 @@ function repaint(){
         digitizerFigureIndex = parseInt(dataStore.digitizerValue, 16),
 	address, channelName, ADC, url;
 
-    console.log(dataStore.ODB.DAQ);
-
     // Variables used for Filter Display    
     var ID = FilterSelectedElementID;
     var string = "Click on a Filter element to display details here.";
@@ -687,7 +684,7 @@ function repaint(){
     // Filter Display
     // Here add in the extra Det Types to the datastore
     // These top 3 Det Types are hard coded in the GRIFC firmware and cannot be modified in the ODB by the user
-   // console.log(dataStore.ODB.DAQ);
+    console.log(dataStore.ODB.DAQ);
     if(dataStore.ODB.DAQ.params.DetTypes.length == 14)
     {
 	dataStore.ODB.DAQ.params.DetTypes[14] = 'CLOV';
@@ -695,40 +692,47 @@ function repaint(){
     }
     
     // Grab the current rates through the Filter from the ODB
-    // Format of ODB: /DAQ/GRIFC/Filter-stats is
-    // First 16 indexes are for Input Buffer, Last 16 indexes are for Output Buffer
+    // Format of ODB: /DAQ/GRIFC/Filter-status is
+//    currently for the filter status - there are 52 words in 4 blocks of data
+//   3 blocks of 16 * 32bits for filter-input, after-time-order, filter-output - these are event counts for each detector type (as before).
+//   1 block of 4 * 32bits for two 4bin*16bit histograms for the time-order buffer usage, followed by filter input buffer usage. i.e. each word is two 16bit histogram bins, and each pair of words is:
+//   bin2bin1 bin4bin3
+//   the 4 bins are bin1:0-25% full, bin2:25-50%, bin3:50-75%, bin4:75-100% 
     // The 16 indexes for each Buffer are the rates for each Det Type (including CLOV, SUPN, SCLR)
-	for(i=0; i<dataStore.ODB.DAQ.GRIFC.FilterStats.length; i++){
-	    FilterReportValues[i] = dataStore.ODB.DAQ.GRIFC.FilterStats[i];	    
-	}
-    
+    //
     // Put the rates numbers into the Filter DataStore
-    // The way the elements are accessed here is a bit convoluted here (a relic from initial development) and should be tidied up.
+    // The way the elements are accessed here is a bit convoluted (a relic from initial development) and should be tidied up (just need to search FilterObjectdataStore for the ID to get the index).
     for(var i=0; i<FilterObjectIDRates.length; i+=2){
 	for (var k = 0; k < FilterObjectdataStore.FilterElementInfo.length; k++){
 	    if (FilterObjectdataStore.FilterElementInfo[k].ID == FilterObjectIDRates[i]){
 		if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterBufferOutput'){
-		    // The last 16 entries are for the Output buffer
+		    // The last 16 entries, before the 4 histogram words, are for the Output buffer
 		    var jj=0;
-		    for(var j=(FilterReportValues.length - 16); j<FilterReportValues.length; j++){
-			FilterObjectdataStore.FilterElementInfo[k].Rate[jj] = FilterReportValues[j];
-			FilterObjectdataStore.FilterElementInfo[k+1].Rate[jj] = FilterReportValues[j];
+		    for(var j=(FilterReportValues.length - 16 - 4); j<(FilterReportValues.length - 4); j++){
+			FilterObjectdataStore.FilterElementInfo[k].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
+			FilterObjectdataStore.FilterElementInfo[k+1].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
 			jj++;
 		    }
-		}else if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterObjectBGOSupp'){
-		        // Hack to get Ge and BGO rates only - relies on these Det Types not changing
-			FilterObjectdataStore.FilterElementInfo[k].Rate[0] = FilterReportValues[0];
-			FilterObjectdataStore.FilterElementInfo[k+1].Rate[0] = FilterReportValues[0];
-			FilterObjectdataStore.FilterElementInfo[k].Rate[1] = FilterReportValues[1];
-			FilterObjectdataStore.FilterElementInfo[k+1].Rate[1] = FilterReportValues[1];
-			FilterObjectdataStore.FilterElementInfo[k].Rate[2] = FilterReportValues[7];
-			FilterObjectdataStore.FilterElementInfo[k+1].Rate[2] = FilterReportValues[7];
-		}else{
+		}else if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterObjectTimeOrdering'){
+		    var jj=0;
+		    for(var j=16; j<32; j++){
+			FilterObjectdataStore.FilterElementInfo[k].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
+			FilterObjectdataStore.FilterElementInfo[k+1].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
+			jj++;
+		    }
+		}else if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterBufferInput'){
 		    // The first 16 entries are for the Input buffer
 		    for(var j=0; j<dataStore.ODB.DAQ.params.DetTypes.length; j++){
-			FilterObjectdataStore.FilterElementInfo[k].Rate[j] = FilterReportValues[j];
-			FilterObjectdataStore.FilterElementInfo[k+1].Rate[j] = FilterReportValues[j];
+			FilterObjectdataStore.FilterElementInfo[k].Rate[j] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
+			FilterObjectdataStore.FilterElementInfo[k+1].Rate[j] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
 		    }
+		}
+		else{
+		    // Rates for other Filter components are not yet reported in the ODB
+		    // FilterObjectBGOSupp
+		    // FilterObjectDetTypes
+		    // FilterObjectCoincDS
+		  
 		}
 		break;
 	    }
