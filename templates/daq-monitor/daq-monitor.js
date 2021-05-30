@@ -726,7 +726,7 @@ function repaint(){
 		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[0] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-4] & 0x0000FFFF);
 		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[1] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-4] & 0xFFFF0000) >> 16);
 		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[2] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-3] & 0x0000FFFF);
-		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[3] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-3]) & 0xFFFF0000) >> 16);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[3] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-3] & 0xFFFF0000) >> 16);
 		}else if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterBufferInput'){
 		    // The first 16 entries are for the rates for the Input buffer
 		    for(var j=0; j<dataStore.ODB.DAQ.params.DetTypes.length; j++){
