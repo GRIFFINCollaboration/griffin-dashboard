@@ -737,7 +737,7 @@ function repaint(){
 		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[0] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-2] & 0x0000FFFF);
 		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[1] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-2] & 0xFFFF0000) >> 16);
 		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[2] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-1] & 0x0000FFFF);
-		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[3] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-1]) & 0xFFFF0000) >> 16);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoUsage[3] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-1] & 0xFFFF0000) >> 16);
 		}
 		else{
 		    // Rates for other Filter components are not yet reported in the ODB
