@@ -850,6 +850,7 @@ function repaint(){
         'Input Buffer Memory Usage', 'Usage', 'Hz'
 	);
     }
+}
 
 function createBarchart(targetDiv, PSClabels, requests, accepts, plotTitle, xTitle, yTitle){
     // re-create the specified histogram
