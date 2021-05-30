@@ -261,9 +261,8 @@ function regenerateDatastructure(suppressDOMconfig){
         FilterControl.setAttribute('position', 'relative');
         FilterControl.setAttribute('top', '0px');
         FilterControl.setAttribute('left', '0px');
-        FilterControl.innerHTML = "<strong>Display: </strong><input type='radio' name='FilterDisplayType' value='Rate' checked='checked' onclick='FilterSelectedDisplayType=this.value'> Evts/s   <input type='radio' name='FilterDisplayType' value='PercentIn' onclick='FilterSelectedDisplayType=this.value'>Percentage of incoming   <input type='radio' name='FilterDisplayType' value='PercentCap' onclick='FilterSelectedDisplayType=this.value'>Percentage of capacity   <input type='button' id='triggerButton' value='Refresh'>";
+        FilterControl.innerHTML = "<strong>Display: </strong><input type='radio' name='FilterDisplayType' value='Rate' checked='checked' onclick='FilterSelectedDisplayType=this.value'> Evts/s     <input type='radio' name='FilterDisplayType' value='PercentIn' onclick='FilterSelectedDisplayType=this.value'>Percentage of incoming     <input type='radio' name='FilterDisplayType' value='PercentCap' onclick='FilterSelectedDisplayType=this.value'>Percentage of capacity";
         document.getElementById('FilterDisplay').appendChild(FilterControl);
-	document.getElementById('triggerButton').onclick = function(){ repaint(); };
 	
 	// Create the Filter objects
 	for(i=0; i<FilterObjectdataStore.FilterElementInfo.length; i++){
