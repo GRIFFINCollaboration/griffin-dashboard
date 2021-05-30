@@ -11,11 +11,11 @@ var text = '{ "FilterElementInfo": [' +
     '{"ID":"FilterLink2",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
     '{"ID":"FilterMultiLinkHouse",      "Type":"button", "Rate":[], "Class":"FilterMultiLinkContainer","Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
     '{"ID":"FilterObjectHouse",         "Type":"button", "Rate":[], "Class":"FilterObjectContainer",   "Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null },' +
-    '{"ID":"FilterObjectBGOSupp",       "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterObjectHouse", "HTML":"<p>BGO suppression</p>" },' +
+    '{"ID":"FilterObjectBGOSupp",       "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"False",  "Parent":"FilterObjectHouse", "HTML":"<p>BGO suppression</p>" },' +
     '{"ID":"FilterLink3",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
-    '{"ID":"FilterObjectDetTypes",      "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterObjectHouse", "HTML":"<p>Filter by Detector Types</p>" },' +
+    '{"ID":"FilterObjectDetTypes",      "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"False",  "Parent":"FilterObjectHouse", "HTML":"<p>Filter by Detector Types</p>" },' +
     '{"ID":"FilterLink4",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
-    '{"ID":"FilterObjectCoincDS",       "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterObjectHouse", "HTML":"<p>Coinc. and Downscaling</p>" },' +
+    '{"ID":"FilterObjectCoincDS",       "Type":"button", "Rate":[], "Class":"FilterObjectShort",       "Clickable":"True",  "DisplayStats":"False",  "Parent":"FilterObjectHouse", "HTML":"<p>Coinc. and Downscaling</p>" },' +
     '{"ID":"FilterLink5",               "Type":"button", "Rate":[], "Class":"FilterLink",              "Clickable":"True",  "DisplayStats":"False", "Parent":"FilterObjectHouse", "HTML":null },' +
     '{"ID":"FilterBufferOutput",        "Type":"button", "Rate":[], "Class":"FilterBufferObject",      "Clickable":"True",  "DisplayStats":"True",  "Parent":"FilterDisplay",     "HTML":"<p>Output Buffer</p>" },' +
     '{"ID":"FilterLinkOutputContainer", "Type":"Div",    "Rate":[], "Class":"FilterIOLinkContainer",   "Clickable":"False", "DisplayStats":"False", "Parent":"FilterDisplay",     "HTML":null }' +
@@ -28,7 +28,8 @@ var FilterObjectdataStore = JSON.parse(text);
 var FilterSelectedElementID = '';
 var FilterSelectedDisplayType = 'Rate';
 var FilterObjectID = [];
-var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterObjectBGOSupp',  'FilterLink3',  'FilterObjectDetTypes',  'FilterLink4',  'FilterObjectCoincDS',  'FilterLink5',  'FilterBufferOutput'];
+//var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterObjectBGOSupp',  'FilterLink3',  'FilterObjectDetTypes',  'FilterLink4',  'FilterObjectCoincDS',  'FilterLink5',  'FilterBufferOutput'];
+var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterBufferOutput'];
 var MaxValue = 500000000000; // Equal to maximum number of events per second for the link
 var MaxInputLinkValue = 500000000000; // Equal to maximum number of events per second for the input link. However, is this dependent on the size of events being transmitted?
 
