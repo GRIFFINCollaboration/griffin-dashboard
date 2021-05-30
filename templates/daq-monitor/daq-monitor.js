@@ -708,7 +708,7 @@ function repaint(){
 		if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterBufferOutput'){
 		    // The last 16 entries, before the 4 histogram words, are for the Output buffer
 		    var jj=0;
-		    for(var j=(FilterReportValues.length - 16 - 4); j<(FilterReportValues.length - 4); j++){
+		    for(var j=(dataStore.ODB.DAQ.GRIFC.filter_status.length - 16 - 4); j<(dataStore.ODB.DAQ.GRIFC.filter_status.length - 4); j++){
 			FilterObjectdataStore.FilterElementInfo[k].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
 			FilterObjectdataStore.FilterElementInfo[k+1].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
 			jj++;
