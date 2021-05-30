@@ -833,30 +833,23 @@ function repaint(){
     else { LinkColor = 'Green';  }
     document.getElementById(LinkID).style.backgroundColor = LinkColor;
     
-    // Display the detailed numbers for the selected Filter Element in the Report Table after
+    // Display the detailed numbers, and any histogram, for the selected Filter Element in the Report Table after
     // generating the appropriate statistics report based on which Filter element has been selected.
     if (FilterSelectedElementID.indexOf("FilterOutput") >= 0){ ReportOutputLink(); }
-    if (FilterSelectedElementID.indexOf("FilterInput") >= 0) { ReportInputLink();  }
     if (FilterSelectedElementID.indexOf("FilterLink") >= 0)  { ReportLink();       }
     if (FilterSelectedElementID.indexOf("FilterBuffer") >= 0){ ReportBuffer();     }
     if (FilterSelectedElementID.indexOf("FilterObject") >= 0){ ReportObject();     }
-
-
-if(FilterSelectedElementID == 'FilterBufferInput'){
-    
-    //Filter Input Buffer Usage plot   
-    createBarchart(
-        'FilterHisto', 
-        HistoUsageTitles, 
-        FilterObjectdataStore.FilterElementInfo[1].HistoUsage,
-	// Second series is not supplied
+    if (FilterSelectedElementID.indexOf("FilterInput") >= 0) {
+	ReportInputLink();
+	//Filter Input Buffer Usage plot   
+	createBarchart(
+            'FilterHisto', 
+            HistoUsageTitles, 
+            FilterObjectdataStore.FilterElementInfo[1].HistoUsage,
+	    // Second series is not supplied
         'Input Buffer Memory Usage', 'Usage', 'Hz'
-    );
-}
-
-
-
-}
+	);
+    }
 
 function createBarchart(targetDiv, PSClabels, requests, accepts, plotTitle, xTitle, yTitle){
     // re-create the specified histogram
