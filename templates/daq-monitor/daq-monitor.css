@@ -258,7 +258,7 @@ div.pan{
 }
 /* Filter Table */
 #FilterTable {
-  width: 45%; 
+  width: 35%; 
   height: 300px;
   position: relative;
   left: 0px;
@@ -306,4 +306,9 @@ div.pan{
 .FilterReportTable td {
     width: 45px;
     align: right;
+}
+#FilterHisto {
+    width: 65%;
+    position: absolute;
+    right: 5px;
 }
