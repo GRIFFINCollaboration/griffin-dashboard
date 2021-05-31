@@ -259,7 +259,7 @@ div.pan{
 #FilterTable {
   width: 35%; 
   height: 300px;
-  position: relative;
+  position: absolute;
   left: 0px;
   top: 0px;
   margin: 5px 5px;
@@ -309,5 +309,6 @@ div.pan{
 #FilterHisto {
     width: 60%;
     position: absolute;
-    right: 5px;
+    right: 0px;
+    top: 0px;
 }
