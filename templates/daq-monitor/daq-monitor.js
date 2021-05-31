@@ -25,7 +25,7 @@ var text = '{ "FilterElementInfo": [' +
 var FilterObjectdataStore = JSON.parse(text);
 
 // Declare global variables
-var FilterSelectedElementID = '';
+var FilterSelectedElementID = 'FilterBufferInput';
 var FilterSelectedDisplayType = 'Rate';
 var FilterObjectID = [];
 //var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterObjectBGOSupp',  'FilterLink3',  'FilterObjectDetTypes',  'FilterLink4',  'FilterObjectCoincDS',  'FilterLink5',  'FilterBufferOutput'];
