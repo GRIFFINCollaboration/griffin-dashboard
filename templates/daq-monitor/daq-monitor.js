@@ -957,7 +957,6 @@ function ReportInputLink(){
     var ColNum = FilterSelectedElementID.replace( /^\D+/g, '');
     document.getElementById('FilterTableTitleDiv').innerHTML = "Input link from GRIF-C Collector"+ColNum+" to Primary GRIF-C.";
     
-    console.log(ColNum, FilterSelectedElementID);
     var titleString = 'Input Link'+ColNum+' Usage over past 10s';
     //Filter Input Link Usage plot   
     createFilterBarchart(
