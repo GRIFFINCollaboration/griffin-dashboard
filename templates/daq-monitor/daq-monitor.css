@@ -308,6 +308,7 @@ div.pan{
 .FilterReportTable td {
     width: 45px;
     align: right;
+    text-align: right;
     padding-right:3px;
 }
 #FilterHisto {
