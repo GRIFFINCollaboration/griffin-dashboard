@@ -670,7 +670,7 @@ function repaint(){
     // Filter Display
     // Here add in the extra Det Types to the datastore
     // These top 3 Det Types are hard coded in the GRIFC firmware and cannot be modified in the ODB by the user
-    console.log(dataStore.ODB.DAQ);
+   // console.log(dataStore.ODB.DAQ);
     if(dataStore.ODB.DAQ.params.DetTypes.length == 14)
     {
 	dataStore.ODB.DAQ.params.DetTypes[14] = 'CLOV';
@@ -1028,12 +1028,15 @@ function BuildFilterRatesValuesString(ElementID,DisplayType,FirstReportValue,Las
 	    string = string+percent.toFixed(2)+'%<br>';
 	}
 	else if(DisplayType == 'Rate'){
+	    /*
 	    if(OutgoingReportValues[i]>10000000000){ string = string+(OutgoingReportValues[i]/1000000000.0).toFixed(1)+'B<br>'; }
 	    else if(OutgoingReportValues[i]>500000000){ string = string+(OutgoingReportValues[i]/1000000000.0).toFixed(2)+'B<br>'; }
 	    else if(OutgoingReportValues[i]>10000000){ string = string+(OutgoingReportValues[i]/1000000.0).toFixed(1)+'M<br>'; }
 	    else if(OutgoingReportValues[i]>500000){ string = string+(OutgoingReportValues[i]/1000000.0).toFixed(2)+'M<br>'; }
 	    else if(OutgoingReportValues[i]>1000){ string = string+(OutgoingReportValues[i]/1000.0).toFixed(1)+'k<br>'; }
 	    else{ string = string+OutgoingReportValues[i].toFixed(0)+'<br>'; }
+	    */
+	    string = string+OutgoingReportValues[i].toFixed(0)+'<br>';
 	}
 	else{
 	    // Here need to calculate the percentage relative to the number of events at the Input Buffer
