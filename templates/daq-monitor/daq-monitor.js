@@ -291,6 +291,7 @@ function regenerateDatastructure(suppressDOMconfig){
 	// These are inserted into the container on the left of the Filter
 	console.log(dataStore.ODB.DAQ.summary.collectors);
 	for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
+	    if(dataStore.ODB.DAQ.summary.collectors.titles[i].length<1 || i>8){ continue; }
 	    string = 'FilterInputLink'+(i);
 	    FilterInputLink = document.createElement('button'); 
 	    FilterInputLink.setAttribute('id', string);
