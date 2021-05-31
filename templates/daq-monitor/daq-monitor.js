@@ -765,7 +765,6 @@ function repaint(){
 	var bin4 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16);
 	FilterInputBuffUsage.push([bin1, bin2, bin3, bin4]);
     }
-    console.log(FilterInputLinkRate,FilterInputLinkUsage,FilterInputBuffUsage);
 	
     // Display the numbers in the Filter Objects
     for(i=0; i<FilterObjectID.length; i++){
@@ -862,7 +861,6 @@ function repaint(){
             'FilterHisto', 
             HistoBufferUsageTitles, 
             FilterObjectdataStore.FilterElementInfo[1].HistoBufferUsage,
-	    // Second series is not supplied
         'Input Buffer Memory Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
 	);
     }
@@ -872,7 +870,6 @@ function repaint(){
             'FilterHisto', 
             HistoBufferUsageTitles, 
             FilterObjectdataStore.FilterElementInfo[3].HistoBufferUsage,
-	    // Second series is not supplied
         'Time-Ordering Buffer Memory Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
 	);
     }
@@ -966,6 +963,16 @@ function ReportLink(){
     document.getElementById("FilterReportTable").innerHTML = '';
     var LinkNum = FilterSelectedElementID.replace( /^\D+/g, '');
     document.getElementById('FilterTableTitleDiv').innerHTML = "Statistics for Link"+LinkNum+" between Filter elements.";
+
+    var titleString = 'Input Link'+LinkNum+' Usage over past 10s';
+    //Filter Input Link Usage plot   
+    createFilterBarchart(
+        'FilterHisto', 
+        HistoLinkUsageTitles, 
+        FilterInputLinkUsage[LinkNum],
+        titleString, 'Percentage of full capacity', 'Usage per ms'
+    );
+    
 }
 
 function ReportBuffer(){
