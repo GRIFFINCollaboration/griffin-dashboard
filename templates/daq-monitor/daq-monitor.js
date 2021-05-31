@@ -908,7 +908,6 @@ function ReportBuffer(){
     // Use FilterReportTable
     document.getElementById("FilterReportTable").innerHTML = '';
     var cell = [];
-    var num = 0;
     var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
     for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
     cell[0].innerHTML = 'Det Type';
@@ -930,13 +929,12 @@ function ReportObject(){
     document.getElementById('FilterTableTitleDiv').innerHTML = getFilterObjectHTMLByID(FilterSelectedElementID);
     
     var cell = [];
-    var num = 0;
     var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
     for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
     cell[0].innerHTML = 'Det Type';
     cell[1].innerHTML = 'Num Evts';
     cell[2].innerHTML = '% of Capacity';
-    for(num=1; num<dataStore.ODB.DAQ.params.DetTypes.length; num++){
+    for(num=0; num<dataStore.ODB.DAQ.params.DetTypes.length; num++){
 	var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
 	for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
 	cell[0].innerHTML = dataStore.ODB.DAQ.params.DetTypes[num]+':';
