@@ -302,9 +302,13 @@ div.pan{
   font: 11px "Courier New", monospace;
   color: red;
 }
+.FilterReportTable tr {
+    margin: 2px;
+}
 .FilterReportTable td {
     width: 45px;
     align: right;
+    padding-right:3px;
 }
 #FilterHisto {
     width: 60%;
