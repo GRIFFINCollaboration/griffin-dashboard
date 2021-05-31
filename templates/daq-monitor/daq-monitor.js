@@ -753,16 +753,16 @@ function repaint(){
     FilterInputBuffUsage = [];
     for(i=0; i<FilterNumInputLinks; i++){
 	FilterInputLinkRate[i] = dataStore.ODB.DAQ.GRIFC.link_statusM[i*5];
-	var bin1 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0x0000FFFF); 
-	var bin2 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0xFFFF0000) >> 16); 
-	var bin3  = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+2] & 0x0000FFFF); 
-	var bin4  = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+2] & 0xFFFF0000) >> 16); 
+	var bin1 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0xFFFF0000) >> 16); 
+	var bin2 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0x0000FFFF); 
+	var bin3  = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+2] & 0xFFFF0000) >> 16);
+	var bin4  = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+2] & 0x0000FFFF);  
 	FilterInputLinkUsage.push([bin1, bin2, bin3, bin4]);
 	
-	var bin1 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0x0000FFFF); 
-	var bin2 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16); 
-	var bin3 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0x0000FFFF); 
-	var bin4 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0xFFFF0000) >> 16);
+	var bin1 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16);
+	var bin2 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0x0000FFFF);  
+	var bin3 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0xFFFF0000) >> 16);
+	var bin4 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0x0000FFFF); 
 	FilterInputBuffUsage.push([bin1, bin2, bin3, bin4]);
     }
     console.log(FilterInputLinkRate,FilterInputLinkUsage,FilterInputBuffUsage);
