@@ -913,12 +913,14 @@ function ReportBuffer(){
     cell[0].innerHTML = 'Det Type';
     cell[1].innerHTML = 'Num Evts';
     cell[2].innerHTML = '% of all';
+    cell[3].innerHTML = '% of Input';
     for(num=0; num<dataStore.ODB.DAQ.params.DetTypes.length; num++){
 	var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
-	for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
+	for(j=0; j<4; j++){ cell[j] = row.insertCell(j); }
 	cell[0].innerHTML = dataStore.ODB.DAQ.params.DetTypes[num]+':';
 	cell[1].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'Rate',num);
 	cell[2].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentTot',num);
+	cell[3].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentIn',num);
     }
     
 }
@@ -934,12 +936,14 @@ function ReportObject(){
     cell[0].innerHTML = 'Det Type';
     cell[1].innerHTML = 'Num Evts';
     cell[2].innerHTML = '% of all';
+    cell[3].innerHTML = '% of Input';
     for(num=0; num<dataStore.ODB.DAQ.params.DetTypes.length; num++){
 	var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
-	for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
+	for(j=0; j<4; j++){ cell[j] = row.insertCell(j); }
 	cell[0].innerHTML = dataStore.ODB.DAQ.params.DetTypes[num]+':';
 	cell[1].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'Rate',num);
 	cell[2].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentTot',num);
+	cell[3].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentIn',num);
     }
 }
 
