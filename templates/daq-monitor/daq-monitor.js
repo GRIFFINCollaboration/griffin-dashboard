@@ -289,7 +289,7 @@ function regenerateDatastructure(suppressDOMconfig){
 	
 	// Create the Links from the Collector modules into the Primary
 	// These are inserted into the container on the left of the Filter
-	for(i=0; i<dataStore.ODB.DAQ.hosts.length; i++){
+	for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
 	    string = 'FilterInputLink'+(i);
 	    FilterInputLink = document.createElement('button'); 
 	    FilterInputLink.setAttribute('id', string);
