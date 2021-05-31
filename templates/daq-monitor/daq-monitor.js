@@ -826,7 +826,7 @@ function repaint(){
     if (FilterSelectedElementID.indexOf("FilterInput") >= 0) {
 	ReportInputLink();
 	//Filter Input Buffer Usage plot   
-	createBarchart(
+	createFilterBarchart(
             'FilterHisto', 
             HistoUsageTitles, 
             FilterObjectdataStore.FilterElementInfo[1].HistoUsage,
@@ -866,6 +866,32 @@ function createBarchart(targetDiv, PSClabels, requests, accepts, plotTitle, xTit
 
     //collectors
     Plotly.newPlot(targetDiv, [req, acpt], layout);
+}
+
+function createFilterBarchart(targetDiv, labels, usage, plotTitle, xTitle, yTitle){
+    // re-create the specified histogram
+
+    var layout = {
+            barmode: 'group',
+            title: plotTitle,
+            xaxis: {
+                title: xTitle,
+                ticktext: labels
+            },
+            yaxis: {
+                title: yTitle
+            }
+        },
+        use = {
+          x: labels,
+          y: usage,
+          name: 'Usage',
+          type: 'bar',
+
+        };
+
+    //collectors
+    Plotly.newPlot(targetDiv, [use], layout);
 }
 
 
