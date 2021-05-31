@@ -30,7 +30,7 @@ var FilterSelectedDisplayType = 'Rate';
 var FilterObjectID = [];
 //var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterObjectBGOSupp',  'FilterLink3',  'FilterObjectDetTypes',  'FilterLink4',  'FilterObjectCoincDS',  'FilterLink5',  'FilterBufferOutput'];
 var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterBufferOutput'];
-var HistoUsageTitles = ["0-25% full", "25-50% full", "50-75% full", "75-100% full"];
+var HistoUsageTitles = ["0-25%", "25-50%", "50-75%", "75-100%"];
 var MaxValue = 500000000000; // Equal to maximum number of events per second for the link
 var MaxInputLinkValue = 500000000000; // Equal to maximum number of events per second for the input link. However, is this dependent on the size of events being transmitted?
 
@@ -824,14 +824,24 @@ function repaint(){
     if (FilterSelectedElementID.indexOf("FilterBuffer") >= 0){ ReportBuffer();     }
     if (FilterSelectedElementID.indexOf("FilterObject") >= 0){ ReportObject();     }
     if (FilterSelectedElementID.indexOf("FilterInput") >= 0) { ReportInputLink();  }
-    if(FilterSelectedElementID == "FilterBufferInput" || FilterSelectedElementID == "FilterObjectTimeOrdering"){
+    if(FilterSelectedElementID == "FilterBufferInput"){
 	//Filter Input Buffer Usage plot   
 	createFilterBarchart(
             'FilterHisto', 
             HistoUsageTitles, 
             FilterObjectdataStore.FilterElementInfo[1].HistoUsage,
 	    // Second series is not supplied
-        'Input Buffer Memory Usage in past 10s', 'Percentage of capacity', 'Usage per ms'
+        'Input Buffer Memory Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
+	);
+    }
+    if(FilterSelectedElementID == "FilterObjectTimeOrdering"){
+	//Filter Input Buffer Usage plot   
+	createFilterBarchart(
+            'FilterHisto', 
+            HistoUsageTitles, 
+            FilterObjectdataStore.FilterElementInfo[3].HistoUsage,
+	    // Second series is not supplied
+        'Time-Ordering Buffer Memory Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
 	);
     }
 }
