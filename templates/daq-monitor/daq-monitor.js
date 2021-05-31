@@ -435,28 +435,19 @@ function regenerateDatastructure(suppressDOMconfig){
         FilterReport.innerHTML = "Click on a Filter element to display details here."; // initial text
         document.getElementById('FilterTable').appendChild(FilterReport);
 	
-        FilterReport = document.createElement('div'); 
-        string = 'FilterTableReportTitles';
-        FilterReport.setAttribute('id', string); 
-        FilterReport.setAttribute('class', 'FilterTableReportDivTitles');
-        FilterReport.innerHTML = '';
-        document.getElementById('FilterTable').appendChild(FilterReport);
-	
-        FilterReport = document.createElement('div');  
-        string = 'FilterTableReportValuesEvts';
-        FilterReport.setAttribute('id', string); 
-        FilterReport.setAttribute('class', 'FilterTableReportDivValues'); 
-        FilterReport.innerHTML = '';
-        document.getElementById('FilterTable').appendChild(FilterReport);
-	
-        FilterReport = document.createElement('div');  
-        string = 'FilterTableReportValuesPerc';
-        FilterReport.setAttribute('id', string); 
-        FilterReport.style.left = '90px'; 
-        FilterReport.setAttribute('class', 'FilterTableReportDivValues'); 
-        FilterReport.innerHTML = '';
-        document.getElementById('FilterTable').appendChild(FilterReport);
-	
+            FilterReport = document.createElement('div'); 
+            string = 'FilterTableTitleDiv';
+            FilterReport.setAttribute('id', string); 
+            FilterReport.setAttribute('class', 'FilterTableTitleDiv');
+            FilterReport.innerHTML = "Statistics of the selected Filter element will be displayed here."; // dummy text
+            document.getElementById('FilterTable').appendChild(FilterReport);
+
+            FilterReport = document.createElement('div'); 
+            string = 'FilterTableReportDiv';
+            FilterReport.setAttribute('id', string); 
+            FilterReport.setAttribute('class', 'FilterTableReportDiv');
+            FilterReport.innerHTML = '<table id="FilterReportTable" width="100%"></table>';
+            document.getElementById('FilterTable').appendChild(FilterReport);
 	
 	// Repaint everything for the first time after creation
         repaint();
@@ -847,7 +838,7 @@ function repaint(){
             HistoUsageTitles, 
             FilterObjectdataStore.FilterElementInfo[1].HistoUsage,
 	    // Second series is not supplied
-        'Input Buffer Memory Usage', 'Usage', 'Hz'
+        'Input Buffer Memory Usage in past 10s', 'Percentage of capacity', 'Usage per ms'
 	);
     }
 }
@@ -898,64 +889,54 @@ function FilterElementSelection(ElementID){
 
 function ReportOutputLink(){
 // Unique report for the UDP output link to MIDAS
-    document.getElementById('FilterTableReportTitles').innerHTML = '';
-    document.getElementById('FilterTableReportValuesPerc').innerHTML = '';
-    document.getElementById('FilterTableReportValuesEvts').innerHTML = '';
+    document.getElementById("FilterReportTable").innerHTML = '';
     document.getElementById('FilterTableTitleDiv').innerHTML = "UDP link to MIDAS from Primary GRIF-C.";
 }
 
 function ReportInputLink(){
     // Reports for whichever Secondary-Primary input link is selected
-    document.getElementById('FilterTableReportTitles').innerHTML = '';
-    document.getElementById('FilterTableReportValuesPerc').innerHTML = '';
-    document.getElementById('FilterTableReportValuesEvts').innerHTML = '';
-    FilterSelectedElementID;
+    document.getElementById("FilterReportTable").innerHTML = '';
     var ColNum = FilterSelectedElementID.replace( /^\D+/g, '');
     document.getElementById('FilterTableTitleDiv').innerHTML = "Input link from GRIF-C Collector"+ColNum+" to Primary GRIF-C.";
 }
 
 function ReportLink(){
     // Reports for whichever Link between Filter objects is selected
-    document.getElementById('FilterTableReportTitles').innerHTML = '';
-    document.getElementById('FilterTableReportValuesPerc').innerHTML = '';
-    document.getElementById('FilterTableReportValuesEvts').innerHTML = '';
+    document.getElementById("FilterReportTable").innerHTML = '';
     var LinkNum = FilterSelectedElementID.replace( /^\D+/g, '');
     document.getElementById('FilterTableTitleDiv').innerHTML = "Statistics for Link"+LinkNum+" between Filter elements.";
 }
 
 function ReportBuffer(){
     // Reports for the buffer object that is selected
-    document.getElementById('FilterTableReportTitles').innerHTML = '';
-    document.getElementById('FilterTableReportValuesPerc').innerHTML = '';
-    document.getElementById('FilterTableReportValuesEvts').innerHTML = '';
     document.getElementById('FilterTableTitleDiv').innerHTML = getFilterObjectHTMLByID(FilterSelectedElementID);
-    for(i=0; i<dataStore.ODB.DAQ.params.DetTypes.length; i++){
-	string = string + dataStore.ODB.DAQ.params.DetTypes[i] + ':<br>';
+    
+// New approach
+    // Use FilterReportTable
+    document.getElementById("FilterReportTable").innerHTML = '';
+    var cell = [];
+    for(num=0; num<DummyDetTypes.length; num++){
+	var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
+	for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
+	cell[0].innerHTML = DummyDetTypes[num]+':';
+	cell[1].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'Rate',num);
+	cell[2].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentCap',num);
     }
-    document.getElementById('FilterTableReportTitles').innerHTML = string;
-    document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',0,dataStore.ODB.DAQ.params.DetTypes.length);
-    document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',0,dataStore.ODB.DAQ.params.DetTypes.length);
+    
 }
 
 function ReportObject(){
 // Reports for whichever Filter Object is selected
-    document.getElementById('FilterTableReportTitles').innerHTML = '';
-    document.getElementById('FilterTableReportValuesPerc').innerHTML = '';
-    document.getElementById('FilterTableReportValuesEvts').innerHTML = '';
+    document.getElementById("FilterReportTable").innerHTML = '';
     document.getElementById('FilterTableTitleDiv').innerHTML = getFilterObjectHTMLByID(FilterSelectedElementID);
     
-    if(FilterSelectedElementID == 'FilterObjectBGOSupp'){
-	document.getElementById('FilterTableReportTitles').innerHTML = 'GRGa:<br>GRGb:<br>GRS:<br>'; 
-	document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',0,3);
-	document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',0,3);
-    }else{
-	var string = '';
-	for(i=0; i<dataStore.ODB.DAQ.params.DetTypes.length; i++){
-	    string = string + dataStore.ODB.DAQ.params.DetTypes[i] + ':<br>';
-	}
-	document.getElementById('FilterTableReportTitles').innerHTML = string;
-	document.getElementById('FilterTableReportValuesEvts').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'Rate',0,dataStore.ODB.DAQ.params.DetTypes.length);
-	document.getElementById('FilterTableReportValuesPerc').innerHTML = BuildFilterRatesValuesString(FilterSelectedElementID,'PercentCap',0,dataStore.ODB.DAQ.params.DetTypes.length);
+    var cell = [];
+    for(num=0; num<DummyDetTypes.length; num++){
+	var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
+	for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
+	cell[0].innerHTML = DummyDetTypes[num]+':';
+	cell[1].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'Rate',num);
+	cell[2].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentCap',num);
     }
 }
 
@@ -1016,6 +997,39 @@ function BuildFilterRatesValuesString(ElementID,DisplayType,FirstReportValue,Las
 	    percent = (OutgoingReportValues[i]/InitialReportValues[i]) * 100.0;
 	    string = string+percent.toFixed(1)+'%<br>';
 	}
+    }
+    return string;
+}
+
+function BuildSingleFilterRateValue(ElementID,DisplayType,ValueIndex){
+    // ElementID is the Div that the rates will be displayed in.
+    // DisplayType is the choice of reporting; Evts/s, Percentage of incoming or Percentage of capacity.
+    
+    var OutgoingReportValues = [];
+    
+    for (var i = 0; i < FilterObjectdataStore.FilterElementInfo.length; i++){
+	if (FilterObjectdataStore.FilterElementInfo[i].ID == ElementID){
+	    OutgoingReportValues = FilterObjectdataStore.FilterElementInfo[i].Rate;
+	    break;
+	}
+    }
+    if(DisplayType == 'PercentIn'){
+	InitialReportValues = FilterObjectdataStore.FilterElementInfo[1].Rate;
+    }
+    
+    string = '';
+    i=ValueIndex;
+    if(DisplayType == 'PercentCap'){
+	percent = (OutgoingReportValues[i]/MaxValue) * 100.0;
+	string = percent.toFixed(2)+'%';
+    }
+    else if(DisplayType == 'Rate'){
+	string = OutgoingReportValues[i].toFixed(0);
+    }
+    else{
+	// Here need to calculate the percentage relative to the number of events at the Input Buffer
+	percent = (OutgoingReportValues[i]/InitialReportValues[i]) * 100.0;
+	string = percent.toFixed(1)+'%';
     }
     return string;
 }

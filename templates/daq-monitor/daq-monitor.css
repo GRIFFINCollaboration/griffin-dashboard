@@ -274,7 +274,6 @@ div.pan{
   vertical-align:top;
   font-family: "Lucida Console", "Courier New", monospace;
   font: 11px "Courier New", monospace;
-  color: black;
 }
 #FilterTable p {
   margin: 0;
@@ -283,7 +282,27 @@ div.pan{
   top: 5%;
   left: 50%;
   transform: translate(-50%, -5%);
-  color: black;
+}
+.FilterTableReportDiv {
+  height: 80%; 
+  position: absolute;
+  left: 5px;
+  bottom: 0px;
+  margin: 1px; 
+  border-style: none; 
+  text-align: left;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: red;
+}
+table tbody {
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+  color: red;
+}
+table td {
+    width: 45px;
+    align: right;
 }
 .FilterTableReportDivTitles {
   width: 40px;
