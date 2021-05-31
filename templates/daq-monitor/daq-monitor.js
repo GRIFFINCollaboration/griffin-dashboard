@@ -909,7 +909,7 @@ function ReportBuffer(){
     document.getElementById("FilterReportTable").innerHTML = '';
     var cell = [];
     var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
-    for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
+    for(j=0; j<4; j++){ cell[j] = row.insertCell(j); }
     cell[0].innerHTML = 'Det Type';
     cell[1].innerHTML = 'Num Evts';
     cell[2].innerHTML = '% of all';
@@ -932,7 +932,7 @@ function ReportObject(){
     
     var cell = [];
     var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
-    for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
+    for(j=0; j<4; j++){ cell[j] = row.insertCell(j); }
     cell[0].innerHTML = 'Det Type';
     cell[1].innerHTML = 'Num Evts';
     cell[2].innerHTML = '% of all';
