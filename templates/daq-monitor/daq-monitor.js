@@ -823,8 +823,8 @@ function repaint(){
     if (FilterSelectedElementID.indexOf("FilterLink") >= 0)  { ReportLink();       }
     if (FilterSelectedElementID.indexOf("FilterBuffer") >= 0){ ReportBuffer();     }
     if (FilterSelectedElementID.indexOf("FilterObject") >= 0){ ReportObject();     }
-    if (FilterSelectedElementID.indexOf("FilterInput") >= 0) {
-	ReportInputLink();
+    if (FilterSelectedElementID.indexOf("FilterInput") >= 0) { ReportInputLink();  }
+    if(FilterSelectedElementID == "FilterBufferInput" || FilterSelectedElementID == "FilterObjectTimeOrdering"){
 	//Filter Input Buffer Usage plot   
 	createFilterBarchart(
             'FilterHisto', 
