@@ -958,13 +958,13 @@ function ReportInputLink(){
     document.getElementById('FilterTableTitleDiv').innerHTML = "Input link from GRIF-C Collector"+ColNum+" to Primary GRIF-C.";
     
     console.log(ColNum, FilterSelectedElementID);
-    var titleString = 'Input Link'+LinkNum+' Usage over past 10s';
+    var titleString = 'Input Link'+ColNum+' Usage over past 10s';
     //Filter Input Link Usage plot   
     createFilterBarchart(
         'FilterHisto', 
         HistoLinkUsageTitles, 
         FilterInputLinkUsage[ColNum],
-       'Link Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
+	titleString, 'Percentage of full capacity', 'Usage per ms'
     );
 }
 
