@@ -748,17 +748,24 @@ function repaint(){
     //  word1:   event count
     //  word2-3: 4bin link usage histogram
     //   word4-5: 4bin link event buffer usage histogram
+    FilterInputLinkRate = [];
+    FilterInputLinkUsage = [];
+    FilterInputBuffUsage = [];
     for(i=0; i<FilterNumInputLinks; i++){
 	FilterInputLinkRate[i] = dataStore.ODB.DAQ.GRIFC.link_statusM[i*5];
-	FilterInputLinkUsage[i][0] = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0x0000FFFF); 
-	FilterInputLinkUsage[i][1] = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0xFFFF0000) >> 16); 
-	FilterInputLinkUsage[i][2] = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+2] & 0x0000FFFF); 
-	FilterInputLinkUsage[i][3] = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+2] & 0xFFFF0000) >> 16); 
-	FilterInputBuffUsage[i][0] = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0x0000FFFF); 
-	FilterInputBuffUsage[i][1] = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16); 
-	FilterInputBuffUsage[i][2] = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0x0000FFFF); 
-	FilterInputBuffUsage[i][3] = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0xFFFF0000) >> 16); 
+	var bin1 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0x0000FFFF); 
+	var bin2 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0xFFFF0000) >> 16); 
+	var bin3  = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+2] & 0x0000FFFF); 
+	var bin4  = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+2] & 0xFFFF0000) >> 16); 
+	FilterInputLinkUsage.push([bin1, bin2, bin3, bin4]);
+	
+	var bin1 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0x0000FFFF); 
+	var bin2 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16); 
+	var bin3 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0x0000FFFF); 
+	var bin4 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0xFFFF0000) >> 16);
+	FilterInputBuffUsage.push([bin1, bin2, bin3, bin4]);
     }
+    console.log(FilterInputLinkRate,FilterInputLinkUsage,FilterInputBuffUsage);
 	
     // Display the numbers in the Filter Objects
     for(i=0; i<FilterObjectID.length; i++){
