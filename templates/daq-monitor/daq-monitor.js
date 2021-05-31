@@ -912,13 +912,13 @@ function ReportBuffer(){
     for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
     cell[0].innerHTML = 'Det Type';
     cell[1].innerHTML = 'Num Evts';
-    cell[2].innerHTML = '% of Capacity';
+    cell[2].innerHTML = '% of all';
     for(num=0; num<dataStore.ODB.DAQ.params.DetTypes.length; num++){
 	var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
 	for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
 	cell[0].innerHTML = dataStore.ODB.DAQ.params.DetTypes[num]+':';
 	cell[1].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'Rate',num);
-	cell[2].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentCap',num);
+	cell[2].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentTot',num);
     }
     
 }
@@ -933,13 +933,13 @@ function ReportObject(){
     for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
     cell[0].innerHTML = 'Det Type';
     cell[1].innerHTML = 'Num Evts';
-    cell[2].innerHTML = '% of Capacity';
+    cell[2].innerHTML = '% of all';
     for(num=0; num<dataStore.ODB.DAQ.params.DetTypes.length; num++){
 	var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
 	for(j=0; j<3; j++){ cell[j] = row.insertCell(j); }
 	cell[0].innerHTML = dataStore.ODB.DAQ.params.DetTypes[num]+':';
 	cell[1].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'Rate',num);
-	cell[2].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentCap',num);
+	cell[2].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentTot',num);
     }
 }
 
@@ -1022,7 +1022,11 @@ function BuildSingleFilterRateValue(ElementID,DisplayType,ValueIndex){
     
     string = '';
     i=ValueIndex;
-    if(DisplayType == 'PercentCap'){
+    if(DisplayType == 'PercentTot'){
+	percent = (OutgoingReportValues[i]/OutgoingReportValues.reduce((a, b) => a + b)) * 100.0;
+	string = percent.toFixed(2)+'%';
+    }
+    else if(DisplayType == 'PercentCap'){
 	percent = (OutgoingReportValues[i]/MaxValue) * 100.0;
 	string = percent.toFixed(2)+'%';
     }
