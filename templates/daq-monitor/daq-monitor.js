@@ -446,7 +446,7 @@ function regenerateDatastructure(suppressDOMconfig){
             string = 'FilterTableReportDiv';
             FilterReport.setAttribute('id', string); 
             FilterReport.setAttribute('class', 'FilterTableReportDiv');
-            FilterReport.innerHTML = '<table id="FilterReportTable" width="100%"></table>';
+            FilterReport.innerHTML = '<table id="FilterReportTable" class="FilterReportTable"></table>';
             document.getElementById('FilterTable').appendChild(FilterReport);
 	
 	// Repaint everything for the first time after creation

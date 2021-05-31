@@ -295,12 +295,15 @@ div.pan{
   font: 11px "Courier New", monospace;
   color: red;
 }
-table tbody {
+#FilterReportTable{
+    width: 100%;
+}
+.FilterReportTable tbody {
   font-family: "Lucida Console", "Courier New", monospace;
   font: 11px "Courier New", monospace;
   color: red;
 }
-table td {
+.FilterReportTable td {
     width: 45px;
     align: right;
 }
