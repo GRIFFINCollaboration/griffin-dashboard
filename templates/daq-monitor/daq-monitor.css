@@ -13,7 +13,6 @@ div.pan{
   border-radius: 1em;
   display: inline-block; 
   vertical-align:middle;
-  text-align: center;
   overflow: hidden;
   color: black;
 }
