@@ -248,7 +248,7 @@ div.pan{
   position: absolute;
   padding: 0px;
   left: -10px; 
-  margin: 0px;
+ margin: 0px;
   border-style: none;
   background: green; 
   text-align: left;
@@ -285,7 +285,7 @@ div.pan{
 }
 .FilterTableReportDiv {
   height: 80%; 
-  position: absolute;
+  position: relative;
   left: 5px;
   bottom: 0px;
   margin: 1px; 

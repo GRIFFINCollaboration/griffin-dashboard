@@ -435,19 +435,12 @@ function regenerateDatastructure(suppressDOMconfig){
         FilterReport.innerHTML = "Click on a Filter element to display details here."; // initial text
         document.getElementById('FilterTable').appendChild(FilterReport);
 	
-            FilterReport = document.createElement('div'); 
-            string = 'FilterTableTitleDiv';
-            FilterReport.setAttribute('id', string); 
-            FilterReport.setAttribute('class', 'FilterTableTitleDiv');
-            FilterReport.innerHTML = "Statistics of the selected Filter element will be displayed here."; // dummy text
-            document.getElementById('FilterTable').appendChild(FilterReport);
-
-            FilterReport = document.createElement('div'); 
-            string = 'FilterTableReportDiv';
-            FilterReport.setAttribute('id', string); 
-            FilterReport.setAttribute('class', 'FilterTableReportDiv');
-            FilterReport.innerHTML = '<table id="FilterReportTable" class="FilterReportTable"></table>';
-            document.getElementById('FilterTable').appendChild(FilterReport);
+        FilterReport = document.createElement('div'); 
+        string = 'FilterTableReportDiv';
+        FilterReport.setAttribute('id', string); 
+        FilterReport.setAttribute('class', 'FilterTableReportDiv');
+        FilterReport.innerHTML = '<table id="FilterReportTable" class="FilterReportTable"></table>';
+        document.getElementById('FilterTable').appendChild(FilterReport);
 	
 	// Repaint everything for the first time after creation
         repaint();
