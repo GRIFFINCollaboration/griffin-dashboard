@@ -964,13 +964,14 @@ function ReportLink(){
     var LinkNum = FilterSelectedElementID.replace( /^\D+/g, '');
     document.getElementById('FilterTableTitleDiv').innerHTML = "Statistics for Link"+LinkNum+" between Filter elements.";
 
+    console.log(LinkNum, FilterSelectedElementID);
     var titleString = 'Input Link'+LinkNum+' Usage over past 10s';
     //Filter Input Link Usage plot   
     createFilterBarchart(
         'FilterHisto', 
         HistoLinkUsageTitles, 
         FilterInputLinkUsage[LinkNum],
-        titleString, 'Percentage of full capacity', 'Usage per ms'
+       'Link Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
     );
     
 }
