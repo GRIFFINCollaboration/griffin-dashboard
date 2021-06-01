@@ -222,7 +222,7 @@ function regenerateDatastructure(suppressDOMconfig){
                 CollectorChanMaskRow = document.createElement('div');
 		name = 'CollectorChanMaskRow'+i;
                 CollectorChanMaskRow.setAttribute('id', name);
-		CollectorChanMaskRow.innerHTML = 'Collector'+(i+1)+': ';
+		CollectorChanMaskRow.innerHTML = 'Collector'+(i)+': ';
                 document.getElementById('CollectorChanMaskPicker').appendChild(CollectorChanMaskRow);
 		for(j=0; j<16; j++){
                 ChanMaskButton = document.createElement('button');
