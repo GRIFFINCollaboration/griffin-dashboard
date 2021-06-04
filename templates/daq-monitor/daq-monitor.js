@@ -944,6 +944,7 @@ function ReportInputLink(){
     opt.value = 'LinkUsage';
     opt.innerHTML = 'Link usage';
     select.appendChild(opt);
+    opt = document.createElement('option');
     opt.value = 'BufferUsage';
     opt.innerHTML = 'Link event buffer usage';
     select.appendChild(opt);
