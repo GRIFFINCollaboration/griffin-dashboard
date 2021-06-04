@@ -973,7 +973,7 @@ function ReportInputLink(){
 
 function DrawFilterLinkHisto(ColNum){
     if(FilterSelectedInputLinkHistoType == 'BufferUsage'){
-	var titleString = 'Collector'+ColNum+' Link Buffer Usage over past 10s';
+	var titleString = 'Collector'+ColNum+' Link event buffer usage over past 10s';
 	//Filter Input Link Buffer Usage plot   
 	createFilterBarchart(
             'FilterHisto', 
@@ -984,7 +984,7 @@ function DrawFilterLinkHisto(ColNum){
     }else{
 	// Other option is (FilterSelectedInputLinkHistoType == 'LinkUsage')
 	//Filter Input Link Usage plot   
-	var titleString = 'Collector'+ColNum+' Link Usage over past 10s';
+	var titleString = 'Collector'+ColNum+' Link usage over past 10s';
 	//Filter Input Link Usage plot   
 	createFilterBarchart(
             'FilterHisto', 

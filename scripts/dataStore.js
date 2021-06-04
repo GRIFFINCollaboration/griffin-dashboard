@@ -24,7 +24,7 @@ dataStore = {
         "plotScales": {                   // defaults, feel free to update later
             'HV': {
                 'scale': 'lin',
-                'min': 0,
+               'min': 0,
                 'max': 2000,
                 'color': 'blue'
             },
