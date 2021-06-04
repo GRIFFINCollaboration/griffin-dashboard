@@ -64,7 +64,11 @@
                 determineADCrequests();
                 detectDetectors();
             }
-            
+     
+	  function processGRIFC(payload){
+	       var dataStore.ODB.DAQ.GRIFC = payload;
+	    }
+	
             window.addEventListener('HTMLImportsLoaded', function(e) {
                 validate_browser();
 
