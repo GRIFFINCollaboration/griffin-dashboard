@@ -939,17 +939,24 @@ function ReportInputLink(){
     document.getElementById("FilterReportTable").innerHTML = '';
     var ColNum = FilterSelectedElementID.replace( /^\D+/g, '');
     document.getElementById('FilterTableTitleDiv').innerHTML = 'Input link from GRIF-C Collector'+ColNum+' to Primary GRIF-C.<BR><div id="FilterLinkHistoSelect">Input-Link Histrogram Type: <select id="FilterSelectedInputLinkHisto"></select></div>';
-    select = document.getElementById('FilterSelectedInputLinkHisto');
-    
+
+    // Set up the select
+    var select = document.getElementById('FilterSelectedInputLinkHisto');   
     var opt = document.createElement('option');
     opt.value = 'LinkUsage';
     opt.innerHTML = 'Link usage';
-    select.appendChild(opt);
+    select.add(opt);
     opt = document.createElement('option');
     opt.value = 'BufferUsage';
     opt.innerHTML = 'Link event buffer usage';
-    select.appendChild(opt);
-    select.options.selectedIndex = FilterSelectedInputLinkHistoType;
+    select.add(opt);
+    
+    if(FilterSelectedInputLinkHistoType == 'BufferUsage'){
+	select.options.selectedIndex = 1;
+    }else{
+	// Link Usage
+	select.options.selectedIndex = 0;
+    }
 
     select.onchange = function(){
 	// Function executed when the select is changed.
