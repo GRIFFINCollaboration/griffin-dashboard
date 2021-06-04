@@ -123,7 +123,7 @@
                 ////////////////////////////
                 //set up heartbeat
                 ////////////////////////////
-                dataStore.heartbeat.URLqueries.push(['http://' + dataStore.host + '/DAQ/GRIFC', 'arrayBuffer', processDAQ])
+                dataStore.heartbeat.URLqueries.push(['http://' + dataStore.host + '/DAQ/GRIFC', 'arraybuffer', processDAQ])
                 dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery]
                 dataStore.heartbeat.callback = dataUpdate
                 heartbeat();
