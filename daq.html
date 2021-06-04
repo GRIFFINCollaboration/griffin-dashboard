@@ -72,8 +72,7 @@
                 // setup
                 ///////////////
                 //get the ODB DAQ dir and set up adc requests:
-                promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
-	        console.log('DAQ Promise made');
+	        promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
 	
                 ///////////////////////////
                 //handle templates
@@ -124,6 +123,7 @@
                 ////////////////////////////
                 //set up heartbeat
                 ////////////////////////////
+                dataStore.heartbeat.URLqueries.push(['http://' + dataStore.host + '/DAQ/GRIFC', 'arrayBuffer', processDAQ])
                 dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery]
                 dataStore.heartbeat.callback = dataUpdate
                 heartbeat();
