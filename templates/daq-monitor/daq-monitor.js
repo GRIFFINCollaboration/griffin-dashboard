@@ -26,13 +26,14 @@ var FilterObjectdataStore = JSON.parse(text);
 
 // Declare global variables
 var FilterSelectedElementID = 'FilterBufferInput';
+var FilterSelectedInputLinkHistoType = 'LinkUsage';
 var FilterSelectedDisplayType = 'Rate';
 var FilterObjectID = [];
 //var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterObjectBGOSupp',  'FilterLink3',  'FilterObjectDetTypes',  'FilterLink4',  'FilterObjectCoincDS',  'FilterLink5',  'FilterBufferOutput'];
 var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterBufferOutput'];
 var FilterInputLinkRate = [];
 var FilterInputLinkUsage = [];
-var FilterInputLinkBuffUsage = [];
+var FilterInputLinkBufferUsage = [];
 var FilterNumInputLinks=0;
 var HistoLinkUsageTitles = ["0-25%", "25-50%", "50-75%", "75-100%"];
 var HistoBufferUsageTitles = ["0-25%", "25-50%", "50-75%", "75-100%"];
@@ -750,7 +751,7 @@ function repaint(){
     //   word4-5: 4bin link event buffer usage histogram
     FilterInputLinkRate = [];
     FilterInputLinkUsage = [];
-    FilterInputBuffUsage = [];
+    FilterInputBufferUsage = [];
     for(i=0; i<FilterNumInputLinks; i++){
 	FilterInputLinkRate[i] = dataStore.ODB.DAQ.GRIFC.link_statusM[i*5];
 	var bin1 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0xFFFF0000) >> 16); 
@@ -763,7 +764,7 @@ function repaint(){
 	var bin2 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0xFFFF0000) >> 16);
 	var bin3 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0x0000FFFF);  
 	var bin4 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16);
-	FilterInputBuffUsage.push([bin1, bin2, bin3, bin4]);
+	FilterInputBufferUsage.push([bin1, bin2, bin3, bin4]);
     }
 	
     // Display the numbers in the Filter Objects
@@ -855,24 +856,6 @@ function repaint(){
     if (FilterSelectedElementID.indexOf("FilterBuffer") >= 0){ ReportBuffer();     }
     if (FilterSelectedElementID.indexOf("FilterObject") >= 0){ ReportObject();     }
     if (FilterSelectedElementID.indexOf("FilterInput") >= 0) { ReportInputLink();  }
-    if(FilterSelectedElementID == "FilterBufferInput"){
-	//Filter Input Buffer Usage plot   
-	createFilterBarchart(
-            'FilterHisto', 
-            HistoBufferUsageTitles, 
-            FilterObjectdataStore.FilterElementInfo[1].HistoBufferUsage,
-        'Input Buffer Memory Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
-	);
-    }
-    if(FilterSelectedElementID == "FilterObjectTimeOrdering"){
-	//Filter Input Buffer Usage plot   
-	createFilterBarchart(
-            'FilterHisto', 
-            HistoBufferUsageTitles, 
-            FilterObjectdataStore.FilterElementInfo[3].HistoBufferUsage,
-        'Time-Ordering Buffer Memory Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
-	);
-    }
 }
 
 function createBarchart(targetDiv, PSClabels, requests, accepts, plotTitle, xTitle, yTitle){
@@ -955,16 +938,30 @@ function ReportInputLink(){
     // Reports for whichever Secondary-Primary input link is selected
     document.getElementById("FilterReportTable").innerHTML = '';
     var ColNum = FilterSelectedElementID.replace( /^\D+/g, '');
-    document.getElementById('FilterTableTitleDiv').innerHTML = "Input link from GRIF-C Collector"+ColNum+" to Primary GRIF-C.";
-    
-    var titleString = 'Collector'+ColNum+' Link Usage over past 10s';
-    //Filter Input Link Usage plot   
-    createFilterBarchart(
-        'FilterHisto', 
-        HistoLinkUsageTitles, 
-        FilterInputLinkUsage[ColNum],
-	titleString, 'Percentage of full capacity', 'Usage per ms'
-    );
+    document.getElementById('FilterTableTitleDiv').innerHTML = 'Input link from GRIF-C Collector'+ColNum+' to Primary GRIF-C.<BR><div id="FilterLinkHistoSelect">input</div>';
+
+
+    if(FilterSelectedInputLinkHistoType == 'BufferUsage'){
+	var titleString = 'Collector'+ColNum+' Link Buffer Usage over past 10s';
+	//Filter Input Link Buffer Usage plot   
+	createFilterBarchart(
+            'FilterHisto', 
+            HistoLinkUsageTitles, 
+            FilterInputLinkBufferUsage[ColNum],
+	    titleString, 'Percentage of full capacity', 'Usage per ms'
+	);
+    }else{
+	// Other option is (FilterSelectedInputLinkHistoType == 'LinkUsage')
+	//Filter Input Link Usage plot   
+	var titleString = 'Collector'+ColNum+' Link Usage over past 10s';
+	//Filter Input Link Usage plot   
+	createFilterBarchart(
+            'FilterHisto', 
+            HistoLinkUsageTitles, 
+            FilterInputLinkUsage[ColNum],
+	    titleString, 'Percentage of full capacity', 'Usage per ms'
+	);
+    }
 }
 
 function ReportLink(){
@@ -978,8 +975,6 @@ function ReportBuffer(){
     // Reports for the buffer object that is selected
     document.getElementById('FilterTableTitleDiv').innerHTML = getFilterObjectHTMLByID(FilterSelectedElementID);
     
-// New approach
-    // Use FilterReportTable
     document.getElementById("FilterReportTable").innerHTML = '';
     var cell = [];
     var row = document.getElementById("FilterReportTable").insertRow(document.getElementById("FilterReportTable").rows.length);
@@ -996,7 +991,17 @@ function ReportBuffer(){
 	cell[2].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentTot',num);
 	cell[3].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentIn',num);
     }
-    
+
+    // Create Usage Histograms if available
+    if(FilterSelectedElementID == "FilterBufferInput"){
+	//Filter Input Buffer Usage plot   
+	createFilterBarchart(
+            'FilterHisto', 
+            HistoBufferUsageTitles, 
+            FilterObjectdataStore.FilterElementInfo[1].HistoBufferUsage,
+        'Input Buffer Memory Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
+	);
+    }
 }
 
 function ReportObject(){
@@ -1018,6 +1023,17 @@ function ReportObject(){
 	cell[1].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'Rate',num);
 	cell[2].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentTot',num);
 	cell[3].innerHTML = BuildSingleFilterRateValue(FilterSelectedElementID,'PercentIn',num);
+    }
+
+    // Create Usage Histograms if available
+    if(FilterSelectedElementID == "FilterObjectTimeOrdering"){
+	//Filter Time-Ordering Buffer Usage plot   
+	createFilterBarchart(
+            'FilterHisto', 
+            HistoBufferUsageTitles, 
+            FilterObjectdataStore.FilterElementInfo[3].HistoBufferUsage,
+        'Time-Ordering Buffer Memory Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
+	);
     }
 }
 
