@@ -949,6 +949,7 @@ function ReportInputLink(){
     opt.value = 'BufferUsage';
     opt.innerHTML = 'Link event buffer usage';
     select.appendChild(opt);
+    select.options.selectedIndex = FilterSelectedInputLinkHistoType;
 
     select.onchange = function(){
 	// Function executed when the select is changed.
