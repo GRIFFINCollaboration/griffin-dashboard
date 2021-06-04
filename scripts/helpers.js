@@ -387,6 +387,14 @@ function unpackDAQ(i, dv){
     return unpacked;
 }
 
+function processGRIFC(payload){
+    // do setup things with the DAQ/GRIFC directory from the ODB when it arrives
+
+    // Not sure if anything needs to be done
+    var dataStore.ODB.DAQ.GRIFC = payload;
+    console.log('processGRIFC');
+}
+
 function parsePSCindex(PSC){
     //decode an PSC index into [primary channel, collector channel, digitizer channel]
 
