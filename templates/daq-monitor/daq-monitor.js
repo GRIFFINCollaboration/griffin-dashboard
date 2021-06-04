@@ -705,34 +705,34 @@ function repaint(){
 		if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterBufferOutput'){
 		    // The last 16 entries, before the 4 histogram words, are for the Output buffer
 		    var jj=0;
-		    for(var j=(dataStore.ODB.DAQ.GRIFC.filter_status.length - 16 - 4); j<(dataStore.ODB.DAQ.GRIFC.filter_status.length - 4); j++){
-			FilterObjectdataStore.FilterElementInfo[k].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
-			FilterObjectdataStore.FilterElementInfo[k+1].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
+		    for(var j=(dataStore.GRIFC.filter_status.length - 16 - 4); j<(dataStore.GRIFC.filter_status.length - 4); j++){
+			FilterObjectdataStore.FilterElementInfo[k].Rate[jj] = dataStore.GRIFC.filter_status[j];
+			FilterObjectdataStore.FilterElementInfo[k+1].Rate[jj] = dataStore.GRIFC.filter_status[j];
 			jj++;
 		    }
 		}else if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterObjectTimeOrdering'){
 		    var jj=0;
 		    for(var j=16; j<32; j++){
-			FilterObjectdataStore.FilterElementInfo[k].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
-			FilterObjectdataStore.FilterElementInfo[k+1].Rate[jj] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
+			FilterObjectdataStore.FilterElementInfo[k].Rate[jj] = dataStore.GRIFC.filter_status[j];
+			FilterObjectdataStore.FilterElementInfo[k+1].Rate[jj] = dataStore.GRIFC.filter_status[j];
 			jj++;
 		    }
 		    // The next to last two words are the Histrogram of Buffer Usage for the Time-Ordering buffer
-		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[0] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-4] & 0x0000FFFF);
-		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[1] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-4] & 0xFFFF0000) >> 16);
-		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[2] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-3] & 0x0000FFFF);
-		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[3] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-3] & 0xFFFF0000) >> 16);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[0] =  (dataStore.GRIFC.filter_status[dataStore.GRIFC.filter_status.length-4] & 0x0000FFFF);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[1] = ((dataStore.GRIFC.filter_status[dataStore.GRIFC.filter_status.length-4] & 0xFFFF0000) >> 16);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[2] =  (dataStore.GRIFC.filter_status[dataStore.GRIFC.filter_status.length-3] & 0x0000FFFF);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[3] = ((dataStore.GRIFC.filter_status[dataStore.GRIFC.filter_status.length-3] & 0xFFFF0000) >> 16);
 		}else if(FilterObjectdataStore.FilterElementInfo[k].ID == 'FilterBufferInput'){
 		    // The first 16 entries are for the rates for the Input buffer
 		    for(var j=0; j<dataStore.ODB.DAQ.params.DetTypes.length; j++){
-			FilterObjectdataStore.FilterElementInfo[k].Rate[j] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
-			FilterObjectdataStore.FilterElementInfo[k+1].Rate[j] = dataStore.ODB.DAQ.GRIFC.filter_status[j];
+			FilterObjectdataStore.FilterElementInfo[k].Rate[j] = dataStore.GRIFC.filter_status[j];
+			FilterObjectdataStore.FilterElementInfo[k+1].Rate[j] = dataStore.GRIFC.filter_status[j];
 		    }
 		    // The last two words are the Histrogram of Buffer Usage for the Input buffer
-		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[0] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-2] & 0x0000FFFF);
-		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[1] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-2] & 0xFFFF0000) >> 16);
-		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[2] =  (dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-1] & 0x0000FFFF);
-		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[3] = ((dataStore.ODB.DAQ.GRIFC.filter_status[dataStore.ODB.DAQ.GRIFC.filter_status.length-1] & 0xFFFF0000) >> 16);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[0] =  (dataStore.GRIFC.filter_status[dataStore.GRIFC.filter_status.length-2] & 0x0000FFFF);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[1] = ((dataStore.GRIFC.filter_status[dataStore.GRIFC.filter_status.length-2] & 0xFFFF0000) >> 16);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[2] =  (dataStore.GRIFC.filter_status[dataStore.GRIFC.filter_status.length-1] & 0x0000FFFF);
+		    FilterObjectdataStore.FilterElementInfo[k].HistoBufferUsage[3] = ((dataStore.GRIFC.filter_status[dataStore.GRIFC.filter_status.length-1] & 0xFFFF0000) >> 16);
 		}
 		else{
 		    // Rates for other Filter components are not yet reported in the ODB
@@ -755,17 +755,17 @@ function repaint(){
     FilterInputLinkUsage = [];
     FilterInputBufferUsage = [];
     for(i=0; i<FilterNumInputLinks; i++){
-	FilterInputLinkRate[i] = dataStore.ODB.DAQ.GRIFC.link_statusM[i*5];
-	var bin1 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0xFFFF0000) >> 16); 
-	var bin2 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+1] & 0x0000FFFF); 
-	var bin3  = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+2] & 0xFFFF0000) >> 16);
-	var bin4  = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+2] & 0x0000FFFF);  
+	FilterInputLinkRate[i] = dataStore.GRIFC.link_statusM[i*5];
+	var bin1 = ((dataStore.GRIFC.link_statusM[i*5+1] & 0xFFFF0000) >> 16); 
+	var bin2 = (dataStore.GRIFC.link_statusM[i*5+1] & 0x0000FFFF); 
+	var bin3  = ((dataStore.GRIFC.link_statusM[i*5+2] & 0xFFFF0000) >> 16);
+	var bin4  = (dataStore.GRIFC.link_statusM[i*5+2] & 0x0000FFFF);  
 	FilterInputLinkUsage.push([bin1, bin2, bin3, bin4]);
 	
-	var bin1 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0x0000FFFF); 
-	var bin2 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+4] & 0xFFFF0000) >> 16);
-	var bin3 = (dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0x0000FFFF);  
-	var bin4 = ((dataStore.ODB.DAQ.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16);
+	var bin1 = (dataStore.GRIFC.link_statusM[i*5+4] & 0x0000FFFF); 
+	var bin2 = ((dataStore.GRIFC.link_statusM[i*5+4] & 0xFFFF0000) >> 16);
+	var bin3 = (dataStore.GRIFC.link_statusM[i*5+3] & 0x0000FFFF);  
+	var bin4 = ((dataStore.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16);
 	FilterInputBufferUsage.push([bin1, bin2, bin3, bin4]);
     }
 	

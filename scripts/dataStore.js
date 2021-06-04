@@ -4,6 +4,7 @@ dataStore = {
     "host": 'missing-hostname',
     "SOHhost": 'missing-hostname',
     "ODB": {},                              // place to park info pulled from ODB
+    "GRIFC": {},                            // place for the GRIFC Filter and Link info
     "data": {},                             // place to park raw data from non-ODB sources; note this gets dumped at the start of every heartbeat!
     "detector": {                           // place to park detector-specific data 
         "subview": null,                    // current subview on display

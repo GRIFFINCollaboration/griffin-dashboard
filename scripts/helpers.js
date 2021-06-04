@@ -391,8 +391,7 @@ function processGRIFC(payload){
     // do setup things with the DAQ/GRIFC directory from the ODB when it arrives
 
     // Not sure if anything needs to be done
-    var dataStore.ODB.DAQ.GRIFC = {};
-    dataStore.ODB.DAQ.GRIFC = payload;
+    dataStore.GRIFC = payload;
     console.log('processGRIFC');
 }
 
