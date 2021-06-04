@@ -73,6 +73,7 @@
                 ///////////////
                 //get the ODB DAQ dir and set up adc requests:
                 promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
+	        console.log('DAQ Promise made');
 	
                 ///////////////////////////
                 //handle templates
