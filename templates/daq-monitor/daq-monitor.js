@@ -954,16 +954,16 @@ function ReportInputLink(){
 	// Function executed when the select is changed.
 	// Save the setting and repaint the histogram
 	FilterSelectedInputLinkHistoType = document.getElementById('FilterSelectedInputLinkHisto').value;
-	DrawFilterLinkHisto();
+	DrawFilterLinkHisto(ColNum);
     }
 
     // Draw the histogram
-    DrawFilterLinkHisto();
+    DrawFilterLinkHisto(ColNum);
     
 }
 
 
-function DrawFilterLinkHisto(){
+function DrawFilterLinkHisto(ColNum){
     if(FilterSelectedInputLinkHistoType == 'BufferUsage'){
 	var titleString = 'Collector'+ColNum+' Link Buffer Usage over past 10s';
 	//Filter Input Link Buffer Usage plot   
