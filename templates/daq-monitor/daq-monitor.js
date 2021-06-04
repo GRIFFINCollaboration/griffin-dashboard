@@ -940,6 +940,7 @@ function ReportInputLink(){
     var ColNum = FilterSelectedElementID.replace( /^\D+/g, '');
     document.getElementById('FilterTableTitleDiv').innerHTML = 'Input link from GRIF-C Collector'+ColNum+' to Primary GRIF-C.<BR><div id="FilterLinkHistoSelect">Input-Link Histrogram Type: <select id="FilterSelectedInputLinkHisto"></select></div>';
     select = document.getElementById('FilterSelectedInputLinkHisto');
+    
     var opt = document.createElement('option');
     opt.value = 'LinkUsage';
     opt.innerHTML = 'Link usage';
@@ -949,6 +950,20 @@ function ReportInputLink(){
     opt.innerHTML = 'Link event buffer usage';
     select.appendChild(opt);
 
+    select.onchange = function(){
+	// Function executed when the select is changed.
+	// Save the setting and repaint the histogram
+	FilterSelectedInputLinkHistoType = document.getElementById('FilterSelectedInputLinkHisto').value;
+	DrawFilterLinkHisto();
+    }
+
+    // Draw the histogram
+    DrawFilterLinkHisto();
+    
+}
+
+
+function DrawFilterLinkHisto(){
     if(FilterSelectedInputLinkHistoType == 'BufferUsage'){
 	var titleString = 'Collector'+ColNum+' Link Buffer Usage over past 10s';
 	//Filter Input Link Buffer Usage plot   
