@@ -802,6 +802,7 @@ if(dataStore.host=="missing-hostname"){
 }
 
 dataStore.runSummaryQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb0=Experiment/&odb1=Runinfo/&odb2=Equipment/Trigger/Statistics/&odb3=Logger/&encoding=json-p-nokeys&callback=runSummaryCB';
+dataStore.GRIFCQuery = 'http://'+dataStore.host+'/?cmd=jcopy&odb=DAQ/GRIFC/&encoding=json-p-nokeys&callback=processGRIFC';
 dataStore.messageQuery = 'http://' + dataStore.host + '/?cmd=jmsg&n=' + dataStore.nMessages;
 
 OK = 0  // why? so that when a midas ajax command returns nothing but OK in a JSON-P situation, JavaScript doesn't interpret OK as an undefined variable.

@@ -107,6 +107,14 @@ function processDAQ(payload){
     detectDetectors();              // decide which detectors to link to in the nav bar based on PSC table
 }
 
+function processGRIFC(payload){
+    // do setup things with the DAQ/GRIFC directory from the ODB when it arrives
+
+    // Not sure if anything needs to be done
+    var dataStore.ODB.DAQ.GRIFC = payload;
+    console.log('processGRIFC');
+}
+
 function sortADCparams(payload){
     // sort the json representation of the ODB's /DAQ/params into the datastore for future visualization:
     // dataStore.data[<channel name>][<parameter name>]

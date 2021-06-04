@@ -326,9 +326,6 @@ function fetchDAQ(payload){
     var i, key;
 
     dataStore.ODB.DAQ = payload;
-
-    console.log('In fetchDAQ: ');
-    console.log(dataStore.ODB.DAQ);
     
     //extract hosts list
     dataStore.hosts = [];
