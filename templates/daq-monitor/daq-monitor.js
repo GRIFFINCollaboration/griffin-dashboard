@@ -697,7 +697,8 @@ function repaint(){
     //
     // Put the rates numbers into the Filter DataStore
     // The way the elements are accessed here is a bit convoluted (a relic from initial development) and should be tidied up (just need to search FilterObjectdataStore for the ID to get the index).
-    console.log('In repaint: '+dataStore.ODB.DAQ);
+    console.log('In repaint: ');
+    console.log(dataStore.ODB.DAQ);
     for(var i=0; i<FilterObjectIDRates.length; i+=2){
 	for (var k = 0; k < FilterObjectdataStore.FilterElementInfo.length; k++){
 	    if (FilterObjectdataStore.FilterElementInfo[k].ID == FilterObjectIDRates[i]){
