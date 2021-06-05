@@ -78,6 +78,13 @@
                 //get the ODB DAQ dir and set up adc requests:
 	        promiseScript('http://' + dataStore.host + '/?cmd=jcopy&odb=/DAQ&encoding=json-p-nokeys&callback=processDAQ');
 	
+                ////////////////////////////
+                //set up heartbeat
+                ////////////////////////////
+                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery,dataStore.GRIFCQuery]
+                dataStore.heartbeat.callback = dataUpdate
+	        heartbeat();
+	
                 ///////////////////////////
                 //handle templates
                 ///////////////////////////
@@ -124,12 +131,6 @@
                  
 	        if(dataStore.hostname=='tigress'){ document.getElementById('Logo').src = 'img/TIGRESS-logo.png';}
 
-                ////////////////////////////
-                //set up heartbeat
-                ////////////////////////////
-                dataStore.heartbeat.scriptQueries = [dataStore.runSummaryQuery,dataStore.GRIFCQuery]
-                dataStore.heartbeat.callback = dataUpdate
-                heartbeat();
             });
              
 

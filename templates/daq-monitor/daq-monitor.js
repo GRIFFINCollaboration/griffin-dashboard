@@ -679,7 +679,6 @@ function repaint(){
     // Filter Display
     // Here add in the extra Det Types to the datastore
     // These top 3 Det Types are hard coded in the GRIFC firmware and cannot be modified in the ODB by the user
-   // console.log(dataStore.ODB.DAQ);
     if(dataStore.ODB.DAQ.params.DetTypes.length == 14)
     {
 	dataStore.ODB.DAQ.params.DetTypes[14] = 'CLOV';
