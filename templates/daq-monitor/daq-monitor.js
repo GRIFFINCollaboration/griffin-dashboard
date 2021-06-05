@@ -1035,7 +1035,7 @@ function ReportBuffer(){
             'FilterHisto', 
             HistoBufferUsageTitles, 
             FilterObjectdataStore.FilterElementInfo[1].HistoBufferUsage,
-        'Input Buffer Memory Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
+        'Input buffer memory usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
 	);
     }
 }
@@ -1068,7 +1068,7 @@ function ReportObject(){
             'FilterHisto', 
             HistoBufferUsageTitles, 
             FilterObjectdataStore.FilterElementInfo[3].HistoBufferUsage,
-        'Time-Ordering Buffer Memory Usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
+        'Time-ordering buffer memory usage over past 10s', 'Percentage of full capacity', 'Usage per ms'
 	);
     }
 }
