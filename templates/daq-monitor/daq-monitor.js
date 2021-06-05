@@ -33,6 +33,7 @@ var FilterObjectID = [];
 var FilterObjectIDRates = ['FilterBufferInput', 'FilterLink',  'FilterObjectTimeOrdering',  'FilterLink2',  'FilterBufferOutput'];
 var FilterInputLinkRate = [];
 var FilterInputLinkUsage = [];
+var FilterInputLinkUsageMean = [];
 var FilterInputLinkBufferUsage = [];
 var FilterNumInputLinks=0;
 var HistoLinkUsageTitles = ["0-25%", "25-50%", "50-75%", "75-100%"];
@@ -758,6 +759,7 @@ function repaint(){
 	var bin3  = ((dataStore.GRIFC.link_statusM[i*5+2] & 0xFFFF0000) >> 16);
 	var bin4  = (dataStore.GRIFC.link_statusM[i*5+2] & 0x0000FFFF);  
 	FilterInputLinkUsage.push([bin1, bin2, bin3, bin4]);
+	FilterInputLinkUsageMean[i] = ((bin1*0.25) + (bin2*0.50) + (bin3*0.75) + (bin4*1.0)) / 4.0;
 	
 	var bin1 = ((dataStore.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16);
 	var bin2 = (dataStore.GRIFC.link_statusM[i*5+3] & 0x0000FFFF); 
@@ -811,7 +813,7 @@ function repaint(){
     // Color the Input Links from the Secondary level based on the volume of data
 	for(i=0; i<dataStore.ODB.DAQ.hosts.length; i++){
 	    LinkID = 'FilterInputLink'+(i);
-	    var TotalRate = (dataStore.ODB.DAQ.summary.collectors.accepts[0][i]) / (MaxInputLinkValue);
+	    var TotalRate = FilterInputLinkUsageMean[i];
 	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
 	    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
 	    else if(TotalRate >= 0.4 ){ LinkColor = 'Orange';  }
