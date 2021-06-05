@@ -812,7 +812,8 @@ function repaint(){
     }
     
     // Color the Input Links from the Secondary level based on the volume of data
-	for(i=0; i<dataStore.ODB.DAQ.hosts.length; i++){
+	for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
+	    if(dataStore.ODB.DAQ.summary.collectors.titles[i]==null || i>8){ continue; }
 	    LinkID = 'FilterInputLink'+(i);
 	    var TotalRate = FilterInputLinkUsageMean[i] / 883949568; // 883949568 is the maximum value
 	    console.log(TotalRate);
