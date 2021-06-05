@@ -827,14 +827,14 @@ function repaint(){
     // Use the mean of the latest Usage histogram
     for (var i = 0; i < FilterObjectdataStore.FilterElementInfo.length; i++){
 	if (FilterObjectdataStore.FilterElementInfo[i].Class == 'FilterLink'){
-	    var ThisRate = FilterObjectdataStore.FilterElementInfo[i].HistoBufferUsage;
+	    var ThisRate = FilterObjectdataStore.FilterElementInfo[i-1].HistoBufferUsage;
 	    var TotalRate = 0; var Entries = 0;
 	    for(j=0; j<ThisRate.length; j++){
 		TotalRate += (ThisRate[j]*((1.0/ThisRate.length)*(j+1)));
 		Entries += ThisRate[j];
 	    }
 	    TotalRate = TotalRate / Entries;
-	    console.log(ThisRate, Entries, TotalRate);
+	    console.log(i, ThisRate, Entries, TotalRate);
 	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
 	    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
 	    else if(TotalRate >= 0.4 ){ LinkColor = 'Orange';  }
