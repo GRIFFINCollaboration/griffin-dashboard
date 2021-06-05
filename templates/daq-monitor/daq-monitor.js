@@ -814,7 +814,7 @@ function repaint(){
     // Color the Input Links from the Secondary level based on the volume of data
 	for(i=0; i<dataStore.ODB.DAQ.hosts.length; i++){
 	    LinkID = 'FilterInputLink'+(i);
-	    var TotalRate = FilterInputLinkUsageMean[i];
+	    var TotalRate = FilterInputLinkUsageMean[i] / 883949568; // 883949568 is the maximum value
 	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
 	    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
 	    else if(TotalRate >= 0.4 ){ LinkColor = 'Orange';  }
