@@ -828,6 +828,11 @@ function repaint(){
     for (var i = 0; i < FilterObjectdataStore.FilterElementInfo.length; i++){
 	if (FilterObjectdataStore.FilterElementInfo[i].Class == 'FilterLink'){
 	    var ThisRate = FilterObjectdataStore.FilterElementInfo[i-1].HistoBufferUsage;
+	    if(ThisRate.length ==0){
+		// Hack because nothing provided from electronics for BGO Supp, Det Types or Coinc/Downscaling yet.
+		// Use Time-Ordering usage for these links as well.
+		ThisRate = FilterObjectdataStore.FilterElementInfo[3].HistoBufferUsage;
+	    }
 	    var TotalRate = 0; var Entries = 0;
 	    for(j=0; j<ThisRate.length; j++){
 		TotalRate += (ThisRate[j]*((1.0/ThisRate.length)*(j+1)));
