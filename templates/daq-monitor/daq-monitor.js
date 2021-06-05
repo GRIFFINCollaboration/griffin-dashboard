@@ -815,6 +815,7 @@ function repaint(){
 	for(i=0; i<dataStore.ODB.DAQ.hosts.length; i++){
 	    LinkID = 'FilterInputLink'+(i);
 	    var TotalRate = FilterInputLinkUsageMean[i] / 883949568; // 883949568 is the maximum value
+	    console.log(TotalRate);
 	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
 	    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
 	    else if(TotalRate >= 0.4 ){ LinkColor = 'Orange';  }
