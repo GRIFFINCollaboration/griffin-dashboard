@@ -815,11 +815,7 @@ function repaint(){
 	    if(dataStore.ODB.DAQ.summary.collectors.titles[i]==null || i>8){ continue; }
 	    LinkID = 'FilterInputLink'+(i);
 	    var TotalRate = FilterInputLinkUsageMean[i];
-	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
-	    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
-	    else if(TotalRate >= 0.4 ){ LinkColor = 'Orange';  }
-	    else if(TotalRate == 0.0 ){ LinkColor = 'DimGrey';  }
-	    else { LinkColor = 'Green';  }
+	    LinkColor = PickLinkColor(TotalRate);
             document.getElementById(LinkID).style.backgroundColor = LinkColor;
         }
     
@@ -839,11 +835,7 @@ function repaint(){
 		Entries += ThisRate[j];
 	    }
 	    TotalRate = TotalRate / Entries;
-	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
-	    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
-	    else if(TotalRate >= 0.4 ){ LinkColor = 'Orange';  }
-	    else if(TotalRate == 0.0 ){ LinkColor = 'DimGrey';  }
-	    else { LinkColor = 'Green';  }
+	    LinkColor = PickLinkColor(TotalRate);
 	    document.getElementById(FilterObjectdataStore.FilterElementInfo[i].ID).style.backgroundColor = LinkColor;
 	    if(FilterObjectdataStore.FilterElementInfo[i].ID == 'FilterLink2'){ MultiLinkColor = LinkColor; }
 	}
@@ -858,11 +850,7 @@ function repaint(){
     // dataStore.ODB.Equipment_Trigger_Statistics['kBytes per sec.'].toFixed()
     LinkID = 'FilterOutputLink0';
     var TotalRate = (dataStore.ODB.Equipment_Trigger_Statistics['kBytes per sec.'].toFixed()) / (95000); // Max value set to 95MB
-    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
-    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
-    else if(TotalRate >= 0.4 ){ LinkColor = 'Orange';  }
-    else if(TotalRate == 0.0 ){ LinkColor = 'DimGrey';  }
-    else { LinkColor = 'Green';  }
+    LinkColor = PickLinkColor(TotalRate);
     document.getElementById(LinkID).style.backgroundColor = LinkColor;
     
     // Display the detailed numbers, and any histogram, for the selected Filter Element in the Report Table after
@@ -932,7 +920,18 @@ function createFilterBarchart(targetDiv, labels, usage, plotTitle, xTitle, yTitl
     Plotly.newPlot(targetDiv, [use], layout);
 }
 
-
+// Function to return a color to represent a scale between 0.0 and 1.0
+// Input number must be between 0.0 and 1.0
+function PickLinkColor(Rate){
+    if(Rate>1.0){ return null; }
+    var LinkColor;
+    if(Rate >= 0.9 ){ LinkColor = 'Red'; }
+    else if(Rate >= 0.6 ){ LinkColor = 'DarkOrange';  }
+    else if(Rate >= 0.4 ){ LinkColor = 'Orange';  }
+    else if(Rate == 0.0 ){ LinkColor = 'DimGrey';  }
+    else { LinkColor = 'Green';  }
+    return LinkColor;
+}
 
 /////////////////////////////
 // Filter Display functions
