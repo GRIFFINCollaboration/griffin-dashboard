@@ -763,7 +763,7 @@ function repaint(){
 	var bin2 = (dataStore.GRIFC.link_statusM[i*5+3] & 0x0000FFFF); 
 	var bin3 = ((dataStore.GRIFC.link_statusM[i*5+4] & 0xFFFF0000) >> 16); 
 	var bin4 = (dataStore.GRIFC.link_statusM[i*5+4] & 0x0000FFFF); 
-	FilterInputBufferUsage.push([bin1, bin2, bin3, bin4]);
+	FilterInputLinkBufferUsage.push([bin1, bin2, bin3, bin4]);
     }
 	
     // Display the numbers in the Filter Objects
