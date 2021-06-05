@@ -827,6 +827,7 @@ function repaint(){
 	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
 	    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
 	    else if(TotalRate >= 0.4 ){ LinkColor = 'Orange';  }
+	    else if(TotalRate == 0.0 ){ LinkColor = 'DarkGrey';  }
 	    else { LinkColor = 'Green';  }
 	    document.getElementById(FilterObjectdataStore.FilterElementInfo[i].ID).style.backgroundColor = LinkColor;
 	    if(FilterObjectdataStore.FilterElementInfo[i].ID == 'FilterLink2'){ MultiLinkColor = LinkColor; }
