@@ -759,7 +759,7 @@ function repaint(){
 	var bin3  = ((dataStore.GRIFC.link_statusM[i*5+2] & 0xFFFF0000) >> 16);
 	var bin4  = (dataStore.GRIFC.link_statusM[i*5+2] & 0x0000FFFF);  
 	FilterInputLinkUsage.push([bin1, bin2, bin3, bin4]);
-	FilterInputLinkUsageMean[i] = ((bin1*0.25) + (bin2*0.50) + (bin3*0.75) + (bin4*1.0)) / 4.0;
+	FilterInputLinkUsageMean[i] = ((bin1*0.25) + (bin2*0.50) + (bin3*0.75) + (bin4*1.0)) / (bin1+bin2+bin3+bin4);
 	console.log(bin1, bin2, bin3, bin4, FilterInputLinkUsageMean[i]);
 	
 	var bin1 = ((dataStore.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16);
@@ -815,7 +815,7 @@ function repaint(){
 	for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
 	    if(dataStore.ODB.DAQ.summary.collectors.titles[i]==null || i>8){ continue; }
 	    LinkID = 'FilterInputLink'+(i);
-	    var TotalRate = FilterInputLinkUsageMean[i] / 883949568; // 883949568 is the maximum value
+	    var TotalRate = FilterInputLinkUsageMean[i];
 	    console.log(TotalRate);
 	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
 	    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
