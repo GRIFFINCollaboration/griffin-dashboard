@@ -839,7 +839,6 @@ function repaint(){
 		Entries += ThisRate[j];
 	    }
 	    TotalRate = TotalRate / Entries;
-	    console.log(i, ThisRate, Entries, TotalRate);
 	    if(TotalRate >= 0.9 ){ LinkColor = 'Red'; }
 	    else if(TotalRate >= 0.6 ){ LinkColor = 'DarkOrange';  }
 	    else if(TotalRate >= 0.4 ){ LinkColor = 'Orange';  }
