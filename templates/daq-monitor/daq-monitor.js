@@ -981,7 +981,7 @@ function ReportInputLink(){
     }
 
     // Write content into the Report
-    document.getElementById("FilterReportTable").innerHTML = '<tr><td>Mean link usage in past 10 seconds: ' + (FilterInputLinkUsageMean[ColNum]*100.0) + '%</td></tr>';
+    document.getElementById("FilterReportTable").innerHTML = '<tr><td width="270px">Mean link usage in past 10 seconds: ' + (FilterInputLinkUsageMean[ColNum]*100.0) + '%</td></tr>';
     
     // Draw the histogram
     DrawFilterLinkHisto(ColNum);
