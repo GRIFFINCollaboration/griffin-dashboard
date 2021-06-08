@@ -304,7 +304,7 @@ function regenerateDatastructure(suppressDOMconfig){
 	    FilterInputLink.setAttribute('id', string);
 	    FilterInputLink.setAttribute('type', 'button'); 
 	    FilterInputLink.setAttribute('value', (100+i)); 
-	    FilterInputLink.setAttribute('class', 'FilterInputLink');
+	    FilterInputLink.setAttribute('class', 'FilterInputLinkGrey');
 	    FilterInputLink.innerHTML = 'Col'+i; 
 	    FilterInputLink.onclick = function(){
                 FilterElementSelection(this.id);
@@ -816,8 +816,12 @@ function repaint(){
 	    LinkID = 'FilterInputLink'+(i);
 	    var TotalRate = FilterInputLinkUsageMean[i];
 	    LinkColor = PickLinkColor(TotalRate);
-            document.getElementById(LinkID).style.backgroundColor = LinkColor;
+            // document.getElementById(LinkID).style.backgroundColor = LinkColor;
+	    // Need to also change the color of the psuedo-elements 'before' which cannot be manipulated directly
+	    // So the solution is to change the class of the Input links to a class with a pre-defined color.
+            document.getElementById(LinkID).classList = 'FilterInputLink' + LinkColor;
         }
+    
     
     // Color the Filter Links based on the volume of data
     // Use the mean of the latest Usage histogram
@@ -925,9 +929,10 @@ function createFilterBarchart(targetDiv, labels, usage, plotTitle, xTitle, yTitl
 function PickLinkColor(Rate){
     if(Rate>1.0){ return null; }
     var LinkColor;
-    if(Rate >= 0.9 ){ LinkColor = 'Red'; }
+    if(Rate >= 0.8 ){ LinkColor = 'Red'; }
     else if(Rate >= 0.6 ){ LinkColor = 'DarkOrange';  }
-    else if(Rate >= 0.4 ){ LinkColor = 'Orange';  }
+    else if(Rate >= 0.4 ){ LinkColor = 'Gold';  }
+    else if(Rate >= 0.2 ){ LinkColor = 'YellowGreen';  }
     else if(Rate == 0.0 ){ LinkColor = 'DimGrey';  }
     else { LinkColor = 'Green';  }
     return LinkColor;

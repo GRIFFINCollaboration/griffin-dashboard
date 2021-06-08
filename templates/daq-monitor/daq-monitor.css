@@ -215,6 +215,144 @@ div.pan{
   border-bottom: 15px solid transparent;
   color: black;
 }
+.FilterInputLinkGreen {
+  width: 40px;
+  height: 30px;
+  position: relative; 
+  left: 0px; 
+  top: 50px;
+  margin: 1px 15px 1px 0px; 
+  border-style: none;
+  background: Green; 
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+}
+.FilterInputLinkGreen:before {
+  content: "";
+  position: absolute;
+  right: -15px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 15px solid Green;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+}
+.FilterInputLinkYellowGreen {
+  width: 40px;
+  height: 30px;
+  position: relative; 
+  left: 0px; 
+  top: 50px;
+  margin: 1px 15px 1px 0px; 
+  border-style: none;
+  background: YellowGreen; 
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+}
+.FilterInputLinkYellowGreen:before {
+  content: "";
+  position: absolute;
+  right: -15px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 15px solid YellowGreen;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+}
+.FilterInputLinkGold {
+  width: 40px;
+  height: 30px;
+  position: relative; 
+  left: 0px; 
+  top: 50px;
+  margin: 1px 15px 1px 0px; 
+  border-style: none;
+  background: Gold; 
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+}
+.FilterInputLinkGold:before {
+  content: "";
+  position: absolute;
+  right: -15px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 15px solid Gold;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+}
+.FilterInputLinkDarkOrange {
+  width: 40px;
+  height: 30px;
+  position: relative; 
+  left: 0px; 
+  top: 50px;
+  margin: 1px 15px 1px 0px; 
+  border-style: none;
+  background: DarkOrange; 
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+}
+.FilterInputLinkDarkOrange:before {
+  content: "";
+  position: absolute;
+  right: -15px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 15px solid DarkOrange;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+}
+.FilterInputLinkRed {
+  width: 40px;
+  height: 30px;
+  position: relative; 
+  left: 0px; 
+  top: 50px;
+  margin: 1px 15px 1px 0px; 
+  border-style: none;
+  background: Red; 
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+}
+.FilterInputLinkRed:before {
+  content: "";
+  position: absolute;
+  right: -15px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 15px solid Red;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+}
+.FilterInputLinkDimGrey {
+  width: 40px;
+  height: 30px;
+  position: relative; 
+  left: 0px; 
+  top: 50px;
+  margin: 1px 15px 1px 0px; 
+  border-style: none;
+  background: DimGrey; 
+  font-family: "Lucida Console", "Courier New", monospace;
+  font: 11px "Courier New", monospace;
+}
+.FilterInputLinkDimGrey:before {
+  content: "";
+  position: absolute;
+  right: -15px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 15px solid DimGrey;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+}
 .FilterLink {
   width: 60px;
   height: 40px; 
