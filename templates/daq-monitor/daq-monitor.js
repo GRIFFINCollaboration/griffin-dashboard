@@ -368,7 +368,7 @@ function regenerateDatastructure(suppressDOMconfig){
         FilterOutputLink.setAttribute('id', string);
         FilterOutputLink.setAttribute('type', 'button'); 
         FilterOutputLink.setAttribute('value', '999'); 
-        FilterOutputLink.setAttribute('class', 'FilterInputLink'); 
+        FilterOutputLink.setAttribute('class', 'FilterInputLinkGrey'); 
         FilterOutputLink.innerHTML = 'UDP'; 
         FilterOutputLink.onclick = function(){
             FilterElementSelection(this.id);
@@ -855,7 +855,8 @@ function repaint(){
     LinkID = 'FilterOutputLink0';
     var TotalRate = (dataStore.ODB.Equipment_Trigger_Statistics['kBytes per sec.'].toFixed()) / (95000); // Max value set to 95MB
     LinkColor = PickLinkColor(TotalRate);
-    document.getElementById(LinkID).style.backgroundColor = LinkColor;
+    //document.getElementById(LinkID).style.backgroundColor = LinkColor;
+    document.getElementById(LinkID).classList = 'FilterInputLink' + LinkColor;
     
     // Display the detailed numbers, and any histogram, for the selected Filter Element in the Report Table after
     // generating the appropriate statistics report based on which Filter element has been selected.
