@@ -754,17 +754,17 @@ function repaint(){
     FilterInputBufferUsage = [];
     for(i=0; i<FilterNumInputLinks; i++){
 	FilterInputLinkRate[i] = dataStore.GRIFC.link_statusM[i*5];
-	var bin1 = ((dataStore.GRIFC.link_statusM[i*5+1] & 0x0000FFFF); 
-	var bin2 = (dataStore.GRIFC.link_statusM[i*5+1] & 0xFFFF0000) >> 16); 
-	var bin3  = ((dataStore.GRIFC.link_statusM[i*5+2] & 0x0000FFFF);  
-	var bin4  = (dataStore.GRIFC.link_statusM[i*5+2] & 0xFFFF0000) >> 16);
+	var bin1 = (dataStore.GRIFC.link_statusM[i*5+1] & 0x0000FFFF); 
+	var bin2 = ((dataStore.GRIFC.link_statusM[i*5+1] & 0xFFFF0000) >> 16); 
+	var bin3  = (dataStore.GRIFC.link_statusM[i*5+2] & 0x0000FFFF);  
+	var bin4  = ((dataStore.GRIFC.link_statusM[i*5+2] & 0xFFFF0000) >> 16);
 	FilterInputLinkUsage.push([bin1, bin2, bin3, bin4]);
 	FilterInputLinkUsageMean[i] = ((bin1*0.25) + (bin2*0.50) + (bin3*0.75) + (bin4*1.0)) / (bin1+bin2+bin3+bin4);
 	
-	var bin1 = ((dataStore.GRIFC.link_statusM[i*5+3] & 0x0000FFFF); 
-	var bin2 = (dataStore.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16);
-	var bin3 = ((dataStore.GRIFC.link_statusM[i*5+4] & 0x0000FFFF); 
-	var bin4 = (dataStore.GRIFC.link_statusM[i*5+4] & 0xFFFF0000) >> 16); 
+	var bin1 = (dataStore.GRIFC.link_statusM[i*5+3] & 0x0000FFFF); 
+	var bin2 = ((dataStore.GRIFC.link_statusM[i*5+3] & 0xFFFF0000) >> 16);
+	var bin3 = (dataStore.GRIFC.link_statusM[i*5+4] & 0x0000FFFF); 
+	var bin4 = ((dataStore.GRIFC.link_statusM[i*5+4] & 0xFFFF0000) >> 16); 
 	FilterInputLinkBufferUsage.push([bin1, bin2, bin3, bin4]);
     }
 	
