@@ -1176,11 +1176,11 @@ function BuildSingleFilterRateValue(ElementID,DisplayType,ValueIndex){
     i=ValueIndex;
     if(DisplayType == 'PercentTot'){
 	percent = (OutgoingReportValues[i]/OutgoingReportValues.reduce((a, b) => a + b)) * 100.0;
-	string = percent.toPrecision(6)+'%';
+	string = percent.toFixed(3)+'%';
     }
     else if(DisplayType == 'PercentCap'){
 	percent = (OutgoingReportValues[i]/MaxValue) * 100.0;
-	string = percent.toPrecision(6)+'%';
+	string = percent.toFixed(3)+'%';
     }
     else if(DisplayType == 'Rate'){
 	string = OutgoingReportValues[i].toFixed(0);
@@ -1188,7 +1188,7 @@ function BuildSingleFilterRateValue(ElementID,DisplayType,ValueIndex){
     else{
 	// Here need to calculate the percentage relative to the number of events at the Input Buffer
 	percent = (OutgoingReportValues[i]/InitialReportValues[i]) * 100.0;
-	string = percent.toPrecision(6)+'%';
+	string = percent.toFixed(3)+'%';
     }
     return string;
 }
