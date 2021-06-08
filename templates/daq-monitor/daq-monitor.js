@@ -1175,9 +1175,9 @@ function BuildSingleFilterRateValue(ElementID,DisplayType,ValueIndex){
     string = '';
     i=ValueIndex;
     if(DisplayType == 'PercentTot'){
-	console.log(i,OutgoingReportValues,OutgoingReportValues.reduce((a, b) => a + b));
 	percent = (OutgoingReportValues[i]/OutgoingReportValues.reduce((a, b) => a + b)) * 100.0;
-	string = percent.toFixed(2)+'%';
+	//string = percent.toFixed(2)+'%';
+	string = percent+'%';
     }
     else if(DisplayType == 'PercentCap'){
 	percent = (OutgoingReportValues[i]/MaxValue) * 100.0;
