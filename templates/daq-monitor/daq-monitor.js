@@ -500,18 +500,18 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
 	if((currentNumber & (1 << i))!=0){ thisBit=1; }else{ thisBit=0;}
 
 	// Deterime which ADC this corresponds to
-	thisADC = dataStore.ODB.DAQ.hosts[thisCollector].digitizers[i];
-	console.log(thisCollector,i,thisADC,thisADC.match(/\d+/)[0]);
+//	thisADC = dataStore.ODB.DAQ.hosts[thisCollector].digitizers[i];
+//	console.log(thisCollector,i,thisADC,thisADC.match(/\d+/)[0]);
 	
 	// Set the button attributes appropriately
 	if(thisBit){
-	  //  string='0x'+i.toString(16)+'<br>ADC'+thisADC.match(/\d+/)[0]+'<br>Enabled'
-	    string='0x'+i.toString(16)+'<br>Enabled'
+	  //  string='0x'+i.toString(16)+'<br>ADC'+thisADC.match(/\d+/)[0]+'<br>Enabled';
+	    string='0x'+i.toString(16)+'<br>Enabled';
 	    document.getElementById(name).innerHTML = string;
 	    document.getElementById(name).status = 'true'; 
 	    document.getElementById(name).style.background='#5cb85c';
 	}else{
-	    string='0x'+i.toString(16)+'<br>Disabled'
+	    string='0x'+i.toString(16)+'<br>Disabled';
 	    document.getElementById(name).innerHTML = string;
 	    document.getElementById(name).status = 'false';
 	    document.getElementById(name).style.background='#e74c3c';
