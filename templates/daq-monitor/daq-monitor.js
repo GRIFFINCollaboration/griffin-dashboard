@@ -498,10 +498,13 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
 	
 	// Determine if this bit is set in the chanmask
 	if((currentNumber & (1 << i))!=0){ thisBit=1; }else{ thisBit=0;}
+
+	// Deterime which ADC this corresponds to
+	thisADC = dataStore.ODB.DAQ.hosts[thisCollector].digitizers[i];
 	
 	// Set the button attributes appropriately
 	if(thisBit){
-	    string='0x'+i.toString(16)+'<br>Enabled'
+	    string='0x'+i.toString(16)+'<br>ADC'+thisADC.match(/\d+/)[0]+'<br>Enabled'
 	    document.getElementById(name).innerHTML = string;
 	    document.getElementById(name).status = 'true'; 
 	    document.getElementById(name).style.background='#5cb85c';
