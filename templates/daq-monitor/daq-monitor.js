@@ -501,10 +501,12 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
 
 	// Deterime which ADC this corresponds to
 	thisADC = dataStore.ODB.DAQ.hosts[thisCollector].digitizers[i];
+	console.log(thisCollector,i,thisADC,thisADC.match(/\d+/)[0]);
 	
 	// Set the button attributes appropriately
 	if(thisBit){
-	    string='0x'+i.toString(16)+'<br>ADC'+thisADC.match(/\d+/)[0]+'<br>Enabled'
+	  //  string='0x'+i.toString(16)+'<br>ADC'+thisADC.match(/\d+/)[0]+'<br>Enabled'
+	    string='0x'+i.toString(16)+'<br>Enabled'
 	    document.getElementById(name).innerHTML = string;
 	    document.getElementById(name).status = 'true'; 
 	    document.getElementById(name).style.background='#5cb85c';
