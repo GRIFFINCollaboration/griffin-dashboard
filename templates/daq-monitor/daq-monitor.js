@@ -493,7 +493,7 @@ function WriteChanMask(id){
 function SetAllChanMaskButtons(thisCollector,currentNumber){
     //This function sets the initial values of the buttons used for the channel mask
     // Set all 16 buttons appropriately based on the current value of the chanmask
-	thisColl = 'collector0x'+thisCollector;
+    thisColl = 'collector0x'+(thisCollector-1);
     for(i=0; i<16; i++){
 	name='ChanMaskButton'+thisCollector+'-'+(i);
 	
@@ -501,21 +501,23 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
 	if((currentNumber & (1 << i))!=0){ thisBit=1; }else{ thisBit=0;}
 
 	// Deterime which ADC this corresponds to
-//	var thisADC = 'empty';
-//	if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]){ thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]; }
+	if(thisCollector>0){
+	var thisADC = 'empty';
+	    if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]){ thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]; }
+	}
 	console.log(thisColl,',',i,',',dataStore.ODB.DAQ.hosts);
 //	console.log(thisCollector,i,thisADC,thisADC.match(/\d+/)[0]);
 	
 	// Set the button attributes appropriately
 	if(thisBit){
-	  //  string='0x'+i.toString(16)+'<br>'+thisADC.match(/\d+/)[0]+'<br>Enabled';
-	    string='0x'+i.toString(16)+'<br>Enabled';
+	    if(thisCollector>0){  string='0x'+i.toString(16)+'<br>'+thisADC.match(/\d+/)[0]+'<br>Enabled';
+			       }else{ string='0x'+i.toString(16)+'<br>Enabled'; }
 	    document.getElementById(name).innerHTML = string;
 	    document.getElementById(name).status = 'true'; 
 	    document.getElementById(name).style.background='#5cb85c';
 	}else{
-	  //  string='0x'+i.toString(16)+'<br>'+thisADC.match(/\d+/)[0]+'<br>Disabled';
-	    string='0x'+i.toString(16)+'<br>Disabled';
+	    if(thisCollector>0){  string='0x'+i.toString(16)+'<br>'+thisADC.match(/\d+/)[0]+'<br>Disabled';
+			       }else{ string='0x'+i.toString(16)+'<br>Disabled'; }
 	    document.getElementById(name).innerHTML = string;
 	    document.getElementById(name).status = 'false';
 	    document.getElementById(name).style.background='#e74c3c';
