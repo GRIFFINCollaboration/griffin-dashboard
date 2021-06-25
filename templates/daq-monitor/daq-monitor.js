@@ -503,7 +503,7 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
 	// Deterime which ADC this corresponds to
 	var thisADC = 'empty';
 	if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]){ thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]; }
-//	console.log(thisColl,i,dataStore.ODB.DAQ.hosts);
+	console.log(thisColl,i,dataStore.ODB.DAQ.hosts,thisADC,dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]);
 //	console.log(thisCollector,i,thisADC,thisADC.match(/\d+/)[0]);
 	
 	// Set the button attributes appropriately
