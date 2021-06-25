@@ -494,7 +494,6 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
     //This function sets the initial values of the buttons used for the channel mask
     // Set all 16 buttons appropriately based on the current value of the chanmask
     thisColl = 'collector0x'+(thisCollector-1);
-    console.log(thisCollector,',',thisColl,dataStore.ODB.DAQ.hosts);
     for(i=0; i<16; i++){
 	name='ChanMaskButton'+thisCollector+'-'+(i);
 	
