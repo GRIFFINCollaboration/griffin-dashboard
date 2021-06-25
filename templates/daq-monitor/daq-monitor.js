@@ -504,7 +504,7 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
 	// Deterime which ADC this corresponds to
 	if(thisCollector>0){ // Skip the Primary and just look at the digitizers for the Secondaries
 	var thisADC = 'empty';
-	    if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].length>0){ thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].match(/\d+/)[0]; }
+	    if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i] && dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].length>0){ thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].match(/\d+/)[0]; }
 	}
 	
 	// Set the button attributes appropriately
