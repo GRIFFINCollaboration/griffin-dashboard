@@ -501,9 +501,8 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
 	if((currentNumber & (1 << i))!=0){ thisBit=1; }else{ thisBit=0;}
 
 	// Deterime which ADC this corresponds to
-	if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]){
-	var thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i];
-	}else{ thisADC = 'empty';}
+	var thisADC = 'empty';
+	if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]){ thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]; }
 //	console.log(thisColl,i,dataStore.ODB.DAQ.hosts);
 //	console.log(thisCollector,i,thisADC,thisADC.match(/\d+/)[0]);
 	
