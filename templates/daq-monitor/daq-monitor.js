@@ -503,20 +503,20 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
 	// Deterime which ADC this corresponds to
 	if(thisCollector>0){
 	var thisADC = 'empty';
-	    if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]){ thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]; }
+	    if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].length>0){ thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].match(/\d+/)[0]; }
 	}
 	console.log(thisColl,',',i,',',dataStore.ODB.DAQ.hosts);
 //	console.log(thisCollector,i,thisADC,thisADC.match(/\d+/)[0]);
 	
 	// Set the button attributes appropriately
 	if(thisBit){
-	    if(thisCollector>0){  string='0x'+i.toString(16)+'<br>'+thisADC.match(/\d+/)[0]+'<br>Enabled';
+	    if(thisCollector>0){  string='0x'+i.toString(16)+'<br>'+thisADC+'<br>Enabled';
 			       }else{ string='0x'+i.toString(16)+'<br>Enabled'; }
 	    document.getElementById(name).innerHTML = string;
 	    document.getElementById(name).status = 'true'; 
 	    document.getElementById(name).style.background='#5cb85c';
 	}else{
-	    if(thisCollector>0){  string='0x'+i.toString(16)+'<br>'+thisADC.match(/\d+/)[0]+'<br>Disabled';
+	    if(thisCollector>0){  string='0x'+i.toString(16)+'<br>'+thisADC+'<br>Disabled';
 			       }else{ string='0x'+i.toString(16)+'<br>Disabled'; }
 	    document.getElementById(name).innerHTML = string;
 	    document.getElementById(name).status = 'false';
