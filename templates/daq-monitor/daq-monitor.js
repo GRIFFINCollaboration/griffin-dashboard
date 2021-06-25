@@ -501,21 +501,22 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
 	if((currentNumber & (1 << i))!=0){ thisBit=1; }else{ thisBit=0;}
 
 	// Deterime which ADC this corresponds to
-//	var thisADC = dataStore.ODB.DAQ.hosts[thisColl].digitizers[i];
-//	if(thisADC==null){ thisADC = 'empty';}
+	if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]){
+	var thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i];
+	}else{ thisADC = 'empty';}
 //	console.log(thisColl,i,dataStore.ODB.DAQ.hosts);
 //	console.log(thisCollector,i,thisADC,thisADC.match(/\d+/)[0]);
 	
 	// Set the button attributes appropriately
 	if(thisBit){
-	  //  string='0x'+i.toString(16)+'<br>adc'+thisADC.match(/\d+/)[0]+'<br>Enabled';
-	    string='0x'+i.toString(16)+'<br>Enabled';
+	    string='0x'+i.toString(16)+'<br>'+thisADC.match(/\d+/)[0]+'<br>Enabled';
+	  //  string='0x'+i.toString(16)+'<br>Enabled';
 	    document.getElementById(name).innerHTML = string;
 	    document.getElementById(name).status = 'true'; 
 	    document.getElementById(name).style.background='#5cb85c';
 	}else{
-	  //  string='0x'+i.toString(16)+'<br>adc'+thisADC.match(/\d+/)[0]+'<br>Disabled';
-	    string='0x'+i.toString(16)+'<br>Disabled';
+	    string='0x'+i.toString(16)+'<br>'+thisADC.match(/\d+/)[0]+'<br>Disabled';
+	  //  string='0x'+i.toString(16)+'<br>Disabled';
 	    document.getElementById(name).innerHTML = string;
 	    document.getElementById(name).status = 'false';
 	    document.getElementById(name).style.background='#e74c3c';
