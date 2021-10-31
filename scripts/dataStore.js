@@ -209,15 +209,15 @@ dataStore = {
 	},
         {
             "id": '06',
-            "short": 'SI2p',
-            "full": 'Silicon',
-            "description": 'Silicon 2, positive (ATSD preamp)'
+            "short": 'SHQ',
+            "full": 'SHARC Quad',
+            "description": 'SHARC Quadrant'
 	},
         {
             "id": '07',
-            "short": 'SI2n',
-            "full": 'Silicon',
-            "description": 'Silicon 2, negative (ATSD preamp)'
+            "short": 'SHB',
+            "full": 'SHARC Box',
+            "description": 'SHARC Box'
 	},
         {
             "id": '08',
