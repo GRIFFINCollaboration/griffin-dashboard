@@ -70,6 +70,7 @@ dataStore = {
     "detPrefix": {                          // standard three-character prefixes for all detectors
         'CSI': 'CsI',
         'DSC': 'DESCANT',
+        'EMT': 'EMMA Trigger',
         'LBL': 'LaBr3 Energy',
         'LBS': 'LaBr3 Shield',
         'LBT': 'TAC',
@@ -78,6 +79,8 @@ dataStore = {
         'GRS': 'GRIFFIN Shield',
         'PAC': 'PACES',
         'SEP': 'SCEPTAR',
+        'SHQ': 'SHARC Quad',
+        'SHB': 'SHARC Box',
         'SI1': 'Silicon SWAN',
         'SI2': 'Silicon ATSD',
         'SPI': 'SPICE',
@@ -89,6 +92,7 @@ dataStore = {
         'TRI': 'TRIFOIL',
         'TPW': 'TIP Wall',
         'TPC': 'TIP Ball',
+        'XXX': 'Empty CSA',
         'ZDS': 'ZDS'
     },
     "detectorTypes": {
