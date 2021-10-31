@@ -362,7 +362,8 @@ function determineADCrequests(){
 //	dataStore.hosts[i] = dataStore.hosts[i].replace(/42/, "22");
 //	}
 	
-        dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv])
+        dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/report', 'arraybuffer', unpackDAQdv]);
+        dataStore.heartbeat.URLqueries.push(['http://' + dataStore.hosts[i] + '/fmc_report', 'arraybuffer', unpackDAQdv]);
     }
 
     //bump the heartbeat
