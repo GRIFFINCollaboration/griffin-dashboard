@@ -795,9 +795,9 @@ if(dataStore.host=="missing-hostname"){
 	dataStore.hostname = 'tigress';
 	dataStore.host = 'grsmid02.triumf.ca:8081';
 	dataStore.SOHhost = 'tigsoh01.triumf.ca:8081';
-    }else if(urlData.backend=="annikal"){
-	dataStore.hostname = 'annikal';
-	dataStore.host = 'annikal.triumf.ca:8081';
+    }else if(urlData.backend=="kernidon"){
+	dataStore.hostname = 'kernidon';
+	dataStore.host = 'kernidon.triumf.ca:8081';
 	dataStore.SOHhost = 'tigsoh01.triumf.ca:8081';
     }else{
 	dataStore.hostname = 'missing-hostname';
