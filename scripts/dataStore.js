@@ -68,6 +68,7 @@ dataStore = {
         'currentTooltipTarget': null
     },
     "detPrefix": {                          // standard three-character prefixes for all detectors
+        'ART': 'ARIES',
         'CSI': 'CsI',
         'DSC': 'DESCANT',
         'EMT': 'EMMA Trigger',
@@ -77,6 +78,7 @@ dataStore = {
         'Gas': 'Gas Detector',
         'GRG': 'GRIFFIN',
         'GRS': 'GRIFFIN Shield',
+        'OGS': 'Organic Glass Scintillator',
         'PAC': 'PACES',
         'SEP': 'SCEPTAR',
         'SHQ': 'SHARC Quad',
@@ -159,9 +161,9 @@ dataStore = {
         },
         {
             "id": '10',
-            "short": 'DSCg',
-            "full": 'DESCANT (gamma)',
-            "description": 'DSCg pulse shape'
+            "short": 'OGS',
+            "full": 'Organic Glass Scintillator',
+            "description": 'Organic Glass Scintillator'
         },
         {
             "id": '11',
