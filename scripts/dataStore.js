@@ -793,6 +793,10 @@ if(dataStore.host=="missing-hostname"){
 	dataStore.hostname = 'griffin';
 	dataStore.host = 'grsmid00.triumf.ca:8081';
 	dataStore.SOHhost = 'grifsoh00.triumf.ca:8081';
+    }else if(urlData.backend=="grifstore"){
+	dataStore.hostname = 'grifstore';
+	dataStore.host = 'grifstore1.triumf.ca:8081';
+	dataStore.SOHhost = 'grifsoh00.triumf.ca:8081';
     }else if(urlData.backend=="tigress"){
 	dataStore.hostname = 'tigress';
 	dataStore.host = 'grsmid02.triumf.ca:8081';
