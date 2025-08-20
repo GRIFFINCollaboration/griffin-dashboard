@@ -1147,6 +1147,7 @@ function populateCollectorLinkTable(collectorLinksFigureIndex,displayNow){
   var ColKey = 'link_status'+collectorLinksFigureIndex;
   var numWordsPerLink = 12;
   var packetSize = 92; // 92 bits per packet
+  var refreshPeriod = 8; // 8 seconds
   var emptyPortLinkClockCount=0;
   var displayRates = document.getElementById('collectorPickerType').value; // display rates or total since BOR
   //console.log(dataStore);  // Find the number of link errors for empty ports. This is the largest value of any empty port
@@ -1223,10 +1224,10 @@ function populateCollectorLinkTable(collectorLinksFigureIndex,displayNow){
         var dataRate = parseInt(dataStore.GRIFC[ColKey][ADCindex+8])-parseInt(dataStore.lastGRIFC[ColKey][ADCindex+8]);
         thisData = prettyFileSizeString(Math.floor((dataRate*packetSize)/80))+'/s';
 
-        thisEventCount = Math.floor((thisEventCount - dataStore.lastGRIFC[ColKey][ADCindex+0])/10);
-        thisGoodCount = Math.floor((thisGoodCount - dataStore.lastGRIFC[ColKey][ADCindex+5])/10);
-        thisLateCount = Math.floor((thisLateCount - dataStore.lastGRIFC[ColKey][ADCindex+6])/10);
-        thisFormatErrorCount = Math.floor((thisFormatErrorCount - dataStore.GRIFC[ColKey][ADCindex+7])/10);
+        thisEventCount = Math.floor((thisEventCount - dataStore.lastGRIFC[ColKey][ADCindex+0])/refreshPeriod);
+        thisGoodCount = Math.floor((thisGoodCount - dataStore.lastGRIFC[ColKey][ADCindex+5])/refreshPeriod);
+        thisLateCount = Math.floor((thisLateCount - dataStore.lastGRIFC[ColKey][ADCindex+6])/refreshPeriod);
+        thisFormatErrorCount = Math.floor((thisFormatErrorCount - dataStore.GRIFC[ColKey][ADCindex+7])/refreshPeriod);
         // Put Link errors here
         if(ADC == 'empty'){
           var thisLinkErrorCount = '-';
@@ -1234,9 +1235,9 @@ function populateCollectorLinkTable(collectorLinksFigureIndex,displayNow){
           var thisLinkErrorCount = dataStore.GRIFC[ColKey][ADCindex+11] - dataStore.lastGRIFC[ColKey][ADCindex+11];
         }
 
-        thisEvtPkts = Math.floor((thisEvtPkts - dataStore.lastGRIFC[ColKey][ADCindex+8])/10);
-        thisPtrPkts = Math.floor((thisPtrPkts - dataStore.lastGRIFC[ColKey][ADCindex+9])/10);
-        thisParPkts = Math.floor((thisParPkts - dataStore.lastGRIFC[ColKey][ADCindex+10])/10);
+        thisEvtPkts = Math.floor((thisEvtPkts - dataStore.lastGRIFC[ColKey][ADCindex+8])/refreshPeriod);
+        thisPtrPkts = Math.floor((thisPtrPkts - dataStore.lastGRIFC[ColKey][ADCindex+9])/refreshPeriod);
+        thisParPkts = Math.floor((thisParPkts - dataStore.lastGRIFC[ColKey][ADCindex+10])/refreshPeriod);
       }
       catch(err){
         //  console.log(err);
@@ -1262,7 +1263,7 @@ function populateCollectorLinkTable(collectorLinksFigureIndex,displayNow){
     if(displayRates == 'Rates'){
       dataStore.ODB.DAQ.summary.digitizers.receives[parseInt(collectorLinksFigureIndex)][i] = thisGoodCount;
     }else{
-      dataStore.ODB.DAQ.summary.digitizers.receives[parseInt(collectorLinksFigureIndex)][i] = Math.floor((thisGoodCount - dataStore.lastGRIFC[ColKey][ADCindex+5])/10);
+      dataStore.ODB.DAQ.summary.digitizers.receives[parseInt(collectorLinksFigureIndex)][i] = Math.floor((thisGoodCount - dataStore.lastGRIFC[ColKey][ADCindex+5])/refreshPeriod);
     }
   }
 
