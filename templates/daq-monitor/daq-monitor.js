@@ -117,7 +117,7 @@ function regenerateDatastructure(suppressDOMconfig){
   dataStore.ODB.DAQ.summary = {
     primary: {requests: 0, accepts: 0},
     collectors: {requests: [], accepts: [], titles: []},
-    digitizers: {requests:[], accepts:[], titles: []},
+    digitizers: {requests:[], accepts:[], receives:[], titles: []},
     channels: {requests:[], accepts:[], titles:[]},
     detectors: {requests:[], accepts:[], titles:[], prettyName:[]}
   }
@@ -138,9 +138,11 @@ function regenerateDatastructure(suppressDOMconfig){
 
     dataStore.ODB.DAQ.summary.digitizers.requests[P] = dataStore.ODB.DAQ.summary.digitizers.requests[P] || [];
     dataStore.ODB.DAQ.summary.digitizers.accepts[P] = dataStore.ODB.DAQ.summary.digitizers.accepts[P] || [];
+    dataStore.ODB.DAQ.summary.digitizers.receives[P] = dataStore.ODB.DAQ.summary.digitizers.receives[P] || [];
     dataStore.ODB.DAQ.summary.digitizers.titles[P] = dataStore.ODB.DAQ.summary.digitizers.titles[P] || [];
     dataStore.ODB.DAQ.summary.digitizers.requests[P][S] = 0;
     dataStore.ODB.DAQ.summary.digitizers.accepts[P][S] = 0;
+    dataStore.ODB.DAQ.summary.digitizers.receives[P][S] = 0;
     dataStore.ODB.DAQ.summary.digitizers.titles[P][S] = '0x' + P.toString(16) + S.toString(16) + '--';
 
     dataStore.ODB.DAQ.summary.channels.requests[P] = dataStore.ODB.DAQ.summary.channels.requests[P] || [];
@@ -189,34 +191,34 @@ function regenerateDatastructure(suppressDOMconfig){
     }
     SetAllChanMaskButtons(0,dataStore.ODB.DAQ.params.ChanMask[0]);
 
-        // create the Primary collector Picker button for the Collector subpage links table and histogram selection
-        collectorOption = document.createElement('button');
-        collectorOption.setAttribute('type', 'button');
-        collectorOption.setAttribute('class', 'btn btn-default');
-        collectorOption.setAttribute('value', 'M');
-        collectorOption.onclick = function(){
-          activeButton('collectorPickerCol', this);
-          dataStore.collectorLinksValue = this.value;
-          populateCollectorLinkTable(this.value,true);
-          repaint();
-        }.bind(collectorOption);
-        collectorOption.innerHTML = 'Primary';
-        document.getElementById('collectorPickerCol').appendChild(collectorOption);
+    // create the Primary collector Picker button for the Collector subpage links table and histogram selection
+    collectorOption = document.createElement('button');
+    collectorOption.setAttribute('type', 'button');
+    collectorOption.setAttribute('class', 'btn btn-default');
+    collectorOption.setAttribute('value', 'M');
+    collectorOption.onclick = function(){
+      activeButton('collectorPickerCol', this);
+      dataStore.collectorLinksValue = this.value;
+      populateCollectorLinkTable(this.value,true);
+      repaint();
+    }.bind(collectorOption);
+    collectorOption.innerHTML = 'Primary';
+    document.getElementById('collectorPickerCol').appendChild(collectorOption);
 
-        // Add the options to the collector Picker Type select (display rates or totals) for the Collector subpage links table and histogram selection
-        select = document.getElementById('collectorPickerType');
-        var selectOptions = [['Rates','Rates'],['Totals','Totals since Beginning of Run']];
-        for (var thisOption = 0; thisOption<selectOptions.length; thisOption++){
-            var opt = document.createElement('option');
-            opt.value = selectOptions[thisOption][0];
-            opt.innerHTML = selectOptions[thisOption][1];
-            select.appendChild(opt);
-        }
-        // Add the onchange listener for the collector Picker Type select (display rates or totals)
-        select.onchange = function(){
-          populateCollectorLinkTable(dataStore.collectorLinksValue,true);
-          repaint();
-        };
+    // Add the options to the collector Picker Type select (display rates or totals) for the Collector subpage links table and histogram selection
+    select = document.getElementById('collectorPickerType');
+    var selectOptions = [['Rates','Rates'],['Totals','Totals since Beginning of Run']];
+    for (var thisOption = 0; thisOption<selectOptions.length; thisOption++){
+      var opt = document.createElement('option');
+      opt.value = selectOptions[thisOption][0];
+      opt.innerHTML = selectOptions[thisOption][1];
+      select.appendChild(opt);
+    }
+    // Add the onchange listener for the collector Picker Type select (display rates or totals)
+    select.onchange = function(){
+      populateCollectorLinkTable(dataStore.collectorLinksValue,true);
+      repaint();
+    };
 
     first = true;
     for(i=0; i<dataStore.ODB.DAQ.summary.collectors.titles.length; i++){
@@ -312,7 +314,11 @@ function regenerateDatastructure(suppressDOMconfig){
             ADCLinksButton.style.padding = '4px';
             thisCol = 'collector0x'+i;
             ADC='empty';
-            if(dataStore.ODB.DAQ.hosts[thisCol].digitizers[j] && dataStore.ODB.DAQ.hosts[thisCol].digitizers[j].length>0){ ADC = 'adc'+dataStore.ODB.DAQ.hosts[thisCol].digitizers[j].match(/\d+/)[0]; }
+            if(dataStore.ODB.DAQ.hosts[thisCol].digitizers[j] && dataStore.ODB.DAQ.hosts[thisCol].digitizers[j]!='empty'){
+              if(dataStore.ODB.DAQ.hosts[thisCol].digitizers[j].length>0){
+                ADC = 'adc'+dataStore.ODB.DAQ.hosts[thisCol].digitizers[j].match(/\d+/)[0];
+              }
+            }
             //ADC = findADC(findChannelName('0x'+(i)+j+'--'));
             //if(ADC != null){ ADC = ADC.split('.')[0].split('grif')[1]; }else{ ADC = ''; }
             ADCLinksButton.innerHTML = '0x'+(i)+j+'<br>'+ADC;
@@ -587,7 +593,12 @@ function SetAllChanMaskButtons(thisCollector,currentNumber){
     // Deterime which ADC this corresponds to
     if(thisCollector>0){ // Skip the Primary and just look at the digitizers for the Secondaries
       var thisADC = 'empty';
-      if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i] && dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].length>0){ thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].match(/\d+/)[0]; }
+      //  if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i] && dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].length>0){
+      if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i] && dataStore.ODB.DAQ.hosts[thisColl].digitizers[i]!='empty'){
+        if(dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].length>0){
+          thisADC = 'adc'+dataStore.ODB.DAQ.hosts[thisColl].digitizers[i].match(/\d+/)[0];
+        }
+      }
     }
 
     // Set the button attributes appropriately
@@ -726,6 +737,8 @@ function repaint(){
   var ID = FilterSelectedElementID;
   var string = "Click on a Filter element to display details here.";
 
+  if(!dataStore.ODB.DAQ){ return; } // No data to plot yet
+
   //primary summary
   createBarchart(
     'collectorsHisto',
@@ -742,15 +755,6 @@ function repaint(){
     dataStore.ODB.DAQ.summary.digitizers.requests[collectorFigureIndex],
     dataStore.ODB.DAQ.summary.digitizers.accepts[collectorFigureIndex],
     'Collector ' + dataStore.ODB.DAQ.summary.collectors.titles[collectorFigureIndex] + ' Channels', 'Digitizer', 'Hz'
-  );
-
-  //Collectors Links plot on Collectors subpage
-  createLinksBarchart(
-    'collectorLinksHisto',
-    dataStore.ODB.DAQ.summary.digitizers.titles[collectorLinksFigureIndex],
-    dataStore.ODB.DAQ.summary.digitizers.requests[collectorLinksFigureIndex],
-    dataStore.ODB.DAQ.summary.digitizers.accepts[collectorLinksFigureIndex],
-    'Collector ' + dataStore.ODB.DAQ.summary.collectors.titles[collectorLinksFigureIndex] + ' Channels', 'Digitizer', 'Hz'
   );
 
   //Collector Links table on Collectors subpage
@@ -973,10 +977,12 @@ function repaint(){
   // dataStore.ODB.Equipment_Trigger_Statistics['Events per sec.'].toFixed()
   // dataStore.ODB.Equipment_Trigger_Statistics['kBytes per sec.'].toFixed()
   LinkID = 'FilterOutputLink0';
-  var TotalRate = (dataStore.ODB.Equipment_Trigger_Statistics['kBytes per sec.'].toFixed()) / (95000); // Max value set to 95MB
-  LinkColor = PickLinkColor(TotalRate);
-  //document.getElementById(LinkID).style.backgroundColor = LinkColor;
-  document.getElementById(LinkID).classList = 'FilterInputLink' + LinkColor;
+  if(dataStore.ODB.Equipment_Trigger_Statistics){
+    var TotalRate = (dataStore.ODB.Equipment_Trigger_Statistics['kBytes per sec.'].toFixed()) / (95000); // Max value set to 95MB
+    LinkColor = PickLinkColor(TotalRate);
+    //document.getElementById(LinkID).style.backgroundColor = LinkColor;
+    document.getElementById(LinkID).classList = 'FilterInputLink' + LinkColor;
+  }
 
   // Display the detailed numbers, and any histogram, for the selected Filter Element in the Report Table after
   // generating the appropriate statistics report based on which Filter element has been selected.
@@ -985,6 +991,7 @@ function repaint(){
   if (FilterSelectedElementID.indexOf("FilterBuffer") >= 0){ ReportBuffer();     }
   if (FilterSelectedElementID.indexOf("FilterObject") >= 0){ ReportObject();     }
   if (FilterSelectedElementID.indexOf("FilterInput") >= 0) { ReportInputLink();  }
+
 }
 
 function createBarchart(targetDiv, PSClabels, requests, accepts, plotTitle, xTitle, yTitle){
@@ -1017,6 +1024,44 @@ function createBarchart(targetDiv, PSClabels, requests, accepts, plotTitle, xTit
 
   //collectors
   Plotly.newPlot(targetDiv, [req, acpt], layout);
+}
+
+function createCollectorchart(targetDiv, PSClabels, requests, accepts, receives, plotTitle, xTitle, yTitle){
+  // re-create the specified histogram
+
+  var layout = {
+    barmode: 'group',
+    title: plotTitle,
+    xaxis: {
+      title: xTitle,
+      ticktext: PSClabels
+    },
+    yaxis: {
+      title: yTitle
+    }
+  },
+  req = {
+    x: PSClabels,
+    y: requests,
+    name: 'GRIF16 Requests',
+    type: 'bar',
+
+  },
+  acpt = {
+    x: PSClabels,
+    y: accepts,
+    name: 'GRIF16 Accepts',
+    type: 'bar'
+  },
+  rcve = {
+    x: PSClabels,
+    y: receives,
+    name: 'GRIFC Receives',
+    type: 'bar'
+  };
+
+  //collectors
+  Plotly.newPlot(targetDiv, [req, acpt, rcve], layout);
 }
 
 function createFilterBarchart(targetDiv, labels, usage, plotTitle, xTitle, yTitle){
@@ -1094,7 +1139,7 @@ function populateCollectorLinkTable(collectorLinksFigureIndex,displayNow){
   //
   //late => event received on grifc more than 160us after being produced
   if(typeof(collectorLinksFigureIndex) == 'undefined'){
-   var collectorLinksFigureIndex = dataStore.collectorLinksValue;
+    var collectorLinksFigureIndex = dataStore.collectorLinksValue;
   }
 
   var wrap = 'CollectorLinksTable';
@@ -1123,7 +1168,11 @@ function populateCollectorLinkTable(collectorLinksFigureIndex,displayNow){
     var ADC='empty';
 
     if(collectorLinksFigureIndex!='M'){
-      if(dataStore.ODB.DAQ.hosts[thisCol].digitizers[i] && dataStore.ODB.DAQ.hosts[thisCol].digitizers[i].length>0){ ADC = 'adc'+dataStore.ODB.DAQ.hosts[thisCol].digitizers[i].match(/\d+/)[0]; }
+      if(dataStore.ODB.DAQ.hosts[thisCol].digitizers[i] && dataStore.ODB.DAQ.hosts[thisCol].digitizers[i]!='empty'){
+        if(dataStore.ODB.DAQ.hosts[thisCol].digitizers[i].length>0){
+          ADC = 'adc'+dataStore.ODB.DAQ.hosts[thisCol].digitizers[i].match(/\d+/)[0];
+        }
+      }
       var ADCindex = i*numWordsPerLink;
     }else{
       var ADC='empty';
@@ -1134,80 +1183,87 @@ function populateCollectorLinkTable(collectorLinksFigureIndex,displayNow){
     // Determine the information for this links
     // If the ADC is empty then some info is blanked
     // Determine either the total since BOR, or the current rate
-      if(collectorLinksFigureIndex!='M' && ADC!='empty'){
-        var thisADC = '<a href=\'http://grif' + ADC + '.triumf.ca\' target=\'_blank\'>' + ADC + '</a>';
-      }else{
-        var thisADC = ADC;
-      }
-var thisPort = '0x'+i.toString(16);
-    if(ADC == 'empty'){
-var thisData = '-';
+    if(collectorLinksFigureIndex!='M' && ADC!='empty'){
+      var thisADC = '<a href=\'http://grif' + ADC + '.triumf.ca\' target=\'_blank\'>' + ADC + '</a>';
     }else{
-var thisData = prettyFileSizeString(Math.floor((dataStore.GRIFC[ColKey][ADCindex+8]*packetSize)/80));
-}
-var thisEventCount = dataStore.GRIFC[ColKey][ADCindex+0];
-var thisGoodCount = dataStore.GRIFC[ColKey][ADCindex+5];
-var thisLateCount = dataStore.GRIFC[ColKey][ADCindex+6];
-var thisFormatErrorCount = dataStore.GRIFC[ColKey][ADCindex+7];
-if((ADC == 'empty') && dataStore.GRIFC[ColKey][ADCindex+11]<(0.95*emptyPortLinkClockCount)){
-var thisLinkErrorCount = '<p style="color:red;">'+dataStore.GRIFC[ColKey][ADCindex+11]+'</p>';
-}else if(ADC == 'empty'){
-var thisLinkErrorCount = '-';
-}else if(dataStore.GRIFC[ColKey][ADCindex+11]>0){
-var thisLinkErrorCount = '<p style="color:red;">'+dataStore.GRIFC[ColKey][ADCindex+11]+'</p>';
-}else{
-var thisLinkErrorCount = dataStore.GRIFC[ColKey][ADCindex+11];
-}
-var thisEvtPkts = dataStore.GRIFC[ColKey][ADCindex+8];
-var thisPtrPkts = dataStore.GRIFC[ColKey][ADCindex+9];
-var thisParPkts = dataStore.GRIFC[ColKey][ADCindex+10];
+      var thisADC = ADC;
+    }
+    var thisPort = '0x'+i.toString(16);
+    if(ADC == 'empty'){
+      var thisData = '-';
+    }else{
+      var thisData = prettyFileSizeString(Math.floor((dataStore.GRIFC[ColKey][ADCindex+8]*packetSize)/80));
+    }
+    var thisEventCount = dataStore.GRIFC[ColKey][ADCindex+0];
+    var thisGoodCount = dataStore.GRIFC[ColKey][ADCindex+5];
+    var thisLateCount = dataStore.GRIFC[ColKey][ADCindex+6];
+    var thisFormatErrorCount = dataStore.GRIFC[ColKey][ADCindex+7];
+    if((ADC == 'empty') && dataStore.GRIFC[ColKey][ADCindex+11]<(0.95*emptyPortLinkClockCount)){
+      var thisLinkErrorCount = '<p style="color:red;">'+dataStore.GRIFC[ColKey][ADCindex+11]+'</p>';
+    }else if(ADC == 'empty'){
+      var thisLinkErrorCount = '-';
+    }else if(dataStore.GRIFC[ColKey][ADCindex+11]>0){
+      var thisLinkErrorCount = '<p style="color:red;">'+dataStore.GRIFC[ColKey][ADCindex+11]+'</p>';
+    }else{
+      var thisLinkErrorCount = dataStore.GRIFC[ColKey][ADCindex+11];
+    }
+    var thisEvtPkts = dataStore.GRIFC[ColKey][ADCindex+8];
+    var thisPtrPkts = dataStore.GRIFC[ColKey][ADCindex+9];
+    var thisParPkts = dataStore.GRIFC[ColKey][ADCindex+10];
 
-  if((dataStore.GRIFC['filter_status/last_written'] == dataStore.lastGRIFC['filter_status/last_written']) && !displayNow){
-    //Do not update table values. ODB values only update every 10 seconds, but we fetch more often
-    return;
-  }
+    if((dataStore.GRIFC['filter_status/last_written'] == dataStore.lastGRIFC['filter_status/last_written']) && !displayNow){
+      //Do not update table values. ODB values only update every 10 seconds, but we fetch more often
+      return;
+    }
 
-// If rates are to be displayed, calculate rates here
-if(displayRates == 'Rates'){
+    // If rates are to be displayed, calculate rates here
+    if(displayRates == 'Rates'){
 
       try{
         var dataRate = parseInt(dataStore.GRIFC[ColKey][ADCindex+8])-parseInt(dataStore.lastGRIFC[ColKey][ADCindex+8]);
-  thisData = prettyFileSizeString(Math.floor((dataRate*packetSize)/80))+'/s';
+        thisData = prettyFileSizeString(Math.floor((dataRate*packetSize)/80))+'/s';
 
-  thisEventCount = Math.floor((thisEventCount - dataStore.lastGRIFC[ColKey][ADCindex+0])/10);
-  thisGoodCount = Math.floor((thisGoodCount - dataStore.lastGRIFC[ColKey][ADCindex+5])/10);
-  thisLateCount = Math.floor((thisLateCount - dataStore.lastGRIFC[ColKey][ADCindex+6])/10);
-  thisFormatErrorCount = Math.floor((thisFormatErrorCount - dataStore.GRIFC[ColKey][ADCindex+7])/10);
-  // Put Link errors here
-  if(ADC == 'empty'){
-  var thisLinkErrorCount = '-';
-  }else{
-  var thisLinkErrorCount = dataStore.GRIFC[ColKey][ADCindex+11] - dataStore.lastGRIFC[ColKey][ADCindex+11];
-  }
+        thisEventCount = Math.floor((thisEventCount - dataStore.lastGRIFC[ColKey][ADCindex+0])/10);
+        thisGoodCount = Math.floor((thisGoodCount - dataStore.lastGRIFC[ColKey][ADCindex+5])/10);
+        thisLateCount = Math.floor((thisLateCount - dataStore.lastGRIFC[ColKey][ADCindex+6])/10);
+        thisFormatErrorCount = Math.floor((thisFormatErrorCount - dataStore.GRIFC[ColKey][ADCindex+7])/10);
+        // Put Link errors here
+        if(ADC == 'empty'){
+          var thisLinkErrorCount = '-';
+        }else{
+          var thisLinkErrorCount = dataStore.GRIFC[ColKey][ADCindex+11] - dataStore.lastGRIFC[ColKey][ADCindex+11];
+        }
 
-  thisEvtPkts = Math.floor((thisEvtPkts - dataStore.lastGRIFC[ColKey][ADCindex+8])/10);
-  thisPtrPkts = Math.floor((thisPtrPkts - dataStore.lastGRIFC[ColKey][ADCindex+9])/10);
-  thisParPkts = Math.floor((thisParPkts - dataStore.lastGRIFC[ColKey][ADCindex+10])/10);
-  }
-  catch(err){
-  //  console.log(err);
-  }
+        thisEvtPkts = Math.floor((thisEvtPkts - dataStore.lastGRIFC[ColKey][ADCindex+8])/10);
+        thisPtrPkts = Math.floor((thisPtrPkts - dataStore.lastGRIFC[ColKey][ADCindex+9])/10);
+        thisParPkts = Math.floor((thisParPkts - dataStore.lastGRIFC[ColKey][ADCindex+10])/10);
+      }
+      catch(err){
+        //  console.log(err);
+      }
 
-}
+    }
 
 
-// Put the information into the table
-      document.getElementById(wrap+i.toString(16)+'ADC').innerHTML = thisADC;
-      document.getElementById(wrap+i.toString(16)+'Port').innerHTML = thisPort;
-      document.getElementById(wrap+i.toString(16)+'Data').innerHTML = thisData;
-      document.getElementById(wrap+i.toString(16)+'EventCount').innerHTML = thisEventCount;
-      document.getElementById(wrap+i.toString(16)+'GoodCount').innerHTML = thisGoodCount;
-      document.getElementById(wrap+i.toString(16)+'LateCount').innerHTML = thisLateCount;
-      document.getElementById(wrap+i.toString(16)+'FormatErrorCount').innerHTML = thisFormatErrorCount;
-      document.getElementById(wrap+i.toString(16)+'LinkErrorCount').innerHTML = thisLinkErrorCount;
-      document.getElementById(wrap+i.toString(16)+'evtPkts').innerHTML = thisEvtPkts;
-      document.getElementById(wrap+i.toString(16)+'ptrPkts').innerHTML = thisPtrPkts;
-      document.getElementById(wrap+i.toString(16)+'parPkts').innerHTML = thisPtrPkts;
+    // Put the information into the table
+    document.getElementById(wrap+i.toString(16)+'ADC').innerHTML = thisADC;
+    document.getElementById(wrap+i.toString(16)+'Port').innerHTML = thisPort;
+    document.getElementById(wrap+i.toString(16)+'Data').innerHTML = thisData;
+    document.getElementById(wrap+i.toString(16)+'EventCount').innerHTML = thisEventCount;
+    document.getElementById(wrap+i.toString(16)+'GoodCount').innerHTML = thisGoodCount;
+    document.getElementById(wrap+i.toString(16)+'LateCount').innerHTML = thisLateCount;
+    document.getElementById(wrap+i.toString(16)+'FormatErrorCount').innerHTML = thisFormatErrorCount;
+    document.getElementById(wrap+i.toString(16)+'LinkErrorCount').innerHTML = thisLinkErrorCount;
+    document.getElementById(wrap+i.toString(16)+'evtPkts').innerHTML = thisEvtPkts;
+    document.getElementById(wrap+i.toString(16)+'ptrPkts').innerHTML = thisPtrPkts;
+    document.getElementById(wrap+i.toString(16)+'parPkts').innerHTML = thisPtrPkts;
+
+    // Save the Good Event count to the dataStore object for this link
+    if(displayRates == 'Rates'){
+      dataStore.ODB.DAQ.summary.digitizers.receives[parseInt(collectorLinksFigureIndex)][i] = thisGoodCount;
+    }else{
+      dataStore.ODB.DAQ.summary.digitizers.receives[parseInt(collectorLinksFigureIndex)][i] = Math.floor((thisGoodCount - dataStore.lastGRIFC[ColKey][ADCindex+5])/10);
+    }
   }
 
   // Remember this information for calculating rates next time
@@ -1215,6 +1271,15 @@ if(displayRates == 'Rates'){
     dataStore.lastGRIFC = dataStore.GRIFC;
   }
 
+  //Use the data derived for the Table also for the Collectors Links plot on Collectors subpage
+  createCollectorchart(
+    'collectorLinksHisto',
+    dataStore.ODB.DAQ.summary.digitizers.titles[collectorLinksFigureIndex],
+    dataStore.ODB.DAQ.summary.digitizers.requests[collectorLinksFigureIndex],
+    dataStore.ODB.DAQ.summary.digitizers.accepts[collectorLinksFigureIndex],
+    dataStore.ODB.DAQ.summary.digitizers.receives[collectorLinksFigureIndex],
+    'Collector ' + dataStore.ODB.DAQ.summary.collectors.titles[collectorLinksFigureIndex] + ' Channels', 'Link (Digitizer-Collector)', 'Hz'
+  );
 
 };
 
